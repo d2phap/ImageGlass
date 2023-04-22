@@ -561,20 +561,20 @@ public partial class FrmMain
     /// <param name="visible"></param>
     public bool IG_ToggleGallery(bool? visible = null)
     {
-        visible ??= !Config.ShowThumbnails;
-        Config.ShowThumbnails = visible.Value;
+        visible ??= !Config.ShowGallery;
+        Config.ShowGallery = visible.Value;
 
-        Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
-        Gallery.ShowItemText = Config.ShowThumbnailFilename;
+        Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+        Gallery.ShowItemText = Config.ShowGalleryFileName;
 
         // update gallery size
         UpdateGallerySize();
 
         // toggle gallery
-        Gallery.Visible = Config.ShowThumbnails;
+        Gallery.Visible = Config.ShowGallery;
 
         // update menu item state
-        MnuToggleThumbnails.Checked = Config.ShowThumbnails;
+        MnuToggleGallery.Checked = Config.ShowGallery;
 
         // update toolbar items state
         UpdateToolbarItemsState();
@@ -586,7 +586,7 @@ public partial class FrmMain
             FitWindowToImage(false);
         }
 
-        return Config.ShowThumbnails;
+        return Config.ShowGallery;
     }
 
 
@@ -595,7 +595,7 @@ public partial class FrmMain
     /// </summary>
     private void UpdateGallerySize()
     {
-        if (!Config.ShowThumbnails) return;
+        if (!Config.ShowGallery) return;
 
         Gallery.SuspendLayout();
 
@@ -2192,7 +2192,7 @@ public partial class FrmMain
         var horzGap = Width - ClientSize.Width;
         var vertGap = Height - ClientSize.Height;
 
-        if (Config.ShowThumbnails)
+        if (Config.ShowGallery)
         {
             if (Gallery.Dock == DockStyle.Left || Gallery.Dock == DockStyle.Right)
             {
@@ -2377,7 +2377,7 @@ public partial class FrmMain
             enable: enable.Value,
             changeWindowState: true,
             hideToolbar: Config.HideToolbarInFullscreen,
-            hideThumbnails: Config.HideThumbnailsInFullscreen);
+            hideThumbnails: Config.HideGalleryInFullscreen);
 
         // update menu item state
         MnuFullScreen.Checked = Config.EnableFullScreen;
@@ -2430,7 +2430,7 @@ public partial class FrmMain
             _windowBound = Bounds;
             _windowState = WindowState;
             if (hideToolbar) _showToolbar = Config.ShowToolbar;
-            if (hideThumbnails) _showThumbnails = Config.ShowThumbnails;
+            if (hideThumbnails) _showThumbnails = Config.ShowGallery;
 
             if (changeWindowState)
             {
@@ -2464,14 +2464,14 @@ public partial class FrmMain
 
             // restore last state of the window
             if (hideToolbar) Config.ShowToolbar = _showToolbar;
-            if (hideThumbnails) Config.ShowThumbnails = _showThumbnails;
+            if (hideThumbnails) Config.ShowGallery = _showThumbnails;
 
             if (hideToolbar && Config.ShowToolbar)
             {
                 // Show toolbar
                 IG_ToggleToolbar(true);
             }
-            if (hideThumbnails && Config.ShowThumbnails)
+            if (hideThumbnails && Config.ShowGallery)
             {
                 // Show thumbnail
                 IG_ToggleGallery(true);

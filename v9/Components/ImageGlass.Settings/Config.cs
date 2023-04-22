@@ -118,7 +118,7 @@ public static class Config
         {
             Id = "Btn_Thumbnail",
             Image = nameof(Theme.ToolbarIcons.ThumbnailBar),
-            CheckableConfigBinding = nameof(ShowThumbnails),
+            CheckableConfigBinding = nameof(ShowGallery),
             OnClick = new("MnuToggleThumbnails"),
         },
         new()
@@ -248,24 +248,24 @@ public static class Config
     public static bool HideToolbarInFullscreen { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
+    /// Gets, sets value indicates that the gallery should be hidden in Full screen mode
     /// </summary>
-    public static bool HideThumbnailsInFullscreen { get; set; } = false;
+    public static bool HideGalleryInFullscreen { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value of thumbnail visibility
+    /// Gets, sets value of gallery visibility
     /// </summary>
-    public static bool ShowThumbnails { get; set; } = true;
+    public static bool ShowGallery { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets value whether thumbnail scrollbars visible
+    /// Gets, sets value whether gallery scrollbars visible
     /// </summary>
-    public static bool ShowThumbnailScrollbars { get; set; } = false;
+    public static bool ShowGalleryScrollbars { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value indicates that showing image filename on thumbnail bar
+    /// Gets, sets value indicates that showing image file name on gallery
     /// </summary>
-    public static bool ShowThumbnailFilename { get; set; } = false;
+    public static bool ShowGalleryFileName { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
@@ -764,9 +764,9 @@ public static class Config
         EnableFullscreenSlideshow = items.GetValue(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         EnableFrameless = items.GetValue(nameof(EnableFrameless), EnableFrameless);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
-        ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
-        ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
-        ShowThumbnailFilename = items.GetValue(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
+        ShowGallery = items.GetValue(nameof(ShowGallery), ShowGallery);
+        ShowGalleryScrollbars = items.GetValue(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
+        ShowGalleryFileName = items.GetValue(nameof(ShowGalleryFileName), ShowGalleryFileName);
         //IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
@@ -801,7 +801,7 @@ public static class Config
         ShouldAutoOpenNewAddedImage = items.GetValue(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
-        HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
+        HideGalleryInFullscreen = items.GetValue(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);
 
         #endregion
 
@@ -835,7 +835,7 @@ public static class Config
         SlideshowIntervalTo = Math.Max(SlideshowIntervalTo, SlideshowInterval);
         #endregion
 
-        #region Load thumbnail bar width & position
+        #region Load gallery thumbnail width & position
         ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
         ThumbnailSize = Math.Max(20, ThumbnailSize);
         GalleryCacheSizeInMb = items.GetValue(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
@@ -1311,9 +1311,9 @@ public static class Config
         settings.TryAdd(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         settings.TryAdd(nameof(EnableFrameless), EnableFrameless);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
-        settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
-        settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
-        settings.TryAdd(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
+        settings.TryAdd(nameof(ShowGallery), ShowGallery);
+        settings.TryAdd(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
+        settings.TryAdd(nameof(ShowGalleryFileName), ShowGalleryFileName);
         //settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
@@ -1349,7 +1349,7 @@ public static class Config
         settings.TryAdd(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
-        settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
+        settings.TryAdd(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);
 
         #endregion
 

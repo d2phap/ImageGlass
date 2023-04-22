@@ -307,7 +307,7 @@ public class IgLang : Dictionary<string, string>
         #region Layout
         Add("FrmMain.MnuLayout", "Layout"); //v3.0
         Add("FrmMain.MnuToggleToolbar", "Toolbar"); //v3.0
-        Add("FrmMain.MnuToggleThumbnails", "Thumbnail panel"); //v3.0
+        Add("FrmMain.MnuToggleGallery", "Gallery panel"); //v3.0
         Add("FrmMain.MnuToggleCheckerboard", "Checkerboard background"); //v3.0, updated v5.0
         Add("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
         Add("FrmMain.MnuToggleTopMost._Enable", "Enabled window always on top"); // v9.0

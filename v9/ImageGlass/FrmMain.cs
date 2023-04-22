@@ -638,13 +638,13 @@ public partial class FrmMain : ThemedForm
 
 
     /// <summary>
-    /// Clear and reload all thumbnail image
+    /// Clear and reload all thumbnails in gallery
     /// </summary>
-    public void LoadThumbnails()
+    public void LoadGallery()
     {
         if (InvokeRequired)
         {
-            Invoke(LoadThumbnails);
+            Invoke(LoadGallery);
             return;
         }
 
@@ -663,18 +663,18 @@ public partial class FrmMain : ThemedForm
         Gallery.ResumeLayout();
         UpdateGallerySize();
 
-        SelectCurrentThumbnail();
+        SelectCurrentGalleryThumbnail();
     }
 
 
     /// <summary>
     /// Select current thumbnail
     /// </summary>
-    public void SelectCurrentThumbnail()
+    public void SelectCurrentGalleryThumbnail()
     {
         if (InvokeRequired)
         {
-            Invoke(new(SelectCurrentThumbnail));
+            Invoke(new(SelectCurrentGalleryThumbnail));
             return;
         }
 
@@ -980,7 +980,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // Select thumbnail item
-        _ = BHelper.RunAsThread(SelectCurrentThumbnail);
+        _ = BHelper.RunAsThread(SelectCurrentGalleryThumbnail);
 
         // show image preview if it's not cached
         if (!Local.Images.IsCached(Local.CurrentIndex))
@@ -1057,7 +1057,7 @@ public partial class FrmMain : ThemedForm
 
         if (Local.CurrentIndex >= 0)
         {
-            SelectCurrentThumbnail();
+            SelectCurrentGalleryThumbnail();
         }
 
 
@@ -1080,7 +1080,7 @@ public partial class FrmMain : ThemedForm
         LoadImageInfo(ImageInfoUpdateTypes.ListCount);
 
         // Load thumnbnail
-        BHelper.RunAsThread(LoadThumbnails);
+        BHelper.RunAsThread(LoadGallery);
     }
 
 
@@ -2112,7 +2112,7 @@ public partial class FrmMain : ThemedForm
         IG_ToggleToolbar();
     }
 
-    private void MnuToggleThumbnails_Click(object sender, EventArgs e)
+    private void MnuToggleGallery_Click(object sender, EventArgs e)
     {
         IG_ToggleGallery();
     }

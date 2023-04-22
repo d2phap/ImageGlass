@@ -176,7 +176,7 @@ public partial class FrmMain
 
             try
             {
-                //Rename image in thumbnail bar
+                // Rename image in gallery
                 Gallery.Items[imgIndex].Text = Path.GetFileName(e.FullPath);
                 Gallery.Items[imgIndex].Tag = newFilePath;
             }
@@ -256,7 +256,7 @@ public partial class FrmMain
         // Add the new image to the list
         Local.Images.Add(filePath);
 
-        // Add the new image to thumbnail bar
+        // Add the new image to gallery
         Gallery.Items.Add(filePath);
         Gallery.Refresh();
 

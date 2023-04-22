@@ -120,7 +120,7 @@ namespace ImageGlass
             toolStripMenuItem7 = new ToolStripSeparator();
             MnuLayout = new ToolStripMenuItem();
             MnuToggleToolbar = new ToolStripMenuItem();
-            MnuToggleThumbnails = new ToolStripMenuItem();
+            MnuToggleGallery = new ToolStripMenuItem();
             MnuToggleCheckerboard = new ToolStripMenuItem();
             toolStripMenuItem20 = new ToolStripSeparator();
             MnuToggleTopMost = new ToolStripMenuItem();
@@ -793,7 +793,7 @@ namespace ImageGlass
             // 
             // MnuLayout
             // 
-            MnuLayout.DropDownItems.AddRange(new ToolStripItem[] { MnuToggleToolbar, MnuToggleThumbnails, MnuToggleCheckerboard, toolStripMenuItem20, MnuToggleTopMost });
+            MnuLayout.DropDownItems.AddRange(new ToolStripItem[] { MnuToggleToolbar, MnuToggleGallery, MnuToggleCheckerboard, toolStripMenuItem20, MnuToggleTopMost });
             MnuLayout.Image = (Image)resources.GetObject("MnuLayout.Image");
             MnuLayout.ImageAlign = ContentAlignment.MiddleLeft;
             MnuLayout.ImageScaling = ToolStripItemImageScaling.None;
@@ -809,13 +809,13 @@ namespace ImageGlass
             MnuToggleToolbar.Text = "[Toolbar]";
             MnuToggleToolbar.Click += MnuToggleToolbar_Click;
             // 
-            // MnuToggleThumbnails
+            // MnuToggleGallery
             // 
-            MnuToggleThumbnails.CheckOnClick = true;
-            MnuToggleThumbnails.Name = "MnuToggleThumbnails";
-            MnuToggleThumbnails.Size = new Size(604, 54);
-            MnuToggleThumbnails.Text = "[Thumbnail panel]";
-            MnuToggleThumbnails.Click += MnuToggleThumbnails_Click;
+            MnuToggleGallery.CheckOnClick = true;
+            MnuToggleGallery.Name = "MnuToggleGallery";
+            MnuToggleGallery.Size = new Size(604, 54);
+            MnuToggleGallery.Text = "[Gallery]";
+            MnuToggleGallery.Click += MnuToggleGallery_Click;
             // 
             // MnuToggleCheckerboard
             // 
@@ -1195,7 +1195,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuCopyPath;
         public ToolStripMenuItem MnuClearClipboard;
         public ToolStripMenuItem MnuToggleToolbar;
-        public ToolStripMenuItem MnuToggleThumbnails;
+        public ToolStripMenuItem MnuToggleGallery;
         public ToolStripMenuItem MnuToggleCheckerboard;
         private ToolStripSeparator toolStripMenuItem20;
         public ToolStripMenuItem MnuToggleTopMost;

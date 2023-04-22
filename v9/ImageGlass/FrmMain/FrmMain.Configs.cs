@@ -118,7 +118,7 @@ public partial class FrmMain
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
-        { nameof(MnuToggleThumbnails),      new() { new (Keys.H) } },
+        { nameof(MnuToggleGallery),      new() { new (Keys.H) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
         { nameof(MnuToggleTopMost),         new() { new (Keys.Oemtilde) } }, // `
 
@@ -255,7 +255,7 @@ public partial class FrmMain
         IG_ToggleToolbar(Config.ShowToolbar);
 
         // toggle gallery
-        IG_ToggleGallery(Config.ShowThumbnails);
+        IG_ToggleGallery(Config.ShowGallery);
 
 
         // load Full screen mode
@@ -328,7 +328,7 @@ public partial class FrmMain
         if (Config.EnableFullScreen)
         {
             Config.ShowToolbar = _showToolbar;
-            Config.ShowThumbnails = _showThumbnails;
+            Config.ShowGallery = _showThumbnails;
         }
 
         Config.LastSeenImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
@@ -626,7 +626,7 @@ public partial class FrmMain
         MnuLayout.Text = lang[$"{Name}.{nameof(MnuLayout)}"];
 
         MnuToggleToolbar.Text = lang[$"{Name}.{nameof(MnuToggleToolbar)}"];
-        MnuToggleThumbnails.Text = lang[$"{Name}.{nameof(MnuToggleThumbnails)}"];
+        MnuToggleGallery.Text = lang[$"{Name}.{nameof(MnuToggleGallery)}"];
         MnuToggleCheckerboard.Text = lang[$"{Name}.{nameof(MnuToggleCheckerboard)}"];
         MnuToggleTopMost.Text = lang[$"{Name}.{nameof(MnuToggleTopMost)}"];
         #endregion
@@ -1198,7 +1198,7 @@ public partial class FrmMain
         }
         else
         {
-            Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+            Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
 
             Gallery.Resizer = ResizerType.None;
             PicMain.Padding = new Padding();
