@@ -111,8 +111,7 @@ public class ModernGalleryRenderer : StyleRenderer
         // on focused
         else if (state.HasFlag(ItemState.Focused))
         {
-            penBorder.Color = Theme.Colors.ThumbnailItemSelectedColor;
-            penBorder.DashStyle = DashStyle.Dash;
+            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
         }
 
         var radius = BHelper.GetItemBorderRadius((int)bounds.Height, Constants.THUMBNAIL_HEIGHT);

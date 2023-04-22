@@ -348,7 +348,8 @@ public partial class ImageGallery
                     SelectionRectangle = new Rectangle(lastMouseDownLocation, new Size(0, 0));
                     _imageGallery.Refresh();
                 }
-                else if (lastMouseDownOverItem && HoveredItem != null && (_imageGallery.AllowItemReorder || _imageGallery.AllowDrag))
+                else if (lastMouseDownOverItem && HoveredItem != null
+                    && (_imageGallery.AllowItemReorder || _imageGallery.AllowDrag))
                 {
                     // Start drag&drop
                     if (!HoveredItem.Selected)
@@ -385,6 +386,14 @@ public partial class ImageGallery
                     }
                     _imageGallery.AllowDrop = oldAllowDrop;
                     selfDragging = false;
+
+                    // unselect the dragged items
+                    foreach (var item in _imageGallery.SelectedItems)
+                    {
+                        item.mSelected = false;
+                    }
+                    _imageGallery.Refresh();
+
 
                     // Since the MouseUp event will be eaten by DoDragDrop we will not receive
                     // the MouseUp event. We need to manually update mouse button flags after
