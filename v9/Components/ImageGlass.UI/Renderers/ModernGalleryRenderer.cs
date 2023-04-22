@@ -92,6 +92,7 @@ public class ModernGalleryRenderer : StyleRenderer
         {
             Alignment = PenAlignment.Inset,
         };
+        bounds.Inflate(-(int)penBorder.Width, -(int)penBorder.Width);
 
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
@@ -101,6 +102,7 @@ public class ModernGalleryRenderer : StyleRenderer
         // on hover
         else if (state.HasFlag(ItemState.Hovered))
         {
+            penBorder.Width = 0;
             penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemHoverColor;
         }
         // on selected
