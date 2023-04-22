@@ -168,11 +168,12 @@ public partial class ImageGallery
         /// </summary>
         public void MouseDown(MouseEventArgs e)
         {
-            MouseState = MouseState.Pressed;
+            if (e.Button == MouseButtons.Middle) return;
 
-            if ((e.Button & MouseButtons.Left) != MouseButtons.None)
+            MouseState = MouseState.Pressed;
+            if (e.Button.HasFlag(MouseButtons.Left))
                 LeftButton = true;
-            if ((e.Button & MouseButtons.Right) != MouseButtons.None)
+            if (e.Button.HasFlag(MouseButtons.Right))
                 RightButton = true;
 
             DoHitTest(e.Location);
@@ -211,6 +212,7 @@ public partial class ImageGallery
         /// </summary>
         public void MouseMove(MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Middle) return;
             if (MouseState == MouseState.Normal)
             {
                 MouseState = MouseState.Hovered;
@@ -429,6 +431,7 @@ public partial class ImageGallery
         /// </summary>
         public void MouseUp(MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Middle) return;
             MouseState = MouseState.Hovered;
 
             DoHitTest(e.Location);
@@ -599,6 +602,7 @@ public partial class ImageGallery
         /// </summary>
         public void MouseDoubleClick(MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Middle) return;
             if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null)
             {
                 _imageGallery.OnItemDoubleClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
