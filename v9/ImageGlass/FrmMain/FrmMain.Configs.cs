@@ -178,7 +178,7 @@ public partial class FrmMain
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 
         // set up layout
-        ApplyAppLayout();
+        LoadAppLayout();
 
         ResumeLayout(false);
 
@@ -359,6 +359,8 @@ public partial class FrmMain
             Config.FrmMainWidth = Size.Width;
             Config.FrmMainHeight = Size.Height;
         }
+
+        UpdateGallerySize();
     }
 
 
@@ -1132,7 +1134,7 @@ public partial class FrmMain
     /// <summary>
     /// Makes app layout changes according to <see cref="Config.Layout"/>.
     /// </summary>
-    private void ApplyAppLayout()
+    private void LoadAppLayout()
     {
         const string SEPARATOR = ";";
         var dict = new Dictionary<Control, (DockStyle Dock, int DockOrder)>()
@@ -1201,10 +1203,13 @@ public partial class FrmMain
             control.SendToBack();
         }
 
+
+        // make sure Gallery does not cover toolbar
+        Gallery.BringToFront();
+
         // make sure PicMain always on top
         PicMain.BringToFront();
         ResumeLayout(false);
-
     }
 
 }

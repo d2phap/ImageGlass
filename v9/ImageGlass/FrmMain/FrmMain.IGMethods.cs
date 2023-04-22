@@ -1076,6 +1076,7 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?
