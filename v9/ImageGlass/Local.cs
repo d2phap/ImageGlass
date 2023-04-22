@@ -448,7 +448,7 @@ internal class Local
         // start tool client
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
-        var exitCode = await BHelper.RunExeCmd($"{tool.Executable}", $"-{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
+        var exitCode = await BHelper.RunExeCmd($"{tool.Executable}", $"{Constants.CONFIG_CMD_PREFIX}{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
 
         if (exitCode == IgExitCode.Error_FileNotFound)
         {
