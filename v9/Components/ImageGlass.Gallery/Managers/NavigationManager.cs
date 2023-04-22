@@ -168,15 +168,21 @@ public partial class ImageGallery
         /// </summary>
         public void MouseDown(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle) return;
-
             MouseState = MouseState.Pressed;
+            DoHitTest(e.Location);
+
+            if (HoveredItem != null)
+            {
+                HoveredItem.Pressed = true;
+            }
+
+            if (e.Button.HasFlag(MouseButtons.Middle)) return;
             if (e.Button.HasFlag(MouseButtons.Left))
                 LeftButton = true;
             if (e.Button.HasFlag(MouseButtons.Right))
                 RightButton = true;
 
-            DoHitTest(e.Location);
+            
             lastMouseDownInItemArea = inItemArea;
             lastMouseDownOverItem = HoveredItem != null;
             lastMouseDownOverCheckBox = overCheckBox;
@@ -184,11 +190,7 @@ public partial class ImageGallery
             lastViewOffset = _imageGallery.ViewOffset;
             lastMouseDownLocation = e.Location;
 
-            if (HoveredItem is not null)
-            {
-                HoveredItem.Pressed = true;
-            }
-
+            
             if (_imageGallery.Resizer != ResizerType.None)
             {
                 _imageGallery.Refresh();
@@ -212,15 +214,21 @@ public partial class ImageGallery
         /// </summary>
         public void MouseMove(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle) return;
             if (MouseState == MouseState.Normal)
             {
                 MouseState = MouseState.Hovered;
             }
 
             var oldHoveredItem = HoveredItem;
-
             DoHitTest(e.Location);
+
+
+            // deselect old item that is clicked by middle mouse
+            if (e.Button == MouseButtons.Middle && oldHoveredItem != null)
+            {
+                oldHoveredItem.mPressed = false;
+                oldHoveredItem.mSelected = false;
+            }
 
             _imageGallery.SuspendPaint();
 
@@ -389,13 +397,6 @@ public partial class ImageGallery
                     _imageGallery.AllowDrop = oldAllowDrop;
                     selfDragging = false;
 
-                    // unselect the dragged items
-                    foreach (var item in _imageGallery.SelectedItems)
-                    {
-                        item.mSelected = false;
-                    }
-                    _imageGallery.Refresh();
-
 
                     // Since the MouseUp event will be eaten by DoDragDrop we will not receive
                     // the MouseUp event. We need to manually update mouse button flags after
@@ -417,6 +418,11 @@ public partial class ImageGallery
             }
 
 
+            // unselect the dragged items
+            _imageGallery.SelectedItems.Clear();
+            _imageGallery.Refresh();
+
+            // set cursor for resizer
             if (_imageGallery.Resizer != ResizerType.None)
             {
                 _imageGallery.Refresh();
@@ -431,11 +437,9 @@ public partial class ImageGallery
         /// </summary>
         public void MouseUp(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle) return;
             MouseState = MouseState.Hovered;
 
             DoHitTest(e.Location);
-
             _imageGallery.SuspendPaint();
 
             // Stop if we are scrolling
@@ -458,7 +462,6 @@ public partial class ImageGallery
                 _imageGallery.OnSelectionChangedInternal();
 
                 MouseSelecting = false;
-
                 _imageGallery.Refresh();
             }
             else if (_imageGallery.AllowCheckBoxClick
@@ -551,7 +554,6 @@ public partial class ImageGallery
 
                 // Raise the selection change event
                 _imageGallery.OnSelectionChangedInternal();
-                _imageGallery.OnItemClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
 
                 // Set the item as the focused item
                 _imageGallery.Items.FocusedItem = HoveredItem;
@@ -570,9 +572,6 @@ public partial class ImageGallery
                     HoveredItem.mSelected = true;
                     _imageGallery.OnSelectionChangedInternal();
                 }
-
-                _imageGallery.OnItemClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
-                _imageGallery.Items.FocusedItem = HoveredItem;
             }
             else if (lastMouseDownInItemArea
                 && inItemArea
@@ -584,15 +583,24 @@ public partial class ImageGallery
                 _imageGallery.Refresh();
             }
 
-            if (HoveredItem is not null)
+            if (HoveredItem != null)
             {
                 HoveredItem.Pressed = false;
+                _imageGallery.OnItemClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
             }
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
                 LeftButton = false;
             if ((e.Button & MouseButtons.Right) != MouseButtons.None)
                 RightButton = false;
+
+
+            if (e.Button.HasFlag(MouseButtons.Middle))
+            {
+                // unselect the dragged items
+                _imageGallery.SelectedItems.Clear();
+                _imageGallery.Refresh();
+            }
 
             _imageGallery.ResumePaint();
         }
