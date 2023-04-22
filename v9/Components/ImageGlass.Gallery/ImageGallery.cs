@@ -1099,11 +1099,22 @@ public partial class ImageGallery : Control, IComponent
         var fileIconHit = false;
         var resizerHit = false;
 
+        if (pt.X < 0 || pt.Y < 0)
+        {
+            hitInfo = new HitInfo(itemIndex, checkBoxHit, fileIconHit, resizerHit);
+            return;
+        }
+
+
         // Normalize to item area coordinates
         pt.X -= layoutManager.ItemAreaBounds.Left;
         pt.Y -= layoutManager.ItemAreaBounds.Top;
 
-        if (pt.X > 0 && pt.Y > 0)
+        // resizer hit test
+        resizerHit = ResizerBound.Contains(pt);
+
+
+        if (!resizerHit && pt.X > 0 && pt.Y > 0)
         {
             var startGap = 0;
 
@@ -1147,12 +1158,6 @@ public partial class ImageGallery : Control, IComponent
             }
         }
 
-
-        // resizer hit test
-        if (pt.X >= 0 && pt.Y >= 0)
-        {
-            resizerHit = ResizerBound.Contains(pt);
-        }
 
         hitInfo = new HitInfo(itemIndex, checkBoxHit, fileIconHit, resizerHit);
     }
