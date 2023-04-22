@@ -20,13 +20,13 @@
   "Colors": {
     "MenuBgHoverColor": "accent:50",
 
-    "ToolbarItemHoverColor": "accent:190",
-    "ToolbarItemActiveColor": "accent:130",
-    "ToolbarItemSelectedColor": "accent:150",
+    "ToolbarItemHoverColor": "accent:170",
+    "ToolbarItemActiveColor": "accent:100",
+    "ToolbarItemSelectedColor": "accent:120",
 
-    "ThumbnailItemHoverColor": "accent:190",
-    "ThumbnailItemActiveColor": "accent:130",
-    "ThumbnailItemSelectedColor": "accent:150"
+    "ThumbnailItemHoverColor": "accent:170",
+    "ThumbnailItemActiveColor": "accent:100",
+    "ThumbnailItemSelectedColor": "accent:120"
   },
   "ToolbarIcons": {
     "ActualSize": "ActualSize.svg",
