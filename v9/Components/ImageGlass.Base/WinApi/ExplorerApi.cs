@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Runtime.InteropServices;
 using System.Text;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace ImageGlass.Base.WinApi;
 public static class ExplorerApi
@@ -259,4 +261,25 @@ public static class ExplorerApi
 
         _ = ShellExecuteEx(ref shInfo);
     }
+
+
+    /// <summary>
+    /// Apply system theme to control.
+    /// </summary>
+    public static bool SetWindowTheme(IntPtr handle, string subIdList = "", bool darkMode = true)
+    {
+        return SetWindowTheme(handle, darkMode ? "DarkMode_Explorer" : "Explorer", subIdList);
+    }
+
+
+    /// <summary>
+    /// Apply system theme to control.
+    /// </summary>
+    public static bool SetWindowTheme(IntPtr handle, string subAppName, string subIdList = "")
+    {
+        var result = PInvoke.SetWindowTheme(new HWND(handle), subAppName, subIdList);
+
+        return result.Succeeded;
+    }
+
 }

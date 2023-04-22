@@ -18,3 +18,4 @@ ShowWindow
 ReleaseCapture
 SendMessage
 GetSystemMetrics
+SetWindowTheme
