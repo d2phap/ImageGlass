@@ -1306,11 +1306,10 @@ public partial class ImageGallery : Control, IComponent
     public async void ShowItemTooltip(ImageGalleryItem? item,
         int duration = -1, int delay = 400)
     {
-        if (item is null) return;
-
         _tooltipTokenSrc?.Cancel();
         _tooltipTokenSrc = new();
         mTooltip.Hide(this);
+        if (item is null) return;
 
         try
         {
