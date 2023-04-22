@@ -33,6 +33,11 @@ public static class DXCanvasExtensions
         var isLocationInNavLeft = false;
         var isLocationInNavRight = false;
 
+        if (c.Width < c.NavButtonSize.Width * 2)
+        {
+            return MouseAndNavLocation.Outside;
+        }
+
 
         if (c.NavDisplay == NavButtonDisplay.Left || c.NavDisplay == NavButtonDisplay.Both)
         {
@@ -40,9 +45,9 @@ public static class DXCanvasExtensions
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                    c.NavRightPos.X - c.NavButtonSize.Width / 2 + c.NAV_PADDING,
+                    c.NavRightPos.X - c.NavButtonSize.Width / 2,
                     c.DrawingArea.Top,
-                    c.NavButtonSize.Width,
+                    c.NavButtonSize.Width + c.NAV_PADDING,
                     c.DrawingArea.Height);
 
                 // check if the point inside the rect;
@@ -59,7 +64,7 @@ public static class DXCanvasExtensions
                 var leftClickable = new RectangleF(
                     c.NavLeftPos.X - c.NavButtonSize.Width / 2 - c.NAV_PADDING,
                     c.DrawingArea.Top,
-                    c.NavButtonSize.Width,
+                    c.NavButtonSize.Width + c.NAV_PADDING,
                     c.DrawingArea.Height);
 
                 // check if the point inside the rect
