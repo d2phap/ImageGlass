@@ -37,7 +37,7 @@ public sealed class GestureListener : NativeWindow
     private Point _lastPanPoint;
     private double _lastRotation;
     private long _lastZoom;
-    private readonly GestureConfig[] m_configs;
+    private readonly GestureConfig[] _configs;
 
 
     // Public Events
@@ -55,7 +55,7 @@ public sealed class GestureListener : NativeWindow
     public GestureListener(Control parent) : this(parent, new[] {
         new GestureConfig(GestureConfigId.GID_PAN,
             GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_VERTICALLY
-            | GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_VERTICALLY
+            | GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY
             | GestureConfigFlags.GC_PAN_WITH_INERTIA,
 
             // block GC_PAN_WITH_GUTTER for proper panning:
@@ -74,7 +74,7 @@ public sealed class GestureListener : NativeWindow
     /// <param name="configs">The gesture configurations.</param>
     public GestureListener(Control parent, GestureConfig[] configs)
     {
-        m_configs = configs;
+        _configs = configs;
 
         if (parent.IsHandleCreated)
         {
@@ -96,7 +96,7 @@ public sealed class GestureListener : NativeWindow
     private void Initialize(Control parent)
     {
         AssignHandle(parent.Handle);
-        NativeMethods.SetGestureConfig(parent.Handle, m_configs);
+        NativeMethods.SetGestureConfig(parent.Handle, _configs);
     }
 
 
