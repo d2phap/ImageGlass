@@ -73,11 +73,11 @@ public record IgThemeColors
 
 
     // Gallery
-    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
-    public Color ThumbnailBarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
-    public Color ThumbnailItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+    public Color GalleryBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
+    public Color GalleryTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color GalleryItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color GalleryItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
+    public Color GalleryItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
 
 
     // Menu
@@ -200,7 +200,7 @@ public class IgThemeToolbarIcons : IDisposable
     public Bitmap? ScaleToHeight { get; set; }
     public Bitmap? ScaleToWidth { get; set; }
     public Bitmap? Slideshow { get; set; }
-    public Bitmap? ThumbnailBar { get; set; }
+    public Bitmap? Gallery { get; set; }
     public Bitmap? ViewFirstImage { get; set; }
     public Bitmap? ViewLastImage { get; set; }
     public Bitmap? ViewNextImage { get; set; }
@@ -301,8 +301,8 @@ public class IgThemeToolbarIcons : IDisposable
             Slideshow?.Dispose();
             Slideshow = null;
 
-            ThumbnailBar?.Dispose();
-            ThumbnailBar = null;
+            Gallery?.Dispose();
+            Gallery = null;
 
             ViewFirstImage?.Dispose();
             ViewFirstImage = null;

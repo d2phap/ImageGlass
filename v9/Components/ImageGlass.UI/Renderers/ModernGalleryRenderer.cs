@@ -100,23 +100,23 @@ public class ModernGalleryRenderer : StyleRenderer
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
         {
-            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemActiveColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.GalleryItemActiveColor;
         }
         // on hover
         else if (state.HasFlag(ItemState.Hovered))
         {
             penBorder.Width = 0;
-            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemHoverColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.GalleryItemHoverColor;
         }
         // on selected
         else if (state.HasFlag(ItemState.Selected))
         {
-            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.GalleryItemSelectedColor;
         }
         // on focused
         else if (state.HasFlag(ItemState.Focused))
         {
-            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.GalleryItemSelectedColor;
         }
 
         var radius = BHelper.GetItemBorderRadius((int)bounds.Height, Constants.THUMBNAIL_HEIGHT);
@@ -136,19 +136,19 @@ public class ModernGalleryRenderer : StyleRenderer
         {
             textSize = TextRenderer.MeasureText(item.Text, ImageGalleryOwner.Font);
 
-            var foreColor = Theme.Colors.ThumbnailBarTextColor;
+            var foreColor = Theme.Colors.GalleryTextColor;
 
             if (state.HasFlag(ItemState.Disabled))
             {
                 // light background color
-                if (Theme.Colors.ThumbnailBarBgColor.GetBrightness() > 0.5)
+                if (Theme.Colors.GalleryBgColor.GetBrightness() > 0.5)
                 {
-                    foreColor = ThemeUtils.DarkenColor(Theme.Colors.ThumbnailBarBgColor, 0.5f);
+                    foreColor = ThemeUtils.DarkenColor(Theme.Colors.GalleryBgColor, 0.5f);
                 }
                 // dark background color
                 else
                 {
-                    foreColor = ThemeUtils.LightenColor(Theme.Colors.ThumbnailBarBgColor, 0.5f);
+                    foreColor = ThemeUtils.LightenColor(Theme.Colors.GalleryBgColor, 0.5f);
                 }
             }
 

@@ -76,7 +76,7 @@ public partial class FrmMain
         // Thumbnail bar
         Gallery.EnableTransparent = EnableTransparent;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
-        Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
+        Gallery.BackColor = Config.Theme.Colors.GalleryBgColor;
 
 
         // navigation buttons

@@ -30,7 +30,7 @@ public enum UpdateRequests
     Language = 1 << 1,
     MenuHotkeys = 1 << 2,
     Toolbar = 1 << 3,
-    ThumbnailBar = 1 << 4,
+    Gallery = 1 << 4,
     MouseActions = 1 << 5,
 }
 

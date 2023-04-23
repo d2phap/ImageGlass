@@ -116,10 +116,10 @@ public static class Config
         },
         new()
         {
-            Id = "Btn_Thumbnail",
-            Image = nameof(Theme.ToolbarIcons.ThumbnailBar),
+            Id = "Btn_Gallery",
+            Image = nameof(Theme.ToolbarIcons.Gallery),
             CheckableConfigBinding = nameof(ShowGallery),
-            OnClick = new("MnuToggleThumbnails"),
+            OnClick = new("MnuToggleGallery"),
         },
         new()
         {

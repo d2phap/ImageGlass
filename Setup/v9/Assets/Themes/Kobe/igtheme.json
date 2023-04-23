@@ -24,9 +24,9 @@
     "ToolbarItemActiveColor": "accent:100",
     "ToolbarItemSelectedColor": "accent:120",
 
-    "ThumbnailItemHoverColor": "accent:170",
-    "ThumbnailItemActiveColor": "accent:100",
-    "ThumbnailItemSelectedColor": "accent:120"
+    "GalleryItemHoverColor": "accent:170",
+    "GalleryItemActiveColor": "accent:100",
+    "GalleryItemSelectedColor": "accent:120"
   },
   "ToolbarIcons": {
     "ActualSize": "ActualSize.svg",
@@ -53,7 +53,7 @@
     "ScaleToHeight": "ScaleToHeight.svg",
     "ScaleToWidth": "ScaleToWidth.svg",
     "Slideshow": "Slideshow.svg",
-    "ThumbnailBar": "ThumbnailBar.svg",
+    "Gallery": "Gallery.svg",
     "ViewFirstImage": "ViewFirstImage.svg",
     "ViewLastImage": "ViewLastImage.svg",
     "ViewNextImage": "ViewNextImage.svg",
