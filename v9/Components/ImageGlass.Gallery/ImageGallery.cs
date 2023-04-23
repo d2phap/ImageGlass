@@ -25,6 +25,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.WinTouch;
 using System.ComponentModel;
 
 namespace ImageGlass.Gallery;
@@ -797,8 +798,38 @@ public partial class ImageGallery : Control, IComponent
         thumbnailCache = new ThumbnailCacheManager(this);
         shellInfoCache = new ShellInfoCacheManager(this);
         metadataCache = new MetadataCacheManager(this);
+
+
+        // enable touch gesture support
+        InitializeTouchGesture();
     }
     #endregion
+
+
+    #region Touch gesture support
+
+    private GestureListener? _gesture;
+
+
+    private void InitializeTouchGesture()
+    {
+        // initialize touch support
+        if (WindowApi.IsTouchDevice())
+        {
+            _gesture = new GestureListener(this);
+            _gesture.Pan += Gesture_Pan;
+        }
+    }
+
+
+    private void Gesture_Pan(object? sender, PanEventArgs e)
+    {
+        if (e.Begin) return;
+
+        ScrollVerticalDelta(e.PanOffset.Y);
+        ScrollHorizontalDelta(e.PanOffset.X);
+    }
+    #endregion // Touch support
 
 
     #region Select/Check

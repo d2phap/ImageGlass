@@ -110,6 +110,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
+    <ProjectReference Include="..\ImageGlass.WinTouch\ImageGlass.WinTouch.csproj" />
   </ItemGroup>
 
 </Project>
