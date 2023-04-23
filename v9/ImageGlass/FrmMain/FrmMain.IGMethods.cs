@@ -719,6 +719,19 @@ public partial class FrmMain
             PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleTopMost)}.{msgKey}"], Config.InAppMessageDuration);
         }
 
+        // update tools top most
+        foreach (var server in Local.ToolPipeServers)
+        {
+            if (server.Value is PipeServer tool)
+            {
+                using var toolProc = Process.GetProcessById(tool.TagNumber);
+                if (toolProc != null)
+                {
+                    WindowApi.SetWindowTopMost(toolProc.MainWindowHandle, Config.EnableWindowTopMost);
+                }
+            }
+        }
+
         return Config.EnableWindowTopMost;
     }
 
