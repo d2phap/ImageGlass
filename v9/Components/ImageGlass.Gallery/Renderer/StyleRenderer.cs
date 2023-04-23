@@ -541,27 +541,55 @@ public class StyleRenderer : IDisposable
     private void RenderResizer(Graphics g)
     {
         if (ImageGalleryOwner.Resizer == ResizerType.None) return;
+        if (!ImageGalleryOwner.navigationManager.IsResizerHit) return;
+        //g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
-        g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
-
-        var opacity = 0;
-        if (ImageGalleryOwner.navigationManager.IsResizerHit)
-        {
-            if (ImageGalleryOwner.navigationManager.MouseState == MouseState.Pressed)
-            {
-                opacity = 70;
-            }
-            else
-            {
-                opacity = 35;
-            }
-        }
-
+        // draw resizer bar
+        var opacity = ImageGalleryOwner.navigationManager.MouseState == MouseState.Pressed
+            ? 70
+            : 35;
         var color = ImageGalleryOwner.BackColor.InvertBlackOrWhite(opacity);
         using var brush = new SolidBrush(color);
-
         g.FillRectangle(brush, ImageGalleryOwner.ResizerBound);
+
+
+        // draw resizer indicator
+        brush.Color = ImageGalleryOwner.BackColor.WithAlpha(255);
+        var dotSize = ImageGalleryOwner.ScaleToDpi(ImageGalleryOwner.ResizerSize) * 0.6f;
+        var dotX = ImageGalleryOwner.ResizerBound.X + ImageGalleryOwner.ResizerBound.Width / 2f - dotSize / 2f;
+        var dotY = ImageGalleryOwner.ResizerBound.Y + ImageGalleryOwner.ResizerBound.Height / 2f - dotSize / 2f;
+        
+        if (ImageGalleryOwner.Resizer == ResizerType.HTBOTTOM && ImageGalleryOwner.HScrollBar.Visible)
+        {
+            dotY -= ImageGalleryOwner.HScrollBar.Height / 2;
+        }
+        else if (ImageGalleryOwner.Resizer == ResizerType.HTRIGHT && ImageGalleryOwner.VScrollBar.Visible)
+        {
+            dotX -= ImageGalleryOwner.VScrollBar.Width / 2;
+        }
+
+        var dotRect = new RectangleF(dotX, dotY, dotSize, dotSize);
+        g.FillEllipse(brush, dotRect);
+
+        // horizontal
+        if (ImageGalleryOwner.ResizerBound.Width > ImageGalleryOwner.ResizerBound.Height)
+        {
+            dotRect.Offset(-dotSize * 2, 0);
+            g.FillEllipse(brush, dotRect);
+
+            dotRect.Offset(dotSize * 4, 0);
+            g.FillEllipse(brush, dotRect);
+        }
+        // vertical
+        else
+        {
+            dotRect.Offset(0, -dotSize * 2);
+            g.FillEllipse(brush, dotRect);
+
+            dotRect.Offset(0, dotSize * 4);
+            g.FillEllipse(brush, dotRect);
+        }
     }
 
 

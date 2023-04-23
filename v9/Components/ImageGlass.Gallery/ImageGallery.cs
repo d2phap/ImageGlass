@@ -122,7 +122,7 @@ public partial class ImageGallery : Control, IComponent
     /// <summary>
     /// Gets, sets the size of <see cref="Resizer"/>. Default is <c>4px</c>.
     /// </summary>
-    public int ResizerSize { get; set; } = 5;
+    public int ResizerSize { get; set; } = 8;
 
     /// <summary>
     /// Gets resizer bound.
