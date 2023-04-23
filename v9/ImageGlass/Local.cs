@@ -20,8 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
+using System.Diagnostics;
 using System.IO.Pipes;
 using System.Runtime;
 using WicNet;
@@ -443,16 +445,17 @@ internal class Local
         #endregion // Create new tool server
 
 
-
         // start tool client
         #region Start tool client
+        Process? toolProc = null;
+
         try
         {
             var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
             var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
             var pipeCodeCmd = $"{ImageGlassTool.PIPE_CODE_CMD_LINE}{pipeCode}";
 
-            using var toolProc = ImageGlassTool.LaunchTool(tool.Executable,
+            toolProc = ImageGlassTool.LaunchTool(tool.Executable,
                 $"{args} {pipeCodeCmd}", false);
         }
         catch (FileNotFoundException ex)
@@ -466,9 +469,15 @@ internal class Local
         #endregion // Start tool client
 
 
-
         // wait for client connection
         await toolServer.WaitForConnectionAsync();
+        toolServer.TagNumber = toolProc.Id; // save tool client process id
+        await Task.Delay(1000); // wait for tool window ready
+
+        // set tool client window top most
+        WindowApi.SetWindowTopMost(toolProc.MainWindowHandle, Config.EnableWindowTopMost);
+        toolProc?.Dispose();
+
 
         return toolServer;
     }
