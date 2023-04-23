@@ -322,6 +322,17 @@ public class WindowApi
         _ = PInvoke.SendMessage(new HWND(handle), WM_NCLBUTTONDOWN,
             new WPARAM((uint)typePtr), new LPARAM());
     }
+
+
+    /// <summary>
+    /// Sets window top most.
+    /// </summary>
+    public static void SetWindowTopMost(IntPtr handle, bool enable)
+    {
+        var topMost = enable ? new HWND(new IntPtr(-1)) : new HWND(new IntPtr(-2));
+        _ = PInvoke.SetWindowPos(new HWND(handle), topMost, 0, 0, 0, 0,
+            SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE);
+    }
 }
 
 
