@@ -416,23 +416,19 @@ internal class Local
     /// <exception cref="FileNotFoundException"></exception>
     public static async Task<PipeServer?> OpenPipedToolAsync(IgTool? tool)
     {
-        if (tool == null || tool.IsEmpty)
-        {
-            throw new FileNotFoundException();
-        }
+        if (tool == null || tool.IsEmpty) throw new FileNotFoundException();
         if (ToolPipeServers.TryGetValue(tool.ToolId, out PipeServer? server)) return server;
 
 
-        // prepend tool prefix to create pipe name
-        var toolFileName = Path.GetFileNameWithoutExtension(tool.Executable);
-        var toolFileExt = Path.GetExtension(tool.Executable);
-        if (string.IsNullOrEmpty(toolFileExt))
-        {
-            toolFileExt = ".exe";
-        }
+        // Create new tool server
+        #region Create new tool server
 
-        var toolExecutable = $"{toolFileName}{toolFileExt}";
-        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExecutable}";
+        // create pipe code to send to client
+        // example: 9d5420cd322c49bc9abf8a48039d801a
+        var pipeCode = Guid.NewGuid().ToString("N");
+
+        // prepend tool prefix to create pipe name
+        var pipeName = ImageGlassTool.CreateServerName(pipeCode);
 
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
@@ -444,21 +440,31 @@ internal class Local
         toolServer.Start();
         await Config.WriteAsync();
 
+        #endregion // Create new tool server
+
+
 
         // start tool client
-        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-        var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
-        var exitCode = await BHelper.RunExeCmd($"{tool.Executable}", $"{Constants.CONFIG_CMD_PREFIX}{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
+        #region Start tool client
+        try
+        {
+            var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+            var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+            var pipeCodeCmd = $"{ImageGlassTool.PIPE_CODE_CMD_LINE}{pipeCode}";
 
-        if (exitCode == IgExitCode.Error_FileNotFound)
+            using var toolProc = ImageGlassTool.LaunchTool(tool.Executable,
+                $"{args} {pipeCodeCmd}", false);
+        }
+        catch (FileNotFoundException ex)
         {
             toolServer.Stop();
             toolServer.Dispose();
             toolServer = null;
             Local.ToolPipeServers.Remove(tool.ToolId);
-
-            throw new FileNotFoundException();
+            throw ex;
         }
+        #endregion // Start tool client
+
 
 
         // wait for client connection

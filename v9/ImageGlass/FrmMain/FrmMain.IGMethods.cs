@@ -2554,7 +2554,9 @@ public partial class FrmMain
             Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
             IsIntegrated = true,
         };
-        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
+
+        var pipeCode = Guid.NewGuid().ToString("N");
+        var pipeName = ImageGlassTool.CreateServerName(pipeCode);
 
 
         if (enable)
