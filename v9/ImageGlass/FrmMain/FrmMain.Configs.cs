@@ -118,9 +118,8 @@ public partial class FrmMain
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
-        { nameof(MnuToggleGallery),      new() { new (Keys.H) } },
+        { nameof(MnuToggleGallery),         new() { new (Keys.H) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
-        { nameof(MnuToggleTopMost),         new() { new (Keys.Oemtilde) } }, // `
 
         // MnuTools
         { nameof(MnuColorPicker),           new() { new (Keys.K) } },
