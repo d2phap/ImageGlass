@@ -2208,18 +2208,15 @@ public partial class DXCanvas : DXControl
     ///     <item><c>false</c> if the viewport is unchanged.</item>
     ///   </list>
     /// </returns>
-    public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true, float snapZoomValue = 0f)
+    public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
     {
         if (factor >= MaxZoom || factor <= MinZoom) return false;
         var newZoomFactor = factor;
 
-        // snap to zoom X * 100%
-        if (snapZoomValue > 0)
+        // snap zoom to 100% if it's nearby
+        if (0.9f <= newZoomFactor && newZoomFactor <= 1.1f)
         {
-            var intZoom = Math.Max(1, (int)newZoomFactor);
-            var minSnapZoom = intZoom - 0.1f;
-            var maxSnapZoom = intZoom + 0.1f;
-            if (minSnapZoom < newZoomFactor && newZoomFactor < maxSnapZoom) newZoomFactor = intZoom;
+            newZoomFactor = 1;
         }
 
         var location = point ?? new PointF(-1, -1);
@@ -2304,7 +2301,7 @@ public partial class DXCanvas : DXControl
     ///   </list>
     /// </returns>
     public bool ZoomByDeltaToPoint(float delta, PointF? point = null,
-        bool requestRerender = true, float snapZoomValue = 0f)
+        bool requestRerender = true)
     {
         var newZoomFactor = _zoomFactor;
         var speed = delta / (501f - ZoomSpeed);
@@ -2324,14 +2321,10 @@ public partial class DXCanvas : DXControl
         if (newZoomFactor == _zoomFactor) return false;
 
 
-        // snap to zoom X * 100%
-        if (snapZoomValue > 0)
+        // snap zoom to 100% if it's nearby
+        if (0.9f <= newZoomFactor && newZoomFactor <= 1.1f)
         {
-            // snap to zoom X * 100%
-            var intZoom = Math.Max(1, (int)newZoomFactor);
-            var minSnapZoom = intZoom - snapZoomValue;
-            var maxSnapZoom = intZoom + snapZoomValue;
-            if (minSnapZoom < newZoomFactor && newZoomFactor < maxSnapZoom) newZoomFactor = intZoom;
+            newZoomFactor = 1;
         }
 
 

@@ -301,7 +301,7 @@ public partial class FrmMain
 
         if (action == MouseWheelAction.Zoom)
         {
-            PicMain.ZoomByDeltaToPoint(e.Delta, e.Location, snapZoomValue: 0.1f);
+            PicMain.ZoomByDeltaToPoint(e.Delta, e.Location);
         }
         else if (action == MouseWheelAction.PanVertically)
         {

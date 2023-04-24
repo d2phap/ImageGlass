@@ -49,7 +49,7 @@ public partial class DXCanvas
         var newZoomFactor = _zoomFactor * (float)e.PercentChange;
 
 
-        ZoomToPoint(newZoomFactor, zoomPoint, snapZoomValue: 0.1f);
+        ZoomToPoint(newZoomFactor, zoomPoint);
     }
 
 
