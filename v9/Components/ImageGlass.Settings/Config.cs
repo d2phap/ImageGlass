@@ -267,15 +267,10 @@ public static class Config
     /// </summary>
     public static bool ShowGalleryFileName { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
-    ///// </summary>
-    //public static bool IsCenterImage { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets welcome picture value
-    ///// </summary>
-    //public static bool IsShowWelcome { get; set; } = true;
+    /// <summary>
+    /// Gets, sets welcome picture value
+    /// </summary>
+    public static bool ShowWelcomeImage { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value of visibility of toolbar when start up
@@ -311,16 +306,6 @@ public static class Config
     /// Gets, sets value indicating that Confirmation dialog is displayed when overriding the viewing image
     /// </summary>
     public static bool ShowSaveOverrideConfirmation { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets the value indicates that viewer scrollbars are visible
-    ///// </summary>
-    //public static bool IsScrollbarsVisible { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets the value indicates that the viewing image is auto-saved after rotating
-    ///// </summary>
-    //public static bool IsSaveAfterRotating { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
@@ -772,8 +757,7 @@ public static class Config
         ShowGallery = items.GetValue(nameof(ShowGallery), ShowGallery);
         ShowGalleryScrollbars = items.GetValue(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
         ShowGalleryFileName = items.GetValue(nameof(ShowGalleryFileName), ShowGalleryFileName);
-        //IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
-        //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
+        ShowWelcomeImage = items.GetValue(nameof(ShowWelcomeImage), ShowWelcomeImage);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
@@ -781,8 +765,6 @@ public static class Config
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
         ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
-        //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
-        //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         ShouldPreserveModifiedDate = items.GetValue(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
         ShowNewVersionIndicator = items.GetValue(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
         EnableCenterToolbar = items.GetValue(nameof(EnableCenterToolbar), EnableCenterToolbar);
@@ -832,7 +814,7 @@ public static class Config
 
         //FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
-        #region Slide show
+        #region Slideshow
         SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
         if (SlideshowInterval < 1) SlideshowInterval = 5f;
 
@@ -1333,8 +1315,7 @@ public static class Config
         settings.TryAdd(nameof(ShowGallery), ShowGallery);
         settings.TryAdd(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
         settings.TryAdd(nameof(ShowGalleryFileName), ShowGalleryFileName);
-        //settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
-        //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
+        settings.TryAdd(nameof(ShowWelcomeImage), ShowWelcomeImage);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
@@ -1342,8 +1323,6 @@ public static class Config
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
         settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
-        //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
-        //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         settings.TryAdd(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
         settings.TryAdd(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
         settings.TryAdd(nameof(EnableCenterToolbar), EnableCenterToolbar);
@@ -1357,7 +1336,6 @@ public static class Config
         settings.TryAdd(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
         settings.TryAdd(nameof(EnableWindowFit), EnableWindowFit);
         settings.TryAdd(nameof(CenterWindowFit), CenterWindowFit);
-        //settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         settings.TryAdd(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
