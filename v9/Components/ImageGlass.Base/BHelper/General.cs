@@ -18,26 +18,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base.DirectoryComparer;
+using System.Globalization;
 
 namespace ImageGlass.Base;
 
 public partial class BHelper
 {
     /// <summary>
-    /// Convert string to int array, where numbers are separated by semicolons
+    /// Convert string to float array, where numbers are separated by semicolons
     /// </summary>
     /// <param name="str">Input string. E.g. "12; -40; 50"</param>
     /// <param name="unsignedOnly">whether negative numbers are allowed</param>
     /// <param name="distinct">whether repitition of values is allowed</param>
-    public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
+    public static IEnumerable<float> StringToFloatArray(string str, bool unsignedOnly = false, bool distinct = false)
     {
-        var args = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        var numbers = new List<int>();
+        var numberStrings = str.Split(new[] { ';' },
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var numbers = new List<float>();
 
-        foreach (var item in args)
+        foreach (var item in numberStrings)
         {
-            // Issue #677 : don't throw exception if we encounter invalid number, e.g. the comma-separated zoom values from pre-V7.5
-            if (!int.TryParse(item, System.Globalization.NumberStyles.Integer, Constants.NumberFormat, out var num))
+            // Issue #677: don't throw exception if we encounter invalid number,
+            // e.g. the comma-separated zoom values from pre-V7.5
+            if (!float.TryParse(item, NumberStyles.Float, Constants.NumberFormat, out var num))
                 continue;
 
             if (unsignedOnly && num < 0)
@@ -50,10 +53,10 @@ public partial class BHelper
 
         if (distinct)
         {
-            numbers = numbers.Distinct().ToList();
+            return numbers.Distinct();
         }
 
-        return numbers.ToArray();
+        return numbers;
     }
 
 
@@ -286,7 +289,6 @@ public partial class BHelper
             .OrderBy(f => f, directorySortComparer)
             .ThenBy(f => f, naturalSortComparer);
     }
-
 
 
     /// <summary>

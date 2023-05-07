@@ -602,6 +602,11 @@ public static class Config
     #region Array items
 
     /// <summary>
+    /// Gets, sets zoom levels of the viewer
+    /// </summary>
+    public static float[] ZoomLevels { get; set; } = Array.Empty<float>();
+
+    /// <summary>
     /// Gets, sets the list of apps for edit action.
     /// </summary>
     public static Dictionary<string, EditApp?> EditApps { get; set; } = new();
@@ -894,6 +899,20 @@ public static class Config
 
         // Array values
         #region Array items
+
+        // ZoomLevels
+        ZoomLevels = items.GetSection(nameof(ZoomLevels))
+            .GetChildren()
+            .Select(i =>
+            {
+                // convert % to float
+                try { return i.Get<float>() / 100f; } catch { }
+                return -1;
+            })
+            .OrderBy(i => i)
+            .Where(i => i > 0)
+            .Distinct()
+            .ToArray();
 
         #region EditApps
 
@@ -1427,6 +1446,7 @@ public static class Config
 
         #region Array items
 
+        settings.TryAdd(nameof(ZoomLevels), ZoomLevels.Select(i => Math.Round(i * 100, 2)));
         settings.TryAdd(nameof(EditApps), EditApps);
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));

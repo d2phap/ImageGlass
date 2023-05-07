@@ -546,7 +546,10 @@ public partial class DXCanvas : DXControl
     public float[] ZoomLevels
     {
         get => _zoomLevels;
-        set => _zoomLevels = value.OrderBy(x => x).ToArray();
+        set => _zoomLevels = value.OrderBy(x => x)
+            .Where(i => i > 0)
+            .Distinct()
+            .ToArray();
     }
 
     /// <summary>

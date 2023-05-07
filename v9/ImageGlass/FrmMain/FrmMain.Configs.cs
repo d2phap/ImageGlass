@@ -165,6 +165,7 @@ public partial class FrmMain
         PicMain.TabStop = false;
         PicMain.PanDistance = Config.PanSpeed;
         PicMain.ZoomSpeed = Config.ZoomSpeed;
+        PicMain.ZoomLevels = Config.ZoomLevels;
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
         IG_SetZoomMode(Config.ZoomMode.ToString());
