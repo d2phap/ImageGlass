@@ -141,7 +141,7 @@ public partial class ToolForm : ThemedForm
 
     protected override void OnShown(EventArgs e)
     {
-        if (!DesignMode && Owner != _currentOwner)
+        if (!DesignMode && Owner != null && Owner != _currentOwner)
         {
             DetachEventsFromParent(_currentOwner);
             _currentOwner = Owner;

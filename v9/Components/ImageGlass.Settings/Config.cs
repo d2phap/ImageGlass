@@ -439,6 +439,26 @@ public static class Config
     public static int FrmMainHeight { get; set; } = 800;
 
     /// <summary>
+    /// Gets, sets 'Left' position of settings window
+    /// </summary>
+    public static int FrmSettingsPositionX { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets 'Top' position of settings window
+    /// </summary>
+    public static int FrmSettingsPositionY { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets width of settings window
+    /// </summary>
+    public static int FrmSettingsWidth { get; set; } = 1050;
+
+    /// <summary>
+    /// Gets, sets height of settings window
+    /// </summary>
+    public static int FrmSettingsHeight { get; set; } = 750;
+
+    /// <summary>
     /// Gets, sets the panning speed.
     /// Value range is from 0 to 100.
     /// </summary>
@@ -450,32 +470,10 @@ public static class Config
     /// </summary>
     public static float ZoomSpeed { get; set; } = 0;
 
-
-    ///// <summary>
-    ///// Gets, sets 'Left' position of settings window
-    ///// </summary>
-    //public static int FrmSettingsPositionX { get; set; } = 200;
-
-    ///// <summary>
-    ///// Gets, sets 'Top' position of settings window
-    ///// </summary>
-    //public static int FrmSettingsPositionY { get; set; } = 200;
-
-    ///// <summary>
-    ///// Gets, sets width of settings window
-    ///// </summary>
-    //public static int FrmSettingsWidth { get; set; } = 1050;
-
-    ///// <summary>
-    ///// Gets, sets height of settings window
-    ///// </summary>
-    //public static int FrmSettingsHeight { get; set; } = 750;
-
-
-    ///// <summary>
-    ///// Gets, sets the version that requires to launch First-Launch Configs screen
-    ///// </summary>
-    //public static int FirstLaunchVersion { get; set; } = 0;
+    /// <summary>
+    /// Gets, sets the version that requires to launch First-launch configuration dialog.
+    /// </summary>
+    public static int FirstLaunchVersion { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets slide show interval (minimum value if it's random)
@@ -662,10 +660,10 @@ public static class Config
     /// </summary>
     public static WindowState FrmMainState { get; set; } = WindowState.Normal;
 
-    ///// <summary>
-    ///// Gets, sets state of settings window
-    ///// </summary>
-    //public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
+    /// <summary>
+    /// Gets, sets state of settings window
+    /// </summary>
+    public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
 
     /// <summary>
     /// Gets, sets image loading order
@@ -802,17 +800,15 @@ public static class Config
         FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
         FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
 
+        // FrmSettings
+        FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
+
         PanSpeed = items.GetValue(nameof(PanSpeed), PanSpeed);
         ZoomSpeed = items.GetValue(nameof(ZoomSpeed), ZoomSpeed);
-
-        //// FrmSettings
-        //FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
-        //FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
-        //FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
-        //FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
-
-
-        //FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
+        FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
         #region Slideshow
         SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
@@ -853,7 +849,7 @@ public static class Config
         #region Enum items
 
         FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
-        //FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
+        FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
         ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
         ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
@@ -1359,16 +1355,15 @@ public static class Config
         settings.TryAdd(nameof(FrmMainWidth), FrmMainWidth);
         settings.TryAdd(nameof(FrmMainHeight), FrmMainHeight);
 
+        // FrmSettings
+        settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        settings.TryAdd(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
+
         settings.TryAdd(nameof(PanSpeed), PanSpeed);
         settings.TryAdd(nameof(ZoomSpeed), ZoomSpeed);
-
-        //// FrmSettings
-        //settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
-        //settings.TryAdd(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
-        //settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
-        //settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
-
-        //settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
+        settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
@@ -1390,7 +1385,7 @@ public static class Config
         #region Enum items
 
         settings.TryAdd(nameof(FrmMainState), FrmMainState.ToString());
-        //settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
+        settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
         settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
         settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());

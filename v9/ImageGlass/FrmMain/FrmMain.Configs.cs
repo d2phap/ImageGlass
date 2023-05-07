@@ -312,6 +312,8 @@ public partial class FrmMain
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
         _ = SaveConfigsOnClosing();
+
+        ToolbarContext.Dispose();
     }
 
 

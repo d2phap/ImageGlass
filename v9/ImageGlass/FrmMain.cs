@@ -1107,7 +1107,7 @@ public partial class FrmMain : ThemedForm
     private void ImageTransform_Changed(object? sender, EventArgs e)
     {
         const string TOOLBAR_BUTTON_SAVE_TRANSFORMATION = "Btn_SaveImageTransformation";
-        var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
+        using var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
 
         // has changes, show Save button
         if (Local.ImageTransform.HasChanges && btnItem == null)
