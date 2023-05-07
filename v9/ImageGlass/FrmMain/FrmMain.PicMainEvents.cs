@@ -154,7 +154,15 @@ public partial class FrmMain
         if (actions.Contains(nameof(MnuZoomIn))
             || actions.Contains(nameof(IG_ZoomIn)))
         {
-            PicMain.StartAnimation(AnimationSource.ZoomIn);
+            if (PicMain.ZoomLevels.Length > 0)
+            {
+                PicMain.ZoomIn();
+            }
+            else
+            {
+                PicMain.StartAnimation(AnimationSource.ZoomIn);
+            }
+            
             return;
         }
 
@@ -162,7 +170,15 @@ public partial class FrmMain
         if (actions.Contains(nameof(MnuZoomOut))
             || actions.Contains(nameof(IG_ZoomOut)))
         {
-            PicMain.StartAnimation(AnimationSource.ZoomOut);
+            if (PicMain.ZoomLevels.Length > 0)
+            {
+                PicMain.ZoomOut();
+            }
+            else
+            {
+                PicMain.StartAnimation(AnimationSource.ZoomOut);
+            }
+            
             return;
         }
 
