@@ -83,7 +83,9 @@ public partial class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.8f, 1.4f, 2f };
+    private float _minZoom = 0.01f; // 1%
+    private float _maxZoom = 100f; // 10_000%
+    private float[] _zoomLevels = Array.Empty<float>();
     private ImageInterpolation _interpolationScaleDown = ImageInterpolation.SampleLinear;
     private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
 
@@ -539,18 +541,45 @@ public partial class DXCanvas : DXControl
     #region Zooming
 
     /// <summary>
+    /// Gets, sets zoom levels (ordered by ascending).
+    /// </summary>
+    public float[] ZoomLevels
+    {
+        get => _zoomLevels;
+        set => _zoomLevels = value.OrderBy(x => x).ToArray();
+    }
+
+    /// <summary>
     /// Gets, sets the minimum zoom factor (<c>1.0f = 100%</c>).
+    /// Returns the first value of <see cref="ZoomLevels"/> if it is not empty.
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(0.01f)]
-    public float MinZoom { get; set; } = 0.01f;
+    public float MinZoom
+    {
+        get
+        {
+            if (ZoomLevels.Length > 0) return ZoomLevels[0];
+            return _minZoom;
+        }
+        set => _minZoom = Math.Min(Math.Max(0.001f, value), 1000);
+    }
 
     /// <summary>
     /// Gets, sets the maximum zoom factor (<c>1.0f = 100%</c>).
+    /// Returns the last value of <see cref="ZoomLevels"/> if it is not empty.
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(100.0f)]
-    public float MaxZoom { get; set; } = 100f;
+    public float MaxZoom
+    {
+        get
+        {
+            if (ZoomLevels.Length > 0) return ZoomLevels[ZoomLevels.Length - 1];
+            return _maxZoom;
+        }
+        set => _maxZoom = Math.Min(Math.Max(0.001f, value), 1000);
+    }
 
     /// <summary>
     /// Gets, sets current zoom factor (<c>1.0f = 100%</c>).
@@ -580,18 +609,6 @@ public partial class DXCanvas : DXControl
         {
             _zoomSpeed = Math.Min(value, 500f); // max 500f
             _zoomSpeed = Math.Max(value, -500f); // min -500f
-        }
-    }
-
-    /// <summary>
-    /// Gets, sets zoom levels (ordered asc).
-    /// </summary>
-    public float[] ZoomLevels
-    {
-        get => _zoomLevels;
-        set
-        {
-            _zoomLevels = value.OrderBy(x => x).ToArray();
         }
     }
 
