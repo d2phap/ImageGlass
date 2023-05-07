@@ -27,7 +27,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Numerics;
-using System.Runtime.InteropServices;
 using WicNet;
 using InterpolationMode = D2Phap.InterpolationMode;
 
@@ -84,6 +83,7 @@ public partial class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
+    private float[] _zoomLevels = new float[] { 0.25f, 0.5f, 0.8f, 1.4f, 2f };
     private ImageInterpolation _interpolationScaleDown = ImageInterpolation.SampleLinear;
     private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
 
@@ -580,6 +580,18 @@ public partial class DXCanvas : DXControl
         {
             _zoomSpeed = Math.Min(value, 500f); // max 500f
             _zoomSpeed = Math.Max(value, -500f); // min -500f
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets zoom levels (ordered asc).
+    /// </summary>
+    public float[] ZoomLevels
+    {
+        get => _zoomLevels;
+        set
+        {
+            _zoomLevels = value.OrderBy(x => x).ToArray();
         }
     }
 
@@ -2199,9 +2211,6 @@ public partial class DXCanvas : DXControl
     /// If its value is <c>null</c> or outside of the <see cref="ViewBox"/> control,
     /// <c><see cref="ImageViewportCenterPoint"/></c> is used.
     /// </param>
-    /// <param name="snapZoomValue">
-    /// The boundary value for snapping zoom factor. Example: 0.15 => [0.85; zoom=1; 1.15].
-    /// </param>
     /// <returns>
     ///   <list type="table">
     ///     <item><c>true</c> if the viewport is changed.</item>
@@ -2211,14 +2220,8 @@ public partial class DXCanvas : DXControl
     public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
     {
         if (factor >= MaxZoom || factor <= MinZoom) return false;
+
         var newZoomFactor = factor;
-
-        // snap zoom to 100% if it's nearby
-        if (0.9f <= newZoomFactor && newZoomFactor <= 1.1f)
-        {
-            newZoomFactor = 1;
-        }
-
         var location = point ?? new PointF(-1, -1);
 
         // use the center point if the point is outside
@@ -2291,9 +2294,6 @@ public partial class DXCanvas : DXControl
     /// Client's cursor location to zoom out.
     /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
     /// </param>
-    /// <param name="snapZoomValue">
-    /// The boundary value for snapping zoom factor. Example: 0.15 => [0.85; zoom=1; 1.15].
-    /// </param>
     /// <returns>
     ///   <list type="table">
     ///     <item><c>true</c> if the viewport is changed.</item>
@@ -2304,29 +2304,52 @@ public partial class DXCanvas : DXControl
         bool requestRerender = true)
     {
         var newZoomFactor = _zoomFactor;
-        var speed = delta / (501f - ZoomSpeed);
+        var isZoomingByMouseWheel = Math.Abs(delta) == SystemInformation.MouseWheelScrollDelta;
 
-        // zoom in
-        if (delta > 0)
+        // use zoom levels
+        if (ZoomLevels.Length > 0 && isZoomingByMouseWheel)
         {
-            newZoomFactor = _zoomFactor * (1f + speed);
+            var minZoomLevel = ZoomLevels[0];
+            var maxZoomLevel = ZoomLevels[ZoomLevels.Length - 1];
+
+            // zoom in
+            if (delta > 0)
+            {
+                newZoomFactor = ZoomLevels.FirstOrDefault(i => i > _zoomFactor);
+            }
+            // zoom out
+            else if (delta < 0)
+            {
+                newZoomFactor = ZoomLevels.LastOrDefault(i => i < _zoomFactor);
+            }
+            if (newZoomFactor == 0) return false;
+
+            // limit zoom factor
+            newZoomFactor = Math.Min(Math.Max(minZoomLevel, newZoomFactor), maxZoomLevel);
+
         }
-        // zoom out
-        else if (delta < 0)
+        // use smooth zooming
+        else
         {
-            newZoomFactor = _zoomFactor / (1f - speed);
+            var speed = delta / (501f - ZoomSpeed);
+
+            // zoom in
+            if (delta > 0)
+            {
+                newZoomFactor = _zoomFactor * (1f + speed);
+            }
+            // zoom out
+            else if (delta < 0)
+            {
+                newZoomFactor = _zoomFactor / (1f - speed);
+            }
+
+            // limit zoom factor
+            newZoomFactor = Math.Min(Math.Max(MinZoom, newZoomFactor), MaxZoom);
         }
 
-        newZoomFactor = Math.Min(Math.Max(MinZoom, newZoomFactor), MaxZoom);
+
         if (newZoomFactor == _zoomFactor) return false;
-
-
-        // snap zoom to 100% if it's nearby
-        if (0.9f <= newZoomFactor && newZoomFactor <= 1.1f)
-        {
-            newZoomFactor = 1;
-        }
-
 
         var location = point ?? new PointF(-1, -1);
         // use the center point if the point is outside
@@ -2812,7 +2835,7 @@ public partial class DXCanvas : DXControl
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
                 }
                 // viewing non-animated multiple frames
-                else if(imgData?.Source is WicBitmapDecoder decoder)
+                else if (imgData?.Source is WicBitmapDecoder decoder)
                 {
                     var frame = decoder.GetFrame((int)frameIndex);
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, frame);
