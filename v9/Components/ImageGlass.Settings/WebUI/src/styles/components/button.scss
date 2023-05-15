@@ -1,0 +1,76 @@
+button {
+  --control-width: none;
+
+  @include baseControl();
+
+  overflow: hidden;
+  position: relative;
+  font-size: 95%;
+  white-space: nowrap;
+  padding: 0.3rem 1rem 0.35rem 1rem;
+
+  // font-family: var(--fontBase);
+  // color: rgb(var(--AppText));
+  // background-color: rgb(var(--ControlBg));
+  // border-radius: var(--border-radius);
+  // border: 0.075rem solid var(--ControlBorder);
+  // transition: all ease 300ms;
+
+  * {
+    pointer-events: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: rgb(var(--ControlBg));
+  }
+
+  // &:hover {
+  //   background-color: rgb(var(--ControlBgHover));
+  //   border-color: var(--ControlBorderHover);
+  // }
+  // &:focus {
+  //   outline: none;
+  //   border-color: rgb(var(--Accent));
+  // }
+
+  &[type=submit] {
+    background-color: var(--ControlCtaBg);
+    border-color: var(--ControlCtaBorder);
+  }
+  
+  &[type=submit]:hover {
+    background-color: var(--ControlCtaBgHover);
+    border-color: var(--ControlCtaBorderHover);
+  }
+  
+  &[type=submit]:focus {
+    background-color: var(--ControlCtaBgHover);
+    border-color: rgb(var(--Accent));
+  }
+  
+  // &:active,
+  &[type=submit]:active {
+    background-color: rgb(var(--ControlBgPressed));
+    border-color: rgb(var(--Accent));
+    transition: all ease 80ms;
+  }
+
+  // &[disabled],
+  // &:disabled {
+  //   color: rgb(var(--AppText) / 0.45);
+  //   border-color: var(--ControlBorderDisabled);
+  //   background-color: rgb(var(--ControlBgDisabled));
+  // }
+}
+

@@ -1,0 +1,377 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+
+  -webkit-user-drag: none;
+  user-drag: none;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html {
+  font-family: var(--fontBase);
+  color: rgb(var(--AppText));
+  accent-color: rgb(var(--Accent));
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-size: 12px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+  line-height: normal;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: var(--fontCode);
+  font-size: 1em;
+}
+
+pre {
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+sup,
+sub {
+  font-size: 60%;
+}
+
+b,
+strong {
+  font-weight: 500;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+p:last-of-type {
+  margin-bottom: 0;
+}
+
+hr {
+  margin: 1rem 0;
+  height: 0.05rem;
+  background-color: rgb(var(--AppText) / 0.3);
+  border: 0;
+}
+
+ul {
+  padding-left: 1.5rem;
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 500;
+}
+
+a,
+a:visited {
+  display: inline-block;
+  text-underline-position: under;
+  transition: all ease 200ms;
+  color: rgb(var(--Accent));
+  border-radius: 0.125em;
+  padding: 0 0.125em 0.1em 0.125em;
+}
+a {
+  &:focus-visible,
+  &:hover {
+    color: rgb(var(--Accent));
+    background-color: rgb(var(--InvertColor) / 0.1);
+    filter: brightness(1.3);
+  }
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgb(var(--Accent) / 0.1);
+  }
+  &:active {
+    background-color: rgb(var(--InvertColor) / 0.05);
+    filter: brightness(0.95);
+    transition: all ease 80ms;
+  }
+}
+
+
+// Figures
+//
+// Apply a consistent margin strategy (matches our type styles).
+figure {
+  margin: 0 0 1rem;
+}
+
+
+// Images and content
+img,
+svg {
+  vertical-align: middle;
+}
+
+
+// Tables
+//
+// Prevent double borders
+table {
+  caption-side: bottom;
+  border-collapse: collapse;
+}
+
+// 1. Removes font-weight bold by inheriting
+// 2. Matches default `<td>` alignment by inheriting `text-align`.
+// 3. Fix alignment for Safari
+th {
+  font-weight: 500; // 1
+  text-align: inherit; // 2
+  text-align: match-parent; // 3
+  text-align: -webkit-match-parent; // 3
+}
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+}
+
+
+// Forms
+//
+// 1. Allow labels to use `margin` for spacing.
+label {
+  display: inline-block; // 1
+}
+
+
+// 1. Remove the margin in Firefox and Safari
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0; // 1
+  font-family: inherit;
+  line-height: inherit;
+}
+
+
+// Remove the inheritance of text transform in Firefox
+button,
+select {
+  text-transform: none;
+}
+// Set the cursor for non-`<button>` buttons
+//
+// Details at https://github.com/twbs/bootstrap/pull/30562
+[role="button"] {
+  cursor: pointer;
+}
+
+
+select {
+  // Remove the inheritance of word-wrap in Safari.
+  // See https://github.com/twbs/bootstrap/issues/24990
+  word-wrap: normal;
+
+  // Undo the opacity change from Chrome
+  &:disabled {
+    opacity: 1;
+  }
+}
+
+
+// Remove the dropdown arrow in Chrome from inputs built with datalists.
+// See https://stackoverflow.com/a/54997118
+[list]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+
+// 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+//    controls in Android 4.
+// 2. Correct the inability to style clickable types in iOS and Safari.
+button,
+[type="button"], // 1
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; // 2
+}
+
+
+// 1. Textareas should really only resize vertically so they don't break their (horizontal) containers.
+textarea {
+  resize: vertical; // 1
+}
+
+
+// 1. Browsers set a default `min-width: min-content;` on fieldsets,
+//    unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+//    So we reset that to ensure fieldsets behave more like a standard block element.
+//    See https://github.com/twbs/bootstrap/issues/12359
+//    and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+// 2. Reset the default outline behavior of fieldsets so they don't affect page layout.
+fieldset {
+  min-width: 0; // 1
+  padding: 0; // 2
+  margin: 0; // 2
+  border: 0; // 2
+}
+
+
+// Fix height of inputs with a type of datetime-local, date, month, week, or time
+// See https://github.com/twbs/bootstrap/issues/18842
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+  padding: 0;
+}
+::-webkit-inner-spin-button {
+  height: auto;
+}
+
+
+// 1. Correct the outline style in Safari.
+// 2. This overrides the extra rounded corners on search inputs in iOS so that our
+//    `.form-control` class can properly style them. Note that this cannot simply
+//    be added to `.form-control` as it's not specific enough. For details, see
+//    https://github.com/twbs/bootstrap/issues/11586.
+[type="search"] {
+  outline-offset: -2px; // 1
+  -webkit-appearance: textfield; // 2
+}
+
+
+// Remove the inner padding in Chrome and Safari on macOS.
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+
+// Remove padding around color pickers in webkit browsers
+::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+
+// Inherit font family and line height for file input buttons
+::file-selector-button {
+  font: inherit;
+}
+
+
+// 1. Change font properties to `inherit`
+// 2. Correct the inability to style clickable types in iOS and Safari.
+::-webkit-file-upload-button {
+  font: inherit; // 1
+  -webkit-appearance: button; // 2
+}
+
+
+// Correct element displays
+output {
+  display: inline-block;
+}
+
+
+// Remove border from iframe
+iframe {
+  border: 0;
+}
+
+
+// Progress
+//
+// Add the correct vertical alignment in Chrome, Firefox, and Opera.
+progress {
+  vertical-align: baseline;
+}
+
+
+// Hidden attribute
+//
+// Always hide an element with the `hidden` HTML attribute.
+[hidden] {
+  display: none !important;
+}
+
+
+@keyframes aniFocus {
+  0% {
+    box-shadow: 0 0 0 0.075rem rgb(var(--focus-color));
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--focus-color));
+  }
+}
+
+@mixin focusAnimation() {
+  animation: aniFocus 1000ms ease forwards;
+}
+
+@mixin baseControl() {
+  --focus-color: var(--Accent);
+
+  width: calc(var(--control-width) * 1px);
+  padding: 0.325rem;
+  font-size: inherit;
+  font-family: var(--fontBase);
+  color: rgb(var(--AppText));
+  background-color: rgb(var(--ControlBg));
+  border-radius: var(--border-radius);
+  border: 0.075rem solid var(--ControlBorder);
+  transition: all ease 300ms;
+  &::selection {
+    background-color: rgb(var(--Accent) / 0.55);
+  }
+
+  &:hover {
+    background-color: rgb(var(--ControlBgHover));
+    border-color: var(--ControlBorderHover);
+  }
+  &:focus {
+    outline: none;
+    border-color: rgb(var(--Accent));
+  }
+  &:focus-visible {
+    @include focusAnimation();
+  }
+  &:active {
+    background-color: rgb(var(--ControlBgPressed));
+    border-color: rgb(var(--Accent));
+    transition: all ease 80ms;
+  }
+  &:invalid {
+    border-color: rgb(var(--BgDanger));
+
+    &:focus-visible {
+      --focus-color: var(--BgDanger);
+      @include focusAnimation();
+    }
+  }
+
+  &[disabled],
+  &:disabled {
+    color: rgb(var(--AppText) / 0.45);
+    border-color: var(--ControlBorderDisabled);
+    background-color: rgb(var(--ControlBgDisabled));
+  }
+}

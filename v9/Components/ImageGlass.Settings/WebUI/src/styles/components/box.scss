@@ -1,0 +1,20 @@
+.box {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+
+  &.box-danger {
+    background-color: rgb(219, 19, 24, 0.1);
+  }
+
+  &.box-warning {
+    background-color: rgb(205, 98, 0, 0.1);
+  }
+
+  &.box-success {
+    background-color: rgb(31, 146, 84, 0.1);
+  }
+
+  &.box-info {
+    background-color: rgb(0, 102, 212, 0.1);
+  }
+}

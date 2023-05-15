@@ -141,4 +141,8 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="WebUI\" />
+    </ItemGroup>
+
 </Project>

@@ -1,0 +1,48 @@
+details {
+  padding-left: 1.35rem;
+  transition: all ease 300ms;
+
+  summary {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: -1.35rem;
+    margin-bottom: 0.5em;
+    border-radius: 0.125em;
+    padding: 0 0.125em 0.1em 0.125em;
+    transition: all ease 300ms;
+
+    & > * {
+      display: inline;
+    }
+    
+    &::marker {
+      content: none;
+    }
+    
+    &::before {
+      content: "▶️";
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: rgb(var(--Accent));
+      background-color: rgb(var(--InvertColor) / 0.1);
+      filter: brightness(1.3);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgb(var(--Accent) / 0.1);
+    }
+
+    &:active {
+      background-color: rgb(var(--InvertColor) / 0.05);
+      filter: brightness(0.95);
+      transition: all ease 80ms;
+    }
+  }
+
+  &[open] summary::before {
+    content: "🔽";
+  }
+}

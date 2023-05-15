@@ -1,0 +1,28 @@
+
+::-webkit-scrollbar {
+  width: var(--scrollBarSize-px);
+  height: var(--scrollBarSize-px);
+  background: transparent;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--AppText) / 0.3);
+  border-radius: var(--scrollBarSize-px);
+  border-color: transparent;
+  border-style: solid;
+  border-width: calc((var(--scrollBarSize-px) / 2.25) - 1px);
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 1px;
+  border-radius: var(--border-radius);
+  background-color: rgb(var(--AppText) / 0.35);
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-width: 1px;
+  background-color: rgb(var(--AppText) / 0.5);
+}

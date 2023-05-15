@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageGlass UI Demo</title>
+  <link rel="stylesheet" href="../Resources/Styles.css">
+
+  <style>
+    body {
+      background-color: rgb(var(--AppBg));
+      /* font-size: 14px; */
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    Hello world!
+  </div>
+
+
+  <!-- Button -->
+  <div class="d-flex mt-3">
+    <button type="submit">CTA button</button>
+    <button class="ms-2">A button</button>
+    <button class="ms-2" disabled>Disabled button</button>
+  </div>
+
+
+  <!-- Text box -->
+  <div class="d-flex mt-3 align-items-end">
+    <label>
+      <div>Number input</div>
+      <input type="number" value="100" />
+    </label>
+    <button class="ms-2">A button</button>
+  </div>
+  <div class="d-flex mt-3">
+    <label>
+      <div>Invalid number input</div>
+      <input type="number" value="" required />
+    </label>
+
+    <label class="ms-2">
+      <div>Disable text input</div>
+      <input type="text" value="disabled" disabled />
+    </label>
+
+    <label class="ms-2">
+      <div>Readonly text input</div>
+      <input type="text" value="readonly" readonly />
+    </label>
+  </div>
+  <div class="d-flex mt-3">
+    <label>
+      <div>Text area</div>
+      <textarea></textarea>
+    </label>
+
+    <label class="ms-2">
+      <div>Disable Text area</div>
+      <textarea disabled></textarea>
+    </label>
+  </div>
+
+
+  <!-- Checkbox -->
+  <div class="mt-3">
+    <div class="mb-2">
+      <label class="ig-checkbox">
+        <input type="checkbox" />
+        <div>Normal checkbox</div>
+      </label>
+    </div>
+    <div class="mb-2">
+      <label class="ig-checkbox">
+        <input type="checkbox" disabled />
+        <div>Disabled checkbox</div>
+      </label>
+    </div>
+    <div class="mb-2">
+      <label class="ig-checkbox">
+        <input type="checkbox" checked disabled />
+        <div>Disabled checked checkbox</div>
+      </label>
+    </div>
+  </div>
+
+
+  <!-- Radio -->
+  <div class="mt-3">
+    <div class="mb-2">
+      <label class="ig-radio">
+        <input type="radio" name="group1" />
+        <div>Normal radio 1</div>
+      </label>
+    </div>
+    <div class="mb-2">
+      <label class="ig-radio">
+        <input type="radio" name="group1" />
+        <div>Normal radio 2</div>
+      </label>
+    </div>
+    <div class="mb-2">
+      <label class="ig-radio">
+        <input type="radio" name="group1" disabled />
+        <div>Disabled radio 3</div>
+      </label>
+    </div>
+    <div class="mb-2">
+      <label class="ig-radio">
+        <input type="radio" name="group1" disabled />
+        <div>Disabled checked radio 4</div>
+      </label>
+    </div>
+  </div>
+
+
+  <!-- Select box -->
+  <div class="d-flex mt-3 align-items-end">
+    <label>
+      <div>Select an option:</div>
+      <select>
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </label>
+    <button class="ms-2">A button</button>
+  </div>
+  <div class="d-flex mt-3">
+    <label>
+      <div>Select an option:</div>
+      <select required>
+        <option value="">With validation</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </label>
+
+    <label class="ms-2">
+      <div>Select an option:</div>
+      <select disabled>
+        <option>Open this select menu</option>
+        <option selected value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Select (listbox) -->
+  <div class="d-flex mt-3">
+    <label>
+      <div>Select an option:</div>
+      <select size="5">
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        <option value="4">Option 4</option>
+        <option value="5">Option 5</option>
+        <option value="6">Option 6</option>
+        <option value="7">Option 7</option>
+      </select>
+    </label>
+
+    <label class="ms-2">
+      <div>Select an option:</div>
+      <select size="5" disabled>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        <option value="4">Option 4</option>
+        <option value="5">Option 5</option>
+        <option value="6">Option 6</option>
+        <option value="7">Option 7</option>
+      </select>
+    </label>
+  </div>
+
+
+
+  <!-- Table -->
+  <div class="ig-table has--frozen-column mt-3">
+    <table>
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th>Column 2</th>
+          <th>Column 3</th>
+          <th>Column 4</th>
+          <th>Column 5</th>
+          <th>Column 6</th>
+          <th>Column 7</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+        <tr>
+          <td class="cell-sticky">Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td>Cell 4</td>
+          <td>Cell 5</td>
+          <td>Cell 6</td>
+          <td>Cell 7</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+  <!-- <script src="./dist/main.js"></script> -->
+</body>
+</html>
