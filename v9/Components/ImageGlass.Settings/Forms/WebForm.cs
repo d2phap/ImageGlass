@@ -80,6 +80,8 @@ public partial class WebForm : ThemedForm
     {
         base.OnRequestUpdatingColorMode(e);
 
+        _ = SetWeb2ColorModeAsync();
+
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
@@ -89,7 +91,7 @@ public partial class WebForm : ThemedForm
     {
         base.OnSystemAccentColorChanged(e);
 
-        _ = SetWeb2AccentColor();
+        _ = SetWeb2AccentColorAsync();
     }
 
     #endregion // Protected / override methods
@@ -150,6 +152,9 @@ public partial class WebForm : ThemedForm
     // Private methods
     #region Private methods
 
+    /// <summary>
+    /// Initialize Webview2 control.
+    /// </summary>
     private async Task InitWebview2()
     {
         var options = new CoreWebView2EnvironmentOptions
@@ -160,7 +165,7 @@ public partial class WebForm : ThemedForm
         try
         {
             var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "ViewerData"),
+                userDataFolder: App.ConfigDir(PathType.Dir, "WebUiData"),
                 options: options);
 
             await WebV.EnsureCoreWebView2Async(env);
@@ -178,15 +183,45 @@ public partial class WebForm : ThemedForm
     }
 
 
-    private async Task SetWeb2AccentColor()
+    /// <summary>
+    /// Sets accent color to Webview2 content.
+    /// </summary>
+    private async Task SetWeb2AccentColorAsync()
     {
         var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
         var rgb = $"{accent.R} {accent.G} {accent.B}";
 
         await WebV.ExecuteScriptAsync($"""
             document.documentElement.style.setProperty('--Accent', '{rgb}');
-            document.documentElement.setAttribute('color-mode', '{(Config.Theme.Settings.IsDarkMode ? "dark" : "light")}');
             """);
+    }
+
+
+    /// <summary>
+    /// Sets color mode for Webview2 content.
+    /// </summary>
+    private async Task SetWeb2ColorModeAsync()
+    {
+        var colorMode = Config.Theme.Settings.IsDarkMode ? "dark" : "light";
+
+        await WebV.ExecuteScriptAsync($"""
+            document.documentElement.setAttribute('color-mode', '{colorMode}');
+            """);
+    }
+
+
+    /// <summary>
+    /// Starts listening to keydown event
+    /// </summary>
+    /// <returns></returns>
+    private async Task StartListeningToKeyDownEventAsync()
+    {
+        await WebV.ExecuteScriptAsync("""
+            window.onkeydown = (e) => {
+                console.log("ListentoKeyDownEvents", e);
+                window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
+            }
+        """);
     }
 
     #endregion // Private methods
@@ -224,13 +259,9 @@ public partial class WebForm : ThemedForm
     {
         _isNavigationCompleted = true;
 
-        _ = SetWeb2AccentColor();
-        _ = WebV.ExecuteScriptAsync("""
-            window.onkeydown = (e) => {
-                console.log(e);
-                window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
-            }
-        """);
+        _ = SetWeb2ColorModeAsync();
+        _ = SetWeb2AccentColorAsync();
+        _ = StartListeningToKeyDownEventAsync();
 
         OnWeb2NavigationCompleted();
     }
