@@ -50,8 +50,6 @@ public partial class WebForm : ThemedForm
         WebV.NavigationCompleted += Web2_NavigationCompleted;
         WebV.WebMessageReceived += Web2_WebMessageReceived;
 
-        _ = InitWebview2();
-
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
@@ -64,6 +62,8 @@ public partial class WebForm : ThemedForm
     {
         base.OnLoad(e);
         Config.UpdateFormIcon(this);
+
+        _ = InitWebview2();
     }
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
@@ -234,6 +234,8 @@ public partial class WebForm : ThemedForm
     private void Web2_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
         WebV.DefaultBackgroundColor = Color.Transparent;
+        if (WebV.CoreWebView2 == null) return;
+
         WebV.CoreWebView2.Settings.IsZoomControlEnabled = false;
         WebV.CoreWebView2.Settings.IsStatusBarEnabled = false;
         WebV.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;

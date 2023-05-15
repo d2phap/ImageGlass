@@ -2328,7 +2328,7 @@ public partial class FrmMain : ThemedForm
     #region Other menu
     private void MnuSettings_Click(object sender, EventArgs e)
     {
-        IG_Settings();
+        IG_OpenSettings();
     }
 
     private void MnuExit_Click(object sender, EventArgs e)

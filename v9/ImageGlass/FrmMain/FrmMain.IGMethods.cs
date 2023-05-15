@@ -768,15 +768,15 @@ public partial class FrmMain
     }
 
 
-    public void IG_Settings()
+    public void IG_OpenSettings()
     {
-        using var frmSettings = new FrmSettings()
+        var frmSettings = new FrmSettings()
         {
             CloseFormHotkey = Keys.Escape,
             StartPosition = FormStartPosition.CenterScreen,
         };
 
-        frmSettings.ShowDialog();
+        frmSettings.Show();
     }
 
 
