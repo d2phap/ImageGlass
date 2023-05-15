@@ -91,5 +91,37 @@ namespace ImageGlass.Properties {
                 return ResourceManager.GetString("Page_About", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;style&gt;
+        ///    #app {
+        ///        display: grid;
+        ///        grid-template-areas: &quot;main&quot; &quot;footer&quot;;
+        ///        grid-template-columns: 1fr;
+        ///        grid-template-rows: 1fr min-content;
+        ///    }
+        ///
+        ///    #top {
+        ///        grid-area: main;
+        ///        display: flex;
+        ///        padding: 1rem;
+        ///        background-color: rgb(var(--AppBg) / 0.85);
+        ///        max-height: fit-content;
+        ///        overflow: auto;
+        ///    }
+        ///
+        ///        #top &gt; aside {
+        ///            position: sticky;
+        ///            top: 0;
+        ///        }
+        ///
+        ///    #app &gt; footer {
+        ///        gri [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Page_Settings {
+            get {
+                return ResourceManager.GetString("Page_Settings", resourceCulture);
+            }
+        }
     }
 }
