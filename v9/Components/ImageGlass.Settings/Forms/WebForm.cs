@@ -165,7 +165,7 @@ public partial class WebForm : ThemedForm
         try
         {
             var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "WebUiData"),
+                userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
                 options: options);
 
             await WebV.EnsureCoreWebView2Async(env);
