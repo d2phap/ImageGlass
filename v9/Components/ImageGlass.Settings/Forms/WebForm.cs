@@ -309,6 +309,7 @@ public partial class WebForm : ThemedForm
         {
             ("{{styles.css}}", Resources.Styles),
             ("{{body.html}}", html),
+            ("{{PageName}}", PageName),
         };
         templates.AddRange(OnWebTemplateParsing());
 
