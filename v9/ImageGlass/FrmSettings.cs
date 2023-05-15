@@ -62,29 +62,9 @@ public partial class FrmSettings : WebForm
 
         return new List<(string Variable, string Value)>
         {
-            ("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
-            ("{{AppCode}}", Constants.APP_CODE),
-            ("{{AppVersion}}", App.Version),
-            ("{{AppArchitecture}}", archInfo),
-            ("{{AppRuntime}}", Environment.Version.ToString()),
-            ("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
-            ("{{MsStoreBadge}}", msStoreBadge),
-
-            // language
-            ("{{_Slogan}}", Config.Language[$"{nameof(FrmAbout)}._Slogan"]),
-            ("{{_Version}}", Config.Language[$"{nameof(FrmAbout)}._Version"]),
-            ("{{_License}}", Config.Language[$"{nameof(FrmAbout)}._License"]),
-            ("{{_Privacy}}", Config.Language[$"{nameof(FrmAbout)}._Privacy"]),
-            ("{{_Thanks}}", Config.Language[$"{nameof(FrmAbout)}._Thanks"]),
-            ("{{_LogoDesigner}}", Config.Language[$"{nameof(FrmAbout)}._LogoDesigner"]),
-            ("{{_Collaborator}}", Config.Language[$"{nameof(FrmAbout)}._Collaborator"]),
-            ("{{_Contact}}", Config.Language[$"{nameof(FrmAbout)}._Contact"]),
-            ("{{_Homepage}}", Config.Language[$"{nameof(FrmAbout)}._Homepage"]),
-            ("{{_Email}}", Config.Language[$"{nameof(FrmAbout)}._Email"]),
-            ("{{_Credits}}", Config.Language[$"{nameof(FrmAbout)}._Credits"]),
-            ("{{_Donate}}", Config.Language[$"{nameof(FrmAbout)}._Donate"]),
-            ("{{_CheckForUpdate}}", Config.Language[$"_._CheckForUpdate"]),
-            ("{{_Close}}", Config.Language[$"_._Close"]),
+            ("{{_OK}}", Config.Language[$"_._OK"]),
+            ("{{_Cancel}}", Config.Language[$"_._Cancel"]),
+            ("{{_Apply}}", Config.Language[$"_._Apply"]),
         };
     }
 
@@ -99,12 +79,11 @@ public partial class FrmSettings : WebForm
                 window.chrome.webview?.postMessage({ Name: 'Button_Clicked', Data: e.target.id });
             };
 
-            document.getElementById('BtnImageGlassStore').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnCheckForUpdate').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnDonate').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnClose').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnOK').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnCancel').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnApply').addEventListener('click', Button_Clicked, false);
 
-            document.getElementById('BtnCheckForUpdate').focus();
+            document.getElementById('BtnOK').focus();
         """);
     }
 
@@ -113,19 +92,15 @@ public partial class FrmSettings : WebForm
     {
         if (name == "Button_Clicked")
         {
-            if (data.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+            if (data.Equals("BtnOK", StringComparison.InvariantCultureIgnoreCase))
             {
-                BHelper.OpenImageGlassMsStore();
+                //
             }
-            else if (data.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+            else if (data.Equals("BtnApply", StringComparison.InvariantCultureIgnoreCase))
             {
-                Local.FrmMain.IG_CheckForUpdate(true);
+                //
             }
-            else if (data.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
-            {
-                BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
-            }
-            else if (data.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+            else if (data.Equals("BtnCancel", StringComparison.InvariantCultureIgnoreCase))
             {
                 Close();
             }
