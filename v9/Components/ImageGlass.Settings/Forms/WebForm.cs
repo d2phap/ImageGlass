@@ -33,7 +33,8 @@ public partial class WebForm : ThemedForm
     /// <summary>
     /// Gets, sets campaign for hyperlink url.
     /// </summary>
-    protected string UrlCampaignString { get; set; } = "app_unknown";
+    protected string PageName { get; set; } = "unknown";
+
 
     /// <summary>
     /// Gets the <see cref="WebView2"/> instance.
@@ -270,7 +271,7 @@ public partial class WebForm : ThemedForm
     private void CoreWebView2_NewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
     {
         e.Handled = true;
-        BHelper.OpenUrl(e.Uri, UrlCampaignString);
+        BHelper.OpenUrl(e.Uri, $"app_{PageName}");
     }
 
 

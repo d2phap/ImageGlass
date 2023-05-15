@@ -44,7 +44,7 @@ public partial class FrmUpdate : WebForm
         if (DesignMode) return;
 
         Config.UpdateFormIcon(this);
-        UrlCampaignString = "app_update";
+        PageName = "update";
         Text = Config.Language[$"_._CheckForUpdate"];
 
         // center window in screen
@@ -137,7 +137,7 @@ public partial class FrmUpdate : WebForm
             }
             else if (data.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
             {
-                BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), UrlCampaignString);
+                BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"app_{PageName}");
             }
             else if (data.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
             {

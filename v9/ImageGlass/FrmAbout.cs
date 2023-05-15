@@ -39,7 +39,7 @@ public partial class FrmAbout : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        UrlCampaignString = "app_about";
+        PageName = "about";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
     }
 
