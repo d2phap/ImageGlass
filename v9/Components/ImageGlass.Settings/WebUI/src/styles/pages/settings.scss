@@ -4,6 +4,7 @@
     grid-template-areas: "sidebar main" "footer footer";
     grid-template-columns: min-content 1fr;
     grid-template-rows: 1fr min-content;
+    overflow: hidden;
   }
 
   #app>aside {
@@ -51,16 +52,17 @@
                 border-radius: calc(var(--border-radius) * 1.25);
                 transition: all ease 200ms;
 
+                // active indicator
                 &::before {
                   content: "";
                   display: block;
-                  width: 0.15rem;
+                  width: 0.185rem;
                   height: 50%;
                   background-color: rgb(var(--Accent));
                   border-radius: 1rem;
                   opacity: 0;
                   transition: all ease 300ms;
-    
+
                   position: absolute;
                   left: 0;
                   top: 0;
@@ -99,16 +101,44 @@
 
   #app>main {
     grid-area: main;
-    display: flex;
     padding: 1rem;
-    background-color: rgb(var(--AppBg) / 0.85);
+    background-color: rgb(var(--AppBg) / 0.8);
+    min-width: 30rem;
     max-height: fit-content;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    // background-color: aliceblue;
   }
 
   #app>footer {
     grid-area: footer;
     padding: 1rem;
     justify-content: end;
+
+    // background-color: antiquewhite;
+
+    button {
+      min-width: 5rem;
+    }
+  }
+
+  section {
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    &.tab-page {
+      padding-left: 0;
+    }
+
+    &>header {
+      font-size: 115%;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      margin-left: -0.5rem;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }

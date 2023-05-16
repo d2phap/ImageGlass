@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light" page="settings">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageGlass UI Demo</title>
+  <link rel="stylesheet" href="../Resources/Styles.css">
+
+  <style>
+    body {
+      background-color: rgb(var(--AppBg));
+      /* font-size: 14px; */
+      /* padding: 1rem; */
+    }
+  </style>
+</head>
+
+<body id="app">
+  <aside>
+    <nav class="nav-bar">
+      <ul>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="general" checked />
+            <span>General</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="image" />
+            <span>Image</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="edit" />
+            <span>Edit</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="toolbar" />
+            <span>Toolbar</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="layout" />
+            <span>Layout</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="keyboard" />
+            <span>Keyboard</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="file_assocs" />
+            <span>File type associations</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="language" />
+            <span>Language</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="theme" />
+            <span>Theme</span>
+          </label>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+
+  <main>
+    <!-- Tab: General -->
+    <section class="tab-page" tab="general">
+      <!-- General > App settings -->
+      <section>
+        <header>[App settings]</header>
+        <div class="mb-2">
+          <span>[Startup location:]</span>
+          <a class="text-nowrap" href="#">C:\Program Files\ImageGlass</a>
+        </div>
+        <div class="mb-2">
+          <span>[Configuration location:]</span>
+          <a class="text-nowrap" href="#">C:\Program Files\ImageGlass</a>
+        </div>
+        <div class="mb-2">
+          <span>[User settings file:]</span>
+          <a class="text-nowrap" href="#">C:\Program Files\ImageGlass\igconfig.json</a>
+        </div>
+      </section>
+
+      <!-- General > Start up -->
+      <section>
+        <header>[Start up]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Show welcome picture]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Open the last seen image]</div>
+          </label>
+        </div>
+      </section>
+
+      <!-- General > Others -->
+      <section>
+        <header>[Others]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Check for update automatically]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Enable in-app notification message]</div>
+          </label>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Image -->
+    <section class="tab-page" tab="Image">
+      <!-- Image > Image loading -->
+      <section>
+        <header>[Image loading]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Loads images in child folder]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Group images by directory]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Loads hidden images]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Loop back to the first image when reaching the end of images list]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Show embedded thumbnail for RAW formats]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[Auto-add the new created images in the viewing folder into the images list]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[xxxxxxxxxxxx]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[xxxxxxxxxxxx]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[xxxxxxxxxxxx]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxx}}" />
+            <div>[xxxxxxxxxxxx]</div>
+          </label>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+
+  <footer class="panel">
+    <button id="BtnOK" type="submit">{{_OK}}</button>
+    <button id="BtnCancel">{{_Cancel}}</button>
+    <button id="BtnApply">{{_Apply}}</button>
+  </footer>
+
+
+  <!-- <script src="./dist/main.js"></script> -->
+</body>
+
+</html>

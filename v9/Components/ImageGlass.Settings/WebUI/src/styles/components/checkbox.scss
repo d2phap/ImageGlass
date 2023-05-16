@@ -20,7 +20,7 @@
       height: var(--box-size);
       position: absolute;
       left: 0;
-      top: 0;
+      top: 0.1rem;
 
       transition: all ease 100ms;
     }
@@ -32,12 +32,12 @@
     }
     &::after {
       opacity: 0;
-      top: 0.3em;
+      top: calc(0.1rem + 0.3em);
       left: 0.2em;
       width: calc(var(--box-size) / 1.5);
       height: calc(var(--box-size) / 3);
-      border-left: 0.175em solid rgb(var(--InvertColor));
-      border-bottom: 0.175em solid rgb(var(--InvertColor));
+      border-left: 0.175em solid rgb(255 255 255 / 0.85);
+      border-bottom: 0.175em solid rgb(255 255 255 / 0.85);
       border-radius: 0.075em;
       transform: rotate(-45deg);
     }

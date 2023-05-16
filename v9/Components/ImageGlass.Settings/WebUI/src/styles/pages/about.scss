@@ -10,7 +10,7 @@
     grid-area: main;
     display: flex;
     padding: 1rem;
-    background-color: rgb(var(--AppBg) / 0.85);
+    background-color: rgb(var(--AppBg) / 0.8);
     max-height: fit-content;
     overflow: auto;
   }
@@ -24,6 +24,10 @@
     grid-area: footer;
     padding: 1rem;
     justify-content: end;
+
+    button {
+      min-width: 5rem;
+    }
   }
 
   #BtnImageGlassStore {
