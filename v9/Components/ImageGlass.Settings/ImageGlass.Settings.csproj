@@ -109,6 +109,12 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="WebUI\node_modules\**" />
+    <EmbeddedResource Remove="WebUI\node_modules\**" />
+    <None Remove="WebUI\node_modules\**" />
+  </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
