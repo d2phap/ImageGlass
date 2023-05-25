@@ -1222,9 +1222,10 @@ public static class PhotoCodec
         settings.SetDefines(new DngReadDefines()
         {
             UseCameraWhitebalance = true,
-            OutputColor = DngOutputColor.AdobeRGB,
+            OutputColor = DngOutputColor.SRGB,
             ReadThumbnail = true,
         });
+
 
 
         if (writePurpose)
