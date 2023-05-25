@@ -913,7 +913,7 @@ public partial class FrmSlideshow : ThemedForm
             if (_currentIndex == _images.Length - 1)
             {
                 // loop the list
-                if (!Config.ShouldLoopSlideshow)
+                if (!Config.EnableLoopSlideshow)
                 {
                     // pause slideshow
                     SetSlideshowState(false, false);

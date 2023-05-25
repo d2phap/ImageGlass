@@ -2646,7 +2646,7 @@ public partial class FrmMain
 
 
         // hide FrmMain
-        if (enableSlideshow && Config.HideFrmMainInSlideshow)
+        if (enableSlideshow && Config.HideMainWindowInSlideshow)
         {
             if (!Config.EnableFullScreen)
             {
@@ -2657,7 +2657,7 @@ public partial class FrmMain
         }
 
         // show FrmMain
-        else if (!enableSlideshow && Config.HideFrmMainInSlideshow)
+        else if (!enableSlideshow && Config.HideMainWindowInSlideshow)
         {
             WindowState = _windowState;
         }

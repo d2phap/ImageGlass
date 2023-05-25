@@ -210,7 +210,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicating whether the FrmMain should be hidden when <see cref="EnableSlideshow"/> is on.
     /// </summary>
-    public static bool HideFrmMainInSlideshow { get; set; } = true;
+    public static bool HideMainWindowInSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value if the countdown timer is shown or not.
@@ -225,7 +225,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that slideshow will loop back to the first image when reaching the end of list.
     /// </summary>
-    public static bool ShouldLoopSlideshow { get; set; } = true;
+    public static bool EnableLoopSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicates that slideshow is played in full screen, not window mode.
@@ -413,7 +413,7 @@ public static class Config
     public static bool ShouldAutoOpenNewAddedImage { get; set; } = false;
 
 
-    #endregion
+    #endregion // Boolean items
 
 
     #region Number items
@@ -549,7 +549,7 @@ public static class Config
     /// </summary>
     public static int EmbeddedThumbnailMinHeight { get; set; } = 0;
 
-    #endregion
+    #endregion // Number items
 
 
     #region String items
@@ -745,10 +745,10 @@ public static class Config
         #region Boolean items
 
         EnableSlideshow = items.GetValue(nameof(EnableSlideshow), EnableSlideshow);
-        HideFrmMainInSlideshow = items.GetValue(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
+        HideMainWindowInSlideshow = items.GetValue(nameof(HideMainWindowInSlideshow), HideMainWindowInSlideshow);
         ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
-        ShouldLoopSlideshow = items.GetValue(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
+        EnableLoopSlideshow = items.GetValue(nameof(EnableLoopSlideshow), EnableLoopSlideshow);
         EnableFullscreenSlideshow = items.GetValue(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         EnableFrameless = items.GetValue(nameof(EnableFrameless), EnableFrameless);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
@@ -1301,10 +1301,10 @@ public static class Config
         #region Boolean items
 
         settings.TryAdd(nameof(EnableSlideshow), EnableSlideshow);
-        settings.TryAdd(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
+        settings.TryAdd(nameof(HideMainWindowInSlideshow), HideMainWindowInSlideshow);
         settings.TryAdd(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
-        settings.TryAdd(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
+        settings.TryAdd(nameof(EnableLoopSlideshow), EnableLoopSlideshow);
         settings.TryAdd(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         settings.TryAdd(nameof(EnableFrameless), EnableFrameless);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
