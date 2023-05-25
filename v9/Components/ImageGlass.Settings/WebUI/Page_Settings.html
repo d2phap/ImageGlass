@@ -18,59 +18,77 @@
 
 <body id="app">
   <aside>
-    <nav class="nav-bar">
-      <ul>
+    <nav>
+      <ul class="list">
         <li>
           <label>
-            <input type="radio" name="nav" value="general" checked />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="general" />
             <span>General</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="image" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="image" />
             <span>Image</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="edit" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="slideshow" />
+            <span>Slideshow</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="edit" />
             <span>Edit</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="toolbar" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="toolbar" />
             <span>Toolbar</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="layout" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="gallery" />
+            <span>Gallery</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="layout" />
             <span>Layout</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="keyboard" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="keyboard" />
             <span>Keyboard</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="file_assocs" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="file_assocs" />
             <span>File type associations</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="language" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="tools" />
+            <span>Tools</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="language" />
             <span>Language</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="theme" />
+            <input type="radio" name="nav" onchange="onNavChanged(this)" value="theme" />
             <span>Theme</span>
           </label>
         </li>
@@ -104,14 +122,14 @@
         <header>[Start up]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Show welcome picture]</div>
+            <input type="checkbox" name="{{ShowWelcomeImage}}" />
+            <div>[ShowWelcomeImage]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Open the last seen image]</div>
+            <input type="checkbox" name="{{ShouldOpenLastSeenImage}}" />
+            <div>[ShouldOpenLastSeenImage]</div>
           </label>
         </div>
       </section>
@@ -121,14 +139,21 @@
         <header>[Others]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Check for update automatically]</div>
+            <input type="checkbox" name="{{AutoUpdate}}" />
+            <div>[AutoUpdate]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Enable in-app notification message]</div>
+            <input type="checkbox" name="{{EnableMultiInstances}}" />
+            <div>[EnableMultiInstances]</div>
+          </label>
+        </div>
+
+        <div class="mt-3 mb-2">
+          <label>
+            <div>[InAppMessageDuration]</div>
+            <input type="number" name="{{InAppMessageDuration}}" value="2000" min="0" max="60000" />
           </label>
         </div>
       </section>
@@ -136,72 +161,519 @@
 
 
     <!-- Tab: Image -->
-    <section class="tab-page" tab="Image">
+    <section class="tab-page" tab="image">
       <!-- Image > Image loading -->
       <section>
         <header>[Image loading]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Loads images in child folder]</div>
+            <input type="checkbox" name="{{EnableRecursiveLoading}}" />
+            <div>[EnableRecursiveLoading]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Group images by directory]</div>
+            <input type="checkbox" name="{{ShouldGroupImagesByDirectory}}" />
+            <div>[ShouldGroupImagesByDirectory]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Loads hidden images]</div>
+            <input type="checkbox" name="{{ShouldLoadHiddenImages}}" />
+            <div>[ShouldLoadHiddenImages]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Loop back to the first image when reaching the end of images list]</div>
+            <input type="checkbox" name="{{EnableLoopBackNavigation}}" />
+            <div>[EnableLoopBackNavigation]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Show embedded thumbnail for RAW formats]</div>
+            <input type="checkbox" name="{{ShouldAutoOpenNewAddedImage}}" />
+            <div>[ShouldAutoOpenNewAddedImage]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[Auto-add the new created images in the viewing folder into the images list]</div>
+            <input type="checkbox" name="{{ShouldUseExplorerSortOrder}}" />
+            <div>[ShouldUseExplorerSortOrder]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
+            <input type="checkbox" name="{{ShowImagePreview}}" />
+            <div>[ShowImagePreview]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableImageTransition}}" />
+            <div>[EnableImageTransition]</div>
+          </label>
+        </div>
+
+        <div class="mt-3 mb-2">
+          <div class="mb-2">
+            <b>[Embedded thumbnail]</b>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="{{UseEmbeddedThumbnailRawFormats}}" />
+              <div>[UseEmbeddedThumbnailRawFormats]</div>
+            </label>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="{{UseEmbeddedThumbnailOtherFormats}}" />
+              <div>[UseEmbeddedThumbnailOtherFormats]</div>
+            </label>
+          </div>
+          <div>
+            <div class="mb-2">[Minimum size of embedded thumbnail]</div>
+            <div class="d-flex align-items-center ms-3 ps-1">
+              <label>
+                <div>[Width]</div>
+                <input type="number" name="{{EmbeddedThumbnailMinWidth}}" value="0" min="0" max="100000" style="width: 5rem;" />
+              </label>
+              <label class="ms-3">
+                <div>[Height]</div>
+                <input type="number" name="{{EmbeddedThumbnailMinHeight}}" value="0" min="0" max="100000" style="width: 5rem;" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- Image > Image booster -->
+      <section>
+        <header>[Image booster]</header>
+        <div class="mb-2">
+          <label>
+            <div>[ImageBoosterCacheCount]</div>
+            <select required>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ImageBoosterCacheMaxDimension]</div>
+            <input type="number" name="{{ImageBoosterCacheMaxDimension}}" value="8000" min="0" max="1000000" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ImageBoosterCacheMaxFileSizeInMb]</div>
+            <input type="number" name="{{ImageBoosterCacheMaxFileSizeInMb}}" value="100" min="0" max="1048" />
+          </label>
+        </div>
+      </section>
+
+
+      <!-- Image > Color management -->
+      <section>
+        <header>[Color management]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShouldUseColorProfileForAll}}" />
+            <div>[ShouldUseColorProfileForAll]</div>
+          </label>
+        </div>
+        <div class="mt-3 mb-2">
+          <div>
+            <label>
+              <div>[ColorProfile]</div>
+              <select>
+                <option value="">None</option>
+                <option value="{{CURRENT_MONITOR_PROFILE}}">{{CURRENT_MONITOR_PROFILE}}</option>
+                <option value="{{AdobeRGB1998}}">{{AdobeRGB1998}}</option>
+                <option value="{{AppleRGB}}">{{AppleRGB}}</option>
+                <option value="{{CoatedFOGRA39}}">{{CoatedFOGRA39}}</option>
+                <option value="{{ColorMatchRGB}}">{{ColorMatchRGB}}</option>
+                <option value="{{sRGB}}">{{sRGB}}</option>
+                <option value="{{USWebCoatedSWOP}}">{{USWebCoatedSWOP}}</option>
+                <option value="{{Custom}}">{{Custom}}</option>
+              </select>
+            </label>
+            <button class="ms-2">[Browse]</button>
+          </div>
+          <div class="mt-2">
+            <a href="#" title="[Open location]">
+              C:\Program File\ImageGlass\ImageGlass.icc
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Image > Viewer -->
+      <section>
+        <header>[Viewer]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{CenterWindowFit}}" />
+            <div>[CenterWindowFit]</div>
+          </label>
+        </div>
+        <div class="mt-3 mb-2">
+          <label>
+            <div>[PanSpeed]</div>
+            <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ZoomSpeed]</div>
+            <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ZoomLevels]</div>
+            <textarea></textarea>
+          </label>
+        </div>
+      </section>
+
+    </section>
+
+
+    <!-- Tab: Slideshow -->
+    <section class="tab-page" tab="slideshow">
+      <section>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{HideMainWindowInSlideshow}}" />
+            <div>[HideMainWindowInSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowSlideshowCountdown}}" />
+            <div>[ShowSlideshowCountdown]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableLoopSlideshow}}" />
+            <div>[EnableLoopSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableFullscreenSlideshow}}" />
+            <div>[EnableFullscreenSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{UseRandomIntervalForSlideshow}}" />
+            <div>[UseRandomIntervalForSlideshow]</div>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <header>[Slideshow interval: 00:05:00]</header>
+        <div class="mb-2">
+          <div class="d-flex align-items-center">
+            <label>
+              <div>[From]</div>
+              <input type="number" name="{{SlideshowInterval}}" value="5" step="0.1" min="0" style="width: 5rem;" />
+            </label>
+            <label class="ms-3">
+              <div>[To]</div>
+              <input type="number" name="{{SlideshowIntervalTo}}" value="5" step="0.1" min="0" style="width: 5rem;" />
+            </label>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Edit -->
+    <section class="tab-page" tab="edit">
+      <!-- Edit > xxxxxxxxxxxxxxxxxxx -->
+      <section>
+        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowDeleteConfirmation}}" />
+            <div>[ShowDeleteConfirmation]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowSaveOverrideConfirmation}}" />
+            <div>[ShowSaveOverrideConfirmation]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShouldPreserveModifiedDate}}" />
+            <div>[ShouldPreserveModifiedDate]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
+            <div>[EnableCopyMultipleFiles]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
+            <div>[EnableCutMultipleFiles]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
             <div>[xxxxxxxxxxxx]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
+            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
             <div>[xxxxxxxxxxxx]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
-            <div>[xxxxxxxxxxxx]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxx}}" />
+            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
             <div>[xxxxxxxxxxxx]</div>
           </label>
         </div>
       </section>
     </section>
+
+
+    <!-- Tab: Toolbar -->
+    <section class="tab-page" tab="toolbar">
+      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <section>
+        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{HideToolbarInFullscreen}}" />
+            <div>[HideToolbarInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableCenterToolbar}}" />
+            <div>[EnableCenterToolbar]</div>
+          </label>
+        </div>
+        <div class="mt-3 mb-2">
+          <label>
+            <div>[ToolbarIconHeight]</div>
+            <input type="number" name="{{ToolbarIconHeight}}" value="24" min="10" max="1000" />
+          </label>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Gallery -->
+    <section class="tab-page" tab="gallery">
+      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <section>
+        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{HideGalleryInFullscreen}}" />
+            <div>[HideGalleryInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowGalleryScrollbars}}" />
+            <div>[ShowGalleryScrollbars]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowGalleryFileName}}" />
+            <div>[ShowGalleryFileName]</div>
+          </label>
+        </div>
+
+        <div class="mt-3 mb-2">
+          <label>
+            <div>[ThumbnailSize]</div>
+            <input type="number" name="{{ThumbnailSize}}" value="50" min="20" max="500" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[GalleryCacheSizeInMb]</div>
+            <input type="number" name="{{GalleryCacheSizeInMb}}" value="400" min="0" max="2048" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[GalleryColumns]</div>
+            <input type="number" name="{{GalleryColumns}}" value="3" min="1" max="100" />
+          </label>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Layout -->
+    <section class="tab-page" tab="layout">
+      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <section>
+        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowCheckerboardOnlyImageRegion}}" />
+            <div>[ShowCheckerboardOnlyImageRegion]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableNavigationButtons}}" />
+            <div>[EnableNavigationButtons]</div>
+          </label>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Keyboard -->
+    <section class="tab-page" tab="keyboard">
+      <!-- Keyboard > Mouse wheel action -->
+      <section>
+        <header>[Mouse wheel action]</header>
+        <div class="mb-2">
+          <label>
+            <div>[Scroll]</div>
+            <select>
+              <option value="{{DoNothing}}">[DoNothing]</option>
+              <option value="{{Zoom}}">[Zoom]</option>
+              <option value="{{PanVertically}}">[PanVertically]</option>
+              <option value="{{PanHorizontally}}">PanHorizontally</option>
+              <option value="{{BrowseImages}}">BrowseImages</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[PressCtrlAndScroll]</div>
+            <select>
+              <option value="{{DoNothing}}">[DoNothing]</option>
+              <option value="{{Zoom}}">[Zoom]</option>
+              <option value="{{PanVertically}}">[PanVertically]</option>
+              <option value="{{PanHorizontally}}">PanHorizontally</option>
+              <option value="{{BrowseImages}}">BrowseImages</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[PressShiftAndScroll]</div>
+            <select>
+              <option value="{{DoNothing}}">[DoNothing]</option>
+              <option value="{{Zoom}}">[Zoom]</option>
+              <option value="{{PanVertically}}">[PanVertically]</option>
+              <option value="{{PanHorizontally}}">PanHorizontally</option>
+              <option value="{{BrowseImages}}">BrowseImages</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[PressAltAndScroll]</div>
+            <select>
+              <option value="{{DoNothing}}">[DoNothing]</option>
+              <option value="{{Zoom}}">[Zoom]</option>
+              <option value="{{PanVertically}}">[PanVertically]</option>
+              <option value="{{PanHorizontally}}">PanHorizontally</option>
+              <option value="{{BrowseImages}}">BrowseImages</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <!-- Keyboard > Mouse click action -->
+      <section>
+        <header>[Mouse click action]</header>
+        <div class="ig-table mb-2">
+          <table style="min-width: 40rem;">
+            <thead>
+              <tr>
+                <th width="100">Click event</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+              <tr>
+                <td class="cell-sticky">Cell 1</td>
+                <td>Cell 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Theme -->
+    <section class="tab-page" tab="theme">
+      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <section>
+        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <div class="mb-2">
+          <label>
+            <div>[DarkTheme]</div>
+            <input name="{{DarkTheme}}" value="Kobe" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[LightTheme]</div>
+            <input name="{{LightTheme}}" value="Kobe - Light" />
+          </label>
+        </div>
+      </section>
+    </section>
+
 
   </main>
 
@@ -213,7 +685,32 @@
   </footer>
 
 
-  <!-- <script src="./dist/main.js"></script> -->
+  <script>
+    function onNavChanged(radioEl) {
+      const activeTabName = radioEl.value;
+
+      setActiveTab(activeTabName);
+    }
+
+
+    function setActiveTab(tabPageName) {
+      // hide all tabs
+      const allTabPages = document.querySelectorAll('.tab-page');
+      allTabPages.forEach(el => el.classList.remove('active'));
+
+      // show the selected tab
+      const tabPageEl = document.querySelector(`.tab-page[tab="${tabPageName}"]`);
+      tabPageEl?.classList.add('active');
+
+      // select the active nav item
+      const allNavItems = document.querySelectorAll('input[type="radio"]');
+      allNavItems.forEach(item => item.checked = false);
+      const navItem = document.querySelector(`input[type="radio"][value="${tabPageName}"]`);
+      if (navItem) navItem.checked = true;
+    }
+
+    setActiveTab('image');
+  </script>
 </body>
 
 </html>

@@ -16,87 +16,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     background-color: rgb(var(--AppBg) / 0.5);
-
-    nav.nav-bar {
-      &> ul {
-        list-style: none;
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-        margin-bottom: 0;
-
-        &> li {
-          &> label {
-            --focus-color: var(--Accent);
-            width: 100%;
-            position: relative;
-            align-items: center;
-            white-space: nowrap;
-
-            &> input[type="radio"] {
-              opacity: 0 !important;
-              position: absolute;
-              z-index: -1;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              right: 0;
-              pointer-events: none;
-
-              // normal style
-              &+ * {
-                position: relative;
-                width: 100%;
-                display: block;
-                padding: 0.383rem 0.65rem;
-                margin-bottom: 0.125rem;
-                border-radius: calc(var(--border-radius) * 1.25);
-                transition: all ease 200ms;
-
-                // active indicator
-                &::before {
-                  content: "";
-                  display: block;
-                  width: 0.185rem;
-                  height: 50%;
-                  background-color: rgb(var(--Accent));
-                  border-radius: 1rem;
-                  opacity: 0;
-                  transition: all ease 300ms;
-
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                  bottom: 0;
-                  margin: auto;
-                }
-              }
-              &:hover + * {
-                background-color: rgb(var(--InvertColor) / 0.15);
-              }
-              &:focus-visible + * {
-                @include focusAnimation();
-              }
-              &:active + * {
-                background-color: rgb(var(--InvertColor) / 0.1);
-                transition: all ease 80ms;
-              }
-
-
-              // checked style
-              &:checked {
-                &+ * {
-                  background-color: rgb(var(--InvertColor) / 0.1);
-
-                  &::before {
-                    opacity: 1;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   #app>main {
@@ -124,17 +43,22 @@
   }
 
   section {
-    margin-bottom: 1.5rem;
-    padding-left: 0.5rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+
     &.tab-page {
       padding-left: 0;
+
+      &:not(.active) {
+        display: none;
+      }
     }
 
     &>header {
       font-size: 115%;
       font-weight: 500;
       margin-bottom: 0.75rem;
-      margin-left: -0.5rem;
+      margin-left: -1rem;
     }
 
     &:last-of-type {
