@@ -1098,7 +1098,7 @@ public static class PhotoCodec
     /// <param name="profile"></param>
     private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile, string ext)
     {
-        if (ext == ".TGA")
+        if (ext == ".TGA" || ext == ".NEF" || ext == ".DNG")
         {
             imgM.AutoOrient();
             return;
