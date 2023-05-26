@@ -46,6 +46,12 @@
         </li>
         <li>
           <label>
+            <input type="radio" name="nav" value="viewer" />
+            <span>Viewer</span>
+          </label>
+        </li>
+        <li>
+          <label>
             <input type="radio" name="nav" value="toolbar" />
             <span>Toolbar</span>
           </label>
@@ -100,9 +106,9 @@
   <main>
     <!-- Tab: General -->
     <section class="tab-page" tab="general">
-      <!-- General > App settings -->
+      <!-- General > General -->
       <section>
-        <header>[App settings]</header>
+        <header>[General]</header>
         <div class="mb-2">
           <span>[Startup location:]</span>
           <a class="text-nowrap" href="#">C:\Program Files\ImageGlass</a>
@@ -166,7 +172,7 @@
       <section>
         <header>[Image loading]</header>
         <div class="mb-2">
-          <label>
+          <label class="me-2">
             <div>[ImageLoadingOrder]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -175,7 +181,7 @@
               <option value="XXXXXXXX">XXXXXXXX</option>
             </select>
           </label>
-          <label class="ms-2">
+          <label>
             <select required>
               <option value="XXXXXXXX">[Ascending]</option>
               <option value="XXXXXXXX">[Descending]</option>
@@ -250,11 +256,11 @@
           <div>
             <div class="mb-2">[Minimum size of embedded thumbnail]</div>
             <div class="d-flex align-items-center ms-3 ps-1">
-              <label>
+              <label class="me-3">
                 <div>[Width]</div>
                 <input type="number" name="{{EmbeddedThumbnailMinWidth}}" value="0" min="0" max="100000" style="width: 5rem;" />
               </label>
-              <label class="ms-3">
+              <label>
                 <div>[Height]</div>
                 <input type="number" name="{{EmbeddedThumbnailMinHeight}}" value="0" min="0" max="100000" style="width: 5rem;" />
               </label>
@@ -311,7 +317,7 @@
         </div>
         <div class="mt-3 mb-2">
           <div>
-            <label>
+            <label class="me-2">
               <div>[ColorProfile]</div>
               <select>
                 <option value="">None</option>
@@ -325,7 +331,7 @@
                 <option value="{{Custom}}">{{Custom}}</option>
               </select>
             </label>
-            <button class="ms-2">[Browse]</button>
+            <button>[Browse]</button>
           </div>
           <div class="mt-2">
             <a href="#" title="[Open location]">
@@ -334,66 +340,14 @@
           </div>
         </div>
       </section>
-
-
-      <!-- Image > Viewer -->
-      <section>
-        <header>[Viewer]</header>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{CenterWindowFit}}" />
-            <div>[CenterWindowFit]</div>
-          </label>
-        </div>
-        <div class="mt-3 mb-2">
-          <label>
-            <div>[PanSpeed]</div>
-            <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
-          </label>
-        </div>
-        <div class="mb-2">
-          <label>
-            <div>[ZoomSpeed]</div>
-            <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
-          </label>
-        </div>
-        <div class="mb-2">
-          <label>
-            <div>[ZoomLevels]</div>
-            <textarea rows="3"></textarea>
-          </label>
-        </div>
-
-        <div class="mb-2">
-          <label>
-            <div>[ImageInterpolationScaleDown]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label>
-            <div>[ImageInterpolationScaleUp]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
-        </div>
-      </section>
-
     </section>
 
 
     <!-- Tab: Slideshow -->
     <section class="tab-page" tab="slideshow">
+      <!-- Slideshow > Slideshow -->
       <section>
+        <header>[Slideshow]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{HideMainWindowInSlideshow}}" />
@@ -426,15 +380,16 @@
         </div>
       </section>
 
+      <!-- Slideshow > Slideshow interval -->
       <section>
         <header>[Slideshow interval: 00:05:00]</header>
         <div class="mb-2">
           <div class="d-flex align-items-center">
-            <label>
+            <label class="me-3">
               <div>[From]</div>
               <input type="number" name="{{SlideshowInterval}}" value="5" step="0.1" min="0" style="width: 5rem;" />
             </label>
-            <label class="ms-3">
+            <label>
               <div>[To]</div>
               <input type="number" name="{{SlideshowIntervalTo}}" value="5" step="0.1" min="0" style="width: 5rem;" />
             </label>
@@ -446,9 +401,9 @@
 
     <!-- Tab: Edit -->
     <section class="tab-page" tab="edit">
-      <!-- Edit > xxxxxxxxxxxxxxxxxxx -->
+      <!-- Edit > Edit -->
       <section>
-        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <header>[Edit]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowDeleteConfirmation}}" />
@@ -477,23 +432,100 @@
             </select>
           </label>
         </div>
+      </section>
 
+      <section>
+        <header>[Clipboard]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
+            <div>[EnableCopyMultipleFiles]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
+            <div>[EnableCutMultipleFiles]</div>
+          </label>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Viewer -->
+    <section class="tab-page" tab="viewer">
+      <!-- Viewer > Viewer -->
+      <section>
+        <header>[Viewer]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowCheckerboard}}" />
+            <div>[ShowCheckerboard]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShowCheckerboardOnlyImageRegion}}" />
+            <div>[ShowCheckerboardOnlyImageRegion]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{EnableNavigationButtons}}" />
+            <div>[EnableNavigationButtons]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{CenterWindowFit}}" />
+            <div>[CenterWindowFit]</div>
+          </label>
+        </div>
         <div class="mt-3 mb-2">
-          <div class="mb-2">
-            <b>[Clipboard]</b>
-          </div>
-          <div class="mb-2">
-            <label class="ig-checkbox">
-              <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
-              <div>[EnableCopyMultipleFiles]</div>
-            </label>
-          </div>
-          <div class="mb-2">
-            <label class="ig-checkbox">
-              <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
-              <div>[EnableCutMultipleFiles]</div>
-            </label>
-          </div>
+          <label>
+            <div>[PanSpeed]</div>
+            <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
+          </label>
+        </div>
+      </section>
+
+
+      <!-- Viewer > Zooming -->
+      <section>
+        <header>[Zooming]</header>
+        <div class="mb-2">
+          <label>
+            <div>[ImageInterpolationScaleDown]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ImageInterpolationScaleUp]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ZoomSpeed]</div>
+            <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ZoomLevels]</div>
+            <textarea rows="3"></textarea>
+          </label>
         </div>
       </section>
     </section>
@@ -501,9 +533,9 @@
 
     <!-- Tab: Toolbar -->
     <section class="tab-page" tab="toolbar">
-      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <!-- Layout > Toolbar -->
       <section>
-        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <header>[Toolbar]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{HideToolbarInFullscreen}}" />
@@ -528,9 +560,9 @@
 
     <!-- Tab: Gallery -->
     <section class="tab-page" tab="gallery">
-      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <!-- Layout > Gallery -->
       <section>
-        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <header>[Gallery]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{HideGalleryInFullscreen}}" />
@@ -574,21 +606,9 @@
 
     <!-- Tab: Layout -->
     <section class="tab-page" tab="layout">
-      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+      <!-- Layout > Layout -->
       <section>
-        <header>[xxxxxxxxxxxxxxxxxxx]</header>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{ShowCheckerboardOnlyImageRegion}}" />
-            <div>[ShowCheckerboardOnlyImageRegion]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{EnableNavigationButtons}}" />
-            <div>[EnableNavigationButtons]</div>
-          </label>
-        </div>
+        <header>[Layout]</header>
       </section>
     </section>
 
@@ -695,10 +715,11 @@
     <!-- Tab: Language -->
     <section class="tab-page" tab="language">
       <!-- Language > Theme -->
-      <section class="ps-0">
+      <section>
+        <header>Language</header>
         <div class="mb-2">
-          <label>
-            <div>[Language]</div>
+          <label class="me-2">
+            <div>[Installed language packs]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -706,19 +727,9 @@
             </select>
           </label>
 
-          <button class="ms-2">[Refresh]</button>
+          <button>[Refresh]</button>
         </div>
-      </section>
-
-      <section>
-        <header>[Contributors]</header>
-        <div class="mb-2" style="min-height: 3rem;">
-          Duong Dieu Phap
-        </div>
-      </section>
-
-      <section class="ps-0">
-        <div class="mb-2">
+        <div class="mb-2 mt-3">
           <a href="#">
             [Install new language packs...]
           </a>
@@ -729,13 +740,22 @@
           </a>
         </div>
       </section>
+
+      <!-- Language > Contributors -->
+      <section>
+        <header>[Contributors]</header>
+        <div class="mb-2" style="min-height: 3rem;">
+          Duong Dieu Phap
+        </div>
+      </section>
     </section>
 
 
     <!-- Tab: Appearance -->
     <section class="tab-page" tab="appearance">
-      <!-- Appearance > Theme -->
+      <!-- Appearance > Appearance -->
       <section>
+        <header>Appearance</header>
         <div class="mb-2">
           <label>
             <div>[WindowBackdrop]</div>
