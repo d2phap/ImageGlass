@@ -62,17 +62,17 @@ namespace ImageGlass.Settings.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///&lt;html lang=&quot;en&quot;&gt;
+        ///&lt;html lang=&quot;en&quot; page=&quot;{{PageName}}&quot;&gt;
         ///&lt;head&gt;
-        ///  &lt;meta charset=&quot;UTF-8&quot;&gt;
-        ///  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-        ///  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        ///    &lt;meta charset=&quot;UTF-8&quot;&gt;
+        ///    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        ///    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
         ///
-        ///  &lt;style&gt;{{styles.css}}&lt;/style&gt;
+        ///    &lt;style&gt;{{styles.css}}&lt;/style&gt;
         ///&lt;/head&gt;
         ///
         ///&lt;body id=&quot;app&quot;&gt;
-        ///  {{body.html}}
+        ///    {{body.html}}
         ///&lt;/body&gt;
         ///&lt;/html&gt;.
         /// </summary>
@@ -93,28 +93,89 @@ namespace ImageGlass.Settings.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to *,
-        ///*::before,
-        ///*::after {
-        ///    box-sizing: border-box;
-        ///    user-drag: none;
-        ///    -webkit-user-drag: none;
-        ///    user-select: none;
-        ///}
+        ///   Looks up a localized string similar to &lt;div id=&quot;top&quot;&gt;
+        ///    &lt;aside style=&quot;padding-right: 2rem;&quot;&gt;
+        ///        &lt;img src=&quot;{{AppLogo}}&quot; height=&quot;64&quot; width=&quot;64&quot; alt=&quot;ImageGlass logo&quot; /&gt;
+        ///    &lt;/aside&gt;
         ///
-        ///:root {
-        ///    /* theme colors (dark is default) */
-        ///    --InvertColor: 255 255 255;
-        ///    --AppBg: 20 25 28;
-        ///    --AppText: 210 210 210;
-        ///    --AppTextDisabled: 140 140 140;
-        ///    --Accent: 0 99 177;
-        ///    --ControlBg: 69 73 74;
-        ///    --ControlBgHover: 95 101 102;
-        ///    --ControlBgPressed: 43 43 43;
-        ///    --ControlBgPressed2: 49 51 53;
-        ///    --ControlBgDisabled: 82 82 82;
-        ///    - [rest of string was truncated]&quot;;.
+        ///    &lt;main&gt;
+        ///        &lt;h1 class=&quot;mt-0 mb-0 text-accent&quot;&gt;ImageGlass &lt;sup class=&quot;app-code&quot;&gt;{{AppCode}}&lt;/sup&gt;&lt;/h1&gt;
+        ///        &lt;p&gt;{{_Slogan}}&lt;/p&gt;&lt;br /&gt;
+        ///
+        ///        &lt;h3 class=&quot;mb-0 mt-0&quot;&gt;
+        ///            {{_Version}} {{AppVersion}} ({{AppArchitecture}})&lt;br /&gt;
+        ///            .NET Runtime: {{AppRuntime}}
+        ///        &lt;/h3&gt;
+        ///        &lt;p&gt;
+        ///            Copyright © 2010-{{Copyright [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Page_About {
+            get {
+                return ResourceManager.GetString("Page_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;aside&gt;
+        ///    &lt;nav&gt;
+        ///        &lt;ul class=&quot;list&quot;&gt;
+        ///            &lt;li&gt;
+        ///                &lt;label&gt;
+        ///                    &lt;input type=&quot;radio&quot; name=&quot;nav&quot; value=&quot;general&quot; /&gt;
+        ///                    &lt;span&gt;General&lt;/span&gt;
+        ///                &lt;/label&gt;
+        ///            &lt;/li&gt;
+        ///            &lt;li&gt;
+        ///                &lt;label&gt;
+        ///                    &lt;input type=&quot;radio&quot; name=&quot;nav&quot; value=&quot;image&quot; /&gt;
+        ///                    &lt;span&gt;Image&lt;/span&gt;
+        ///                &lt;/label&gt;
+        ///            &lt;/li&gt;
+        ///            &lt;li&gt;
+        ///                &lt;label&gt;
+        ///                    &lt;inp [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Page_Settings {
+            get {
+                return ResourceManager.GetString("Page_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div id=&quot;top&quot;&gt;
+        ///    &lt;aside&gt;
+        ///        &lt;span class=&quot;icon status--checking&quot;&gt;🌀&lt;/span&gt;
+        ///        &lt;span class=&quot;icon status--updated&quot;&gt;🥰&lt;/span&gt;
+        ///        &lt;span class=&quot;icon status--outdated&quot;&gt;🤩&lt;/span&gt;
+        ///    &lt;/aside&gt;
+        ///
+        ///    &lt;main&gt;
+        ///        &lt;h1 class=&quot;mt-0 text-accent&quot;&gt;
+        ///            &lt;span class=&quot;status--checking&quot;&gt;{{_StatusChecking}}&lt;/span&gt;
+        ///            &lt;span class=&quot;status--updated&quot;&gt;{{_StatusUpdated}}&lt;/span&gt;
+        ///            &lt;span class=&quot;status--outdated&quot;&gt;{{_StatusOutdated}}&lt;/span&gt;
+        ///        &lt;/h1&gt;
+        ///
+        ///        &lt;p&gt;
+        ///            [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Page_Update {
+            get {
+                return ResourceManager.GetString("Page_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to !function(e,t){&quot;object&quot;==typeof exports&amp;&amp;&quot;object&quot;==typeof module?module.exports=t():&quot;function&quot;==typeof define&amp;&amp;define.amd?define(&quot;ig-ui&quot;,[],t):&quot;object&quot;==typeof exports?exports[&quot;ig-ui&quot;]=t():e[&quot;ig-ui&quot;]=t()}(this,(()=&gt;(()=&gt;{&quot;use strict&quot;;var e={r:e=&gt;{&quot;undefined&quot;!=typeof Symbol&amp;&amp;Symbol.toStringTag&amp;&amp;Object.defineProperty(e,Symbol.toStringTag,{value:&quot;Module&quot;}),Object.defineProperty(e,&quot;__esModule&quot;,{value:!0})}},t={};e.r(t);for(var o=function(e){document.querySelectorAll(&quot;.tab-page&quot;).forEach((function(e){return e.cl [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Script_Settings {
+            get {
+                return ResourceManager.GetString("Script_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :root{--InvertColor: 255 255 255;--AppBg: 20 25 28;--AppText: 210 210 210;--AppTextDisabled: 140 140 140;--Accent: 0 99 177;--ControlBg: 69 73 74;--ControlBgHover: 95 101 102;--ControlBgPressed: 43 43 43;--ControlBgPressed2: 49 51 53;--ControlBgDisabled: 82 82 82;--ControlCtaBg: rgb(var(--Accent) / 0.2);--ControlCtaBgHover: rgb(var(--Accent) / 0.3);--ControlBorder: rgb(var(--InvertColor) / 0.2);--ControlBorderHover: rgb(var(--InvertColor) / 0.3);--ControlBorderDisabled: rgb(var(--InvertColor) / 0.02);--Cont [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Styles {
             get {

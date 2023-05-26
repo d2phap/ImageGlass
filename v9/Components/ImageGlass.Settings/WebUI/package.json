@@ -9,8 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "start": "webpack --watch --config ./webpack.config.js --progress",
-    "build": "webpack --config ./webpack.config.js --progress --mode=production",
+    "start": "webpack --watch --config ./webpack.config.js --progress --mode=production",
+    "build": "webpack         --config ./webpack.config.js --progress --mode=production",
     "css": "sass ./src/styles/main.scss ./dist/main.css"
   },
   "keywords": [

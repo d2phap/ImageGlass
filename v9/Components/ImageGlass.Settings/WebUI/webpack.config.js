@@ -8,11 +8,14 @@ const pkJson = require('./package.json');
 
 
 const configs = {
-  entry: './src/main.ts',
+  entry: {
+    main: './src/main.ts',
+    Script_Settings: './src/script_settings.ts',
+  },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'main.js',
+    path: path.resolve(__dirname, '../Resources'),
+    publicPath: '../Resources/',
+    filename: '[name].js',
 
     library: {
       name: pkJson.name,
@@ -34,7 +37,7 @@ const configs = {
         exclude: /node_modules/,
         type: 'asset/resource',
         generator: {
-          filename: '../../Resources/Styles.css',
+          filename: '../Resources/Styles.css',
         },
         use: [
           {
@@ -79,13 +82,13 @@ module.exports = (env, argv) => {
 
   return {
     ...configs,
-    devtool: 'source-map',
+    // devtool: 'source-map',
     optimization: {
       minimize: isProduction,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
-            sourceMap: true,
+            sourceMap: false,
             compress: isProduction,
           },
         }),

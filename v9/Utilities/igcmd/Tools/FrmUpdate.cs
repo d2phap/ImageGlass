@@ -152,7 +152,7 @@ public partial class FrmUpdate : WebForm
     private async Task CheckForUpdateAsync()
     {
         // show checking progress
-        await LoadWeb2ContentAsync(Resources.Page_Update);
+        await LoadWeb2ContentAsync(ImageGlass.Settings.Properties.Resources.Page_Update);
         var status = "checking";
         await Web2.ExecuteScriptAsync($"""
             document.documentElement.setAttribute('app-status', '{status}');
@@ -163,7 +163,7 @@ public partial class FrmUpdate : WebForm
         // update the status
         await _updater.GetUpdatesAsync();
         status = _updater.HasNewUpdate ? "outdated" : "updated";
-        await LoadWeb2ContentAsync(Resources.Page_Update);
+        await LoadWeb2ContentAsync(ImageGlass.Settings.Properties.Resources.Page_Update);
 
         await Web2.ExecuteScriptAsync($"""
             document.documentElement.setAttribute('app-status', '{status}');

@@ -50,7 +50,8 @@ public partial class FrmSettings : WebForm
     {
         base.OnWeb2Ready();
 
-        _ = LoadWeb2ContentAsync(Resources.Page_Settings);
+        _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
+            $"<script>{Settings.Properties.Resources.Script_Settings}</script>");
     }
 
 

@@ -22,73 +22,73 @@
       <ul class="list">
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="general" />
+            <input type="radio" name="nav" value="general" />
             <span>General</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="image" />
+            <input type="radio" name="nav" value="image" />
             <span>Image</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="slideshow" />
+            <input type="radio" name="nav" value="slideshow" />
             <span>Slideshow</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="edit" />
+            <input type="radio" name="nav" value="edit" />
             <span>Edit</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="toolbar" />
+            <input type="radio" name="nav" value="toolbar" />
             <span>Toolbar</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="gallery" />
+            <input type="radio" name="nav" value="gallery" />
             <span>Gallery</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="layout" />
+            <input type="radio" name="nav" value="layout" />
             <span>Layout</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="keyboard" />
+            <input type="radio" name="nav" value="keyboard" />
             <span>Keyboard</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="file_assocs" />
+            <input type="radio" name="nav" value="file_assocs" />
             <span>File type associations</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="tools" />
+            <input type="radio" name="nav" value="tools" />
             <span>Tools</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="language" />
+            <input type="radio" name="nav" value="language" />
             <span>Language</span>
           </label>
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" onchange="onNavChanged(this)" value="theme" />
+            <input type="radio" name="nav" value="theme" />
             <span>Theme</span>
           </label>
         </li>
@@ -685,32 +685,7 @@
   </footer>
 
 
-  <script>
-    function onNavChanged(radioEl) {
-      const activeTabName = radioEl.value;
-
-      setActiveTab(activeTabName);
-    }
-
-
-    function setActiveTab(tabPageName) {
-      // hide all tabs
-      const allTabPages = document.querySelectorAll('.tab-page');
-      allTabPages.forEach(el => el.classList.remove('active'));
-
-      // show the selected tab
-      const tabPageEl = document.querySelector(`.tab-page[tab="${tabPageName}"]`);
-      tabPageEl?.classList.add('active');
-
-      // select the active nav item
-      const allNavItems = document.querySelectorAll('input[type="radio"]');
-      allNavItems.forEach(item => item.checked = false);
-      const navItem = document.querySelector(`input[type="radio"][value="${tabPageName}"]`);
-      if (navItem) navItem.checked = true;
-    }
-
-    setActiveTab('image');
-  </script>
+  <script src="../Resources/Script_Settings.js"></script>
 </body>
 
 </html>

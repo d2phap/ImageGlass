@@ -48,7 +48,7 @@ public partial class FrmAbout : WebForm
     {
         base.OnWeb2Ready();
 
-        _ = LoadWeb2ContentAsync(Resources.Page_About);
+        _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_About);
     }
 
 
