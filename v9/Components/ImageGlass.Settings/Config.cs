@@ -125,7 +125,7 @@ public static class Config
         {
             Id = "Btn_Checkerboard",
             Image = nameof(Theme.ToolbarIcons.Checkerboard),
-            CheckableConfigBinding = nameof(ShowCheckerBoard),
+            CheckableConfigBinding = nameof(ShowCheckerboard),
             OnClick = new("MnuToggleCheckerboard"),
         },
         new() { Type = ToolbarItemModelType.Separator },
@@ -285,7 +285,12 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicating that checker board is shown or not
     /// </summary>
-    public static bool ShowCheckerBoard { get; set; } = false;
+    public static bool ShowCheckerboard { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates whether to show checkerboard in the image region only
+    /// </summary>
+    public static bool ShowCheckerboardOnlyImageRegion { get; set; } = false;
 
     /// <summary>
     /// Gets, sets value indicating that multi instances is allowed or not
@@ -336,11 +341,6 @@ public static class Config
     /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
     /// </summary>
     public static bool EnableNavigationButtons { get; set; } = true;
-
-    /// <summary>
-    /// Gets, sets the value indicates whether to show checkerboard in the image region only
-    /// </summary>
-    public static bool ShowCheckerboardOnlyImageRegion { get; set; } = false;
 
     /// <summary>
     /// Gets, sets recursive value
@@ -758,7 +758,8 @@ public static class Config
         ShowWelcomeImage = items.GetValue(nameof(ShowWelcomeImage), ShowWelcomeImage);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
-        ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
+        ShowCheckerboard = items.GetValue(nameof(ShowCheckerboard), ShowCheckerboard);
+        ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
         ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
@@ -769,7 +770,6 @@ public static class Config
         ShouldOpenLastSeenImage = items.GetValue(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
         ShouldUseColorProfileForAll = items.GetValue(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
         EnableNavigationButtons = items.GetValue(nameof(EnableNavigationButtons), EnableNavigationButtons);
-        ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         EnableRecursiveLoading = items.GetValue(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
         ShouldUseExplorerSortOrder = items.GetValue(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
         ShouldGroupImagesByDirectory = items.GetValue(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
@@ -1314,7 +1314,8 @@ public static class Config
         settings.TryAdd(nameof(ShowWelcomeImage), ShowWelcomeImage);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
-        settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
+        settings.TryAdd(nameof(ShowCheckerboard), ShowCheckerboard);
+        settings.TryAdd(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
         settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
@@ -1325,7 +1326,6 @@ public static class Config
         settings.TryAdd(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
         settings.TryAdd(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
         settings.TryAdd(nameof(EnableNavigationButtons), EnableNavigationButtons);
-        settings.TryAdd(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         settings.TryAdd(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
         settings.TryAdd(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
         settings.TryAdd(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);

@@ -175,7 +175,7 @@ public partial class FrmMain
             PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
         }
 
-        IG_ToggleCheckerboard(Config.ShowCheckerBoard);
+        IG_ToggleCheckerboard(Config.ShowCheckerboard);
 
         // set up layout
         LoadAppLayout();

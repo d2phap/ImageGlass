@@ -668,8 +668,8 @@ public partial class FrmMain
     /// <param name="visible"></param>
     public bool IG_ToggleCheckerboard(bool? visible = null)
     {
-        visible ??= !Config.ShowCheckerBoard;
-        Config.ShowCheckerBoard = visible.Value;
+        visible ??= !Config.ShowCheckerboard;
+        Config.ShowCheckerboard = visible.Value;
 
         if (visible.Value)
         {
@@ -694,7 +694,7 @@ public partial class FrmMain
         UpdateToolbarItemsState();
 
 
-        return Config.ShowCheckerBoard;
+        return Config.ShowCheckerboard;
     }
 
 

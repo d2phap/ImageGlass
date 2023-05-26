@@ -1821,10 +1821,10 @@ public partial class FrmSlideshow : ThemedForm
 
     private void MnuToggleCheckerboard_Click(object sender, EventArgs e)
     {
-        Config.ShowCheckerBoard = !Config.ShowCheckerBoard;
-        MnuToggleCheckerboard.Checked = Config.ShowCheckerBoard;
+        Config.ShowCheckerboard = !Config.ShowCheckerboard;
+        MnuToggleCheckerboard.Checked = Config.ShowCheckerboard;
 
-        if (Config.ShowCheckerBoard)
+        if (Config.ShowCheckerboard)
         {
             if (Config.ShowCheckerboardOnlyImageRegion)
             {
