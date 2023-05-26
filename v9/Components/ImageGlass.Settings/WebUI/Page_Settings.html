@@ -88,8 +88,8 @@
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="theme" />
-            <span>Theme</span>
+            <input type="radio" name="nav" value="appearance" />
+            <span>Appearance</span>
           </label>
         </li>
       </ul>
@@ -166,6 +166,29 @@
       <section>
         <header>[Image loading]</header>
         <div class="mb-2">
+          <label>
+            <div>[ImageLoadingOrder]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+          <label class="ms-2">
+            <select required>
+              <option value="XXXXXXXX">[Ascending]</option>
+              <option value="XXXXXXXX">[Descending]</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="{{ShouldUseExplorerSortOrder}}" />
+            <div>[ShouldUseExplorerSortOrder]</div>
+          </label>
+        </div>
+        <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableRecursiveLoading}}" />
             <div>[EnableRecursiveLoading]</div>
@@ -193,12 +216,6 @@
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShouldAutoOpenNewAddedImage}}" />
             <div>[ShouldAutoOpenNewAddedImage]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{ShouldUseExplorerSortOrder}}" />
-            <div>[ShouldUseExplorerSortOrder]</div>
           </label>
         </div>
         <div class="mb-2">
@@ -343,7 +360,30 @@
         <div class="mb-2">
           <label>
             <div>[ZoomLevels]</div>
-            <textarea></textarea>
+            <textarea rows="3"></textarea>
+          </label>
+        </div>
+
+        <div class="mb-2">
+          <label>
+            <div>[ImageInterpolationScaleDown]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[ImageInterpolationScaleUp]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
           </label>
         </div>
       </section>
@@ -428,34 +468,32 @@
           </label>
         </div>
         <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
-            <div>[EnableCopyMultipleFiles]</div>
+          <label>
+            <div>[AfterEditingAction]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
           </label>
         </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
-            <div>[EnableCutMultipleFiles]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
-            <div>[xxxxxxxxxxxx]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
-            <div>[xxxxxxxxxxxx]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="{{xxxxxxxxxxxx}}" />
-            <div>[xxxxxxxxxxxx]</div>
-          </label>
+
+        <div class="mt-3 mb-2">
+          <div class="mb-2">
+            <b>[Clipboard]</b>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
+              <div>[EnableCopyMultipleFiles]</div>
+            </label>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
+              <div>[EnableCutMultipleFiles]</div>
+            </label>
+          </div>
         </div>
       </section>
     </section>
@@ -654,11 +692,77 @@
     </section>
 
 
-    <!-- Tab: Theme -->
-    <section class="tab-page" tab="theme">
-      <!-- Layout > xxxxxxxxxxxxxxxxxxx -->
+    <!-- Tab: Language -->
+    <section class="tab-page" tab="language">
+      <!-- Language > Theme -->
+      <section class="ps-0">
+        <div class="mb-2">
+          <label>
+            <div>[Language]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+
+          <button class="ms-2">[Refresh]</button>
+        </div>
+      </section>
+
       <section>
-        <header>[xxxxxxxxxxxxxxxxxxx]</header>
+        <header>[Contributors]</header>
+        <div class="mb-2" style="min-height: 3rem;">
+          Duong Dieu Phap
+        </div>
+      </section>
+
+      <section class="ps-0">
+        <div class="mb-2">
+          <a href="#">
+            [Install new language packs...]
+          </a>
+        </div>
+        <div class="mb-2">
+          <a href="#">
+            [Get more language packs...]
+          </a>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Appearance -->
+    <section class="tab-page" tab="appearance">
+      <!-- Appearance > Theme -->
+      <section>
+        <div class="mb-2">
+          <label>
+            <div>[WindowBackdrop]</div>
+            <select required>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+              <option value="XXXXXXXX">XXXXXXXX</option>
+            </select>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[BackgroundColor]</div>
+            <input type="color" style="width: 5rem;" />
+          </label>
+        </div>
+        <div class="mb-2">
+          <label>
+            <div>[SlideshowBackgroundColor]</div>
+            <input type="color" style="width: 5rem;" />
+          </label>
+        </div>
+      </section>
+
+      <!-- Appearance > Theme -->
+      <section>
+        <header>[Theme]</header>
         <div class="mb-2">
           <label>
             <div>[DarkTheme]</div>
