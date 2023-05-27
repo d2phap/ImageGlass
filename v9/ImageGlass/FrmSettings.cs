@@ -17,10 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.Properties;
 using ImageGlass.Settings;
-using ImageGlass.UI;
-using System.Diagnostics;
 using System.Text;
 
 namespace ImageGlass;
@@ -43,6 +40,19 @@ public partial class FrmSettings : WebForm
 
         PageName = "settings";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuSettings)}"];
+
+        // load window placement from settings
+        WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());
+    }
+
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        base.OnFormClosing(e);
+
+        // save placement setting
+        var wp = WindowSettings.GetPlacementFromWindow(this);
+        WindowSettings.SetFrmSettingsPlacementConfig(wp);
     }
 
 

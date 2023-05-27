@@ -66,7 +66,7 @@ public class WindowSettings
         catch { }
     }
 
-    #endregion
+    #endregion // General window placement get/set functions
 
 
     #region FrmMain placement
@@ -87,9 +87,8 @@ public class WindowSettings
 
 
     /// <summary>
-    /// Retrieves WindowPlacement object from WinMain config
+    /// Retrieves WindowPlacement object from FrmMain config
     /// </summary>
-    /// <returns></returns>
     public static WindowPlacement GetFrmMainPlacementFromConfig()
     {
         return new WindowPlacement(new WpRect(
@@ -99,6 +98,41 @@ public class WindowSettings
             Config.FrmMainPositionY + Config.FrmMainHeight
           ), Config.FrmMainState);
     }
+
+    #endregion // FrmMain placement
+
+
+    #region FrmSettings placement
+
+    /// <summary>
+    /// Updates the given WindowPlacement object to FrmMain config
+    /// </summary>
+    /// <param name="wp"></param>
+    public static void SetFrmSettingsPlacementConfig(WindowPlacement wp)
+    {
+        Config.FrmSettingsPositionX = wp.normalPosition.Left;
+        Config.FrmSettingsPositionY = wp.normalPosition.Top;
+        Config.FrmSettingsWidth = wp.normalPosition.Right - wp.normalPosition.Left;
+        Config.FrmSettingsHeight = wp.normalPosition.Bottom - wp.normalPosition.Top;
+
+        Config.FrmSettingsState = wp.showCmd;
+    }
+
+
+    /// <summary>
+    /// Retrieves WindowPlacement object from FrmSettings config
+    /// </summary>
+    public static WindowPlacement GetFrmSettingsPlacementFromConfig()
+    {
+        return new WindowPlacement(new WpRect(
+            Config.FrmSettingsPositionX,
+            Config.FrmSettingsPositionY,
+            Config.FrmSettingsPositionX + Config.FrmSettingsWidth,
+            Config.FrmSettingsPositionY + Config.FrmSettingsHeight
+          ), Config.FrmSettingsState);
+    }
+
+    #endregion // FrmSettings placement
 
 
     /// <summary>
@@ -133,6 +167,5 @@ public class WindowSettings
         return WindowState.Normal;
     }
 
-    #endregion
-
+    
 }
