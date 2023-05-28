@@ -512,6 +512,23 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Viewer
 
 
+        #region Tab Toolbar
+        // Toolbar > Toolbar
+        Add("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in Fullscreen mode");
+        Add("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
+        Add("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
+        #endregion // Tab Toolbar
+
+
+        #region Tab Gallery
+        // Gallery > Gallery
+        Add("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in Fullscreen mode");
+        Add("FrmSettings.Tab.Gallery._ShowGalleryScrollbars", "Show gallery scrollbars");
+        Add("FrmSettings.Tab.Gallery._ShowGalleryFileName", "Show thumbnail filename");
+        Add("FrmSettings.Tab.Gallery._ThumbnailSize", "Thumbnail size (in pixels)");
+        Add("FrmSettings.Tab.Gallery._GalleryCacheSizeInMb", "Maximum gallery cache size (in megabytes)");
+        Add("FrmSettings.Tab.Gallery._GalleryColumns", "Number of thumbnail columns in vertical gallery layout");
+        #endregion // Tab Gallery
 
 
 
@@ -558,16 +575,8 @@ public class IgLang : Dictionary<string, string>
         #region Thumbnail bar
         //Add("FrmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
         //Add("FrmSetting.chkThumbnailVertical", "Show thumbnails on right side");
-        //Add("FrmSetting.chkShowThumbnailScrollbar", "Show thumbnails scroll bar"); //v5.5
-        //Add("FrmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
         #endregion
 
-
-        #region Full screen
-        //Add("FrmSetting.lblHeadFullScreen", "Full screen"); // v8.3
-        //Add("FrmSetting.chkHideToolbarInFullScreen", "Hide toolbar"); // v8.3
-        //Add("FrmSetting.chkHideThumbnailBarInFullScreen", "Hide thumbnail bar"); // v8.3
-        #endregion
 
         #endregion
 
@@ -598,7 +607,6 @@ public class IgLang : Dictionary<string, string>
 
         #region TAB Toolbar
         //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
-        //Add("FrmSetting.lblToolbarIconHeight", "Toolbar icon size:");
 
         //// V5.0
         //Add("FrmSetting._separator", "Separator"); // i.e. 'toolbar separator'
@@ -610,8 +618,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.btnMoveRight._Tooltip", "Add selected button(s) to the toolbar"); // tooltip
         //Add("FrmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
 
-        //Add("FrmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
-        //Add("FrmSetting.chkHideTooltips", "Hide toolbar tooltips"); // v8.0
         #endregion
 
         #region TAB Tools
