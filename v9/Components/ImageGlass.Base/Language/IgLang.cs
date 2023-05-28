@@ -531,6 +531,28 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Gallery
 
 
+        #region Tab Language
+        // Language > Language
+        Add("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
+        Add("FrmSettings.Tab.Language._Refresh", "Refresh");
+        Add("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install a new language pack…");
+        Add("FrmSettings.Tab.Language._GetMoreLanguagePacks", "Get more language packs…");
+        Add("FrmSettings.Tab.Language._Contributors", "Contributors");
+        #endregion // Tab Language
+
+
+        #region Tab Appearance
+        // Appearance > Appearance
+        Add("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
+        Add("FrmSettings.Tab.Appearance._BackgroundColor", "Background color");
+        Add("FrmSettings.Tab.Appearance._SlideshowBackgroundColor", "Slideshow background color");
+
+        // Appearance > Theme
+        Add("FrmSettings.Tab.Appearance._Theme", "Theme");
+        Add("FrmSettings.Tab.Appearance._DarkTheme", "Dark theme");
+        Add("FrmSettings.Tab.Appearance._LightTheme", "Light theme");
+        #endregion // Tab Appearance
+
 
         #region TAB General
 
@@ -556,26 +578,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
         #endregion
 
-        #region Zooming
-        //Add("FrmSetting.lblHeadZooming", "Zooming"); //v4.0
-        //Add("FrmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
-        //Add("FrmSetting.cmbZoomOptimization._Auto", "Auto (Low quality/Nearest-neighbor)"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._Low", "Low quality"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._High", "High quality"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._Bilinear", "Bilinear"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._Bicubic", "Bicubic"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._NearestNeighbor", "Nearest-neighbor"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._HighQualityBilinear", "High-quality, bilinear"); // v8.1
-        //Add("FrmSetting.cmbZoomOptimization._HighQualityBicubic", "High-quality, bicubic"); // v8.1
-
-        //Add("FrmSetting.lblZoomLevels", "Zoom levels"); //v7.0
-        //Add("FrmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v7.0
-        #endregion
-
-        #region Thumbnail bar
-        //Add("FrmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
-        //Add("FrmSetting.chkThumbnailVertical", "Show thumbnails on right side");
-        #endregion
 
 
         #endregion

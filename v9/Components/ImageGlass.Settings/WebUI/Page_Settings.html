@@ -726,12 +726,12 @@
 
     <!-- Tab: Language -->
     <section class="tab-page" tab="language">
-      <!-- Language > Theme -->
+      <!-- Language > Language -->
       <section>
-        <header>Language</header>
+        <header data-lang="FrmSettings.Nav._Language">[Language]</header>
         <div class="mb-2">
           <label class="me-2">
-            <div>[Installed language packs]</div>
+            <div data-lang="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -739,15 +739,15 @@
             </select>
           </label>
 
-          <button>[Refresh]</button>
+          <button data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
         </div>
         <div class="mb-2 mt-3">
-          <a href="#">
-            [Install new language packs...]
+          <a href="#" data-lang="FrmSettings.Tab.Language._InstallNewLanguagePack">
+            [Install a new language pack...]
           </a>
         </div>
         <div class="mb-2">
-          <a href="#">
+          <a href="#" data-lang="FrmSettings.Tab.Language._GetMoreLanguagePacks">
             [Get more language packs...]
           </a>
         </div>
@@ -755,8 +755,8 @@
 
       <!-- Language > Contributors -->
       <section>
-        <header>[Contributors]</header>
-        <div class="mb-2" style="min-height: 3rem;">
+        <header data-lang="FrmSettings.Tab.Language._Contributors">[Contributors]</header>
+        <div class="mb-2">
           Duong Dieu Phap
         </div>
       </section>
@@ -767,10 +767,10 @@
     <section class="tab-page" tab="appearance">
       <!-- Appearance > Appearance -->
       <section>
-        <header>Appearance</header>
+        <header data-lang="FrmSettings.Nav._Appearance">[Appearance]</header>
         <div class="mb-2">
           <label>
-            <div>[WindowBackdrop]</div>
+            <div data-lang="FrmSettings.Tab.Appearance._WindowBackdrop">[WindowBackdrop]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -780,13 +780,13 @@
         </div>
         <div class="mb-2">
           <label>
-            <div>[BackgroundColor]</div>
+            <div data-lang="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</div>
             <input type="color" style="width: 5rem;" />
           </label>
         </div>
         <div class="mb-2">
           <label>
-            <div>[SlideshowBackgroundColor]</div>
+            <div data-lang="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">[SlideshowBackgroundColor]</div>
             <input type="color" style="width: 5rem;" />
           </label>
         </div>
@@ -794,16 +794,16 @@
 
       <!-- Appearance > Theme -->
       <section>
-        <header>[Theme]</header>
+        <header data-lang="FrmSettings.Tab.Appearance._Theme">[Theme]</header>
         <div class="mb-2">
           <label>
-            <div>[DarkTheme]</div>
+            <div data-lang="FrmSettings.Tab.Appearance._DarkTheme">[DarkTheme]</div>
             <input name="{{DarkTheme}}" value="Kobe" />
           </label>
         </div>
         <div class="mb-2">
           <label>
-            <div>[LightTheme]</div>
+            <div data-lang="FrmSettings.Tab.Appearance._LightTheme">[LightTheme]</div>
             <input name="{{LightTheme}}" value="Kobe - Light" />
           </label>
         </div>
