@@ -174,10 +174,8 @@
         </div>
 
         <div class="mt-3 mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.General._InAppMessageDuration">[InAppMessageDuration]</div>
-            <input type="number" name="{{InAppMessageDuration}}" value="2000" min="0" max="60000" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.General._InAppMessageDuration">[InAppMessageDuration]</div>
+          <input type="number" name="{{InAppMessageDuration}}" value="2000" min="0" max="60000" />
         </div>
       </section>
     </section>
@@ -188,22 +186,22 @@
       <!-- Image > Image loading -->
       <section>
         <header data-lang="FrmSettings.Tab.Image._ImageLoading">[Image loading]</header>
-        <div class="mb-2">
-          <label class="me-2">
-            <div data-lang="FrmSettings.Tab.Image._ImageLoadingOrder">[ImageLoadingOrder]</div>
+        <div class="d-flex align-items-end">
+          <div class="me-2 mb-2">
+            <div class="mb-1" data-lang="FrmSettings.Tab.Image._ImageLoadingOrder">[ImageLoadingOrder]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
             </select>
-          </label>
-          <label>
+          </div>
+          <div class="mb-2">
             <select required>
               <option value="XXXXXXXX">[Ascending]</option>
               <option value="XXXXXXXX">[Descending]</option>
             </select>
-          </label>
+          </div>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
@@ -255,26 +253,31 @@
           <div class="mb-2">
             <label class="ig-checkbox">
               <input type="checkbox" name="{{UseEmbeddedThumbnailRawFormats}}" />
-              <div data-lang="FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats">[UseEmbeddedThumbnailRawFormats]</div>
+              <div data-lang="FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats">[UseEmbeddedThumbnailRawFormats]
+              </div>
             </label>
           </div>
           <div class="mb-2">
             <label class="ig-checkbox">
               <input type="checkbox" name="{{UseEmbeddedThumbnailOtherFormats}}" />
-              <div data-lang="FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats">[UseEmbeddedThumbnailOtherFormats]</div>
+              <div data-lang="FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats">
+                [UseEmbeddedThumbnailOtherFormats]</div>
             </label>
           </div>
           <div>
-            <div class="mb-2" data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize">[Minimum size of embedded thumbnail]</div>
+            <div class="mb-2" data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize">[Minimum size of embedded
+              thumbnail]</div>
             <div class="d-flex align-items-center ms-3 ps-1">
-              <label class="me-3">
-                <div data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width">[Width]</div>
-                <input type="number" name="{{EmbeddedThumbnailMinWidth}}" value="0" min="0" max="100000" style="width: 5rem;" />
-              </label>
-              <label>
-                <div data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height">[Height]</div>
-                <input type="number" name="{{EmbeddedThumbnailMinHeight}}" value="0" min="0" max="100000" style="width: 5rem;" />
-              </label>
+              <div class="me-3">
+                <div class="mb-1" data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width">[Width]</div>
+                <input type="number" name="{{EmbeddedThumbnailMinWidth}}" value="0" min="0" max="100000"
+                  style="width: 5rem;" />
+              </div>
+              <div>
+                <div class="mb-1" data-lang="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height">[Height]</div>
+                <input type="number" name="{{EmbeddedThumbnailMinHeight}}" value="0" min="0" max="100000"
+                  style="width: 5rem;" />
+              </div>
             </div>
           </div>
         </div>
@@ -285,34 +288,31 @@
       <section>
         <header data-lang="FrmSettings.Tab.Image._ImageBooster">[Image booster]</header>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Image._ImageBoosterCacheCount">[ImageBoosterCacheCount]</div>
-            <select required>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Image._ImageBoosterCacheCount">[ImageBoosterCacheCount]</div>
+          <select required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension">[ImageBoosterCacheMaxDimension]</div>
-            <input type="number" name="{{ImageBoosterCacheMaxDimension}}" value="8000" min="0" max="1000000" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension">
+            [ImageBoosterCacheMaxDimension]</div>
+          <input type="number" name="{{ImageBoosterCacheMaxDimension}}" value="8000" min="0" max="1000000" />
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb">[ImageBoosterCacheMaxFileSizeInMb]</div>
-            <input type="number" name="{{ImageBoosterCacheMaxFileSizeInMb}}" value="100" min="0" max="1048" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb">
+            [ImageBoosterCacheMaxFileSizeInMb]
+          </div>
+          <input type="number" name="{{ImageBoosterCacheMaxFileSizeInMb}}" value="100" min="0" max="1048" />
         </div>
       </section>
 
@@ -327,9 +327,9 @@
           </label>
         </div>
         <div class="mt-3 mb-2">
-          <div>
-            <label class="me-2">
-              <div data-lang="FrmSettings.Tab.Image._ColorProfile">[ColorProfile]</div>
+          <div class="d-flex align-items-end">
+            <div class="me-2">
+              <div class="mb-1" data-lang="FrmSettings.Tab.Image._ColorProfile">[ColorProfile]</div>
               <select>
                 <option value="">[None]</option>
                 <option value="[CURRENT_MONITOR_PROFILE]">[CURRENT_MONITOR_PROFILE]</option>
@@ -341,7 +341,7 @@
                 <option value="[USWebCoatedSWOP]">[USWebCoatedSWOP]</option>
                 <option value="[Custom]">[Custom]</option>
               </select>
-            </label>
+            </div>
             <button data-lang="_._Browse">[Browse...]</button>
           </div>
           <div class="mt-2">
@@ -386,7 +386,8 @@
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{UseRandomIntervalForSlideshow}}" />
-            <div data-lang="FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow">[UseRandomIntervalForSlideshow]</div>
+            <div data-lang="FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow">[UseRandomIntervalForSlideshow]
+            </div>
           </label>
         </div>
       </section>
@@ -396,14 +397,14 @@
         <header data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval: 00:05:00]</header>
         <div class="mb-2">
           <div class="d-flex align-items-center">
-            <label class="me-3">
-              <div data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
+            <div class="me-3">
+              <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
               <input type="number" name="{{SlideshowInterval}}" value="5" step="0.1" min="0" style="width: 5rem;" />
-            </label>
-            <label>
-              <div data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
+            </div>
+            <div>
+              <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
               <input type="number" name="{{SlideshowIntervalTo}}" value="5" step="0.1" min="0" style="width: 5rem;" />
-            </label>
+            </div>
           </div>
         </div>
       </section>
@@ -433,15 +434,13 @@
             <div data-lang="FrmSettings.Tab.Edit._ShouldPreserveModifiedDate">[ShouldPreserveModifiedDate]</div>
           </label>
         </div>
-        <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
+        <div class="mb-2 mt-3">
+          <div class="mb-1" data-lang="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
+          <select required>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+          </select>
         </div>
       </section>
 
@@ -478,7 +477,8 @@
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowCheckerboardOnlyImageRegion}}" />
-            <div data-lang="FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]
+            </div>
           </label>
         </div>
         <div class="mb-2">
@@ -494,10 +494,8 @@
           </label>
         </div>
         <div class="mt-3 mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
-            <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
+          <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
         </div>
       </section>
 
@@ -506,38 +504,32 @@
       <section>
         <header data-lang="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleDown">[ImageInterpolationScaleDown]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleDown">
+            [ImageInterpolationScaleDown]</div>
+          <select required>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleUp">[ImageInterpolationScaleUp]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleUp">[ImageInterpolationScaleUp]
+          </div>
+          <select required>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
-            <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
+          <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
-            <textarea rows="3"></textarea>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
+          <textarea rows="3"></textarea>
         </div>
       </section>
     </section>
@@ -561,10 +553,8 @@
           </label>
         </div>
         <div class="mt-3 mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
-            <input type="number" name="{{ToolbarIconHeight}}" value="24" min="10" max="1000" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
+          <input type="number" name="{{ToolbarIconHeight}}" value="24" min="10" max="1000" />
         </div>
       </section>
     </section>
@@ -595,22 +585,16 @@
         </div>
 
         <div class="mt-3 mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Gallery._ThumbnailSize">[ThumbnailSize]</div>
-            <input type="number" name="{{ThumbnailSize}}" value="50" min="20" max="500" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Gallery._ThumbnailSize">[ThumbnailSize]</div>
+          <input type="number" name="{{ThumbnailSize}}" value="50" min="20" max="500" />
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Gallery._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
-            <input type="number" name="{{GalleryCacheSizeInMb}}" value="400" min="0" max="2048" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Gallery._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
+          <input type="number" name="{{GalleryCacheSizeInMb}}" value="400" min="0" max="2048" />
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
-            <input type="number" name="{{GalleryColumns}}" value="3" min="1" max="100" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
+          <input type="number" name="{{GalleryColumns}}" value="3" min="1" max="100" />
         </div>
       </section>
     </section>
@@ -631,52 +615,44 @@
       <section>
         <header>[Mouse wheel action]</header>
         <div class="mb-2">
-          <label>
-            <div>[Scroll]</div>
-            <select>
-              <option value="{{DoNothing}}">[DoNothing]</option>
-              <option value="{{Zoom}}">[Zoom]</option>
-              <option value="{{PanVertically}}">[PanVertically]</option>
-              <option value="{{PanHorizontally}}">PanHorizontally</option>
-              <option value="{{BrowseImages}}">BrowseImages</option>
-            </select>
-          </label>
+          <div class="mb-1">[Scroll]</div>
+          <select>
+            <option value="{{DoNothing}}">[DoNothing]</option>
+            <option value="{{Zoom}}">[Zoom]</option>
+            <option value="{{PanVertically}}">[PanVertically]</option>
+            <option value="{{PanHorizontally}}">PanHorizontally</option>
+            <option value="{{BrowseImages}}">BrowseImages</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div>[PressCtrlAndScroll]</div>
-            <select>
-              <option value="{{DoNothing}}">[DoNothing]</option>
-              <option value="{{Zoom}}">[Zoom]</option>
-              <option value="{{PanVertically}}">[PanVertically]</option>
-              <option value="{{PanHorizontally}}">PanHorizontally</option>
-              <option value="{{BrowseImages}}">BrowseImages</option>
-            </select>
-          </label>
+          <div class="mb-1">[PressCtrlAndScroll]</div>
+          <select>
+            <option value="{{DoNothing}}">[DoNothing]</option>
+            <option value="{{Zoom}}">[Zoom]</option>
+            <option value="{{PanVertically}}">[PanVertically]</option>
+            <option value="{{PanHorizontally}}">PanHorizontally</option>
+            <option value="{{BrowseImages}}">BrowseImages</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div>[PressShiftAndScroll]</div>
-            <select>
-              <option value="{{DoNothing}}">[DoNothing]</option>
-              <option value="{{Zoom}}">[Zoom]</option>
-              <option value="{{PanVertically}}">[PanVertically]</option>
-              <option value="{{PanHorizontally}}">PanHorizontally</option>
-              <option value="{{BrowseImages}}">BrowseImages</option>
-            </select>
-          </label>
+          <div class="mb-1">[PressShiftAndScroll]</div>
+          <select>
+            <option value="{{DoNothing}}">[DoNothing]</option>
+            <option value="{{Zoom}}">[Zoom]</option>
+            <option value="{{PanVertically}}">[PanVertically]</option>
+            <option value="{{PanHorizontally}}">PanHorizontally</option>
+            <option value="{{BrowseImages}}">BrowseImages</option>
+          </select>
         </div>
         <div class="mb-2">
-          <label>
-            <div>[PressAltAndScroll]</div>
-            <select>
-              <option value="{{DoNothing}}">[DoNothing]</option>
-              <option value="{{Zoom}}">[Zoom]</option>
-              <option value="{{PanVertically}}">[PanVertically]</option>
-              <option value="{{PanHorizontally}}">PanHorizontally</option>
-              <option value="{{BrowseImages}}">BrowseImages</option>
-            </select>
-          </label>
+          <div class="mb-1">[PressAltAndScroll]</div>
+          <select>
+            <option value="{{DoNothing}}">[DoNothing]</option>
+            <option value="{{Zoom}}">[Zoom]</option>
+            <option value="{{PanVertically}}">[PanVertically]</option>
+            <option value="{{PanHorizontally}}">PanHorizontally</option>
+            <option value="{{BrowseImages}}">BrowseImages</option>
+          </select>
         </div>
       </section>
 
@@ -769,14 +745,12 @@
       <section>
         <header data-lang="FrmSettings.Nav._Appearance">[Appearance]</header>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Appearance._WindowBackdrop">[WindowBackdrop]</div>
-            <select required>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-              <option value="XXXXXXXX">XXXXXXXX</option>
-            </select>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._WindowBackdrop">[WindowBackdrop]</div>
+          <select required>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+            <option value="XXXXXXXX">XXXXXXXX</option>
+          </select>
         </div>
         <div class="mb-2">
           <div>
@@ -789,7 +763,8 @@
         </div>
         <div class="mb-2">
           <div>
-            <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">[SlideshowBackgroundColor]</div>
+            <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">
+              [SlideshowBackgroundColor]</div>
             <span class="d-flex align-items-center">
               <input type="color" class="me-2" style="width: 5rem;" />
               <a href="#" data-lang="_._Reset">[Reset]</a>
@@ -802,16 +777,12 @@
       <section>
         <header data-lang="FrmSettings.Tab.Appearance._Theme">[Theme]</header>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Appearance._DarkTheme">[DarkTheme]</div>
-            <input name="{{DarkTheme}}" value="Kobe" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._DarkTheme">[DarkTheme]</div>
+          <input name="{{DarkTheme}}" value="Kobe" />
         </div>
         <div class="mb-2">
-          <label>
-            <div data-lang="FrmSettings.Tab.Appearance._LightTheme">[LightTheme]</div>
-            <input name="{{LightTheme}}" value="Kobe - Light" />
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._LightTheme">[LightTheme]</div>
+          <input name="{{LightTheme}}" value="Kobe - Light" />
         </div>
       </section>
     </section>
