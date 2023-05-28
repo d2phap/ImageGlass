@@ -39,7 +39,7 @@ public partial class FrmSettings : WebForm
         if (DesignMode) return;
 
         PageName = "settings";
-        Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuSettings)}"];
+        Text = Config.Language[$"{nameof(FrmSettings)}._Text"];
 
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());

@@ -389,12 +389,21 @@ public class IgLang : Dictionary<string, string>
         Add("FrmAbout._Donate", "Donate");
         #endregion
 
-        #region FrmSetting
-        //Add("FrmSetting._Text", "Settings");
-
-        //Add("FrmSetting.btnSave", "Save"); //v4.1
-        //Add("FrmSetting.btnCancel", "Cancel"); //v4.1
-        //Add("FrmSetting.btnApply", "Apply"); //v4.1
+        #region FrmSettings
+        Add("FrmSettings._Text", "Settings");
+        Add("FrmSettings.Nav._General", "General");
+        Add("FrmSettings.Nav._Image", "Image");
+        Add("FrmSettings.Nav._Slideshow", "Slideshow");
+        Add("FrmSettings.Nav._Edit", "Edit");
+        Add("FrmSettings.Nav._Viewer", "Viewer");
+        Add("FrmSettings.Nav._Toolbar", "Toolbar");
+        Add("FrmSettings.Nav._Gallery", "Gallery");
+        Add("FrmSettings.Nav._Layout", "Layout");
+        Add("FrmSettings.Nav._Keyboard", "Keyboard");
+        Add("FrmSettings.Nav._FileTypeAssociations", "File type associations");
+        Add("FrmSettings.Nav._Tools", "Tools");
+        Add("FrmSettings.Nav._Language", "Language");
+        Add("FrmSettings.Nav._Appearance", "Appearance");
 
         #region Tab names
         //Add("FrmSetting.lblGeneral", "General");
