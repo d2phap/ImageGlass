@@ -393,7 +393,7 @@ public class IgLang : Dictionary<string, string>
         #region FrmSettings
         Add("FrmSettings._Text", "Settings");
 
-        // nav bar
+        #region Nav bar
         Add("FrmSettings.Nav._General", "General");
         Add("FrmSettings.Nav._Image", "Image");
         Add("FrmSettings.Nav._Slideshow", "Slideshow");
@@ -407,6 +407,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Nav._Tools", "Tools");
         Add("FrmSettings.Nav._Language", "Language");
         Add("FrmSettings.Nav._Appearance", "Appearance");
+        #endregion // Nav bar
+
 
         #region Tab General
         // General > General
@@ -440,7 +442,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
         Add("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
         Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Loads hidden images");
-        Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back viewer to the first image when reaching the end of image list");
+        Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
         Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded.");
         Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect.");
         Add("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
@@ -465,6 +467,50 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Image
 
 
+        #region Tab Slideshow
+        // Slideshow > Slideshow
+        Add("FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow", "Automatically hide main window");
+        Add("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
+        Add("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in fullscreen mode");
+        Add("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
+
+        // Slideshow > Slideshow interval
+        Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval: {0}");
+        Add("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
+        Add("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
+        #endregion // Tab Slideshow
+
+
+        #region Tab Edit
+        // Edit > Edit
+        Add("FrmSettings.Tab.Edit._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
+        Add("FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
+        Add("FrmSettings.Tab.Edit._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
+        Add("FrmSettings.Tab.Edit._AfterEditingAction", "After opening editing app");
+
+        // Edit > Clipboard
+        Add("FrmSettings.Tab.Edit._Clipboard", "Clipboard");
+        Add("FrmSettings.Tab.Edit._EnableCopyMultipleFiles", "Enable the copying of multiple files at once");
+        Add("FrmSettings.Tab.Edit._EnableCutMultipleFiles", "Enable the cutting of multiple files at once");
+        #endregion // Tab Edit
+
+
+        #region Tab Viewer
+        // Viewer > Viewer
+        Add("FrmSettings.Tab.Viewer._ShowCheckerboard", "Show checkerboard");
+        Add("FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
+        Add("FrmSettings.Tab.Viewer._EnableNavigationButtons", "Show navigation arrow buttons");
+        Add("FrmSettings.Tab.Viewer._CenterWindowFit", "Automatically center the window in Window Fit mode");
+        Add("FrmSettings.Tab.Viewer._PanSpeed", "Panning speed");
+
+        // Viewer > Zooming
+        Add("FrmSettings.Tab.Viewer._Zooming", "Zooming");
+        Add("FrmSettings.Tab.Viewer._ImageInterpolationScaleDown", "Image interpolation when the zoom factor is less than 100 percent");
+        Add("FrmSettings.Tab.Viewer._ImageInterpolationScaleUp", "Image interpolation when the zoom factor is greater than 100 percent");
+        Add("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
+        Add("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
+        #endregion // Tab Viewer
+
 
 
 
@@ -473,21 +519,10 @@ public class IgLang : Dictionary<string, string>
 
 
         #region Viewer
-        //Add("FrmSetting.lblHeadViewer", "Viewer"); // v7.6
-        //Add("FrmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
-        //Add("FrmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
-        //Add("FrmSetting.chkDisplayBasename", "Display basename of the viewing image on title bar"); //v5.0
-        //Add("FrmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
-        //Add("FrmSetting.chkUseTouchGesture", "Enable touch gesture support"); // v7.6
         //Add("FrmSetting.lblBackGroundColor", "Background color");
         //Add("FrmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
         #endregion
 
-        #region Others
-        //Add("FrmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
-        //Add("FrmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
-
-        #endregion
         #endregion
 
 
@@ -527,14 +562,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
         #endregion
 
-        #region Slideshow
-        //Add("FrmSetting.lblHeadSlideshow", "Slideshow"); // v4.0
-        //Add("FrmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); // v2.0 final
-        //Add("FrmSetting.chkShowSlideshowCountdown", "Show slideshow countdown"); // v7.5
-        //Add("FrmSetting.chkRandomSlideshowInterval", "Use random interval"); // v7.6
-        //Add("FrmSetting.lblSlideshowInterval", "Slideshow interval: {0}");
-        //Add("FrmSetting.lblSlideshowIntervalTo", "to"); // v7.6
-        #endregion
 
         #region Full screen
         //Add("FrmSetting.lblHeadFullScreen", "Full screen"); // v8.3
@@ -545,9 +572,7 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region TAB Edit
-        //Add("FrmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
         //Add("FrmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
-        //Add("FrmSetting.lblAfterEditingApp", "After opening editing app:"); // v8.0
         //Add("FrmSetting.lblImageQuality", "Image quality:"); // v8.0
 
         //Add("FrmSetting.btnEditEditExt", "Edit…"); //v4.0
@@ -559,7 +584,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
         //Add("FrmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
-        //Add("FrmSetting.chkSaveModifyDate", "Preserve the image's modified date on save"); //v5.5, v8.0
         #endregion
 
         #region TAB File Associations

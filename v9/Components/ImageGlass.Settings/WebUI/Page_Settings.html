@@ -331,15 +331,15 @@
             <label class="me-2">
               <div data-lang="FrmSettings.Tab.Image._ColorProfile">[ColorProfile]</div>
               <select>
-                <option value="">None</option>
-                <option value="{{CURRENT_MONITOR_PROFILE}}">{{CURRENT_MONITOR_PROFILE}}</option>
-                <option value="{{AdobeRGB1998}}">{{AdobeRGB1998}}</option>
-                <option value="{{AppleRGB}}">{{AppleRGB}}</option>
-                <option value="{{CoatedFOGRA39}}">{{CoatedFOGRA39}}</option>
-                <option value="{{ColorMatchRGB}}">{{ColorMatchRGB}}</option>
-                <option value="{{sRGB}}">{{sRGB}}</option>
-                <option value="{{USWebCoatedSWOP}}">{{USWebCoatedSWOP}}</option>
-                <option value="{{Custom}}">{{Custom}}</option>
+                <option value="">[None]</option>
+                <option value="[CURRENT_MONITOR_PROFILE]">[CURRENT_MONITOR_PROFILE]</option>
+                <option value="[AdobeRGB1998]">[AdobeRGB1998]</option>
+                <option value="[AppleRGB]">[AppleRGB]</option>
+                <option value="[CoatedFOGRA39]">[CoatedFOGRA39]</option>
+                <option value="[ColorMatchRGB]">[ColorMatchRGB]</option>
+                <option value="[sRGB]">[sRGB]</option>
+                <option value="[USWebCoatedSWOP]">[USWebCoatedSWOP]</option>
+                <option value="[Custom]">[Custom]</option>
               </select>
             </label>
             <button data-lang="_._Browse">[Browse...]</button>
@@ -358,50 +358,50 @@
     <section class="tab-page" tab="slideshow">
       <!-- Slideshow > Slideshow -->
       <section>
-        <header>[Slideshow]</header>
+        <header data-lang="FrmSettings.Nav._Slideshow">[Slideshow]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{HideMainWindowInSlideshow}}" />
-            <div>[HideMainWindowInSlideshow]</div>
+            <div data-lang="FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow">[HideMainWindowInSlideshow]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowSlideshowCountdown}}" />
-            <div>[ShowSlideshowCountdown]</div>
+            <div data-lang="FrmSettings.Tab.Slideshow._ShowSlideshowCountdown">[ShowSlideshowCountdown]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableLoopSlideshow}}" />
-            <div>[EnableLoopSlideshow]</div>
+            <div data-lang="FrmSettings.Tab.Image._EnableLoopBackNavigation">[EnableLoopSlideshow]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableFullscreenSlideshow}}" />
-            <div>[EnableFullscreenSlideshow]</div>
+            <div data-lang="FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow">[EnableFullscreenSlideshow]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{UseRandomIntervalForSlideshow}}" />
-            <div>[UseRandomIntervalForSlideshow]</div>
+            <div data-lang="FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow">[UseRandomIntervalForSlideshow]</div>
           </label>
         </div>
       </section>
 
       <!-- Slideshow > Slideshow interval -->
       <section>
-        <header>[Slideshow interval: 00:05:00]</header>
+        <header data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval: 00:05:00]</header>
         <div class="mb-2">
           <div class="d-flex align-items-center">
             <label class="me-3">
-              <div>[From]</div>
+              <div data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
               <input type="number" name="{{SlideshowInterval}}" value="5" step="0.1" min="0" style="width: 5rem;" />
             </label>
             <label>
-              <div>[To]</div>
+              <div data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
               <input type="number" name="{{SlideshowIntervalTo}}" value="5" step="0.1" min="0" style="width: 5rem;" />
             </label>
           </div>
@@ -414,28 +414,28 @@
     <section class="tab-page" tab="edit">
       <!-- Edit > Edit -->
       <section>
-        <header>[Edit]</header>
+        <header data-lang="FrmSettings.Nav._Edit">[Edit]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowDeleteConfirmation}}" />
-            <div>[ShowDeleteConfirmation]</div>
+            <div data-lang="FrmSettings.Tab.Edit._ShowDeleteConfirmation">[ShowDeleteConfirmation]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowSaveOverrideConfirmation}}" />
-            <div>[ShowSaveOverrideConfirmation]</div>
+            <div data-lang="FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation">[ShowSaveOverrideConfirmation]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShouldPreserveModifiedDate}}" />
-            <div>[ShouldPreserveModifiedDate]</div>
+            <div data-lang="FrmSettings.Tab.Edit._ShouldPreserveModifiedDate">[ShouldPreserveModifiedDate]</div>
           </label>
         </div>
         <div class="mb-2">
           <label>
-            <div>[AfterEditingAction]</div>
+            <div data-lang="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -445,18 +445,19 @@
         </div>
       </section>
 
+      <!-- Edit > Clipboard -->
       <section>
-        <header>[Clipboard]</header>
+        <header data-lang="FrmSettings.Tab.Edit._Clipboard">[Clipboard]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableCopyMultipleFiles}}" />
-            <div>[EnableCopyMultipleFiles]</div>
+            <div data-lang="FrmSettings.Tab.Edit._EnableCopyMultipleFiles">[EnableCopyMultipleFiles]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableCutMultipleFiles}}" />
-            <div>[EnableCutMultipleFiles]</div>
+            <div data-lang="FrmSettings.Tab.Edit._EnableCutMultipleFiles">[EnableCutMultipleFiles]</div>
           </label>
         </div>
       </section>
@@ -467,34 +468,34 @@
     <section class="tab-page" tab="viewer">
       <!-- Viewer > Viewer -->
       <section>
-        <header>[Viewer]</header>
+        <header data-lang="FrmSettings.Nav._Viewer">[Viewer]</header>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowCheckerboard}}" />
-            <div>[ShowCheckerboard]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ShowCheckerboard">[ShowCheckerboard]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{ShowCheckerboardOnlyImageRegion}}" />
-            <div>[ShowCheckerboardOnlyImageRegion]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{EnableNavigationButtons}}" />
-            <div>[EnableNavigationButtons]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._EnableNavigationButtons">[EnableNavigationButtons]</div>
           </label>
         </div>
         <div class="mb-2">
           <label class="ig-checkbox">
             <input type="checkbox" name="{{CenterWindowFit}}" />
-            <div>[CenterWindowFit]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._CenterWindowFit">[CenterWindowFit]</div>
           </label>
         </div>
         <div class="mt-3 mb-2">
           <label>
-            <div>[PanSpeed]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
             <input type="number" name="{{PanSpeed}}" value="20" step="0.1" min="0" max="100" />
           </label>
         </div>
@@ -503,10 +504,10 @@
 
       <!-- Viewer > Zooming -->
       <section>
-        <header>[Zooming]</header>
+        <header data-lang="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
         <div class="mb-2">
           <label>
-            <div>[ImageInterpolationScaleDown]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleDown">[ImageInterpolationScaleDown]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -517,7 +518,7 @@
         </div>
         <div class="mb-2">
           <label>
-            <div>[ImageInterpolationScaleUp]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleUp">[ImageInterpolationScaleUp]</div>
             <select required>
               <option value="XXXXXXXX">XXXXXXXX</option>
               <option value="XXXXXXXX">XXXXXXXX</option>
@@ -528,13 +529,13 @@
         </div>
         <div class="mb-2">
           <label>
-            <div>[ZoomSpeed]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
             <input type="number" name="{{ZoomSpeed}}" value="0" step="0" min="-500" max="500" />
           </label>
         </div>
         <div class="mb-2">
           <label>
-            <div>[ZoomLevels]</div>
+            <div data-lang="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
             <textarea rows="3"></textarea>
           </label>
         </div>
