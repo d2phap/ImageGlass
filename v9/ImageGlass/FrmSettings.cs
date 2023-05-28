@@ -60,17 +60,29 @@ public partial class FrmSettings : WebForm
     {
         base.OnWeb2Ready();
 
+        // get all settings as json string
+        var configJsonObj = Config.PrepareJsonSettingsObject();
+        var configJson = BHelper.ToJson(configJsonObj) as string;
+
+        // get language as json string
+        var configLangJson = BHelper.ToJson(Config.Language);
+
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
-            $"<script>{Settings.Properties.Resources.Script_Settings}</script>");
+            @$"
+             <script>
+                window._pageSettings = {{
+                    config: {configJson},
+                    lang: {configLangJson},
+                }};
+
+                {Settings.Properties.Resources.Script_Settings}
+             </script>
+            ");
     }
 
 
     protected override IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
     {
-        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
-        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
-        var msStoreBadge = Encoding.UTF8.GetString(Settings.Properties.Resources.MsStoreBadge);
-
         return new List<(string Variable, string Value)>
         {
             ("{{_OK}}", Config.Language[$"_._OK"]),
