@@ -403,7 +403,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Nav._Toolbar", "Toolbar");
         Add("FrmSettings.Nav._Gallery", "Gallery");
         Add("FrmSettings.Nav._Layout", "Layout");
-        Add("FrmSettings.Nav._Keyboard", "Keyboard");
+        Add("FrmSettings.Nav._MouseKeyboard", "Mouse & Keyboard");
         Add("FrmSettings.Nav._FileTypeAssociations", "File type associations");
         Add("FrmSettings.Nav._Tools", "Tools");
         Add("FrmSettings.Nav._Language", "Language");
@@ -487,6 +487,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Edit._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
         Add("FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
         Add("FrmSettings.Tab.Edit._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
+        Add("FrmSettings.Tab.Edit._ImageEditQuality", "Image quality");
         Add("FrmSettings.Tab.Edit._AfterEditingAction", "After opening editing app");
 
         // Edit > Clipboard
@@ -532,6 +533,34 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Gallery
 
 
+        #region Tab Layout
+        // Layout > Layout
+
+        #endregion // Tab Layout
+
+
+        #region Tab Mouse & Keyboard
+        // Mouse & Keyboard > Mouse wheel action
+        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction", "Mouse wheel action");
+        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._Scroll", "Scroll");
+        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressCtrlAndScroll", "Hold Ctrl and scroll");
+        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressShiftAndScroll", "Hold Shift and scroll");
+        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressAltAndScroll", "Hold Alt and scroll");
+        #endregion // Tab Mouse & Keyboard
+
+
+        #region Tab File type associations
+        // File type associations > File type associations
+
+        #endregion // Tab File type associations
+
+
+        #region Tab Tools
+        // Tools > Tools
+
+        #endregion // Tab Tools
+
+
         #region Tab Language
         // Language > Language
         Add("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
@@ -555,27 +584,11 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Appearance
 
 
+        #endregion // FrmSettings
 
-        #region Mouse wheel actions
-        //Add("FrmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
-        //Add("FrmSetting.lblMouseWheel", "Mouse wheel");
-        //Add("FrmSetting.lblMouseWheelAlt", "Mouse wheel + Alt");
-        //Add("FrmSetting.lblMouseWheelCtrl", "Mouse wheel + Ctrl");
-        //Add("FrmSetting.lblMouseWheelShift", "Mouse wheel + Shift");
-        //Add("FrmSetting.cmbMouseWheel._DoNothing", "Do nothing");
-        //Add("FrmSetting.cmbMouseWheel._Zoom", "Zoom");
-        //Add("FrmSetting.cmbMouseWheel._ScrollVertically", "Scroll vertically");
-        //Add("FrmSetting.cmbMouseWheel._ScrollHorizontally", "Scroll horizontally");
-        //Add("FrmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
-        #endregion
-
-
-
-        #endregion
 
         #region TAB Edit
         //Add("FrmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
-        //Add("FrmSetting.lblImageQuality", "Image quality:"); // v8.0
 
         //Add("FrmSetting.btnEditEditExt", "Edit…"); //v4.0
         //Add("FrmSetting.btnEditResetExt", "Reset to default"); //v4.0

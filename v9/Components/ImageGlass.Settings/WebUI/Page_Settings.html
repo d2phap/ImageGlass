@@ -70,8 +70,8 @@
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="keyboard" />
-            <span data-lang="FrmSettings.Nav._Keyboard">[Keyboard]</span>
+            <input type="radio" name="nav" value="mouse_keyboard" />
+            <span data-lang="FrmSettings.Nav._MouseKeyboard">[Mouse & Keyboard]</span>
           </label>
         </li>
         <li>
@@ -435,6 +435,10 @@
           </label>
         </div>
         <div class="mb-2 mt-3">
+          <div class="mb-1" data-lang="FrmSettings.Tab.Edit._ImageEditQuality">[ImageEditQuality]</div>
+          <input type="number" name="{{ImageEditQuality}}" value="80" min="0" max="100" />
+        </div>
+        <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
           <select required>
             <option value="XXXXXXXX">XXXXXXXX</option>
@@ -604,18 +608,18 @@
     <section class="tab-page" tab="layout">
       <!-- Layout > Layout -->
       <section>
-        <header>[Layout]</header>
+        <header data-lang="FrmSettings.Nav._Layout">[Layout]</header>
       </section>
     </section>
 
 
-    <!-- Tab: Keyboard -->
-    <section class="tab-page" tab="keyboard">
-      <!-- Keyboard > Mouse wheel action -->
+    <!-- Tab: Mouse & Keyboard -->
+    <section class="tab-page" tab="mouse_keyboard">
+      <!-- Mouse & Keyboard > Mouse wheel action -->
       <section>
-        <header>[Mouse wheel action]</header>
+        <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Mouse wheel action]</header>
         <div class="mb-2">
-          <div class="mb-1">[Scroll]</div>
+          <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._Scroll">[Scroll]</div>
           <select>
             <option value="{{DoNothing}}">[DoNothing]</option>
             <option value="{{Zoom}}">[Zoom]</option>
@@ -625,7 +629,7 @@
           </select>
         </div>
         <div class="mb-2">
-          <div class="mb-1">[PressCtrlAndScroll]</div>
+          <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressCtrlAndScroll">[PressCtrlAndScroll]</div>
           <select>
             <option value="{{DoNothing}}">[DoNothing]</option>
             <option value="{{Zoom}}">[Zoom]</option>
@@ -635,7 +639,7 @@
           </select>
         </div>
         <div class="mb-2">
-          <div class="mb-1">[PressShiftAndScroll]</div>
+          <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressShiftAndScroll">[PressShiftAndScroll]</div>
           <select>
             <option value="{{DoNothing}}">[DoNothing]</option>
             <option value="{{Zoom}}">[Zoom]</option>
@@ -645,7 +649,7 @@
           </select>
         </div>
         <div class="mb-2">
-          <div class="mb-1">[PressAltAndScroll]</div>
+          <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressAltAndScroll">[PressAltAndScroll]</div>
           <select>
             <option value="{{DoNothing}}">[DoNothing]</option>
             <option value="{{Zoom}}">[Zoom]</option>
@@ -656,8 +660,8 @@
         </div>
       </section>
 
-      <!-- Keyboard > Mouse click action -->
-      <section>
+      <!-- Mouse & Keyboard > Mouse click action -->
+      <section hidden>
         <header>[Mouse click action]</header>
         <div class="ig-table mb-2">
           <table style="min-width: 40rem;">
