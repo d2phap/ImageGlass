@@ -56,7 +56,7 @@ public partial class FrmMain
         // reset the watcher
         StopFileWatcher();
 
-        if (!Config.EnableFileWatcher) return;
+        if (!Config.EnableRealTimeFileUpdate) return;
 
 
         // From Issue #530: file watcher currently fails nastily if given a prefixed path

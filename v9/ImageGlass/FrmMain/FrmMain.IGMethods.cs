@@ -1389,7 +1389,7 @@ public partial class FrmMain
         // image is empty
         else
         {
-            if (Config.EnableFileWatcher)
+            if (Config.EnableRealTimeFileUpdate)
             {
                 _fileWatcher.Start();
             }
@@ -1409,7 +1409,7 @@ public partial class FrmMain
                 heading: string.Format(Config.Language[$"{langPath}._Error"]),
                 formOwner: this);
 
-            if (Config.EnableFileWatcher)
+            if (Config.EnableRealTimeFileUpdate)
             {
                 _fileWatcher.Start();
             }
@@ -1421,7 +1421,7 @@ public partial class FrmMain
         if (saveSource == ImageSaveSource.SelectedArea)
         {
             // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableFileWatcher)
+            if (!Config.EnableRealTimeFileUpdate)
             {
                 // reload to view the updated image
                 IG_Reload();
@@ -1436,7 +1436,7 @@ public partial class FrmMain
             LoadClipboardImage(null);
 
             // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableFileWatcher)
+            if (!Config.EnableRealTimeFileUpdate)
             {
                 // reload to view the updated image
                 IG_Reload();
@@ -1458,7 +1458,7 @@ public partial class FrmMain
         // reload image
         IG_Reload();
         Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
-        if (Config.EnableFileWatcher)
+        if (Config.EnableRealTimeFileUpdate)
         {
             _fileWatcher.Start();
         }
@@ -1878,7 +1878,7 @@ public partial class FrmMain
 
 
             // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableFileWatcher)
+            if (!Config.EnableRealTimeFileUpdate)
             {
                 Local.Images.SetFileName(Local.CurrentIndex, newFilePath);
                 Gallery.Items[Local.CurrentIndex].FileName = newFilePath;
@@ -1943,7 +1943,7 @@ public partial class FrmMain
                 BHelper.DeleteFile(filePath, moveToRecycleBin);
 
                 // manually update the change if FileWatcher is not enabled
-                if (!Config.EnableFileWatcher)
+                if (!Config.EnableRealTimeFileUpdate)
                 {
                     Local.Images.Remove(Local.CurrentIndex);
                     Gallery.Items.RemoveAt(Local.CurrentIndex);

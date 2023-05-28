@@ -405,7 +405,7 @@ public static class Config
     /// <summary>
     /// Enables / Disables the file system watcher.
     /// </summary>
-    public static bool EnableFileWatcher { get; set; } = true;
+    public static bool EnableRealTimeFileUpdate { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicates that ImageGlass should open the new image file added in the viewing folder.
@@ -782,7 +782,7 @@ public static class Config
         EnableImageTransition = items.GetValue(nameof(EnableImageTransition), EnableImageTransition);
         EnableCopyMultipleFiles = items.GetValue(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
-        EnableFileWatcher = items.GetValue(nameof(EnableFileWatcher), EnableFileWatcher);
+        EnableRealTimeFileUpdate = items.GetValue(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
         ShouldAutoOpenNewAddedImage = items.GetValue(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
@@ -1095,7 +1095,7 @@ public static class Config
         settings.TryAdd(nameof(EnableImageTransition), EnableImageTransition);
         settings.TryAdd(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
-        settings.TryAdd(nameof(EnableFileWatcher), EnableFileWatcher);
+        settings.TryAdd(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
         settings.TryAdd(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
