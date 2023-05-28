@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "outDir": "./dist/",
     "noImplicitAny": true,
     "declaration": true,
