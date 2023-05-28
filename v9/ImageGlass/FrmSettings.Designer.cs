@@ -43,6 +43,7 @@ namespace ImageGlass
             Location = new Point(0, 0);
             Margin = new Padding(6);
             MaximizeBox = true;
+            MinimumSize = new Size(500, 300);
             Name = "FrmSettings";
             StartPosition = FormStartPosition.Manual;
             Text = "Settings";

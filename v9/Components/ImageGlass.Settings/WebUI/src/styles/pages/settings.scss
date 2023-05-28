@@ -1,7 +1,7 @@
 [page="settings"] {
   #app {
     display: grid;
-    grid-template-areas: "sidebar main" "footer footer";
+    grid-template-areas: "sidebar main" "sidebar footer";
     grid-template-columns: min-content 1fr;
     grid-template-rows: 1fr min-content;
     overflow: hidden;
@@ -15,14 +15,12 @@
     padding: 0.5rem 0.25rem;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: rgb(var(--AppBg) / 0.5);
   }
 
   #app>main {
     grid-area: main;
     padding: 1rem;
     background-color: rgb(var(--AppBg) / 0.8);
-    min-width: 30rem;
     max-height: fit-content;
     overflow-y: auto;
     overflow-x: hidden;
@@ -48,6 +46,8 @@
 
     &.tab-page {
       padding-left: 0;
+      margin-bottom: 0;
+      min-width: 30rem;
 
       &:not(.active) {
         display: none;
