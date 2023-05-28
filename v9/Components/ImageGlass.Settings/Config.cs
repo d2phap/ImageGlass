@@ -728,7 +728,7 @@ public static class Config
 
 
 
-    #region Public functions
+    #region Public static functions
 
     /// <summary>
     /// Loads and parsse configs from file
@@ -1028,264 +1028,21 @@ public static class Config
 
 
     /// <summary>
-    /// Loads theme pack <see cref="Config.Theme"/> and only theme colors.
-    /// </summary>
-    /// <param name="darkMode">
-    /// Determine which theme should be loaded: <see cref="DarkTheme"/> or <see cref="LightTheme"/>.
-    /// </param>
-    /// <param name="useFallBackTheme">
-    /// If theme pack is invalid, should load the default theme pack <see cref="Constants.DEFAULT_THEME"/>?
-    /// </param>
-    /// <param name="throwIfThemeInvalid">
-    /// If theme pack is invalid, should throw exception?
-    /// </param>
-    /// <exception cref="InvalidDataException"></exception>
-    public static void LoadThemePack(bool darkMode, bool useFallBackTheme, bool throwIfThemeInvalid)
-    {
-        var themeFolderName = darkMode ? DarkTheme : LightTheme;
-        if (string.IsNullOrEmpty(themeFolderName))
-        {
-            themeFolderName = Constants.DEFAULT_THEME;
-        }
-
-        // theme pack is already updated
-        if (themeFolderName.Equals(Theme.FolderName, StringComparison.InvariantCultureIgnoreCase))
-        {
-            return;
-        }
-
-        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
-
-        if (!th.IsValid)
-        {
-            if (useFallBackTheme)
-            {
-                th.Dispose();
-                th = null;
-
-                // load default theme
-                th = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
-            }
-        }
-
-        if (!th.IsValid && throwIfThemeInvalid)
-        {
-            th.Dispose();
-            th = null;
-
-            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
-                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
-        }
-
-        // update the name of dark/light theme
-        if (darkMode) DarkTheme = th.FolderName;
-        else LightTheme = th.FolderName;
-
-        // load theme settings
-        th.ReloadThemeSettings();
-
-        // load theme colors
-        th.ReloadThemeColors();
-
-        // load background color
-        if (Config.BackgroundColor == Theme.Colors.BgColor)
-        {
-            Config.BackgroundColor = th.Colors.BgColor;
-        }
-
-
-        // set to the current theme
-        Theme?.Dispose();
-        Theme = th;
-    }
-
-
-    /// <summary>
     /// Parses and writes configs to file
     /// </summary>
     public static async Task WriteAsync()
     {
         var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
-        var jsonObj = PrepareJsonSettingObjects();
+        var jsonObj = PrepareJsonSettingsObject();
 
         await BHelper.WriteJsonAsync(jsonFile, jsonObj);
     }
 
 
     /// <summary>
-    /// Gets property by name.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static PropertyInfo? GetProp(string? name)
-    {
-        if (string.IsNullOrEmpty(name))
-            return null;
-
-        // Find the public property in Config
-        var prop = typeof(Config)
-            .GetProperties(BindingFlags.Public | BindingFlags.Static)
-            .FirstOrDefault(i => i.Name == name);
-
-        return prop;
-    }
-
-
-    /// <summary>
-    /// Show the default error popup for igcmd/igcmd10.exe
-    /// </summary>
-    /// <returns><see cref="IgExitCode.Error"/></returns>
-    public static int ShowDefaultIgCommandError(string igcmdExeName)
-    {
-        var url = "https://imageglass.org/docs/command-line-utilities";
-        var langPath = $"_._IgCommandExe._DefaultError";
-
-        var result = ShowError(null,
-            title: Application.ProductName + " v" + Application.ProductVersion,
-            heading: Language[$"{langPath}._Heading"],
-            description: string.Format(Language[$"{langPath}._Description"], url),
-            buttons: PopupButton.LearnMore_Close);
-
-
-        if (result.ExitResult == PopupExitResult.OK)
-        {
-            BHelper.OpenUrl(url, $"{igcmdExeName}_invalid_command");
-        }
-
-        return (int)IgExitCode.Error;
-    }
-
-
-    /// <summary>
-    /// Shows unhandled exception popup
-    /// </summary>
-    public static void HandleException(Exception ex)
-    {
-        var exeVersion = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
-        var appInfo = Application.ProductName + " v" + exeVersion;
-        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
-
-        var langPath = $"_._UnhandledException";
-        var description = Language[$"{langPath}._Description"];
-        var details =
-            $"Version: {appInfo}\r\n" +
-            $"Release code: {Constants.APP_CODE}\r\n" +
-            $"OS: {osInfo}\r\n\r\n" +
-
-            $"----------------------------------------------------\r\n" +
-            $"Error:\r\n\r\n" +
-            $"{ex.Message}\r\n" +
-            $"----------------------------------------------------\r\n\r\n" +
-
-            ex.ToString();
-
-        var result = ShowError(null,
-            title: Application.ProductName + " - " + Language[langPath],
-            heading: ex.Message,
-            description: description,
-            details: details,
-            buttons: PopupButton.Continue_Quit);
-
-        if (result.ExitResult == PopupExitResult.Cancel)
-        {
-            Application.Exit();
-        }
-    }
-
-
-
-    /// <summary>
-    /// Shows information popup widow.
-    /// </summary>
-    /// <param name="title">Popup title.</param>
-    /// <param name="heading">Popup heading text.</param>
-    /// <param name="description">Popup description.</param>
-    /// <param name="details">Other details</param>
-    /// <param name="note">Note text.</param>
-    /// <param name="buttons">Popup buttons.</param>
-    public static PopupResult ShowInfo(
-        Form? formOwner,
-        string description = "",
-        string title = "",
-        string heading = "",
-        string details = "",
-        string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
-        Image? thumbnail = null,
-        PopupButton buttons = PopupButton.OK,
-        string optionText = "")
-    {
-        SystemSounds.Question.Play();
-
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
-    }
-
-
-    /// <summary>
-    /// Shows warning popup widow.
-    /// </summary>
-    /// <param name="title">Popup title.</param>
-    /// <param name="heading">Popup heading text.</param>
-    /// <param name="description">Popup description.</param>
-    /// <param name="details">Other details</param>
-    /// <param name="note">Note text.</param>
-    /// <param name="buttons">Popup buttons.</param>
-    public static PopupResult ShowWarning(
-        Form? formOwner,
-        string description = "",
-        string title = "",
-        string? heading = null,
-        string details = "",
-        string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
-        Image? thumbnail = null,
-        PopupButton buttons = PopupButton.OK,
-        string optionText = "")
-    {
-        heading ??= Language["_._Warning"];
-        SystemSounds.Exclamation.Play();
-
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
-    }
-
-
-    /// <summary>
-    /// Shows error popup widow.
-    /// </summary>
-    /// <param name="title">Popup title.</param>
-    /// <param name="heading">Popup heading text.</param>
-    /// <param name="description">Popup description.</param>
-    /// <param name="details">Other details</param>
-    /// <param name="note">Note text.</param>
-    /// <param name="buttons">Popup buttons.</param>
-    public static PopupResult ShowError(
-        Form? formOwner,
-        string description = "",
-        string title = "",
-        string? heading = null,
-        string details = "",
-        string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
-        Image? thumbnail = null,
-        PopupButton buttons = PopupButton.OK,
-        string optionText = "")
-    {
-        heading ??= Language["_._Error"];
-        SystemSounds.Asterisk.Play();
-
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
-    }
-
-
-    #endregion
-
-
-    #region Private functions
-
-    /// <summary>
     /// Converts all settings to ExpandoObject for parsing JSON.
     /// </summary>
-    private static dynamic PrepareJsonSettingObjects()
+    public static dynamic PrepareJsonSettingsObject()
     {
         var settings = new ExpandoObject();
 
@@ -1441,105 +1198,95 @@ public static class Config
     }
 
 
-    // ImageFormats
-    #region ImageFormats
+    /// <summary>
+    /// Gets property by name.
+    /// </summary>
+    public static PropertyInfo? GetProp(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        // Find the public property in Config
+        var prop = typeof(Config)
+            .GetProperties(BindingFlags.Public | BindingFlags.Static)
+            .FirstOrDefault(i => i.Name == name);
+
+        return prop;
+    }
+
 
     /// <summary>
-    /// Returns distinc list of image formats.
+    /// Loads theme pack <see cref="Config.Theme"/> and only theme colors.
     /// </summary>
-    /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
-    /// <returns></returns>
-    public static HashSet<string> GetImageFormats(string formats)
+    /// <param name="darkMode">
+    /// Determine which theme should be loaded: <see cref="DarkTheme"/> or <see cref="LightTheme"/>.
+    /// </param>
+    /// <param name="useFallBackTheme">
+    /// If theme pack is invalid, should load the default theme pack <see cref="Constants.DEFAULT_THEME"/>?
+    /// </param>
+    /// <param name="throwIfThemeInvalid">
+    /// If theme pack is invalid, should throw exception?
+    /// </param>
+    /// <exception cref="InvalidDataException"></exception>
+    public static void LoadThemePack(bool darkMode, bool useFallBackTheme, bool throwIfThemeInvalid)
     {
-        var list = new HashSet<string>();
-        var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        char[] wildTrim = { '*' };
-
-        foreach (var ext in formatList)
+        var themeFolderName = darkMode ? DarkTheme : LightTheme;
+        if (string.IsNullOrEmpty(themeFolderName))
         {
-            list.Add(ext.Trim(wildTrim));
+            themeFolderName = Constants.DEFAULT_THEME;
         }
 
-        return list;
-    }
-
-    /// <summary>
-    /// Returns the image formats string. Example: <c>*.png;*.jpg;</c>
-    /// </summary>
-    /// <param name="list">The input HashSet</param>
-    /// <returns></returns>
-    public static string GetImageFormats(HashSet<string> list)
-    {
-        var sb = new StringBuilder(list.Count);
-        foreach (var item in list)
+        // theme pack is already updated
+        if (themeFolderName.Equals(Theme.FolderName, StringComparison.InvariantCultureIgnoreCase))
         {
-            sb.Append('*').Append(item).Append(';');
+            return;
         }
 
-        return sb.ToString();
-    }
+        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
-    #endregion // ImageFormats
-
-
-    // System events
-    #region System events
-
-    private static void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-    {
-        // User settings changed:
-        // - Color mode: dark / light
-        // - Transparency
-        // - Accent color
-        // - others...
-        if (e.Category == UserPreferenceCategory.General)
+        if (!th.IsValid)
         {
-            DelayTriggerRequestUpdatingColorModeEvent();
-        }
-    }
-
-
-    /// <summary>
-    /// Delays triggering <see cref="RequestUpdatingColorMode"/> event.
-    /// </summary>
-    private static void DelayTriggerRequestUpdatingColorModeEvent()
-    {
-        _requestUpdatingColorModeCancelToken.Cancel();
-        _requestUpdatingColorModeCancelToken = new();
-
-        _ = TriggerRequestUpdatingColorModeEventAsync(_requestUpdatingColorModeCancelToken.Token);
-    }
-
-
-    /// <summary>
-    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
-    /// </summary>
-    private static async Task TriggerRequestUpdatingColorModeEventAsync(CancellationToken token = default)
-    {
-        try
-        {
-            // since the message is triggered multiple times (3 - 5 times)
-            await Task.Delay(10, token);
-            token.ThrowIfCancellationRequested();
-
-
-            var isDarkMode = WinColorsApi.IsDarkMode;
-            if (_isDarkMode != isDarkMode)
+            if (useFallBackTheme)
             {
-                _isDarkMode = isDarkMode;
+                th.Dispose();
+                th = null;
 
-                // emit event here
-                RequestUpdatingColorMode?.Invoke(new SystemColorModeChangedEventArgs(_isDarkMode));
+                // load default theme
+                th = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
             }
         }
-        catch (OperationCanceledException) { }
+
+        if (!th.IsValid && throwIfThemeInvalid)
+        {
+            th.Dispose();
+            th = null;
+
+            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
+                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
+        }
+
+        // update the name of dark/light theme
+        if (darkMode) DarkTheme = th.FolderName;
+        else LightTheme = th.FolderName;
+
+        // load theme settings
+        th.ReloadThemeSettings();
+
+        // load theme colors
+        th.ReloadThemeColors();
+
+        // load background color
+        if (Config.BackgroundColor == Theme.Colors.BgColor)
+        {
+            Config.BackgroundColor = th.Colors.BgColor;
+        }
+
+
+        // set to the current theme
+        Theme?.Dispose();
+        Theme = th;
     }
-    #endregion // System events
 
-    #endregion
-
-
-    #region Public static functions
 
     /// <summary>
     /// Updates form icon using theme setting.
@@ -1562,7 +1309,6 @@ public static class Config
     /// <summary>
     /// Parses string dictionary to hotkey dictionary
     /// </summary>
-    /// <returns></returns>
     public static Dictionary<string, List<Hotkey>> ParseHotkeys(Dictionary<string, string?[]>? dict)
     {
         var result = new Dictionary<string, List<Hotkey>>();
@@ -1698,8 +1444,259 @@ public static class Config
     }
 
 
+    #region Popup functions
 
-    #endregion
+    /// <summary>
+    /// Shows information popup widow.
+    /// </summary>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    public static PopupResult ShowInfo(
+        Form? formOwner,
+        string description = "",
+        string title = "",
+        string heading = "",
+        string details = "",
+        string note = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
+        Image? thumbnail = null,
+        PopupButton buttons = PopupButton.OK,
+        string optionText = "")
+    {
+        SystemSounds.Question.Play();
+
+        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+    }
+
+
+    /// <summary>
+    /// Shows warning popup widow.
+    /// </summary>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    public static PopupResult ShowWarning(
+        Form? formOwner,
+        string description = "",
+        string title = "",
+        string? heading = null,
+        string details = "",
+        string note = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
+        Image? thumbnail = null,
+        PopupButton buttons = PopupButton.OK,
+        string optionText = "")
+    {
+        heading ??= Language["_._Warning"];
+        SystemSounds.Exclamation.Play();
+
+        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+    }
+
+
+    /// <summary>
+    /// Shows error popup widow.
+    /// </summary>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    public static PopupResult ShowError(
+        Form? formOwner,
+        string description = "",
+        string title = "",
+        string? heading = null,
+        string details = "",
+        string note = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
+        Image? thumbnail = null,
+        PopupButton buttons = PopupButton.OK,
+        string optionText = "")
+    {
+        heading ??= Language["_._Error"];
+        SystemSounds.Asterisk.Play();
+
+        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+    }
+
+
+    /// <summary>
+    /// Show the default error popup for igcmd/igcmd10.exe
+    /// </summary>
+    /// <returns><see cref="IgExitCode.Error"/></returns>
+    public static int ShowDefaultIgCommandError(string igcmdExeName)
+    {
+        var url = "https://imageglass.org/docs/command-line-utilities";
+        var langPath = $"_._IgCommandExe._DefaultError";
+
+        var result = ShowError(null,
+            title: Application.ProductName + " v" + Application.ProductVersion,
+            heading: Language[$"{langPath}._Heading"],
+            description: string.Format(Language[$"{langPath}._Description"], url),
+            buttons: PopupButton.LearnMore_Close);
+
+
+        if (result.ExitResult == PopupExitResult.OK)
+        {
+            BHelper.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+        }
+
+        return (int)IgExitCode.Error;
+    }
+
+
+    /// <summary>
+    /// Shows unhandled exception popup
+    /// </summary>
+    public static void HandleException(Exception ex)
+    {
+        var exeVersion = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
+        var appInfo = Application.ProductName + " v" + exeVersion;
+        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
+
+        var langPath = $"_._UnhandledException";
+        var description = Language[$"{langPath}._Description"];
+        var details =
+            $"Version: {appInfo}\r\n" +
+            $"Release code: {Constants.APP_CODE}\r\n" +
+            $"OS: {osInfo}\r\n\r\n" +
+
+            $"----------------------------------------------------\r\n" +
+            $"Error:\r\n\r\n" +
+            $"{ex.Message}\r\n" +
+            $"----------------------------------------------------\r\n\r\n" +
+
+            ex.ToString();
+
+        var result = ShowError(null,
+            title: Application.ProductName + " - " + Language[langPath],
+            heading: ex.Message,
+            description: description,
+            details: details,
+            buttons: PopupButton.Continue_Quit);
+
+        if (result.ExitResult == PopupExitResult.Cancel)
+        {
+            Application.Exit();
+        }
+    }
+
+
+    #endregion // Popup functions
+
+
+    #endregion // Public static functions
+
+
+
+
+    #region Private functions
+
+    // ImageFormats
+    #region ImageFormats
+
+    /// <summary>
+    /// Returns distinc list of image formats.
+    /// </summary>
+    /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
+    /// <returns></returns>
+    public static HashSet<string> GetImageFormats(string formats)
+    {
+        var list = new HashSet<string>();
+        var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        char[] wildTrim = { '*' };
+
+        foreach (var ext in formatList)
+        {
+            list.Add(ext.Trim(wildTrim));
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// Returns the image formats string. Example: <c>*.png;*.jpg;</c>
+    /// </summary>
+    /// <param name="list">The input HashSet</param>
+    /// <returns></returns>
+    public static string GetImageFormats(HashSet<string> list)
+    {
+        var sb = new StringBuilder(list.Count);
+        foreach (var item in list)
+        {
+            sb.Append('*').Append(item).Append(';');
+        }
+
+        return sb.ToString();
+    }
+
+    #endregion // ImageFormats
+
+
+    // System events
+    #region System events
+
+    private static void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+    {
+        // User settings changed:
+        // - Color mode: dark / light
+        // - Transparency
+        // - Accent color
+        // - others...
+        if (e.Category == UserPreferenceCategory.General)
+        {
+            DelayTriggerRequestUpdatingColorModeEvent();
+        }
+    }
+
+
+    /// <summary>
+    /// Delays triggering <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private static void DelayTriggerRequestUpdatingColorModeEvent()
+    {
+        _requestUpdatingColorModeCancelToken.Cancel();
+        _requestUpdatingColorModeCancelToken = new();
+
+        _ = TriggerRequestUpdatingColorModeEventAsync(_requestUpdatingColorModeCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private static async Task TriggerRequestUpdatingColorModeEventAsync(CancellationToken token = default)
+    {
+        try
+        {
+            // since the message is triggered multiple times (3 - 5 times)
+            await Task.Delay(10, token);
+            token.ThrowIfCancellationRequested();
+
+
+            var isDarkMode = WinColorsApi.IsDarkMode;
+            if (_isDarkMode != isDarkMode)
+            {
+                _isDarkMode = isDarkMode;
+
+                // emit event here
+                RequestUpdatingColorMode?.Invoke(new SystemColorModeChangedEventArgs(_isDarkMode));
+            }
+        }
+        catch (OperationCanceledException) { }
+    }
+    #endregion // System events
+
+    #endregion // Private functions
 
 
 }
