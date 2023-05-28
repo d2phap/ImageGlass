@@ -115,6 +115,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Error", "Error"); // v9.0
         Add("_._Warning", "Warning"); // v9.0
         Add("_._Copy", "Copy"); //v9.0
+        Add("_._Browse", "Browse…"); //v9.0
         Add("_._CheckForUpdate", "Check for update…"); //v5.0
         Add("_._Update", "Update"); //v9.0
 
@@ -391,6 +392,8 @@ public class IgLang : Dictionary<string, string>
 
         #region FrmSettings
         Add("FrmSettings._Text", "Settings");
+
+        // nav bar
         Add("FrmSettings.Nav._General", "General");
         Add("FrmSettings.Nav._Image", "Image");
         Add("FrmSettings.Nav._Slideshow", "Slideshow");
@@ -405,29 +408,69 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Nav._Language", "Language");
         Add("FrmSettings.Nav._Appearance", "Appearance");
 
-        #region Tab names
-        //Add("FrmSetting.lblGeneral", "General");
-        //Add("FrmSetting.lblImage", "Image"); //v4.0
-        //Add("FrmSetting.lblEdit", "Edit"); //v6.0
-        //Add("FrmSetting.lblFileTypeAssoc", "File Type Associations"); //v2.0 final
-        //Add("FrmSetting.lblToolbar", "Toolbar"); //v5.0
-        //Add("FrmSetting.lblLanguage", "Language");
-        //Add("FrmSetting.lblTheme", "Theme"); //v5.0
-        //Add("FrmSetting.lblKeyboard", "Keyboard"); // v7.0
-        #endregion
+        #region Tab General
+        // General > General
+        Add("FrmSettings.Tab.General._StartupLocation", "Startup location");
+        Add("FrmSettings.Tab.General._ConfigLocation", "Config location");
+        Add("FrmSettings.Tab.General._UserSettingsFile", "User settings file");
+
+        // General > Startup
+        Add("FrmSettings.Tab.General._Startup", "Startup");
+        Add("FrmSettings.Tab.General._ShowWelcomeImage", "Show welcome image");
+        Add("FrmSettings.Tab.General._ShouldOpenLastSeenImage", "Open the last seen image");
+
+        // General > Real-time update
+        Add("FrmSettings.Tab.General._RealTimeFileUpdate", "Real-time file update");
+        Add("FrmSettings.Tab.General._EnableRealTimeFileUpdate", "Monitor file changes in the viewing folder and update in realtime");
+        Add("FrmSettings.Tab.General._ShouldAutoOpenNewAddedImage", "Open the new added image automatically");
+
+        // General > Others
+        Add("FrmSettings.Tab.General._Others", "Others");
+        Add("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
+        Add("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
+        Add("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration");
+        #endregion // Tab General
+
+
+        #region Tab Image
+        // Image > Image loading
+        Add("FrmSettings.Tab.Image._ImageLoading", "Image loading");
+        Add("FrmSettings.Tab.Image._ImageLoadingOrder", "Image loading order");
+        Add("FrmSettings.Tab.Image._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
+        Add("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
+        Add("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
+        Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Loads hidden images");
+        Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back viewer to the first image when reaching the end of image list");
+        Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded.");
+        Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect.");
+        Add("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
+        Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
+        Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
+        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize", "Minimum size of the embedded thumbnail to be loaded");
+        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width", "Width");
+        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height", "Height");
+
+        // Image > Image Booster
+        Add("FrmSettings.Tab.Image._ImageBooster", "Image Booster");
+        Add("FrmSettings.Tab.Image._ImageBoosterCacheCount", "Number of images cached by Image Booster (one direction)");
+        Add("FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension", "Maximum image dimension to be cached (in pixels)");
+        Add("FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb", "Maximum image file size to be cached (in megabytes)");
+
+        // Image > Color management
+        Add("FrmSettings.Tab.Image._ColorManagement", "Color management");
+        Add("FrmSettings.Tab.Image._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
+        Add("FrmSettings.Tab.Image._ColorProfile", "Color profile");
+        Add("FrmSettings.Tab.Image._ColorProfile._None", "None");
+        Add("FrmSettings.Tab.Image._ColorProfile._Custom", "Custom…");
+        #endregion // Tab Image
+
+
+
+
+
 
         #region TAB General
-        #region Start up
-        //Add("FrmSetting.lblHeadStartup", "Start up"); //v4.0
-        //Add("FrmSetting.chkWelcomePicture", "Show welcome picture");
-        //Add("FrmSetting.chkLastSeenImage", "Open last seen image"); //v6.0
-        //Add("FrmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
 
-        #endregion
-
-        #region Configuration dir
-        //Add("FrmSetting.lblHeadConfigDir", "Configuration directory"); // 5.5.x
-        #endregion
 
         #region Viewer
         //Add("FrmSetting.lblHeadViewer", "Viewer"); // v7.6
@@ -441,41 +484,12 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region Others
-        //Add("FrmSetting.lblHeadOthers", "Others"); //v4.0
-        //Add("FrmSetting.chkAutoUpdate", "Check for update automatically");
-        //Add("FrmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
-        //Add("FrmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
         //Add("FrmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
         //Add("FrmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
-        //Add("FrmSetting.chkShowToast", "Show toast message"); //v7.5
 
         #endregion
         #endregion
 
-        #region TAB Image
-        #region Image loading
-        //Add("FrmSetting.lblHeadImageLoading", "Image loading"); //v4.0
-        //Add("FrmSetting.chkFindChildFolder", "Find images in child folder");
-        //Add("FrmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
-        //Add("FrmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
-        //Add("FrmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
-        //Add("FrmSetting.chkIsUseRawThumbnail", "Use embedded thumbnail for RAW formats"); //v8.3
-
-        //Add("FrmSetting.lblImageLoadingOrder", "Image loading order");
-        //Add("FrmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
-        //Add("FrmSetting.chkGroupByDirectory", "Group images by directory"); //v8.0
-        //Add("FrmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
-        #endregion
-
-        #region Color Management
-        //Add("FrmSetting.lblColorManagement", "Color management"); //v6.0
-        //Add("FrmSetting.chkApplyColorProfile", "Apply also for images without embedded color profile"); //v6.0
-        //Add("FrmSetting.lblColorProfile", "Color profile:"); //v6.0
-        //Add("FrmSetting.lnkColorProfileBrowse", "Browse…"); //v6.0
-        //Add("FrmSetting.cmbColorProfile._None", "None"); //v6.0
-        //Add("FrmSetting.cmbColorProfile._CustomProfileFile", "Custom…"); //v6.0
-
-        #endregion
 
         #region Mouse wheel actions
         //Add("FrmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
@@ -647,7 +661,7 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
-        #endregion
+
 
         #region FrmAddNewFormat
         Add("FrmAddNewFormat.lblFileExtension", "File extension"); // 4.0
