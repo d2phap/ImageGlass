@@ -331,6 +331,7 @@ progress {
   --focus-color: var(--Accent);
 
   width: calc(var(--control-width) * 1px);
+  min-height: calc(var(--control-height) * 1px);
   padding: 0.325rem;
   font-size: inherit;
   font-family: var(--fontBase);

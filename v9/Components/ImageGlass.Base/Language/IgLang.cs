@@ -116,6 +116,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Warning", "Warning"); // v9.0
         Add("_._Copy", "Copy"); //v9.0
         Add("_._Browse", "Browse…"); //v9.0
+        Add("_._Reset", "Reset"); //v9.0
         Add("_._CheckForUpdate", "Check for update…"); //v5.0
         Add("_._Update", "Update"); //v9.0
 
@@ -544,7 +545,7 @@ public class IgLang : Dictionary<string, string>
         #region Tab Appearance
         // Appearance > Appearance
         Add("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
-        Add("FrmSettings.Tab.Appearance._BackgroundColor", "Background color");
+        Add("FrmSettings.Tab.Appearance._BackgroundColor", "Viewer background color");
         Add("FrmSettings.Tab.Appearance._SlideshowBackgroundColor", "Slideshow background color");
 
         // Appearance > Theme
@@ -553,16 +554,6 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Appearance._LightTheme", "Light theme");
         #endregion // Tab Appearance
 
-
-        #region TAB General
-
-
-        #region Viewer
-        //Add("FrmSetting.lblBackGroundColor", "Background color");
-        //Add("FrmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
-        #endregion
-
-        #endregion
 
 
         #region Mouse wheel actions
@@ -637,14 +628,7 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region TAB Language
-        //Add("FrmSetting.lblLanguageText", "Installed languages");
-        //Add("FrmSetting.lnkRefresh", "> Refresh");
         //Add("FrmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
-
-        //Add("FrmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)…"); //v2.0 final
-        //Add("FrmSetting.lnkCreateNew", "> Create new language pack…");
-        //Add("FrmSetting.lnkEdit", "> Edit selected language pack…");
-        //Add("FrmSetting.lnkGetMoreLanguage", "> Get more language packs…");
         #endregion
 
         #region TAB Theme
