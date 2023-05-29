@@ -1,5 +1,6 @@
 import { setActiveTab } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
+import { loadSettings } from './page_settings/settings';
 
 // export to global
 if (!window._pageSettings) {
@@ -10,6 +11,7 @@ if (!window._pageSettings) {
 }
 window._pageSettings.setActiveTab = setActiveTab;
 window._pageSettings.loadLanguage = loadLanguage;
+window._pageSettings.loadSettings = loadSettings;
 
 
 // navigation bar event
@@ -25,3 +27,4 @@ for (let i = 0; i < navItems.length; i++) {
 
 setActiveTab('image');
 loadLanguage();
+loadSettings();

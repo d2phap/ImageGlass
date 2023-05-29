@@ -6,4 +6,5 @@ export type IPageSettings = Record<string, any> & {
   // global functions
   setActiveTab?: (tabName: string) => void;
   loadLanguage?: () => void;
+  loadSettings?: () => void;
 };
