@@ -10,6 +10,9 @@ if (!window._pageSettings) {
   window._pageSettings = {
     config: {},
     lang: {},
+    startUpDir: '',
+    configDir: '',
+    userConfigFilePath: '',
   };
 }
 _pageSettings.setActiveTab = setActiveTab;

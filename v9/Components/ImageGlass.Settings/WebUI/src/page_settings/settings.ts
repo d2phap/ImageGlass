@@ -46,4 +46,11 @@ export const loadSettings = () => {
       }
     }
   }
+
+
+  // tab General
+  query('#Lnk_StartupDir').innerText = _pageSettings.startUpDir || '(unknown)';
+  query('#Lnk_ConfigDir').innerText = _pageSettings.configDir || '(unknown)';
+  query('#Lnk_UserConfigFile').innerText = _pageSettings.userConfigFilePath || '(unknown)';
+
 };

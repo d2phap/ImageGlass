@@ -67,10 +67,17 @@ public partial class FrmSettings : WebForm
         // get language as json string
         var configLangJson = BHelper.ToJson(Config.Language);
 
+        var startupDir = App.StartUpDir().Replace("\\", "\\\\");
+        var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
+        var userConfigFilePath = App.ConfigDir(PathType.Dir, Source.UserFilename).Replace("\\", "\\\\");
+
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
              <script>
                 window._pageSettings = {{
+                    startUpDir: '{startupDir}',
+                    configDir: '{configDir}',
+                    userConfigFilePath: '{userConfigFilePath}',
                     config: {configJson},
                     lang: {configLangJson},
                 }};
