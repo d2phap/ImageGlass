@@ -3,14 +3,14 @@
  * Loads language.
  */
 export const loadLanguage = () => {
-  for (const langKey in window._pageSettings.lang) {
-    if (!Object.prototype.hasOwnProperty.call(window._pageSettings.lang, langKey)) {
+  for (const langKey in _pageSettings.lang) {
+    if (!Object.prototype.hasOwnProperty.call(_pageSettings.lang, langKey)) {
       continue;
     }
-    
-    const langValue = window._pageSettings.lang[langKey];
 
-    const els = Array.from<HTMLElement>(document.querySelectorAll(`[data-lang="${langKey}"]`));
+    const langValue = _pageSettings.lang[langKey];
+
+    const els = queryAll(`[data-lang="${langKey}"]`);
     for (const el of els) {
       el.innerText = langValue;
     }

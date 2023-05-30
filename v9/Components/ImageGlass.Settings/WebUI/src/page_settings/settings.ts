@@ -3,12 +3,13 @@
  * Loads settings.
  */
 export const loadSettings = () => {
-  for (const configKey in window._pageSettings.config) {
-    if (!Object.prototype.hasOwnProperty.call(window._pageSettings.config, configKey)) {
+  // auto loads settings for String, Number, Boolean
+  for (const configKey in _pageSettings.config) {
+    if (!Object.prototype.hasOwnProperty.call(_pageSettings.config, configKey)) {
       continue;
     }
 
-    const configValue = window._pageSettings.config[configKey];
+    const configValue = _pageSettings.config[configKey];
 
     // only auto load the settings if the value type is supported
     const canAutoSet = typeof configValue === 'string'
@@ -18,7 +19,7 @@ export const loadSettings = () => {
 
 
     // find the html element
-    const el = document.querySelector(`[name="${configKey}"]`);
+    const el = query(`[name="${configKey}"]`);
     if (!el) continue;
 
 
