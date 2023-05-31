@@ -39,7 +39,6 @@ public static class Constants
     public const string APP_PROTOCOL = "igm";
     public const string APP_CODE = "moon";
     public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
-    public const string CURRENT_MONITOR_PROFILE = "CurrentMonitorProfile";
     public const int MAX_IMAGE_DIMENSION = 16_384;
 
     public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";

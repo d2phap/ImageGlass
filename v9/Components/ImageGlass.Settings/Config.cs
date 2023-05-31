@@ -557,7 +557,7 @@ public static class Config
     /// <summary>
     /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
     /// </summary>
-    public static string ColorProfile { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
+    public static string ColorProfile { get; set; } = nameof(ColorProfileOption.CurrentMonitorProfile);
 
     /// <summary>
     /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.

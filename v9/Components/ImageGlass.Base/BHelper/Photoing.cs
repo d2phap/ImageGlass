@@ -424,35 +424,18 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Get built-in color profiles
-    /// </summary>
-    /// <returns></returns>
-    public static string[] GetBuiltInColorProfiles()
-    {
-        return new string[]
-        {
-            "AdobeRGB1998",
-            "AppleRGB",
-            "CoatedFOGRA39",
-            "ColorMatchRGB",
-            "sRGB",
-            "USWebCoatedSWOP",
-        };
-    }
-
-
-    /// <summary>
     /// Get the correct color profile name
     /// </summary>
     /// <param name="name">Name or Full path of color profile</param>
     /// <returns></returns>
     public static string GetCorrectColorProfileName(string name)
     {
-        var profileName = "";
+        var profileName = string.Empty;
+        var currentMonitorProfile = nameof(ColorProfileOption.CurrentMonitorProfile);
 
-        if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase))
+        if (name.Equals(currentMonitorProfile, StringComparison.InvariantCultureIgnoreCase))
         {
-            return Constants.CURRENT_MONITOR_PROFILE;
+            return currentMonitorProfile;
         }
         else if (File.Exists(name))
         {
@@ -460,17 +443,15 @@ public partial class BHelper
         }
         else
         {
-            var builtInProfiles = GetBuiltInColorProfiles();
-            var result = Array.Find(builtInProfiles, i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase));
+            var builtInProfiles = Enum.GetNames(typeof(ColorProfileOption))
+                .Where(i => new string[] {
+                    nameof(ColorProfileOption.None),
+                    nameof(ColorProfileOption.CurrentMonitorProfile),
+                    nameof(ColorProfileOption.Custom),
+                }.Contains(i));
 
-            if (result != null)
-            {
-                profileName = result;
-            }
-            else
-            {
-                return string.Empty;
-            }
+
+            profileName = builtInProfiles.FirstOrDefault(i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase)) ?? string.Empty;
         }
 
         return profileName;
@@ -484,7 +465,9 @@ public partial class BHelper
     /// <returns></returns>
     public static ColorProfile? GetColorProfile(string name)
     {
-        if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase))
+        var currentMonitorProfile = nameof(ColorProfileOption.CurrentMonitorProfile);
+
+        if (name.Equals(currentMonitorProfile, StringComparison.InvariantCultureIgnoreCase))
         {
             var winHandle = Process.GetCurrentProcess().MainWindowHandle;
             var colorProfilePath = DisplayApi.GetMonitorColorProfileFromWindow(winHandle);

@@ -42,7 +42,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets sets ColorProfile name of path
     /// </summary>
-    public string ColorProfileName { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
+    public string ColorProfileName { get; set; } = nameof(ColorProfileOption.CurrentMonitorProfile);
 
     /// <summary>
     /// Gets, sets the value indicates if the <see cref="ColorProfileName"/>
