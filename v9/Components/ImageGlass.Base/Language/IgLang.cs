@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 
 namespace ImageGlass.Base;
@@ -128,7 +129,9 @@ public class IgLang : Dictionary<string, string>
         Add($"_._NotSupported", "Unsupported format"); //v9.0
         Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
 
+        #region Enums
 
+        // ImageOrderBy
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
@@ -137,13 +140,40 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
 
+        // ImageOrderType
         Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
         Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Desc)}", "Descending");  //v8.0
 
+        // AfterEditAppAction
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Nothing)}", "Nothing"); //v8.0
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Minimize)}", "Minimize"); //v8.0
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Close)}", "Close"); //v8.0
 
+        // ColorProfileOption
+        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.None)}", "None");
+        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.CurrentMonitorProfile)}", "Current monitor profile");
+        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.Custom)}", "Custom…");
+
+        // BackdropStyle
+        Add($"_.{nameof(BackdropStyle)}._{nameof(BackdropStyle.None)}", "None");
+
+        // MouseWheelAction
+        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.DoNothing)}", "Do nothing");
+        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.Zoom)}", "Zoom in / out");
+        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanVertically)}", "Pan up / down");
+        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanHorizontally)}", "Pan left / right");
+        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.BrowseImages)}", "View next / previous Image");
+
+        // ImageInterpolation
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.NearestNeighbor)}", "Nearest neighbor");
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Linear)}", "Linear");
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Cubic)}", "Cubic");
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.SampleLinear)}", "Sample linear");
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Antisotropic)}", "Antisotropic");
+        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.HighQualityBicubic)}", "High quality bicubic");
+
+
+        #endregion // Enums
 
         Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
         Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
@@ -463,8 +493,6 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Image._ColorManagement", "Color management");
         Add("FrmSettings.Tab.Image._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
         Add("FrmSettings.Tab.Image._ColorProfile", "Color profile");
-        Add("FrmSettings.Tab.Image._ColorProfile._None", "None");
-        Add("FrmSettings.Tab.Image._ColorProfile._Custom", "Custom…");
         #endregion // Tab Image
 
 
