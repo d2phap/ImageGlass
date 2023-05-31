@@ -51,6 +51,25 @@ public enum ColorChannel
 
 
 /// <summary>
+/// Color profile options.
+/// </summary>
+public enum ColorProfileOption
+{
+    None,
+    Custom,
+    CurrentMonitorProfile,
+
+    // ImageMagick's profiles
+    AdobeRGB1998,
+    AppleRGB,
+    CoatedFOGRA39,
+    ColorMatchRGB,
+    sRGB,
+    USWebCoatedSWOP,
+}
+
+
+/// <summary>
 /// Types of path
 /// </summary>
 public enum PathType
