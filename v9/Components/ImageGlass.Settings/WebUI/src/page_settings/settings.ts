@@ -78,4 +78,10 @@ export const loadSettings = () => {
   query('#Lnk_ConfigDir').innerText = _pageSettings.configDir || '(unknown)';
   query('#Lnk_UserConfigFile').innerText = _pageSettings.userConfigFilePath || '(unknown)';
 
+  // tab Mouse & Keyboard > Mouse wheel action
+  query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_CtrlAndScroll').value = _pageSettings.config.MouseWheelActions?.CtrlAndScroll || 'DoNothing';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_ShiftAndScroll').value = _pageSettings.config.MouseWheelActions?.ShiftAndScroll || 'DoNothing';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_AltAndScroll').value = _pageSettings.config.MouseWheelActions?.AltAndScroll || 'DoNothing';
+
 };
