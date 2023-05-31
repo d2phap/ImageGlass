@@ -952,6 +952,14 @@ public static class Config
             .ToDictionary(
                 i => BHelper.ParseEnum<MouseWheelEvent>(i.Key),
                 i => BHelper.ParseEnum<MouseWheelAction>(i.Value));
+        // default MouseWheelActions
+        if (!MouseWheelActions.Any())
+        {
+            MouseWheelActions.Add(MouseWheelEvent.Scroll, MouseWheelAction.Zoom);
+            MouseWheelActions.Add(MouseWheelEvent.CtrlAndScroll, MouseWheelAction.PanVertically);
+            MouseWheelActions.Add(MouseWheelEvent.ShiftAndScroll, MouseWheelAction.PanHorizontally);
+            MouseWheelActions.Add(MouseWheelEvent.AltAndScroll, MouseWheelAction.BrowseImages);
+        }
 
 
         // Layout
