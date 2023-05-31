@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
-using System.Text;
+using System.Dynamic;
 
 namespace ImageGlass;
 
@@ -67,9 +68,32 @@ public partial class FrmSettings : WebForm
         // get language as json string
         var configLangJson = BHelper.ToJson(Config.Language);
 
+        // setting paths
         var startupDir = App.StartUpDir().Replace("\\", "\\\\");
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
         var userConfigFilePath = App.ConfigDir(PathType.Dir, Source.UserFilename).Replace("\\", "\\\\");
+
+        // enums
+        var enumObj = new ExpandoObject();
+        var enums = new Type[] {
+            typeof(ImageOrderBy),
+            typeof(ImageOrderType),
+            typeof(ColorProfileOption),
+            typeof(AfterEditAppAction),
+            typeof(ImageInterpolation),
+            typeof(MouseWheelAction),
+            typeof(MouseWheelEvent),
+            typeof(MouseClickEvent),
+            typeof(Base.BackdropStyle),
+            typeof(ToolbarItemModelType),
+        };
+        foreach (var item in enums)
+        {
+            var keys = Enum.GetNames(item);
+            enumObj.TryAdd(item.Name, keys);
+        }
+        var enumsJson = BHelper.ToJson(enumObj);
+
 
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
@@ -78,6 +102,7 @@ public partial class FrmSettings : WebForm
                     startUpDir: '{startupDir}',
                     configDir: '{configDir}',
                     userConfigFilePath: '{userConfigFilePath}',
+                    enums: {enumsJson},
                     config: {configJson},
                     lang: {configLangJson},
                 }};
