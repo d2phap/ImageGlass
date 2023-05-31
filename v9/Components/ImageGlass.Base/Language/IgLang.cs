@@ -129,6 +129,25 @@ public class IgLang : Dictionary<string, string>
         Add($"_._NotSupported", "Unsupported format"); //v9.0
         Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
 
+        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
+        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
+        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported."); // v9.0
+
+        // Gallery tooltip
+        Add($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FrameCount)}", "Frames"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
+
+        // image info
+        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
+        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
+
+
         #region Enums
 
         // ImageOrderBy
@@ -172,26 +191,7 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Antisotropic)}", "Antisotropic");
         Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.HighQualityBicubic)}", "High quality bicubic");
 
-
         #endregion // Enums
-
-        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
-        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
-        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported."); // v9.0
-
-        // Gallery tooltip
-        Add($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FrameCount)}", "Frames"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
-
-        // image info
-        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
-        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
 
 
         #region FrmMain
@@ -406,6 +406,7 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
+
         #region FrmAbout
         Add("FrmAbout._Slogan", "A lightweight, versatile image viewer");
         Add("FrmAbout._Version", "Version:");
@@ -420,6 +421,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmAbout._Credits", "Credits");
         Add("FrmAbout._Donate", "Donate");
         #endregion
+
 
         #region FrmSettings
         Add("FrmSettings._Text", "Settings");
@@ -654,23 +656,6 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
-        #region TAB Tools
-
-        //Add("FrmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
-
-        //Add("FrmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
-
-        //Add("FrmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v8.0
-        //Add("FrmSetting.lnkSelectExifTool", "Select Exif tool file"); // v8.0
-        //Add("FrmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v8.0
-
-        //Add("FrmSetting.lblExifToolCommandArgs", "Command arguments:"); // v8.1
-        //Add("FrmSetting.lblExifToolCommandPreview", "Command preview:"); // v8.1
-        #endregion
-
-        #region TAB Language
-        //Add("FrmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
-        #endregion
 
         #region TAB Theme
 
@@ -701,24 +686,6 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
-        #region TAB Keyboard
-        //Add("FrmSetting.btnKeyReset", "Reset to default"); // v7.0
-        //Add("FrmSetting.lblKeysSpaceBack", "Space / Backspace"); // v7.0
-        //Add("FrmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v7.0
-        //Add("FrmSetting.lblKeysUpDown", "Up / Down arrows"); // v7.0
-        //Add("FrmSetting.lblKeysLeftRight", "Left / Right arrows"); // v7.0
-
-        #region Actions Combo Values
-        //Add("FrmSetting.KeyActions._PrevNextImage", "Previous / Next Image"); // v7.0
-        //Add("FrmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v7.0
-        //Add("FrmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
-        //Add("FrmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
-        //Add("FrmSetting.KeyActions._DoNothing", "Do nothing"); // v7.0
-        #endregion
-
-        #endregion
-
-
 
         #region FrmAddNewFormat
         Add("FrmAddNewFormat.lblFileExtension", "File extension"); // 4.0
@@ -737,6 +704,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmEditApp.lblPreviewLabel", "Preview"); // 5.0
         #endregion
 
+
+
+
         #region FrmFirstLaunch
         Add("FrmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
         Add("FrmFirstLaunch._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
@@ -753,6 +723,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
         Add("FrmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
         #endregion
+
+
+
+
 
         #region FrmCrop
         Add("FrmCrop.LblAspectRatio", "Aspect ratio:"); //v9.0
@@ -791,6 +765,7 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
+
         #region FrmColorPicker
 
         Add("FrmColorPicker.BtnSettings._Tooltip", "Open Color picker settings…"); //v9.0
@@ -805,23 +780,13 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
 
-        // External tools ----------------------------------------------------
+        #region FrmToolNotFound
         Add("FrmToolNotFound._Title", "Tool not found"); // v9.0
         Add("FrmToolNotFound.BtnSelectExecutable", "Select…"); // v9.0
         Add("FrmToolNotFound.LblHeading", "'{0}' is not found!"); // v9.0
         Add("FrmToolNotFound.LblDescription", "ImageGlass was unable to locate the path to the '{0}' executable. To resolve this issue, please update the path to the '{0}' as necessary."); // v9.0
         Add("FrmToolNotFound.LblDownloadToolText", "You can download more tools for ImageGlass at:"); // v9.0
-
-
-        #region Tool_ExifTool
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnProperty", "Property"); // v8.0
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnValue", "Value"); // v8.0
-
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnCopyValue", "Copy value"); // v8.0
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnExport", "Export…"); // v8.0
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnClose", "Close"); // v8.0
-
-        #endregion
+        #endregion // FrmToolNotFound
 
 
         #region igcmd.exe
