@@ -938,7 +938,7 @@ public static class Config
         MenuHotkeys = ParseHotkeys(stringArrDict);
 
 
-        // mouse click actions
+        // MouseClickActions
         MouseClickActions = items.GetSection(nameof(MouseClickActions))
             .GetChildren()
             .ToDictionary(
@@ -946,7 +946,7 @@ public static class Config
                 i => i.Get<ToggleAction>());
 
 
-        // mouse wheel actions
+        // MouseWheelActions
         MouseWheelActions = items.GetSection(nameof(MouseWheelActions))
             .GetChildren()
             .ToDictionary(

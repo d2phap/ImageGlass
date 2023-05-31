@@ -48,9 +48,9 @@ public enum MouseClickEvent
 public enum MouseWheelEvent
 {
     Scroll = 1,
-    PressCtrlAndScroll = 2,
-    PressShiftAndScroll = 3,
-    PressAltAndScroll = 4,
+    CtrlAndScroll = 2,
+    ShiftAndScroll = 3,
+    AltAndScroll = 4,
 }
 
 

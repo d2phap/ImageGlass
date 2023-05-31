@@ -272,9 +272,9 @@ public partial class FrmMain
 
         var eventType = ModifierKeys switch
         {
-            Keys.Control => MouseWheelEvent.PressCtrlAndScroll,
-            Keys.Shift => MouseWheelEvent.PressShiftAndScroll,
-            Keys.Alt => MouseWheelEvent.PressAltAndScroll,
+            Keys.Control => MouseWheelEvent.CtrlAndScroll,
+            Keys.Shift => MouseWheelEvent.ShiftAndScroll,
+            Keys.Alt => MouseWheelEvent.AltAndScroll,
             _ => MouseWheelEvent.Scroll,
         };
 
@@ -295,13 +295,13 @@ public partial class FrmMain
                 case MouseWheelEvent.Scroll:
                     action = MouseWheelAction.Zoom;
                     break;
-                case MouseWheelEvent.PressCtrlAndScroll:
+                case MouseWheelEvent.CtrlAndScroll:
                     action = MouseWheelAction.PanVertically;
                     break;
-                case MouseWheelEvent.PressShiftAndScroll:
+                case MouseWheelEvent.ShiftAndScroll:
                     action = MouseWheelAction.PanHorizontally;
                     break;
-                case MouseWheelEvent.PressAltAndScroll:
+                case MouseWheelEvent.AltAndScroll:
                     action = MouseWheelAction.BrowseImages;
                     break;
                 default:

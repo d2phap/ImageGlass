@@ -176,6 +176,12 @@ public class IgLang : Dictionary<string, string>
         // BackdropStyle
         Add($"_.{nameof(BackdropStyle)}._{nameof(BackdropStyle.None)}", "None");
 
+        // MouseWheelEvent
+        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.Scroll)}", "Scroll");
+        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.CtrlAndScroll)}", "Hold Ctrl and scroll");
+        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.ShiftAndScroll)}", "Hold Shift and scroll");
+        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.AltAndScroll)}", "Hold Alt and scroll");
+
         // MouseWheelAction
         Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.DoNothing)}", "Do nothing");
         Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.Zoom)}", "Zoom in / out");
@@ -572,10 +578,6 @@ public class IgLang : Dictionary<string, string>
         #region Tab Mouse & Keyboard
         // Mouse & Keyboard > Mouse wheel action
         Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction", "Mouse wheel action");
-        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._Scroll", "Scroll");
-        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressCtrlAndScroll", "Hold Ctrl and scroll");
-        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressShiftAndScroll", "Hold Shift and scroll");
-        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressAltAndScroll", "Hold Alt and scroll");
         #endregion // Tab Mouse & Keyboard
 
 
