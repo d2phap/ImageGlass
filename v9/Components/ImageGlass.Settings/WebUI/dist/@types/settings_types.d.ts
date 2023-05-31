@@ -4,6 +4,18 @@ export type IPageSettings = Record<string, any> & {
     startUpDir: string;
     configDir: string;
     userConfigFilePath: string;
+    enums: {
+        ImageOrderBy: string[];
+        ImageOrderType: string[];
+        ColorProfileOption: string[];
+        AfterEditAppAction: string[];
+        ImageInterpolation: string[];
+        MouseWheelAction: string[];
+        MouseWheelEvent: string[];
+        MouseClickEvent: string[];
+        BackdropStyle: string[];
+        ToolbarItemModelType: string[];
+    };
     setActiveTab?: (tabName: string) => void;
     loadLanguage?: () => void;
     loadSettings?: () => void;

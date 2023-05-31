@@ -1,8 +1,33 @@
 
+export const loadSelectBoxEnums = () => {
+  // load enums
+  for (const enumName in _pageSettings.enums) {
+    if (!Object.prototype.hasOwnProperty.call(_pageSettings.enums, enumName)) {
+      continue;
+    }
+
+    const enumKeys = _pageSettings.enums[enumName];
+    const selectEls = queryAll<HTMLSelectElement>(`select[data-enum="${enumName}"]`);
+
+    for (const el of selectEls) {
+      enumKeys.forEach(key => {
+        const optionEl = new Option(`${key}`, key);
+        optionEl.setAttribute('data-lang', `_.${enumName}._${key}`);
+
+        el.add(optionEl);
+      });
+    }
+  }
+};
+
+
 /**
  * Loads settings.
  */
 export const loadSettings = () => {
+  loadSelectBoxEnums();
+
+
   // auto loads settings for String, Number, Boolean
   for (const configKey in _pageSettings.config) {
     if (!Object.prototype.hasOwnProperty.call(_pageSettings.config, configKey)) {

@@ -10,6 +10,18 @@ if (!window._pageSettings) {
   window._pageSettings = {
     config: {},
     lang: {},
+    enums: {
+      ImageOrderBy: [],
+      ImageOrderType: [],
+      ColorProfileOption: [],
+      AfterEditAppAction: [],
+      ImageInterpolation: [],
+      MouseWheelAction: [],
+      MouseWheelEvent: [],
+      MouseClickEvent: [],
+      BackdropStyle: [],
+      ToolbarItemModelType: [],
+    },
     startUpDir: '',
     configDir: '',
     userConfigFilePath: '',
@@ -32,5 +44,5 @@ for (let i = 0; i < navItems.length; i++) {
 }
 
 setActiveTab('image');
-loadLanguage();
 loadSettings();
+loadLanguage();

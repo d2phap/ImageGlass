@@ -191,17 +191,11 @@
         <div class="d-flex align-items-end">
           <div class="me-2 mb-2">
             <div class="mb-1" data-lang="FrmSettings.Tab.Image._ImageLoadingOrder">[ImageLoadingOrder]</div>
-            <select name="ImageLoadingOrder" required>
-              <option value="XXXXXXXX">[XXXXXXXX]</option>
-              <option value="XXXXXXXX">[XXXXXXXX]</option>
-              <option value="XXXXXXXX">[XXXXXXXX]</option>
-              <option value="XXXXXXXX">[XXXXXXXX]</option>
+            <select name="ImageLoadingOrder" required data-enum="ImageOrderBy">
             </select>
           </div>
           <div class="mb-2">
-            <select name="ImageLoadingOrderType" required>
-              <option value="XXXXXXXX">[Ascending]</option>
-              <option value="XXXXXXXX">[Descending]</option>
+            <select name="ImageLoadingOrderType" required data-enum="ImageOrderType">
             </select>
           </div>
         </div>
@@ -332,16 +326,7 @@
           <div class="d-flex align-items-end">
             <div class="me-2">
               <div class="mb-1" data-lang="FrmSettings.Tab.Image._ColorProfile">[ColorProfile]</div>
-              <select name="ColorProfile" required>
-                <option value="[None]">[None]</option>
-                <option value="[CURRENT_MONITOR_PROFILE]">[CURRENT_MONITOR_PROFILE]</option>
-                <option value="[AdobeRGB1998]">[AdobeRGB1998]</option>
-                <option value="[AppleRGB]">[AppleRGB]</option>
-                <option value="[CoatedFOGRA39]">[CoatedFOGRA39]</option>
-                <option value="[ColorMatchRGB]">[ColorMatchRGB]</option>
-                <option value="[sRGB]">[sRGB]</option>
-                <option value="[USWebCoatedSWOP]">[USWebCoatedSWOP]</option>
-                <option value="[Custom]">[Custom]</option>
+              <select name="ColorProfile" required data-enum="ColorProfileOption">
               </select>
             </div>
             <button data-lang="_._Browse">[Browse...]</button>
@@ -442,10 +427,7 @@
         </div>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
-          <select name="AfterEditingAction" required>
-            <option value="XXXXXXXX">XXXXXXXX</option>
-            <option value="XXXXXXXX">XXXXXXXX</option>
-            <option value="XXXXXXXX">XXXXXXXX</option>
+          <select name="AfterEditingAction" required data-enum="AfterEditAppAction">
           </select>
         </div>
       </section>
@@ -506,21 +488,13 @@
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleDown">
             [ImageInterpolationScaleDown]</div>
-          <select name="ImageInterpolationScaleDown" required>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
+          <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
           </select>
         </div>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleUp">[ImageInterpolationScaleUp]
           </div>
-          <select name="ImageInterpolationScaleUp" required>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
+          <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
           </select>
         </div>
         <div class="mb-2">
@@ -616,42 +590,22 @@
         <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Mouse wheel action]</header>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._Scroll">[Scroll]</div>
-          <select required>
-            <option value="{{DoNothing}}">[DoNothing]</option>
-            <option value="{{Zoom}}">[Zoom]</option>
-            <option value="{{PanVertically}}">[PanVertically]</option>
-            <option value="{{PanHorizontally}}">PanHorizontally</option>
-            <option value="{{BrowseImages}}">BrowseImages</option>
+          <select required data-enum="MouseWheelAction">
           </select>
         </div>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressCtrlAndScroll">[PressCtrlAndScroll]</div>
-          <select required>
-            <option value="{{DoNothing}}">[DoNothing]</option>
-            <option value="{{Zoom}}">[Zoom]</option>
-            <option value="{{PanVertically}}">[PanVertically]</option>
-            <option value="{{PanHorizontally}}">PanHorizontally</option>
-            <option value="{{BrowseImages}}">BrowseImages</option>
+          <select required data-enum="MouseWheelAction">
           </select>
         </div>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressShiftAndScroll">[PressShiftAndScroll]</div>
-          <select required>
-            <option value="{{DoNothing}}">[DoNothing]</option>
-            <option value="{{Zoom}}">[Zoom]</option>
-            <option value="{{PanVertically}}">[PanVertically]</option>
-            <option value="{{PanHorizontally}}">PanHorizontally</option>
-            <option value="{{BrowseImages}}">BrowseImages</option>
+          <select required data-enum="MouseWheelAction">
           </select>
         </div>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction._PressAltAndScroll">[PressAltAndScroll]</div>
-          <select required>
-            <option value="{{DoNothing}}">[DoNothing]</option>
-            <option value="{{Zoom}}">[Zoom]</option>
-            <option value="{{PanVertically}}">[PanVertically]</option>
-            <option value="{{PanHorizontally}}">PanHorizontally</option>
-            <option value="{{BrowseImages}}">BrowseImages</option>
+          <select required data-enum="MouseWheelAction">
           </select>
         </div>
       </section>
@@ -746,10 +700,7 @@
         <header data-lang="FrmSettings.Nav._Appearance">[Appearance]</header>
         <div class="mb-2">
           <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._WindowBackdrop">[WindowBackdrop]</div>
-          <select name="WindowBackdrop" required>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-            <option value="[XXXXXXXX]">[XXXXXXXX]</option>
+          <select name="WindowBackdrop" required data-enum="BackdropStyle">
           </select>
         </div>
         <div class="mb-2">

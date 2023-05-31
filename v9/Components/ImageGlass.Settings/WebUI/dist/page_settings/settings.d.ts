@@ -1,3 +1,4 @@
+export declare const loadSelectBoxEnums: () => void;
 /**
  * Loads settings.
  */
