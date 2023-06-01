@@ -71,7 +71,7 @@ public partial class FrmSettings : WebForm
         // setting paths
         var startupDir = App.StartUpDir().Replace("\\", "\\\\");
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
-        var userConfigFilePath = App.ConfigDir(PathType.Dir, Source.UserFilename).Replace("\\", "\\\\");
+        var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
 
         // enums
         var enumObj = new ExpandoObject();
@@ -140,15 +140,15 @@ public partial class FrmSettings : WebForm
         #region Tab General
         else if (name.Equals("Lnk_StartupDir"))
         {
-
+            BHelper.OpenFilePath(data);
         }
         else if (name.Equals("Lnk_ConfigDir"))
         {
-
+            BHelper.OpenFilePath(data);
         }
         else if (name.Equals("Lnk_UserConfigFile"))
         {
-
+            _ = OpenUserConfigFileAsync(data);
         }
         #endregion // Tab General
 
@@ -217,6 +217,17 @@ public partial class FrmSettings : WebForm
         {
             var langListJson = GetLanguageListJson();
             PostMessage("Lnk_InstallLanguage", langListJson);
+        }
+    }
+
+
+    private static async Task OpenUserConfigFileAsync(string filePath)
+    {
+        var result = await BHelper.RunExeCmd($"\"{filePath}\"", "", false);
+
+        if (result == IgExitCode.Error)
+        {
+            result = await BHelper.RunExeCmd("notepad", $"\"{filePath}\"", false);
         }
     }
 
