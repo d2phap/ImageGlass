@@ -73,6 +73,7 @@ export const postAsync = async <T = unknown>(name: string, data?: any) => {
 
     hasResult = true;
     result = eventData;
+    _webview.removeEvent(name);
   });
 
   // @ts-ignore

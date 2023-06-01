@@ -192,6 +192,9 @@ export const addEventsForTabLanguage = () => {
     const result = await postAsync<ILanguage[]>('Btn_RefreshLanguageList');
     loadLanguageList(result);
   }, false);
-  query('#Lnk_InstallLanguage').addEventListener('click', () => post('Lnk_InstallLanguage'), false);
-  query('#Lnk_GetMoreLanguage').addEventListener('click', () => post('Lnk_GetMoreLanguage'), false);
+
+  query('#Lnk_InstallLanguage').addEventListener('click', async () => {
+    const result = await postAsync<ILanguage[]>('Lnk_InstallLanguage');
+    loadLanguageList(result);
+  }, false);
 };
