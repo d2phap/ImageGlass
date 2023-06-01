@@ -334,11 +334,21 @@ public partial class WebForm : ThemedForm
     public void PostMessage(string name, string dataJson)
     {
         var json = @$"
-            {{
-                ""Name"": ""{name}"",
-                ""Data"": {dataJson}
-            }}";
+{{
+    ""Name"": ""{name}"",
+    ""Data"": {dataJson}
+}}";
 
-        Web2.CoreWebView2.PostWebMessageAsJson(json);
+        try
+        {
+            Web2.CoreWebView2.PostWebMessageAsJson(json);
+        }
+        catch (Exception ex)
+        {
+            _ = Config.ShowError(this, description: ex.Message,
+                title: Text,
+                details: $"JSON data:\r\n{json}\r\n\r\n" +
+                    $"Error detail:\r\n" + ex.ToString());
+        }
     }
 }
