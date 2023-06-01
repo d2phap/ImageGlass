@@ -16,6 +16,38 @@ export const toTimeString = (totalSeconds: number) => {
 };
 
 
+export const onSlideshowIntervalsChanged = () => {
+  const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
+  const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
+  const intervalFromText = toTimeString(intervalFrom);
+  const intervalToText = toTimeString(intervalTo);
+
+  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
+
+  if (useRandomInterval) {
+    query('#Lbl_SlideshowInterval').innerText = `${intervalFromText} - ${intervalToText}`;
+  }
+  else {
+    query('#Lbl_SlideshowInterval').innerText = intervalFromText;
+  }
+};
+
+export const onUseRandomIntervalForSlideshowChanged = () => {
+  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
+
+  query('#Lbl_SlideshowIntervalFrom').hidden = !useRandomInterval;
+  query('#Section_SlideshowIntervalTo').hidden = !useRandomInterval;
+};
+
+export const onLanguageChanged = () => {
+  const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
+  const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
+  if (!lang) return;
+
+  query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
+};
+
+
 /**
  * Loads select box items.
  */
@@ -64,38 +96,9 @@ export const loadLanguageList = (list?: ILanguage[]) => {
     const optionEl = new Option(displayText, lang.FileName);
     selectEl.add(optionEl);
   });
-};
 
-
-export const onSlideshowIntervalsChanged = () => {
-  const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
-  const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
-  const intervalFromText = toTimeString(intervalFrom);
-  const intervalToText = toTimeString(intervalTo);
-
-  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
-
-  if (useRandomInterval) {
-    query('#Lbl_SlideshowInterval').innerText = `${intervalFromText} - ${intervalToText}`;
-  }
-  else {
-    query('#Lbl_SlideshowInterval').innerText = intervalFromText;
-  }
-};
-
-export const onUseRandomIntervalForSlideshowChanged = () => {
-  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
-
-  query('#Lbl_SlideshowIntervalFrom').hidden = !useRandomInterval;
-  query('#Section_SlideshowIntervalTo').hidden = !useRandomInterval;
-};
-
-export const onLanguageChanged = () => {
-  const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
-  const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
-  if (!lang) return;
-
-  query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
+  selectEl.value = _pageSettings.config.Language;
+  onLanguageChanged();
 };
 
 
@@ -104,6 +107,7 @@ export const onLanguageChanged = () => {
  */
 export const loadSettings = () => {
   loadSelectBoxEnums();
+  loadLanguageList();
 
 
   // auto loads settings for String, Number, Boolean
@@ -167,7 +171,6 @@ export const loadSettings = () => {
   onSlideshowIntervalsChanged();
 
   // tab Language
-  loadLanguageList();
   onLanguageChanged();
 };
 

@@ -186,7 +186,14 @@ public partial class FrmSettings : WebForm
         var langListJson = BHelper.ToJson(langList.Select(i =>
         {
             var obj = new ExpandoObject();
-            obj.TryAdd(nameof(i.FileName), i.FileName);
+
+            var langName = Path.GetFileName(i.FileName);
+            if (string.IsNullOrEmpty(langName))
+            {
+                langName = i.Metadata.EnglishName;
+            }
+
+            obj.TryAdd(nameof(i.FileName), langName);
             obj.TryAdd(nameof(i.Metadata), i.Metadata);
 
             return obj;
