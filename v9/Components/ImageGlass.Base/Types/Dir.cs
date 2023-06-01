@@ -24,7 +24,7 @@ public static class Dir
     /// <summary>
     /// Gets the Languages folder name
     /// </summary>
-    public static string Languages { get; } = "Languages";
+    public static string Language { get; } = "Language";
 
     /// <summary>
     /// Gets the cached thumbnails folder name

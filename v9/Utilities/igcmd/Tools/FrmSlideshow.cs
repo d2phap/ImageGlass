@@ -422,7 +422,7 @@ public partial class FrmSlideshow : ThemedForm
         // update language
         if (e.MessageName.Equals(ImageGlassEvents.LANG_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
-            Config.Language = new IgLang(e.MessageData, App.StartUpDir(Dir.Languages));
+            Config.Language = new IgLang(e.MessageData, App.StartUpDir(Dir.Language));
             LoadLanguage();
             return;
         }

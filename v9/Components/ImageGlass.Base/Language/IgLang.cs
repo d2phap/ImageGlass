@@ -482,8 +482,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
         Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Loads hidden images");
         Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
-        Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded.");
-        Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect.");
+        Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded");
+        Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect");
         Add("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
         Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
         Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
