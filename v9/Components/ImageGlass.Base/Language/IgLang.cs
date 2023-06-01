@@ -597,7 +597,7 @@ public class IgLang : Dictionary<string, string>
         // Language > Language
         Add("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
         Add("FrmSettings.Tab.Language._Refresh", "Refresh");
-        Add("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install a new language pack…");
+        Add("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install new language packs…");
         Add("FrmSettings.Tab.Language._GetMoreLanguagePacks", "Get more language packs…");
         Add("FrmSettings.Tab.Language._Contributors", "Contributors");
         #endregion // Tab Language

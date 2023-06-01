@@ -171,11 +171,7 @@ public partial class FrmSettings : WebForm
         }
         else if (name.Equals("Lnk_InstallLanguage"))
         {
-
-        }
-        else if (name.Equals("Lnk_GetMoreLanguage"))
-        {
-
+            _ = InstallLanguagePackAsync();
         }
         #endregion // Tab Language
 
@@ -198,4 +194,30 @@ public partial class FrmSettings : WebForm
 
         return langListJson;
     }
+
+
+    private async Task InstallLanguagePackAsync()
+    {
+        using var o = new OpenFileDialog()
+        {
+            Filter = "ImageGlass language pack (*.iglang.json)|*.iglang.json",
+            CheckFileExists = true,
+            RestoreDirectory = true,
+            Multiselect = true,
+        };
+
+        if (o.ShowDialog() != DialogResult.OK) return;
+
+        var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
+        var result = await BHelper.RunIgcmd(
+            $"{IgCommands.INSTALL_LANGUAGE_PACKS} {IgCommands.SHOW_UI} {filePathsArgs}",
+            true);
+
+        if (result == IgExitCode.Done)
+        {
+            var langListJson = GetLanguageListJson();
+            PostMessage("Lnk_InstallLanguage", langListJson);
+        }
+    }
+
 }
