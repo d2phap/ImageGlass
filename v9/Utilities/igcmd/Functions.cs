@@ -32,7 +32,6 @@ public static class Functions
     /// </summary>
     /// <param name="bmpPath">Full path of BMP file</param>
     /// <param name="styleStr">Wallpaper style, see <see cref="WallpaperStyle"/>.</param>
-    /// <returns></returns>
     public static IgExitCode SetDesktopWallpaper(string bmpPath, string styleStr)
     {
         // Get style
@@ -178,5 +177,56 @@ public static class Functions
         return string.Empty;
     }
 
+
+    /// <summary>
+    /// Install new language packs
+    /// </summary>
+    public static IgExitCode InstallLanguagePacks(List<string> paths, bool showUi = false, bool hideAdminRequiredErrorUi = false)
+    {
+        var exitCode = IgExitCode.Done;
+        Exception? error = null;
+
+        // create directory if not exist
+        if (!Directory.Exists(App.StartUpDir(Dir.Language)))
+        {
+            Directory.CreateDirectory(App.StartUpDir(Dir.Language));
+        }
+
+
+        foreach (var f in paths)
+        {
+            try
+            {
+                File.Copy(f, App.StartUpDir(Dir.Language, Path.GetFileName(f)), true);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                error = ex;
+                exitCode = IgExitCode.AdminRequired;
+                break;
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+
+                exitCode = IgExitCode.Error;
+                break;
+            }
+        }
+
+
+        if (showUi && error != null)
+        {
+            if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
+            {
+                _ = Config.ShowError(null,
+                    description: error.Message,
+                    title: Config.Language["FrmSettings.Tab.Language._InstallNewLanguagePack"],
+                    details: error.ToString());
+            }
+        }
+
+        return IgExitCode.Done;
+    }
 
 }

@@ -34,6 +34,7 @@ public static class IgCommands
     public static string EXPORT_FRAMES => "export-frames";
 
     public static string CHECK_FOR_UPDATE => "check-for-update";
+    public static string INSTALL_LANGUAGE_PACKS => "install-language-packs";
 
 
     // igcmd10.exe

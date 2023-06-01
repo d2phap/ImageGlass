@@ -167,6 +167,18 @@ internal static class Program
         #endregion
 
 
+        #region INSTALL_LANGUAGE_PACKS [string filePaths]
+        if (topCmd == IgCommands.INSTALL_LANGUAGE_PACKS)
+        {
+            var paths = CmdArgs.Where(cmd => File.Exists(cmd)).ToList();
+            if (paths.Any())
+            {
+                return (int)Functions.InstallLanguagePacks(paths, showUI, hideAdminRequiredErrorUi);
+            }
+        }
+        #endregion
+
+
         return (int)IgExitCode.Error;
     }
 
