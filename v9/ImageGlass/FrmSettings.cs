@@ -94,6 +94,17 @@ public partial class FrmSettings : WebForm
         }
         var enumsJson = BHelper.ToJson(enumObj);
 
+        // language list
+        var langList = Config.LoadLanguageList();
+        var langListJson = BHelper.ToJson(langList.Select(i =>
+        {
+            var obj = new ExpandoObject();
+            obj.TryAdd(nameof(i.FileName), i.FileName);
+            obj.TryAdd(nameof(i.Metadata), i.Metadata);
+
+            return obj;
+        }));
+
 
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
@@ -105,6 +116,7 @@ public partial class FrmSettings : WebForm
                     enums: {enumsJson},
                     config: {configJson},
                     lang: {configLangJson},
+                    langList: {langListJson},
                 }};
 
                 {Settings.Properties.Resources.Script_Settings}

@@ -990,7 +990,7 @@ public static class Config
 
         #region Language
         var langPath = items.GetValue(nameof(Language), "English");
-        Language = new IgLang(langPath, App.StartUpDir(Dir.Languages));
+        Language = new IgLang(langPath, App.StartUpDir(Dir.Language));
         #endregion
 
 
@@ -1449,6 +1449,24 @@ public static class Config
         }
 
         return actions.ToList();
+    }
+
+
+    /// <summary>
+    /// Loads language list. It auto-adds the first item as the default language pack.
+    /// </summary>
+    public static List<IgLang> LoadLanguageList()
+    {
+        var list = new List<IgLang>() { new IgLang(), };
+        var langDir = App.StartUpDir(Dir.Language);
+
+        if (!Directory.Exists(langDir)) return list;
+
+        var files = Directory.EnumerateFiles(langDir, "*.iglang.json")
+            .Select(path => new IgLang(path));
+        list.AddRange(files);
+
+        return list;
     }
 
 
