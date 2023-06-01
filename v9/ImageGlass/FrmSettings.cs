@@ -157,7 +157,17 @@ public partial class FrmSettings : WebForm
         #region Tab Image
         else if (name.Equals("Btn_BrowseColorProfile"))
         {
+            var profileFilePath = SelectColorProfileFile();
+            profileFilePath = profileFilePath.Replace("\\", "\\\\");
 
+            if (!String.IsNullOrEmpty(profileFilePath))
+            {
+                PostMessage("Btn_BrowseColorProfile", $"\"{profileFilePath}\"");
+            }
+        }
+        else if (name.Equals("Lnk_CustomColorProfile"))
+        {
+            BHelper.OpenFilePath(data);
         }
         #endregion // Tab Image
 
@@ -236,6 +246,21 @@ public partial class FrmSettings : WebForm
         {
             result = await BHelper.RunExeCmd("notepad", $"\"{filePath}\"", false);
         }
+    }
+
+
+    private static string SelectColorProfileFile()
+    {
+        using var o = new OpenFileDialog()
+        {
+            Filter = "Color profile|*.icc;*.icm;|All files|*.*",
+            CheckFileExists = true,
+            RestoreDirectory = true,
+        };
+
+        if (o.ShowDialog() != DialogResult.OK) return string.Empty;
+
+        return o.FileName;
     }
 
 }
