@@ -4,6 +4,7 @@ import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sid
 import { loadLanguage } from './page_settings/lang';
 import {
   addEventsForTabGeneral,
+  addEventsForTabImage,
   addEventsForTabLanguage,
   addEventsForTabSlideshow,
   loadLanguageList,
@@ -65,5 +66,6 @@ query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
 
 addEventsForTabGeneral();
+addEventsForTabImage();
 addEventsForTabSlideshow();
 addEventsForTabLanguage();

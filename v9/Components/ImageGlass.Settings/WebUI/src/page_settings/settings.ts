@@ -16,6 +16,14 @@ export const toTimeString = (totalSeconds: number) => {
 };
 
 
+export const onColorProfileChanged = () => {
+  const selectEl = query<HTMLSelectElement>('[name="ColorProfile"]');
+  const useCustomProfile = selectEl.value === 'Custom';
+
+  query('#Btn_BrowseColorProfile').hidden = !useCustomProfile;
+  query('#Section_CustomColorProfile').hidden = !useCustomProfile;
+};
+
 export const onSlideshowIntervalsChanged = () => {
   const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
   const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
@@ -160,6 +168,14 @@ export const loadSettings = () => {
   query('#Lnk_ConfigDir').innerText = _pageSettings.configDir || '(unknown)';
   query('#Lnk_UserConfigFile').innerText = _pageSettings.userConfigFilePath || '(unknown)';
 
+  // tab Image
+  const colorProfile = (_pageSettings.config.ColorProfile as string || '');
+  if (colorProfile.includes('.')) {
+    query<HTMLSelectElement>('[name="ColorProfile"]').value = 'Custom';
+    query('#Lnk_CustomColorProfile').innerText = colorProfile;
+  }
+  onColorProfileChanged();
+
   // tab Mouse & Keyboard > Mouse wheel action
   query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
   query<HTMLSelectElement>('#Cmb_MouseWheel_CtrlAndScroll').value = _pageSettings.config.MouseWheelActions?.CtrlAndScroll || 'DoNothing';
@@ -176,7 +192,7 @@ export const loadSettings = () => {
 
 
 /**
- * Adds events for tab General
+ * Adds events for tab General.
  */
 export const addEventsForTabGeneral = () => {
   query('#Lnk_StartupDir').addEventListener('click', () => post('Lnk_StartupDir', _pageSettings.startUpDir), false);
@@ -186,7 +202,25 @@ export const addEventsForTabGeneral = () => {
 
 
 /**
- * Adds events for tab Slideshow
+ * Add events for tab Image.
+ */
+export const addEventsForTabImage = () => {
+  query('#Btn_BrowseColorProfile').addEventListener('click', async () => {
+    const profileFilePath = await postAsync<string>('Btn_BrowseColorProfile');
+    query('#Lnk_CustomColorProfile').innerText = profileFilePath;
+  }, false);
+
+  query('#Lnk_CustomColorProfile').addEventListener('click', () => {
+    const profileFilePath = query('#Lnk_CustomColorProfile').innerText.trim();
+    post('Lnk_CustomColorProfile', profileFilePath);
+  }, false);
+
+  query('[name="ColorProfile"]').addEventListener('change', () => onColorProfileChanged(), false);
+};
+
+
+/**
+ * Adds events for tab Slideshow.
  */
 export const addEventsForTabSlideshow = () => {
   query('[name="UseRandomIntervalForSlideshow"]').addEventListener('input', () => onUseRandomIntervalForSlideshowChanged(), false);
@@ -196,7 +230,7 @@ export const addEventsForTabSlideshow = () => {
 
 
 /**
- * Adds events for tab Language
+ * Adds events for tab Language.
  */
 export const addEventsForTabLanguage = () => {
   query('#Cmb_LanguageList').addEventListener('change', () => onLanguageChanged(), false);
