@@ -655,22 +655,19 @@
             <div class="mb-2">
                 <label class="me-2">
                     <div data-lang="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
-                    <select name="Language" required>
-                        <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-                        <option value="[XXXXXXXX]">[XXXXXXXX]</option>
-                        <option value="[XXXXXXXX]">[XXXXXXXX]</option>
+                    <select id="Cmb_Language_List" name="Language">
                     </select>
                 </label>
 
-                <button data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
+                <button id="Btn_Refresh_Language_List" data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
             </div>
             <div class="mb-2 mt-3">
-                <a href="#" data-lang="FrmSettings.Tab.Language._InstallNewLanguagePack">
+                <a id="Lnk_Install_Language" href="#" data-lang="FrmSettings.Tab.Language._InstallNewLanguagePack">
                     [Install a new language pack...]
                 </a>
             </div>
             <div class="mb-2">
-                <a href="#" data-lang="FrmSettings.Tab.Language._GetMoreLanguagePacks">
+                <a id="Lnk_Get_More_Language" href="#" data-lang="FrmSettings.Tab.Language._GetMoreLanguagePacks">
                     [Get more language packs...]
                 </a>
             </div>
@@ -679,7 +676,7 @@
         <!-- Language > Contributors -->
         <section>
             <header data-lang="FrmSettings.Tab.Language._Contributors">[Contributors]</header>
-            <div class="mb-2">
+            <div id="Lbl_Language_Contributors" class="mb-2">
                 [Duong Dieu Phap]
             </div>
         </section>
@@ -736,7 +733,7 @@
 
 
 <footer class="panel">
-    <button id="BtnOK" type="submit" data-lang="_._OK">[_OK]</button>
-    <button id="BtnCancel" data-lang="_._Cancel">[_Cancel]</button>
-    <button id="BtnApply" data-lang="_._Apply">[_Apply]</button>
+    <button id="BtnOK" type="submit" data-lang="_._OK">[OK]</button>
+    <button id="BtnCancel" data-lang="_._Cancel">[Cancel]</button>
+    <button id="BtnApply" data-lang="_._Apply">[Apply]</button>
 </footer>

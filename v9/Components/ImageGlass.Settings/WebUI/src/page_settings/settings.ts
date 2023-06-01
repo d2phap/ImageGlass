@@ -41,6 +41,24 @@ export const loadSelectBoxEnums = () => {
 
 
 /**
+ * Loads language list to select box.
+ */
+export const loadLanguageList = () => {
+  const selectEl = query<HTMLSelectElement>('#Cmb_Language_List');
+
+  _pageSettings.langList.forEach(lang => {
+    let displayText = `${lang.Metadata.LocalName} \t\t\t (${lang.Metadata.EnglishName})`;
+    if (!lang.FileName || lang.FileName.length === 0) {
+      displayText = lang.Metadata.EnglishName;
+    }
+
+    const optionEl = new Option(displayText, lang.FileName);
+    selectEl.add(optionEl);
+  });
+};
+
+
+/**
  * Updates slideshow interval value accoding to the inputs.
  */
 export const onSlideshowIntervalsChanged = () => {
@@ -135,6 +153,8 @@ export const loadSettings = () => {
   onUseRandomIntervalForSlideshowChanged();
   onSlideshowIntervalsChanged();
 
+  // tab Language
+  loadLanguageList();
 };
 
 

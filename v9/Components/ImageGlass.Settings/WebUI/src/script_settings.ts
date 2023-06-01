@@ -10,6 +10,7 @@ if (!window._pageSettings) {
   window._pageSettings = {
     config: {},
     lang: {},
+    langList: [],
     enums: {
       ImageOrderBy: [],
       ImageOrderType: [],

@@ -1,7 +1,19 @@
 
+export type ILanguage = {
+  FileName: string,
+  Metadata: Record<string, any> & {
+    Code: string,
+    EnglishName: string,
+    LocalName: string,
+    Author: string,
+    MinVersion: string,
+  },
+};
+
 export type IPageSettings = Record<string, any> & {
   config: Record<string, any>,
   lang: Record<string, string>,
+  langList: ILanguage[],
   startUpDir: string,
   configDir: string,
   userConfigFilePath: string,
