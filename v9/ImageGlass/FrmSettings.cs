@@ -95,15 +95,7 @@ public partial class FrmSettings : WebForm
         var enumsJson = BHelper.ToJson(enumObj);
 
         // language list
-        var langList = Config.LoadLanguageList();
-        var langListJson = BHelper.ToJson(langList.Select(i =>
-        {
-            var obj = new ExpandoObject();
-            obj.TryAdd(nameof(i.FileName), i.FileName);
-            obj.TryAdd(nameof(i.Metadata), i.Metadata);
-
-            return obj;
-        }));
+        var langListJson = GetLanguageListJson();
 
 
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
@@ -127,21 +119,83 @@ public partial class FrmSettings : WebForm
 
     protected override void OnWeb2MessageReceived(string name, string data)
     {
-        if (name.Equals("BtnOK", StringComparison.InvariantCultureIgnoreCase))
+        // Footer
+        #region Footer
+        if (name.Equals("BtnOK"))
         {
             //
         }
-        else if (name.Equals("BtnApply", StringComparison.InvariantCultureIgnoreCase))
+        else if (name.Equals("BtnApply"))
         {
             //
         }
-        else if (name.Equals("BtnCancel", StringComparison.InvariantCultureIgnoreCase))
+        else if (name.Equals("BtnCancel"))
         {
             Close();
         }
+        #endregion // Footer
+
+
+        // Tab General
+        #region Tab General
+        else if (name.Equals("Lnk_StartupDir"))
+        {
+
+        }
+        else if (name.Equals("Lnk_ConfigDir"))
+        {
+
+        }
+        else if (name.Equals("Lnk_UserConfigFile"))
+        {
+
+        }
+        #endregion // Tab General
+
+
+        // Tab Image
+        #region Tab Image
+        else if (name.Equals("Btn_BrowseColorProfile"))
+        {
+
+        }
+        #endregion // Tab Image
+
+
+        // Tab Language
+        #region Tab Language
+        else if (name.Equals("Btn_RefreshLanguageList"))
+        {
+            var langListJson = GetLanguageListJson();
+            PostMessage("Btn_RefreshLanguageList", langListJson);
+        }
+        else if (name.Equals("Lnk_InstallLanguage"))
+        {
+
+        }
+        else if (name.Equals("Lnk_GetMoreLanguage"))
+        {
+
+        }
+        #endregion // Tab Language
+
     }
 
     #endregion // Protected / override methods
 
 
+    private static string GetLanguageListJson()
+    {
+        var langList = Config.LoadLanguageList();
+        var langListJson = BHelper.ToJson(langList.Select(i =>
+        {
+            var obj = new ExpandoObject();
+            obj.TryAdd(nameof(i.FileName), i.FileName);
+            obj.TryAdd(nameof(i.Metadata), i.Metadata);
+
+            return obj;
+        }));
+
+        return langListJson;
+    }
 }
