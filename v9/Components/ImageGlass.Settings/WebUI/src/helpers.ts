@@ -23,3 +23,26 @@ export const queryAll = <T = HTMLElement>(selector: string) => {
 
   return [];
 };
+
+
+/**
+ * Send an event to backend.
+ * @param name Event name
+ * @param data Data to send to backend
+ */
+export const post = (name: string, data?: any) => {
+  // @ts-ignore
+  window.chrome.webview?.postMessage({ name, data });
+};
+
+
+/**
+ * Add event listerner from backend.
+ * @param name Event name
+ * @param handler Function to handle the event
+ */
+export const on = (name: string, handler: (name: string, data?: any) => void) => {
+  // @ts-ignore
+  window.chrome.webview?.addEventListener(name, ({ data }) => handler(data.name, data.data));
+};
+

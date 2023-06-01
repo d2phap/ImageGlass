@@ -44,7 +44,7 @@ export const loadSelectBoxEnums = () => {
  * Loads language list to select box.
  */
 export const loadLanguageList = () => {
-  const selectEl = query<HTMLSelectElement>('#Cmb_Language_List');
+  const selectEl = query<HTMLSelectElement>('#Cmb_LanguageList');
 
   _pageSettings.langList.forEach(lang => {
     let displayText = `${lang.Metadata.LocalName} \t\t\t (${lang.Metadata.EnglishName})`;
@@ -58,9 +58,6 @@ export const loadLanguageList = () => {
 };
 
 
-/**
- * Updates slideshow interval value accoding to the inputs.
- */
 export const onSlideshowIntervalsChanged = () => {
   const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
   const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
@@ -70,19 +67,26 @@ export const onSlideshowIntervalsChanged = () => {
   const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
 
   if (useRandomInterval) {
-    query('#Lbl_Slideshow_Interval').innerText = `${intervalFromText} - ${intervalToText}`;
+    query('#Lbl_SlideshowInterval').innerText = `${intervalFromText} - ${intervalToText}`;
   }
   else {
-    query('#Lbl_Slideshow_Interval').innerText = intervalFromText;
+    query('#Lbl_SlideshowInterval').innerText = intervalFromText;
   }
 };
-
 
 export const onUseRandomIntervalForSlideshowChanged = () => {
   const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
 
-  query('#Lbl_Slideshow_IntervalFrom').hidden = !useRandomInterval;
-  query('#Section_Slideshow_IntervalTo').hidden = !useRandomInterval;
+  query('#Lbl_SlideshowIntervalFrom').hidden = !useRandomInterval;
+  query('#Section_SlideshowIntervalTo').hidden = !useRandomInterval;
+};
+
+export const onLanguageChanged = () => {
+  const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
+  const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
+  if (!lang) return;
+
+  query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
 };
 
 
@@ -155,11 +159,12 @@ export const loadSettings = () => {
 
   // tab Language
   loadLanguageList();
+  onLanguageChanged();
 };
 
 
 /**
- * Adds input events to slideshow interval inputs.
+ * Adds events for tab Slideshow
  */
 export const addEventsForTabSlideshow = () => {
   query('[name="UseRandomIntervalForSlideshow"]').addEventListener('input', () => onUseRandomIntervalForSlideshowChanged(), false);
@@ -167,3 +172,13 @@ export const addEventsForTabSlideshow = () => {
   query('[name="SlideshowIntervalTo"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
 };
 
+
+/**
+ * Adds events for tab Language
+ */
+export const addEventsForTabLanguage = () => {
+  query('#Cmb_LanguageList').addEventListener('change', () => onLanguageChanged(), false);
+  query('#Btn_RefreshLanguageList').addEventListener('click', () => post('Btn_RefreshLanguageList'), false);
+  query('#Lnk_InstallLanguage').addEventListener('click', () => post('Lnk_InstallLanguage'), false);
+  query('#Lnk_GetMoreLanguage').addEventListener('click', () => post('Lnk_GetMoreLanguage'), false);
+};

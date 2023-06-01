@@ -125,52 +125,19 @@ public partial class FrmSettings : WebForm
     }
 
 
-    protected override IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
-    {
-        return new List<(string Variable, string Value)>
-        {
-            ("{{_OK}}", Config.Language[$"_._OK"]),
-            ("{{_Cancel}}", Config.Language[$"_._Cancel"]),
-            ("{{_Apply}}", Config.Language[$"_._Apply"]),
-        };
-    }
-
-
-    protected override void OnWeb2NavigationCompleted()
-    {
-        _ = Web2.ExecuteScriptAsync("""
-            function Button_Clicked(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(e);
-                window.chrome.webview?.postMessage({ Name: 'Button_Clicked', Data: e.target.id });
-            };
-
-            document.getElementById('BtnOK').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnCancel').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnApply').addEventListener('click', Button_Clicked, false);
-
-            document.getElementById('BtnOK').focus();
-        """);
-    }
-
-
     protected override void OnWeb2MessageReceived(string name, string data)
     {
-        if (name == "Button_Clicked")
+        if (name.Equals("BtnOK", StringComparison.InvariantCultureIgnoreCase))
         {
-            if (data.Equals("BtnOK", StringComparison.InvariantCultureIgnoreCase))
-            {
-                //
-            }
-            else if (data.Equals("BtnApply", StringComparison.InvariantCultureIgnoreCase))
-            {
-                //
-            }
-            else if (data.Equals("BtnCancel", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Close();
-            }
+            //
+        }
+        else if (name.Equals("BtnApply", StringComparison.InvariantCultureIgnoreCase))
+        {
+            //
+        }
+        else if (name.Equals("BtnCancel", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Close();
         }
     }
 

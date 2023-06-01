@@ -1,11 +1,19 @@
-import { query, queryAll } from './helpers';
+import { query, queryAll, on, post } from './helpers';
 import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
-import { addEventsForTabSlideshow, loadSettings } from './page_settings/settings';
+import {
+  addEventsForTabLanguage,
+  addEventsForTabSlideshow,
+  loadLanguageList,
+  loadSettings,
+} from './page_settings/settings';
+
 
 // export to global
 window.query = query;
 window.queryAll = queryAll;
+window.on = on;
+window.post = post;
 if (!window._pageSettings) {
   window._pageSettings = {
     config: {},
@@ -28,9 +36,10 @@ if (!window._pageSettings) {
     userConfigFilePath: '',
   };
 }
-_pageSettings.setActiveTab = setSidebarActiveMenu;
+_pageSettings.setSidebarActiveMenu = setSidebarActiveMenu;
 _pageSettings.loadLanguage = loadLanguage;
 _pageSettings.loadSettings = loadSettings;
+_pageSettings.loadLanguageList = loadLanguageList;
 
 
 // sidebar
@@ -42,4 +51,9 @@ loadSettings();
 loadLanguage();
 
 // add event listeners
+query('#BtnOK').addEventListener('click', () => post('BtnOK'), false);
+query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
+query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
+
 addEventsForTabSlideshow();
+addEventsForTabLanguage();
