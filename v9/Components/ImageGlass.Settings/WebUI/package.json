@@ -3,11 +3,6 @@
   "displayName": "ImageGlass Web UI",
   "version": "1.0.0",
   "description": "ImageGlass Web UI",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "start": "webpack --watch --config ./webpack.config.js --progress --mode=production",
     "build": "webpack         --config ./webpack.config.js --progress --mode=production",
