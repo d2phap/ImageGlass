@@ -512,7 +512,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
 
         // Slideshow > Slideshow interval
-        Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval: {0}");
+        Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
         #endregion // Tab Slideshow

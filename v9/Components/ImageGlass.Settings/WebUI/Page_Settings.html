@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" color-mode="light_" page="settings">
+<html lang="en" color-mode="light" page="settings">
 
 <head>
   <meta charset="UTF-8">
@@ -381,14 +381,17 @@
 
       <!-- Slideshow > Slideshow interval -->
       <section>
-        <header data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval: 00:05:00]</header>
+        <header>
+          <span data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval:]</span>
+          <span id="Lbl_Slideshow_Interval"></span>
+        </header>
         <div class="mb-2">
           <div class="d-flex align-items-center">
             <div class="me-3">
-              <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
+              <div id="Lbl_Slideshow_IntervalFrom" class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
               <input type="number" name="SlideshowInterval" required step="0.1" min="0" style="width: 5rem;" />
             </div>
-            <div>
+            <div id="Section_Slideshow_IntervalTo">
               <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
               <input type="number" name="SlideshowIntervalTo" required step="0.1" min="0" style="width: 5rem;" />
             </div>

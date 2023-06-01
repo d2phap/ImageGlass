@@ -1,4 +1,23 @@
 
+/**
+ * Formats total seconds to time format: mm:ss.ff
+ */
+export const toTimeString = (totalSeconds: number) => {
+  const dt = new Date(totalSeconds * 1000);
+  let minutes = dt.getUTCMinutes().toString();
+  let seconds = dt.getUTCSeconds().toString();
+  const msSeconds = dt.getUTCMilliseconds().toString();
+
+  if (minutes.length < 2) minutes = `0${minutes}`;
+  if (seconds.length < 2) seconds = `0${seconds}`;
+
+  return `${minutes}:${seconds}.${msSeconds}`;
+};
+
+
+/**
+ * Loads select box items.
+ */
 export const loadSelectBoxEnums = () => {
   // load enums
   for (const enumName in _pageSettings.enums) {
@@ -18,6 +37,34 @@ export const loadSelectBoxEnums = () => {
       });
     }
   }
+};
+
+
+/**
+ * Updates slideshow interval value accoding to the inputs.
+ */
+export const onSlideshowIntervalsChanged = () => {
+  const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
+  const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
+  const intervalFromText = toTimeString(intervalFrom);
+  const intervalToText = toTimeString(intervalTo);
+
+  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
+
+  if (useRandomInterval) {
+    query('#Lbl_Slideshow_Interval').innerText = `${intervalFromText} - ${intervalToText}`;
+  }
+  else {
+    query('#Lbl_Slideshow_Interval').innerText = intervalFromText;
+  }
+};
+
+
+export const onUseRandomIntervalForSlideshowChanged = () => {
+  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
+
+  query('#Lbl_Slideshow_IntervalFrom').hidden = !useRandomInterval;
+  query('#Section_Slideshow_IntervalTo').hidden = !useRandomInterval;
 };
 
 
@@ -84,4 +131,19 @@ export const loadSettings = () => {
   query<HTMLSelectElement>('#Cmb_MouseWheel_ShiftAndScroll').value = _pageSettings.config.MouseWheelActions?.ShiftAndScroll || 'DoNothing';
   query<HTMLSelectElement>('#Cmb_MouseWheel_AltAndScroll').value = _pageSettings.config.MouseWheelActions?.AltAndScroll || 'DoNothing';
 
+  // tab Slideshow
+  onUseRandomIntervalForSlideshowChanged();
+  onSlideshowIntervalsChanged();
+
 };
+
+
+/**
+ * Adds input events to slideshow interval inputs.
+ */
+export const addEventsForTabSlideshow = () => {
+  query('[name="UseRandomIntervalForSlideshow"]').addEventListener('input', () => onUseRandomIntervalForSlideshowChanged(), false);
+  query('[name="SlideshowInterval"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
+  query('[name="SlideshowIntervalTo"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
+};
+

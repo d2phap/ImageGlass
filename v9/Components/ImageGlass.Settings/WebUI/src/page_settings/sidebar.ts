@@ -1,8 +1,8 @@
 
 /**
- * Set the active tab of Settings page.
+ * Set the active menu for sidebar
  */
-export const setActiveTab = (tabPageName: string) => {
+export const setSidebarActiveMenu = (tabPageName: string) => {
   // hide all tabs
   const allTabPages = queryAll('.tab-page');
   allTabPages.forEach(el => el.classList.remove('active'));
@@ -18,3 +18,19 @@ export const setActiveTab = (tabPageName: string) => {
   if (navItem) navItem.checked = true;
 };
 
+
+/**
+ * Adds click events to sidebar menu.
+ */
+export const addSidebarClickEvents = () => {
+  // navigation bar event
+  const navItems = Array.from(document.querySelectorAll('input[name="nav"]'));
+  for (let i = 0; i < navItems.length; i++) {
+    const itemEl = navItems[i] as HTMLInputElement;
+
+    itemEl.addEventListener('change', (e) => {
+      const activeTabName = (e.target as HTMLInputElement).value;
+      setSidebarActiveMenu(activeTabName);
+    }, false);
+  }
+};
