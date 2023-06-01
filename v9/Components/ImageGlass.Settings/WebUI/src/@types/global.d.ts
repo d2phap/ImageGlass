@@ -1,13 +1,17 @@
 import { IPageSettings } from './settings_types';
+import { Webview } from '@/webview';
+
 import {
   query as QueryFn,
   queryAll as QueryAllFn,
   on as OnFn,
   post as PostFn,
+  postAsync as PostAsyncFn,
 } from '../helpers';
 
 declare global {
   interface Window {
+    _webview: Webview;
     _pageSettings: IPageSettings,
 
     query: typeof QueryFn,
@@ -15,13 +19,17 @@ declare global {
 
     on: typeof OnFn,
     post: typeof PostFn,
+    postAsync: typeof PostAsyncFn,
   }
 
+  var _webview: Webview;
   var _pageSettings: IPageSettings;
+
   var query: typeof QueryFn;
   var queryAll: typeof QueryAllFn;
 
   var on: typeof OnFn;
   var post: typeof PostFn;
+  var postAsync: typeof PostAsyncFn;
 }
 

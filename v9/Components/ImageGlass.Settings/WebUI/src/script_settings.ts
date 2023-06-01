@@ -1,4 +1,5 @@
-import { query, queryAll, on, post } from './helpers';
+import { Webview } from './webview';
+import { query, queryAll, on, post, postAsync } from './helpers';
 import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
 import {
@@ -9,11 +10,18 @@ import {
 } from './page_settings/settings';
 
 
+// initialize webview event listeners
+window._webview = new Webview();
+_webview.startListening();
+
+
 // export to global
 window.query = query;
 window.queryAll = queryAll;
 window.on = on;
 window.post = post;
+window.postAsync = postAsync;
+
 if (!window._pageSettings) {
   window._pageSettings = {
     config: {},

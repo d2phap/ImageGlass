@@ -1,3 +1,4 @@
+import { ILanguage } from '@/@types/settings_types';
 
 /**
  * Formats total seconds to time format: mm:ss.ff
@@ -42,12 +43,20 @@ export const loadSelectBoxEnums = () => {
 
 /**
  * Loads language list to select box.
+ * @param list If defined, it overrides `_pageSettings.langList`.
  */
-export const loadLanguageList = () => {
+export const loadLanguageList = (list?: ILanguage[]) => {
   const selectEl = query<HTMLSelectElement>('#Cmb_LanguageList');
 
+  // clear current list
+  while (selectEl.options.length) selectEl.remove(0);
+
+  if (Array.isArray(list) && list.length > 0) {
+    _pageSettings.langList = list;
+  }
+
   _pageSettings.langList.forEach(lang => {
-    let displayText = `${lang.Metadata.LocalName} \t\t\t (${lang.Metadata.EnglishName})`;
+    let displayText = `${lang.Metadata.LocalName} (${lang.Metadata.EnglishName})`;
     if (!lang.FileName || lang.FileName.length === 0) {
       displayText = lang.Metadata.EnglishName;
     }
@@ -178,7 +187,11 @@ export const addEventsForTabSlideshow = () => {
  */
 export const addEventsForTabLanguage = () => {
   query('#Cmb_LanguageList').addEventListener('change', () => onLanguageChanged(), false);
-  query('#Btn_RefreshLanguageList').addEventListener('click', () => post('Btn_RefreshLanguageList'), false);
+
+  query('#Btn_RefreshLanguageList').addEventListener('click', async () => {
+    const result = await postAsync<ILanguage[]>('Btn_RefreshLanguageList');
+    loadLanguageList(result);
+  }, false);
   query('#Lnk_InstallLanguage').addEventListener('click', () => post('Lnk_InstallLanguage'), false);
   query('#Lnk_GetMoreLanguage').addEventListener('click', () => post('Lnk_GetMoreLanguage'), false);
 };
