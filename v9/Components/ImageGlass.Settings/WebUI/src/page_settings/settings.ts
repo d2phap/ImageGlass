@@ -173,6 +173,16 @@ export const loadSettings = () => {
 
 
 /**
+ * Adds events for tab General
+ */
+export const addEventsForTabGeneral = () => {
+  query('#Lnk_StartupDir').addEventListener('click', () => post('Lnk_StartupDir', _pageSettings.startUpDir), false);
+  query('#Lnk_ConfigDir').addEventListener('click', () => post('Lnk_ConfigDir', _pageSettings.configDir), false);
+  query('#Lnk_UserConfigFile').addEventListener('click', () => post('Lnk_UserConfigFile', _pageSettings.userConfigFilePath), false);
+};
+
+
+/**
  * Adds events for tab Slideshow
  */
 export const addEventsForTabSlideshow = () => {

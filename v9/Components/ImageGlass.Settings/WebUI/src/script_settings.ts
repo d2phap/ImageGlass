@@ -3,6 +3,7 @@ import { query, queryAll, on, post, postAsync } from './helpers';
 import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
 import {
+  addEventsForTabGeneral,
   addEventsForTabLanguage,
   addEventsForTabSlideshow,
   loadLanguageList,
@@ -63,5 +64,6 @@ query('#BtnOK').addEventListener('click', () => post('BtnOK'), false);
 query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
 
+addEventsForTabGeneral();
 addEventsForTabSlideshow();
 addEventsForTabLanguage();
