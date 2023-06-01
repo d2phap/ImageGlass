@@ -325,4 +325,20 @@ public partial class WebForm : ThemedForm
         }
     }
 
+
+    /// <summary>
+    /// Post a message to client.
+    /// </summary>
+    /// <param name="name">Name of the message</param>
+    /// <param name="dataJson">Message data</param>
+    public void PostMessage(string name, string dataJson)
+    {
+        var json = @$"
+            {{
+                ""Name"": ""{name}"",
+                ""Data"": {dataJson}
+            }}";
+
+        Web2.CoreWebView2.PostWebMessageAsJson(json);
+    }
 }
