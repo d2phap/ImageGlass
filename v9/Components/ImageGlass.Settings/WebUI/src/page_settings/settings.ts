@@ -24,6 +24,14 @@ export const onColorProfileChanged = () => {
   query('#Section_CustomColorProfile').hidden = !useCustomProfile;
 };
 
+export const onUseEmbeddedThumbnailOptionsChanged = () => {
+  const enableForRaw = query<HTMLInputElement>('[name="UseEmbeddedThumbnailRawFormats"]').checked;
+  const enableForOthers = query<HTMLInputElement>('[name="UseEmbeddedThumbnailOtherFormats"]').checked;
+  const showSizeSection = enableForRaw || enableForOthers;
+
+  query('#Section_EmbeddedThumbnailSize').hidden = !showSizeSection;
+};
+
 export const onSlideshowIntervalsChanged = () => {
   const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
   const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
@@ -175,6 +183,7 @@ export const loadSettings = () => {
     query('#Lnk_CustomColorProfile').innerText = colorProfile;
   }
   onColorProfileChanged();
+  onUseEmbeddedThumbnailOptionsChanged();
 
   // tab Mouse & Keyboard > Mouse wheel action
   query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
@@ -216,6 +225,9 @@ export const addEventsForTabImage = () => {
   }, false);
 
   query('[name="ColorProfile"]').addEventListener('change', () => onColorProfileChanged(), false);
+
+  query('[name="UseEmbeddedThumbnailRawFormats"]').addEventListener('input', () => onUseEmbeddedThumbnailOptionsChanged(), false);
+  query('[name="UseEmbeddedThumbnailOtherFormats"]').addEventListener('input', () => onUseEmbeddedThumbnailOptionsChanged(), false);
 };
 
 
