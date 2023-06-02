@@ -1,0 +1,8 @@
+.aniFadeIn {
+  animation: animationFadeIn ease 500ms forwards;
+}
+
+@keyframes animationFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
