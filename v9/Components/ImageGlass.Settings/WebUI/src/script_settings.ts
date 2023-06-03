@@ -1,16 +1,15 @@
 import { Webview } from './webview';
 import { query, queryAll, on, post, postAsync } from './helpers';
-import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
-import { loadLanguage } from './page_settings/lang';
-import {
-  loadSettings,
-} from './page_settings/settings';
-import TabGeneral from './page_settings/tabGeneral';
-import TabImage from './page_settings/tabImage';
-import TabSlideshow from './page_settings/tabSlideshow';
-import TabMouseKeyboard from './page_settings/tabMouseKeyboard';
-import TabLanguage from './page_settings/tabLanguage';
-import TabEdit from './page_settings/tabEdit';
+
+import TabGeneral from './page_settings/TabGeneral2';
+import TabImage from './page_settings/TabImage2';
+import TabSlideshow from './page_settings/TabSlideshow2';
+import TabMouseKeyboard from './page_settings/TabMouseKeyboard2';
+import TabLanguage from './page_settings/TabLanguage2';
+import TabEdit from './page_settings/TabEdit2';
+import Settings from './page_settings/Settings2';
+import Language from './page_settings/Language';
+import Sidebar from './page_settings/Sidebar2';
 
 
 // initialize webview event listeners
@@ -47,25 +46,22 @@ if (!window._pageSettings) {
     userConfigFilePath: '',
   };
 }
-_pageSettings.setSidebarActiveMenu = setSidebarActiveMenu;
-_pageSettings.loadLanguage = loadLanguage;
-_pageSettings.loadSettings = loadSettings;
+_pageSettings.setSidebarActiveMenu = Sidebar.setActiveMenu;
+_pageSettings.loadLanguage = Language.load;
+_pageSettings.loadSettings = Settings.load;
 _pageSettings.loadLanguageList = TabLanguage.loadLanguageList;
 
 
 // sidebar
-addSidebarClickEvents();
-setSidebarActiveMenu('image');
+Sidebar.addEvents();
+Sidebar.setActiveMenu('image');
 
 // load settings
-loadSettings();
-loadLanguage();
+Settings.load();
+Language.load();
 
 // add event listeners
-query('#BtnOK').addEventListener('click', () => post('BtnOK'), false);
-query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
-query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
-
+Settings.addEventsForFooter();
 TabGeneral.addEvents();
 TabImage.addEvents();
 TabSlideshow.addEvents();

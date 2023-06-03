@@ -1,7 +1,7 @@
-import { loadLanguage } from '@/page_settings/lang';
-import { loadSettings } from '@/page_settings/settings';
-import { setSidebarActiveMenu } from '@/page_settings/sidebar';
-import TabLanguage from '@/page_settings/tabLanguage';
+import { loadLanguage } from '@/page_settings/Language';
+import { loadSettings } from '@/page_settings/Settings2';
+import { setSidebarActiveMenu } from '@/page_settings/Sidebar2';
+import TabLanguage from '@/page_settings/TabLanguage2';
 
 export type ILanguage = {
   FileName: string,
