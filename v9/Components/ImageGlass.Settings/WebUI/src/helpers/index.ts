@@ -11,6 +11,7 @@ export const getChangedSettingsFromTab = (tab: string) => {
   for (const el of allEls) {
     const configName = el.name;
     let configValue: boolean | number | string = '';
+    if (!el.checkValidity()) continue;
 
 
     // bool value
