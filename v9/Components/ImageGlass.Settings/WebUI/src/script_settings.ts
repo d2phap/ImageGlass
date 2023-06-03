@@ -11,6 +11,12 @@ import TabSlideshow from './page_settings/TabSlideshow';
 import TabMouseKeyboard from './page_settings/TabMouseKeyboard';
 import TabLanguage from './page_settings/TabLanguage';
 import TabEdit from './page_settings/TabEdit';
+import TabViewer from './page_settings/TabViewer';
+import TabToolbar from './page_settings/TabToolbar';
+import TabGallery from './page_settings/TabGallery';
+import TabAppearance from './page_settings/TabAppearance';
+import TabFileAssocs from './page_settings/TabFileAssocs';
+import TabTools from './page_settings/TabTools';
 
 
 // initialize webview event listeners
@@ -67,5 +73,12 @@ TabGeneral.addEvents();
 TabImage.addEvents();
 TabSlideshow.addEvents();
 TabEdit.addEvents();
-TabMouseKeyboard.addEvents();
+TabViewer.addEvents();
+TabToolbar.addEvents();
+TabGallery.addEvents();
 TabLanguage.addEvents();
+TabMouseKeyboard.addEvents();
+TabFileAssocs.addEvents();
+TabTools.addEvents();
+TabLanguage.addEvents();
+TabAppearance.addEvents();
