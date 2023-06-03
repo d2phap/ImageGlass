@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabTools {
   /**
@@ -11,5 +12,13 @@ export default class TabTools {
    * Adds events for tab Tools.
    */
   static addEvents() {
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('tools');
   }
 }

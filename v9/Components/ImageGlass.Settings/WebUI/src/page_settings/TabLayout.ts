@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabLayout {
   /**
@@ -11,5 +12,13 @@ export default class TabLayout {
    * Adds events for tab Layout.
    */
   static addEvents() {
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('layout');
   }
 }

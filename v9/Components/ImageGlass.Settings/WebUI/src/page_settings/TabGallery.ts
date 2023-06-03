@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabGallery {
   /**
@@ -11,5 +12,13 @@ export default class TabGallery {
    * Adds events for tab Gallery.
    */
   static addEvents() {
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('gallery');
   }
 }

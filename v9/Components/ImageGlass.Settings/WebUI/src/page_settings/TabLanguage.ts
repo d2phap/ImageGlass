@@ -1,4 +1,5 @@
 import { ILanguage } from '@/@types/settings_types';
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabLanguage {
   /**
@@ -27,6 +28,17 @@ export default class TabLanguage {
   }
 
 
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('language');
+  }
+
+
+  /**
+   * Handles when language is changed.
+   */
   private static handleLanguageChanged() {
     const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
     const lang = _pageSettings.langList.find(i => i.FileName === langFileName);

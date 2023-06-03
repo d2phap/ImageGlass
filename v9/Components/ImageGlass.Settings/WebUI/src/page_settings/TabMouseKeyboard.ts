@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabMouseKeyboard {
   /**
@@ -16,6 +17,14 @@ export default class TabMouseKeyboard {
    */
   static addEvents() {
     query('#Btn_ResetMouseWheelAction').addEventListener('click', TabMouseKeyboard.resetDefaultMouseWheelActions, false);
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('mouse_keyboard');
   }
 
 

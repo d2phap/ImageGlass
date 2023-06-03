@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabToolbar {
   /**
@@ -11,5 +12,13 @@ export default class TabToolbar {
    * Adds events for tab Toolbar.
    */
   static addEvents() {
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('toolbar');
   }
 }

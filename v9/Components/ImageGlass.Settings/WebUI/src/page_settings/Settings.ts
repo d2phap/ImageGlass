@@ -10,6 +10,7 @@ import TabGallery from './TabGallery';
 import TabFileAssocs from './TabFileAssocs';
 import TabTools from './TabTools';
 import TabAppearance from './TabAppearance';
+import TabLayout from './TabLayout';
 
 export default class Settings {
   /**
@@ -110,6 +111,14 @@ export default class Settings {
       ...TabSlideshow.exportSettings(),
       ...TabEdit.exportSettings(),
       ...TabViewer.exportSettings(),
+      ...TabToolbar.exportSettings(),
+      ...TabGallery.exportSettings(),
+      ...TabLayout.exportSettings(),
+      ...TabMouseKeyboard.exportSettings(),
+      ...TabFileAssocs.exportSettings(),
+      ...TabTools.exportSettings(),
+      ...TabLanguage.exportSettings(),
+      ...TabAppearance.exportSettings(),
     };
 
     return JSON.stringify(settings);
