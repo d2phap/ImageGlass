@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabEdit {
   /**
@@ -11,5 +12,13 @@ export default class TabEdit {
    * Adds events for tab Edit.
    */
   static addEvents() {
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('edit');
   }
 }

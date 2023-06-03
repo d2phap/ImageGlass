@@ -3,6 +3,13 @@ import TabImage from './TabImage';
 import TabSlideshow from './TabSlideshow';
 import TabMouseKeyboard from './TabMouseKeyboard';
 import TabLanguage from './TabLanguage';
+import TabEdit from './TabEdit';
+import TabViewer from './TabViewer';
+import TabToolbar from './TabToolbar';
+import TabGallery from './TabGallery';
+import TabFileAssocs from './TabFileAssocs';
+import TabTools from './TabTools';
+import TabAppearance from './TabAppearance';
 
 export default class Settings {
   /**
@@ -61,9 +68,17 @@ export default class Settings {
     // load specific settings
     TabGeneral.loadSettings();
     TabImage.loadSettings();
-    TabMouseKeyboard.loadSettings();
     TabSlideshow.loadSettings();
+    TabEdit.loadSettings();
+    TabViewer.loadSettings();
+    TabToolbar.loadSettings();
+    TabGallery.loadSettings();
     TabLanguage.loadSettings();
+    TabMouseKeyboard.loadSettings();
+    TabFileAssocs.loadSettings();
+    TabTools.loadSettings();
+    TabLanguage.loadSettings();
+    TabAppearance.loadSettings();
   }
 
 
@@ -93,6 +108,8 @@ export default class Settings {
       ...TabGeneral.exportSettings(),
       ...TabImage.exportSettings(),
       ...TabSlideshow.exportSettings(),
+      ...TabEdit.exportSettings(),
+      ...TabViewer.exportSettings(),
     };
 
     return JSON.stringify(settings);
