@@ -27,8 +27,16 @@ export default class TabViewer {
 
     // ZoomLevels
     settings.ZoomLevels = TabViewer.getZoomLevels();
-    if (!query<HTMLTextAreaElement>('[name="ZoomLevels"]').checkValidity()
-      || settings.ZoomLevels === _pageSettings.config.ZoomLevels) {
+
+    if (query<HTMLTextAreaElement>('[name="ZoomLevels"]').checkValidity()) {
+      const originalLevelsString = _pageSettings.config.ZoomLevels.toString();
+      const newLevelsString = settings.ZoomLevels.toString();
+
+      if (newLevelsString === originalLevelsString) {
+        delete settings.ZoomLevels;
+      }
+    }
+    else {
       delete settings.ZoomLevels;
     }
 
