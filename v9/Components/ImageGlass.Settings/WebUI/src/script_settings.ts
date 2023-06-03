@@ -1,5 +1,5 @@
-import { Webview } from './webview';
-import { query, queryAll, on, post, postAsync } from './helpers';
+import { Webview } from './helpers/webview';
+import { query, queryAll, on, post, postAsync } from './helpers/globalHelpers';
 
 import Sidebar from './page_settings/Sidebar';
 import Language from './page_settings/Language';

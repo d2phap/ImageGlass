@@ -71,9 +71,29 @@ export default class Settings {
    * Adds events for the footer of setting.
    */
   static addEventsForFooter() {
-    query('#BtnOK').addEventListener('click', () => post('BtnOK'), false);
     query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
-    query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
+
+    query('#BtnOK').addEventListener('click', () => {
+      const settingsJson = Settings.saveAsJson();
+      post('BtnOK', settingsJson);
+    }, false);
+
+    query('#BtnApply').addEventListener('click', () => {
+      const settingsJson = Settings.saveAsJson();
+      post('BtnApply', settingsJson);
+    }, false);
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static saveAsJson() {
+    const settings: Record<string, any> = {
+      ...TabGeneral.exportSettings(),
+    };
+
+    return JSON.stringify(settings);
   }
 
 

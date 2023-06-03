@@ -1,5 +1,5 @@
 import { IPageSettings } from './settings_types';
-import { Webview } from '@/webview';
+import { Webview } from '@/helpers/webview';
 
 import {
   query as QueryFn,
@@ -7,7 +7,7 @@ import {
   on as OnFn,
   post as PostFn,
   postAsync as PostAsyncFn,
-} from '../helpers';
+} from '../helpers/globalHelpers';
 
 declare global {
   interface Window {

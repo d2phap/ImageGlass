@@ -53,7 +53,7 @@ export const on = (name: string, handler: WebviewEventHandlerFn) => {
  * @param name Event name
  * @param data Data to send to backend
  */
-export const post = (name: string, data?: any) => {
+export const post = (name: string, data?: string) => {
   // @ts-ignore
   window.chrome.webview?.postMessage({ name, data });
 };
