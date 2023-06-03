@@ -560,9 +560,9 @@ public static class Config
     public static string ColorProfile { get; set; } = nameof(ColorProfileOption.CurrentMonitorProfile);
 
     /// <summary>
-    /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
+    /// Gets, sets the last time to check for update. Set it to <c>0</c> to disable auto-update.
     /// </summary>
-    public static string AutoUpdate { get; set; } = "7/22/2010 12:13:08";
+    public static string AutoUpdate { get; set; } = DateTime.UtcNow.Subtract(TimeSpan.FromDays(30)).ToISO8601String();
 
     /// <summary>
     /// Gets, sets the absolute file path of the last seen image

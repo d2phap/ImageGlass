@@ -76,12 +76,7 @@ internal static class Program
     {
         if (Config.AutoUpdate != "0")
         {
-            if (DateTime.TryParseExact(
-                Config.AutoUpdate,
-                Constants.DATETIME_FORMAT,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out var lastUpdate))
+            if (DateTime.TryParse(Config.AutoUpdate, out var lastUpdate))
             {
                 // Check for update every 5 days
                 if (DateTime.UtcNow.Subtract(lastUpdate).TotalDays > 5)
@@ -118,7 +113,7 @@ internal static class Program
             Config.ShowNewVersionIndicator = updater.HasNewUpdate;
 
             // save last update
-            Config.AutoUpdate = DateTime.UtcNow.ToString(Constants.DATETIME_FORMAT);
+            Config.AutoUpdate = DateTime.UtcNow.ToISO8601String();
 
 
             if (updater.HasNewUpdate || showIfNewUpdate.Value)
