@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabSlideshow {
   /**
@@ -20,11 +21,25 @@ export default class TabSlideshow {
 
 
   /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    return getChangedSettingsFromTab('slideshow');
+  }
+
+
+  /**
    * Handle when slideshow intervals are changed.
    */
   private static handleSlideshowIntervalsChanged() {
-    const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
-    const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
+    const fromEl = query<HTMLInputElement>('[name="SlideshowInterval"]');
+    const toEl = query<HTMLInputElement>('[name="SlideshowIntervalTo"]');
+
+    fromEl.max = toEl.value;
+    toEl.min = fromEl.value;
+
+    const intervalFrom = +fromEl.value || 5;
+    const intervalTo = +toEl.value || 5;
     const intervalFromText = TabSlideshow.toTimeString(intervalFrom);
     const intervalToText = TabSlideshow.toTimeString(intervalTo);
 

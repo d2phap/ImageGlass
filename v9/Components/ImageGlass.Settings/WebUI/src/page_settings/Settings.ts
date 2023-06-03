@@ -92,6 +92,7 @@ export default class Settings {
     const settings: Record<string, any> = {
       ...TabGeneral.exportSettings(),
       ...TabImage.exportSettings(),
+      ...TabSlideshow.exportSettings(),
     };
 
     return JSON.stringify(settings);
