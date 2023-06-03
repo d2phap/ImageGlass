@@ -6,6 +6,7 @@ import {
   addEventsForTabGeneral,
   addEventsForTabImage,
   addEventsForTabLanguage,
+  addEventsForTabMouseKeyboard,
   addEventsForTabSlideshow,
   loadLanguageList,
   loadSettings,
@@ -68,4 +69,5 @@ query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
 addEventsForTabGeneral();
 addEventsForTabImage();
 addEventsForTabSlideshow();
+addEventsForTabMouseKeyboard();
 addEventsForTabLanguage();

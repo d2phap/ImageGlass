@@ -316,7 +316,7 @@
                         <select name="ColorProfile" required data-enum="ColorProfileOption">
                         </select>
                     </div>
-                    <button id="Btn_BrowseColorProfile" class="aniFadeIn" data-lang="_._Browse">[Browse...]</button>
+                    <button id="Btn_BrowseColorProfile" type="button" class="aniFadeIn" data-lang="_._Browse">[Browse...]</button>
                 </div>
                 <div id="Section_CustomColorProfile" class="mt-2 aniFadeIn">
                     <a id="Lnk_CustomColorProfile" class="text-nowrap" href="#"></a>
@@ -600,6 +600,9 @@
                 <select id="Cmb_MouseWheel_AltAndScroll" required data-enum="MouseWheelAction">
                 </select>
             </div>
+            <div class="mb-2 mt-3">
+                <button id="Btn_ResetMouseWheelAction" type="button" data-lang="_._ResetToDefault">[Reset to default]</button>
+            </div>
         </section>
 
         <!-- Mouse & Keyboard > Mouse click action -->
@@ -658,7 +661,7 @@
                     </select>
                 </label>
 
-                <button id="Btn_RefreshLanguageList" data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
+                <button id="Btn_RefreshLanguageList" type="button" data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
             </div>
             <div class="mb-2 mt-3">
                 <a id="Lnk_InstallLanguage" href="#" data-lang="FrmSettings.Tab.Language._InstallNewLanguagePack">
@@ -733,6 +736,6 @@
 
 <footer class="panel">
     <button id="BtnOK" type="submit" data-lang="_._OK">[OK]</button>
-    <button id="BtnCancel" data-lang="_._Cancel">[Cancel]</button>
-    <button id="BtnApply" data-lang="_._Apply">[Apply]</button>
+    <button id="BtnCancel" type="button" data-lang="_._Cancel">[Cancel]</button>
+    <button id="BtnApply" type="button" data-lang="_._Apply">[Apply]</button>
 </footer>

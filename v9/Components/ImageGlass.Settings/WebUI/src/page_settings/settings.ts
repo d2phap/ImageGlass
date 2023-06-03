@@ -119,6 +119,17 @@ export const loadLanguageList = (list?: ILanguage[]) => {
 
 
 /**
+ * Resets the mouse wheel actions to the default settings.
+ */
+export const resetDefaultMouseWheelActions = () => {
+  query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = 'Zoom';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_CtrlAndScroll').value = 'PanVertically';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_ShiftAndScroll').value = 'PanHorizontally';
+  query<HTMLSelectElement>('#Cmb_MouseWheel_AltAndScroll').value = 'BrowseImages';
+};
+
+
+/**
  * Loads settings.
  */
 export const loadSettings = () => {
@@ -240,6 +251,13 @@ export const addEventsForTabSlideshow = () => {
   query('[name="SlideshowIntervalTo"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
 };
 
+
+/**
+ * Adds events for tab Mouse & Keyboard.
+ */
+export const addEventsForTabMouseKeyboard = () => {
+  query('#Btn_ResetMouseWheelAction').addEventListener('click', () => resetDefaultMouseWheelActions(), false);
+};
 
 /**
  * Adds events for tab Language.

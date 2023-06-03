@@ -118,6 +118,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Copy", "Copy"); //v9.0
         Add("_._Browse", "Browse…"); //v9.0
         Add("_._Reset", "Reset"); //v9.0
+        Add("_._ResetToDefault", "Reset to default"); //v9.0
         Add("_._CheckForUpdate", "Check for update…"); //v5.0
         Add("_._Update", "Update"); //v9.0
 
