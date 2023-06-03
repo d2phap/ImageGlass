@@ -1,15 +1,16 @@
 import { Webview } from './webview';
 import { query, queryAll, on, post, postAsync } from './helpers';
 
-import TabGeneral from './page_settings/TabGeneral2';
-import TabImage from './page_settings/TabImage2';
-import TabSlideshow from './page_settings/TabSlideshow2';
-import TabMouseKeyboard from './page_settings/TabMouseKeyboard2';
-import TabLanguage from './page_settings/TabLanguage2';
-import TabEdit from './page_settings/TabEdit2';
-import Settings from './page_settings/Settings2';
+import Sidebar from './page_settings/Sidebar';
 import Language from './page_settings/Language';
-import Sidebar from './page_settings/Sidebar2';
+import Settings from './page_settings/Settings';
+
+import TabGeneral from './page_settings/TabGeneral';
+import TabImage from './page_settings/TabImage';
+import TabSlideshow from './page_settings/TabSlideshow';
+import TabMouseKeyboard from './page_settings/TabMouseKeyboard';
+import TabLanguage from './page_settings/TabLanguage';
+import TabEdit from './page_settings/TabEdit';
 
 
 // initialize webview event listeners

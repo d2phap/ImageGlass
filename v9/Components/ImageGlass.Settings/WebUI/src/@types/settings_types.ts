@@ -1,7 +1,7 @@
-import { loadLanguage } from '@/page_settings/Language';
-import { loadSettings } from '@/page_settings/Settings2';
-import { setSidebarActiveMenu } from '@/page_settings/Sidebar2';
-import TabLanguage from '@/page_settings/TabLanguage2';
+import Language from '@/page_settings/Language';
+import Settings from '@/page_settings/Settings';
+import Sidebar from '@/page_settings/Sidebar';
+import TabLanguage from '@/page_settings/TabLanguage';
 
 export type ILanguage = {
   FileName: string,
@@ -35,8 +35,8 @@ export type IPageSettings = Record<string, any> & {
   },
 
   // global functions
-  setSidebarActiveMenu?: typeof setSidebarActiveMenu,
-  loadLanguage?: typeof loadLanguage,
-  loadSettings?: typeof loadSettings,
+  setSidebarActiveMenu?: typeof Sidebar.setActiveMenu,
+  loadLanguage?: typeof Language.load,
+  loadSettings?: typeof Settings.load,
   loadLanguageList?: typeof TabLanguage.loadLanguageList,
 };

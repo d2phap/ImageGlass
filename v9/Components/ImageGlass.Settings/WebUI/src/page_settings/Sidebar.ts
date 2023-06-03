@@ -3,7 +3,7 @@ export default class Sidebar {
   /**
    * Adds click events to sidebar menu.
    */
-  static addEvents = () => {
+  static addEvents() {
     // navigation bar event
     const navItems = Array.from(document.querySelectorAll('input[name="nav"]'));
     for (let i = 0; i < navItems.length; i++) {
@@ -20,7 +20,7 @@ export default class Sidebar {
   /**
    * Set the active menu for sidebar
    */
-  static setActiveMenu = (tabPageName: string) => {
+  static setActiveMenu(tabPageName: string) {
     // hide all tabs
     const allTabPages = queryAll('.tab-page');
     allTabPages.forEach(el => el.classList.remove('active'));

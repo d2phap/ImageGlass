@@ -1,8 +1,8 @@
-import TabGeneral from './TabGeneral2';
-import TabImage from './TabImage2';
-import TabSlideshow from './TabSlideshow2';
-import TabMouseKeyboard from './TabMouseKeyboard2';
-import TabLanguage from './TabLanguage2';
+import TabGeneral from './TabGeneral';
+import TabImage from './TabImage';
+import TabSlideshow from './TabSlideshow';
+import TabMouseKeyboard from './TabMouseKeyboard';
+import TabLanguage from './TabLanguage';
 
 export default class Settings {
   /**
