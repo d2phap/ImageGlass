@@ -91,6 +91,7 @@ export default class Settings {
   static saveAsJson() {
     const settings: Record<string, any> = {
       ...TabGeneral.exportSettings(),
+      ...TabImage.exportSettings(),
     };
 
     return JSON.stringify(settings);

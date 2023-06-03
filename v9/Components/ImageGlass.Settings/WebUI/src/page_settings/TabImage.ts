@@ -1,3 +1,4 @@
+import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabImage {
   /**
@@ -36,6 +37,44 @@ export default class TabImage {
   }
 
 
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    const settings = getChangedSettingsFromTab('image');
+
+    // ImageBoosterCacheCount
+    settings.ImageBoosterCacheCount = +(settings.ImageBoosterCacheCount || 0);
+    if (settings.ImageBoosterCacheCount === _pageSettings.config.ImageBoosterCacheCount) {
+      delete settings.ImageBoosterCacheCount;
+    }
+
+
+    // ColorProfile
+    const originalColorProfile = _pageSettings.config.ColorProfile;
+    let newColorProfile = settings.ColorProfile;
+
+    if (newColorProfile === 'Custom') {
+      const customProfile = query('#Lnk_CustomColorProfile').innerText;
+
+      if (customProfile) {
+        newColorProfile = customProfile;
+      }
+    }
+    if (newColorProfile !== originalColorProfile) {
+      settings.ColorProfile = newColorProfile;
+    }
+    else {
+      delete settings.ColorProfile;
+    }
+
+    return settings;
+  }
+
+
+  /**
+   * Handles when color profile option is changed.
+   */
   static handleColorProfileChanged() {
     const selectEl = query<HTMLSelectElement>('[name="ColorProfile"]');
     const useCustomProfile = selectEl.value === 'Custom';
@@ -45,6 +84,9 @@ export default class TabImage {
   }
 
 
+  /**
+   * Handle when the embedded thumbnail options are changed.
+   */
   static handleUseEmbeddedThumbnailOptionsChanged() {
     const enableForRaw = query<HTMLInputElement>('[name="UseEmbeddedThumbnailRawFormats"]').checked;
     const enableForOthers = query<HTMLInputElement>('[name="UseEmbeddedThumbnailOtherFormats"]').checked;
