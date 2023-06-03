@@ -3,14 +3,14 @@ import { query, queryAll, on, post, postAsync } from './helpers';
 import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
 import {
-  addEventsForTabGeneral,
-  addEventsForTabImage,
   addEventsForTabLanguage,
   addEventsForTabMouseKeyboard,
   addEventsForTabSlideshow,
   loadLanguageList,
   loadSettings,
 } from './page_settings/settings';
+import TabGeneral from './page_settings/tabGeneral';
+import TabImage from './page_settings/tabImage';
 
 
 // initialize webview event listeners
@@ -66,8 +66,8 @@ query('#BtnOK').addEventListener('click', () => post('BtnOK'), false);
 query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
 
-addEventsForTabGeneral();
-addEventsForTabImage();
+TabGeneral.addEvents();
+TabImage.addEvents();
 addEventsForTabSlideshow();
 addEventsForTabMouseKeyboard();
 addEventsForTabLanguage();

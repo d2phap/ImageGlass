@@ -1,4 +1,6 @@
 import { ILanguage } from '@/@types/settings_types';
+import TabGeneral from './tabGeneral';
+import TabImage from './tabImage';
 
 /**
  * Formats total seconds to time format: mm:ss.ff
@@ -15,22 +17,6 @@ export const toTimeString = (totalSeconds: number) => {
   return `${minutes}:${seconds}.${msSeconds}`;
 };
 
-
-export const onColorProfileChanged = () => {
-  const selectEl = query<HTMLSelectElement>('[name="ColorProfile"]');
-  const useCustomProfile = selectEl.value === 'Custom';
-
-  query('#Btn_BrowseColorProfile').hidden = !useCustomProfile;
-  query('#Section_CustomColorProfile').hidden = !useCustomProfile;
-};
-
-export const onUseEmbeddedThumbnailOptionsChanged = () => {
-  const enableForRaw = query<HTMLInputElement>('[name="UseEmbeddedThumbnailRawFormats"]').checked;
-  const enableForOthers = query<HTMLInputElement>('[name="UseEmbeddedThumbnailOtherFormats"]').checked;
-  const showSizeSection = enableForRaw || enableForOthers;
-
-  query('#Section_EmbeddedThumbnailSize').hidden = !showSizeSection;
-};
 
 export const onSlideshowIntervalsChanged = () => {
   const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
@@ -183,18 +169,10 @@ export const loadSettings = () => {
 
 
   // tab General
-  query('#Lnk_StartupDir').innerText = _pageSettings.startUpDir || '(unknown)';
-  query('#Lnk_ConfigDir').innerText = _pageSettings.configDir || '(unknown)';
-  query('#Lnk_UserConfigFile').innerText = _pageSettings.userConfigFilePath || '(unknown)';
+  TabGeneral.loadSettings();
 
   // tab Image
-  const colorProfile = (_pageSettings.config.ColorProfile as string || '');
-  if (colorProfile.includes('.')) {
-    query<HTMLSelectElement>('[name="ColorProfile"]').value = 'Custom';
-    query('#Lnk_CustomColorProfile').innerText = colorProfile;
-  }
-  onColorProfileChanged();
-  onUseEmbeddedThumbnailOptionsChanged();
+  TabImage.loadSettings();
 
   // tab Mouse & Keyboard > Mouse wheel action
   query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
@@ -208,37 +186,6 @@ export const loadSettings = () => {
 
   // tab Language
   onLanguageChanged();
-};
-
-
-/**
- * Adds events for tab General.
- */
-export const addEventsForTabGeneral = () => {
-  query('#Lnk_StartupDir').addEventListener('click', () => post('Lnk_StartupDir', _pageSettings.startUpDir), false);
-  query('#Lnk_ConfigDir').addEventListener('click', () => post('Lnk_ConfigDir', _pageSettings.configDir), false);
-  query('#Lnk_UserConfigFile').addEventListener('click', () => post('Lnk_UserConfigFile', _pageSettings.userConfigFilePath), false);
-};
-
-
-/**
- * Add events for tab Image.
- */
-export const addEventsForTabImage = () => {
-  query('#Btn_BrowseColorProfile').addEventListener('click', async () => {
-    const profileFilePath = await postAsync<string>('Btn_BrowseColorProfile');
-    query('#Lnk_CustomColorProfile').innerText = profileFilePath;
-  }, false);
-
-  query('#Lnk_CustomColorProfile').addEventListener('click', () => {
-    const profileFilePath = query('#Lnk_CustomColorProfile').innerText.trim();
-    post('Lnk_CustomColorProfile', profileFilePath);
-  }, false);
-
-  query('[name="ColorProfile"]').addEventListener('change', () => onColorProfileChanged(), false);
-
-  query('[name="UseEmbeddedThumbnailRawFormats"]').addEventListener('input', () => onUseEmbeddedThumbnailOptionsChanged(), false);
-  query('[name="UseEmbeddedThumbnailOtherFormats"]').addEventListener('input', () => onUseEmbeddedThumbnailOptionsChanged(), false);
 };
 
 
