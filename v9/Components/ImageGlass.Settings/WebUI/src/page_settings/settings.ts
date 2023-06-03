@@ -1,53 +1,8 @@
-import { ILanguage } from '@/@types/settings_types';
 import TabGeneral from './tabGeneral';
 import TabImage from './tabImage';
-
-/**
- * Formats total seconds to time format: mm:ss.ff
- */
-export const toTimeString = (totalSeconds: number) => {
-  const dt = new Date(totalSeconds * 1000);
-  let minutes = dt.getUTCMinutes().toString();
-  let seconds = dt.getUTCSeconds().toString();
-  const msSeconds = dt.getUTCMilliseconds().toString();
-
-  if (minutes.length < 2) minutes = `0${minutes}`;
-  if (seconds.length < 2) seconds = `0${seconds}`;
-
-  return `${minutes}:${seconds}.${msSeconds}`;
-};
-
-
-export const onSlideshowIntervalsChanged = () => {
-  const intervalFrom = +query<HTMLInputElement>('[name="SlideshowInterval"]').value || 5;
-  const intervalTo = +query<HTMLInputElement>('[name="SlideshowIntervalTo"]').value || 5;
-  const intervalFromText = toTimeString(intervalFrom);
-  const intervalToText = toTimeString(intervalTo);
-
-  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
-
-  if (useRandomInterval) {
-    query('#Lbl_SlideshowInterval').innerText = `${intervalFromText} - ${intervalToText}`;
-  }
-  else {
-    query('#Lbl_SlideshowInterval').innerText = intervalFromText;
-  }
-};
-
-export const onUseRandomIntervalForSlideshowChanged = () => {
-  const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
-
-  query('#Lbl_SlideshowIntervalFrom').hidden = !useRandomInterval;
-  query('#Section_SlideshowIntervalTo').hidden = !useRandomInterval;
-};
-
-export const onLanguageChanged = () => {
-  const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
-  const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
-  if (!lang) return;
-
-  query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
-};
+import TabSlideshow from './tabSlideshow';
+import TabMouseKeyboard from './tabMouseKeyboard';
+import TabLanguage from './tabLanguage';
 
 
 /**
@@ -76,51 +31,11 @@ export const loadSelectBoxEnums = () => {
 
 
 /**
- * Loads language list to select box.
- * @param list If defined, it overrides `_pageSettings.langList`.
- */
-export const loadLanguageList = (list?: ILanguage[]) => {
-  const selectEl = query<HTMLSelectElement>('#Cmb_LanguageList');
-
-  // clear current list
-  while (selectEl.options.length) selectEl.remove(0);
-
-  if (Array.isArray(list) && list.length > 0) {
-    _pageSettings.langList = list;
-  }
-
-  _pageSettings.langList.forEach(lang => {
-    let displayText = `${lang.Metadata.LocalName} (${lang.Metadata.EnglishName})`;
-    if (!lang.FileName || lang.FileName.length === 0) {
-      displayText = lang.Metadata.EnglishName;
-    }
-
-    const optionEl = new Option(displayText, lang.FileName);
-    selectEl.add(optionEl);
-  });
-
-  selectEl.value = _pageSettings.config.Language;
-  onLanguageChanged();
-};
-
-
-/**
- * Resets the mouse wheel actions to the default settings.
- */
-export const resetDefaultMouseWheelActions = () => {
-  query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = 'Zoom';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_CtrlAndScroll').value = 'PanVertically';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_ShiftAndScroll').value = 'PanHorizontally';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_AltAndScroll').value = 'BrowseImages';
-};
-
-
-/**
  * Loads settings.
  */
 export const loadSettings = () => {
   loadSelectBoxEnums();
-  loadLanguageList();
+  TabLanguage.loadLanguageList();
 
 
   // auto loads settings for String, Number, Boolean
@@ -168,57 +83,10 @@ export const loadSettings = () => {
   }
 
 
-  // tab General
+  // load specific settings
   TabGeneral.loadSettings();
-
-  // tab Image
   TabImage.loadSettings();
-
-  // tab Mouse & Keyboard > Mouse wheel action
-  query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_CtrlAndScroll').value = _pageSettings.config.MouseWheelActions?.CtrlAndScroll || 'DoNothing';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_ShiftAndScroll').value = _pageSettings.config.MouseWheelActions?.ShiftAndScroll || 'DoNothing';
-  query<HTMLSelectElement>('#Cmb_MouseWheel_AltAndScroll').value = _pageSettings.config.MouseWheelActions?.AltAndScroll || 'DoNothing';
-
-  // tab Slideshow
-  onUseRandomIntervalForSlideshowChanged();
-  onSlideshowIntervalsChanged();
-
-  // tab Language
-  onLanguageChanged();
-};
-
-
-/**
- * Adds events for tab Slideshow.
- */
-export const addEventsForTabSlideshow = () => {
-  query('[name="UseRandomIntervalForSlideshow"]').addEventListener('input', () => onUseRandomIntervalForSlideshowChanged(), false);
-  query('[name="SlideshowInterval"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
-  query('[name="SlideshowIntervalTo"]').addEventListener('input', () => onSlideshowIntervalsChanged(), false);
-};
-
-
-/**
- * Adds events for tab Mouse & Keyboard.
- */
-export const addEventsForTabMouseKeyboard = () => {
-  query('#Btn_ResetMouseWheelAction').addEventListener('click', () => resetDefaultMouseWheelActions(), false);
-};
-
-/**
- * Adds events for tab Language.
- */
-export const addEventsForTabLanguage = () => {
-  query('#Cmb_LanguageList').addEventListener('change', () => onLanguageChanged(), false);
-
-  query('#Btn_RefreshLanguageList').addEventListener('click', async () => {
-    const result = await postAsync<ILanguage[]>('Btn_RefreshLanguageList');
-    loadLanguageList(result);
-  }, false);
-
-  query('#Lnk_InstallLanguage').addEventListener('click', async () => {
-    const result = await postAsync<ILanguage[]>('Lnk_InstallLanguage');
-    loadLanguageList(result);
-  }, false);
+  TabMouseKeyboard.loadSettings();
+  TabSlideshow.loadSettings();
+  TabLanguage.loadSettings();
 };

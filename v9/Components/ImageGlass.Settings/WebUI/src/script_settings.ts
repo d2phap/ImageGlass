@@ -3,14 +3,14 @@ import { query, queryAll, on, post, postAsync } from './helpers';
 import { addSidebarClickEvents, setSidebarActiveMenu } from './page_settings/sidebar';
 import { loadLanguage } from './page_settings/lang';
 import {
-  addEventsForTabLanguage,
-  addEventsForTabMouseKeyboard,
-  addEventsForTabSlideshow,
-  loadLanguageList,
   loadSettings,
 } from './page_settings/settings';
 import TabGeneral from './page_settings/tabGeneral';
 import TabImage from './page_settings/tabImage';
+import TabSlideshow from './page_settings/tabSlideshow';
+import TabMouseKeyboard from './page_settings/tabMouseKeyboard';
+import TabLanguage from './page_settings/tabLanguage';
+import TabEdit from './page_settings/tabEdit';
 
 
 // initialize webview event listeners
@@ -50,7 +50,7 @@ if (!window._pageSettings) {
 _pageSettings.setSidebarActiveMenu = setSidebarActiveMenu;
 _pageSettings.loadLanguage = loadLanguage;
 _pageSettings.loadSettings = loadSettings;
-_pageSettings.loadLanguageList = loadLanguageList;
+_pageSettings.loadLanguageList = TabLanguage.loadLanguageList;
 
 
 // sidebar
@@ -68,6 +68,7 @@ query('#BtnApply').addEventListener('click', () => post('BtnApply'), false);
 
 TabGeneral.addEvents();
 TabImage.addEvents();
-addEventsForTabSlideshow();
-addEventsForTabMouseKeyboard();
-addEventsForTabLanguage();
+TabSlideshow.addEvents();
+TabEdit.addEvents();
+TabMouseKeyboard.addEvents();
+TabLanguage.addEvents();

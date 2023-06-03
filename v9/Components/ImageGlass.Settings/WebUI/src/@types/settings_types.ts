@@ -1,6 +1,7 @@
 import { loadLanguage } from '@/page_settings/lang';
-import { loadSettings, loadLanguageList } from '@/page_settings/settings';
+import { loadSettings } from '@/page_settings/settings';
 import { setSidebarActiveMenu } from '@/page_settings/sidebar';
+import TabLanguage from '@/page_settings/tabLanguage';
 
 export type ILanguage = {
   FileName: string,
@@ -37,5 +38,5 @@ export type IPageSettings = Record<string, any> & {
   setSidebarActiveMenu?: typeof setSidebarActiveMenu,
   loadLanguage?: typeof loadLanguage,
   loadSettings?: typeof loadSettings,
-  loadLanguageList?: typeof loadLanguageList,
+  loadLanguageList?: typeof TabLanguage.loadLanguageList,
 };

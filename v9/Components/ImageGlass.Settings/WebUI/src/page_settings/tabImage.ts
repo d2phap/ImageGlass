@@ -10,8 +10,8 @@ export default class TabImage {
       query('#Lnk_CustomColorProfile').innerText = colorProfile;
     }
 
-    this.handleColorProfileChanged();
-    this.handleUseEmbeddedThumbnailOptionsChanged();
+    TabImage.handleColorProfileChanged();
+    TabImage.handleUseEmbeddedThumbnailOptionsChanged();
   }
 
 
@@ -29,10 +29,10 @@ export default class TabImage {
       post('Lnk_CustomColorProfile', profileFilePath);
     }, false);
   
-    query('[name="ColorProfile"]').addEventListener('change', () => this.handleColorProfileChanged(), false);
-  
-    query('[name="UseEmbeddedThumbnailRawFormats"]').addEventListener('input', () => this.handleUseEmbeddedThumbnailOptionsChanged(), false);
-    query('[name="UseEmbeddedThumbnailOtherFormats"]').addEventListener('input', () => this.handleUseEmbeddedThumbnailOptionsChanged(), false);
+    query('[name="ColorProfile"]').addEventListener('change', TabImage.handleColorProfileChanged, false);
+
+    query('[name="UseEmbeddedThumbnailRawFormats"]').addEventListener('input', TabImage.handleUseEmbeddedThumbnailOptionsChanged, false);
+    query('[name="UseEmbeddedThumbnailOtherFormats"]').addEventListener('input', TabImage.handleUseEmbeddedThumbnailOptionsChanged, false);
   }
 
 
