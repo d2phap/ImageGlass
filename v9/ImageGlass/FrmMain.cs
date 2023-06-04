@@ -1152,7 +1152,6 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
@@ -1777,17 +1776,6 @@ public partial class FrmMain : ThemedForm
                     MnuViewLastFrame.Enabled = true;
             }
 
-            // check if igcmdWin10.exe exists!
-            if (!BHelper.IsOS(WindowsOS.Win10OrLater)
-                || !File.Exists(App.StartUpDir("igcmd10.exe")))
-            {
-                MnuSetLockScreen.Enabled = false;
-            }
-
-            if (BHelper.IsOS(WindowsOS.Win7))
-            {
-                MnuOpenWith.Enabled = false;
-            }
 
             // Get EditApp for editing
             UpdateEditAppInfoForMenu();
@@ -1828,10 +1816,8 @@ public partial class FrmMain : ThemedForm
             }
 
             MnuContext.Items.Add(new ToolStripSeparator());
-            if (!BHelper.IsOS(WindowsOS.Win7))
-            {
-                MnuContext.Items.Add(MenuUtils.Clone(MnuOpenWith));
-            }
+            MnuContext.Items.Add(MenuUtils.Clone(MnuOpenWith));
+
 
             // menu Edit
             UpdateEditAppInfoForMenu();
@@ -1842,12 +1828,7 @@ public partial class FrmMain : ThemedForm
         if ((!imageNotFound && !Local.IsImageError) || Local.ClipboardImage != null)
         {
             MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
-
-            // check if igcmd10.exe exists!
-            if (BHelper.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmd10.exe")))
-            {
-                MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
-            }
+            MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
         }
 
 

@@ -37,7 +37,6 @@ public static class IgCommands
     public static string INSTALL_LANGUAGE_PACKS => "install-language-packs";
 
 
-    // igcmd10.exe
     public static string SET_LOCK_SCREEN => "set-lock-screen";
-    public static string SHARE => "share";
+
 }

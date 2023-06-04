@@ -1106,7 +1106,6 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?
@@ -2022,7 +2021,7 @@ public partial class FrmMain
 
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
-        var defaultExt = BHelper.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
+        var defaultExt = ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
         PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);

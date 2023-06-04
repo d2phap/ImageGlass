@@ -1601,7 +1601,7 @@ public static class Config
 
 
     /// <summary>
-    /// Show the default error popup for igcmd/igcmd10.exe
+    /// Show the default error popup for igcmd.exe
     /// </summary>
     /// <returns><see cref="IgExitCode.Error"/></returns>
     public static int ShowDefaultIgCommandError(string igcmdExeName)

@@ -96,7 +96,6 @@ public enum WindowsOS
     Win11OrLater,
     Win10,
     Win10OrLater,
-    Win7,
 }
 
 

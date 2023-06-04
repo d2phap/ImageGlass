@@ -126,11 +126,6 @@ public partial class BHelper
             return Environment.OSVersion.Version.Major >= 10;
         }
 
-        if (ver == WindowsOS.Win7)
-        {
-            return Environment.OSVersion.Version.Major == 6
-                && Environment.OSVersion.Version.Minor == 1;
-        }
 
         return false;
     }

@@ -199,18 +199,6 @@
         <Delete Files="@(IG_FilesToClean)" />
     </Target>
 
-
-    <!-- Build & copy igcmd10 -->
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="$(ConfigurationName) == 'Release'">
-        <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
-
-        <ItemGroup>
-            <IG_IGCMD10 Include="..\Utilities\igcmd10\bin\$(Platform)\$(ConfigurationName)\$(TargetFramework)10.0.19041.0\*.*" />
-        </ItemGroup>
-
-        <Copy SourceFiles="@(IG_IGCMD10)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-    </Target>
-
     
     <!-- Copy resources -->
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
