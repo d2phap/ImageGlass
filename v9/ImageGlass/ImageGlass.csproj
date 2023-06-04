@@ -155,7 +155,7 @@
     <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Viewer.csproj" />
-    <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" Condition="$(ConfigurationName) != 'Publish_Release'" />
+    <ProjectReference Include="..\igcmd\igcmd.csproj" />
   </ItemGroup>
 
   <ItemGroup>
