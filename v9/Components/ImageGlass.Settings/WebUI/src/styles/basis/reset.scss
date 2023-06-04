@@ -88,6 +88,8 @@ a:visited {
   padding: 0 0.125em 0.1em 0.125em;
 }
 a {
+  cursor: default;
+
   &:focus-visible,
   &:hover {
     color: rgb(var(--Accent));
@@ -179,7 +181,7 @@ select {
 //
 // Details at https://github.com/twbs/bootstrap/pull/30562
 [role="button"] {
-  cursor: pointer;
+  cursor: default;
 }
 
 
@@ -210,6 +212,7 @@ button,
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button; // 2
+  appearance: button;
 }
 
 
@@ -257,12 +260,14 @@ fieldset {
 [type="search"] {
   outline-offset: -2px; // 1
   -webkit-appearance: textfield; // 2
+  appearance: textfield;
 }
 
 
 // Remove the inner padding in Chrome and Safari on macOS.
 ::-webkit-search-decoration {
   -webkit-appearance: none;
+  appearance: none;
 }
 
 
@@ -283,6 +288,12 @@ fieldset {
 ::-webkit-file-upload-button {
   font: inherit; // 1
   -webkit-appearance: button; // 2
+  appearance: button;
+}
+
+
+::selection {
+  background-color: rgb(var(--Accent) / 0.55);
 }
 
 

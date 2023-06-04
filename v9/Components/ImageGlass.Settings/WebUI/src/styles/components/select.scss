@@ -1,7 +1,3 @@
-label > select {
-  margin-top: 0.25rem;
-}
-
 select {
   @include baseControl();
 

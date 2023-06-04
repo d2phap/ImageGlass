@@ -61,7 +61,7 @@ _pageSettings.loadLanguageList = TabLanguage.loadLanguageList;
 
 // sidebar
 Sidebar.addEvents();
-Sidebar.setActiveMenu('image');
+Sidebar.setActiveMenu('appearance');
 
 // load settings
 Settings.load();
