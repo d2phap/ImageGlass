@@ -15,7 +15,8 @@
     "IsDarkMode": true,
     "IsShowTitlebarLogo": true,
     "NavButtonLeft": "ViewPreviousImage.svg",
-    "NavButtonRight": "ViewNextImage.svg"
+    "NavButtonRight": "ViewNextImage.svg",
+    "PreviewImage": "preview.jpg"
   },
   "Colors": {
     "MenuBgHoverColor": "accent:50",

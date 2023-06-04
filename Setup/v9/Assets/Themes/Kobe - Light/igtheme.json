@@ -4,7 +4,7 @@
     "Version": "9.0"
   },
   "Info": {
-    "Name": "Kobe",
+    "Name": "Kobe - Light",
     "Author": "Dương Diệu Pháp",
     "Email": "phap@imageglass.org",
     "Website": "https://imageglass.org",
@@ -15,7 +15,8 @@
     "IsDarkMode": false,
     "IsShowTitlebarLogo": true,
     "NavButtonLeft": "ViewPreviousImage.svg",
-    "NavButtonRight": "ViewNextImage.svg"
+    "NavButtonRight": "ViewNextImage.svg",
+    "PreviewImage": "preview.jpg"
   },
   "Colors": {
     "BgColor": "#ffffff00",
