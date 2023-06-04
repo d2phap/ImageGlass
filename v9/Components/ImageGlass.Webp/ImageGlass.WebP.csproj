@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Publish_Release</Configurations>
-    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
+    <Platforms>x64;ARM64</Platforms>
     <Version>1.3.0</Version>
     <FileVersion>$(Version)</FileVersion>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>

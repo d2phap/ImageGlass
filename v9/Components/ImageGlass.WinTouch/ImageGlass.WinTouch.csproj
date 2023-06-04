@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64;ARM64</Platforms>
     <Configurations>Debug;Release;Publish_Release</Configurations>
   </PropertyGroup>
 
