@@ -3,6 +3,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BomPlugin = require('webpack-utf8-bom');
 
 const pkJson = require('./package.json');
 
@@ -73,6 +74,7 @@ const configs = {
       cleanStaleWebpackAssets: false,
       cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, './dist')],
     }),
+    new BomPlugin(true),
   ],
 };
 

@@ -45,6 +45,7 @@
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^5.0.4",
     "webpack": "^5.82.1",
-    "webpack-cli": "^5.1.1"
+    "webpack-cli": "^5.1.1",
+    "webpack-utf8-bom": "^1.4.0"
   }
 }
