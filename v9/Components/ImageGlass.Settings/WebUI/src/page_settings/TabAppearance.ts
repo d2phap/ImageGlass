@@ -6,11 +6,21 @@ export default class TabAppearance {
    */
   static loadSettings() {
     TabAppearance.loadThemeList();
+    TabAppearance.loadThemeListStatus();
+  }
 
-    if (_pageSettings.themeList.length > 0) {
-      query<HTMLInputElement>(`[name="DarkTheme"][value="${_pageSettings.config.DarkTheme}"]`).checked = true;
-      query<HTMLInputElement>(`[name="LightTheme"][value="${_pageSettings.config.LightTheme}"]`).checked = true;
-    }
+
+  /**
+   * Loads theme list check status
+   */
+  static loadThemeListStatus() {
+    const darkTheme = query<HTMLInputElement>('[name="DarkTheme"]').value;
+    const lightTheme = query<HTMLInputElement>('[name="LightTheme"]').value;
+
+    const darkEl = query<HTMLInputElement>(`[name="_DarkThemeOptions"][value="${darkTheme}"]`);
+    const lightEl = query<HTMLInputElement>(`[name="_LightThemeOptions"][value="${lightTheme}"]`);
+    if (darkEl) darkEl.checked = true;
+    if (lightEl) lightEl.checked = true;
   }
 
 
@@ -30,13 +40,13 @@ export default class TabAppearance {
     const settings = getChangedSettingsFromTab('appearance');
 
     // DarkTheme
-    settings.DarkTheme = query<HTMLInputElement>('[name="DarkTheme"]:checked').value;
+    settings.DarkTheme = query<HTMLInputElement>('[name="DarkTheme"]').value;
     if (settings.DarkTheme === _pageSettings.config.DarkTheme) {
       delete settings.DarkTheme;
     }
 
     // LightTheme
-    settings.LightTheme = query<HTMLInputElement>('[name="LightTheme"]:checked').value;
+    settings.LightTheme = query<HTMLInputElement>('[name="LightTheme"]').value;
     if (settings.LightTheme === _pageSettings.config.LightTheme) {
       delete settings.LightTheme;
     }
@@ -72,14 +82,14 @@ export default class TabAppearance {
                 </div>
                 <div class="theme-actions">
                   <label>
-                    <input type="radio" name="DarkTheme" value="${th.FolderName}" />
+                    <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
                     <span>
                       <span>🌙</span>
                       <span data-lang="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
                     </span>
                   </label>
                   <label>
-                    <input type="radio" name="LightTheme" value="${th.FolderName}" />
+                    <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
                     <span>
                       <span>☀️</span>
                       <span data-lang="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
@@ -111,6 +121,20 @@ export default class TabAppearance {
     }
 
     ulEl.innerHTML = ulHtml;
+
+    queryAll<HTMLInputElement>('[name="_DarkThemeOptions"]').forEach(el => {
+      el.addEventListener('change', (e) => {
+        const themeName = (e.target as HTMLInputElement).value;
+        query<HTMLInputElement>('[name="DarkTheme"]').value = themeName;
+      });
+    });
+
+    queryAll<HTMLInputElement>('[name="_LightThemeOptions"]').forEach(el => {
+      el.addEventListener('change', (e) => {
+        const themeName = (e.target as HTMLInputElement).value;
+        query<HTMLInputElement>('[name="LightTheme"]').value = themeName;
+      });
+    });
   }
 
 

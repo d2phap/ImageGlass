@@ -1,3 +1,4 @@
+import TabAppearance from './TabAppearance';
 
 export default class Sidebar {
   /**
@@ -34,6 +35,10 @@ export default class Sidebar {
     allNavItems.forEach((item: HTMLInputElement) => item.checked = false);
     const navItem = query(`input[type="radio"][value="${tabPageName}"]`) as HTMLInputElement;
     if (navItem) navItem.checked = true;
+
+    if (tabPageName === 'appearance') {
+      TabAppearance.loadThemeListStatus();
+    }
   }
 
 }
