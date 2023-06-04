@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
+using System.Windows;
 using Windows.UI.ViewManagement;
 
 namespace ImageGlass.Base.WinApi;
@@ -28,11 +29,11 @@ public class WinColorsApi
     /// </summary>
     public static Color GetAccentColor(bool includeAlpha)
     {
-        var s = new UISettings();
-        var accent = s.GetColorValue(UIColorType.AccentDark1);
+        var ui = new UISettings();
+        var accent = ui.GetColorValue(UIColorType.AccentDark1);
 
-        var a = includeAlpha ? accent.A : (byte)255;
-        var color = Color.FromArgb(a, accent.R, accent.G, accent.B);
+        var alpha = includeAlpha ? accent.A : (byte)255;
+        var color = Color.FromArgb(alpha, accent.R, accent.G, accent.B);
 
         return color;
     }
