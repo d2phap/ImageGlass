@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
+using ImageGlass.UI;
 using System.Dynamic;
 
 namespace ImageGlass;
@@ -73,6 +74,12 @@ public partial class FrmSettings : WebForm
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
         var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
 
+        // language list
+        var langListJson = GetLanguageListJson();
+
+        // theme
+        var themeListJson = GetThemeListJson();
+
         // enums
         var enumObj = new ExpandoObject();
         var enums = new Type[] {
@@ -94,9 +101,6 @@ public partial class FrmSettings : WebForm
         }
         var enumsJson = BHelper.ToJson(enumObj);
 
-        // language list
-        var langListJson = GetLanguageListJson();
-
 
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
@@ -109,6 +113,7 @@ public partial class FrmSettings : WebForm
                     config: {configJson},
                     lang: {configLangJson},
                     langList: {langListJson},
+                    themeList: {themeListJson},
                 }};
 
                 {Settings.Properties.Resources.Script_Settings}
@@ -261,6 +266,43 @@ public partial class FrmSettings : WebForm
         if (o.ShowDialog() != DialogResult.OK) return string.Empty;
 
         return o.FileName;
+    }
+
+
+    private static string GetThemeListJson()
+    {
+        var themeList = Config.LoadThemeList();
+        var themeListJson = BHelper.ToJson(themeList.Select(i =>
+        {
+            var obj = new ExpandoObject();
+
+            obj.TryAdd(nameof(i.ConfigFilePath), i.ConfigFilePath);
+            obj.TryAdd(nameof(i.FolderName), i.FolderName);
+            obj.TryAdd(nameof(i.FolderPath), i.FolderPath);
+            obj.TryAdd(nameof(i.Info), i.JsonModel.Info);
+
+            // IsDarkMode
+            var isDarkMode = true;
+            if (i.JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.IsDarkMode), out var darkMode))
+            {
+                isDarkMode = darkMode.ToString().ToLowerInvariant() != "false";
+            }
+            obj.TryAdd(nameof(IgThemeSettings.IsDarkMode), isDarkMode);
+
+
+            // PreviewImage
+            var previewImgPath = "";
+            if (i.JsonModel.Settings.TryGetValue(nameof(i.Settings.PreviewImage), out var previewImg))
+            {
+                previewImgPath = Path.Combine(i.FolderPath, previewImg.ToString());
+                previewImgPath = new Uri(previewImgPath, UriKind.Absolute).ToString();
+            }
+            obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgPath);
+
+            return obj;
+        }));
+
+        return themeListJson;
     }
 
 }
