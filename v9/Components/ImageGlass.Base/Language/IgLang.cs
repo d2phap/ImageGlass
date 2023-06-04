@@ -121,6 +121,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._ResetToDefault", "Reset to default"); //v9.0
         Add("_._CheckForUpdate", "Check for update…"); //v5.0
         Add("_._Update", "Update"); //v9.0
+        Add("_._Website", "Website"); //v9.0
+        Add("_._Email", "Email"); //v9.0
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -612,8 +614,9 @@ public class IgLang : Dictionary<string, string>
 
         // Appearance > Theme
         Add("FrmSettings.Tab.Appearance._Theme", "Theme");
-        Add("FrmSettings.Tab.Appearance._DarkTheme", "Dark theme");
-        Add("FrmSettings.Tab.Appearance._LightTheme", "Light theme");
+        Add("FrmSettings.Tab.Appearance._DarkTheme", "Dark");
+        Add("FrmSettings.Tab.Appearance._LightTheme", "Light");
+        Add("FrmSettings.Tab.Appearance._Author", "Author");
         #endregion // Tab Appearance
 
 
@@ -671,13 +674,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.btnThemeFolderOpen", "Open theme folder"); //v5.0
         //Add("FrmSetting.btnThemeApply", "Apply theme"); //v5.0
 
-        //Add("FrmSetting.txtThemeInfo._Name", "Name"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Version", "Version"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Author", "Author"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Email", "Email"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Website", "Website"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Compatibility", "Compatibility"); //v5.0
-        //Add("FrmSetting.txtThemeInfo._Description", "Description"); //v5.0
 
         //Add("FrmSetting.btnThemeInstall._Success", "Your theme was installed successfully!"); //v5.0
         //Add("FrmSetting.btnThemeInstall._Error", "Unable to install your theme."); //v5.0
