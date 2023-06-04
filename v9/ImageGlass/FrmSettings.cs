@@ -295,7 +295,7 @@ public partial class FrmSettings : WebForm
             if (i.JsonModel.Settings.TryGetValue(nameof(i.Settings.PreviewImage), out var previewImg))
             {
                 previewImgPath = Path.Combine(i.FolderPath, previewImg.ToString());
-                previewImgPath = new Uri(previewImgPath, UriKind.Absolute).ToString();
+                previewImgPath = new Uri(previewImgPath, UriKind.Absolute).AbsoluteUri;
             }
             obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgPath);
 

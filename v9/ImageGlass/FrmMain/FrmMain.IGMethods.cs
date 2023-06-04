@@ -891,16 +891,16 @@ public partial class FrmMain
         }
         else
         {
-            var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
-            var result = await BHelper.RunIgcmd10(args);
-
-
-            if (result == IgExitCode.Error || result == IgExitCode.Error_FileNotFound)
+            try
+            {
+                WinShare.ShowShare(Handle, new string[] { filePath });
+            }
+            catch (Exception ex)
             {
                 _ = Config.ShowError(
-                    description: Config.Language[$"{langPath}._Error"],
+                    description: Config.Language[$"{langPath}._Error"] + "\r\n\r\n" +
+                        ex.Message,
                     title: Config.Language[langPath],
-                    heading: Config.Language["_._Error"],
                     formOwner: this);
             }
         }
