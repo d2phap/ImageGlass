@@ -665,11 +665,9 @@
       <section>
         <header data-lang="FrmSettings.Nav._Language">[Language]</header>
         <div class="mb-2">
-          <label class="me-2">
-            <div data-lang="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
-            <select id="Cmb_LanguageList" name="Language">
-            </select>
-          </label>
+          <div class="mb-1" data-lang="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
+          <select id="Cmb_LanguageList" name="Language" class="me-2">
+          </select>
 
           <button id="Btn_RefreshLanguageList" type="button" data-lang="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
         </div>
@@ -710,7 +708,7 @@
             <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</div>
             <span class="d-flex align-items-center">
               <input type="color" name="BackgroundColor" class="me-2" style="width: 5rem;" />
-              <a href="#" data-lang="_._Reset">[Reset]</a>
+              <a id="Lnk_ResetBackgroundColor" href="#" data-lang="_._Reset">[Reset]</a>
             </span>
           </div>
         </div>
@@ -720,7 +718,7 @@
               [SlideshowBackgroundColor]</div>
             <span class="d-flex align-items-center">
               <input type="color" name="SlideshowBackgroundColor" class="me-2" style="width: 5rem;" />
-              <a href="#" data-lang="_._Reset">[Reset]</a>
+              <a id="Lnk_ResetSlideshowBackgroundColor" href="#" data-lang="_._Reset">[Reset]</a>
             </span>
           </div>
         </div>

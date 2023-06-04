@@ -36,6 +36,7 @@ if (!window._pageSettings) {
     config: {},
     lang: {},
     langList: [],
+    themeList: [],
     enums: {
       ImageOrderBy: [],
       ImageOrderType: [],

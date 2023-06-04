@@ -14,10 +14,28 @@ export type ILanguage = {
   },
 };
 
+export type ITheme = {
+  ConfigFilePath: string,
+  FolderName: string,
+  FolderPath: string,
+  BgColor: string,
+  IsDarkMode: boolean,
+  PreviewImage: string,
+  Info: Record<string, any> & {
+    Name: string,
+    Version: string,
+    Author: string,
+    Email: string,
+    Website: string,
+    Description: string,
+  },
+};
+
 export type IPageSettings = Record<string, any> & {
   config: Record<string, any>,
   lang: Record<string, string>,
   langList: ILanguage[],
+  themeList: ITheme[],
   startUpDir: string,
   configDir: string,
   userConfigFilePath: string,

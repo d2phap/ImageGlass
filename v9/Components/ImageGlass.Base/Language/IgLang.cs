@@ -481,7 +481,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Image._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
         Add("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
         Add("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
-        Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Loads hidden images");
+        Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Load hidden images");
         Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
         Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded");
         Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect");

@@ -274,18 +274,21 @@ public partial class FrmSettings : WebForm
     private static string GetThemeListJson()
     {
         var themeList = Config.LoadThemeList();
-        var themeListJson = BHelper.ToJson(themeList.Select(i =>
+        var themeListJson = BHelper.ToJson(themeList.Select(th =>
         {
+            th.ReloadThemeColors();
             var obj = new ExpandoObject();
 
-            obj.TryAdd(nameof(i.ConfigFilePath), i.ConfigFilePath);
-            obj.TryAdd(nameof(i.FolderName), i.FolderName);
-            obj.TryAdd(nameof(i.FolderPath), i.FolderPath);
-            obj.TryAdd(nameof(i.Info), i.JsonModel.Info);
+            obj.TryAdd(nameof(th.ConfigFilePath), th.ConfigFilePath);
+            obj.TryAdd(nameof(th.FolderName), th.FolderName);
+            obj.TryAdd(nameof(th.FolderPath), th.FolderPath);
+            obj.TryAdd(nameof(th.Info), th.JsonModel.Info);
+            obj.TryAdd(nameof(IgTheme.Colors.BgColor), ThemeUtils.ColorToHex(th.Colors.BgColor));
+
 
             // IsDarkMode
             var isDarkMode = true;
-            if (i.JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.IsDarkMode), out var darkMode))
+            if (th.JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.IsDarkMode), out var darkMode))
             {
                 isDarkMode = darkMode.ToString().ToLowerInvariant() != "false";
             }
@@ -294,9 +297,9 @@ public partial class FrmSettings : WebForm
 
             // PreviewImage
             var previewImgPath = "";
-            if (i.JsonModel.Settings.TryGetValue(nameof(i.Settings.PreviewImage), out var previewImg))
+            if (th.JsonModel.Settings.TryGetValue(nameof(th.Settings.PreviewImage), out var previewImg))
             {
-                previewImgPath = Path.Combine(i.FolderPath, previewImg.ToString());
+                previewImgPath = Path.Combine(th.FolderPath, previewImg.ToString());
                 previewImgPath = new Uri(previewImgPath, UriKind.Absolute).AbsoluteUri;
             }
             obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgPath);
