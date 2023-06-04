@@ -1470,6 +1470,51 @@ public static class Config
     }
 
 
+    /// <summary>
+    /// Loads all theme packs from default folder and user folder.
+    /// </summary>
+    public static List<IgTheme> LoadThemeList()
+    {
+        var defaultThemeFolder = App.StartUpDir(Dir.Themes);
+        var userThemeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+
+        // Create theme folder if not exist
+        Directory.CreateDirectory(userThemeFolder);
+
+        var userThemeNames = Directory.EnumerateDirectories(userThemeFolder);
+        var defaultThemeNames = Directory.EnumerateDirectories(defaultThemeFolder);
+
+        // merge and distinct all themes
+        var allThemeNames = defaultThemeNames.ToList();
+        allThemeNames.AddRange(userThemeNames);
+        allThemeNames = allThemeNames.Distinct().ToList();
+
+        var allThemes = new List<IgTheme>(allThemeNames.Count);
+
+        Parallel.ForEach(allThemeNames, dir =>
+        {
+            var configFile = Path.Combine(dir, IgTheme.CONFIG_FILE);
+            var th = new IgTheme(themeFolderPath: dir);
+
+            // valid theme
+            if (th.IsValid)
+            {
+                allThemes.Add(th);
+            }
+        });
+
+
+        // get default theme dir
+        var defaultThemePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, IgTheme.CONFIG_FILE);
+
+        allThemes = allThemes
+            .OrderBy(i => i.ConfigFilePath != defaultThemePath)
+            .ToList();
+
+        return allThemes;
+    }
+
+
     #region Popup functions
 
     /// <summary>
