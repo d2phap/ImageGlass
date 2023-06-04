@@ -66,39 +66,6 @@
     }
   }
 
-  .ig-list {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
-    padding: 0.35rem;
-    border: 0.075rem solid var(--ControlBorder);
-    border-radius: var(--border-radius);
-
-    &> li {
-      padding: 0.35rem;
-      border-radius: var(--border-radius);
-      transition: all ease 200ms;
-
-      &:hover {
-        background-color: rgb(var(--InvertColor) / 0.1);
-      }
-
-      &:not(:last-child) {
-        margin-bottom: 0.35rem;
-
-        &::after {
-          content: "";
-          display: block;
-          height: 1px;
-          background-color: rgb(var(--InvertColor) / 0.1);
-          position: relative;
-          bottom: calc(-1 * (0.35rem + (0.35rem / 2)));
-        }
-      }
-    }
-  }
-
-
   .theme-item {
     display: grid;
     grid-template-columns: min-content 1fr;
@@ -108,8 +75,8 @@
       margin-right: 0.5rem;
       width: 150px;
       height: 100px;
-      background-color: rgb(var(--AppBg) / 0.5);
-      border: 1px solid rgb(var(--AppText) / 0.25);
+      background-color: rgb(var(--AppBg) / 0.25);
+      border: 1px solid rgb(var(--AppText) / 0.15);
       border-radius: var(--border-radius);
       overflow: hidden;
 
@@ -189,6 +156,10 @@
             &:checked + * {
               color: white;
               background-color: rgb(var(--Accent) / 1);
+            }
+
+            &:focus-visible + * {
+              @include focusAnimation();
             }
           }
         }
