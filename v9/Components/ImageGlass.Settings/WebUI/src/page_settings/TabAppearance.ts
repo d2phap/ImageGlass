@@ -27,10 +27,27 @@ export default class TabAppearance {
    * Save settings as JSON object.
    */
   static exportSettings() {
-    return getChangedSettingsFromTab('appearance');
+    const settings = getChangedSettingsFromTab('appearance');
+
+    // DarkTheme
+    settings.DarkTheme = query<HTMLInputElement>('[name="DarkTheme"]:checked').value;
+    if (settings.DarkTheme === _pageSettings.config.DarkTheme) {
+      delete settings.DarkTheme;
+    }
+
+    // LightTheme
+    settings.LightTheme = query<HTMLInputElement>('[name="LightTheme"]:checked').value;
+    if (settings.LightTheme === _pageSettings.config.LightTheme) {
+      delete settings.LightTheme;
+    }
+
+    return settings;
   }
 
 
+  /**
+   * Loads all themes into the list.
+   */
   private static loadThemeList() {
     const themeList = _pageSettings.themeList || [];
 
@@ -42,14 +59,16 @@ export default class TabAppearance {
         <li>
           <div class="theme-item">
             <div class="theme-preview">
-              <img src="${th.PreviewImage}" alt="${th.Info.Name}" />
+              <img src="${th.PreviewImage}" alt="${th.Info.Name}" onerror="this.hidden = true;" />
             </div>
             <div class="theme-info">
               <div class="theme-heading">
                 <div class="theme-title">
                   <span class="theme-name">${th.Info.Name}</span>
                   <span class="theme-version">${th.Info.Version}</span>
-                  <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}"></span>
+                  <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}">
+                    ${th.IsDarkMode ? '🌙' : '☀️'}
+                  </span>
                 </div>
                 <div class="theme-actions">
                   <label>
