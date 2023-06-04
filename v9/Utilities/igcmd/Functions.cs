@@ -22,6 +22,8 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Security;
+using Windows.Storage;
+using Windows.System.UserProfile;
 
 namespace igcmd;
 
@@ -224,6 +226,49 @@ public static class Functions
                     title: Config.Language["FrmSettings.Tab.Language._InstallNewLanguagePack"],
                     details: error.ToString());
             }
+        }
+
+        return IgExitCode.Done;
+    }
+
+
+    /// <summary>
+    /// Sets the Lock Screen background
+    /// </summary>
+    public static IgExitCode SetLockScreenBackground(string imgPath)
+    {
+        if (string.IsNullOrEmpty(imgPath))
+        {
+            return IgExitCode.Error;
+        }
+
+
+        var result = BHelper.RunSync(() => SetLockScreenBackgroundAsync(imgPath));
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Sets the Lock Screen background
+    /// </summary>
+    private static async Task<IgExitCode> SetLockScreenBackgroundAsync(string imgPath)
+    {
+        try
+        {
+            var imgFile = await StorageFile.GetFileFromPathAsync(imgPath);
+
+            using var stream = await imgFile.OpenAsync(FileAccessMode.Read);
+            await LockScreen.SetImageStreamAsync(stream);
+        }
+        catch (Exception ex)
+        {
+            if (ex is SecurityException || ex is UnauthorizedAccessException)
+            {
+                return IgExitCode.AdminRequired;
+            }
+
+            return IgExitCode.Error;
         }
 
         return IgExitCode.Done;

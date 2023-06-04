@@ -166,16 +166,4 @@ public partial class BHelper
         return await RunExeCmd(exePath, args, waitForExit);
     }
 
-
-    /// <summary>
-    /// Runs a command from <c>igcmd10.exe</c>, supports auto-elevating process privilege
-    /// if admin permission is required.
-    /// </summary>
-    /// <returns></returns>
-    public static async Task<IgExitCode> RunIgcmd10(string args, bool waitForExit = true)
-    {
-        var exePath = App.StartUpDir("igcmd10.exe");
-
-        return await RunExeCmd(exePath, args, waitForExit);
-    }
 }

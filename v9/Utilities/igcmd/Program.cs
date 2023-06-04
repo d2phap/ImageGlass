@@ -179,6 +179,19 @@ internal static class Program
         #endregion
 
 
+        #region SET_LOCK_SCREEN <string imgPath>
+        if (topCmd == IgCommands.SET_LOCK_SCREEN)
+        {
+            if (args.Length < 2)
+            {
+                return Config.ShowDefaultIgCommandError(nameof(igcmd));
+            }
+
+            return (int)Functions.SetLockScreenBackground(args[1]);
+        }
+        #endregion
+
+
         return (int)IgExitCode.Error;
     }
 

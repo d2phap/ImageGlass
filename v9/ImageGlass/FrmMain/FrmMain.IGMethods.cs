@@ -2128,7 +2128,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
-            var result = await BHelper.RunIgcmd10(args);
+            var result = await BHelper.RunIgcmd(args);
 
 
             if (result == IgExitCode.Done)
