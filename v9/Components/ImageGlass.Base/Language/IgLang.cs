@@ -61,6 +61,10 @@ public class IgLang : Dictionary<string, string>
         {
             ReadFromFile();
         }
+        else
+        {
+            FileName = "";
+        }
     }
 
 

@@ -1177,7 +1177,13 @@ public static class Config
 
         settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
         settings.TryAdd(nameof(SlideshowBackgroundColor), ThemeUtils.ColorToHex(SlideshowBackgroundColor));
-        settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
+
+        var langName = Path.GetFileName(Language.FileName);
+        if (string.IsNullOrEmpty(langName))
+        {
+            langName = "English";
+        }
+        settings.TryAdd(nameof(Language), langName);
 
         #endregion
 
