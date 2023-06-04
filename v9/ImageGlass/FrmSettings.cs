@@ -21,6 +21,7 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Dynamic;
+using Windows.UI.ViewManagement;
 
 namespace ImageGlass;
 
@@ -45,6 +46,7 @@ public partial class FrmSettings : WebForm
 
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());
+
     }
 
 

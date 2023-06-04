@@ -17,38 +17,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
-using System.Runtime.InteropServices;
+using Windows.UI.ViewManagement;
 
 namespace ImageGlass.Base.WinApi;
 
 public class WinColorsApi
 {
-    [DllImport("dwmapi.dll", EntryPoint = "#127", PreserveSig = false)]
-    private static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);
-
-    private struct DWM_COLORIZATION_PARAMS
-    {
-        public uint clrColor;
-        public uint clrAfterGlow;
-        public uint nIntensity;
-        public uint clrAfterGlowBalance;
-        public uint clrBlurBalance;
-        public uint clrGlassReflectionIntensity;
-        public bool fOpaque;
-    }
-
-
     /// <summary>
     /// Gets system accent color.
     /// </summary>
     public static Color GetAccentColor(bool includeAlpha)
     {
-        var temp = new DWM_COLORIZATION_PARAMS();
-        DwmGetColorizationParameters(out temp);
+        var s = new UISettings();
+        var accent = s.GetColorValue(UIColorType.AccentDark1);
 
-        var bytes = BitConverter.GetBytes(temp.clrAfterGlow);
-        var alpha = includeAlpha ? bytes[3] : (byte)255;
-        var color = Color.FromArgb(alpha, bytes[2], bytes[1], bytes[0]);
+        var a = includeAlpha ? accent.A : (byte)255;
+        var color = Color.FromArgb(a, accent.R, accent.G, accent.B);
 
         return color;
     }
