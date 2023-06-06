@@ -303,8 +303,8 @@ namespace ImageGlass.Heart {
                 }
 
 
-                // Issue #679: fix targa display with Magick.NET 7.15.x 
-                if (ext == ".TGA") {
+                // Issue #679, #1478
+                if (ext == ".TGA" || ext == ".NEF" || ext == ".DNG") {
                     imgM.AutoOrient();
                 }
 
