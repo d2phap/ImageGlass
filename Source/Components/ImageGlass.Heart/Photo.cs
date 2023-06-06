@@ -96,6 +96,9 @@ namespace ImageGlass.Heart {
 
                     // Issue https://github.com/d2phap/ImageGlass/issues/1181
                     "32928",
+
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1583
+                    "32932",
                 },
                 });
             }
