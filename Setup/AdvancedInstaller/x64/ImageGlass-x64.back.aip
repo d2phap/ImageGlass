@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="20.7.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
-  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
-    <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
-  </COMPONENT>
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
-    <ROW Property="AI_APP_FILE" Value="[#ImageGlass.exe]"/>
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_README_FILE" Value="[#ReadMe.rtf]"/>
+    <ROW Property="AI_CURRENT_YEAR" Value="2023" ValueLocId="-"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
-    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="MsiBuild:3"/>
+    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="MsiBuild:2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
     <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
@@ -19,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:3"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{B58AC56C-EFD1-4690-91F8-AFD7D5D0D6EC} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{47F429A7-A9A1-4B5D-977B-E458EB188F13} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.9.6.9" Options="32"/>
+    <ROW Property="ProductVersion" Value="8.8.4.4" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -53,6 +49,7 @@
     <ROW Directory="Themes_Dir" Directory_Parent="APPDIR" DefaultDir="Themes"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_INSTALLPERUSER" ComponentId="{3C727F62-5F7F-449F-86CA-BFCB21DB8626}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{9AA73F17-00E0-4CFF-BB31-59859F667103}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ARI.ico" ComponentId="{A0D80D4C-C7E5-4C24-AB16-7C5000BE9A55}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ARI.ico"/>
     <ROW Component="ARW.ico" ComponentId="{EB08D754-6BF7-448B-8EEA-E30BE86F44B3}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ARW.ico"/>
@@ -496,6 +493,9 @@
     <ROW File="Vietnamese.iglang" Component_="ArabicEgypt.iglang" FileName="VIETNA~2.IGL|Vietnamese.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.iglang" SelfReg="false"/>
     <ROW File="LICENSE" Component_="default.jpg" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\LICENSE" SelfReg="false"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
+    <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
@@ -527,10 +527,11 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Thumbprint="3b6713c9747374f259fa3905490915b25f52e949 Subject: Duong Dieu Phap&#10;Issuer: Certera Code Signing CA&#10;Valid from 03/16/2023 to 03/13/2026" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, S=Tây Ninh, C=VN" Store="User\MY"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Thumbprint="3b6713c9747374f259fa3905490915b25f52e949 Subject: Duong Dieu Phap&#10;Issuer: Certera Code Signing CA&#10;Valid from 03/16/2023 to 03/13/2026&#10;User\MY" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, S=Tây Ninh, C=VN"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="InstallTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\InstallTypeDlg.aip"/>
     <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\LicenseAgreementDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
@@ -544,6 +545,12 @@
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
     <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
     <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_1"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_2"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
@@ -572,12 +579,14 @@
     <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="InstallTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="205"/>
+    <ROW Dialog_="InstallTypeDlg" Control_="Next" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="101"/>
+    <ROW Dialog_="InstallTypeDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="SetupTypeDlg" Control_="TypicalButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
-    <ROW Dialog_="SetupTypeDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="102"/>
+    <ROW Dialog_="SetupTypeDlg" Control_="Back" Event="NewDialog" Argument="InstallTypeDlg" Condition="AI_INSTALL" Ordering="102"/>
     <ROW Dialog_="SetupTypeDlg" Control_="CustomButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="101"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="2"/>
     <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="102"/>
@@ -591,28 +600,29 @@
     <ROW Directory_="ImageGlass_Dir" Component_="ImageGlass_1" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_BACKUP_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="GetAllOldDefaults" AdditionalSeq="AI_DATA_SETTER_1"/>
-    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#127;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
-    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#127;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
-    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="LaunchApp"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#ImageGlass.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
-    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
     <ROW Action="AI_RESTORE_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="RestoreDefaults"/>
     <ROW Action="AI_RESTORE_DEFAULTS64" Type="1" Source="defaultPrograms.dll_1" Target="RestoreDefaults"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Type="1" Source="aicustact.dll" Target="MixedAllUsersInstallLocation"/>
     <ROW Action="AI_SET_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="SetDefaultCustom" AdditionalSeq="AI_DATA_SETTER"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#ReadMe.rtf]"/>
-    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="ViewReadMe"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder]\[ProductName]"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#ReadMe.rtf]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[AI_UserProgramFiles]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
@@ -704,6 +714,7 @@
     <ROW Feature_="MainFeatures" Component_="ImageGlass"/>
     <ROW Feature_="MainFeatures" Component_="LightGray.DuongDieuPhap.igtheme"/>
     <ROW Feature_="MainFeatures" Component_="ActualSize.svg"/>
+    <ROW Feature_="MainFeatures" Component_="AI_INSTALLPERUSER"/>
     <ROW Feature_="MainFeatures" Component_="Installdefault.jpgComponentShortcuts"/>
     <ROW Feature_="MainFeatures" Component_="InstallImageGlass.exeComponentShortcuts"/>
     <ROW Feature_="MainFeatures" Component_="ImageGlass_1"/>
@@ -987,29 +998,29 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
-    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1503"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="56"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="55"/>
     <ROW Action="AI_EnableDebugLog" Sequence="54"/>
     <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
     <ROW Action="AI_SET_DEFAULTS" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="6602"/>
     <ROW Action="AI_DATA_SETTER" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="6601"/>
     <ROW Action="AI_BACKUP_DEFAULTS" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="1502"/>
     <ROW Action="AI_DATA_SETTER_1" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="1501"/>
     <ROW Action="AI_RESTORE_DEFAULTS" Condition="(VersionNT &gt;= 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="1627"/>
     <ROW Action="AI_RESTORE_DEFAULTS64" Condition="VersionNT64 AND (VersionNT &gt;= 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="1626"/>
-    <ROW Action="AI_DETECT_MODERNWIN" Condition="(VersionNT &gt;= 603)" Sequence="57" MsiKey="AI_DETECT_MODERNWIN"/>
-    <ROW Action="AI_DETECT_WINTHEME" Condition="(VersionNT &gt;= 603)" Sequence="55" MsiKey="AI_DETECT_WINTHEME"/>
+    <ROW Action="AI_DETECT_MODERNWIN" Condition="(VersionNT &gt;= 603)" Sequence="56" MsiKey="AI_DETECT_MODERNWIN"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
-    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="98"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
-    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="MsiBuild"/>
@@ -1098,27 +1109,24 @@
     <ROW ProgId="ImageGlass.AssocFile.XBM" Icon_="xbm.exe"/>
     <ROW ProgId="ImageGlass.AssocFile.XPM" Icon_="xpm.exe"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_INSTALLPERUSER" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
+    <ROW Signature_="AI_INSTALLPERUSER_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
+    <ROW Signature_="AI_INSTALLPERUSER_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
+    <ROW Signature_="AI_INSTALLPERUSER_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_INSTALLPERUSER" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Value="[AI_INSTALLPERUSER]" Component_="AI_INSTALLPERUSER"/>
     <ROW Registry="ApplicationDescription" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Name="ApplicationDescription" Value="#%A lightweight, versatile image viewer" Component_="ApplicationDescription" VirtualValue="#%"/>
     <ROW Registry="ApplicationName" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Name="ApplicationName" Value="#%[ProductName]" Component_="ApplicationDescription" VirtualValue="#%"/>
-    <ROW Registry="Capabilities" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Name="\"/>
-    <ROW Registry="FileAssociations" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name="\"/>
     <ROW Registry="ImageGlass" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="ImageGlass" Value="0" Component_="ImageGlass"/>
     <ROW Registry="ImageGlass_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="ImageGlass_1" Value="0" Component_="ImageGlass_1"/>
     <ROW Registry="InstallImageGlass.exeComponentSho_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
     <ROW Registry="InstallImageGlass.exeComponentShort" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts"/>
     <ROW Registry="Installdefault.jpgComponentShortc_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts_1"/>
     <ROW Registry="Installdefault.jpgComponentShortcut" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts"/>
-    <ROW Registry="Manufacturer_1" Root="1" Key="Software\[Manufacturer]" Name="\"/>
-    <ROW Registry="PhapSoftware" Root="2" Key="SOFTWARE\PhapSoftware" Name="\"/>
     <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="+" Component_="Registry"/>
-    <ROW Registry="ProductName_1" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]" Name="\"/>
-    <ROW Registry="ProductName_2" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
     <ROW Registry="ProductName_3" Root="2" Key="SOFTWARE\RegisteredApplications" Name="[ProductName]" Value="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Component_="ApplicationDescription"/>
-    <ROW Registry="RegisteredApplications" Root="2" Key="SOFTWARE\RegisteredApplications" Name="\"/>
-    <ROW Registry="SOFTWARE" Root="2" Key="SOFTWARE" Name="\"/>
-    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
-    <ROW Registry="Software_1" Root="1" Key="Software" Name="\"/>
     <ROW Registry="avif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".avif" Value="ImageGlass.AssocFile.AVIF" Component_="ApplicationDescription"/>
     <ROW Registry="b64" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".b64" Value="ImageGlass.AssocFile.B64" Component_="ApplicationDescription"/>
     <ROW Registry="bmp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".bmp" Value="ImageGlass.AssocFile.BMP" Component_="ApplicationDescription"/>
