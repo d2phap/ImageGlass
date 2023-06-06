@@ -168,3 +168,5 @@ Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 
 BundleArtifacts
 BundleArtifactsUpload
+node_modules/
+launchSettings.json
