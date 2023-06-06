@@ -117,7 +117,7 @@ namespace ImageGlass.Heart {
             // Fix RAW color
             settings.SetDefines(new DngReadDefines() {
                 UseCameraWhitebalance = true,
-                OutputColor = DngOutputColor.AdobeRGB,
+                OutputColor = DngOutputColor.SRGB,
                 ReadThumbnail = true,
             });
 
