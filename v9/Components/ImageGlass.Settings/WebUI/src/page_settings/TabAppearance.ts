@@ -7,6 +7,8 @@ export default class TabAppearance {
   static loadSettings() {
     TabAppearance.loadThemeList();
     TabAppearance.loadThemeListStatus();
+    TabAppearance.handleBackgroundColorChanged();
+    TabAppearance.handleSlideshowBackgroundColorChanged();
   }
 
 
@@ -30,6 +32,25 @@ export default class TabAppearance {
   static addEvents() {
     query('#Lnk_ResetBackgroundColor').addEventListener('click', TabAppearance.resetBackgroundColor, false);
     query('#Lnk_ResetSlideshowBackgroundColor').addEventListener('click', TabAppearance.resetSlideshowBackgroundColor, false);
+
+    query('#Btn_BackgroundColor').addEventListener('click', async () => {
+      const colorEL = query<HTMLInputElement>('[name="BackgroundColor"]');
+      const colorValue = await postAsync<string>('Btn_BackgroundColor', colorEL.value);
+
+      if (colorValue) {
+        colorEL.value = colorValue;
+        TabAppearance.handleBackgroundColorChanged();
+      }
+    }, false);
+    query('#Btn_SlideshowBackgroundColor').addEventListener('click', async () => {
+      const colorEL = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]');
+      const colorValue = await postAsync<string>('Btn_SlideshowBackgroundColor', colorEL.value);
+
+      if (colorValue) {
+        colorEL.value = colorValue;
+        TabAppearance.handleSlideshowBackgroundColorChanged();
+      }
+    }, false);
   }
 
 
@@ -149,8 +170,8 @@ export default class TabAppearance {
 
     const colorHex = theme.BgColor || '#00000000';
 
-    // remove alpha
-    query<HTMLInputElement>('[name="BackgroundColor"]').value = colorHex.substring(0, colorHex.length - 2);
+    query<HTMLInputElement>('[name="BackgroundColor"]').value = colorHex;
+    TabAppearance.handleBackgroundColorChanged();
   }
 
 
@@ -159,5 +180,30 @@ export default class TabAppearance {
    */
   private static resetSlideshowBackgroundColor() {
     query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value = '#000000';
+    TabAppearance.handleSlideshowBackgroundColorChanged();
+  }
+
+
+  /**
+   * Handles when `BackgroundColor` is changed.
+   */
+  private static handleBackgroundColorChanged() {
+    const colorValue = query<HTMLInputElement>('[name="BackgroundColor"]').value;
+
+    if (colorValue) {
+      query<HTMLInputElement>('#Btn_BackgroundColor > .color-display').style.setProperty('--color-picker-value', colorValue);
+    }
+  }
+
+
+  /**
+   * Handles when `SlideshowBackgroundColor` is changed.
+   */
+  private static handleSlideshowBackgroundColorChanged() {
+    const colorValue = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value;
+
+    if (colorValue) {
+      query<HTMLInputElement>('#Btn_SlideshowBackgroundColor > .color-display').style.setProperty('--color-picker-value', colorValue);
+    }
   }
 }

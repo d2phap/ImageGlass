@@ -697,7 +697,11 @@
                 <div>
                     <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</div>
                     <span class="d-flex align-items-center">
-                        <input type="color" name="BackgroundColor" class="me-2" style="width: 5rem;" />
+                        <input type="hidden" name="BackgroundColor" />
+                        <button id="Btn_BackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">
+                            <div class="color-display"></div>
+                            <div class="color-checkerboard"></div>
+                        </button>
                         <a id="Lnk_ResetBackgroundColor" href="#" data-lang="_._Reset">[Reset]</a>
                     </span>
                 </div>
@@ -708,7 +712,11 @@
                         [SlideshowBackgroundColor]
                     </div>
                     <span class="d-flex align-items-center">
-                        <input type="color" name="SlideshowBackgroundColor" class="me-2" style="width: 5rem;" />
+                        <input type="hidden" name="SlideshowBackgroundColor" />
+                        <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">
+                            <div class="color-display"></div>
+                            <div class="color-checkerboard"></div>
+                        </button>
                         <a id="Lnk_ResetSlideshowBackgroundColor" href="#" data-lang="_._Reset">[Reset]</a>
                     </span>
                 </div>

@@ -48,17 +48,17 @@ button {
     background-color: var(--ControlCtaBg);
     border-color: var(--ControlCtaBorder);
   }
-  
+
   &[type=submit]:hover {
     background-color: var(--ControlCtaBgHover);
     border-color: var(--ControlCtaBorderHover);
   }
-  
+
   &[type=submit]:focus {
     background-color: var(--ControlCtaBgHover);
     border-color: rgb(var(--Accent));
   }
-  
+
   // &:active,
   &[type=submit]:active {
     background-color: rgb(var(--ControlBgPressed));
@@ -72,5 +72,34 @@ button {
   //   border-color: var(--ControlBorderDisabled);
   //   background-color: rgb(var(--ControlBgDisabled));
   // }
-}
 
+
+  // color picker button
+  &.color-picker {
+    --color-margin-px: calc(var(--control-height) * 0.2px);
+    padding: 0 0.5em;
+
+    .color-display,
+    .color-checkerboard {
+      display: block;
+      border-radius: calc(var(--border-radius) / 2);
+      padding: 0.125em 0.75em;
+
+      position: absolute;
+      top: var(--color-margin-px);
+      bottom: var(--color-margin-px);
+      left: var(--color-margin-px);
+      right: var(--color-margin-px);
+      margin: auto;
+    }
+    .color-display {
+      background-color: var(--color-picker-value, #000);
+      z-index: 1;
+    }
+    .color-checkerboard {
+      background-size: 0.5em 0.5em;
+      background-image: conic-gradient(rgb(255 255 255 / 6%) 25%, rgb(0 0 0 / 6%) 0 50%, rgb(255 255 255 / 6%) 0 75%, rgb(0 0 0 / 6%) 0);
+      z-index: 0;
+    }
+  }
+}
