@@ -305,7 +305,7 @@ public static class PhotoCodec
             using var imgM = new MagickImage();
             imgM.Read(thumbnail);
 
-            return "data:image/png;base64," + imgM.ToBase64(MagickFormat.Png);
+            return "data:image/png;charset=utf-8;base64," + imgM.ToBase64(MagickFormat.Png);
         }
 
         return string.Empty;

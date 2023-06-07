@@ -6,6 +6,7 @@
   padding: 0.35rem;
   border: 0.075rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
+  background-color: rgb(var(--ControlBg) / 0.5);
 
   &> li {
     padding: 0.35rem;

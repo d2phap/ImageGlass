@@ -21,7 +21,6 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Dynamic;
-using Windows.UI.ViewManagement;
 
 namespace ImageGlass;
 
@@ -296,13 +295,18 @@ public partial class FrmSettings : WebForm
 
 
             // PreviewImage
-            var previewImgPath = "";
-            if (th.JsonModel.Settings.TryGetValue(nameof(th.Settings.PreviewImage), out var previewImg))
+            var previewImgB64 = "";
+            if (th.JsonModel.Settings.TryGetValue(nameof(th.Settings.PreviewImage), out var previewImgName))
             {
-                previewImgPath = Path.Combine(th.FolderPath, previewImg.ToString());
-                previewImgPath = new Uri(previewImgPath, UriKind.Absolute).AbsoluteUri;
+                var previewImgPath = Path.Combine(th.FolderPath, previewImgName.ToString());
+
+                // get thumbnail
+                using var bmp = ShellThumbnailApi.GetThumbnail(previewImgPath, 256, 256, ShellThumbnailOptions.ThumbnailOnly);
+
+                // convert to base-64
+                previewImgB64 = "data:image/png;charset=utf-8;base64," + BHelper.ToBase64Png(bmp);
             }
-            obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgPath);
+            obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgB64);
 
             return obj;
         }));
