@@ -96,6 +96,9 @@ namespace ImageGlass.Heart {
 
                     // Issue https://github.com/d2phap/ImageGlass/issues/1181
                     "32928",
+
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1583
+                    "32932",
                 },
                 });
             }
@@ -114,7 +117,7 @@ namespace ImageGlass.Heart {
             // Fix RAW color
             settings.SetDefines(new DngReadDefines() {
                 UseCameraWhitebalance = true,
-                OutputColor = DngOutputColor.AdobeRGB,
+                OutputColor = DngOutputColor.SRGB,
                 ReadThumbnail = true,
             });
 
@@ -300,8 +303,8 @@ namespace ImageGlass.Heart {
                 }
 
 
-                // Issue #679: fix targa display with Magick.NET 7.15.x 
-                if (ext == ".TGA") {
+                // Issue #679, #1478
+                if (ext == ".TGA" || ext == ".NEF" || ext == ".DNG") {
                     imgM.AutoOrient();
                 }
 
