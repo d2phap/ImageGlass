@@ -168,7 +168,7 @@ public partial class FrmSettings : WebForm
 
             if (!String.IsNullOrEmpty(profileFilePath))
             {
-                PostMessage("Btn_BrowseColorProfile", $"\"{profileFilePath}\"");
+                PostMessage(name, $"\"{profileFilePath}\"");
             }
         }
         else if (name.Equals("Lnk_CustomColorProfile"))
@@ -183,13 +183,32 @@ public partial class FrmSettings : WebForm
         else if (name.Equals("Btn_RefreshLanguageList"))
         {
             var langListJson = GetLanguageListJson();
-            PostMessage("Btn_RefreshLanguageList", langListJson);
+            PostMessage(name, langListJson);
         }
         else if (name.Equals("Lnk_InstallLanguage"))
         {
             _ = InstallLanguagePackAsync();
         }
         #endregion // Tab Language
+
+
+        // Tab Appearance
+        #region Tab Appearance
+        else if (name.Equals("Btn_BackgroundColor")
+            || name.Equals("Btn_SlideshowBackgroundColor"))
+        {
+            var currentColor = ThemeUtils.ColorFromHex(data);
+            var newColor = OpenColorPicker(currentColor);
+            var hexColor = string.Empty;
+
+            if (newColor != null)
+            {
+                hexColor = ThemeUtils.ColorToHex(newColor.Value);
+            }
+
+            PostMessage(name, $"\"{hexColor}\"");
+        }
+        #endregion // Tab Appearance
 
     }
 
@@ -312,6 +331,27 @@ public partial class FrmSettings : WebForm
         }));
 
         return themeListJson;
+    }
+
+
+    private static Color? OpenColorPicker(Color? defaultColor = null)
+    {
+        using var cd = new ColorDialog()
+        {
+            FullOpen = true,
+        };
+
+        if (defaultColor != null)
+        {
+            cd.Color = defaultColor.Value;
+        }
+
+        if (cd.ShowDialog() == DialogResult.OK)
+        {
+            return cd.Color;
+        }
+
+        return defaultColor;
     }
 
 }
