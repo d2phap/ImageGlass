@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Base;
+using ImageGlass.Base.Update;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.Services.InstanceManagement;
 using ImageGlass.Settings;
@@ -171,12 +172,12 @@ namespace ImageGlass {
                     out var lastUpdate)) {
 
                     // Check for update every 5 days
-                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 5) {
-                        CheckForUpdate(useAutoCheck: true);
+                    if (DateTime.UtcNow.Subtract(lastUpdate).TotalDays > 5) {
+                        CheckForUpdate(false);
                     }
                 }
                 else {
-                    CheckForUpdate(useAutoCheck: true);
+                    CheckForUpdate(false);
                 }
             }
         }
@@ -185,21 +186,31 @@ namespace ImageGlass {
         /// <summary>
         /// Check for updatae
         /// </summary>
-        /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
-        public static void CheckForUpdate(bool useAutoCheck = false) {
-            _ = Task.Run(() => {
-                using var p = new Process();
-                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
-                p.Start();
+        /// <param name="showIfNewUpdate">
+        /// Set to <c>true</c> if you want to show the Update dialog
+        /// when there is a new version. Default value is <c>false</c>.
+        /// </param>
+        public static void CheckForUpdate(bool? showIfNewUpdate = null) {
+            _ = Task.Run(async () => {
+                showIfNewUpdate ??= false;
 
-                p.WaitForExit();
+                var updater = new UpdateService();
+                await updater.GetUpdatesAsync();
+
 
                 // There is a newer version
-                Configs.IsNewVersionAvailable = p.ExitCode == 1;
+                Configs.IsNewVersionAvailable = updater.HasNewUpdate;
 
                 // save last update
                 Configs.AutoUpdate = DateTime.Now.ToString(Constants.DATETIME_FORMAT);
+
+
+                if (updater.HasNewUpdate || showIfNewUpdate.Value) {
+                    using var p = new Process();
+                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    p.StartInfo.Arguments = "igupdate";
+                    p.Start();
+                }
             });
         }
 
