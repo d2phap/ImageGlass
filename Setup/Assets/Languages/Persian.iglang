@@ -3,7 +3,7 @@
   <Language>
     <Info langCode="fa-IR" langName="فارسی" author="(MSKF (mskf1383" description="Persian" minVersion="8.8" isRightToLeftLayout="Yes"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="برخی از تنظیمات با ImageGlass سازگاری ندارند {0}. پیشنهاد میشود این تنظیمات را قبل از استفاده بروزرسانی کنید.&#10;&#10;-برای اطلاعات بیشتر بروی بله کلیک کنید.&#10;-برای اجرا با تنظیمات پیشفرض بروی خیر کلیک کنید."/>
+      <Item key="_IncompatibleConfigs" value="برخی از تنظیمات با ایمیج‌گلس سازگاری ندارند {0}. پیشنهاد می شود این تنظیمات را قبل از استفاده به‌روزرسانی کنید.&#10;&#10;- برای اطلاعات بیشتر روی بله کلیک کنید.&#10;- برای اجرا با تنظیمات پیشفرض روی خیر کلیک کنید."/>
       <Item key="_.ImageOrderBy._Name" value="نام (پیش‌فرض)"/>
       <Item key="_.ImageOrderBy._Length" value="طول"/>
       <Item key="_.ImageOrderBy._CreationTime" value="زمان ایجاد"/>
@@ -108,7 +108,7 @@
       <Item key="frmMain.mnuMainReportIssue" value="گزارش مشکل…"/>
       <Item key="frmMain.mnuMainExitApplication" value="خروج"/>
       <Item key="frmMain.mnuTrayShowWindow" value="نمایش"/>
-      <Item key="frmMain.picMain._ErrorText" value="ImageGlass نمی تواند این تصویر را باز کند زیرا به نظر می رسد فایل آسیب دیده ، خراب است یا پشتیبانی نمی شود."/>
+      <Item key="frmMain.picMain._ErrorText" value="ایمیج‌گلس نمی‌تواند این تصویر را باز کند زیرا به نظر می رسد پرونده آسیب دیده، خراب است یا پشتیبانی نمی‌شود."/>
       <Item key="frmMain._ImageNotExist" value="تصویر وجود ندارد."/>
       <Item key="frmMain.btnMenu" value="گزینه‌های اصلی"/>
       <Item key="frmMain._OpenFileDialog" value="فایل های پشتیبانی شده"/>
@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="{0} فایل بریده شد"/>
       <Item key="frmMain._CopyImageData" value="تصویر در کلیپ بورد روگرفت شد"/>
       <Item key="frmMain._ClearClipboard" value="کلیپ بورد پاک شد"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="آیا می‌خواهید این تصویر را ذخیره کنید؟&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="مطمئنید که می‌خواهید این تصویر را رونویسی کنید؟&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ایمیج‌گلس یک ویرایشگر عکس حرفه‌ای نیست. لطفاً از افت کیفیت، فرادادگان، لایه‌ها و… هنگام ذخیرهٔ تصویرتان آگاه باشید."/>
       <Item key="frmMain._SaveImage" value="تصویر در این آدرس ذخیره شد&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="در حال ذخیره تصویر...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="موفق به ذخیره تصویر نشدیم&#10;{0}."/>
@@ -270,9 +270,9 @@
       <Item key="frmSetting.btnDeleteExt" value="حذف"/>
       <Item key="frmSetting.btnResetExt" value="بازگشت به تنظیمات پیشفرض"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="ثبت پیوند وب به برنامه امکان پذیر نیست"/>
-      <Item key="frmSetting._RegisterAppExtensions_Error" value="ثبت افزونه های فایل به برنامه ImageGlass امکان پذیر نیست"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="ثبت افزونه‌های پرونده به کارهٔ ایمیج‌گلس امکان‌پذیر نیست"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="همه افزونه های فایل با موفقیت ثبت شدند! برای تنظیم ImageGlass به عنوان نمایشگر پیش فرض عکس ، لطفاً تنظیمات ویندوز &gt; برنامه های پیش فرض را باز کرده و به صورت دستی برنامه ImageGlass را در پایین Photo Viewer انتخاب کنید."/>
-      <Item key="frmSetting._UnregisterAppExtensions_Error" value="حذف افزونه های فایل ثبت شده از برنامه ImageGlass امکان پذیر نیست"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="حذف افزونه‌های پروندهٔ ثبت شده از کارهٔ ایمیج‌گلس امکان‌پذیر نیست"/>
       <Item key="frmSetting._UnregisterAppExtensions_Success" value="همه‌ی پسوندهای فایل با موفقیت عدم ثبت شدند!"/>
       <Item key="frmSetting.lblToolbarPosition" value="موقعیت نوار ابزار:"/>
       <Item key="frmSetting.lblToolbarIconHeight" value="اندازه آیکون نوار ابزار:"/>
@@ -352,14 +352,14 @@
       <Item key="frmEditApp.btnClose" value="بستن"/>
       <Item key="frmEditApp.lblPreviewLabel" value="پیش نمایش"/>
       <Item key="frmFirstLaunch._Text" value="پیکربندی اولین اجرا"/>
-      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass برای اعمال تنظیمات جدید باید تمام پردازش های خود را ببندد ، آیا می خواهید ادامه دهید؟"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ایمیج‌گلس برای اعمال تنظیمات جدید باید تمام پردازش‌های خود را ببندد، آیا می‌خواهید ادامه دهید؟"/>
       <Item key="frmFirstLaunch.lblStepNumber" value="گام {0}/{1}"/>
       <Item key="frmFirstLaunch.btnNextStep" value="بعدی"/>
       <Item key="frmFirstLaunch.btnNextStep._Done" value="انجام شد!"/>
-      <Item key="frmFirstLaunch.lnkSkip" value="گذر از این و اجرای ImageGlass"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="گذر از این و اجرای ایمیج‌گلس"/>
       <Item key="frmFirstLaunch.lblLanguage" value="یک زبان را انتخاب کنید"/>
       <Item key="frmFirstLaunch.lblTheme" value="انتخاب پوسته"/>
-      <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass بعنوان نمایش گر تصویر پیشفرض تنظیم شود؟"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="ایمیج‌گلس بعنوان نمایشگر تصویر پیشفرض تنظیم شود؟"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="بلی"/>
       <Item key="frmCrop.lblWidth" value="پهنا:"/>
       <Item key="frmCrop.lblHeight" value="ارتفاع:"/>
