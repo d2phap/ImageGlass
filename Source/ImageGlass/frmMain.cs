@@ -4075,18 +4075,18 @@ namespace ImageGlass {
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e) {
-            if (e.Source == ImageBoxActionSources.Unknown) return;
+            if (e.Source == ImageBoxActionSources.User) {
+                _isManuallyZoomed = true;
 
-            _isManuallyZoomed = true;
+                // Handle window fit after zoom change
+                if (Configs.IsWindowFit) {
+                    WindowFitMode(false);
+                }
 
-            // Handle window fit after zoom change
-            if (Configs.IsWindowFit) {
-                WindowFitMode(false);
-            }
-
-            // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
-            if (Configs.ZoomMode == ZoomMode.LockZoomRatio) {
-                Configs.ZoomLockValue = e.NewZoom;
+                // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
+                if (Configs.ZoomMode == ZoomMode.LockZoomRatio) {
+                    Configs.ZoomLockValue = e.NewZoom;
+                }
             }
 
             // Zoom optimization
