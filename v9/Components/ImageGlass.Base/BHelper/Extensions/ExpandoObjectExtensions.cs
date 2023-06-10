@@ -30,8 +30,7 @@ public static class ExpandoObjectExtensions
     public static T GetValue<T>(this ExpandoObject? expObj, string keyName, T defaultValue)
     {
         if (expObj == null) return defaultValue;
-
-        var dict = (IDictionary<string, object>)(expObj as dynamic);
+        var dict = expObj.ToDictionary(i => i.Key, i => i.Value);
 
         try
         {
@@ -51,7 +50,7 @@ public static class ExpandoObjectExtensions
     public static object? GetValue(this ExpandoObject? expObj, string keyName)
     {
         if (expObj == null) return null;
-        var dict = (IDictionary<string, object>)(expObj as dynamic);
+        var dict = expObj.ToDictionary(i => i.Key, i => i.Value);
 
         try
         {
@@ -71,7 +70,7 @@ public static class ExpandoObjectExtensions
     public static bool Remove(this ExpandoObject? expObj, string keyName)
     {
         if (expObj == null) return false;
-        var dict = expObj as dynamic as Dictionary<string, object>;
+        var dict = expObj.ToDictionary(i => i.Key, i => i.Value);
 
         return dict.Remove(keyName);
     }
@@ -83,7 +82,7 @@ public static class ExpandoObjectExtensions
     public static void Set(this ExpandoObject? expObj, string keyName, object value)
     {
         if (expObj == null) return;
-        var dict = expObj as dynamic as IDictionary<string, object?>;
+        var dict = expObj.ToDictionary(i => i.Key, i => i.Value);
 
         if (dict.ContainsKey(keyName))
         {
@@ -94,4 +93,5 @@ public static class ExpandoObjectExtensions
             dict.TryAdd(keyName, value);
         }
     }
+
 }

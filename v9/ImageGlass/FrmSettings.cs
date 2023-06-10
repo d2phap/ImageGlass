@@ -130,11 +130,11 @@ public partial class FrmSettings : WebForm
         #region Footer
         if (name.Equals("BtnOK"))
         {
-            //
+            ApplySettings(data);
         }
         else if (name.Equals("BtnApply"))
         {
-            //
+            ApplySettings(data);
         }
         else if (name.Equals("BtnCancel"))
         {
@@ -143,11 +143,14 @@ public partial class FrmSettings : WebForm
         #endregion // Footer
 
 
+        // Sidebar
+        #region Sidebar
         // sidebar tab changed
         else if (name.Equals("Sidebar_Changed"))
         {
             Local.LastOpenedSetting = data;
         }
+        #endregion // Sidebar
 
 
         // Tab General
@@ -221,6 +224,34 @@ public partial class FrmSettings : WebForm
     }
 
     #endregion // Protected / override methods
+
+
+    private static void ApplySettings(string dataJson)
+    {
+        var dict = BHelper.ParseJson<ExpandoObject>(dataJson)
+            .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+        var requests = UpdateRequests.None;
+
+
+        // Tab General
+        #region Tab General
+
+        Config.SetFromJson(dict, nameof(Config.ShowWelcomeImage));
+        Config.SetFromJson(dict, nameof(Config.ShouldOpenLastSeenImage));
+
+        if (Config.SetFromJson(dict, nameof(Config.EnableRealTimeFileUpdate)))
+        {
+            requests |= UpdateRequests.RealTimeFileUpdate;
+        }
+        Config.SetFromJson(dict, nameof(Config.ShouldAutoOpenNewAddedImage));
+
+        Config.SetFromJson(dict, nameof(Config.AutoUpdate));
+        Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
+        Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
+
+        #endregion // Tab General
+
+    }
 
 
     private static string GetLanguageListJson()

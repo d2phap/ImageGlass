@@ -28,10 +28,17 @@ public enum UpdateRequests
 {
     None = 0,
     Language = 1 << 1,
-    MenuHotkeys = 1 << 2,
-    Toolbar = 1 << 3,
-    Gallery = 1 << 4,
-    MouseActions = 1 << 5,
+    
+    Toolbar = 1 << 2,
+    Gallery = 1 << 3,
+    Viewer = 1 << 4,
+    Layout = 1 << 5,
+    Appearance = 1 << 6,
+    Theme = 1 << 7,
+
+    MouseActions = 1 << 8,
+    RealTimeFileUpdate = 1 << 9,
+    MenuHotkeys = 1 << 10,
 }
 
 

@@ -1230,6 +1230,75 @@ public static class Config
 
 
     /// <summary>
+    /// Set user settings from JSON dictionary.
+    /// </summary>
+    /// <param name="settings">JSON dictionary</param>
+    /// <param name="configName">Config name</param>
+    /// <returns><c>true</c> if successful.</returns>
+    public static bool SetFromJson(IDictionary<string, string> settings, string configName)
+    {
+        if (!settings.ContainsKey(configName)) return false;
+
+        var prop = Config.GetProp(configName);
+        if (prop == null) return false;
+
+        var propValue = prop?.GetValue(null);
+        if (!settings.TryGetValue(configName, out var newValue)) return false;
+        newValue ??= string.Empty;
+
+        // bool
+        if (prop.PropertyType.Equals(typeof(bool)))
+        {
+            if (bool.TryParse(newValue, out var value))
+            {
+                prop.SetValue(null, value);
+                return true;
+            }
+        }
+        // int
+        else if (prop.PropertyType.Equals(typeof(int)))
+        {
+            if (int.TryParse(newValue, out var value))
+            {
+                prop.SetValue(null, value);
+                return true;
+            }
+        }
+        // float
+        else if (prop.PropertyType.Equals(typeof(float)))
+        {
+            if (int.TryParse(newValue, out var value))
+            {
+                prop.SetValue(null, value);
+                return true;
+            }
+        }
+        // string
+        else if (prop.PropertyType.Equals(typeof(string)))
+        {
+            prop.SetValue(null, newValue);
+            return true;
+        }
+        // enum
+        else if (prop.PropertyType.IsEnum)
+        {
+            if (Enum.TryParse(prop.PropertyType, newValue, true, out var value))
+            {
+                prop.SetValue(null, value);
+                return true;
+            }
+        }
+        else
+        {
+            // unsupported type
+        }
+
+        return false;
+    }
+
+
+
+    /// <summary>
     /// Loads theme pack <see cref="Config.Theme"/> and only theme colors.
     /// </summary>
     /// <param name="darkMode">
