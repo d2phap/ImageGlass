@@ -331,7 +331,10 @@ public partial class FrmSettings : WebForm
         // Tab Viewer
         #region Tab Viewer
 
-        _ = Config.SetFromJson(dict, nameof(Config.CenterWindowFit));
+        if (Config.SetFromJson(dict, nameof(Config.CenterWindowFit)).Done)
+        {
+            Local.FrmMain.FitWindowToImage();
+        }
 
         if (Config.SetFromJson(dict, nameof(Config.ShowCheckerboardOnlyImageRegion)).Done)
         {
