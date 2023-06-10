@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="גזור {0} קבצים"/>
       <Item key="frmMain._CopyImageData" value="התמונה הועתקה ללוח"/>
       <Item key="frmMain._ClearClipboard" value="לוח הגזירים נוקה"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="האם לשמור את התמונה הזאת?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="האם אתם בטוחים שברצונכם לשכתב את התמונה הזו?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass אינה תוכנת עריכת תמונות מקצועית, אנא היו מודעים לאפשרות אובדן איכות, מטא מידע, שכבות,... בעת שמירת התמונה."/>
       <Item key="frmMain._SaveImage" value="התמונה נשמרה ב-&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="שומר תמונה...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="לא ניתן לשמור את התמונה&#10;{0}."/>
@@ -143,7 +143,7 @@
       <Item key="frmMain._SetLockImage_Success" value="תמונת רקע במסך הנעילה הוגדרה בהצלחה"/>
       <Item key="frmMain._SetBackground_Error" value="התרחשה שגיאה בעת קביעת תמונת רקע לשולחן העבודה"/>
       <Item key="frmMain._SetBackground_Success" value="תמונת רקע לשולחן העבודה הוגדרה בהצלחה"/>
-      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtracting" value="מחלץ תמונות מדפים..."/>
       <Item key="frmMain._PageExtractComplete" value="חילוץ עמוד הושלם."/>
       <Item key="frmMain._Frameless" value="החזיקו את מקש ה- SHIFT לחוץ להזזת החלון."/>
       <Item key="frmMain._InvalidImageClipboardData" value="לוח הגזירים אינו מכיל תמונה."/>
@@ -182,12 +182,12 @@
       <Item key="frmSetting.chkUseTouchGesture" value="הפעל תמיכה במחוות מגע"/>
       <Item key="frmSetting.lblBackGroundColor" value="צבע רקע"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="איפוס"/>
-      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
-      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
-      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadPanning" value="סיבוב"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="מהירות סיבוב אנכית"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="מהירות סיבוב אופקית"/>
       <Item key="frmSetting.lblHeadOthers" value="אחרים"/>
-      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkStartWithOs" value="הפעל עם מערכת ההפעלה לשיפור מהירות הפתיחה"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="המשך לפעול ברקע לאחר סגירת האפליקציה"/>
       <Item key="frmSetting.chkAutoUpdate" value="בדוק עדכונים אוטומטית"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="אפשר עותקים מרובים של התוכנה"/>
       <Item key="frmSetting.chkESCToQuit" value="אפשר לחיצה על ESC ליציאה מהתוכנה"/>
@@ -212,7 +212,7 @@
       <Item key="frmSetting.lblColorProfile" value="פרופיל צבע:"/>
       <Item key="frmSetting.lnkColorProfileBrowse" value="דפדף…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="ללא"/>
-      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="השתמש בפרופיל מסך נוכחי"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="התאמה אישית…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="פעולות גלגל עכבר"/>
       <Item key="frmSetting.lblMouseWheel" value="גלגלת עכבר"/>
@@ -226,12 +226,12 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="תמונה קודמת/הבאה"/>
       <Item key="frmSetting.lblHeadZooming" value="התקרבות"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="מיטוב תקריב"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Low quality/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="אוטומטי (איכות נמוכה/פיקסל סמוך)"/>
       <Item key="frmSetting.cmbZoomOptimization._Low" value="איכות נמוכה"/>
       <Item key="frmSetting.cmbZoomOptimization._High" value="איכות גבוהה"/>
       <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="ביליניארי"/>
       <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="ביקיוביק"/>
-      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="פיקסל סמוך"/>
       <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="איכות גבוהה, ביליניארי"/>
       <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="איכות גבוהה, ביקובי"/>
       <Item key="frmSetting.lblZoomLevels" value="רמות תקריב"/>

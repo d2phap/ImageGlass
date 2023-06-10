@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="{0} file dipindahkan"/>
       <Item key="frmMain._CopyImageData" value="Gambar tersalin ke papan klip"/>
       <Item key="frmMain._ClearClipboard" value="Clipboard sudah dibersihkan"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Apakah Anda ingin menyimpan gambar ini?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Apakah Anda ingin menimpa gambar ini?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass bukanlah penyunting foto profesional, harap berhati-hati terhadap kemungkinan hilangnya kualitas, metadata, atau layer,... saat menyimpan gambar."/>
       <Item key="frmMain._SaveImage" value="Gambar telah disimpan di&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="Menyimpan gambar...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Tidak dapat menyimpan gambar&#10;{0}."/>

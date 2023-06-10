@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="{0} pel hatin jê kirin"/>
       <Item key="frmMain._CopyImageData" value="Wêne hate jê girtin bo tûrikê"/>
       <Item key="frmMain._ClearClipboard" value="Tûrik hate pakkirin"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Tu dixwazî vê wêneyê tomar bikî?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Tu bi rastî dixwazî ​​vê wêneyê derbas bikî?&#10; {0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass ne serrastkera wêneya profesyonel e, jkx baldar beji wendakirina kalîteyê, metadata, pergalan,... Dema ku wêneyê xwe tomar dikî."/>
       <Item key="frmMain._SaveImage" value="Wêne hate tomarkirin di {0} de"/>
       <Item key="frmMain._SavingImage" value="Wêne tê tomarkirin...&#10; {0}"/>
       <Item key="frmMain._SaveImageError" value="Nikare wêneyê tomar bike&#10; {0}."/>

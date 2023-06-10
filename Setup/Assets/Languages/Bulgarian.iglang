@@ -3,7 +3,7 @@
   <Language>
     <Info langCode="bg-BG" langName="Български" author="Alexander Sirakov" description="Bulgarian" minVersion="8.8" isRightToLeftLayout="No"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="Някои настройки не са съвместими с вашия ImageGlass {0}. Препоръчително е да ги обновите, преди да продължите.&#13;&#10;&#10;- Кликнете на Да, за да научите за промените.&#13;&#10;- Кликнете Не, за да пуснете ImageGlass с настройките по подразбиране."/>
+      <Item key="_IncompatibleConfigs" value="Някои настройки не са съвместими с ImageGlass {0}. Препоръчително е да ги обновите, преди да продължите.&#10;&#10;- Изберете Да, за да научите за промените.&#10;- Изберете Не, за да пуснете ImageGlass с настройките по подразбиране."/>
       <Item key="_.ImageOrderBy._Name" value="Име (по подразбиране)"/>
       <Item key="_.ImageOrderBy._Length" value="Дължина"/>
       <Item key="_.ImageOrderBy._CreationTime" value="Време на създаване"/>
@@ -14,10 +14,10 @@
       <Item key="_.ImageOrderType._Asc" value="Възходящ"/>
       <Item key="_.ImageOrderType._Desc" value="Низходящ"/>
       <Item key="_.AfterOpeningEditAppAction._Nothing" value="Нищо"/>
-      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Минимизирай"/>
-      <Item key="_.AfterOpeningEditAppAction._Close" value="Затвори"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Намаляване"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Затваряне"/>
       <Item key="frmMain.mnuMainFile" value="Файл"/>
-      <Item key="frmMain.mnuMainOpenFile" value="Отвори файл…"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Отваряне на файл…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Отвори данните за изображението от буфера"/>
       <Item key="frmMain.mnuMainNewWindow" value="Отвори в нов прозорец"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Не може да се отвори нов прозорец, защото е разрешен само едно копие"/>
@@ -200,7 +200,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Връщане на зрителя в първото изображение, когато достигне края на списъка"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрирай изображението на програмата"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Използване на вградена миниатюра за RAW формати"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Автоматично показване на добавените в папката изображения"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Ред за зареждане на изображения"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Използвай реда за сортиране на Windows File Explorer, ако е възможно"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Групиране на изображения по папка"/>
@@ -302,7 +302,7 @@
       <Item key="frmSetting.lblLanguageText" value="Инсталирани езици"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Опресни"/>
       <Item key="frmSetting.lblLanguageWarning" value="Този езиков пакет може да не е съвместим с {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Преводач:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Инсталиране на нов езиков пакет (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Създаване на нов езиков пакет…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Редактиране на избрания езиков пакет…"/>
@@ -342,7 +342,7 @@
       <Item key="frmSetting.KeyActions._DoNothing" value="Не прави нищо"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Разширение на файла"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
-      <Item key="frmAddNewFormat.btnClose" value="Затвори"/>
+      <Item key="frmAddNewFormat.btnClose" value="Затваряне"/>
       <Item key="frmEditApp.lblFileExtension" value="Разширение на файла"/>
       <Item key="frmEditApp.lblAppName" value="Име на приложението"/>
       <Item key="frmEditApp.lblAppPath" value="Път до приложението"/>
@@ -363,15 +363,15 @@
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Да"/>
       <Item key="frmCrop.lblWidth" value="Ширина:"/>
       <Item key="frmCrop.lblHeight" value="Височина:"/>
-      <Item key="frmCrop.btnSave" value="Съхрани"/>
-      <Item key="frmCrop.btnSaveAs" value="Съхрани като…"/>
-      <Item key="frmCrop.btnCopy" value="Копирай"/>
+      <Item key="frmCrop.btnSave" value="Запазване"/>
+      <Item key="frmCrop.btnSaveAs" value="Запазване като…"/>
+      <Item key="frmCrop.btnCopy" value="Копиране"/>
       <Item key="frmCrop.btnReset" value="Нулиране"/>
-      <Item key="FrmExifTool.clnProperty" value="Имущество"/>
+      <Item key="FrmExifTool.clnProperty" value="Свойство"/>
       <Item key="FrmExifTool.clnValue" value="Стойност"/>
       <Item key="FrmExifTool.btnCopyValue" value="Копиране на стойност"/>
       <Item key="FrmExifTool.btnExport" value="Изнасяне…"/>
-      <Item key="FrmExifTool.btnClose" value="Затвори"/>
+      <Item key="FrmExifTool.btnClose" value="Затваряне"/>
     </Content>
   </Language>
 </ImageGlass>

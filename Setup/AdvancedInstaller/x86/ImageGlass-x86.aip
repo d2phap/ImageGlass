@@ -410,6 +410,13 @@
     <ROW File="System.ValueTuple.xml" Component_="EULA.txt" FileName="SYSTEM~8.XML|System.ValueTuple.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.ValueTuple.xml" SelfReg="false"/>
     <ROW File="LICENSE" Component_="EULA.txt" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\LICENSE" SelfReg="false"/>
     <ROW File="default.jpg" Component_="EULA.txt" FileName="default.jpg" Attributes="0" SourcePath="..\..\Assets\default.jpg" SelfReg="false"/>
+    <ROW File="Esperanto.iglang" Component_="ArabicEgypt.iglang" FileName="ESPERA~1.IGL|Esperanto.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Esperanto.iglang" SelfReg="false"/>
+    <ROW File="GreekCyprus.iglang" Component_="ArabicEgypt.iglang" FileName="GREEK_~1.IGL|Greek, Cyprus.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek, Cyprus.iglang" SelfReg="false"/>
+    <ROW File="Icelandic.iglang" Component_="ArabicEgypt.iglang" FileName="ICELAN~1.IGL|Icelandic.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Icelandic.iglang" SelfReg="false"/>
+    <ROW File="Khmer.iglang" Component_="ArabicEgypt.iglang" FileName="KHMER~1.IGL|Khmer.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Khmer.iglang" SelfReg="false"/>
+    <ROW File="Swahili.iglang" Component_="ArabicEgypt.iglang" FileName="SWAHIL~1.IGL|Swahili.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swahili.iglang" SelfReg="false"/>
+    <ROW File="Tamil.iglang" Component_="ArabicEgypt.iglang" FileName="TAMIL~1.IGL|Tamil.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.iglang" SelfReg="false"/>
+    <ROW File="Uzbek.iglang" Component_="ArabicEgypt.iglang" FileName="UZBEK~1.IGL|Uzbek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Uzbek.iglang" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -497,7 +504,7 @@
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#ReadMe.rtf]"/>
     <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="ViewReadMe"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[AppDataFolder][ProductName]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="MsiBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>

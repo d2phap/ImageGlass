@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ar-SA" langName="الاسم المحلي للغة" author="sysy1413" description="Arabic" minVersion="8.8" isRightToLeftLayout="Yes"/>
+    <Info langCode="ar-SA" langName="الاسم المحلي للغة" author="sysy1413" description="Arabic" minVersion="8.8" isRightToLeftLayout="لا"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="بعض الإعدادات غير متوافقة مع ImageGlass {0} الخاص بك. يوصى بتحديثها قبل المتابعة.&#10;&#10;- انقر فوق نعم للتعرف على التغييرات.&#10;- انقر فوق لا لتشغيل ImageGlass بالإعدادات الافتراضية."/>
-      <Item key="_.ImageOrderBy._Name" value="الاسم (افتراضي)"/>
+      <Item key="_.ImageOrderBy._Name" value="اسم (افتراضي)"/>
       <Item key="_.ImageOrderBy._Length" value="طول"/>
       <Item key="_.ImageOrderBy._CreationTime" value="وقت الإنشاء"/>
       <Item key="_.ImageOrderBy._LastAccessTime" value="آخر وقت للدخول"/>
@@ -129,8 +129,8 @@
       <Item key="frmMain._CutFileText" value="تم نسخ الملف"/>
       <Item key="frmMain._CopyImageData" value="تم نسخ الصورة إلى الحافظة"/>
       <Item key="frmMain._ClearClipboard" value="تم مسح الحافظة"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveConfirm" value="هل تود حفظ هذه الصورة؟&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="هل أنت متأكد من أنك تريد تخطى هذه الصورة؟&#10;{0}"/>
       <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
       <Item key="frmMain._SaveImage" value="تم حفظ الصورة في&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="جار حفظ الصورة {0}"/>
