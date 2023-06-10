@@ -236,6 +236,8 @@ public partial class FrmSettings : WebForm
         var reloadImg = false;
         var reloadImgList = false;
         var updateSlideshow = false;
+        var updateToolbarAlignment = false;
+        var updateToolbarIcons = false;
 
 
         // Tab General
@@ -373,6 +375,10 @@ public partial class FrmSettings : WebForm
         // Tab Toolbar
         #region Tab Toolbar
 
+        _ = Config.SetFromJson(dict, nameof(Config.HideToolbarInFullscreen));
+        if (Config.SetFromJson(dict, nameof(Config.EnableCenterToolbar)).Done) { updateToolbarAlignment = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ToolbarIconHeight)).Done) { updateToolbarIcons = true; }
+
         #endregion // Tab Toolbar
 
 
@@ -421,6 +427,8 @@ public partial class FrmSettings : WebForm
         if (reloadImg) requests |= UpdateRequests.ReloadImage;
         if (reloadImgList) requests |= UpdateRequests.ReloadImageList;
         if (updateSlideshow) requests |= UpdateRequests.Slideshow;
+        if (updateToolbarAlignment) requests |= UpdateRequests.ToolbarAlignment;
+        if (updateToolbarIcons) requests |= UpdateRequests.ToolbarIcons;
 
         Local.UpdateFrmMain(requests);
     }

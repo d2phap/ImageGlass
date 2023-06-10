@@ -29,7 +29,7 @@ public enum UpdateRequests
     None = 0,
     Language = 1 << 1,
     
-    Toolbar = 1 << 2,
+    
     Gallery = 1 << 3,
     Viewer = 1 << 4,
     Layout = 1 << 5,
@@ -43,6 +43,9 @@ public enum UpdateRequests
     ReloadImage = 1 << 11,
     ReloadImageList = 1 << 12,
     Slideshow = 1 << 13,
+
+    ToolbarAlignment = 1 << 14,
+    ToolbarIcons = 1 << 15,
 }
 
 

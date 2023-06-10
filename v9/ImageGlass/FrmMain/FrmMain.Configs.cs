@@ -395,6 +395,19 @@ public partial class FrmMain
             // TODO:
         }
 
+        if (e.HasFlag(UpdateRequests.ToolbarIcons))
+        {
+            Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
+            ToolbarContext.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
+        }
+
+        if (e.HasFlag(UpdateRequests.ToolbarIcons) || e.HasFlag(UpdateRequests.ToolbarAlignment))
+        {
+            Toolbar.Alignment = Config.EnableCenterToolbar
+                ? ToolbarAlignment.Center
+                : ToolbarAlignment.Left;
+        }
+
         if (e.HasFlag(UpdateRequests.Language))
         {
             LoadLanguage();
