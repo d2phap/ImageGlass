@@ -196,6 +196,13 @@ public static class Config
     public delegate void RequestUpdatingThemeHandler(RequestUpdatingThemeEventArgs e);
 
 
+    /// <summary>
+    /// Occurs when the <see cref="Config.Language"/> is requested to change.
+    /// </summary>
+    public static event RequestUpdatingLanguageHandler? RequestUpdatingLanguage;
+    public delegate void RequestUpdatingLanguageHandler();
+
+
     #endregion
 
 
@@ -1416,6 +1423,15 @@ public static class Config
     public static void TriggerRequestUpdatingTheme()
     {
         RequestUpdatingTheme?.Invoke(new RequestUpdatingThemeEventArgs(Config.Theme));
+    }
+
+
+    // <summary>
+    /// Triggers <see cref="RequestUpdatingLanguage"/> event.
+    /// </summary>
+    public static void TriggerRequestUpdatingLanguage()
+    {
+        RequestUpdatingLanguage?.Invoke();
     }
 
 
