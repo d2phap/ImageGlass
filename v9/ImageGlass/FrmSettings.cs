@@ -59,6 +59,18 @@ public partial class FrmSettings : WebForm
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        // get language as json string
+        var configLangJson = BHelper.ToJson(Config.Language);
+
+        _ = Web2.ExecuteScriptAsync($"""
+            window._pageSettings.lang = {configLangJson};
+            window._pageSettings.loadLanguage();
+        """);
+    }
+
+
     protected override void OnWeb2Ready()
     {
         base.OnWeb2Ready();

@@ -95,6 +95,15 @@ public partial class WebForm : ThemedForm
         _ = SetWeb2AccentColorAsync();
     }
 
+
+    protected override void OnRequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
+    {
+        base.OnRequestUpdatingTheme(e);
+
+        _ = SetWeb2ColorModeAsync();
+    }
+
+
     #endregion // Protected / override methods
 
 
@@ -146,6 +155,7 @@ public partial class WebForm : ThemedForm
     {
 
     }
+
 
     #endregion // Virtual methods
 
