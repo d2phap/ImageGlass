@@ -189,6 +189,13 @@ public static class Config
     public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
 
 
+    /// <summary>
+    /// Occurs when the <see cref="Config.Theme"/> is requested to change.
+    /// </summary>
+    public static event RequestUpdatingThemeHandler? RequestUpdatingTheme;
+    public delegate void RequestUpdatingThemeHandler(RequestUpdatingThemeEventArgs e);
+
+
     #endregion
 
 
@@ -1314,6 +1321,12 @@ public static class Config
             }
             catch { }
         }
+        // Language
+        else if (configName == nameof(Config.Language))
+        {
+            Config.Language = new IgLang(newValue, App.StartUpDir(Dir.Language));
+            Done = true;
+        }
         else
         {
             // unsupported type
@@ -1322,7 +1335,6 @@ public static class Config
 
         return (Done, Unsupported);
     }
-
 
 
     /// <summary>
@@ -1395,6 +1407,15 @@ public static class Config
         // set to the current theme
         Theme?.Dispose();
         Theme = th;
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingTheme"/> event.
+    /// </summary>
+    public static void TriggerRequestUpdatingTheme()
+    {
+        RequestUpdatingTheme?.Invoke(new RequestUpdatingThemeEventArgs(Config.Theme));
     }
 
 
