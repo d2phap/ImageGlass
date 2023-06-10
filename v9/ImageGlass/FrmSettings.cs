@@ -238,6 +238,7 @@ public partial class FrmSettings : WebForm
         var updateSlideshow = false;
         var updateToolbarAlignment = false;
         var updateToolbarIcons = false;
+        var updateGallery = false;
 
 
         // Tab General
@@ -385,6 +386,14 @@ public partial class FrmSettings : WebForm
         // Tab Gallery
         #region Tab Gallery
 
+        _ = Config.SetFromJson(dict, nameof(Config.HideGalleryInFullscreen));
+        if (Config.SetFromJson(dict, nameof(Config.ShowGalleryScrollbars)).Done) { updateGallery = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ShowGalleryFileName)).Done) { updateGallery = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ThumbnailSize)).Done) { updateGallery = true; }
+        if (Config.SetFromJson(dict, nameof(Config.GalleryCacheSizeInMb)).Done) { updateGallery = true; }
+        if (Config.SetFromJson(dict, nameof(Config.GalleryColumns)).Done) { updateGallery = true; }
+
+
         #endregion // Tab Gallery
 
 
@@ -429,6 +438,7 @@ public partial class FrmSettings : WebForm
         if (updateSlideshow) requests |= UpdateRequests.Slideshow;
         if (updateToolbarAlignment) requests |= UpdateRequests.ToolbarAlignment;
         if (updateToolbarIcons) requests |= UpdateRequests.ToolbarIcons;
+        if (updateGallery) requests |= UpdateRequests.Gallery;
 
         Local.UpdateFrmMain(requests);
     }

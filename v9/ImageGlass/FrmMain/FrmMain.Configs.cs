@@ -408,6 +408,16 @@ public partial class FrmMain
                 : ToolbarAlignment.Left;
         }
 
+        if (e.HasFlag(UpdateRequests.Gallery))
+        {
+            Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+            Gallery.ShowItemText = Config.ShowGalleryFileName;
+            Gallery.PersistentCacheSize = Config.GalleryCacheSizeInMb;
+
+            // update gallery size
+            UpdateGallerySize();
+        }
+
         if (e.HasFlag(UpdateRequests.Language))
         {
             LoadLanguage();
