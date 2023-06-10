@@ -177,6 +177,11 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        ApplyLanguage();
+    }
+
 
     #endregion // Override methods
 

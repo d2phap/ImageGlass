@@ -185,6 +185,12 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        ApplyLanguage();
+    }
+
+
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);

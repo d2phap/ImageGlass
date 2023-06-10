@@ -420,7 +420,7 @@ public partial class FrmMain
 
         if (e.HasFlag(UpdateRequests.Language))
         {
-            LoadLanguage();
+            Config.TriggerRequestUpdatingLanguage();
         }
 
         if (e.HasFlag(UpdateRequests.Theme))
@@ -476,6 +476,12 @@ public partial class FrmMain
                 PicMain.ContextMenuStrip = null;
             }
         }
+    }
+
+
+    protected override void OnRequestUpdatingLanguage()
+    {
+        LoadLanguage();
     }
 
 

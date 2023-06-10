@@ -85,6 +85,12 @@ public partial class FrmCropSettings : DialogForm
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        ApplyLanguage();
+    }
+
+
     #endregion // Override / Virtual methods
 
 

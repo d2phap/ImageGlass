@@ -125,6 +125,12 @@ public partial class FrmToolNotFound : DialogForm
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        ApplyLanguage();
+    }
+
+
     #endregion // Override / Virtual methods
 
 
