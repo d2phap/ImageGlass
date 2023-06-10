@@ -39,6 +39,9 @@ public enum UpdateRequests
     MouseActions = 1 << 8,
     RealTimeFileUpdate = 1 << 9,
     MenuHotkeys = 1 << 10,
+
+    ReloadImage = 1 << 11,
+    ReloadImageList = 1 << 12,
 }
 
 

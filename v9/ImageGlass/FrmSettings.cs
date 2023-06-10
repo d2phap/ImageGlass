@@ -230,27 +230,143 @@ public partial class FrmSettings : WebForm
     {
         var dict = BHelper.ParseJson<ExpandoObject>(dataJson)
             .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
-        var requests = UpdateRequests.None;
+
+
+        var updates = UpdateRequests.None;
+        var reloadImg = false;
+        var reloadImgList = false;
 
 
         // Tab General
         #region Tab General
 
-        Config.SetFromJson(dict, nameof(Config.ShowWelcomeImage));
-        Config.SetFromJson(dict, nameof(Config.ShouldOpenLastSeenImage));
+        _ = Config.SetFromJson(dict, nameof(Config.ShowWelcomeImage));
+        _ = Config.SetFromJson(dict, nameof(Config.ShouldOpenLastSeenImage));
 
-        if (Config.SetFromJson(dict, nameof(Config.EnableRealTimeFileUpdate)))
+        if (Config.SetFromJson(dict, nameof(Config.EnableRealTimeFileUpdate)).Done)
         {
-            requests |= UpdateRequests.RealTimeFileUpdate;
+            Local.FrmMain.IG_SetRealTimeFileUpdate(Config.EnableRealTimeFileUpdate);
         }
-        Config.SetFromJson(dict, nameof(Config.ShouldAutoOpenNewAddedImage));
+        _ = Config.SetFromJson(dict, nameof(Config.ShouldAutoOpenNewAddedImage));
 
-        Config.SetFromJson(dict, nameof(Config.AutoUpdate));
-        Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
-        Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
+        _ = Config.SetFromJson(dict, nameof(Config.AutoUpdate));
+        _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
+        _ = Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
 
         #endregion // Tab General
 
+
+        // Tab Image
+        #region Tab Image
+
+        // Image loading
+        if (Config.SetFromJson(dict, nameof(Config.ImageLoadingOrder)).Done) { reloadImgList = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ImageLoadingOrderType)).Done) { reloadImgList = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ShouldUseExplorerSortOrder)).Done) { reloadImgList = true; }
+        if (Config.SetFromJson(dict, nameof(Config.EnableRecursiveLoading)).Done) { reloadImgList = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ShouldGroupImagesByDirectory)).Done) { reloadImgList = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ShouldLoadHiddenImages)).Done) { reloadImgList = true; }
+
+        _ = Config.SetFromJson(dict, nameof(Config.EnableLoopBackNavigation));
+        _ = Config.SetFromJson(dict, nameof(Config.ShowImagePreview));
+        _ = Config.SetFromJson(dict, nameof(Config.EnableImageTransition));
+
+        if (Config.SetFromJson(dict, nameof(Config.UseEmbeddedThumbnailRawFormats)).Done) { reloadImg = true; }
+        if (Config.SetFromJson(dict, nameof(Config.UseEmbeddedThumbnailOtherFormats)).Done) { reloadImg = true; }
+        if (Config.SetFromJson(dict, nameof(Config.EmbeddedThumbnailMinWidth)).Done) { reloadImg = true; }
+        if (Config.SetFromJson(dict, nameof(Config.EmbeddedThumbnailMinHeight)).Done) { reloadImg = true; }
+
+
+        // Image booster
+        if (Config.SetFromJson(dict, nameof(Config.ImageBoosterCacheCount)).Done)
+        {
+            Local.Images.MaxQueue = Config.ImageBoosterCacheCount;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ImageBoosterCacheMaxDimension)).Done)
+        {
+            Local.Images.MaxImageDimensionToCache = Config.ImageBoosterCacheMaxDimension;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ImageBoosterCacheMaxFileSizeInMb)).Done)
+        {
+            Local.Images.MaxFileSizeInMbToCache = Config.ImageBoosterCacheMaxFileSizeInMb;
+        }
+
+
+        // Color manmagement
+        if (Config.SetFromJson(dict, nameof(Config.ShouldUseColorProfileForAll)).Done) { reloadImg = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ColorProfile)).Done) { reloadImg = true; }
+
+        #endregion // Tab Image
+
+
+        // Tab Slideshow
+        #region Tab Slideshow
+
+        #endregion // Tab Slideshow
+
+
+        // Tab Edit
+        #region Tab Edit
+
+        #endregion // Tab Edit
+
+
+        // Tab Viewer
+        #region Tab Viewer
+
+        #endregion // Tab Viewer
+
+
+        // Tab Toolbar
+        #region Tab Toolbar
+
+        #endregion // Tab Toolbar
+
+
+        // Tab Gallery
+        #region Tab Gallery
+
+        #endregion // Tab Gallery
+
+
+        // Tab Layout
+        #region Tab Layout
+
+        #endregion // Tab Layout
+
+
+        // Tab Mouse & Keyboard
+        #region Tab Mouse & Keyboard
+
+        #endregion // Tab Mouse & Keyboard
+
+
+        // Tab File type associations
+        #region Tab File type associations
+
+        #endregion // Tab File type associations
+
+
+        // Tab Tools
+        #region Tab Tools
+
+        #endregion // Tab Tools
+
+
+        // Tab Language
+        #region Tab Language
+
+        #endregion // Tab Language
+
+
+        // Tab Appearance
+        #region Tab Appearance
+
+        #endregion // Tab Appearance
+
+
+        if (reloadImg) updates |= UpdateRequests.ReloadImage;
+        if (reloadImgList) updates |= UpdateRequests.ReloadImageList;
     }
 
 

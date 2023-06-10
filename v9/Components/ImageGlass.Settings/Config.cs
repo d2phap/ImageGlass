@@ -1234,16 +1234,18 @@ public static class Config
     /// </summary>
     /// <param name="settings">JSON dictionary</param>
     /// <param name="configName">Config name</param>
-    /// <returns><c>true</c> if successful.</returns>
-    public static bool SetFromJson(IDictionary<string, string> settings, string configName)
+    public static (bool Done, bool Unsupported) SetFromJson(IDictionary<string, string> settings, string configName)
     {
-        if (!settings.ContainsKey(configName)) return false;
+        var Done = false;
+        var Unsupported = false;
+
+        if (!settings.ContainsKey(configName)) return (Done, Unsupported);
 
         var prop = Config.GetProp(configName);
-        if (prop == null) return false;
+        if (prop == null) return (Done, Unsupported);
 
         var propValue = prop?.GetValue(null);
-        if (!settings.TryGetValue(configName, out var newValue)) return false;
+        if (!settings.TryGetValue(configName, out var newValue)) return (Done, Unsupported);
         newValue ??= string.Empty;
 
         // bool
@@ -1252,7 +1254,7 @@ public static class Config
             if (bool.TryParse(newValue, out var value))
             {
                 prop.SetValue(null, value);
-                return true;
+                Done = true;
             }
         }
         // int
@@ -1261,7 +1263,7 @@ public static class Config
             if (int.TryParse(newValue, out var value))
             {
                 prop.SetValue(null, value);
-                return true;
+                Done = true;
             }
         }
         // float
@@ -1270,14 +1272,14 @@ public static class Config
             if (int.TryParse(newValue, out var value))
             {
                 prop.SetValue(null, value);
-                return true;
+                Done = true;
             }
         }
         // string
         else if (prop.PropertyType.Equals(typeof(string)))
         {
             prop.SetValue(null, newValue);
-            return true;
+            Done = true;
         }
         // enum
         else if (prop.PropertyType.IsEnum)
@@ -1285,15 +1287,16 @@ public static class Config
             if (Enum.TryParse(prop.PropertyType, newValue, true, out var value))
             {
                 prop.SetValue(null, value);
-                return true;
+                Done = true;
             }
         }
         else
         {
             // unsupported type
+            Unsupported = true;
         }
 
-        return false;
+        return (Done, Unsupported);
     }
 
 
