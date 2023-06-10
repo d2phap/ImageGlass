@@ -1304,6 +1304,18 @@ public static class Config
                 Done = true;
             }
         }
+        // BackgroundColor
+        else if (configName == nameof(Config.BackgroundColor))
+        {
+            BackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            Done = true;
+        }
+        // SlideshowBackgroundColor
+        else if (configName == nameof(Config.SlideshowBackgroundColor))
+        {
+            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            Done = true;
+        }
         // Zoom levels
         else if (configName == nameof(Config.ZoomLevels))
         {
