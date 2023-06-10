@@ -39,10 +39,18 @@ public class ThemedForm : ModernForm
     public delegate void RequestUpdatingThemeHandler(RequestUpdatingThemeEventArgs e);
 
 
+    /// <summary>
+    /// Occurs when the <see cref="Config.Language"/> is requested to change.
+    /// </summary>
+    public static event RequestUpdatingLanguageHandler? RequestUpdatingLanguage;
+    public delegate void RequestUpdatingLanguageHandler();
+
+
     public ThemedForm() : base()
     {
         Config.RequestUpdatingColorMode += Config_RequestUpdatingColorMode;
         Config.RequestUpdatingTheme += Config_RequestUpdatingTheme;
+        Config.RequestUpdatingLanguage += Config_RequestUpdatingLanguage;
     }
 
 
@@ -69,6 +77,18 @@ public class ThemedForm : ModernForm
     }
 
 
+    private void Config_RequestUpdatingLanguage()
+    {
+        if (InvokeRequired)
+        {
+            Invoke(Config_RequestUpdatingLanguage);
+            return;
+        }
+
+        OnRequestUpdatingLanguage();
+    }
+
+
     /// <summary>
     /// Triggers <see cref="RequestUpdatingColorMode"/> event.
     /// </summary>
@@ -89,8 +109,18 @@ public class ThemedForm : ModernForm
     {
         RequestUpdatingTheme?.Invoke(e);
 
+        if (e.Handled) return;
         OnDpiChanged();
         ApplyTheme(e.Theme.Settings.IsDarkMode);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingLanguage"/> event.
+    /// </summary>
+    protected virtual void OnRequestUpdatingLanguage()
+    {
+        RequestUpdatingLanguage?.Invoke();
     }
 
 
