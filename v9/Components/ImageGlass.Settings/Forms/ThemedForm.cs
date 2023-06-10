@@ -32,9 +32,17 @@ public class ThemedForm : ModernForm
     public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
 
 
+    /// <summary>
+    /// Occurs when the <see cref="Config.Theme"/> is requested to change.
+    /// </summary>
+    public static event RequestUpdatingThemeHandler? RequestUpdatingTheme;
+    public delegate void RequestUpdatingThemeHandler(RequestUpdatingThemeEventArgs e);
+
+
     public ThemedForm() : base()
     {
         Config.RequestUpdatingColorMode += Config_RequestUpdatingColorMode;
+        Config.RequestUpdatingTheme += Config_RequestUpdatingTheme;
     }
 
 
@@ -49,6 +57,17 @@ public class ThemedForm : ModernForm
         OnRequestUpdatingColorMode(e);
     }
 
+    private void Config_RequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(Config_RequestUpdatingTheme, e);
+            return;
+        }
+
+        OnRequestUpdatingTheme(e);
+    }
+
 
     /// <summary>
     /// Triggers <see cref="RequestUpdatingColorMode"/> event.
@@ -60,6 +79,18 @@ public class ThemedForm : ModernForm
 
         // emits the event
         RequestUpdatingColorMode?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingTheme"/> event.
+    /// </summary>
+    protected virtual void OnRequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
+    {
+        RequestUpdatingTheme?.Invoke(e);
+
+        OnDpiChanged();
+        ApplyTheme(e.Theme.Settings.IsDarkMode);
     }
 
 

@@ -96,6 +96,8 @@ public partial class ModernForm : Form
         set
         {
             _backdropMargin = value;
+
+            if (IsDisposed) return;
             _ = WindowApi.SetWindowFrame(Handle, _backdropMargin);
         }
     }
@@ -325,7 +327,7 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetBackdrop(BackdropStyle style)
     {
-        if (DesignMode) return;
+        if (DesignMode || IsDisposed) return;
 
         var backupBgColor = BackColor;
         if (style != BackdropStyle.None && EnableTransparent)
@@ -355,7 +357,7 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetDarkMode(bool enable)
     {
-        if (DesignMode) return;
+        if (DesignMode || IsDisposed) return;
 
         // set dark/light mode for controls
         SetDarkModeToChildControls(enable, this);
