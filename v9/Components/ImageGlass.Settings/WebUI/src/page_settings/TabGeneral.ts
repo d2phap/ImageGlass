@@ -9,9 +9,9 @@ export default class TabGeneral {
    * Loads settings for tab General.
    */
   static loadSettings() {
-    query('#Lnk_StartupDir').innerText = _pageSettings.startUpDir || '(unknown)';
-    query('#Lnk_ConfigDir').innerText = _pageSettings.configDir || '(unknown)';
-    query('#Lnk_UserConfigFile').innerText = _pageSettings.userConfigFilePath || '(unknown)';
+    query('#Lnk_StartupDir').title = _pageSettings.startUpDir || '(unknown)';
+    query('#Lnk_ConfigDir').title = _pageSettings.configDir || '(unknown)';
+    query('#Lnk_UserConfigFile').title = _pageSettings.userConfigFilePath || '(unknown)';
 
     // AutoUpdate is a string
     query<HTMLInputElement>('[name="AutoUpdate"]').checked = TabGeneral.isOriginalAutoUpdateEnabled;

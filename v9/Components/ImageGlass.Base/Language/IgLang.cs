@@ -458,9 +458,9 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab General
         // General > General
-        Add("FrmSettings.Tab.General._StartupDir", "Startup location:");
-        Add("FrmSettings.Tab.General._ConfigDir", "Config location:");
-        Add("FrmSettings.Tab.General._UserConfigFile", "User settings file:");
+        Add("FrmSettings.Tab.General._StartupDir", "Startup location");
+        Add("FrmSettings.Tab.General._ConfigDir", "Config location");
+        Add("FrmSettings.Tab.General._UserConfigFile", "User settings file (igconfig.json)");
 
         // General > Startup
         Add("FrmSettings.Tab.General._Startup", "Startup");
