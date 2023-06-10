@@ -1290,6 +1290,30 @@ public static class Config
                 Done = true;
             }
         }
+        // Zoom levels
+        else if (configName == nameof(Config.ZoomLevels))
+        {
+            try
+            {
+                var floats = BHelper.ParseJson<float[]>(newValue);
+                if (floats != null)
+                {
+                    Config.ZoomLevels = floats.Select(i =>
+                    {
+                        // convert % to float
+                        try { return i / 100f; } catch { }
+                        return -1;
+                    })
+                    .OrderBy(i => i)
+                    .Where(i => i > 0)
+                    .Distinct()
+                    .ToArray();
+
+                    Done = true;
+                }
+            }
+            catch { }
+        }
         else
         {
             // unsupported type

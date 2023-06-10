@@ -216,7 +216,7 @@ public partial class FrmMain
 
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
-        Local.RequestUpdateFrmMain += Local_FrmMainUpdateRequested;
+        Local.FrmMainUpdateRequested += Local_FrmMainUpdateRequested;
 
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
@@ -380,6 +380,21 @@ public partial class FrmMain
     /// </summary>
     private void Local_FrmMainUpdateRequested(UpdateRequests e)
     {
+        if (e.HasFlag(UpdateRequests.ReloadImage))
+        {
+            IG_Reload();
+        }
+
+        if (e.HasFlag(UpdateRequests.ReloadImageList))
+        {
+            IG_ReloadList();
+        }
+
+        if (e.HasFlag(UpdateRequests.Slideshow))
+        {
+            // TODO:
+        }
+
         if (e.HasFlag(UpdateRequests.Language))
         {
             LoadLanguage();

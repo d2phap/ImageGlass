@@ -232,7 +232,7 @@ public partial class FrmSettings : WebForm
             .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
 
 
-        var updates = UpdateRequests.None;
+        var requests = UpdateRequests.None;
         var reloadImg = false;
         var reloadImgList = false;
         var updateSlideshow = false;
@@ -331,6 +331,39 @@ public partial class FrmSettings : WebForm
         // Tab Viewer
         #region Tab Viewer
 
+        _ = Config.SetFromJson(dict, nameof(Config.CenterWindowFit));
+
+        if (Config.SetFromJson(dict, nameof(Config.ShowCheckerboardOnlyImageRegion)).Done)
+        {
+            Local.FrmMain.IG_ToggleCheckerboard(Config.ShowCheckerboard);
+        }
+        if (Config.SetFromJson(dict, nameof(Config.EnableNavigationButtons)).Done)
+        {
+            Local.FrmMain.PicMain.NavDisplay = Config.EnableNavigationButtons
+                ? NavButtonDisplay.Both
+                : NavButtonDisplay.None;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.PanSpeed)).Done)
+        {
+            Local.FrmMain.PicMain.PanDistance = Config.PanSpeed;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ImageInterpolationScaleDown)).Done)
+        {
+            Local.FrmMain.PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ImageInterpolationScaleUp)).Done)
+        {
+            Local.FrmMain.PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ZoomSpeed)).Done)
+        {
+            Local.FrmMain.PicMain.ZoomSpeed = Config.ZoomSpeed;
+        }
+        if (Config.SetFromJson(dict, nameof(Config.ZoomLevels)).Done)
+        {
+            Local.FrmMain.PicMain.ZoomLevels = Config.ZoomLevels;
+        }
+
         #endregion // Tab Viewer
 
 
@@ -382,8 +415,11 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Appearance
 
 
-        if (reloadImg) updates |= UpdateRequests.ReloadImage;
-        if (reloadImgList) updates |= UpdateRequests.ReloadImageList;
+        if (reloadImg) requests |= UpdateRequests.ReloadImage;
+        if (reloadImgList) requests |= UpdateRequests.ReloadImageList;
+        if (updateSlideshow) requests |= UpdateRequests.Slideshow;
+
+        Local.UpdateFrmMain(requests);
     }
 
 

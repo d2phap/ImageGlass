@@ -42,6 +42,7 @@ public enum UpdateRequests
 
     ReloadImage = 1 << 11,
     ReloadImageList = 1 << 12,
+    Slideshow = 1 << 13,
 }
 
 
