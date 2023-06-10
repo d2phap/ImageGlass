@@ -2953,6 +2953,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Toggles Page naviagtion tool.
+    /// </summary>
     public bool IG_TogglePageNavTool(bool? visible = null)
     {
         visible ??= MnuPageNav.Checked;
@@ -3093,6 +3096,38 @@ public partial class FrmMain
 
 
         ToolbarContext.UpdateAlignment();
+    }
+
+
+    /// <summary>
+    /// Sets the real-time file update engine.
+    /// </summary>
+    public bool IG_SetRealTimeFileUpdate(bool? enable = null)
+    {
+        enable ??= !Config.EnableRealTimeFileUpdate;
+        Config.EnableRealTimeFileUpdate = enable.Value;
+
+        if (Config.EnableRealTimeFileUpdate)
+        {
+            // get current dir path
+            var dirPath = _fileWatcher.FolderPath;
+            if (string.IsNullOrEmpty(dirPath))
+            {
+                // get the first dir in the list
+                dirPath = Local.Images.DistinctDirs.FirstOrDefault();
+            }
+
+            if (!string.IsNullOrEmpty(dirPath))
+            {
+                StartFileWatcher(dirPath);
+            }
+        }
+        else
+        {
+            StopFileWatcher();
+        }
+
+        return Config.EnableRealTimeFileUpdate;
     }
 
 }
