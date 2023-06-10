@@ -52,19 +52,10 @@ export default class TabImage {
 
     // ColorProfile
     const originalColorProfile = _pageSettings.config.ColorProfile;
-    let newColorProfile = settings.ColorProfile;
-
-    if (newColorProfile === 'Custom') {
-      const customProfile = query('#Lnk_CustomColorProfile').innerText;
-
-      if (customProfile) {
-        newColorProfile = customProfile;
-      }
+    if (settings.ColorProfile === 'Custom') {
+      settings.ColorProfile = query('#Lnk_CustomColorProfile').innerText.trim();
     }
-    if (newColorProfile !== originalColorProfile) {
-      settings.ColorProfile = newColorProfile;
-    }
-    else {
+    if (!settings.ColorProfile || settings.ColorProfile === originalColorProfile) {
       delete settings.ColorProfile;
     }
 
