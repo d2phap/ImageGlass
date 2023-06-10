@@ -90,21 +90,27 @@ export default class Settings {
     query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 
     query('#BtnOK').addEventListener('click', () => {
-      const settingsJson = Settings.saveAsJson();
+      const allSettings = Settings.getAllSettings();
+      const settingsJson = JSON.stringify(allSettings);
+      Settings.updateInitSettings(allSettings);
+
       post('BtnOK', settingsJson);
     }, false);
 
     query('#BtnApply').addEventListener('click', () => {
-      const settingsJson = Settings.saveAsJson();
+      const allSettings = Settings.getAllSettings();
+      const settingsJson = JSON.stringify(allSettings);
+      Settings.updateInitSettings(allSettings);
+
       post('BtnApply', settingsJson);
     }, false);
   }
 
 
   /**
-   * Save settings as JSON object.
+   * Gets all settings as an object.
    */
-  static saveAsJson() {
+  static getAllSettings() {
     const settings: Record<string, any> = {
       ...TabGeneral.exportSettings(),
       ...TabImage.exportSettings(),
@@ -121,7 +127,21 @@ export default class Settings {
       ...TabAppearance.exportSettings(),
     };
 
-    return JSON.stringify(settings);
+    return settings;
+  }
+
+
+  /**
+   * Updates the `_pageSettings.config`.
+   */
+  static updateInitSettings(newSettings: Record<string, any>) {
+    const settingKeys = Object.keys(newSettings);
+
+    settingKeys.forEach(key => {
+      if (_pageSettings.config.hasOwnProperty(key)) {
+        _pageSettings.config[key] = newSettings[key];
+      }
+    });
   }
 
 
