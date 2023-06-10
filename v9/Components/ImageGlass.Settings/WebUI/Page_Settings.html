@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ImageGlass UI Demo</title>
+  <title>ImageGlass Settings UI Demo</title>
   <link rel="stylesheet" href="../Resources/Styles.css">
 
   <style>
@@ -656,6 +656,28 @@
     </section>
 
 
+    <!-- Tab: File type assosications -->
+    <section class="tab-page" tab="file_assocs">
+      <!-- File type assosications > File type assosications -->
+      <section>
+        <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[File type assosications]</header>
+        <div class="mb-2">
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Tools -->
+    <section class="tab-page" tab="tools">
+      <!-- Tools > Tools -->
+      <section>
+        <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Tools]</header>
+        <div class="mb-2">
+        </div>
+      </section>
+    </section>
+
+
     <!-- Tab: Language -->
     <section class="tab-page" tab="language">
       <!-- Language > Language -->
@@ -702,7 +724,10 @@
         </div>
         <div class="mb-2">
           <div>
-            <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</div>
+            <div class="mb-1">
+              <span data-lang="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</span>
+              <span id="Lbl_BackgroundColorValue" class="text-code"></span>
+            </div>
             <span class="d-flex align-items-center">
               <input type="hidden" name="BackgroundColor" />
               <button id="Btn_BackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">
@@ -715,8 +740,10 @@
         </div>
         <div class="mb-2">
           <div>
-            <div class="mb-1" data-lang="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">
-              [SlideshowBackgroundColor]</div>
+            <div class="mb-1">
+              <span data-lang="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">[SlideshowBackgroundColor]</span>
+              <span id="Lbl_SlideshowBackgroundColorValue" class="text-code"></span>
+            </div>
             <span class="d-flex align-items-center">
               <input type="hidden" name="SlideshowBackgroundColor" />
               <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">

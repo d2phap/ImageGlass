@@ -188,11 +188,11 @@ export default class TabAppearance {
    * Handles when `BackgroundColor` is changed.
    */
   private static handleBackgroundColorChanged() {
-    const colorValue = query<HTMLInputElement>('[name="BackgroundColor"]').value;
+    const colorHex = query<HTMLInputElement>('[name="BackgroundColor"]').value;
+    if (!colorHex) return;
 
-    if (colorValue) {
-      query<HTMLInputElement>('#Btn_BackgroundColor > .color-display').style.setProperty('--color-picker-value', colorValue);
-    }
+    query<HTMLInputElement>('#Btn_BackgroundColor > .color-display').style.setProperty('--color-picker-value', colorHex);
+    query('#Lbl_BackgroundColorValue').innerText = colorHex;
   }
 
 
@@ -200,10 +200,10 @@ export default class TabAppearance {
    * Handles when `SlideshowBackgroundColor` is changed.
    */
   private static handleSlideshowBackgroundColorChanged() {
-    const colorValue = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value;
+    const colorHex = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value;
+    if (!colorHex) return;
 
-    if (colorValue) {
-      query<HTMLInputElement>('#Btn_SlideshowBackgroundColor > .color-display').style.setProperty('--color-picker-value', colorValue);
-    }
+    query<HTMLInputElement>('#Btn_SlideshowBackgroundColor > .color-display').style.setProperty('--color-picker-value', colorHex);
+    query('#Lbl_SlideshowBackgroundColorValue').innerText = colorHex;
   }
 }
