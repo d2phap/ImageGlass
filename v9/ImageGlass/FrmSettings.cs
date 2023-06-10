@@ -235,6 +235,7 @@ public partial class FrmSettings : WebForm
         var updates = UpdateRequests.None;
         var reloadImg = false;
         var reloadImgList = false;
+        var updateSlideshow = false;
 
 
         // Tab General
@@ -302,11 +303,27 @@ public partial class FrmSettings : WebForm
         // Tab Slideshow
         #region Tab Slideshow
 
+        _ = Config.SetFromJson(dict, nameof(Config.HideMainWindowInSlideshow));
+        if (Config.SetFromJson(dict, nameof(Config.ShowSlideshowCountdown)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.EnableLoopSlideshow)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.EnableFullscreenSlideshow)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.UseRandomIntervalForSlideshow)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.SlideshowInterval)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.SlideshowIntervalTo)).Done) { updateSlideshow = true; }
+
         #endregion // Tab Slideshow
 
 
         // Tab Edit
         #region Tab Edit
+
+        _ = Config.SetFromJson(dict, nameof(Config.ShowDeleteConfirmation));
+        _ = Config.SetFromJson(dict, nameof(Config.ShowSaveOverrideConfirmation));
+        _ = Config.SetFromJson(dict, nameof(Config.ShouldPreserveModifiedDate));
+        _ = Config.SetFromJson(dict, nameof(Config.ImageEditQuality));
+        _ = Config.SetFromJson(dict, nameof(Config.AfterEditingAction));
+        _ = Config.SetFromJson(dict, nameof(Config.EnableCopyMultipleFiles));
+        _ = Config.SetFromJson(dict, nameof(Config.EnableCutMultipleFiles));
 
         #endregion // Tab Edit
 
