@@ -33,6 +33,7 @@ window.postAsync = postAsync;
 
 if (!window._pageSettings) {
   window._pageSettings = {
+    initTab: '',
     config: {},
     lang: {},
     langList: [],
@@ -62,7 +63,6 @@ _pageSettings.loadLanguageList = TabLanguage.loadLanguageList;
 
 // sidebar
 Sidebar.addEvents();
-Sidebar.setActiveMenu('appearance');
 
 // load settings
 Settings.load();
@@ -83,3 +83,6 @@ TabFileAssocs.addEvents();
 TabTools.addEvents();
 TabLanguage.addEvents();
 TabAppearance.addEvents();
+
+// load the last open tab
+Sidebar.setActiveMenu(_pageSettings.initTab);

@@ -768,18 +768,24 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Opens setting window.
+    /// </summary>
     public void IG_OpenSettings()
     {
-        var frmSettings = new FrmSettings()
+        if (Local.FrmSettings.IsDisposed)
         {
-            CloseFormHotkey = Keys.Escape,
-            StartPosition = FormStartPosition.CenterScreen,
-        };
+            Local.FrmSettings = new();
+        }
 
-        frmSettings.Show();
+        Local.FrmSettings.TopMost = TopMost;
+        Local.FrmSettings.Show();
     }
 
 
+    /// <summary>
+    /// Exits ImageGlass
+    /// </summary>
     public void IG_Exit()
     {
         Application.Exit();

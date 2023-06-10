@@ -22,13 +22,17 @@ export default class Sidebar {
    * Set the active menu for sidebar
    */
   static setActiveMenu(tabPageName: string) {
+    tabPageName ||= 'general';
+
+    const tabPageEl = query(`.tab-page[tab="${tabPageName}"]`);
+    if (!tabPageEl) return;
+
     // hide all tabs
     const allTabPages = queryAll('.tab-page');
     allTabPages.forEach(el => el.classList.remove('active'));
 
     // show the selected tab
-    const tabPageEl = query(`.tab-page[tab="${tabPageName}"]`);
-    tabPageEl?.classList.add('active');
+    tabPageEl.classList.add('active');
 
     // select the active nav item
     const allNavItems = queryAll('input[type="radio"]');
@@ -39,6 +43,9 @@ export default class Sidebar {
     if (tabPageName === 'appearance') {
       TabAppearance.loadThemeListStatus();
     }
+
+    // update backend tab name
+    post('Sidebar_Changed', tabPageName);
   }
 
 }

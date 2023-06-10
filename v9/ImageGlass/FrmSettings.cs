@@ -42,10 +42,10 @@ public partial class FrmSettings : WebForm
 
         PageName = "settings";
         Text = Config.Language[$"{nameof(FrmSettings)}._Text"];
+        CloseFormHotkey = Keys.Escape;
 
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());
-
     }
 
 
@@ -107,6 +107,7 @@ public partial class FrmSettings : WebForm
             @$"
              <script>
                 window._pageSettings = {{
+                    initTab: '{Local.LastOpenedSetting}',
                     startUpDir: '{startupDir}',
                     configDir: '{configDir}',
                     userConfigFilePath: '{userConfigFilePath}',
@@ -140,6 +141,13 @@ public partial class FrmSettings : WebForm
             Close();
         }
         #endregion // Footer
+
+
+        // sidebar tab changed
+        else if (name.Equals("Sidebar_Changed"))
+        {
+            Local.LastOpenedSetting = data;
+        }
 
 
         // Tab General

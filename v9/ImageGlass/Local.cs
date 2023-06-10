@@ -33,8 +33,24 @@ namespace ImageGlass;
 internal class Local
 {
     private static CancellationTokenSource? _gcTokenSrc;
+    private static FrmSettings _frmSetting;
+
 
     public static FrmMain? FrmMain;
+
+
+    #region LazyInitializer Properties
+
+    /// <summary>
+    /// Gets settings window.
+    /// </summary>
+    public static FrmSettings FrmSettings
+    {
+        get => LazyInitializer.EnsureInitialized(ref _frmSetting);
+        set => _frmSetting = value;
+    }
+
+    #endregion
 
 
     #region Public events
@@ -206,6 +222,11 @@ internal class Local
 
 
     #region Public properties
+
+    /// <summary>
+    /// Gets, sets the last view of settings window.
+    /// </summary>
+    public static string LastOpenedSetting { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets, sets the tools.

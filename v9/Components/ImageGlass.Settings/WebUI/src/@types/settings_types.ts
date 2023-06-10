@@ -32,6 +32,7 @@ export type ITheme = {
 };
 
 export type IPageSettings = Record<string, any> & {
+  initTab: string,
   config: Record<string, any>,
   lang: Record<string, string>,
   langList: ILanguage[],
