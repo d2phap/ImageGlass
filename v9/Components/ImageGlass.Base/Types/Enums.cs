@@ -26,26 +26,27 @@ namespace ImageGlass.Base;
 [Flags]
 public enum UpdateRequests
 {
-    None = 0,
-    Language = 1 << 1,
-    
-    
-    Gallery = 1 << 3,
-    Viewer = 1 << 4,
-    Layout = 1 << 5,
-    Appearance = 1 << 6,
-    Theme = 1 << 7,
+    #pragma warning disable format
 
-    MouseActions = 1 << 8,
-    RealTimeFileUpdate = 1 << 9,
-    MenuHotkeys = 1 << 10,
+    None                = 0,
+    Language            = 1 << 1,
 
-    ReloadImage = 1 << 11,
-    ReloadImageList = 1 << 12,
-    Slideshow = 1 << 13,
+    MouseActions        = 1 << 8,
+    RealTimeFileUpdate  = 1 << 9,
+    MenuHotkeys         = 1 << 10,
 
-    ToolbarAlignment = 1 << 14,
-    ToolbarIcons = 1 << 15,
+    ReloadImage         = 1 << 11,
+    ReloadImageList     = 1 << 12,
+    Slideshow           = 1 << 13,
+
+    ToolbarAlignment    = 1 << 14,
+    ToolbarIcons        = 1 << 15,
+    Gallery             = 1 << 3,
+
+    Appearance          = 1 << 6,
+    Theme               = 1 << 7,
+
+    #pragma warning restore format
 }
 
 

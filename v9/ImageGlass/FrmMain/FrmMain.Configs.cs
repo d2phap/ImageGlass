@@ -423,6 +423,16 @@ public partial class FrmMain
             LoadLanguage();
         }
 
+        if (e.HasFlag(UpdateRequests.Theme))
+        {
+            Config.LoadThemePack(WinColorsApi.IsDarkMode, true, true);
+        }
+
+        if (e.HasFlag(UpdateRequests.Theme) || e.HasFlag(UpdateRequests.Appearance))
+        {
+            Config.TriggerRequestUpdatingTheme();
+        }
+
         if (e.HasFlag(UpdateRequests.MenuHotkeys))
         {
             LoadMenuHotkeys();

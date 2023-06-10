@@ -239,6 +239,9 @@ public partial class FrmSettings : WebForm
         var updateToolbarAlignment = false;
         var updateToolbarIcons = false;
         var updateGallery = false;
+        var updateLanguage = false;
+        var updateAppearance = false;
+        var updateTheme = false;
 
 
         // Tab General
@@ -393,7 +396,6 @@ public partial class FrmSettings : WebForm
         if (Config.SetFromJson(dict, nameof(Config.GalleryCacheSizeInMb)).Done) { updateGallery = true; }
         if (Config.SetFromJson(dict, nameof(Config.GalleryColumns)).Done) { updateGallery = true; }
 
-
         #endregion // Tab Gallery
 
 
@@ -424,11 +426,22 @@ public partial class FrmSettings : WebForm
         // Tab Language
         #region Tab Language
 
+        if (Config.SetFromJson(dict, nameof(Config.Language)).Done)
+        {
+            updateLanguage = true;
+        }
+
         #endregion // Tab Language
 
 
         // Tab Appearance
         #region Tab Appearance
+
+        if (Config.SetFromJson(dict, nameof(Config.WindowBackdrop)).Done) { updateAppearance = true; }
+        if (Config.SetFromJson(dict, nameof(Config.BackgroundColor)).Done) { updateAppearance = true; }
+        if (Config.SetFromJson(dict, nameof(Config.SlideshowBackgroundColor)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.DarkTheme)).Done) { updateTheme = true; }
+        if (Config.SetFromJson(dict, nameof(Config.LightTheme)).Done) { updateTheme = true; }
 
         #endregion // Tab Appearance
 
@@ -439,6 +452,9 @@ public partial class FrmSettings : WebForm
         if (updateToolbarAlignment) requests |= UpdateRequests.ToolbarAlignment;
         if (updateToolbarIcons) requests |= UpdateRequests.ToolbarIcons;
         if (updateGallery) requests |= UpdateRequests.Gallery;
+        if (updateLanguage) requests |= UpdateRequests.Language;
+        if (updateAppearance) requests |= UpdateRequests.Appearance;
+        if (updateTheme) requests |= UpdateRequests.Theme;
 
         Local.UpdateFrmMain(requests);
     }
