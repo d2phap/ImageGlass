@@ -40,6 +40,7 @@ export type IPageSettings = Record<string, any> & {
   startUpDir: string,
   configDir: string,
   userConfigFilePath: string,
+  defaultThemeDir: string,
   enums: Record<string, string[]> & {
     ImageOrderBy: string[],
     ImageOrderType: string[],

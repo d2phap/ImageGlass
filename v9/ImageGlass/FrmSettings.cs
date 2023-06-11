@@ -92,6 +92,7 @@ public partial class FrmSettings : WebForm
 
         // theme
         var themeListJson = GetThemeListJson();
+        var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME).Replace("\\", "\\\\");
 
         // enums
         var enumObj = new ExpandoObject();
@@ -128,6 +129,7 @@ public partial class FrmSettings : WebForm
                     lang: {configLangJson},
                     langList: {langListJson},
                     themeList: {themeListJson},
+                    defaultThemeDir: '{defaultThemeDir}',
                 }};
 
                 {Settings.Properties.Resources.Script_Settings}
@@ -636,10 +638,11 @@ public partial class FrmSettings : WebForm
         }
     }
 
+
     private async Task UninstallThemeAsync(string themeDirPath)
     {
         var result = await BHelper.RunIgcmd(
-            $"{IgCommands.UNINSTALL_THEME} {IgCommands.SHOW_UI} {themeDirPath}",
+            $"{IgCommands.UNINSTALL_THEME} {IgCommands.SHOW_UI} \"{themeDirPath}\"",
             true);
 
         if (result == IgExitCode.Done)
@@ -648,6 +651,7 @@ public partial class FrmSettings : WebForm
             PostMessage("Delete_Theme_Pack", themeListJson);
         }
     }
+
 
     private static Color? OpenColorPicker(Color? defaultColor = null)
     {

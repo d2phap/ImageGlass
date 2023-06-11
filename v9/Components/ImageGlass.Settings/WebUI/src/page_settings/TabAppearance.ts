@@ -150,7 +150,11 @@ export default class TabAppearance {
                   </span>
                 </label>
 
-                <button type="button" class="ms-3 px-1" data-delete-theme="${th.FolderPath}">❌</button>
+                <button type="button" class="ms-3 px-1"
+                  ${_pageSettings.defaultThemeDir === th.FolderPath ? 'style="visibility: hidden !important;"' : ''}
+                  data-delete-theme="${th.FolderPath}">
+                  ❌
+                </button>
               </div>
             </div>
           </div>

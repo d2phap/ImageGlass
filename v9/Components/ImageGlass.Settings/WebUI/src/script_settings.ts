@@ -53,6 +53,7 @@ if (!window._pageSettings) {
     startUpDir: '',
     configDir: '',
     userConfigFilePath: '',
+    defaultThemeDir: '',
   };
 }
 _pageSettings.setSidebarActiveMenu = Sidebar.setActiveMenu;
