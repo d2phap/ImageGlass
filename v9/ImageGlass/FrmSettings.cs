@@ -189,13 +189,16 @@ public partial class FrmSettings : WebForm
         #region Tab Image
         else if (name.Equals("Btn_BrowseColorProfile"))
         {
-            var profileFilePath = SelectColorProfileFile();
-            profileFilePath = profileFilePath.Replace("\\", "\\\\");
-
-            if (!String.IsNullOrEmpty(profileFilePath))
+            SynchronizationContext.Current.Post((_) =>
             {
-                PostMessage(name, $"\"{profileFilePath}\"");
-            }
+                var profileFilePath = SelectColorProfileFile();
+                profileFilePath = profileFilePath.Replace("\\", "\\\\");
+
+                if (!String.IsNullOrEmpty(profileFilePath))
+                {
+                    PostMessage(name, $"\"{profileFilePath}\"");
+                }
+            }, null);
         }
         else if (name.Equals("Lnk_CustomColorProfile"))
         {
@@ -213,7 +216,7 @@ public partial class FrmSettings : WebForm
         }
         else if (name.Equals("Lnk_InstallLanguage"))
         {
-            _ = InstallLanguagePackAsync();
+            SynchronizationContext.Current.Post((_) => _ = InstallLanguagePackAsync(), null);
         }
         #endregion // Tab Language
 
@@ -223,20 +226,23 @@ public partial class FrmSettings : WebForm
         else if (name.Equals("Btn_BackgroundColor")
             || name.Equals("Btn_SlideshowBackgroundColor"))
         {
-            var currentColor = ThemeUtils.ColorFromHex(data);
-            var newColor = OpenColorPicker(currentColor);
-            var hexColor = string.Empty;
-
-            if (newColor != null)
+            SynchronizationContext.Current.Post((_) =>
             {
-                hexColor = ThemeUtils.ColorToHex(newColor.Value);
-            }
+                var currentColor = ThemeUtils.ColorFromHex(data);
+                var newColor = OpenColorPicker(currentColor);
+                var hexColor = string.Empty;
 
-            PostMessage(name, $"\"{hexColor}\"");
+                if (newColor != null)
+                {
+                    hexColor = ThemeUtils.ColorToHex(newColor.Value);
+                }
+
+                PostMessage(name, $"\"{hexColor}\"");
+            }, null);
         }
         else if (name.Equals("Btn_InstallTheme"))
         {
-            _ = InstallThemeAsync();
+            SynchronizationContext.Current.Post((_) => _ = InstallThemeAsync(), null);
         }
         else if (name.Equals("Btn_RefreshThemeList"))
         {
@@ -528,7 +534,11 @@ public partial class FrmSettings : WebForm
             Multiselect = true,
         };
 
-        if (o.ShowDialog() != DialogResult.OK) return;
+        if (o.ShowDialog() != DialogResult.OK)
+        {
+            PostMessage("Lnk_InstallLanguage", "null");
+            return;
+        }
 
         var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
         var result = await BHelper.RunIgcmd(
@@ -624,7 +634,11 @@ public partial class FrmSettings : WebForm
             Multiselect = true,
         };
 
-        if (o.ShowDialog() != DialogResult.OK) return;
+        if (o.ShowDialog() != DialogResult.OK)
+        {
+            PostMessage("Btn_InstallTheme", "null");
+            return;
+        }
 
         var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
         var result = await BHelper.RunIgcmd(
