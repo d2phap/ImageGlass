@@ -167,14 +167,40 @@ internal static class Program
         #endregion
 
 
-        #region INSTALL_LANGUAGE_PACKS [string filePaths]
-        if (topCmd == IgCommands.INSTALL_LANGUAGE_PACKS)
+        #region INSTALL_LANGUAGES [string filePaths]
+        if (topCmd == IgCommands.INSTALL_LANGUAGES)
         {
-            var paths = CmdArgs.Where(cmd => File.Exists(cmd)).ToList();
+            var paths = CmdArgs.Where(cmd => File.Exists(cmd));
             if (paths.Any())
             {
-                return (int)Functions.InstallLanguagePacks(paths, showUI, hideAdminRequiredErrorUi);
+                return (int)Functions.InstallLanguagePacks(paths.ToList(), showUI, hideAdminRequiredErrorUi);
             }
+        }
+        #endregion
+
+
+        #region INSTALL_THEMES [string filePaths]
+        if (topCmd == IgCommands.INSTALL_THEMES)
+        {
+            var paths = CmdArgs.Where(cmd => File.Exists(cmd));
+            if (paths.Any())
+            {
+                return (int)Functions.InstallThemePacks(paths.ToList(), showUI, hideAdminRequiredErrorUi);
+            }
+        }
+        #endregion
+
+
+        #region UNINSTALL_THEME <string filePath>
+        if (topCmd == IgCommands.UNINSTALL_THEME)
+        {
+            var paths = CmdArgs.Where(cmd => Directory.Exists(cmd));
+            if (paths.Any())
+            {
+                return (int)Functions.UninstallThemePack(paths.FirstOrDefault(), showUI, hideAdminRequiredErrorUi);
+            }
+
+            return (int)IgExitCode.Error;
         }
         #endregion
 

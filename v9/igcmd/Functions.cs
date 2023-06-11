@@ -21,6 +21,7 @@ using igcmd.Tools;
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using System.IO.Compression;
 using System.Security;
 using Windows.Storage;
 using Windows.System.UserProfile;
@@ -181,7 +182,7 @@ public static class Functions
 
 
     /// <summary>
-    /// Install new language packs
+    /// Install new language packs.
     /// </summary>
     public static IgExitCode InstallLanguagePacks(List<string> paths, bool showUi = false, bool hideAdminRequiredErrorUi = false)
     {
@@ -223,13 +224,106 @@ public static class Functions
             {
                 _ = Config.ShowError(null,
                     description: error.Message,
-                    title: Config.Language["FrmSettings.Tab.Language._InstallNewLanguagePack"],
-                    details: error.ToString());
+                    title: Config.Language["FrmSettings.Tab.Language._InstallNewLanguagePack"]);
             }
         }
 
         return IgExitCode.Done;
     }
+
+
+    /// <summary>
+    /// Install new theme packs.
+    /// </summary>
+    public static IgExitCode InstallThemePacks(List<string> paths, bool showUi = false, bool hideAdminRequiredErrorUi = false)
+    {
+        var exitCode = IgExitCode.Done;
+        Exception? error = null;
+
+        var igThemeDirPath = App.ConfigDir(PathType.Dir, Dir.Themes);
+        Directory.CreateDirectory(igThemeDirPath);
+
+        foreach (var f in paths)
+        {
+            try
+            {
+                if (!File.Exists(f)) continue;
+
+                ZipFile.ExtractToDirectory(f, igThemeDirPath, true);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                error = ex;
+                exitCode = IgExitCode.AdminRequired;
+                break;
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+
+                exitCode = IgExitCode.Error;
+                break;
+            }
+        }
+
+
+        if (showUi && error != null)
+        {
+            if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
+            {
+                _ = Config.ShowError(null,
+                    description: error.Message,
+                    title: Config.Language["FrmSettings.Tab.Appearance._Theme._InstallTheme"]);
+            }
+        }
+
+        return IgExitCode.Done;
+    }
+
+
+    /// <summary>
+    /// Uninstall a theme pack.
+    /// </summary>
+    public static IgExitCode UninstallThemePack(string themeDirPath, bool showUi = false, bool hideAdminRequiredErrorUi = false)
+    {
+        var exitCode = IgExitCode.Done;
+        Exception? error = null;
+
+        try
+        {
+            var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
+            if (themeDirPath.Equals(defaultThemeDir, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("Cannot remove the default theme pack.", themeDirPath);
+            }
+
+            Directory.Delete(themeDirPath, true);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            error = ex;
+            exitCode = IgExitCode.AdminRequired;
+        }
+        catch (Exception ex)
+        {
+            error = ex;
+            exitCode = IgExitCode.Error;
+        }
+
+
+        if (showUi && error != null)
+        {
+            if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
+            {
+                _ = Config.ShowError(null,
+                    description: error.Message,
+                    title: Config.Language["FrmSettings.Tab.Appearance._Theme._UninstallTheme"]);
+            }
+        }
+
+        return IgExitCode.Done;
+    }
+
 
 
     /// <summary>
