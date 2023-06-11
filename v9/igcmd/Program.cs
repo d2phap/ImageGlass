@@ -44,6 +44,16 @@ internal static class Program
         }
     }
 
+    /// <summary>
+    /// Show error UI
+    /// </summary>
+    public static bool ShowUi => CmdArgs.Contains(IgCommands.SHOW_UI);
+
+    /// <summary>
+    /// Hide admin error UI
+    /// </summary>
+    public static bool HideAdminRequiredErrorUi => CmdArgs.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
+
 
     /// <summary>
     ///  The main entry point for the application.
@@ -84,8 +94,6 @@ internal static class Program
         }
 
         var topCmd = CmdArgs[0].ToLower().Trim();
-        var showUI = CmdArgs.Contains(IgCommands.SHOW_UI);
-        var hideAdminRequiredErrorUi = CmdArgs.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
 
 
         #region SET_WALLPAPER <string imgPath> [int style]
@@ -110,7 +118,7 @@ internal static class Program
                 ext = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, ext, showUI, hideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(true, ext, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 
@@ -124,7 +132,7 @@ internal static class Program
                 ext = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, ext, showUI, hideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(false, ext, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 
@@ -173,7 +181,7 @@ internal static class Program
             var paths = CmdArgs.Where(cmd => File.Exists(cmd));
             if (paths.Any())
             {
-                return (int)Functions.InstallLanguagePacks(paths.ToList(), showUI, hideAdminRequiredErrorUi);
+                return (int)Functions.InstallLanguagePacks(paths.ToList());
             }
         }
         #endregion
@@ -185,7 +193,7 @@ internal static class Program
             var paths = CmdArgs.Where(cmd => File.Exists(cmd));
             if (paths.Any())
             {
-                return (int)Functions.InstallThemePacks(paths.ToList(), showUI, hideAdminRequiredErrorUi);
+                return (int)Functions.InstallThemePacks(paths.ToList());
             }
         }
         #endregion
@@ -197,7 +205,7 @@ internal static class Program
             var paths = CmdArgs.Where(cmd => Directory.Exists(cmd));
             if (paths.Any())
             {
-                return (int)Functions.UninstallThemePack(paths.FirstOrDefault(), showUI, hideAdminRequiredErrorUi);
+                return (int)Functions.UninstallThemePack(paths.FirstOrDefault());
             }
 
             return (int)IgExitCode.Error;

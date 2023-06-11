@@ -34,25 +34,6 @@ public enum WallpaperStyle : int
 }
 
 
-public enum WallpaperResult
-{
-    /// <summary>
-    /// Wallpaper successfully set
-    /// </summary>
-    Success = 0,
-
-    /// <summary>
-    /// Wallpaper failure due to privileges - can re-attempt with Admin privileges.
-    /// </summary>
-    PrivilegesFail,
-
-    /// <summary>
-    /// Wallpaper failure - no point in re-attempting
-    /// </summary>
-    Fail,
-}
-
-
 public static class DesktopApi
 {
     private const int SPI_SETDESKWALLPAPER = 20;
@@ -69,55 +50,49 @@ public static class DesktopApi
     /// <param name="bmpPath">BMP image file path</param>
     /// <param name="style">Style of wallpaper</param>
     /// <returns>Success/failure indication.</returns>
-    public static WallpaperResult SetWallpaper(string bmpPath, WallpaperStyle style)
+    public static Exception? SetWallpaper(string bmpPath, WallpaperStyle style)
     {
         try
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true))
+            using var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+
+            if (key == null)
             {
-                if (key == null)
-                {
-                    return WallpaperResult.Fail;
-                }
-
-                var tileVal = "0"; // default not-tiled
-                var winStyle = "1"; // default centered
-
-                switch (style)
-                {
-                    case WallpaperStyle.Tiled:
-                        tileVal = "1";
-                        break;
-
-                    case WallpaperStyle.Stretched:
-                        winStyle = "2";
-                        break;
-
-                    case WallpaperStyle.Current:
-                        tileVal = key.GetValue("TileWallpaper")?.ToString() ?? "";
-                        winStyle = key.GetValue("WallpaperStyle")?.ToString() ?? "";
-                        break;
-                }
-
-                key.SetValue("TileWallpaper", tileVal);
-                key.SetValue("WallpaperStyle", winStyle);
-                key.SetValue("Wallpaper", bmpPath);
+                throw new Exception($"Cannot open registry key: {key.ToString()}");
             }
+
+            var tileVal = "0"; // default not-tiled
+            var winStyle = "1"; // default centered
+
+            switch (style)
+            {
+                case WallpaperStyle.Tiled:
+                    tileVal = "1";
+                    break;
+
+                case WallpaperStyle.Stretched:
+                    winStyle = "2";
+                    break;
+
+                case WallpaperStyle.Current:
+                    tileVal = key.GetValue("TileWallpaper")?.ToString() ?? "";
+                    winStyle = key.GetValue("WallpaperStyle")?.ToString() ?? "";
+                    break;
+            }
+
+            key.SetValue("TileWallpaper", tileVal);
+            key.SetValue("WallpaperStyle", winStyle);
+            key.SetValue("Wallpaper", bmpPath);
+
 
             _ = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, bmpPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
         }
         catch (Exception ex)
         {
-            if (ex is System.Security.SecurityException ||
-                ex is UnauthorizedAccessException)
-            {
-                return WallpaperResult.PrivilegesFail;
-            }
-
-            return WallpaperResult.Fail;
+            return ex;
         }
 
-        return WallpaperResult.Success;
+        return null;
     }
 
 }
