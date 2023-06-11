@@ -90,49 +90,48 @@ export default class TabAppearance {
         <li>
           <div class="theme-item">
             <div class="theme-preview">
-              <img src="${th.PreviewImage}" alt="${th.Info.Name}" onerror="this.hidden = true;" />
+              <div class="theme-preview-img" title="${th.FolderPath}">
+                <img src="${th.PreviewImage}" alt="${th.Info.Name}" onerror="this.hidden = true;" />
+                <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}">
+                  ${th.IsDarkMode ? '🌙' : '☀️'}
+                </span>
+              </div>
             </div>
             <div class="theme-info">
-              <div class="theme-heading">
-                <div class="theme-title">
-                  <span class="theme-name">${th.Info.Name}</span>
-                  <span class="theme-version">${th.Info.Version}</span>
-                  <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}">
-                    ${th.IsDarkMode ? '🌙' : '☀️'}
-                  </span>
-                </div>
-                <div class="theme-actions">
-                  <label>
-                    <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
-                    <span>
-                      <span>🌙</span>
-                      <span data-lang="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
-                    </span>
-                  </label>
-                  <label>
-                    <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
-                    <span>
-                      <span>☀️</span>
-                      <span data-lang="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
-                    </span>
-                  </label>
-                </div>
+              <div class="theme-heading" title="${th.Info.Name} - v${th.Info.Version}">
+                <span class="theme-name">${th.Info.Name}</span>
+                <span class="theme-version">${th.Info.Version}</span>
               </div>
               <div class="theme-description" title="${th.Info.Description}">${th.Info.Description}</div>
-              <div class="theme-location" title="${th.FolderPath}">${th.FolderPath}</div>
               <div class="theme-author">
-                <span class="me-4">
+                <span class="me-4" title="${th.Info.Author}">
                   <span data-lang="FrmSettings.Tab.Appearance._Author">[Author]</span>:
                   ${th.Info.Author || '?'}
                 </span>
-                <span class="me-4">
+                <span class="me-4" title="${th.Info.Website}">
                   <span data-lang="_._Website">[Website]</span>:
                   ${th.Info.Website || '?'}
                 </span>
-                <span>
+                <span title="${th.Info.Email}">
                   <span data-lang="_._Email">[Email]</span>:
                   ${th.Info.Email || '?'}
                 </span>
+              </div>
+              <div class="theme-actions">
+                <label>
+                  <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
+                  <span>
+                    <span>🌙</span>
+                    <span data-lang="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
+                  <span>
+                    <span>☀️</span>
+                    <span data-lang="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
+                  </span>
+                </label>
               </div>
             </div>
           </div>

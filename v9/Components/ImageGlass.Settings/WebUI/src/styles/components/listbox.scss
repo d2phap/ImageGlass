@@ -3,13 +3,13 @@
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
-  padding: 0.35rem;
+  padding: 0.5rem;
   border: 0.075rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
   background-color: rgb(var(--ControlBg) / 0.5);
 
   &> li {
-    padding: 0.35rem;
+    padding: 0.5rem;
     border-radius: var(--border-radius);
     transition: all ease 200ms;
 
@@ -18,7 +18,7 @@
     }
 
     &:not(:last-child) {
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.5rem;
 
       &::after {
         content: "";
@@ -26,7 +26,7 @@
         height: 1px;
         background-color: rgb(var(--InvertColor) / 0.1);
         position: relative;
-        bottom: calc(-1 * (0.35rem + (0.35rem / 2)));
+        bottom: calc(-1 * (0.5rem + (0.5rem / 2)));
       }
     }
   }

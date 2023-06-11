@@ -7,6 +7,9 @@
   font-family: var(--fontCode);
   background-color: rgb(var(--Accent) / 0.15);
   border-radius: var(--border-radius);
+
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .text-accent {
