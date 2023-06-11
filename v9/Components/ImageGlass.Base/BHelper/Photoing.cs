@@ -454,6 +454,11 @@ public partial class BHelper
             profileName = builtInProfiles.FirstOrDefault(i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase)) ?? string.Empty;
         }
 
+        if (string.IsNullOrEmpty(profileName))
+        {
+            profileName = ColorProfileOption.None.ToString();
+        }
+
         return profileName;
     }
 
