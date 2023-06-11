@@ -1438,7 +1438,7 @@ public static class Config
     }
 
 
-    // <summary>
+    /// <summary>
     /// Triggers <see cref="RequestUpdatingLanguage"/> event.
     /// </summary>
     public static void TriggerRequestUpdatingLanguage()

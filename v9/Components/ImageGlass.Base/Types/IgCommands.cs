@@ -34,7 +34,9 @@ public static class IgCommands
     public static string EXPORT_FRAMES => "export-frames";
 
     public static string CHECK_FOR_UPDATE => "check-for-update";
-    public static string INSTALL_LANGUAGE_PACKS => "install-language-packs";
+    public static string INSTALL_LANGUAGES => "install-languages";
+    public static string INSTALL_THEMES => "install-themes";
+    public static string UNINSTALL_THEME => "uninstall-theme";
 
 
     public static string SET_LOCK_SCREEN => "set-lock-screen";

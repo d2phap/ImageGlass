@@ -143,6 +143,7 @@ public partial class FrmSettings : WebForm
         if (name.Equals("BtnOK"))
         {
             ApplySettings(data);
+            Close();
         }
         else if (name.Equals("BtnApply"))
         {
@@ -230,6 +231,26 @@ public partial class FrmSettings : WebForm
             }
 
             PostMessage(name, $"\"{hexColor}\"");
+        }
+        else if (name.Equals("Btn_InstallTheme"))
+        {
+            _ = InstallThemeAsync();
+        }
+        else if (name.Equals("Btn_RefreshThemeList"))
+        {
+            // get themes as json string
+            var themeListJson = GetThemeListJson();
+
+            PostMessage("Btn_RefreshThemeList", themeListJson);
+        }
+        else if (name.Equals("Btn_OpenThemeFolder"))
+        {
+            var igDefaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
+            BHelper.OpenFilePath(igDefaultThemeDir);
+        }
+        else if (name.Equals("Delete_Theme_Pack"))
+        {
+            _ = UninstallThemeAsync(data);
         }
         #endregion // Tab Appearance
 
@@ -509,7 +530,7 @@ public partial class FrmSettings : WebForm
 
         var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
         var result = await BHelper.RunIgcmd(
-            $"{IgCommands.INSTALL_LANGUAGE_PACKS} {IgCommands.SHOW_UI} {filePathsArgs}",
+            $"{IgCommands.INSTALL_LANGUAGES} {IgCommands.SHOW_UI} {filePathsArgs}",
             true);
 
         if (result == IgExitCode.Done)
@@ -590,6 +611,43 @@ public partial class FrmSettings : WebForm
         return themeListJson;
     }
 
+
+    private async Task InstallThemeAsync()
+    {
+        using var o = new OpenFileDialog()
+        {
+            Filter = "ImageGlass theme pack (*.igtheme)|*.igtheme",
+            CheckFileExists = true,
+            RestoreDirectory = true,
+            Multiselect = true,
+        };
+
+        if (o.ShowDialog() != DialogResult.OK) return;
+
+        var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
+        var result = await BHelper.RunIgcmd(
+            $"{IgCommands.INSTALL_THEMES} {IgCommands.SHOW_UI} {filePathsArgs}",
+            true);
+
+        if (result == IgExitCode.Done)
+        {
+            var themeListJson = GetThemeListJson();
+            PostMessage("Btn_InstallTheme", themeListJson);
+        }
+    }
+
+    private async Task UninstallThemeAsync(string themeDirPath)
+    {
+        var result = await BHelper.RunIgcmd(
+            $"{IgCommands.UNINSTALL_THEME} {IgCommands.SHOW_UI} {themeDirPath}",
+            true);
+
+        if (result == IgExitCode.Done)
+        {
+            var themeListJson = GetThemeListJson();
+            PostMessage("Delete_Theme_Pack", themeListJson);
+        }
+    }
 
     private static Color? OpenColorPicker(Color? defaultColor = null)
     {

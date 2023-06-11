@@ -127,6 +127,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._Update", "Update"); //v9.0
         Add("_._Website", "Website"); //v9.0
         Add("_._Email", "Email"); //v9.0
+        Add("_._Install", "Install…");
+        Add("_._Refresh", "Refresh");
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -621,6 +623,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Appearance._DarkTheme", "Dark");
         Add("FrmSettings.Tab.Appearance._LightTheme", "Light");
         Add("FrmSettings.Tab.Appearance._Author", "Author");
+        Add("FrmSettings.Tab.Appearance._Theme._OpenThemeFolder", "Open theme folder");
+        Add("FrmSettings.Tab.Appearance._Theme._GetMoreThemes", "Get more theme packs…");
+        Add("FrmSettings.Tab.Appearance._Theme._InstallTheme", "Install theme packs");
+        Add("FrmSettings.Tab.Appearance._Theme._UninstallTheme", "Uninstall a theme pack");
         #endregion // Tab Appearance
 
 
@@ -667,27 +673,6 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
 
-        #region TAB Theme
-
-        //Add("FrmSetting.lblInstalledThemes", "Installed themes: {0}"); //v5.0
-        //Add("FrmSetting.lnkThemeDownload", "Download themes…"); //v5.0
-        //Add("FrmSetting.btnThemeRefresh", "Refresh"); //v5.0
-        //Add("FrmSetting.btnThemeInstall", "Install…"); //v5.0
-        //Add("FrmSetting.btnThemeUninstall", "Uninstall…"); //v5.0
-        //Add("FrmSetting.btnThemeSaveAs", "Save as…"); //v5.0
-        //Add("FrmSetting.btnThemeFolderOpen", "Open theme folder"); //v5.0
-        //Add("FrmSetting.btnThemeApply", "Apply theme"); //v5.0
-
-
-        //Add("FrmSetting.btnThemeInstall._Success", "Your theme was installed successfully!"); //v5.0
-        //Add("FrmSetting.btnThemeInstall._Error", "Unable to install your theme."); //v5.0
-        //Add("FrmSetting.btnThemeUninstall._Error", "Unable to uninstall the selected theme."); //v5.0
-        //Add("FrmSetting.btnThemeSaveAs._Success", "Your selected theme has been saved in {0}"); //v5.0
-        //Add("FrmSetting.btnThemeSaveAs._Error", "Unable to save your selected theme."); //v5.0
-        //Add("FrmSetting.btnThemeApply._Success", "The selected theme was applied successfully!"); //v5.0
-        //Add("FrmSetting.btnThemeApply._Error", "Unable to apply the selected theme."); //v5.0
-
-        #endregion
 
 
         #region FrmAddNewFormat

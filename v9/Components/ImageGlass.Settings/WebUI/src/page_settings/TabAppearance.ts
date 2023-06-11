@@ -1,4 +1,6 @@
+import { ITheme } from '@/@types/settings_types';
 import { getChangedSettingsFromTab } from '@/helpers';
+import Language from './Language';
 
 export default class TabAppearance {
   /**
@@ -51,6 +53,18 @@ export default class TabAppearance {
         TabAppearance.handleSlideshowBackgroundColorChanged();
       }
     }, false);
+
+    query('#Btn_InstallTheme').addEventListener('click', async () => {
+      const newThemeList = await postAsync<ITheme[]>('Btn_InstallTheme');
+      TabAppearance.loadThemeList(newThemeList);
+    }, false);
+
+    query('#Btn_RefreshThemeList').addEventListener('click', async () => {
+      const newThemeList = await postAsync<ITheme[]>('Btn_RefreshThemeList');
+      TabAppearance.loadThemeList(newThemeList);
+    }, false);
+
+    query('#Btn_OpenThemeFolder').addEventListener('click', () => post('Btn_OpenThemeFolder'), false);
   }
 
 
@@ -79,7 +93,10 @@ export default class TabAppearance {
   /**
    * Loads all themes into the list.
    */
-  private static loadThemeList() {
+  private static loadThemeList(list?: ITheme[]) {
+    if (Array.isArray(list) && list.length > 0) {
+      _pageSettings.themeList = list;
+    }
     const themeList = _pageSettings.themeList || [];
 
     const ulEl = query<HTMLTableElement>('#List_ThemeList');
@@ -132,6 +149,8 @@ export default class TabAppearance {
                     <span data-lang="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
                   </span>
                 </label>
+
+                <button type="button" class="ms-3 px-1" data-delete-theme="${th.FolderPath}">❌</button>
               </div>
             </div>
           </div>
@@ -141,19 +160,30 @@ export default class TabAppearance {
     }
 
     ulEl.innerHTML = ulHtml;
+    Language.load();
+    TabAppearance.loadThemeListStatus();
 
     queryAll<HTMLInputElement>('[name="_DarkThemeOptions"]').forEach(el => {
       el.addEventListener('change', (e) => {
         const themeName = (e.target as HTMLInputElement).value;
         query<HTMLInputElement>('[name="DarkTheme"]').value = themeName;
-      });
+      }, false);
     });
 
     queryAll<HTMLInputElement>('[name="_LightThemeOptions"]').forEach(el => {
       el.addEventListener('change', (e) => {
         const themeName = (e.target as HTMLInputElement).value;
         query<HTMLInputElement>('[name="LightTheme"]').value = themeName;
-      });
+      }, false);
+    });
+
+    queryAll<HTMLButtonElement>('[data-delete-theme]').forEach(el => {
+      el.addEventListener('click', async (e) => {
+        const themeDir = (e.target as HTMLButtonElement).getAttribute('data-delete-theme');
+
+        const newThemeList = await postAsync<ITheme[]>('Delete_Theme_Pack', themeDir);
+        TabAppearance.loadThemeList(newThemeList);
+      }, false);
     });
   }
 

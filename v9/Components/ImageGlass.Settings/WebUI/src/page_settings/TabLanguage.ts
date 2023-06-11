@@ -17,13 +17,13 @@ export default class TabLanguage {
     query('#Cmb_LanguageList').addEventListener('change', TabLanguage.handleLanguageChanged, false);
 
     query('#Btn_RefreshLanguageList').addEventListener('click', async () => {
-      const result = await postAsync<ILanguage[]>('Btn_RefreshLanguageList');
-      TabLanguage.loadLanguageList(result);
+      const newLangList = await postAsync<ILanguage[]>('Btn_RefreshLanguageList');
+      TabLanguage.loadLanguageList(newLangList);
     }, false);
 
     query('#Lnk_InstallLanguage').addEventListener('click', async () => {
-      const result = await postAsync<ILanguage[]>('Lnk_InstallLanguage');
-      TabLanguage.loadLanguageList(result);
+      const newLangList = await postAsync<ILanguage[]>('Lnk_InstallLanguage');
+      TabLanguage.loadLanguageList(newLangList);
     }, false);
   }
 
