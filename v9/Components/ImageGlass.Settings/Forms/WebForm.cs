@@ -361,4 +361,19 @@ public partial class WebForm : ThemedForm
                     $"Error detail:\r\n" + ex.ToString());
         }
     }
+
+
+    /// <summary>
+    /// Safely run the action after the current event handler is completed,
+    /// to avoid potential reentrancy caused by running a nested message loop
+    /// in the WebView2 event handler.
+    /// Source: <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/threading-model#reentrancy"/>
+    /// </summary>
+    public static void SafeRunUi(Action action)
+    {
+        SynchronizationContext.Current.Post((_) =>
+        {
+            action();
+        }, null);
+    }
 }
