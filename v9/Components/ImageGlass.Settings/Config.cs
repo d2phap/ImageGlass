@@ -1386,6 +1386,19 @@ public static class Config
                 Done = true;
             }
         }
+        // MenuHotkeys
+        else if (configName == nameof(Config.MenuHotkeys))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, string[]>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    // Config.MenuHotkeys[key] = 
+                }
+                Done = true;
+            }
+        }
         else
         {
             // unsupported type

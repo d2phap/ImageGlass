@@ -90,14 +90,18 @@
         <!-- General > General -->
         <section>
             <header data-lang="FrmSettings.Nav._General">[General]</header>
-            <div class="mb-2 d-flex align-items-center">
-                <a id="Lnk_StartupDir" class="text-nowrap me-2" href="#" data-lang="FrmSettings.Tab.General._StartupDir">
+            <div class="mb-2">
+                <a id="Lnk_StartupDir" class="text-nowrap" href="#" data-lang="FrmSettings.Tab.General._StartupDir">
                     [Startup location]
                 </a>
-                <a id="Lnk_ConfigDir" class="text-nowrap me-2" href="#" data-lang="FrmSettings.Tab.General._ConfigDir">
+            </div>
+            <div class="mb-2">
+                <a id="Lnk_ConfigDir" class="text-nowrap" href="#" data-lang="FrmSettings.Tab.General._ConfigDir">
                     [Configuration location]
                 </a>
-                <a id="Lnk_UserConfigFile" class="text-nowrap me-2" href="#" data-lang="FrmSettings.Tab.General._UserConfigFile">
+            </div>
+            <div class="mb-2">
+                <a id="Lnk_UserConfigFile" class="text-nowrap" href="#" data-lang="FrmSettings.Tab.General._UserConfigFile">
                     [User settings file]
                 </a>
             </div>
@@ -472,20 +476,27 @@
         <!-- Viewer > Zooming -->
         <section>
             <header data-lang="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
-            <div class="mb-2">
-                <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleDown">
-                    [ImageInterpolationScaleDown]
+            <!-- Image interpolation -->
+            <div class="mb-4">
+                <div class="mb-2">
+                    <b data-lang="FrmSettings.Tab.Viewer._ImageInterpolation">[Image interpolation]</b>
                 </div>
-                <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
-                </select>
-            </div>
-            <div class="mb-2">
-                <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolationScaleUp">
-                    [ImageInterpolationScaleUp]
+                <div class="mb-2">
+                    <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown">
+                        [ImageInterpolationScaleDown]
+                    </div>
+                    <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
+                    </select>
                 </div>
-                <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
-                </select>
+                <div class="mb-2">
+                    <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp">
+                        [ImageInterpolationScaleUp]
+                    </div>
+                    <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
+                    </select>
+                </div>
             </div>
+
             <div class="mb-2">
                 <div class="mb-1" data-lang="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
                 <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" />
@@ -650,7 +661,7 @@
     <section class="tab-page" tab="file_assocs">
         <!-- File type assosications > File type assosications -->
         <section>
-            <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[File type assosications]</header>
+            <header data-lang="FrmSettings.Nav._FileTypeAssociations">[File type assosications]</header>
             <div class="mb-2">
             </div>
         </section>
@@ -661,7 +672,7 @@
     <section class="tab-page" tab="tools">
         <!-- Tools > Tools -->
         <section>
-            <header data-lang="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Tools]</header>
+            <header data-lang="FrmSettings.Nav._Tools">[Tools]</header>
             <div class="mb-2">
             </div>
         </section>

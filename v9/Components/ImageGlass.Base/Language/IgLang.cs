@@ -461,7 +461,7 @@ public class IgLang : Dictionary<string, string>
         #region Tab General
         // General > General
         Add("FrmSettings.Tab.General._StartupDir", "Startup location");
-        Add("FrmSettings.Tab.General._ConfigDir", "Config location");
+        Add("FrmSettings.Tab.General._ConfigDir", "Configuration location");
         Add("FrmSettings.Tab.General._UserConfigFile", "User settings file (igconfig.json)");
 
         // General > Startup
@@ -478,7 +478,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.General._Others", "Others");
         Add("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
         Add("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
-        Add("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration");
+        Add("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration (milliseconds)");
         #endregion // Tab General
 
 
@@ -552,8 +552,9 @@ public class IgLang : Dictionary<string, string>
 
         // Viewer > Zooming
         Add("FrmSettings.Tab.Viewer._Zooming", "Zooming");
-        Add("FrmSettings.Tab.Viewer._ImageInterpolationScaleDown", "Image interpolation when the zoom factor is less than 100 percent");
-        Add("FrmSettings.Tab.Viewer._ImageInterpolationScaleUp", "Image interpolation when the zoom factor is greater than 100 percent");
+        Add("FrmSettings.Tab.Viewer._ImageInterpolation", "Image interpolation");
+        Add("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
+        Add("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp", "When zoom > 100%");
         Add("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
         Add("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
         #endregion // Tab Viewer
