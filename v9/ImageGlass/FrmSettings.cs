@@ -449,6 +449,8 @@ public partial class FrmSettings : WebForm
         // Tab Mouse & Keyboard
         #region Tab Mouse & Keyboard
 
+        _ = Config.SetFromJson(dict, nameof(Config.MouseWheelActions));
+
         #endregion // Tab Mouse & Keyboard
 
 

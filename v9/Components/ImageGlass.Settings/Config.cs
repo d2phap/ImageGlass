@@ -631,17 +631,17 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, List<Hotkey>> MenuHotkeys = new();
+    public static Dictionary<string, List<Hotkey>> MenuHotkeys { get; set; } = new();
 
     /// <summary>
     /// Gets, sets mouse click actions
     /// </summary>
-    public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions = new();
+    public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions { get; set; } = new();
 
     /// <summary>
     /// Gets, sets mouse wheel actions
     /// </summary>
-    public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions = new();
+    public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions { get; set; } = new();
 
     /// <summary>
     /// Gets, sets layout for FrmMain. Syntax:
@@ -664,7 +664,7 @@ public static class Config
         },
     };
 
-    #endregion
+    #endregion // Array items
 
 
     #region Enum items
@@ -1345,6 +1345,46 @@ public static class Config
         {
             Config.Language = new IgLang(newValue, App.StartUpDir(Dir.Language));
             Done = true;
+        }
+        // MouseWheelActions
+        else if (configName == nameof(Config.MouseWheelActions))
+        {
+            var dict = BHelper.ParseJson<Dictionary<MouseWheelEvent, MouseWheelAction>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    if (Config.MouseWheelActions.ContainsKey(key))
+                    {
+                        Config.MouseWheelActions[key] = dict[key];
+                    }
+                    else
+                    {
+                        Config.MouseWheelActions.TryAdd(key, dict[key]);
+                    }
+                }
+                Done = true;
+            }
+        }
+        // MouseClickActions
+        else if (configName == nameof(Config.MouseClickActions))
+        {
+            var dict = BHelper.ParseJson<Dictionary<MouseClickEvent, ToggleAction>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    if (Config.MouseClickActions.ContainsKey(key))
+                    {
+                        Config.MouseClickActions[key] = dict[key];
+                    }
+                    else
+                    {
+                        Config.MouseClickActions.TryAdd(key, dict[key]);
+                    }
+                }
+                Done = true;
+            }
         }
         else
         {
