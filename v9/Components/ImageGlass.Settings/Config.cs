@@ -500,7 +500,7 @@ public static class Config
     public static float SlideshowIntervalTo { get; set; } = 5f;
 
     /// <summary>
-    /// Gets, sets the number of image changes to notify <see cref="SlideshowImageChangeSound"/> sound in slideshow mode.
+    /// Gets, sets the number of image changes to notify <see cref="SlideshowNotificationSound"/> sound in slideshow mode.
     /// </summary>
     public static int SlideshowImagesToNotifySound { get; set; } = 0;
 
@@ -722,7 +722,7 @@ public static class Config
     /// <summary>
     /// Getse, sets system sound to play for <see cref="SlideshowImagesToNotifySound"/> setting.
     /// </summary>
-    public static SystemSound SlideshowImageChangeSound { get; set; } = SystemSound.Asterisk;
+    public static SystemSound SlideshowNotificationSound { get; set; } = SystemSound.Asterisk;
 
     #endregion // Enum items
 
@@ -881,7 +881,7 @@ public static class Config
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
-        SlideshowImageChangeSound = items.GetValue(nameof(SlideshowImageChangeSound), SlideshowImageChangeSound);
+        SlideshowNotificationSound = items.GetValue(nameof(SlideshowNotificationSound), SlideshowNotificationSound);
 
         #endregion
 
@@ -1184,7 +1184,7 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
-        settings.TryAdd(nameof(SlideshowImageChangeSound), SlideshowImageChangeSound);
+        settings.TryAdd(nameof(SlideshowNotificationSound), SlideshowNotificationSound);
 
         #endregion
 

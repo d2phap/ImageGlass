@@ -519,11 +519,14 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
         Add("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in fullscreen mode");
         Add("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
-
-        // Slideshow > Slideshow interval
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
+
+        // Slideshow > Slideshow notification
+        Add("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification:");
+        Add("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
+        Add("FrmSettings.Tab.Slideshow._SlideshowNotificationSound", "Notification sound");
         #endregion // Tab Slideshow
 
 

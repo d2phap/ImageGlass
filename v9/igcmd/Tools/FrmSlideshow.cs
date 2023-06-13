@@ -899,7 +899,7 @@ public partial class FrmSlideshow : ThemedForm
         {
             if (_numberImageChangeCount >= Config.SlideshowImagesToNotifySound - 1)
             {
-                BHelper.PlaySound(Config.SlideshowImageChangeSound);
+                BHelper.PlaySound(Config.SlideshowNotificationSound);
                 _numberImageChangeCount = 0;
             }
             else
