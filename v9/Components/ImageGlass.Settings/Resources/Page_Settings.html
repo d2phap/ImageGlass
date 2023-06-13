@@ -364,25 +364,42 @@
                     </div>
                 </label>
             </div>
-        </section>
 
-        <!-- Slideshow > Slideshow interval -->
-        <section>
-            <header>
-                <span data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval:]</span>
-                <span id="Lbl_SlideshowInterval"></span>
-            </header>
-            <div class="mb-2">
-                <div class="d-flex align-items-center">
-                    <div class="me-3">
-                        <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
-                        <input type="number" name="SlideshowInterval" required step="0.1" min="0" style="width: 5rem;" />
-                    </div>
-                    <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
-                        <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
-                        <input type="number" name="SlideshowIntervalTo" required step="0.1" min="0" style="width: 5rem;" />
+            <!-- Slideshow interval -->
+            <div class="mt-3 mb-2">
+                <div class="mb-2">
+                    <b data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval:]</b>
+                    <b id="Lbl_SlideshowInterval"></b>
+                </div>
+                <div class="mb-2">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
+                            <input type="number" name="SlideshowInterval" required step="0.1" min="0" style="width: 5rem;" />
+                        </div>
+                        <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
+                            <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
+                            <input type="number" name="SlideshowIntervalTo" required step="0.1" min="0" style="width: 5rem;" />
+                        </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- Slideshow > Slideshow notification -->
+        <section>
+            <header data-lang="FrmSettings.Tab.Slideshow._SlideshowNotification">[Slideshow notification]</header>
+            <div class="mb-2">
+                <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound">
+                    [Number of images to trigger a notification sound]
+                </div>
+                <input type="number" name="SlideshowImagesToNotifySound" required min="0" />
+            </div>
+            <div class="mb-2">
+                <div class="mb-1" data-lang="FrmSettings.Tab.Slideshow._SlideshowNotificationSound">[Notification sound]</div>
+                <select name="SlideshowNotificationSound" required data-enum="SystemSound">
+                </select>
             </div>
         </section>
     </section>
