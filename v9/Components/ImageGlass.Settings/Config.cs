@@ -31,6 +31,7 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
+using SystemSound = ImageGlass.Base.SystemSound;
 
 namespace ImageGlass.Settings;
 
@@ -426,7 +427,6 @@ public static class Config
     /// </summary>
     public static bool ShouldAutoOpenNewAddedImage { get; set; } = false;
 
-
     #endregion // Boolean items
 
 
@@ -562,6 +562,11 @@ public static class Config
     /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
     /// </summary>
     public static int EmbeddedThumbnailMinHeight { get; set; } = 0;
+
+    /// <summary>
+    /// Gets, sets the number of image changes to notify <see cref="ImageChangeSound"/> sound.
+    /// </summary>
+    public static uint NumberImagesToNotifySound { get; set; } = 0;
 
     #endregion // Number items
 
@@ -716,6 +721,12 @@ public static class Config
     /// </summary>
     public static BackdropStyle WindowBackdrop { get; set; } = BackdropStyle.Mica;
 
+
+    /// <summary>
+    /// Getse, sets system sound to play when <c><see cref="NumberImagesToNotifySound"/> > 0</c>.
+    /// </summary>
+    public static SystemSound ImageChangeSound { get; set; } = SystemSound.Asterisk;
+
     #endregion // Enum items
 
 
@@ -855,7 +866,7 @@ public static class Config
         InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
         EmbeddedThumbnailMinWidth = items.GetValue(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
         EmbeddedThumbnailMinHeight = items.GetValue(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
-
+        NumberImagesToNotifySound = items.GetValue(nameof(NumberImagesToNotifySound), NumberImagesToNotifySound);
         #endregion
 
 
@@ -871,6 +882,7 @@ public static class Config
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
+        ImageChangeSound = items.GetValue(nameof(ImageChangeSound), ImageChangeSound);
 
         #endregion
 
@@ -1157,6 +1169,7 @@ public static class Config
         settings.TryAdd(nameof(InAppMessageDuration), InAppMessageDuration);
         settings.TryAdd(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
         settings.TryAdd(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
+        settings.TryAdd(nameof(NumberImagesToNotifySound), NumberImagesToNotifySound);
 
         #endregion
 
@@ -1172,6 +1185,7 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
+        settings.TryAdd(nameof(ImageChangeSound), ImageChangeSound);
 
         #endregion
 
