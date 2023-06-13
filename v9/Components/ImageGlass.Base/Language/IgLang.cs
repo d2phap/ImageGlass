@@ -526,7 +526,6 @@ public class IgLang : Dictionary<string, string>
         // Slideshow > Slideshow notification
         Add("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification:");
         Add("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
-        Add("FrmSettings.Tab.Slideshow._SlideshowNotificationSound", "Notification sound");
         #endregion // Tab Slideshow
 
 

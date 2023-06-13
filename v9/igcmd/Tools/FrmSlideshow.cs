@@ -28,6 +28,7 @@ using ImageGlass.UI;
 using ImageGlass.Viewer;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Media;
 using System.Text;
 using Timer = System.Windows.Forms.Timer;
 
@@ -899,7 +900,7 @@ public partial class FrmSlideshow : ThemedForm
         {
             if (_numberImageChangeCount >= Config.SlideshowImagesToNotifySound - 1)
             {
-                BHelper.PlaySound(Config.SlideshowNotificationSound);
+                SystemSounds.Asterisk.Play();
                 _numberImageChangeCount = 0;
             }
             else

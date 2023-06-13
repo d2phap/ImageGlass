@@ -205,16 +205,3 @@ public enum ImageSaveSource
     Clipboard,
     CurrentFile,
 }
-
-
-/// <summary>
-/// System sound options
-/// </summary>
-public enum SystemSound
-{
-    Asterisk,
-    Beep,
-    Exclamation,
-    Hand,
-    Question,
-}

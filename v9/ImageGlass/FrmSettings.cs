@@ -107,7 +107,6 @@ public partial class FrmSettings : WebForm
             typeof(MouseClickEvent),
             typeof(Base.BackdropStyle),
             typeof(ToolbarItemModelType),
-            typeof(SystemSound),
         };
         foreach (var item in enums)
         {
@@ -360,7 +359,6 @@ public partial class FrmSettings : WebForm
         if (Config.SetFromJson(dict, nameof(Config.SlideshowIntervalTo)).Done) { updateSlideshow = true; }
 
         if (Config.SetFromJson(dict, nameof(Config.SlideshowImagesToNotifySound)).Done) { updateSlideshow = true; }
-        if (Config.SetFromJson(dict, nameof(Config.SlideshowNotificationSound)).Done) { updateSlideshow = true; }
 
         #endregion // Tab Slideshow
 

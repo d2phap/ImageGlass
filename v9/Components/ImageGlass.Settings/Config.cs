@@ -31,7 +31,6 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
-using SystemSound = ImageGlass.Base.SystemSound;
 
 namespace ImageGlass.Settings;
 
@@ -719,11 +718,6 @@ public static class Config
     /// </summary>
     public static BackdropStyle WindowBackdrop { get; set; } = BackdropStyle.Mica;
 
-    /// <summary>
-    /// Getse, sets system sound to play for <see cref="SlideshowImagesToNotifySound"/> setting.
-    /// </summary>
-    public static SystemSound SlideshowNotificationSound { get; set; } = SystemSound.Asterisk;
-
     #endregion // Enum items
 
 
@@ -881,7 +875,6 @@ public static class Config
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
-        SlideshowNotificationSound = items.GetValue(nameof(SlideshowNotificationSound), SlideshowNotificationSound);
 
         #endregion
 
@@ -1184,7 +1177,6 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
-        settings.TryAdd(nameof(SlideshowNotificationSound), SlideshowNotificationSound);
 
         #endregion
 
