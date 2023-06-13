@@ -31,6 +31,16 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
+    private void PicMain_DragEnter(object sender, DragEventArgs e)
+    {
+#if NET7_0_OR_GREATER
+        e.DropImageType = DropImageType.Link;
+        e.Message = string.Format(Config.Language[$"{Name}._OpenWith"], "%1");
+        e.MessageReplacementToken = App.AppName;
+#endif
+    }
+
+
     private void PicMain_DragOver(object? sender, DragEventArgs e)
     {
         try

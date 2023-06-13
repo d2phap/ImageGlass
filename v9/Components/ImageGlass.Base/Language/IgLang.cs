@@ -401,6 +401,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._OpenFileDialog", "All supported files");
         Add("FrmMain._Loading", "Loading…"); // v3.0
+        Add("FrmMain._OpenWith", "Open with {0}"); //v9.0
 
         //Add("FrmMain._SaveChanges", "Saving change…"); // v2.0 final
 
