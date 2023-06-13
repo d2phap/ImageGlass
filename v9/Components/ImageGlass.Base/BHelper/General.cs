@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base.DirectoryComparer;
 using System.Globalization;
+using System.Media;
 
 namespace ImageGlass.Base;
 
@@ -389,6 +390,34 @@ public partial class BHelper
                 BHelper.OpenUrl(url);
             }
             catch { }
+        }
+    }
+
+
+    /// <summary>
+    /// Plays system sound.
+    /// </summary>
+    public static void PlaySound(SystemSound sound)
+    {
+        if (sound == SystemSound.Asterisk)
+        {
+            SystemSounds.Asterisk.Play();
+        }
+        else if (sound == SystemSound.Beep)
+        {
+            SystemSounds.Beep.Play();
+        }
+        else if (sound == SystemSound.Exclamation)
+        {
+            SystemSounds.Exclamation.Play();
+        }
+        else if (sound == SystemSound.Hand)
+        {
+            SystemSounds.Hand.Play();
+        }
+        else if (sound == SystemSound.Question)
+        {
+            SystemSounds.Question.Play();
         }
     }
 

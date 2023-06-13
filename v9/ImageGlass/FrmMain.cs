@@ -41,6 +41,7 @@ public partial class FrmMain : ThemedForm
     private IProgress<ProgressReporterEventArgs> _uiReporter;
     private MovableForm _movableForm;
     private bool _isShowingImagePreview = false;
+    private int _numberImageChangeCount = 0;
 
 
     // variable to back up / restore window layout when changing window mode
@@ -381,9 +382,6 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Prepares and load images from the input paths
     /// </summary>
-    /// <param name="paths"></param>
-    /// <param name="currentFile"></param>
-    /// <returns></returns>
     public async Task PrepareLoadingAsync(string[] paths, string? currentFile = null)
     {
         var filePath = currentFile;
@@ -429,6 +427,7 @@ public partial class FrmMain : ThemedForm
             var allFilesToLoad = new HashSet<string>();
             var currentFile = currentFilePath;
             var hasInitFile = !string.IsNullOrEmpty(currentFile);
+            _numberImageChangeCount = 0;
 
 
             // track paths loaded to prevent duplicates
@@ -883,6 +882,7 @@ public partial class FrmMain : ThemedForm
         }
 
         Local.IsBusy = false;
+
     }
 
 
@@ -905,6 +905,7 @@ public partial class FrmMain : ThemedForm
 
         await ViewNextAsync(step, resetZoom, isSkipCache, frameIndex, filePath, _loadCancelToken);
     }
+
 
     #endregion // Image Loading functions
 
@@ -1063,6 +1064,21 @@ public partial class FrmMain : ThemedForm
 
         _isShowingImagePreview = false;
         LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FrameCount);
+
+
+        // notify image changes
+        if (Config.NumberImagesToNotifySound > 0)
+        {
+            if (_numberImageChangeCount >= Config.NumberImagesToNotifySound - 1)
+            {
+                BHelper.PlaySound(Config.ImageChangeSound);
+                _numberImageChangeCount = 0;
+            }
+            else
+            {
+                _numberImageChangeCount++;
+            }
+        }
 
 
         // Collect system garbage

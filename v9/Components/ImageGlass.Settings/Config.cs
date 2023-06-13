@@ -566,7 +566,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the number of image changes to notify <see cref="ImageChangeSound"/> sound.
     /// </summary>
-    public static uint NumberImagesToNotifySound { get; set; } = 0;
+    public static int NumberImagesToNotifySound { get; set; } = 0;
 
     #endregion // Number items
 
@@ -723,7 +723,7 @@ public static class Config
 
 
     /// <summary>
-    /// Getse, sets system sound to play when <c><see cref="NumberImagesToNotifySound"/> > 0</c>.
+    /// Getse, sets system sound to play for <see cref="NumberImagesToNotifySound"/> setting.
     /// </summary>
     public static SystemSound ImageChangeSound { get; set; } = SystemSound.Asterisk;
 
