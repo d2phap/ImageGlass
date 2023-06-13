@@ -524,7 +524,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
 
         // Slideshow > Slideshow notification
-        Add("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification:");
+        Add("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification");
         Add("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
         #endregion // Tab Slideshow
 
