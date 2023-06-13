@@ -49,6 +49,7 @@ public partial class FrmSlideshow : ThemedForm
     private float _slideshowCountdown = 5; // slideshow countdown interval
     private Rectangle _windowBound = new();
     private FormWindowState _windowState = FormWindowState.Normal;
+    private int _numberImageChangeCount = 0;
 
     private CancellationTokenSource _hideCursorCancelToken = new();
     private bool _isCursorHidden = false;
@@ -642,6 +643,7 @@ public partial class FrmSlideshow : ThemedForm
                 Config.ImageLoadingOrder,
                 Config.ImageLoadingOrderType,
                 Config.ShouldGroupImagesByDirectory);
+
             _images = new ImageBooster(list)
             {
                 MaxQueue = 1,
@@ -888,7 +890,23 @@ public partial class FrmSlideshow : ThemedForm
         }
 
 
+        // load image info
         LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FrameCount);
+
+
+        // notify image changes
+        if (Config.SlideshowImagesToNotifySound > 0)
+        {
+            if (_numberImageChangeCount >= Config.SlideshowImagesToNotifySound - 1)
+            {
+                BHelper.PlaySound(Config.SlideshowImageChangeSound);
+                _numberImageChangeCount = 0;
+            }
+            else
+            {
+                _numberImageChangeCount++;
+            }
+        }
 
         // Collect system garbage
         GC.Collect();

@@ -500,6 +500,11 @@ public static class Config
     public static float SlideshowIntervalTo { get; set; } = 5f;
 
     /// <summary>
+    /// Gets, sets the number of image changes to notify <see cref="SlideshowImageChangeSound"/> sound in slideshow mode.
+    /// </summary>
+    public static int SlideshowImagesToNotifySound { get; set; } = 0;
+
+    /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
     public static int ThumbnailSize { get; set; } = 50;
@@ -562,11 +567,6 @@ public static class Config
     /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
     /// </summary>
     public static int EmbeddedThumbnailMinHeight { get; set; } = 0;
-
-    /// <summary>
-    /// Gets, sets the number of image changes to notify <see cref="ImageChangeSound"/> sound.
-    /// </summary>
-    public static int NumberImagesToNotifySound { get; set; } = 0;
 
     #endregion // Number items
 
@@ -709,23 +709,20 @@ public static class Config
     /// </summary>
     public static ImageInterpolation ImageInterpolationScaleUp { get; set; } = ImageInterpolation.NearestNeighbor;
 
-
     /// <summary>
     /// Gets, sets value indicates what happens after clicking Edit menu
     /// </summary>
     public static AfterEditAppAction AfterEditingAction { get; set; } = AfterEditAppAction.Nothing;
-
 
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
     /// </summary>
     public static BackdropStyle WindowBackdrop { get; set; } = BackdropStyle.Mica;
 
-
     /// <summary>
-    /// Getse, sets system sound to play for <see cref="NumberImagesToNotifySound"/> setting.
+    /// Getse, sets system sound to play for <see cref="SlideshowImagesToNotifySound"/> setting.
     /// </summary>
-    public static SystemSound ImageChangeSound { get; set; } = SystemSound.Asterisk;
+    public static SystemSound SlideshowImageChangeSound { get; set; } = SystemSound.Asterisk;
 
     #endregion // Enum items
 
@@ -841,6 +838,8 @@ public static class Config
 
         SlideshowIntervalTo = items.GetValue(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         SlideshowIntervalTo = Math.Max(SlideshowIntervalTo, SlideshowInterval);
+
+        SlideshowImagesToNotifySound = items.GetValue(nameof(SlideshowImagesToNotifySound), SlideshowImagesToNotifySound);
         #endregion
 
         #region Load gallery thumbnail width & position
@@ -866,7 +865,7 @@ public static class Config
         InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
         EmbeddedThumbnailMinWidth = items.GetValue(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
         EmbeddedThumbnailMinHeight = items.GetValue(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
-        NumberImagesToNotifySound = items.GetValue(nameof(NumberImagesToNotifySound), NumberImagesToNotifySound);
+       
         #endregion
 
 
@@ -882,7 +881,7 @@ public static class Config
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
-        ImageChangeSound = items.GetValue(nameof(ImageChangeSound), ImageChangeSound);
+        SlideshowImageChangeSound = items.GetValue(nameof(SlideshowImageChangeSound), SlideshowImageChangeSound);
 
         #endregion
 
@@ -1157,6 +1156,7 @@ public static class Config
         settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
+        settings.TryAdd(nameof(SlideshowImagesToNotifySound), SlideshowImagesToNotifySound);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
         settings.TryAdd(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
         settings.TryAdd(nameof(GalleryColumns), GalleryColumns);
@@ -1169,7 +1169,6 @@ public static class Config
         settings.TryAdd(nameof(InAppMessageDuration), InAppMessageDuration);
         settings.TryAdd(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
         settings.TryAdd(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
-        settings.TryAdd(nameof(NumberImagesToNotifySound), NumberImagesToNotifySound);
 
         #endregion
 
@@ -1185,7 +1184,7 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
-        settings.TryAdd(nameof(ImageChangeSound), ImageChangeSound);
+        settings.TryAdd(nameof(SlideshowImageChangeSound), SlideshowImageChangeSound);
 
         #endregion
 
