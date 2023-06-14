@@ -28,14 +28,18 @@ namespace ImageGlass.UI;
 /// </summary>
 public class ModernToolbar : ToolStrip
 {
+    private const uint WM_MOUSEACTIVATE = 0x21;
+    private const uint MA_ACTIVATE = 1;
+    private const uint MA_ACTIVATEANDEAT = 2;
+
     private ToolbarAlignment _alignment = ToolbarAlignment.Center;
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
     private readonly ToolTip _tooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();
     private ToolStripItem? _hoveredItem = null;
-
     private ContextMenuStrip _mainMenu = new();
+
     private ToolStripButton _mainMenuButton => new()
     {
         Name = "Btn_MainMenu",
@@ -155,6 +159,18 @@ public class ModernToolbar : ToolStrip
 
 
     #region Protected methods
+
+    protected override void WndProc(ref Message m)
+    {
+        base.WndProc(ref m);
+
+        // Enable click-through for inactive toolstrip/menustrip
+        // https://github.com/dotnet/winforms/issues/9288
+        if (m.Msg == WM_MOUSEACTIVATE && m.Result == (IntPtr)MA_ACTIVATEANDEAT)
+        {
+            m.Result = (IntPtr)MA_ACTIVATE;
+        }
+    }
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
