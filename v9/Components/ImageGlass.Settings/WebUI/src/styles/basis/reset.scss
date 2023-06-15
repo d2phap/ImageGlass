@@ -50,6 +50,8 @@ kbd {
   font-size: 85%;
   font-family: var(--fontCode);
   vertical-align: middle;
+  white-space: nowrap;
+
   background-color: rgb(var(--ControlBg) / 1);
   border: solid 1px rgb(var(--InvertColor) / 0.1);
   border-bottom-color: rgb(var(--InvertColor) / 0.1);

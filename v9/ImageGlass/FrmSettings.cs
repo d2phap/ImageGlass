@@ -87,6 +87,9 @@ public partial class FrmSettings : WebForm
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
         var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
 
+        // tool list
+        var toolListJson = BHelper.ToJson(Config.Tools);
+
         // language list
         var langListJson = GetLanguageListJson();
 
@@ -128,6 +131,7 @@ public partial class FrmSettings : WebForm
                     config: {configJson},
                     lang: {configLangJson},
                     langList: {langListJson},
+                    toolList: {toolListJson},
                     themeList: {themeListJson},
                     defaultThemeDir: '{defaultThemeDir}',
                 }};
@@ -690,5 +694,6 @@ public partial class FrmSettings : WebForm
 
         return defaultColor;
     }
+
 
 }

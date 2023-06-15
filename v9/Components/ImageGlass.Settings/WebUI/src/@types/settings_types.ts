@@ -18,7 +18,7 @@ export type ITool = {
   ToolId: string;
   ToolName: string;
   Executable: string;
-  Argument: string;
+  Arguments: string;
   IsIntegrated?: boolean;
 };
 
