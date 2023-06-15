@@ -1,6 +1,7 @@
 
 // theme colors (dark is default)
-:root {
+:root,
+::backdrop {
   --InvertColor: 255 255 255;
   --AppBg: 20 25 28;
   --AppText: 210 210 210;
@@ -36,7 +37,8 @@
 }
 
 // light mode
-html[color-mode=light] {
+html[color-mode=light],
+html[color-mode=light] ::backdrop {
   --InvertColor: 0 0 0;
   --AppBg: 255 255 255;
   --AppText: 30 30 30;

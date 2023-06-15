@@ -1,0 +1,76 @@
+dialog {
+  padding: 0;
+  overflow: hidden;
+  border-color: var(--ControlBorder);
+  border-radius: calc(var(--border-radius) * 2);
+
+  color: rgb(var(--AppText) / 1);
+  background-color: rgb(var(--AppBg) / 1);
+  box-shadow: 0 1rem 3rem -1rem rgb(0 0 0 /0.4);
+  transition: all ease 150ms;
+
+  &::backdrop {
+    position: fixed;
+    inset: 0px;
+    background-color: rgb(var(--AppBg) / 0.65);
+  }
+
+  &> form {
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+    width: 100%;
+  }
+
+  .dialog-header {
+    padding: 0.5rem 1rem;
+    background-color: rgb(var(--InvertColor) / 0.03);
+    transition: all ease 150ms;
+  }
+
+  .dialog-footer {
+    padding: 1rem;
+    background-color: rgb(var(--InvertColor) / 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    transition: all ease 150ms;
+
+    &> button {
+      min-width: 5rem;
+      margin-left: 0.5rem;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .dialog-body {
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
+  &[open] {
+    display: flex;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+
+[window-focus="false"] dialog {
+  border-color: rgb(var(--InvertColor) / 0.12);
+  box-shadow: 0 0 0 0 transparent;
+
+  .dialog-header {
+    background-color: rgb(var(--InvertColor) / 0.01);
+  }
+
+  .dialog-footer {
+    background-color: rgb(var(--InvertColor) / 0.02);
+  }
+}
