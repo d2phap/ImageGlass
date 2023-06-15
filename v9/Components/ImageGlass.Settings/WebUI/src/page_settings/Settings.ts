@@ -161,7 +161,7 @@ export default class Settings {
       for (const el of selectEls) {
         enumKeys.forEach(key => {
           const optionEl = new Option(`${key}`, key);
-          optionEl.setAttribute('data-lang', `_.${enumName}._${key}`);
+          optionEl.setAttribute('lang-text', `_.${enumName}._${key}`);
 
           el.add(optionEl);
         });

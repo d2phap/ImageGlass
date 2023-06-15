@@ -109,7 +109,8 @@ export default class TabAppearance {
             <div class="theme-preview">
               <div class="theme-preview-img" title="${th.FolderPath}">
                 <img src="${th.PreviewImage}" alt="${th.Info.Name}" onerror="this.hidden = true;" />
-                <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}">
+                <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}"
+                  lang-title="FrmSettings.Tab.Appearance.${th.IsDarkMode ? '_DarkTheme' : '_LightTheme'}">
                   ${th.IsDarkMode ? '🌙' : '☀️'}
                 </span>
               </div>
@@ -122,35 +123,36 @@ export default class TabAppearance {
               <div class="theme-description" title="${th.Info.Description}">${th.Info.Description}</div>
               <div class="theme-author">
                 <span class="me-4" title="${th.Info.Author}">
-                  <span data-lang="FrmSettings.Tab.Appearance._Author">[Author]</span>:
+                  <span lang-text="FrmSettings.Tab.Appearance._Author">[Author]</span>:
                   ${th.Info.Author || '?'}
                 </span>
                 <span class="me-4" title="${th.Info.Website}">
-                  <span data-lang="_._Website">[Website]</span>:
+                  <span lang-text="_._Website">[Website]</span>:
                   ${th.Info.Website || '?'}
                 </span>
                 <span title="${th.Info.Email}">
-                  <span data-lang="_._Email">[Email]</span>:
+                  <span lang-text="_._Email">[Email]</span>:
                   ${th.Info.Email || '?'}
                 </span>
               </div>
               <div class="theme-actions">
-                <label>
+                <label lang-title="FrmSettings.Tab.Appearance._UseThemeForDarkMode">
                   <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
                   <span>
                     <span>🌙</span>
-                    <span data-lang="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
+                    <span lang-text="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
                   </span>
                 </label>
-                <label>
+                <label lang-title="FrmSettings.Tab.Appearance._UseThemeForLightMode">
                   <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
                   <span>
                     <span>☀️</span>
-                    <span data-lang="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
+                    <span lang-text="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
                   </span>
                 </label>
 
                 <button type="button" class="ms-3 px-1"
+                  lang-title="_._Delete"
                   ${_pageSettings.defaultThemeDir === th.FolderPath ? 'style="visibility: hidden !important;"' : ''}
                   data-delete-theme="${th.FolderPath}">
                   ❌

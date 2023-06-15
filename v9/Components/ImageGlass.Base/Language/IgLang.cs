@@ -129,6 +129,14 @@ public class IgLang : Dictionary<string, string>
         Add("_._Email", "Email"); //v9.0
         Add("_._Install", "Install…");
         Add("_._Refresh", "Refresh");
+        Add("_._Delete", "Delete");
+        Add("_._Add", "Add");
+        Add("_._Edit", "Edit");
+        Add("_._ID", "ID");
+        Add("_._Name", "Name");
+        Add("_._Hotkey", "Hotkey");
+        Add("_._Executable", "Executable");
+        Add("_._Arguments", "Arguments");
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -395,25 +403,13 @@ public class IgLang : Dictionary<string, string>
 
         #region Form message texts
         Add("FrmMain.PicMain._ErrorText", "Could not open this image"); // v2.0 beta, updated 4.0, 9.0
-
-        //Add("FrmMain._ImageNotExist", "The viewing image doesn't exist."); // v4.5
         Add("FrmMain.MnuMain", "Main menu"); // v3.0
 
         Add("FrmMain._OpenFileDialog", "All supported files");
         Add("FrmMain._Loading", "Loading…"); // v3.0
         Add("FrmMain._OpenWith", "Open with {0}"); //v9.0
-
-        //Add("FrmMain._SaveChanges", "Saving change…"); // v2.0 final
-
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-        //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
-        //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
-        //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
-
-        //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
-
-
         Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
 
 
@@ -602,7 +598,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Tools
         // Tools > Tools
-
+        Add("FrmSettings.Tab.Tools._Integrated", "Integrated");
         #endregion // Tab Tools
 
 
@@ -631,6 +627,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Appearance._Theme._GetMoreThemes", "Get more theme packs…");
         Add("FrmSettings.Tab.Appearance._Theme._InstallTheme", "Install theme packs");
         Add("FrmSettings.Tab.Appearance._Theme._UninstallTheme", "Uninstall a theme pack");
+
+        Add("FrmSettings.Tab.Appearance._UseThemeForDarkMode", "Use this theme for dark mode");
+        Add("FrmSettings.Tab.Appearance._UseThemeForLightMode", "Use this theme for light mode");
         #endregion // Tab Appearance
 
 

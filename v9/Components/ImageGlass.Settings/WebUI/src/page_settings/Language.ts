@@ -11,10 +11,13 @@ export default class Language {
   
       const langValue = _pageSettings.lang[langKey];
   
-      const els = queryAll(`[data-lang="${langKey}"]`);
-      for (const el of els) {
+      queryAll(`[lang-text="${langKey}"]`).forEach(el => {
         el.innerText = langValue;
-      }
+      });
+
+      queryAll(`[lang-title="${langKey}"]`).forEach(el => {
+        el.title = langValue;
+      });
     }
   }
 }

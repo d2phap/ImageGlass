@@ -72,11 +72,16 @@
 
 
     &> tbody > tr {
+      position: relative;
+
       &> td {
         border-bottom: 0.075rem solid var(--ControlBorder);
         border-right: 0.075rem solid var(--ControlBorder);
         padding: 0.34rem 0.5rem;
         background-color: rgb(var(--AppBg));
+        box-shadow: inset 0 0 0 0 transparent,
+          inset 0 0 0 0 transparent,
+          inset 0 0 0 0 transparent;
         transition: all ease 100ms;
 
         // for sticky row column
@@ -85,15 +90,11 @@
           position: sticky;
           z-index: 5;
           left: 0;
-          background-color: rgb(var(--ControlBg));
-          backdrop-filter: saturate(180%) blur(20px);
         }
         &.cell-sticky-right {
           position: sticky;
           z-index: 5;
           right: 0;
-          background-color: rgb(var(--ControlBg));
-          backdrop-filter: saturate(180%) blur(20px);
         }
 
         &:first-child {
@@ -111,13 +112,13 @@
       }
 
       &:hover > td {
-        background-color: rgb(var(--Accent) / 0.1);
         box-shadow: inset 0 0.05rem 0 0 rgb(var(--Accent) / 0.1),
-          inset 0 -0.05rem 0 0 rgb(var(--Accent) / 0.1);
+          inset 0 -0.05rem 0 0 rgb(var(--Accent) / 0.1),
+          inset 0 0 0 100vw rgb(var(--Accent) / 0.1);
+      }
 
-        &.cell-sticky-right {
-          background-color: rgb(var(--ControlBg) / 0.5);
-        }
+      .btn-table-floating {
+        margin: auto;
       }
     }
   }

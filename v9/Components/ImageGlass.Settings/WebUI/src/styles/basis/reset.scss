@@ -44,6 +44,19 @@ sub {
   font-size: 60%;
 }
 
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 85%;
+  font-family: var(--fontCode);
+  vertical-align: middle;
+  background-color: rgb(var(--ControlBg) / 1);
+  border: solid 1px rgb(var(--InvertColor) / 0.1);
+  border-bottom-color: rgb(var(--InvertColor) / 0.1);
+  border-radius: calc(var(--border-radius) * 1.5);
+  box-shadow: inset 0 -1px 0 rgb(var(--InvertColor) / 0.1);
+}
+
 b,
 strong {
   font-weight: 500;
