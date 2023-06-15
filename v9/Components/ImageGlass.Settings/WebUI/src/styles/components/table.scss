@@ -1,5 +1,16 @@
 
 .ig-table {
+  --header-border-top-color: transparent;
+  --header-border-bottom-color: var(--ControlBorder);
+  --header-border-left-color: transparent;
+  --header-border-right-color: var(--ControlBorder);
+
+  --cell-border-top-color: transparent;
+  --cell-border-bottom-color: var(--ControlBorder);
+  --cell-border-left-color: transparent;
+  --cell-border-right-color: var(--ControlBorder);
+  --cell-shadow-background: inset 0 0 0 0 transparent;
+
   overflow: auto;
   border: 0.075rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
@@ -51,8 +62,6 @@
       &> tr {
         &> th {
           font-size: 95%;
-          border-bottom: 0.075rem solid var(--ControlBorder);
-          border-right: 0.075rem solid var(--ControlBorder);
           padding: 0.372rem 0.5rem;
           white-space: nowrap;
           vertical-align: top;
@@ -62,16 +71,21 @@
   
           position: sticky;
           top: 0;
+
+          box-shadow:
+            inset 0 0.075rem 0 0 var(--header-border-top-color),
+            inset 0 -0.075rem 0 0 var(--header-border-bottom-color),
+            inset 0.075rem 0 0 0 var(--header-border-left-color),
+            inset -0.075rem 0 0 0 var(--header-border-right-color);
   
           // for sticky header column
           &.cell-sticky {
-            border-left: 0;
             z-index: 6;
             left: 0;
           }
 
           &:last-child {
-            border-right: 0;
+            --header-border-right-color: transparent;
           }
         }
       }
@@ -81,50 +95,42 @@
       position: relative;
 
       &> td {
-        border-bottom: 0.075rem solid var(--ControlBorder);
-        border-right: 0.075rem solid var(--ControlBorder);
         padding: 0.34rem 0.5rem;
         background-color: rgb(var(--AppBg));
-        box-shadow: inset 0 0 0 0 transparent,
-          inset 0 0 0 0 transparent,
-          inset 0 0 0 0 transparent;
+        box-shadow: var(--cell-shadow-background),
+          inset 0 0.075rem 0 0 var(--cell-border-top-color),
+          inset 0 -0.075rem 0 0 var(--cell-border-bottom-color),
+          inset 0.075rem 0 0 0 var(--cell-border-left-color),
+          inset -0.075rem 0 0 0 var(--cell-border-right-color);
         transition: all ease 100ms;
 
         // for sticky row column
         &.cell-sticky {
-          border-left: 0;
           position: sticky;
           z-index: 5;
           left: 0;
         }
         &.cell-sticky-right {
+          --cell-border-left-color: var(--ControlBorder);
           position: sticky;
           z-index: 5;
           right: 0;
         }
 
-        &:first-child {
-          border-bottom-color: var(--ControlBorder);
-        }
         &:last-child {
-          border-right: 0;
+          --cell-border-right-color: transparent;
         }
       }
 
       &:last-child {
         &> td {
-          border-bottom: 0;
+          --cell-border-bottom-color: rgb(var(--InvertColor) / 0.1);
         }
       }
 
       &:hover > td {
-        box-shadow: inset 0 0.05rem 0 0 rgb(var(--Accent) / 0.1),
-          inset 0 -0.05rem 0 0 rgb(var(--Accent) / 0.1),
-          inset 0 0 0 100vw rgb(var(--Accent) / 0.1);
-      }
-
-      .btn-table-floating {
-        margin: auto;
+        --cell-border-bottom-color: rgb(var(--Accent) / 0.3);
+        --cell-shadow-background: inset 0 0 0 100vw rgb(var(--Accent) / 0.1);
       }
     }
   }

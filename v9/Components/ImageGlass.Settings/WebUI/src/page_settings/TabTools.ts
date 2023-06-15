@@ -88,7 +88,7 @@ export default class TabTools {
           <td class="text-nowrap">
             <code>${escapeHtml(item.Executable)}</code>
           </td>
-          <td class="text-nowrap">${args}</td>
+          <td class="text-nowrap" style="--cell-border-right-color: transparent;">${args}</td>
           <td class="cell-sticky-right text-nowrap" width="1" style="border-left: 0;">
             <button type="button" class="px-1" lang-title="_._Edit" data-action="edit">✏️</button>
             ${item.ToolId !== 'Tool_ExifGlass' ? btnDeleteHtml : ''}
