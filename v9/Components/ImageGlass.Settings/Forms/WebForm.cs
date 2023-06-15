@@ -50,6 +50,7 @@ public partial class WebForm : ThemedForm
         WebV.NavigationCompleted += Web2_NavigationCompleted;
         WebV.WebMessageReceived += Web2_WebMessageReceived;
 
+        BackdropStyle = BackdropStyle.Mica;
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 

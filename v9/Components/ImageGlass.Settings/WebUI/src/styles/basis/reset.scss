@@ -356,6 +356,7 @@ progress {
 @mixin baseControl() {
   --focus-color: var(--Accent);
 
+  min-width: calc(var(--control-height) * 1px);
   width: calc(var(--control-width) * 1px);
   min-height: calc(var(--control-height) * 1px);
   padding: 0.325rem;

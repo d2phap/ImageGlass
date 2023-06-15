@@ -20,20 +20,17 @@
   #app>main {
     grid-area: main;
     padding: 1rem;
-    background-color: rgb(var(--AppBg) / 0.8);
+    background-color: rgb(var(--AppBg) / 0.75);
     max-height: fit-content;
     overflow-y: auto;
     overflow-x: hidden;
-
-    // background-color: aliceblue;
   }
 
   #app>footer {
     grid-area: footer;
     padding: 1rem;
     justify-content: end;
-
-    // background-color: antiquewhite;
+    background-color: rgb(var(--AppBg) / 0.4);
 
     button {
       min-width: 5rem;
