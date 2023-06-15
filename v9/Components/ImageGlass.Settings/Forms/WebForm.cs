@@ -105,6 +105,20 @@ public partial class WebForm : ThemedForm
     }
 
 
+    protected override void OnActivated(EventArgs e)
+    {
+        base.OnActivated(e);
+        _ = SetWeb2WindowFocusAsync(true);
+    }
+
+
+    protected override void OnDeactivate(EventArgs e)
+    {
+        base.OnDeactivate(e);
+        _ = SetWeb2WindowFocusAsync(false);
+    }
+
+
     #endregion // Protected / override methods
 
 
@@ -223,6 +237,19 @@ public partial class WebForm : ThemedForm
 
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="focus"></param>
+    /// <returns></returns>
+    private async Task SetWeb2WindowFocusAsync(bool focus)
+    {
+        await WebV.ExecuteScriptAsync($"""
+            document.documentElement.setAttribute('window-focus', '{focus.ToString().ToLower()}');
+            """);
+    }
+
+
+    /// <summary>
     /// Starts listening to keydown event
     /// </summary>
     /// <returns></returns>
@@ -235,6 +262,7 @@ public partial class WebForm : ThemedForm
             }
         """);
     }
+
 
     #endregion // Private methods
 
