@@ -62,6 +62,9 @@ export default class TabTools {
 
     const tbodyEl = query<HTMLTableElement>('#Table_ToolList > tbody');
     let tbodyHtml = '';
+    const btnDeleteHtml = `
+      <button type="button" class="px-1 ms-1" lang-title="_._Delete" data-action="delete">❌</button>
+    `;
 
     for (const item of toolList) {
       let args = '<i lang-text="_._Empty"></i>';
@@ -88,7 +91,7 @@ export default class TabTools {
           <td class="text-nowrap">${args}</td>
           <td class="cell-sticky-right text-nowrap" width="1" style="border-left: 0;">
             <button type="button" class="px-1" lang-title="_._Edit" data-action="edit">✏️</button>
-            <button type="button" class="px-1 ms-1" lang-title="_._Delete" data-action="delete">❌</button>
+            ${item.ToolId !== 'Tool_ExifGlass' ? btnDeleteHtml : ''}
           </td>
         </tr>
       `;
