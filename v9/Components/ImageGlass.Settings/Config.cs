@@ -990,14 +990,14 @@ public static class Config
 
 
         // Tools
-        var toolsList = items.GetSection(nameof(Tools))
+        var toolList = items.GetSection(nameof(Tools))
             .GetChildren()
             .Select(i => i.Get<IgTool>())
             .Where(i => i != null && !i.IsEmpty);
-        if (toolsList != null && toolsList.Any())
+        if (toolList != null && toolList.Any())
         {
             Tools.Clear();
-            Tools = toolsList.ToList();
+            Tools = toolList.ToList();
         }
 
         #endregion
@@ -1403,6 +1403,17 @@ public static class Config
                 }
                 Done = true;
             }
+        }
+        // Tools
+        else if (configName == nameof(Config.Tools))
+        {
+            var toolList = BHelper.ParseJson<IgTool?[]>(newValue);
+            if (toolList != null)
+            {
+                Config.Tools.Clear();
+                Config.Tools = toolList.ToList();
+            }
+            Done = true;
         }
         else
         {

@@ -1,5 +1,5 @@
 import { ITool } from '@/@types/settings_types';
-import { getChangedSettingsFromTab } from '@/helpers';
+import { escapeHtml, getChangedSettingsFromTab } from '@/helpers';
 import Language from './Language';
 
 export default class TabTools {
@@ -23,11 +23,37 @@ export default class TabTools {
    */
   static exportSettings() {
     const settings = getChangedSettingsFromTab('tools');
+    const originalToolListJson = JSON.stringify(_pageSettings.toolList || []);
+
+    const trEls = queryAll<HTMLTableRowElement>('#Table_ToolList > tbody > tr');
+    settings.Tools = trEls.map(el => {
+      const toolId = el.getAttribute('data-tool-id');
+      const toolName = el.getAttribute('data-tool-name');
+      const toolIntegrated = el.getAttribute('data-tool-integrated') === 'true';
+      const toolHotkey = el.getAttribute('data-tool-hotkey');
+      const toolExecutable = el.getAttribute('data-tool-executable');
+      const toolArguments = el.getAttribute('data-tool-arguments');
+
+      return {
+        ToolId: toolId,
+        ToolName: toolName,
+        IsIntegrated: toolIntegrated,
+        Executable: toolExecutable,
+        Arguments: toolArguments,
+      } as ITool;
+    });
+    const newToolListJson = JSON.stringify(settings.Tools);
+    if (newToolListJson === originalToolListJson) {
+      delete settings.Tools;
+    }
 
     return settings;
   }
 
 
+  /**
+   * Loads tool list.
+   */
   private static loadToolList(list?: ITool[]) {
     if (Array.isArray(list) && list.length > 0) {
       _pageSettings.toolList = list;
@@ -40,7 +66,7 @@ export default class TabTools {
     for (const item of toolList) {
       let args = '<i lang-text="_._Empty"></i>';
       if (item.Arguments) {
-        args = `<code>${item.Arguments}</code>`;
+        args = `<code>${escapeHtml(item.Arguments)}</code>`;
       }
 
       const trHtml = `
@@ -57,7 +83,7 @@ export default class TabTools {
             <kbd>Ctrl+S</kbd>
           </td>
           <td class="text-nowrap">
-            <code>${item.Executable}</code>
+            <code>${escapeHtml(item.Executable)}</code>
           </td>
           <td class="text-nowrap">${args}</td>
           <td class="cell-sticky-right text-nowrap" width="1" style="border-left: 0;">

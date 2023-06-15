@@ -954,19 +954,29 @@ public partial class FrmMain
     /// <summary>
     /// Load external tools to MnuTools.
     /// </summary>
-    private void LoadExternalTools()
+    public void LoadExternalTools()
     {
-        // clear external tools
+        var builtinToolMenuNames = new List<string>()
+        {
+            nameof(MnuColorPicker),
+            nameof(MnuCropTool),
+            nameof(MnuPageNav),
+            nameof(MnuExternalToolsSeparator),
+            nameof(MnuGetMoreTools),
+        };
+        var allToolMenuNames = new List<string>(MnuTools.DropDownItems.Count);
         foreach (ToolStripItem item in MnuTools.DropDownItems)
         {
-            if (item.Name.Equals(nameof(MnuColorPicker))
-                || item.Name.Equals(nameof(MnuCropTool))
-                || item.Name.Equals(nameof(MnuPageNav))
-                || item.Name.Equals(nameof(MnuExternalToolsSeparator))
-                || item.Name.Equals(nameof(MnuGetMoreTools))) continue;
+            allToolMenuNames.Add(item.Name);
+        }
 
-            item.Click -= MnuExternalTool_Click;
-            MnuTools.DropDownItems.Remove(item);
+        // clear external tools
+        foreach (var menuName in allToolMenuNames)
+        {
+            if (builtinToolMenuNames.Contains(menuName)) continue;
+
+            MnuTools.DropDownItems[menuName].Click -= MnuExternalTool_Click;
+            MnuTools.DropDownItems.RemoveByKey(menuName);
         }
 
         var mnuGetMoreToolsIndex = MnuTools.DropDownItems.IndexOf(MnuGetMoreTools);
@@ -974,7 +984,10 @@ public partial class FrmMain
         // add separator to separate built-in and external tools
         if (Config.Tools.Count > 0)
         {
-            MnuTools.DropDownItems.Insert(mnuGetMoreToolsIndex, new ToolStripSeparator());
+            MnuTools.DropDownItems.Insert(mnuGetMoreToolsIndex, new ToolStripSeparator()
+            {
+                Name = "MnuExternalToolsSeparator_End",
+            });
         }
 
         var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);

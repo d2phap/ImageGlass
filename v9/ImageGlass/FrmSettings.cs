@@ -477,6 +477,11 @@ public partial class FrmSettings : WebForm
         // Tab Tools
         #region Tab Tools
 
+        if (Config.SetFromJson(dict, nameof(Config.Tools)).Done)
+        {
+            Local.FrmMain.LoadExternalTools();
+        }
+
         #endregion // Tab Tools
 
 
