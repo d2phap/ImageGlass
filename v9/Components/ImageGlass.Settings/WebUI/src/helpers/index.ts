@@ -1,5 +1,15 @@
 
 /**
+ * Pauses the thread for a period
+ * @param time Duration to pause in millisecond
+ * @param data Data to return after resuming
+ * @returns a promise
+ */
+export const pause = <T>(time: number, data?: T): Promise<T> => new Promise((resolve) => {
+  setTimeout(() => resolve(data as T), time);
+});
+
+/**
  * Gets the settings that are changed by user (`_pageSettings.config`) from the input tab.
  */
 export const getChangedSettingsFromTab = (tab: string) => {
@@ -46,4 +56,41 @@ export const escapeHtml = (html: string) => {
     .replace(/</g, '&lt;')  // <
     .replace(/>/g, '&gt;') // >
     .replace(/"/g, '&quot;'); // "
+};
+
+
+/**
+ * Opens modal dialog and return value.
+ * @param selector Dialog selector.
+ * @param data The data to pass to the dialog.
+ */
+export const openModalDialog = async (selector: string, data: Record<string, any> = {}) => {
+  const dialogEl = query<HTMLDialogElement>(selector);
+
+  // add shaking effect when clicking outside of dialog
+  dialogEl.addEventListener('click', async (e) => {
+    const el = e.target as HTMLDialogElement;
+    const rect = el.getBoundingClientRect();
+
+    // click on backdrop
+    if (rect.left > e.clientX
+      || rect.right < e.clientX
+      || rect.top > e.clientY
+      || rect.bottom < e.clientY) {
+      // shake the modal for 500ms
+      el.classList.add('ani-shaking');
+      await pause(500);
+      el.classList.remove('ani-shaking');
+    }
+  }, false);
+
+
+  Object.keys(data).forEach(key => {
+    query<HTMLInputElement>(`[name="_${key}"]`).value = data[key];
+  });
+
+  // open modal dialog
+  dialogEl.showModal();
+
+  return dialogEl;
 };

@@ -1,5 +1,5 @@
 import { ITool } from '@/@types/settings_types';
-import { escapeHtml, getChangedSettingsFromTab } from '@/helpers';
+import { escapeHtml, getChangedSettingsFromTab, openModalDialog } from '@/helpers';
 import Language from './Language';
 
 export default class TabTools {
@@ -15,6 +15,10 @@ export default class TabTools {
    * Adds events for tab Tools.
    */
   static addEvents() {
+    query('#Btn_AddTool').addEventListener('click', async () => {
+      const dialog = await openModalDialog('#Dialog_AddOrEditTool');
+      console.log(dialog);
+    }, false);
   }
 
 
@@ -118,4 +122,5 @@ export default class TabTools {
       }, false);
     });
   }
+
 }
