@@ -473,7 +473,7 @@ internal class Local
         try
         {
             var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+            var args = tool.Arguments?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
             var pipeCodeCmd = $"{ImageGlassTool.PIPE_CODE_CMD_LINE}{pipeCode}";
 
             toolProc = ImageGlassTool.LaunchTool(tool.Executable,

@@ -527,7 +527,7 @@ public partial class FrmMain
                 // Example: OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString())
                 else if (configProp.PropertyType.IsEnum)
                 {
-                    tItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
+                    tItem.Checked = tagModel.OnClick.Arguments.Equals(propValue.ToString());
                 }
                 // Executable is IGMethod
                 // Example: OnClick = new("IG_ToggleToolbar", false)

@@ -1585,7 +1585,7 @@ public partial class FrmMain : ThemedForm
 
                     if (type.IsPrimitive || type.Equals(typeof(string)))
                     {
-                        if (string.IsNullOrEmpty(ac.Argument.ToString()))
+                        if (string.IsNullOrEmpty(ac.Arguments.ToString()))
                         {
                             methodArg = null;
                         }
@@ -1593,7 +1593,7 @@ public partial class FrmMain : ThemedForm
                         {
                             try
                             {
-                                methodArg = Convert.ChangeType(ac.Argument, type);
+                                methodArg = Convert.ChangeType(ac.Arguments, type);
                             }
                             catch (Exception ex) { error = ex; }
                         }
@@ -1602,7 +1602,7 @@ public partial class FrmMain : ThemedForm
                     {
                         error = new ArgumentException(
                             string.Format(Config.Language[$"{langPath}._MethodArgumentNotSupported"], ac.Executable),
-                            nameof(ac.Argument));
+                            nameof(ac.Arguments));
                     }
 
 
@@ -1639,7 +1639,7 @@ public partial class FrmMain : ThemedForm
         else
         {
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
+            var procArgs = $"{ac.Arguments}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
 
             // run external command line
             using var proc = new Process

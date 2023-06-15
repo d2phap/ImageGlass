@@ -14,6 +14,14 @@ export type ILanguage = {
   },
 };
 
+export type ITool = {
+  ToolId: string;
+  ToolName: string;
+  Executable: string;
+  Argument: string;
+  IsIntegrated?: boolean;
+};
+
 export type ITheme = {
   ConfigFilePath: string,
   FolderName: string,
@@ -36,6 +44,7 @@ export type IPageSettings = Record<string, any> & {
   config: Record<string, any>,
   lang: Record<string, string>,
   langList: ILanguage[],
+  toolList: ITool[],
   themeList: ITheme[],
   startUpDir: string,
   configDir: string,

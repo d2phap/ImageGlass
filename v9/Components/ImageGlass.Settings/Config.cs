@@ -663,7 +663,7 @@ public static class Config
             ToolId = Constants.IGTOOL_EXIFTOOL,
             ToolName = "ExifGlass - EXIF metadata viewer",
             Executable = "exifglass",
-            Argument = Constants.FILE_MACRO,
+            Arguments = Constants.FILE_MACRO,
             IsIntegrated = true,
         },
     };
