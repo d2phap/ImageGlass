@@ -33,10 +33,11 @@ window.postAsync = postAsync;
 
 if (!window._pageSettings) {
   window._pageSettings = {
-    initTab: '',
+    initTab: 'tools',
     config: {},
     lang: {},
     langList: [],
+    toolList: [],
     themeList: [],
     enums: {
       ImageOrderBy: [],

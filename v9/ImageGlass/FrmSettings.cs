@@ -211,6 +211,14 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Image
 
 
+        // Tab Tools
+        #region Tab Tools
+        else if (name.Equals("Tool_Edit"))
+        {
+            
+        }
+        #endregion // Tab Tools
+
         // Tab Language
         #region Tab Language
         else if (name.Equals("Btn_RefreshLanguageList"))

@@ -3,9 +3,16 @@
   overflow: auto;
   border: 0.075rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
+  min-height: 4rem;
   max-height: 200px;
   max-width: 100%;
   display: inline-block;
+  counter-reset: row-counter;
+
+  .cell-counter::before {
+    counter-increment: row-counter;
+    content: counter(row-counter);
+  }
 
   &> table {
     border: 0;
@@ -69,7 +76,6 @@
         }
       }
     }
-
 
     &> tbody > tr {
       position: relative;

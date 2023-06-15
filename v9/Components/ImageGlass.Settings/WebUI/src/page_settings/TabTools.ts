@@ -22,7 +22,9 @@ export default class TabTools {
    * Save settings as JSON object.
    */
   static exportSettings() {
-    return getChangedSettingsFromTab('tools');
+    const settings = getChangedSettingsFromTab('tools');
+
+    return settings;
   }
 
 
@@ -33,7 +35,6 @@ export default class TabTools {
     const toolList = _pageSettings.toolList || [];
 
     const tbodyEl = query<HTMLTableElement>('#Table_ToolList > tbody');
-    let i = 0;
     let tbodyHtml = '';
 
     for (const item of toolList) {
@@ -43,8 +44,12 @@ export default class TabTools {
       }
 
       const trHtml = `
-        <tr>
-          <td>${i + 1}</td>
+        <tr data-tool-id="${item.ToolId}"
+          data-tool-name="${item.ToolName}"
+          data-tool-integrated="${item.IsIntegrated}"
+          data-tool-executable="${item.Executable}"
+          data-tool-arguments="${item.Arguments}">
+          <td class="cell-counter"></td>
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
           <td class="text-nowrap">${item.ToolName}</td>
           <td lang-text="_.${item.IsIntegrated ? '_Yes' : '_No'}"></td>
@@ -56,19 +61,32 @@ export default class TabTools {
           </td>
           <td class="text-nowrap">${args}</td>
           <td class="cell-sticky-right text-nowrap" width="1" style="border-left: 0;">
-            <button type="button" class="px-1" lang-title="_._Edit"
-              data-tool-id="${item.ToolId}" data-action="edit">✏️</button>
-            <button type="button" class="px-1 ms-1" lang-title="_._Delete"
-              data-tool-id="${item.ToolId}" data-action="delete">❌</button>
+            <button type="button" class="px-1" lang-title="_._Edit" data-action="edit">✏️</button>
+            <button type="button" class="px-1 ms-1" lang-title="_._Delete" data-action="delete">❌</button>
           </td>
         </tr>
       `;
 
       tbodyHtml += trHtml;
-      i++;
     }
 
     tbodyEl.innerHTML = tbodyHtml;
     Language.load();
+
+    queryAll<HTMLButtonElement>('#Table_ToolList button[data-action]').forEach(el => {
+      el.addEventListener('click', async (e) => {
+        const action = (e.target as HTMLInputElement).getAttribute('data-action');
+        const trEl = (e.target as HTMLInputElement).closest('tr');
+        const toolId = trEl.getAttribute('data-tool-id');
+
+        if (action === 'delete') {
+          trEl.remove();
+        }
+        else if (action === 'edit') {
+          const newToolList = await postAsync<ITool[]>('Tool_Edit', toolId);
+          TabTools.loadToolList(newToolList);
+        }
+      }, false);
+    });
   }
 }
