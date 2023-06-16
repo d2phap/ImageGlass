@@ -64,7 +64,13 @@ export const escapeHtml = (html: string) => {
  * @param selector Dialog selector.
  * @param data The data to pass to the dialog.
  */
-export const openModalDialog = async (selector: string, purpose: 'create' | 'edit', data: Record<string, any> = {}) => {
+export const openModalDialog = async (
+  selector: string,
+  purpose: 'create' | 'edit',
+  data: Record<string, any> = {},
+  onOpen?: (el: HTMLDialogElement) => any,
+  onSubmit?: (e: SubmitEvent) => any) => {
+  let isClosed = false;
   const dialogEl = query<HTMLDialogElement>(selector);
   dialogEl.classList.remove('dialog--create', 'dialog--edit');
   dialogEl.classList.add(`dialog--${purpose}`);
@@ -86,13 +92,28 @@ export const openModalDialog = async (selector: string, purpose: 'create' | 'edi
     }
   }, false);
 
+  // on close
+  dialogEl.addEventListener('close', () => isClosed = true, false);
 
-  Object.keys(data).forEach(key => {
-    query<HTMLInputElement>(`[name="_${key}"]`).value = data[key];
+  // on submit
+  query<HTMLFormElement>(`${selector} > form`).addEventListener('submit', async (e) => {
+    if (onSubmit) await Promise.resolve(onSubmit(e));
   });
+
+  console.log(data);
+  Object.keys(data).forEach(key => {
+    query<HTMLInputElement>(`${selector} [name="_${key}"]`).value = data[key];
+  });
+
+  // on open
+  if (onOpen) await Promise.resolve(onOpen(dialogEl));
 
   // open modal dialog
   dialogEl.showModal();
+
+  while (!isClosed) {
+    await pause(100);
+  }
 
   return dialogEl;
 };
