@@ -18,6 +18,16 @@ export default class Language {
       queryAll(`[lang-title="${langKey}"]`).forEach(el => {
         el.title = langValue;
       });
+
+      queryAll(`[lang-html="${langKey}"]`).forEach(el => {
+        let html = langValue;
+
+        for (let i = 0; i < el.childElementCount; i++) {
+          html = html.replaceAll(`{${i}}`, el.children.item(i).outerHTML);
+        }
+
+        el.innerHTML = html;
+      });
     }
   }
 }
