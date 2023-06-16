@@ -16,7 +16,7 @@ export default class TabTools {
    */
   static addEvents() {
     query('#Btn_AddTool').addEventListener('click', async () => {
-      const dialog = await openModalDialog('#Dialog_AddOrEditTool');
+      const dialog = await openModalDialog('#Dialog_AddOrEditTool', 'create');
       console.log(dialog);
     }, false);
   }

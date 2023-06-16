@@ -56,6 +56,17 @@ dialog {
     display: flex;
   }
 
+  .create-only,
+  .edit-only {
+    display: none;
+  }
+  &.dialog--create {
+    .create-only { display: initial; }
+  }
+  &.dialog--edit {
+    .edit-only { display: initial; }
+  }
+
   &:focus-visible {
     outline: none;
   }

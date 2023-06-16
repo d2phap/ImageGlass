@@ -64,8 +64,10 @@ export const escapeHtml = (html: string) => {
  * @param selector Dialog selector.
  * @param data The data to pass to the dialog.
  */
-export const openModalDialog = async (selector: string, data: Record<string, any> = {}) => {
+export const openModalDialog = async (selector: string, purpose: 'create' | 'edit', data: Record<string, any> = {}) => {
   const dialogEl = query<HTMLDialogElement>(selector);
+  dialogEl.classList.remove('dialog--create', 'dialog--edit');
+  dialogEl.classList.add(`dialog--${purpose}`);
 
   // add shaking effect when clicking outside of dialog
   dialogEl.addEventListener('click', async (e) => {
