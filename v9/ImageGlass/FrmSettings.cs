@@ -134,6 +134,7 @@ public partial class FrmSettings : WebForm
                     toolList: {toolListJson},
                     themeList: {themeListJson},
                     defaultThemeDir: '{defaultThemeDir}',
+                    FILE_MACRO: '{Constants.FILE_MACRO}',
                 }};
 
                 {Settings.Properties.Resources.Script_Settings}
@@ -213,7 +214,7 @@ public partial class FrmSettings : WebForm
 
         // Tab Tools
         #region Tab Tools
-        else if (name.Equals("Tool_Edit"))
+        else if (name.Equals("Tool_Create"))
         {
             
         }

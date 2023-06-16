@@ -20,6 +20,7 @@ export type ITool = {
   Executable: string;
   Arguments: string;
   IsIntegrated?: boolean;
+  Hotkeys?: string;
 };
 
 export type ITheme = {
@@ -62,6 +63,7 @@ export type IPageSettings = Record<string, any> & {
     BackdropStyle: string[],
     ToolbarItemModelType: string[],
   },
+  FILE_MACRO: string;
 
   // global functions
   setSidebarActiveMenu?: typeof Sidebar.setActiveMenu,

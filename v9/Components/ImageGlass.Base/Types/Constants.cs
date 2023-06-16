@@ -32,7 +32,6 @@ public static class Constants
     public const float VIEWER_GRID_SIZE = 9f;
     public const int TOOLBAR_ICON_HEIGHT = 24;
     public const int THUMBNAIL_HEIGHT = 70;
-    public const string FILE_MACRO = "<file>";
     public const string CONFIG_CMD_PREFIX = "/";
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public const string DATE_FORMAT = "yyyy/MM/dd";
@@ -40,6 +39,12 @@ public static class Constants
     public const string APP_CODE = "moon";
     public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
     public const int MAX_IMAGE_DIMENSION = 16_384;
+
+    /// <summary>
+    /// A file macro to replace with the current viewing image file path in double quotes.
+    /// Example: <c>"C:\my\photo.jpg"</c>
+    /// </summary>
+    public const string FILE_MACRO = "<file>";
 
     public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";
     public const string THEME_SYSTEM_ACCENT_COLOR = "accent";

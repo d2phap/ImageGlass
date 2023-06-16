@@ -10,6 +10,7 @@
 
   // normal style
   &+ * {
+    min-height: var(--box-size);
     padding-left: calc(var(--box-size) + 0.5em);
 
     &::before,
@@ -103,7 +104,7 @@
         border-color: var(--ControlBorderDisabled);
       }
       &::after {
-        opacity: 0.4;
+        opacity: 0.6;
       }
     }
   }
