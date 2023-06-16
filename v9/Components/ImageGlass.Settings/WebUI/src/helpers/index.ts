@@ -53,7 +53,7 @@ export const getChangedSettingsFromTab = (tab: string) => {
 export const escapeHtml = (html: string) => {
   return html
     .replace(/&/g, '&amp;') // &
-    .replace(/</g, '&lt;')  // <
+    .replace(/</g, '&lt;') // <
     .replace(/>/g, '&gt;') // >
     .replace(/"/g, '&quot;'); // "
 };

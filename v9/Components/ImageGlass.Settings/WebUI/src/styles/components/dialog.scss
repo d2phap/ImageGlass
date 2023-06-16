@@ -1,13 +1,13 @@
 dialog {
   padding: 0;
   overflow: hidden;
-  border-color: var(--ControlBorder);
+  border-color: rgb(var(--InvertColor) / 0.275);
   border-radius: calc(var(--border-radius) * 2);
 
   color: rgb(var(--AppText) / 1);
   background-color: rgb(var(--AppBg) / 1);
-  box-shadow: 0 1rem 3rem -1rem rgb(0 0 0 /0.4);
-  transition: all ease 150ms;
+  box-shadow: 0 1rem 3rem -0.5rem rgba(0, 0, 0, 0.4);
+  transition: all ease 80ms;
 
   &::backdrop {
     position: fixed;
@@ -63,8 +63,7 @@ dialog {
 
 
 [window-focus="false"] dialog {
-  border-color: rgb(var(--InvertColor) / 0.12);
-  box-shadow: 0 0 0 0 transparent;
+  box-shadow: 0 1rem 3rem -1rem rgba(0, 0, 0, 0.35);
 
   .dialog-header {
     background-color: rgb(var(--InvertColor) / 0.01);
