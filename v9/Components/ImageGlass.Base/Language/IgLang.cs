@@ -137,6 +137,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Hotkey", "Hotkey");
         Add("_._Executable", "Executable");
         Add("_._Arguments", "Arguments");
+        Add("_._CommandPreview", "Command preview");
         Add("_._Empty", "(empty)");
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
@@ -599,7 +600,9 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Tools
         // Tools > Tools
-        Add("FrmSettings.Tab.Tools._Integrated", "Integrated");
+        Add("FrmSettings.Tab.Tools._AddNewTool", "Add a new external tool");
+        Add("FrmSettings.Tab.Tools._EditTool", "Edit external tool");
+        Add("FrmSettings.Tab.Tools._Integrated", "Integrated with {0}");
         #endregion // Tab Tools
 
 

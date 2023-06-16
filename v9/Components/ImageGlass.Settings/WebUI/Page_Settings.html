@@ -837,45 +837,46 @@
 
 
     <dialog id="Dialog_AddOrEditTool">
-      <form method="dialog" style="--control-width: 300;">
-        <header class="dialog-header">[Edit XXX]</header>
-        <section class="dialog-body">
+      <form method="dialog">
+        <header class="dialog-header">[Add a new external tool]</header>
+        <div class="dialog-body" style="width: 400px;">
           <div class="mb-2">
-            <div class="mb-1">[Tool ID]</div>
-            <input type="text" name="_ToolId" />
+            <div class="mb-1" lang-text="_._ID">[ID]</div>
+            <input type="text" name="_ToolId" class="w-100" />
           </div>
           <div class="mb-2">
-            <div class="mb-1">[Tool name]</div>
-            <input type="text" name="_ToolName" />
+            <div class="mb-1" lang-text="_._Name">[Name]</div>
+            <input type="text" name="_ToolName" class="w-100" />
           </div>
           <div class="mb-2">
-            <div class="mb-1">[Executable]</div>
+            <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
-              <input type="text" name="_Executable" class="me-2"
-                style="width: calc(calc(calc(var(--control-width) - var(--control-height)) * 1px) - 0.5rem);" />
+              <input type="text" name="_Executable" class="me-2 w-100"
+                style="width: calc(100vw - calc(var(--control-height) * 1px) - 0.5rem);" />
               <button type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
           </div>
           <div class="mb-2">
-            <div class="mb-1">[Arguments]</div>
-            <input type="text" name="_Arguments" value="<file>" />
+            <div class="mb-1" lang-text="_._Arguments">[Arguments]</div>
+            <input type="text" name="_Arguments" class="w-100" value="<file>" />
           </div>
           <div class="mb-2">
-            <div class="mb-1">[Hotkey]</div>
-            <input type="text" name="_Hotkey" />
+            <div class="mb-1" lang-text="_._Hotkey">[Hotkey]</div>
+            <input type="text" name="_Hotkey" class="w-100" />
           </div>
           <div class="mb-2">
             <label class="ig-checkbox">
               <input type="checkbox" name="_IsIntegrated" />
-              <div>[Integrated]</div>
+              <div lang-html="FrmSettings.Tab.Tools._Integrated">
+                [Integrated <a href="https://github.com/ImageGlass/ImageGlass.Tools" target="_blank">ImageGlass.Tools</a>]
+              </div>
             </label>
           </div>
-          <div class="mb-2 mt-4">
-            <div class="mb-1">[Preview]</div>
-            <pre class="text-code px-2 my-0" style="max-height: 4rem; width: calc(var(--control-width) * 1px);"><code>C:\app.exe "file:///d%3A/_GITHUB/%40d2phap/ImageGlass/v9/Components/ImageGlass.Settings/WebUI/Page_Settings.html"</code></pre>
+          <div class="mt-4">
+            <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>
+            <pre class="text-code px-2 py-1 my-0" style="max-height: 4rem;"><code>C:\app.exe "file:///d%3A/_GITHUB/%40d2phap/ImageGlass/v9/Components/ImageGlass.Settings/WebUI/Page_Settings.html"</code></pre>
           </div>
-          
-        </section>
+        </div>
         <footer class="dialog-footer">
           <button type="submit" lang-text="_._OK">[OK]</button>
           <button type="button" lang-text="_._Cancel" onclick="Dialog_AddOrEditTool.close();">[Cancel]</button>
