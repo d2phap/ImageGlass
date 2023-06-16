@@ -845,16 +845,16 @@
         <div class="dialog-body" style="width: 400px;">
           <div class="mb-2">
             <div class="mb-1" lang-text="_._ID">[ID]</div>
-            <input type="text" name="_ToolId" class="w-100" />
+            <input type="text" name="_ToolId" class="w-100" required />
           </div>
           <div class="mb-2">
             <div class="mb-1" lang-text="_._Name">[Name]</div>
-            <input type="text" name="_ToolName" class="w-100" />
+            <input type="text" name="_ToolName" class="w-100" required />
           </div>
           <div class="mb-2">
             <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
-              <input type="text" name="_Executable" class="me-2 w-100"
+              <input type="text" name="_Executable" class="me-2 w-100" required
                 style="width: calc(100vw - calc(var(--control-height) * 1px) - 0.5rem);" />
               <button type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
@@ -864,8 +864,8 @@
             <input type="text" name="_Arguments" class="w-100" value="<file>" />
           </div>
           <div class="mb-2">
-            <div class="mb-1" lang-text="_._Hotkey">[Hotkey]</div>
-            <input type="text" name="_Hotkey" class="w-100" />
+            <div class="mb-1" lang-text="_._Hotkey">[Hotkeys]</div>
+            <input type="text" name="_Hotkeys" class="w-100" />
           </div>
           <div class="mb-2">
             <label class="ig-checkbox">
@@ -877,7 +877,8 @@
           </div>
           <div class="mt-4">
             <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>
-            <pre class="text-code px-2 py-1 my-0" style="max-height: 4rem;"><code>C:\app.exe "file:///d%3A/_GITHUB/%40d2phap/ImageGlass/v9/Components/ImageGlass.Settings/WebUI/Page_Settings.html"</code></pre>
+            <pre class="text-code px-2 py-1 my-0"
+              style="min-height: 3rem; max-height: 4rem;"><code id="Tool_CommandPreview"></code></pre>
           </div>
         </div>
         <footer class="dialog-footer">

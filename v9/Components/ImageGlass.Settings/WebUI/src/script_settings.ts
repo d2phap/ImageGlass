@@ -55,6 +55,7 @@ if (!window._pageSettings) {
     configDir: '',
     userConfigFilePath: '',
     defaultThemeDir: '',
+    FILE_MACRO: '',
   };
 }
 _pageSettings.setSidebarActiveMenu = Sidebar.setActiveMenu;
