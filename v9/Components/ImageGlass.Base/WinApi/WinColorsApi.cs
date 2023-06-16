@@ -30,7 +30,7 @@ public class WinColorsApi
     public static Color GetAccentColor(bool includeAlpha)
     {
         var ui = new UISettings();
-        var accent = ui.GetColorValue(UIColorType.AccentDark1);
+        var accent = ui.GetColorValue(UIColorType.Accent);
 
         var alpha = includeAlpha ? accent.A : (byte)255;
         var color = Color.FromArgb(alpha, accent.R, accent.G, accent.B);

@@ -105,6 +105,7 @@
       }
       &::after {
         opacity: 0.6;
+        border-color: rgb(var(--InvertColor) / 1);
       }
     }
   }
