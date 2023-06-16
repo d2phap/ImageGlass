@@ -252,12 +252,18 @@ public partial class WebForm : ThemedForm
     /// <summary>
     /// Starts listening to keydown event
     /// </summary>
-    /// <returns></returns>
     private async Task StartListeningToKeyDownEventAsync()
     {
         await WebV.ExecuteScriptAsync("""
             window.onkeydown = (e) => {
                 console.log("ListentoKeyDownEvents", e);
+
+                const dialog = document.querySelector('dialog[open]');
+                if (dialog) {
+                    const closeDialogKeyPressed = e.key === 'Escape' && !e.ctrlKey && !e.altKey && !e.shiftKey;
+                    if (closeDialogKeyPressed) return;
+                }
+
                 window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
             }
         """);
