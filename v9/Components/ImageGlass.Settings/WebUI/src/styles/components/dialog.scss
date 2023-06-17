@@ -23,13 +23,13 @@ dialog {
 
   .dialog-header {
     padding: 0.5rem 1rem;
-    background-color: rgb(var(--InvertColor) / 0.03);
+    background-color: rgb(var(--Accent) / 0.075);
     transition: all ease 150ms;
   }
 
   .dialog-footer {
     padding: 1rem;
-    background-color: rgb(var(--InvertColor) / 0.05);
+    background-color: rgb(var(--Accent) / 0.075);
     display: flex;
     align-items: center;
     justify-content: end;
