@@ -34,9 +34,10 @@ public partial class FrmMain
     {
         SuspendLayout();
         style ??= Config.WindowBackdrop;
+        var hasTransparency = EnableTransparent && style.Value != BackdropStyle.None;
 
 
-        if (EnableTransparent)
+        if (hasTransparency)
         {
             BackdropMargin = new Padding(-1);
             PicMain.BackColor = Config.BackgroundColor;
@@ -57,13 +58,13 @@ public partial class FrmMain
            MnuSubMenu.Theme = Config.Theme;
 
         // toolbar
-        Toolbar.EnableTransparent = EnableTransparent;
+        Toolbar.EnableTransparent = hasTransparency;
         Toolbar.Theme = Config.Theme;
         Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
 
 
         // toolbar context
-        ToolbarContext.EnableTransparent = EnableTransparent;
+        ToolbarContext.EnableTransparent = hasTransparency;
         ToolbarContext.Theme = Config.Theme;
         ToolbarContext.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
 
@@ -74,7 +75,7 @@ public partial class FrmMain
 
 
         // Thumbnail bar
-        Gallery.EnableTransparent = EnableTransparent;
+        Gallery.EnableTransparent = hasTransparency;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Gallery.BackColor = Config.Theme.Colors.GalleryBgColor;
 

@@ -22,13 +22,13 @@
     "BgColor": "#ffffff00",
     "TextColor": "#000",
 
-    "ToolbarBgColor": "#F5F6F733",
+    "ToolbarBgColor": "#F5F6F700",
     "ToolbarTextColor": "#000",
     "ToolbarItemHoverColor": "accent:70",
     "ToolbarItemActiveColor": "accent:120",
     "ToolbarItemSelectedColor": "accent:100",
 
-    "GalleryBgColor": "#F5F6F733",
+    "GalleryBgColor": "#F5F6F700",
     "GalleryTextColor": "#000",
     "GalleryItemHoverColor": "accent:70",
     "GalleryItemActiveColor": "accent:120",
