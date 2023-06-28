@@ -71,9 +71,9 @@ public partial class FrmSettings : WebForm
     }
 
 
-    protected override void OnWeb2Ready()
+    protected override async Task OnWeb2ReadyAsync()
     {
-        base.OnWeb2Ready();
+        await base.OnWeb2ReadyAsync();
 
         // get all settings as json string
         var configJsonObj = Config.PrepareJsonSettingsObject();
@@ -216,7 +216,7 @@ public partial class FrmSettings : WebForm
         #region Tab Tools
         else if (name.Equals("Tool_Create"))
         {
-            
+
         }
         #endregion // Tab Tools
 

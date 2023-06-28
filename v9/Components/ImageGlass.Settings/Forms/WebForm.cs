@@ -128,9 +128,9 @@ public partial class WebForm : ThemedForm
     /// <summary>
     /// Occurs when Web2 is ready.
     /// </summary>
-    protected virtual void OnWeb2Ready()
+    protected virtual async Task OnWeb2ReadyAsync()
     {
-
+        await Task.CompletedTask;
     }
 
 
@@ -299,7 +299,7 @@ public partial class WebForm : ThemedForm
 
         WebV.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
 
-        OnWeb2Ready();
+        OnWeb2ReadyAsync();
     }
 
 

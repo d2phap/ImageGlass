@@ -54,10 +54,9 @@ public partial class FrmUpdate : WebForm
     }
 
 
-    protected override void OnWeb2Ready()
+    protected override async Task OnWeb2ReadyAsync()
     {
-        base.OnWeb2Ready();
-
+        await base.OnWeb2ReadyAsync();
         _ = CheckForUpdateAsync();
     }
 

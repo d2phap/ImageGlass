@@ -44,9 +44,9 @@ public partial class FrmAbout : WebForm
     }
 
 
-    protected override void OnWeb2Ready()
+    protected override async Task OnWeb2ReadyAsync()
     {
-        base.OnWeb2Ready();
+        await base.OnWeb2ReadyAsync();
 
         _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_About);
     }
