@@ -33,6 +33,15 @@ public class IconFile
         var name = Enum.GetName(typeof(IconName), svgIcon);
         return App.ConfigDir(PathType.File, Dir.Icons, $"{name}.svg");
     }
+
+
+    /// <summary>
+    /// Reads svg file and returns the content.
+    /// </summary>
+    public static async Task<string> ReadIconTextAsync(IconName svgIcon)
+    {
+        return await File.ReadAllTextAsync(GetFullPath(svgIcon));
+    }
 }
 
 
@@ -53,4 +62,9 @@ public enum IconName
     ResetSelection,
     Selection,
     Setting,
+
+    Delete,
+    Edit,
+    Moon,
+    Sun,
 }
