@@ -119,7 +119,22 @@ public partial class FrmSettings : WebForm
         var enumsJson = BHelper.ToJson(enumObj);
 
 
-        _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
+        // get svg icons
+        var iconNames = new Dictionary<IconName, string>(4)
+        {
+            { IconName.Edit, string.Empty },
+            { IconName.Delete, string.Empty },
+            { IconName.Sun, string.Empty },
+            { IconName.Moon, string.Empty },
+        };
+        await Parallel.ForEachAsync(iconNames,
+            new ParallelOptions { MaxDegreeOfParallelism = 3 },
+            async (item, _) => iconNames[item.Key] = await IconFile.ReadIconTextAsync(item.Key));
+        var iconsJson = BHelper.ToJson(iconNames);
+
+
+        // load html content
+        await LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
              <script>
                 window._pageSettings = {{
@@ -128,6 +143,7 @@ public partial class FrmSettings : WebForm
                     configDir: '{configDir}',
                     userConfigFilePath: '{userConfigFilePath}',
                     enums: {enumsJson},
+                    icons: {iconsJson},
                     config: {configJson},
                     lang: {configLangJson},
                     langList: {langListJson},
