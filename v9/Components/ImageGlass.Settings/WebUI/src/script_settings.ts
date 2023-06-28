@@ -51,6 +51,12 @@ if (!window._pageSettings) {
       BackdropStyle: [],
       ToolbarItemModelType: [],
     },
+    icons: {
+      Delete: '',
+      Edit: '',
+      Moon: '',
+      Sun: '',
+    },
     startUpDir: '',
     configDir: '',
     userConfigFilePath: '',

@@ -102,4 +102,18 @@ button {
       z-index: 0;
     }
   }
+
+  &.btn--icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+
+    svg {
+      width: 1em;
+      height: 1em;
+      stroke: rgb(var(--AppText));
+      fill: rgb(var(--AppText));
+    }
+  }
 }

@@ -154,15 +154,31 @@
 
           &+ * {
             @include baseControl();
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding-right: 0.5rem;
-            display: inline-block;
             width: auto;
             white-space: nowrap;
+
+            svg {
+              width: 1.15em;
+              height: 1.15em;
+              margin-right: 0.35em;
+              stroke: rgb(var(--AppText));
+              fill: rgb(var(--AppText));
+            }
           }
 
           &:checked + * {
             color: white;
             background-color: rgb(var(--Accent) / 1);
+
+            svg {
+              stroke: white;
+              fill: white;
+            }
           }
 
           &:focus-visible + * {

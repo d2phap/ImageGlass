@@ -139,23 +139,23 @@ export default class TabAppearance {
                 <label lang-title="FrmSettings.Tab.Appearance._UseThemeForDarkMode">
                   <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
                   <span>
-                    <span>🌙</span>
+                    ${_pageSettings.icons.Moon}
                     <span lang-text="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
                   </span>
                 </label>
                 <label lang-title="FrmSettings.Tab.Appearance._UseThemeForLightMode">
                   <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
                   <span>
-                    <span>☀️</span>
+                    ${_pageSettings.icons.Sun}
                     <span lang-text="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
                   </span>
                 </label>
 
-                <button type="button" class="ms-3 px-1"
+                <button type="button" class="btn--icon ms-3 px-1"
                   lang-title="_._Delete"
                   ${_pageSettings.defaultThemeDir === th.FolderPath ? 'style="visibility: hidden !important;"' : ''}
                   data-delete-theme="${th.FolderPath}">
-                  ❌
+                  ${_pageSettings.icons.Delete}
                 </button>
               </div>
             </div>

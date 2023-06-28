@@ -63,6 +63,12 @@ export type IPageSettings = Record<string, any> & {
     BackdropStyle: string[],
     ToolbarItemModelType: string[],
   },
+  icons: Record<string, string> & {
+    Delete: string,
+    Edit: string,
+    Sun: string,
+    Moon: string,
+  },
   FILE_MACRO: string;
 
   // global functions
