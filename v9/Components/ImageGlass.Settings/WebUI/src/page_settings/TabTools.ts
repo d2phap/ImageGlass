@@ -1,5 +1,5 @@
 import { ITool } from '@/@types/settings_types';
-import { escapeHtml, getChangedSettingsFromTab, openModalDialog } from '@/helpers';
+import { escapeHtml, getChangedSettingsFromTab, openFilePicker, openModalDialog } from '@/helpers';
 import Language from './Language';
 
 
@@ -232,6 +232,9 @@ export default class TabTools {
 
     query('[name="_Arguments"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
     query('[name="_Arguments"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
+
+    query('#btnBrowseTool').removeEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
+    query('#btnBrowseTool').addEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
   }
 
 
@@ -243,5 +246,13 @@ export default class TabTools {
     args = args.trim().replaceAll('<file>', '"C:\\fake dir\\photo.jpg"');
 
     query('#Tool_CommandPreview').innerText = [executable, args].filter(Boolean).join(' ');
+  }
+
+
+  private static async handleBtnBrowseToolClickEvent() {
+    const filePaths = await openFilePicker() ?? [];
+    if (!filePaths.length) return;
+
+    query<HTMLInputElement>('[name="_Executable"]').value = filePaths[0];
   }
 }

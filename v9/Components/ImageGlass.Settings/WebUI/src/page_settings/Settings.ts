@@ -91,18 +91,16 @@ export default class Settings {
 
     query('#BtnOK').addEventListener('click', () => {
       const allSettings = Settings.getAllSettings();
-      const settingsJson = JSON.stringify(allSettings);
       Settings.updateInitSettings(allSettings);
 
-      post('BtnOK', settingsJson);
+      post('BtnOK', allSettings);
     }, false);
 
     query('#BtnApply').addEventListener('click', () => {
       const allSettings = Settings.getAllSettings();
-      const settingsJson = JSON.stringify(allSettings);
       Settings.updateInitSettings(allSettings);
 
-      post('BtnApply', settingsJson);
+      post('BtnApply', allSettings);
     }, false);
   }
 
