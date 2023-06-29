@@ -236,6 +236,7 @@ public partial class FrmSettings : WebForm
         }
         #endregion // Tab Tools
 
+
         // Tab Language
         #region Tab Language
         else if (name.Equals("Btn_RefreshLanguageList"))
@@ -252,8 +253,7 @@ public partial class FrmSettings : WebForm
 
         // Tab Appearance
         #region Tab Appearance
-        else if (name.Equals("Btn_BackgroundColor")
-            || name.Equals("Btn_SlideshowBackgroundColor"))
+        else if (name.Equals("Btn_BackgroundColor") || name.Equals("Btn_SlideshowBackgroundColor"))
         {
             SafeRunUi(() =>
             {
@@ -291,6 +291,19 @@ public partial class FrmSettings : WebForm
         }
         #endregion // Tab Appearance
 
+
+        // Global
+        #region Global
+        // open file picker
+        else if (name.Equals("OpenFilePicker"))
+        {
+            SafeRunUi(() =>
+            {
+                var filePaths = OpenFilePickerJson(data);
+                PostMessage("OpenFilePicker", filePaths);
+            });
+        }
+        #endregion // Global
     }
 
     #endregion // Protected / override methods
@@ -726,4 +739,36 @@ public partial class FrmSettings : WebForm
     }
 
 
+    /// <summary>
+    /// Open file picker.
+    /// </summary>
+    /// <param name="jsonOptions">Options in JSON: <c>{ filter?: string, multiple?: boolean }</c></param>
+    /// <returns>File paths array or null in JSON</returns>
+    private static string OpenFilePickerJson(string jsonOptions)
+    {
+        var options = BHelper.ParseJson<ExpandoObject>(jsonOptions)
+                .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+
+        _ = options.TryGetValue("filter", out var filter);
+        _ = options.TryGetValue("multiple", out var multiple);
+
+        filter ??= "All files (*.*)|*.*";
+        _ = bool.TryParse(multiple, out var multiSelect);
+
+
+        using var o = new OpenFileDialog()
+        {
+            Filter = filter,
+            CheckFileExists = true,
+            RestoreDirectory = true,
+            Multiselect = multiSelect,
+        };
+
+        if (o.ShowDialog() == DialogResult.OK)
+        {
+            return BHelper.ToJson(o.FileNames);
+        }
+
+        return "null";
+    }
 }

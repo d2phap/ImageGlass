@@ -9,6 +9,7 @@ export const pause = <T>(time: number, data?: T): Promise<T> => new Promise((res
   setTimeout(() => resolve(data as T), time);
 });
 
+
 /**
  * Gets the settings that are changed by user (`_pageSettings.config`) from the input tab.
  */
@@ -116,4 +117,17 @@ export const openModalDialog = async (
   }
 
   return dialogEl;
+};
+
+
+/**
+ * Open file picker.
+ */
+export const openFilePicker = async (options?: {
+  multiple?: boolean,
+  filter?: string,
+}) => {
+  const filePaths = await postAsync<string[]>('OpenFilePicker', options || {});
+
+  return filePaths;
 };
