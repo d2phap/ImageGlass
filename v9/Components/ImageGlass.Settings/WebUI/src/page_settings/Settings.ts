@@ -93,14 +93,14 @@ export default class Settings {
       const allSettings = Settings.getAllSettings();
       Settings.updateInitSettings(allSettings);
 
-      post('BtnOK', allSettings);
+      post('BtnOK', allSettings, true);
     }, false);
 
     query('#BtnApply').addEventListener('click', () => {
       const allSettings = Settings.getAllSettings();
       Settings.updateInitSettings(allSettings);
 
-      post('BtnApply', allSettings);
+      post('BtnApply', allSettings, true);
     }, false);
   }
 

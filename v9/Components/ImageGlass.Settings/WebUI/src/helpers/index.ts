@@ -127,7 +127,7 @@ export const openFilePicker = async (options?: {
   multiple?: boolean,
   filter?: string,
 }) => {
-  const filePaths = await postAsync<string[]>('OpenFilePicker', options || {});
+  const filePaths = await postAsync<string[]>('OpenFilePicker', options || {}, true);
 
   return filePaths;
 };

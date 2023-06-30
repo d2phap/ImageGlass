@@ -43,9 +43,11 @@ export const on = (name: string, handler: WebviewEventHandlerFn) => {
  * @param name Event name
  * @param data Data to send to backend, it will be converted to JSON string.
  */
-export const post = (name: string, data?: any) => {
+export const post = (name: string, data?: any, autoConvertToJson?: boolean) => {
+  const msgData = (autoConvertToJson ?? false) ? JSON.stringify(data) : data;
+
   // @ts-ignore
-  window.chrome.webview?.postMessage({ name, data: JSON.stringify(data) });
+  window.chrome.webview?.postMessage({ name, data: msgData });
 };
 
 
@@ -54,7 +56,7 @@ export const post = (name: string, data?: any) => {
  * @param name Event name
  * @param data Data to send to backend, it will be converted to JSON string.
  */
-export const postAsync = async <T = unknown>(name: string, data?: any) => {
+export const postAsync = async <T = unknown>(name: string, data?: any, autoConvertToJson?: boolean) => {
   let hasResult = false;
   let result: T = null;
 
@@ -66,8 +68,10 @@ export const postAsync = async <T = unknown>(name: string, data?: any) => {
     _webview.removeEvent(name);
   });
 
+  const msgData = (autoConvertToJson ?? false) ? JSON.stringify(data) : data;
+
   // @ts-ignore
-  window.chrome.webview?.postMessage({ name, data: JSON.stringify(data) });
+  window.chrome.webview?.postMessage({ name, data: msgData });
 
   // wait for the returned data
   while (!hasResult) {
