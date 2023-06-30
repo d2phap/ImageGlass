@@ -23,8 +23,6 @@ namespace ImageGlass.Base.WinApi;
 
 public class KeyboardApi
 {
-    [DllImport("user32.dll")]
-    static extern bool GetKeyboardState(byte[] lpKeyState);
 
     [DllImport("user32.dll")]
     static extern uint MapVirtualKey(uint uCode, uint uMapType);
@@ -33,31 +31,55 @@ public class KeyboardApi
     static extern IntPtr GetKeyboardLayout(uint idThread);
 
     [DllImport("user32.dll")]
-    static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+    private static extern bool ToAsciiEx(int virtualKey, int scanCode, byte[] lpKeyState, ref uint lpChar, int uFlags, IntPtr dwhkl);
+
+    [DllImport("user32.dll")]
+    private static extern short VkKeyScanExA(char ch, IntPtr dwhkl);
 
 
     /// <summary>
-    /// Convert key code to unicode string
+    /// Converts virtual key to string.
     /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public static string KeyCodeToUnicode(Keys key)
+    public static char KeyCodeToChar(Keys key, bool withShiftKey)
     {
-        var keyboardState = new byte[255];
-        var keyboardStateStatus = GetKeyboardState(keyboardState);
+        uint lpChar = 0;
+        var lpKeyState = new byte[256];
 
-        if (!keyboardStateStatus)
+        if (withShiftKey)
         {
-            return "";
+            var mKey = Keys.ShiftKey;
+
+            foreach (Keys sKey in Enum.GetValues(typeof(Keys)))
+                if ((mKey & sKey) == sKey)
+                    lpKeyState[(int)sKey] = 0x80;
         }
 
         var virtualKeyCode = (uint)key;
         var scanCode = MapVirtualKey(virtualKeyCode, 0);
-        var inputLocaleIdentifier = GetKeyboardLayout(0);
+        var keyboardLayoutPtr = GetKeyboardLayout(0);
 
-        var result = new StringBuilder();
-        _ = ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, result, 5, 0, inputLocaleIdentifier);
+        _ = ToAsciiEx((int)key, (int)scanCode, lpKeyState, ref lpChar, 0, keyboardLayoutPtr);
 
-        return result.ToString();
+        return (char)lpChar;
     }
+
+
+    /// <summary>
+    /// Convert character to virtual key
+    /// </summary>
+    public static Keys CharToKeyCode(char c)
+    {
+        var keyboardLayoutPtr = GetKeyboardLayout(0);
+
+        var vkey = VkKeyScanExA(c, keyboardLayoutPtr);
+        var keys = (Keys)(vkey & 0xff);
+        var modifiers = vkey >> 8;
+
+        if ((modifiers & 1) != 0) keys |= Keys.Shift;
+        if ((modifiers & 2) != 0) keys |= Keys.Control;
+        if ((modifiers & 4) != 0) keys |= Keys.Alt;
+
+        return keys;
+    }
+
 }

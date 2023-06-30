@@ -40,7 +40,7 @@ public class Hotkey
                 || (str.StartsWith("D") && str.Length == 2) // D0 -> D9
                 )
             {
-                var unicode = KeyboardApi.KeyCodeToUnicode(KeyData);
+                var unicode = KeyboardApi.KeyCodeToChar(KeyCode, false).ToString();
 
                 if (!string.IsNullOrEmpty(unicode))
                 {
@@ -51,32 +51,6 @@ public class Hotkey
             return str;
         }
     }
-
-    public static Dictionary<string, Keys> CharToKeyMapping => new()
-    {
-        { "`", Keys.Oemtilde },
-        { "-", Keys.OemMinus },
-        { "=", Keys.Oemplus },
-        { "[", Keys.OemOpenBrackets },
-        { "]", Keys.OemCloseBrackets },
-        { "\\", Keys.Oem5 },
-        { ";", Keys.Oem1 },
-        { "'", Keys.Oem7 },
-        { ",", Keys.Oemcomma },
-        { ".", Keys.OemPeriod },
-        { "/", Keys.OemQuestion },
-
-        { "0", Keys.D0 },
-        { "1", Keys.D1 },
-        { "2", Keys.D2 },
-        { "3", Keys.D3 },
-        { "4", Keys.D4 },
-        { "5", Keys.D5 },
-        { "6", Keys.D6 },
-        { "7", Keys.D7 },
-        { "8", Keys.D8 },
-        { "9", Keys.D9 },
-    };
 
 
     public Hotkey()
@@ -103,40 +77,45 @@ public class Hotkey
     {
         var hotkey = Keys.None;
 
-        var chars = s.Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-        foreach (var c in chars)
+        try
         {
-            if (c.Equals("ctrl", StringComparison.OrdinalIgnoreCase))
+
+            var keyStrings = s.Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            foreach (var str in keyStrings)
             {
-                hotkey |= Keys.Control;
-            }
-            else if (c.Equals("shift", StringComparison.OrdinalIgnoreCase))
-            {
-                hotkey |= Keys.Shift;
-            }
-            else if (c.Equals("alt", StringComparison.OrdinalIgnoreCase))
-            {
-                hotkey |= Keys.Alt;
-            }
-            else
-            {
-                if (CharToKeyMapping.ContainsKey(c))
+                if (str.Equals("ctrl", StringComparison.OrdinalIgnoreCase))
                 {
-                    hotkey |= CharToKeyMapping[c];
+                    hotkey |= Keys.Control;
+                }
+                else if (str.Equals("shift", StringComparison.OrdinalIgnoreCase))
+                {
+                    hotkey |= Keys.Shift;
+                }
+                else if (str.Equals("alt", StringComparison.OrdinalIgnoreCase))
+                {
+                    hotkey |= Keys.Alt;
                 }
                 else
                 {
-                    var kc = new KeysConverter();
-                    var key = (Keys?)kc.ConvertFromString(c);
-
-                    if (key is not null)
+                    if (str.Length == 1)
                     {
-                        hotkey |= key.Value;
+                        hotkey |= KeyboardApi.CharToKeyCode(str[0]);
+                    }
+                    else
+                    {
+                        var kc = new KeysConverter();
+                        var key = (Keys?)kc.ConvertFromString(str);
+
+                        if (key is not null)
+                        {
+                            hotkey |= key.Value;
+                        }
                     }
                 }
             }
         }
+        catch { }
 
 
         if (hotkey != Keys.None)
@@ -149,7 +128,6 @@ public class Hotkey
     /// <summary>
     /// Parses hotkey from keys
     /// </summary>
-    /// <param name="keys"></param>
     public void ParseFrom(Keys keys)
     {
         var ka = new KeyEventArgs(keys);
@@ -167,36 +145,35 @@ public class Hotkey
     /// <summary>
     /// Converts hotkey to string
     /// </summary>
-    /// <returns></returns>
     public override string ToString()
     {
-        var strB = new StringBuilder();
+        var modifiers = new List<string>(4);
 
-        if (Control)
-        {
-            strB.Append("Ctrl+");
-        }
+        if (Control) modifiers.Add("Ctrl");
+        if (Shift) modifiers.Add("Shift");
+        if (Alt) modifiers.Add("Alt");
 
-        if (Shift)
-        {
-            strB.Append("Shift+");
-        }
 
-        if (Alt)
-        {
-            strB.Append("Alt+");
-        }
+        var ignoredKeys = new List<string>() {
+            nameof(Keys.ControlKey),
+            nameof(Keys.ShiftKey),
+            nameof(Keys.Menu),
+            nameof(Keys.LWin),
+            nameof(Keys.RWin),
+            nameof(Keys.Capital),
+        };
+
 
         if (KeyStr.Length == 1)
         {
-            strB.Append(KeyStr.ToUpperInvariant());
+            modifiers.Add(KeyStr.ToUpperInvariant());
         }
-        else
+        else if (!ignoredKeys.Contains(KeyStr))
         {
-            strB.Append(KeyStr);
+            modifiers.Add(KeyStr);
         }
 
 
-        return strB.ToString();
+        return string.Join('+', modifiers);
     }
 }
