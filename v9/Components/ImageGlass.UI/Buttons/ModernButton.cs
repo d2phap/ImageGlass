@@ -304,7 +304,7 @@ public class ModernButton : Button
             // Accent style
             if (ButtonStyle == ModernButtonStyle.Accent)
             {
-                fillColor = fillColor.Blend(WinColorsApi.GetAccentColor(true), DarkMode ? 0.7f : 0.8f);
+                fillColor = fillColor.Blend(accentColor, DarkMode ? 0.7f : 0.8f);
                 borderColor = borderColor.WithAlpha(120);
             }
 

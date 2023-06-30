@@ -785,6 +785,11 @@ public class IgLang : Dictionary<string, string>
         #endregion // FrmToolNotFound
 
 
+        #region FrmHotkeyPicker
+        Add("FrmHotkeyPicker.LblHotkey", "Press hotkeys"); // v9.0
+        #endregion // FrmHotkeyPicker
+
+
         #region igcmd.exe
 
         Add("_._IgCommandExe._DefaultError._Heading", "Invalid commands"); //v9.0
