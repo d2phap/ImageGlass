@@ -1,5 +1,5 @@
 import { ITool } from '@/@types/settings_types';
-import { escapeHtml, getChangedSettingsFromTab, openFilePicker, openModalDialog } from '@/helpers';
+import { escapeHtml, getChangedSettingsFromTab, openFilePicker, openHotkeyPicker, openModalDialog } from '@/helpers';
 import Language from './Language';
 
 
@@ -235,6 +235,9 @@ export default class TabTools {
 
     query('#btnBrowseTool').removeEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
     query('#btnBrowseTool').addEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
+
+    query('#btnOpenHotkeyPicker').removeEventListener('click', TabTools.handleOpenHotkeyPicker, false);
+    query('#btnOpenHotkeyPicker').addEventListener('click', TabTools.handleOpenHotkeyPicker, false);
   }
 
 
@@ -254,5 +257,13 @@ export default class TabTools {
     if (!filePaths.length) return;
 
     query<HTMLInputElement>('[name="_Executable"]').value = filePaths[0];
+  }
+
+
+  private static async handleOpenHotkeyPicker() {
+    const hotkey = await openHotkeyPicker();
+    if (hotkey === null) return;
+
+    query('#btnOpenHotkeyPicker').innerText = hotkey;
   }
 }
