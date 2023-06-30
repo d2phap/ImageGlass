@@ -303,6 +303,16 @@ public partial class FrmSettings : WebForm
                 PostMessage("OpenFilePicker", filePaths);
             });
         }
+
+        // open hotkey picker
+        else if (name.Equals("OpenHotkeyPicker"))
+        {
+            SafeRunUi(() =>
+            {
+                var hotkey = OpenHotkeyPicker();
+                PostMessage("OpenHotkeyPicker", $"\"{hotkey?.ToString()}\"");
+            });
+        }
         #endregion // Global
     }
 
@@ -771,4 +781,25 @@ public partial class FrmSettings : WebForm
 
         return "null";
     }
+
+
+    /// <summary>
+    /// Open hotkey picker.
+    /// </summary>
+    private Hotkey? OpenHotkeyPicker()
+    {
+        using var frm = new FrmHotkeyPicker()
+        {
+            StartPosition = FormStartPosition.CenterParent,
+            TopMost = TopMost,
+        };
+
+        if (frm.ShowDialog() == DialogResult.OK)
+        {
+            return frm.HotkeyValue;
+        }
+
+        return null;
+    }
+
 }

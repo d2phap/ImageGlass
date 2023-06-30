@@ -131,3 +131,13 @@ export const openFilePicker = async (options?: {
 
   return filePaths;
 };
+
+
+/**
+ * Open hotkey picker.
+ */
+export const openHotkeyPicker = async (): Promise<string|null> => {
+  const hotkey = await postAsync<string>('OpenHotkeyPicker');
+
+  return hotkey;
+};
