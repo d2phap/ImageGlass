@@ -118,22 +118,19 @@ namespace ImageGlass.Settings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;aside&gt;
         ///    &lt;nav&gt;
-        ///        &lt;ul class=&quot;list&quot;&gt;
+        ///        &lt;ul class=&quot;ig-sidebar&quot;&gt;
         ///            &lt;li&gt;
         ///                &lt;label&gt;
         ///                    &lt;input type=&quot;radio&quot; name=&quot;nav&quot; value=&quot;general&quot; /&gt;
-        ///                    &lt;span&gt;General&lt;/span&gt;
+        ///                    &lt;span lang-text=&quot;FrmSettings.Nav._General&quot;&gt;[General]&lt;/span&gt;
         ///                &lt;/label&gt;
         ///            &lt;/li&gt;
         ///            &lt;li&gt;
         ///                &lt;label&gt;
         ///                    &lt;input type=&quot;radio&quot; name=&quot;nav&quot; value=&quot;image&quot; /&gt;
-        ///                    &lt;span&gt;Image&lt;/span&gt;
+        ///                    &lt;span lang-text=&quot;FrmSettings.Nav._Image&quot;&gt;[Image]&lt;/span&gt;
         ///                &lt;/label&gt;
-        ///            &lt;/li&gt;
-        ///            &lt;li&gt;
-        ///                &lt;label&gt;
-        ///                    &lt;inp [rest of string was truncated]&quot;;.
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Page_Settings {
             get {
@@ -166,16 +163,7 @@ namespace ImageGlass.Settings.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !function(e,t){&quot;object&quot;==typeof exports&amp;&amp;&quot;object&quot;==typeof module?module.exports=t():&quot;function&quot;==typeof define&amp;&amp;define.amd?define(&quot;ig-ui&quot;,[],t):&quot;object&quot;==typeof exports?exports[&quot;ig-ui&quot;]=t():e[&quot;ig-ui&quot;]=t()}(this,(()=&gt;(()=&gt;{&quot;use strict&quot;;var e={r:e=&gt;{&quot;undefined&quot;!=typeof Symbol&amp;&amp;Symbol.toStringTag&amp;&amp;Object.defineProperty(e,Symbol.toStringTag,{value:&quot;Module&quot;}),Object.defineProperty(e,&quot;__esModule&quot;,{value:!0})}},t={};e.r(t);for(var o=function(e){document.querySelectorAll(&quot;.tab-page&quot;).forEach((function(e){return e.cl [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Script_Settings {
-            get {
-                return ResourceManager.GetString("Script_Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to :root{--InvertColor: 255 255 255;--AppBg: 20 25 28;--AppText: 210 210 210;--AppTextDisabled: 140 140 140;--Accent: 0 99 177;--ControlBg: 69 73 74;--ControlBgHover: 95 101 102;--ControlBgPressed: 43 43 43;--ControlBgPressed2: 49 51 53;--ControlBgDisabled: 82 82 82;--ControlCtaBg: rgb(var(--Accent) / 0.2);--ControlCtaBgHover: rgb(var(--Accent) / 0.3);--ControlBorder: rgb(var(--InvertColor) / 0.2);--ControlBorderHover: rgb(var(--InvertColor) / 0.3);--ControlBorderDisabled: rgb(var(--InvertColor) / 0.02);--Cont [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to :root,::backdrop{--InvertColor: 255 255 255;--AppBg: 20 25 28;--AppText: 210 210 210;--AppTextDisabled: 140 140 140;--Accent: 0 99 177;--ControlBg: 60 63 64;--ControlBgHover: 87 91 92;--ControlBgPressed: 43 43 43;--ControlBgPressed2: 49 51 53;--ControlBgDisabled: 78 78 78;--ControlCtaBg: rgb(var(--Accent) / 0.2);--ControlCtaBgHover: rgb(var(--Accent) / 0.3);--ControlBorder: rgb(var(--InvertColor) / 0.2);--ControlBorderHover: rgb(var(--InvertColor) / 0.3);--ControlBorderDisabled: rgb(var(--InvertColor) / 0.0 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Styles {
             get {

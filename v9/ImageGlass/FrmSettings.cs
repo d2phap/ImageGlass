@@ -26,6 +26,7 @@ namespace ImageGlass;
 
 public partial class FrmSettings : WebForm
 {
+
     public FrmSettings()
     {
         InitializeComponent();
@@ -70,91 +71,52 @@ public partial class FrmSettings : WebForm
         """);
     }
 
-
+    
     protected override async Task OnWeb2ReadyAsync()
     {
         await base.OnWeb2ReadyAsync();
+
+        // update the setting data
+        await WebUI.UpdateFrmSettingsJs();
+        WebUI.UpdateLangJson();
+        WebUI.UpdateLangListJson();
+        WebUI.UpdateToolListJson();
+        await WebUI.UpdateSvgIconsJsonAsync();
+        WebUI.UpdateThemeListJson();
+
 
         // get all settings as json string
         var configJsonObj = Config.PrepareJsonSettingsObject();
         var configJson = BHelper.ToJson(configJsonObj) as string;
 
-        // get language as json string
-        var configLangJson = BHelper.ToJson(Config.Language);
-
         // setting paths
         var startupDir = App.StartUpDir().Replace("\\", "\\\\");
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
         var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
-
-        // tool list
-        var toolListJson = BHelper.ToJson(Config.Tools);
-
-        // language list
-        var langListJson = GetLanguageListJson();
-
-        // theme
-        var themeListJson = GetThemeListJson();
         var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME).Replace("\\", "\\\\");
-
-        // enums
-        var enumObj = new ExpandoObject();
-        var enums = new Type[] {
-            typeof(ImageOrderBy),
-            typeof(ImageOrderType),
-            typeof(ColorProfileOption),
-            typeof(AfterEditAppAction),
-            typeof(ImageInterpolation),
-            typeof(MouseWheelAction),
-            typeof(MouseWheelEvent),
-            typeof(MouseClickEvent),
-            typeof(Base.BackdropStyle),
-            typeof(ToolbarItemModelType),
-        };
-        foreach (var item in enums)
-        {
-            var keys = Enum.GetNames(item);
-            enumObj.TryAdd(item.Name, keys);
-        }
-        var enumsJson = BHelper.ToJson(enumObj);
-
-
-        // get svg icons
-        var iconNames = new Dictionary<IconName, string>(4)
-        {
-            { IconName.Edit, string.Empty },
-            { IconName.Delete, string.Empty },
-            { IconName.Sun, string.Empty },
-            { IconName.Moon, string.Empty },
-        };
-        await Parallel.ForEachAsync(iconNames,
-            new ParallelOptions { MaxDegreeOfParallelism = 3 },
-            async (item, _) => iconNames[item.Key] = await IconFile.ReadIconTextAsync(item.Key));
-        var iconsJson = BHelper.ToJson(iconNames);
 
 
         // load html content
         await LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
             @$"
-             <script>
+            <script>
                 window._pageSettings = {{
                     initTab: '{Local.LastOpenedSetting}',
                     startUpDir: '{startupDir}',
                     configDir: '{configDir}',
                     userConfigFilePath: '{userConfigFilePath}',
-                    enums: {enumsJson},
-                    icons: {iconsJson},
-                    config: {configJson},
-                    lang: {configLangJson},
-                    langList: {langListJson},
-                    toolList: {toolListJson},
-                    themeList: {themeListJson},
-                    defaultThemeDir: '{defaultThemeDir}',
                     FILE_MACRO: '{Constants.FILE_MACRO}',
+                    enums: {WebUI.EnumsJson},
+                    defaultThemeDir: '{defaultThemeDir}',
+                    toolList: {WebUI.ToolListJson},
+                    langList: {WebUI.LangListJson},
+                    themeList: {WebUI.ThemeListJson},
+                    icons: {WebUI.SvgIconsJson},
+                    config: {configJson},
+                    lang: {WebUI.LangJson},
                 }};
-
-                {Settings.Properties.Resources.Script_Settings}
-             </script>
+            </script>
+            <script>{WebUI.FrmSettingsJs}</script>
             ");
     }
 
@@ -241,8 +203,8 @@ public partial class FrmSettings : WebForm
         #region Tab Language
         else if (name.Equals("Btn_RefreshLanguageList"))
         {
-            var langListJson = GetLanguageListJson();
-            PostMessage(name, langListJson);
+            WebUI.UpdateLangListJson(true);
+            PostMessage(name, WebUI.LangListJson);
         }
         else if (name.Equals("Lnk_InstallLanguage"))
         {
@@ -275,10 +237,8 @@ public partial class FrmSettings : WebForm
         }
         else if (name.Equals("Btn_RefreshThemeList"))
         {
-            // get themes as json string
-            var themeListJson = GetThemeListJson();
-
-            PostMessage("Btn_RefreshThemeList", themeListJson);
+            WebUI.UpdateThemeListJson(true);
+            PostMessage("Btn_RefreshThemeList", WebUI.ThemeListJson);
         }
         else if (name.Equals("Btn_OpenThemeFolder"))
         {
@@ -309,8 +269,9 @@ public partial class FrmSettings : WebForm
         {
             SafeRunUi(() =>
             {
-                var hotkey = OpenHotkeyPicker();
-                PostMessage("OpenHotkeyPicker", $"\"{hotkey?.ToString()}\"");
+                var hotkey = OpenHotkeyPickerJson();
+
+                PostMessage("OpenHotkeyPicker", $"\"{hotkey}\"");
             });
         }
         #endregion // Global
@@ -562,29 +523,6 @@ public partial class FrmSettings : WebForm
     }
 
 
-    private static string GetLanguageListJson()
-    {
-        var langList = Config.LoadLanguageList();
-        var langListJson = BHelper.ToJson(langList.Select(i =>
-        {
-            var obj = new ExpandoObject();
-
-            var langName = Path.GetFileName(i.FileName);
-            if (string.IsNullOrEmpty(langName))
-            {
-                langName = i.Metadata.EnglishName;
-            }
-
-            obj.TryAdd(nameof(i.FileName), langName);
-            obj.TryAdd(nameof(i.Metadata), i.Metadata);
-
-            return obj;
-        }));
-
-        return langListJson;
-    }
-
-
     private async Task InstallLanguagePackAsync()
     {
         using var o = new OpenFileDialog()
@@ -608,8 +546,8 @@ public partial class FrmSettings : WebForm
 
         if (result == IgExitCode.Done)
         {
-            var langListJson = GetLanguageListJson();
-            PostMessage("Lnk_InstallLanguage", langListJson);
+            WebUI.UpdateLangListJson(true);
+            PostMessage("Lnk_InstallLanguage", WebUI.LangListJson);
         }
     }
 
@@ -640,51 +578,6 @@ public partial class FrmSettings : WebForm
     }
 
 
-    private static string GetThemeListJson()
-    {
-        var themeList = Config.LoadThemeList();
-        var themeListJson = BHelper.ToJson(themeList.Select(th =>
-        {
-            th.ReloadThemeColors();
-            var obj = new ExpandoObject();
-
-            obj.TryAdd(nameof(th.ConfigFilePath), th.ConfigFilePath);
-            obj.TryAdd(nameof(th.FolderName), th.FolderName);
-            obj.TryAdd(nameof(th.FolderPath), th.FolderPath);
-            obj.TryAdd(nameof(th.Info), th.JsonModel.Info);
-            obj.TryAdd(nameof(IgTheme.Colors.BgColor), ThemeUtils.ColorToHex(th.Colors.BgColor));
-
-
-            // IsDarkMode
-            var isDarkMode = true;
-            if (th.JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.IsDarkMode), out var darkMode))
-            {
-                isDarkMode = darkMode.ToString().ToLowerInvariant() != "false";
-            }
-            obj.TryAdd(nameof(IgThemeSettings.IsDarkMode), isDarkMode);
-
-
-            // PreviewImage
-            var previewImgB64 = "";
-            if (th.JsonModel.Settings.TryGetValue(nameof(th.Settings.PreviewImage), out var previewImgName))
-            {
-                var previewImgPath = Path.Combine(th.FolderPath, previewImgName.ToString());
-
-                // get thumbnail
-                using var bmp = ShellThumbnailApi.GetThumbnail(previewImgPath, 256, 256, ShellThumbnailOptions.ThumbnailOnly);
-
-                // convert to base-64
-                previewImgB64 = "data:image/png;charset=utf-8;base64," + BHelper.ToBase64Png(bmp);
-            }
-            obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgB64);
-
-            return obj;
-        }));
-
-        return themeListJson;
-    }
-
-
     private async Task InstallThemeAsync()
     {
         using var o = new OpenFileDialog()
@@ -708,8 +601,8 @@ public partial class FrmSettings : WebForm
 
         if (result == IgExitCode.Done)
         {
-            var themeListJson = GetThemeListJson();
-            PostMessage("Btn_InstallTheme", themeListJson);
+            WebUI.UpdateThemeListJson(true);
+            PostMessage("Btn_InstallTheme", WebUI.ThemeListJson);
         }
     }
 
@@ -722,8 +615,8 @@ public partial class FrmSettings : WebForm
 
         if (result == IgExitCode.Done)
         {
-            var themeListJson = GetThemeListJson();
-            PostMessage("Delete_Theme_Pack", themeListJson);
+            WebUI.UpdateThemeListJson(true);
+            PostMessage("Delete_Theme_Pack", WebUI.ThemeListJson);
         }
     }
 
@@ -784,9 +677,9 @@ public partial class FrmSettings : WebForm
 
 
     /// <summary>
-    /// Open hotkey picker.
+    /// Open hotkey picker, returns <c>"null"</c> if user cancels the dialog.
     /// </summary>
-    private Hotkey? OpenHotkeyPicker()
+    private string? OpenHotkeyPickerJson()
     {
         using var frm = new FrmHotkeyPicker()
         {
@@ -796,10 +689,10 @@ public partial class FrmSettings : WebForm
 
         if (frm.ShowDialog() == DialogResult.OK)
         {
-            return frm.HotkeyValue;
+            return frm.HotkeyValue.ToString();
         }
 
-        return null;
+        return "null";
     }
 
 }

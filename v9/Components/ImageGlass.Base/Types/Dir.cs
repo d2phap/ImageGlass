@@ -27,6 +27,11 @@ public static class Dir
     public static string Language { get; } = "Language";
 
     /// <summary>
+    /// Gets the WebUI folder name
+    /// </summary>
+    public static string WebUI { get; } = "WebUI";
+
+    /// <summary>
     /// Gets the cached thumbnails folder name
     /// </summary>
     public static string ThumbnailsCache { get; } = "ThumbnailsCache";
