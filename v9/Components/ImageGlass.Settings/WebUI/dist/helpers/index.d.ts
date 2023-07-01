@@ -35,4 +35,4 @@ export declare const openHotkeyPicker: () => Promise<string | null>;
  * @param ulSelector CSS selector of the list element
  * @param hotkeys Hotkey list to render
  */
-export declare const renderHotkeyList: (ulSelector: string, hotkeys: string[], onChange: (action: 'delete' | 'add') => any) => Promise<void>;
+export declare const renderHotkeyList: (ulSelector: string, hotkeys: string[], onChange?: (action: 'delete' | 'add') => any) => Promise<void>;

@@ -5,13 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImageGlass Settings UI Demo</title>
-  <link rel="stylesheet" href="../Resources/Styles.css">
+  <link rel="stylesheet" href="./dist/styles.css">
 
   <style>
     body {
       background-color: rgb(var(--AppBg));
-      /* font-size: 14px; */
-      /* padding: 1rem; */
     }
   </style>
 </head>
@@ -715,12 +713,11 @@
                 <th width="10" class="cell-sticky" lang-text="_._ID">[ID]</th>
                 <th width="10" lang-text="_._Name">[Name]</th>
                 <th width="10" lang-text="FrmSettings.Tab.Tools._Integrated">[Integrated]</th>
-                <th width="10" lang-text="_._Hotkey">[Hotkey]</th>
+                <th width="10" lang-text="_._Hotkeys">[Hotkeys]</th>
                 <th lang-text="_._Executable">[Executable]</th>
                 <th width="10" colspan="2" lang-text="_._Arguments">[Arguments]</th>
               </tr>
             </thead>
-
             <tbody></tbody>
           </table>
         </div>
@@ -864,7 +861,7 @@
             <input type="text" name="_Arguments" class="w-100" value="<file>" />
           </div>
           <div class="mb-2">
-            <div class="mb-1" lang-text="_._Hotkey">[Hotkeys]</div>
+            <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
             <ul class="hotkey-list mb-1"></ul>
           </div>
           <div class="mb-2">

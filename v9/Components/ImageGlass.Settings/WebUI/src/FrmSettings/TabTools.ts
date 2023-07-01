@@ -38,8 +38,7 @@ export default class TabTools {
         TabTools.addEventsForToolDialog();
         TabTools.updateToolCommandPreview();
 
-        await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', defaultTool.Hotkeys,
-          () => TabTools.updateToolCommandPreview());
+        await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', defaultTool.Hotkeys);
       });
 
       const tool = TabTools.getToolDialogFormData();
@@ -86,6 +85,12 @@ export default class TabTools {
         args = `<code>${escapeHtml(item.Arguments)}</code>`;
       }
 
+      const hotkeysHtml = (item.Hotkeys || [])
+        .map((key, index) => {
+          const margin = index === 0 ? '' : 'ms-1';
+          return `<kbd class="${margin}">${key}</kbd>`;
+        }).join('');
+
       const chkIntegratedHtml = `
         <label class="ig-checkbox">
           <input type="checkbox" disabled ${item.IsIntegrated === true ? 'checked' : ''} />
@@ -104,9 +109,7 @@ export default class TabTools {
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
           <td class="text-nowrap">${item.ToolName}</td>
           <td class="text-center">${chkIntegratedHtml}</td>
-          <td>
-            <kbd>Ctrl+S</kbd>
-          </td>
+          <td class="text-nowrap">${hotkeysHtml}</td>
           <td class="text-nowrap">
             <code>${escapeHtml(item.Executable)}</code>
           </td>
@@ -127,16 +130,17 @@ export default class TabTools {
     Language.load();
 
     queryAll<HTMLButtonElement>('#Table_ToolList button[data-action]').forEach(el => {
-      el.addEventListener('click', async (e) => {
-        const action = (e.target as HTMLInputElement).getAttribute('data-action');
-        const trEl = (e.target as HTMLInputElement).closest('tr');
+      el.addEventListener('click', async () => {
+        const action = el.getAttribute('data-action');
+        const trEl = el.closest('tr');
         const toolId = trEl.getAttribute('data-tool-id');
 
         if (action === 'delete') {
           trEl.remove();
         }
         else if (action === 'edit') {
-          TabTools.editTool(toolId);
+          await TabTools.editTool(toolId);
+          el.focus();
         }
       }, false);
     });
@@ -197,8 +201,7 @@ export default class TabTools {
       TabTools.addEventsForToolDialog();
       TabTools.updateToolCommandPreview();
 
-      await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', tool.Hotkeys,
-        () => TabTools.updateToolCommandPreview());
+      await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', tool.Hotkeys);
     });
 
     tool = TabTools.getToolDialogFormData();
@@ -216,7 +219,7 @@ export default class TabTools {
       ToolName: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_ToolName"]').value.trim(),
       Executable: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value.trim(),
       Arguments: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Arguments"]').value.trim(),
-      Hotkeys: [], // query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Hotkeys"]').value.trim(),
+      Hotkeys: queryAll('#Dialog_AddOrEditTool .hotkey-list > .hotkey-item > kbd').map(el => el.innerText),
       IsIntegrated: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked,
     };
 

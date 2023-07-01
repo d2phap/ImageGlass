@@ -154,7 +154,7 @@ export const openHotkeyPicker = async (): Promise<string | null> => {
 export const renderHotkeyList = async (
   ulSelector: string,
   hotkeys: string[],
-  onChange: (action: 'delete' | 'add') => any,
+  onChange?: (action: 'delete' | 'add') => any,
 ) => {
   const ulEl = query(ulSelector);
   let ulHtml = '';
@@ -186,14 +186,17 @@ export const renderHotkeyList = async (
       if (action === 'delete') {
         const hotkeyItemEl = el.closest('.hotkey-item');
         hotkeyItemEl?.remove();
-        await Promise.resolve(onChange(action));
+        if (onChange) await Promise.resolve(onChange(action));
       }
       else if (action === 'add') {
         const hotkey = await openHotkeyPicker();
         if (hotkey === null) return;
 
         renderHotkeyList(ulSelector, [...hotkeys, hotkey], onChange);
-        await Promise.resolve(onChange(action));
+        if (onChange) await Promise.resolve(onChange(action));
+
+        // set focus to the 'Add hotkey' button
+        query<HTMLButtonElement>(`${ulSelector} button[data-action="add"]`)?.focus();
       }
     }, false);
   });
