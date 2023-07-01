@@ -1,4 +1,4 @@
-import { ILanguage } from '@/@types/settings_types';
+import { ILanguage } from '@/@types/FrmSettings';
 import { getChangedSettingsFromTab } from '@/helpers';
 
 export default class TabLanguage {

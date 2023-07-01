@@ -27,7 +27,7 @@
 
 ::-webkit-scrollbar-thumb:hover {
   border-width: calc((var(--scrollBarSize-px) / 3) - 1px);
-  border-radius: var(--border-radius);
+  border-radius: calc(var(--scrollBarSize-px) / 3);
   background-color: rgb(var(--AppText) / 0.35);
 }
 

@@ -1,22 +1,22 @@
 import { Webview } from './helpers/webview';
 import { query, queryAll, on, post, postAsync } from './helpers/globalHelpers';
 
-import Sidebar from './page_settings/Sidebar';
-import Language from './page_settings/Language';
-import Settings from './page_settings/Settings';
+import Sidebar from './FrmSettings/Sidebar';
+import Language from './FrmSettings/Language';
+import Settings from './FrmSettings/Settings';
 
-import TabGeneral from './page_settings/TabGeneral';
-import TabImage from './page_settings/TabImage';
-import TabSlideshow from './page_settings/TabSlideshow';
-import TabMouseKeyboard from './page_settings/TabMouseKeyboard';
-import TabLanguage from './page_settings/TabLanguage';
-import TabEdit from './page_settings/TabEdit';
-import TabViewer from './page_settings/TabViewer';
-import TabToolbar from './page_settings/TabToolbar';
-import TabGallery from './page_settings/TabGallery';
-import TabAppearance from './page_settings/TabAppearance';
-import TabFileAssocs from './page_settings/TabFileAssocs';
-import TabTools from './page_settings/TabTools';
+import TabGeneral from './FrmSettings/TabGeneral';
+import TabImage from './FrmSettings/TabImage';
+import TabSlideshow from './FrmSettings/TabSlideshow';
+import TabMouseKeyboard from './FrmSettings/TabMouseKeyboard';
+import TabLanguage from './FrmSettings/TabLanguage';
+import TabEdit from './FrmSettings/TabEdit';
+import TabViewer from './FrmSettings/TabViewer';
+import TabToolbar from './FrmSettings/TabToolbar';
+import TabGallery from './FrmSettings/TabGallery';
+import TabAppearance from './FrmSettings/TabAppearance';
+import TabFileAssocs from './FrmSettings/TabFileAssocs';
+import TabTools from './FrmSettings/TabTools';
 
 
 // initialize webview event listeners
@@ -37,7 +37,22 @@ if (!window._pageSettings) {
     config: {},
     lang: {},
     langList: [],
-    toolList: [],
+    toolList: [
+      {
+        ToolId: 'Tool_ExifGlass',
+        ToolName: 'ExifGlass - EXIF metadata viewer',
+        Executable: 'D:\\_GITHUB\\@d2phap\\ExifGlass\\Source\\ExifGlass\\bin\\x64\\Debug\\net7.0\\ExifGlass.exe',
+        Arguments: '<file>',
+        IsIntegrated: true,
+      },
+      {
+        ToolId: 'Tool_DemoApp',
+        ToolName: 'Demo app',
+        Executable: 'D:\\_GITHUB\\@imageglass\\ImageGlass.Tools\\Source\\DemoApp\\bin\\Debug\\net7.0-windows\\DemoApp.exe',
+        Arguments: '<file>',
+        IsIntegrated: true,
+      },
+    ],
     themeList: [],
     enums: {
       ImageOrderBy: [],

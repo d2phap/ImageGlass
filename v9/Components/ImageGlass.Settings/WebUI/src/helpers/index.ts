@@ -1,3 +1,5 @@
+import Language from '@/FrmSettings/Language';
+
 
 /**
  * Pauses the thread for a period
@@ -103,7 +105,8 @@ export const openModalDialog = async (
 
   console.log(data);
   Object.keys(data).forEach(key => {
-    query<HTMLInputElement>(`${selector} [name="_${key}"]`).value = data[key];
+    const inputEl = query<HTMLInputElement>(`${selector} [name="_${key}"]`);
+    if (inputEl) inputEl.value = data[key];
   });
 
   // on open
@@ -136,8 +139,62 @@ export const openFilePicker = async (options?: {
 /**
  * Open hotkey picker.
  */
-export const openHotkeyPicker = async (): Promise<string|null> => {
+export const openHotkeyPicker = async (): Promise<string | null> => {
   const hotkey = await postAsync<string>('OpenHotkeyPicker');
 
   return hotkey;
+};
+
+
+/**
+ * Renders hotkey list
+ * @param ulSelector CSS selector of the list element
+ * @param hotkeys Hotkey list to render
+ */
+export const renderHotkeyList = async (
+  ulSelector: string,
+  hotkeys: string[],
+  onChange: (action: 'delete' | 'add') => any,
+) => {
+  const ulEl = query(ulSelector);
+  let ulHtml = '';
+
+  // load list of hotkeys
+  for (const key of hotkeys) {
+    ulHtml += `
+    <li class="hotkey-item">
+      <kbd>${key}</kbd>
+      <button type="button" class="btn--icon" lang-title="_._Delete" data-action="delete">
+        ${_pageSettings.icons.Delete}
+      </button>
+    </li>`;
+  }
+
+  // load 'Add hotkey' button
+  ulHtml += `<li>
+    <button type="button" lang-title="_._AddHotkey" data-action="add">[Add hotkey…]</button>
+  </li>`;
+
+  ulEl.innerHTML = ulHtml;
+  Language.load();
+
+  // add event listerner for 'Delete' hotkey
+  queryAll<HTMLButtonElement>(`${ulSelector} button[data-action]`).forEach(el => {
+    el.addEventListener('click', async () => {
+      const action = el.getAttribute('data-action');
+
+      if (action === 'delete') {
+        const hotkeyItemEl = el.closest('.hotkey-item');
+        hotkeyItemEl?.remove();
+        await Promise.resolve(onChange(action));
+      }
+      else if (action === 'add') {
+        const hotkey = await openHotkeyPicker();
+        if (hotkey === null) return;
+
+        renderHotkeyList(ulSelector, [...hotkeys, hotkey], onChange);
+        await Promise.resolve(onChange(action));
+      }
+    }, false);
+  });
 };

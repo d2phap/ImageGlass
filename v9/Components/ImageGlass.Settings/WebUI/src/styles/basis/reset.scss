@@ -55,7 +55,7 @@ kbd {
   background-color: rgb(var(--ControlBg) / 1);
   border: solid 1px rgb(var(--InvertColor) / 0.1);
   border-bottom-color: rgb(var(--InvertColor) / 0.1);
-  border-radius: calc(var(--border-radius) * 1.5);
+  border-radius: var(--border-radius);
   box-shadow: inset 0 -1px 0 rgb(var(--InvertColor) / 0.1);
 }
 

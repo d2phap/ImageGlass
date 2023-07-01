@@ -1,9 +1,17 @@
-import { ITool } from '@/@types/settings_types';
-import { escapeHtml, getChangedSettingsFromTab, openFilePicker, openHotkeyPicker, openModalDialog } from '@/helpers';
+import { ITool } from '@/@types/FrmSettings';
+import {
+  escapeHtml,
+  getChangedSettingsFromTab,
+  openFilePicker,
+  openModalDialog,
+  renderHotkeyList,
+} from '@/helpers';
 import Language from './Language';
 
 
 export default class TabTools {
+  private static HOTKEY_SEPARATOR = '#';
+
   /**
    * Loads settings for tab Tools.
    */
@@ -22,13 +30,16 @@ export default class TabTools {
         ToolName: '',
         Executable: '',
         Arguments: _pageSettings.FILE_MACRO,
-        Hotkeys: '',
+        Hotkeys: [],
         IsIntegrated: false,
       } as ITool;
 
-      await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, () => {
+      await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, async () => {
         TabTools.addEventsForToolDialog();
         TabTools.updateToolCommandPreview();
+
+        await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', defaultTool.Hotkeys,
+          () => TabTools.updateToolCommandPreview());
       });
 
       const tool = TabTools.getToolDialogFormData();
@@ -88,7 +99,7 @@ export default class TabTools {
           data-tool-integrated="${item.IsIntegrated}"
           data-tool-executable="${item.Executable}"
           data-tool-arguments="${item.Arguments}"
-          data-tool-hotkeys="${item.Hotkeys || ''}">
+          data-tool-hotkeys="${(item.Hotkeys || []).join(TabTools.HOTKEY_SEPARATOR)}">
           <td class="cell-counter"></td>
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
           <td class="text-nowrap">${item.ToolName}</td>
@@ -141,9 +152,11 @@ export default class TabTools {
       const toolId = el.getAttribute('data-tool-id') ?? '';
       const toolName = el.getAttribute('data-tool-name') ?? '';
       const toolIntegrated = el.getAttribute('data-tool-integrated') === 'true';
-      const toolHotkeys = el.getAttribute('data-tool-hotkeys') ?? '';
       const toolExecutable = el.getAttribute('data-tool-executable') ?? '';
       const toolArguments = el.getAttribute('data-tool-arguments') ?? '';
+
+      const hotkeysStr = el.getAttribute('data-tool-hotkeys') ?? '';
+      const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
 
       return {
         ToolId: toolId,
@@ -165,20 +178,27 @@ export default class TabTools {
    */
   private static async editTool(toolId: string) {
     const trEl = query<HTMLTableRowElement>(`#Table_ToolList tr[data-tool-id="${toolId}"]`);
+
+    const hotkeysStr = trEl.getAttribute('data-tool-hotkeys') || '';
+    const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
+
     let tool: ITool = {
       ToolId: toolId,
-      ToolName: trEl.getAttribute('data-tool-name') ?? '',
-      Executable: trEl.getAttribute('data-tool-executable') ?? '',
-      Arguments: trEl.getAttribute('data-tool-arguments') ?? '',
+      ToolName: trEl.getAttribute('data-tool-name') || '',
+      Executable: trEl.getAttribute('data-tool-executable') || '',
+      Arguments: trEl.getAttribute('data-tool-arguments') || '',
       IsIntegrated: trEl.getAttribute('data-tool-integrated') === 'true',
-      Hotkeys: trEl.getAttribute('data-tool-hotkeys') ?? '',
+      Hotkeys: toolHotkeys,
     };
 
     // open dialog
-    await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, () => {
+    await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, async () => {
       query<HTMLInputElement>('[name="_IsIntegrated"]').checked = tool.IsIntegrated ?? false;
       TabTools.addEventsForToolDialog();
       TabTools.updateToolCommandPreview();
+
+      await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', tool.Hotkeys,
+        () => TabTools.updateToolCommandPreview());
     });
 
     tool = TabTools.getToolDialogFormData();
@@ -196,7 +216,7 @@ export default class TabTools {
       ToolName: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_ToolName"]').value.trim(),
       Executable: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value.trim(),
       Arguments: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Arguments"]').value.trim(),
-      Hotkeys: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Hotkeys"]').value.trim(),
+      Hotkeys: [], // query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Hotkeys"]').value.trim(),
       IsIntegrated: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked,
     };
 
@@ -235,9 +255,6 @@ export default class TabTools {
 
     query('#btnBrowseTool').removeEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
     query('#btnBrowseTool').addEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
-
-    query('#btnOpenHotkeyPicker').removeEventListener('click', TabTools.handleOpenHotkeyPicker, false);
-    query('#btnOpenHotkeyPicker').addEventListener('click', TabTools.handleOpenHotkeyPicker, false);
   }
 
 
@@ -259,11 +276,4 @@ export default class TabTools {
     query<HTMLInputElement>('[name="_Executable"]').value = filePaths[0];
   }
 
-
-  private static async handleOpenHotkeyPicker() {
-    const hotkey = await openHotkeyPicker();
-    if (hotkey === null) return;
-
-    query('#btnOpenHotkeyPicker').innerText = hotkey;
-  }
 }

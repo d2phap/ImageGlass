@@ -1,4 +1,4 @@
-import { IPageSettings } from './settings_types';
+import { IPageSettings } from './FrmSettings';
 import { Webview } from '@/helpers/webview';
 
 import {

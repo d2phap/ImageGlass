@@ -1,4 +1,4 @@
-import { ITheme } from '@/@types/settings_types';
+import { ITheme } from '@/@types/FrmSettings';
 import { getChangedSettingsFromTab } from '@/helpers';
 import Language from './Language';
 

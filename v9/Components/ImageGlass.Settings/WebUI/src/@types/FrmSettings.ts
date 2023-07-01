@@ -1,7 +1,7 @@
-import Language from '@/page_settings/Language';
-import Settings from '@/page_settings/Settings';
-import Sidebar from '@/page_settings/Sidebar';
-import TabLanguage from '@/page_settings/TabLanguage';
+import Language from '@/FrmSettings/Language';
+import Settings from '@/FrmSettings/Settings';
+import Sidebar from '@/FrmSettings/Sidebar';
+import TabLanguage from '@/FrmSettings/TabLanguage';
 
 export type ILanguage = {
   FileName: string,
@@ -20,7 +20,7 @@ export type ITool = {
   Executable: string;
   Arguments: string;
   IsIntegrated?: boolean;
-  Hotkeys?: string;
+  Hotkeys?: string[];
 };
 
 export type ITheme = {
