@@ -161,14 +161,5 @@ namespace ImageGlass.Settings.Properties {
                 return ResourceManager.GetString("Page_Update", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to :root,::backdrop{--InvertColor: 255 255 255;--AppBg: 20 25 28;--AppText: 210 210 210;--AppTextDisabled: 140 140 140;--Accent: 0 99 177;--ControlBg: 60 63 64;--ControlBgHover: 87 91 92;--ControlBgPressed: 43 43 43;--ControlBgPressed2: 49 51 53;--ControlBgDisabled: 78 78 78;--ControlCtaBg: rgb(var(--Accent) / 0.2);--ControlCtaBgHover: rgb(var(--Accent) / 0.3);--ControlBorder: rgb(var(--InvertColor) / 0.2);--ControlBorderHover: rgb(var(--InvertColor) / 0.3);--ControlBorderDisabled: rgb(var(--InvertColor) / 0.0 [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Styles {
-            get {
-                return ResourceManager.GetString("Styles", resourceCulture);
-            }
-        }
     }
 }

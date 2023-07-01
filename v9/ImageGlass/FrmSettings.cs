@@ -77,7 +77,7 @@ public partial class FrmSettings : WebForm
         await base.OnWeb2ReadyAsync();
 
         // update the setting data
-        await WebUI.UpdateFrmSettingsJs();
+        await WebUI.UpdateFrmSettingsJsAsync();
         WebUI.UpdateLangJson();
         WebUI.UpdateLangListJson();
         WebUI.UpdateToolListJson();

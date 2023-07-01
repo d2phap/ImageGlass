@@ -146,15 +146,6 @@ public partial class WebForm : ThemedForm
 
 
     /// <summary>
-    /// Loads html content to Web2.
-    /// </summary>
-    protected virtual string OnLoadingWebSource()
-    {
-        return string.Empty;
-    }
-
-
-    /// <summary>
     /// Provides variables to parse HTML templates.
     /// </summary>
     protected virtual IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
@@ -352,9 +343,11 @@ public partial class WebForm : ThemedForm
     {
         _isNavigationCompleted = false;
 
-        var templates = new List<(string, string)>()
+        // get templates
+        await WebUI.UpdateStylesAsync();
+        var templates = new List<(string, string)>(3)
         {
-            ("{{styles.css}}", Resources.Styles),
+            ("{{styles.css}}", WebUI.Styles),
             ("{{body.html}}", html),
             ("{{PageName}}", PageName),
         };

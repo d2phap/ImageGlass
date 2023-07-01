@@ -31,7 +31,7 @@ public static class WebUI
     /// <summary>
     /// Gets CSS content
     /// </summary>
-    public static string MainStyles { get; set; } = string.Empty;
+    public static string Styles { get; set; } = string.Empty;
 
 
     /// <summary>
@@ -108,9 +108,21 @@ public static class WebUI
     #region Public functions
 
     /// <summary>
+    /// Updates value of <see cref="Styles"/>.
+    /// </summary>
+    public static async Task UpdateStylesAsync(bool forced = false)
+    {
+        if (!string.IsNullOrEmpty(Styles) && !forced) return;
+
+        var cssPath = App.StartUpDir(Dir.WebUI, "styles.css");
+        WebUI.Styles = await File.ReadAllTextAsync(cssPath);
+    }
+
+
+    /// <summary>
     /// Updates value of <see cref="FrmSettingsJs"/>.
     /// </summary>
-    public static async Task UpdateFrmSettingsJs(bool forced = false)
+    public static async Task UpdateFrmSettingsJsAsync(bool forced = false)
     {
         if (!string.IsNullOrEmpty(FrmSettingsJs) && !forced) return;
 

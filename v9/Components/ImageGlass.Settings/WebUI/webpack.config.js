@@ -38,7 +38,7 @@ const configs = {
         exclude: /node_modules/,
         type: 'asset/resource',
         generator: {
-          filename: './dist/Styles.css',
+          filename: './styles.css',
         },
         use: [
           {
