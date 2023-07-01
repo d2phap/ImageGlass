@@ -2,8 +2,8 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const BomPlugin = require('webpack-utf8-bom');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const pkJson = require('./package.json');
 
@@ -11,11 +11,11 @@ const pkJson = require('./package.json');
 const configs = {
   entry: {
     main: './src/main.ts',
-    Script_Settings: './src/script_settings.ts',
+    FrmSettings: './src/FrmSettings.ts',
   },
   output: {
-    path: path.resolve(__dirname, '../Resources'),
-    publicPath: '../Resources/',
+    path: path.resolve(__dirname, './dist'),
+    publicPath: './dist/',
     filename: '[name].js',
 
     library: {
@@ -38,7 +38,7 @@ const configs = {
         exclude: /node_modules/,
         type: 'asset/resource',
         generator: {
-          filename: '../Resources/Styles.css',
+          filename: './dist/Styles.css',
         },
         use: [
           {
@@ -84,13 +84,13 @@ module.exports = (env, argv) => {
 
   return {
     ...configs,
-    // devtool: 'source-map',
+    devtool: 'source-map',
     optimization: {
       minimize: isProduction,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
-            sourceMap: false,
+            sourceMap: true,
             compress: isProduction,
           },
         }),
