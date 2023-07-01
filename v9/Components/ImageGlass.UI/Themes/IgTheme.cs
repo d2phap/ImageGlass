@@ -209,15 +209,15 @@ public class IgTheme : IDisposable
 
 
         // Theme settings
-        ReloadThemeSettings();
+        BHelper.RunSync(LoadThemeSettingsAsync);
 
 
         // Theme colors
-        ReloadThemeColors();
+        LoadThemeColors();
 
 
         // Toolbar icons
-        ReloadToolbarIcons(iconHeight);
+        LoadToolbarIcons(iconHeight);
 
     }
 
@@ -225,18 +225,18 @@ public class IgTheme : IDisposable
     /// <summary>
     /// Loads theme <see cref="Settings"/> from <see cref="JsonModel"/>.
     /// </summary>
-    public void ReloadThemeSettings()
+    public async Task LoadThemeSettingsAsync()
     {
         if (IsValid is false || JsonModel is null) return;
 
         // dispose the current values
         Settings.Dispose();
 
-        foreach (var item in JsonModel.Settings)
+
+        await Parallel.ForEachAsync(JsonModel.Settings, async (item, _) =>
         {
             var value = (item.Value ?? "")?.ToString()?.Trim();
-            if (string.IsNullOrEmpty(value))
-                continue;
+            if (string.IsNullOrEmpty(value)) return;
 
             var prop = Settings.GetType().GetProperty(item.Key);
 
@@ -245,14 +245,14 @@ public class IgTheme : IDisposable
                 // property is WicBitmapSource
                 if (prop?.PropertyType == typeof(WicBitmapSource))
                 {
-                    var data = BHelper.RunSync(() => PhotoCodec.LoadAsync(Path.Combine(FolderPath, value), new()
+                    var data = await PhotoCodec.LoadAsync(Path.Combine(FolderPath, value), new()
                     {
                         Width = ToolbarActualIconHeight * 2,
                         Height = ToolbarActualIconHeight * 2,
-                    }));
+                    });
 
                     prop.SetValue(Settings, data.Image);
-                    continue;
+                    return;
                 }
 
                 // property is Bitmap
@@ -261,7 +261,14 @@ public class IgTheme : IDisposable
                     var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
 
                     prop.SetValue(Settings, bmp);
-                    continue;
+                    return;
+                }
+
+                // property is String
+                if (prop?.PropertyType == typeof(String))
+                {
+                    prop.SetValue(Settings, value ?? string.Empty);
+                    return;
                 }
 
 
@@ -270,7 +277,8 @@ public class IgTheme : IDisposable
                 prop?.SetValue(Settings, typedValue);
             }
             catch { }
-        }
+        });
+
 
         if (Settings.AppLogo is null)
         {
@@ -282,7 +290,7 @@ public class IgTheme : IDisposable
     /// <summary>
     /// Loads theme <see cref="Colors"/> from <see cref="JsonModel"/>.
     /// </summary>
-    public void ReloadThemeColors()
+    public void LoadThemeColors()
     {
         if (IsValid is false || JsonModel is null) return;
 
@@ -336,7 +344,7 @@ public class IgTheme : IDisposable
     /// Loads theme <see cref="ToolbarIcons"/> from <see cref="JsonModel"/>.
     /// </summary>
     /// <param name="iconHeight">Toolbar icon height.</param>
-    public void ReloadToolbarIcons(int? iconHeight = null)
+    public void LoadToolbarIcons(int? iconHeight = null)
     {
         if (IsValid is false || JsonModel is null) return;
 

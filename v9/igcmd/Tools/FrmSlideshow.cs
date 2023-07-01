@@ -265,7 +265,7 @@ public partial class FrmSlideshow : ThemedForm
 
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
-        Config.Theme.ReloadThemeColors();
+        Config.Theme.LoadThemeColors();
 
         base.OnSystemAccentColorChanged(e);
     }

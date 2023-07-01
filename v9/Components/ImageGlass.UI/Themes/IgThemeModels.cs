@@ -115,9 +115,6 @@ public record IgThemeSettings : IDisposable
 
             AppLogo?.Dispose();
             AppLogo = null;
-
-            PreviewImage?.Dispose();
-            PreviewImage = null;
         }
 
         // Free any unmanaged objects here.
@@ -166,7 +163,7 @@ public record IgThemeSettings : IDisposable
     /// <summary>
     /// The preview image of the theme
     /// </summary>
-    public Bitmap? PreviewImage { get; set; }
+    public string PreviewImage { get; set; } = string.Empty;
 }
 
 

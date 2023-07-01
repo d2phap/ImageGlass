@@ -1480,10 +1480,10 @@ public static class Config
         else LightTheme = th.FolderName;
 
         // load theme settings
-        th.ReloadThemeSettings();
+        BHelper.RunSync(th.LoadThemeSettingsAsync);
 
         // load theme colors
-        th.ReloadThemeColors();
+        th.LoadThemeColors();
 
         // load background color
         if (Config.BackgroundColor == Theme.Colors.BgColor)

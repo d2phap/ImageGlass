@@ -200,7 +200,7 @@ public static class WebUI
         var themeList = Config.LoadThemeList();
         ThemeListJson = BHelper.ToJson(themeList.Select(th =>
         {
-            th.ReloadThemeColors();
+            th.LoadThemeColors();
             var obj = new ExpandoObject();
 
             obj.TryAdd(nameof(th.ConfigFilePath), th.ConfigFilePath);
