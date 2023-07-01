@@ -169,10 +169,12 @@
         <ItemGroup>
             <IG_Themes Include="..\..\Setup\v9\Assets\Themes\**\*.*" />
             <IG_Langs Include="..\..\Setup\v9\Assets\Language\**\*.*" />
+            <Web_UI Include="..\Components\ImageGlass.Settings\WebUI\dist\**\*.*" />
         </ItemGroup>
         
         <Copy SourceFiles="@(IG_Themes)" DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(IG_Langs)" DestinationFolder="$(OutputPath)\Language\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Web_UI)" DestinationFolder="$(OutputPath)\WebUI\%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
 
     <PropertyGroup>
