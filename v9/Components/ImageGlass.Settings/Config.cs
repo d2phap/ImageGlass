@@ -1624,7 +1624,6 @@ public static class Config
 
 
         var toolHotkeys = Config.Tools
-            .Where(i => i.Hotkeys.Count > 0)
             .ToDictionary(i => i.ToolId, i => i.Hotkeys);
 
         // merge tool hotkeys

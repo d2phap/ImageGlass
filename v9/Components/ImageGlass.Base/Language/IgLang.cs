@@ -601,7 +601,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Tools
         // Tools > Tools
-        Add("FrmSettings.Tab.Tools._AddNewTool", "Add a new external tool");
+        Add("FrmSettings.Tab.Tools._AddNewTool", "Add an external tool");
         Add("FrmSettings.Tab.Tools._EditTool", "Edit external tool");
         Add("FrmSettings.Tab.Tools._Integrated", "Integrated");
         Add("FrmSettings.Tab.Tools._IntegratedWith", "Integrated with {0}");
