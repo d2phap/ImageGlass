@@ -182,6 +182,8 @@ export const renderHotkeyList = async (
   queryAll<HTMLButtonElement>(`${ulSelector} button[data-action]`).forEach(el => {
     el.addEventListener('click', async () => {
       const action = el.getAttribute('data-action');
+      const newHotkeys = queryAll(`${ulSelector} .hotkey-item > kbd`)
+        .map(kbdEl => kbdEl.innerText);
 
       if (action === 'delete') {
         const hotkeyItemEl = el.closest('.hotkey-item');
@@ -192,7 +194,8 @@ export const renderHotkeyList = async (
         const hotkey = await openHotkeyPicker();
         if (!hotkey) return;
 
-        renderHotkeyList(ulSelector, [...hotkeys, hotkey], onChange);
+
+        renderHotkeyList(ulSelector, [...newHotkeys, hotkey], onChange);
         if (onChange) await Promise.resolve(onChange(action));
 
         // set focus to the 'Add hotkey' button
