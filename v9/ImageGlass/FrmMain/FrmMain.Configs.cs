@@ -778,12 +778,23 @@ public partial class FrmMain
                 var tagModel = tItem.Tag as ToolbarItemTagModel;
                 if (tagModel is null) continue;
 
-                var langKey = $"{Name}.{tagModel.OnClick.Executable}";
+                string langKey;
+                string hotkey;
+                if (tItem.Name == Toolbar.MainMenuButton.Name)
+                {
+                    langKey = $"{Name}.MnuMain";
+                    hotkey = Config.GetHotkeyString(CurrentMenuHotkeys, nameof(MnuMain));
+                }
+                else
+                {
+                    langKey = $"{Name}.{tagModel.OnClick.Executable}";
+                    hotkey = Config.GetHotkeyString(CurrentMenuHotkeys, tagModel.OnClick.Executable);
+                }
+
                 if (Config.Language.ContainsKey(langKey))
                 {
                     tItem.Text = tItem.ToolTipText = Config.Language[langKey];
 
-                    var hotkey = Config.GetHotkeyString(CurrentMenuHotkeys, tagModel.OnClick.Executable);
                     if (!string.IsNullOrEmpty(hotkey))
                     {
                         tItem.ToolTipText += $" ({hotkey})";
