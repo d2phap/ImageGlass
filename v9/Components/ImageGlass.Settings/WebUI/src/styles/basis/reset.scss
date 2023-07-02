@@ -12,13 +12,13 @@
 
 html {
   font-family: var(--fontBase);
+  font-size: calc(var(--fontSize) * 1px);
   color: rgb(var(--AppText));
   accent-color: rgb(var(--Accent));
   overflow: hidden;
 }
 body {
   margin: 0;
-  font-size: 12px;
   height: 100vh;
   max-height: 100vh;
   overflow: auto;

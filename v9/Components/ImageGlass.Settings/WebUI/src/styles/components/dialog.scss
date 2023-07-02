@@ -36,7 +36,7 @@ dialog {
     transition: all ease 150ms;
 
     &> button {
-      min-width: 5rem;
+      min-width: calc(5rem * var(--fontScale));
       margin-left: 0.5rem;
 
       &:first-of-type {

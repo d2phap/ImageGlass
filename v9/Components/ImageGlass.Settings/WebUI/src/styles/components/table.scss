@@ -15,7 +15,7 @@
   border: 0.075rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
   min-height: 4rem;
-  max-height: 200px;
+  max-height: calc(200 * var(--fontScale) * 1px);
   max-width: 100%;
   display: inline-block;
   counter-reset: row-counter;

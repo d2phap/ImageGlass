@@ -14,3 +14,7 @@
 .w-0 {
   width: 0% !important;
 }
+
+.w-control-compact {
+  width: calc(5rem * var(--fontScale)) !important;
+}

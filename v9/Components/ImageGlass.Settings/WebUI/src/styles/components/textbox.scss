@@ -9,36 +9,13 @@ textarea {
 
   font-size: 95%;
   padding: 0.325rem;
-  // color: rgb(var(--AppText));
-  // background-color: rgb(var(--ControlBg));
-  // border-radius: var(--border-radius);
-  // border: 0.075rem solid var(--ControlBorder);
-  // transition: all ease 300ms;
 
-  // &:hover {
-  //   background-color: rgb(var(--ControlBgHover));
-  //   border-color: var(--ControlBorderHover);
-  // }
   &:focus {
     background-color: rgb(var(--ControlBgPressed));
   }
-  // &:active {
-  //   background-color: rgb(var(--ControlBgPressed));
-  //   border-color: rgb(var(--Accent));
-  //   transition: all ease 80ms;
-  // }
-  // &:invalid {
-  //   border-color: rgb(var(--BgDanger));
-  // }
   &[readonly] {
     background-color: rgb(var(--ControlBg));
   }
-  // &[disabled],
-  // &:disabled {
-  //   color: rgb(var(--AppText) / 0.75);
-  //   border-color: var(--ControlBorder);
-  //   background-color: rgb(var(--ControlBgDisabled));
-  // }
 }
 [color-mode=light] {
   input:not([type]),
@@ -63,7 +40,7 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 textarea {
-  --control-width: 410;
+  --control-width: calc(410 * var(--fontScale));
 
   resize: none;
   min-height: 4em;

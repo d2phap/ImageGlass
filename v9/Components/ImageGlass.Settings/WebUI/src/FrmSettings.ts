@@ -37,22 +37,7 @@ if (!window._pageSettings) {
     config: {},
     lang: {},
     langList: [],
-    toolList: [
-      {
-        ToolId: 'Tool_ExifGlass',
-        ToolName: 'ExifGlass - EXIF metadata viewer',
-        Executable: 'D:\\_GITHUB\\@d2phap\\ExifGlass\\Source\\ExifGlass\\bin\\x64\\Debug\\net7.0\\ExifGlass.exe',
-        Arguments: '<file>',
-        IsIntegrated: true,
-      },
-      {
-        ToolId: 'Tool_DemoApp',
-        ToolName: 'Demo app',
-        Executable: 'D:\\_GITHUB\\@imageglass\\ImageGlass.Tools\\Source\\DemoApp\\bin\\Debug\\net7.0-windows\\DemoApp.exe',
-        Arguments: '<file>',
-        IsIntegrated: true,
-      },
-    ],
+    toolList: [],
     themeList: [],
     enums: {
       ImageOrderBy: [],

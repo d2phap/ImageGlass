@@ -11,7 +11,7 @@
     grid-area: sidebar;
     position: sticky;
     top: 0;
-    min-width: 11rem;
+    min-width: 15rem;
     padding: 0.5rem 0.25rem;
     overflow-y: auto;
     overflow-x: hidden;
@@ -33,7 +33,7 @@
     background-color: rgb(var(--AppBg) / 0.4);
 
     button {
-      min-width: 5rem;
+      min-width: calc(5rem * var(--fontScale));
     }
   }
 

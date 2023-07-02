@@ -26,7 +26,7 @@
     justify-content: end;
 
     button {
-      min-width: 5rem;
+      min-width: calc(5rem * var(--fontScale));
     }
   }
 
@@ -36,7 +36,7 @@
   }
 
   #BtnImageGlassStore svg {
-    height: 50px;
+    height: 4.2rem;
   }
 
   #BtnImageGlassStore:hover {

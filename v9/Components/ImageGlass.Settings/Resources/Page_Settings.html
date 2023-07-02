@@ -253,13 +253,11 @@
                     <div class="d-flex align-items-center ms-3 ps-1">
                         <div class="me-3">
                             <div class="mb-1" lang-text="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width">[Width]</div>
-                            <input type="number" name="EmbeddedThumbnailMinWidth" required min="0" max="100000"
-                                   style="width: 5rem;" />
+                            <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinWidth" required min="0" max="100000" />
                         </div>
                         <div>
                             <div class="mb-1" lang-text="FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height">[Height]</div>
-                            <input type="number" name="EmbeddedThumbnailMinHeight" required min="0" max="100000"
-                                   style="width: 5rem;" />
+                            <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinHeight" required min="0" max="100000" />
                         </div>
                     </div>
                 </div>
@@ -375,11 +373,11 @@
                     <div class="d-flex align-items-center">
                         <div class="me-3">
                             <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
-                            <input type="number" name="SlideshowInterval" required step="0.1" min="0" style="width: 5rem;" />
+                            <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" />
                         </div>
                         <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
                             <div class="mb-1" lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
-                            <input type="number" name="SlideshowIntervalTo" required step="0.1" min="0" style="width: 5rem;" />
+                            <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" />
                         </div>
                     </div>
                 </div>
@@ -769,7 +767,7 @@
                     </div>
                     <span class="d-flex align-items-center">
                         <input type="hidden" name="BackgroundColor" />
-                        <button id="Btn_BackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">
+                        <button id="Btn_BackgroundColor" class="color-picker me-2 w-control-compact" type="button">
                             <div class="color-display"></div>
                             <div class="color-checkerboard"></div>
                         </button>
@@ -785,7 +783,7 @@
                     </div>
                     <span class="d-flex align-items-center">
                         <input type="hidden" name="SlideshowBackgroundColor" />
-                        <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2" type="button" style="width: 5rem;">
+                        <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2 w-control-compact" type="button">
                             <div class="color-display"></div>
                             <div class="color-checkerboard"></div>
                         </button>
@@ -831,7 +829,7 @@
                 <span class="create-only" lang-text="FrmSettings.Tab.Tools._AddNewTool">[Add a new external tool]</span>
                 <span class="edit-only" lang-text="FrmSettings.Tab.Tools._EditTool">[Edit external tool]</span>
             </header>
-            <div class="dialog-body" style="width: 400px;">
+            <div class="dialog-body" style="width: 33rem;">
                 <div class="mb-2">
                     <div class="mb-1" lang-text="_._ID">[ID]</div>
                     <input type="text" name="_ToolId" class="w-100" required spellcheck="false" />
@@ -867,7 +865,7 @@
                 <div class="mt-4">
                     <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>
                     <pre class="text-code px-2 py-1 my-0"
-                         style="min-height: 3rem; max-height: 4rem;"><code id="Tool_CommandPreview"></code></pre>
+                         style="min-height: calc(3rem * var(--fontScale)); max-height: calc(4rem * var(--fontScale));"><code id="Tool_CommandPreview"></code></pre>
                 </div>
             </div>
             <footer class="dialog-footer">

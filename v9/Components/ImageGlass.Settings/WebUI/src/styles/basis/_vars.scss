@@ -2,6 +2,9 @@
 // theme colors (dark is default)
 :root,
 ::backdrop {
+  --designFontSize: 12;
+  --fontScale: var(--fontSize) / var(--designFontSize);
+
   --InvertColor: 255 255 255;
   --AppBg: 20 25 28;
   --AppText: 210 210 210;
@@ -27,11 +30,13 @@
   --BgWarning: 255 139 0;
   --BgDanger: 255 0 83;
 
-  --control-width: 200;
-  --control-height: 28;
-  --border-radius: 0.15rem;
+  --control-width: calc(200 * var(--fontScale));
+  --control-height: calc(28 * var(--fontScale));
+  --border-radius: calc(0.2rem * var(--fontScale));
   --shadow: 0 1px 10px -5px rgb(0 0 0 / 50%);
-  --scrollBarSize-px: 0.75rem; // 12px
+  --scrollBarSize-px: calc(0.75rem * var(--fontScale)); // 12px
+
+  --fontSize: 13;
   --fontBase: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variant", "Segoe UI";
   --fontCode: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
