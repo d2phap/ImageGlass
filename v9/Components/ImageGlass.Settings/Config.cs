@@ -1233,7 +1233,7 @@ public static class Config
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(Layout), Layout);
-        settings.TryAdd(nameof(Tools), Tools.Select(i => i.ToExpandoObject()));
+        settings.TryAdd(nameof(Tools), Tools);
 
         #endregion
 

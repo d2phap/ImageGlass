@@ -245,7 +245,7 @@ public static class WebUI
     {
         if (!string.IsNullOrEmpty(ToolListJson) && !forced) return;
 
-        ToolListJson = BHelper.ToJson(Config.Tools.Select(i => i.ToExpandoObject()));
+        ToolListJson = BHelper.ToJson(Config.Tools);
     }
 
     #endregion // Public functions

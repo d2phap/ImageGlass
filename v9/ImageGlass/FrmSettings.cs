@@ -480,7 +480,12 @@ public partial class FrmSettings : WebForm
 
         if (Config.SetFromJson(dict, nameof(Config.Tools)).Done)
         {
+            // update hotkeys list
+            FrmMain.CurrentMenuHotkeys = Config.GetAllHotkeys(FrmMain.CurrentMenuHotkeys);
+
+            // update extenal tools menu
             Local.FrmMain.LoadExternalTools();
+            WebUI.UpdateToolListJson(true);
         }
 
         #endregion // Tab Tools

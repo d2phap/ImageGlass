@@ -1017,6 +1017,7 @@ public partial class FrmMain
                 Checked = false,
                 ImageScaling = ToolStripItemImageScaling.None,
                 Image = new Bitmap(newMenuIconHeight, newMenuIconHeight),
+                ShortcutKeyDisplayString = Config.GetHotkeyString(CurrentMenuHotkeys, item.ToolId),
             };
 
             mnu.Click += MnuExternalTool_Click;

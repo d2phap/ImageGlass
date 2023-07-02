@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Dynamic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ImageGlass.Base;
 
@@ -31,7 +33,7 @@ public class IgTool
     /// <summary>
     /// Name of the tool.
     /// </summary>
-    public string ToolName { get; set;} = string.Empty;
+    public string ToolName { get; set; } = string.Empty;
 
 
     /// <summary>
@@ -55,6 +57,7 @@ public class IgTool
     /// <summary>
     /// Gets, sets tool hotkeys.
     /// </summary>
+    [JsonConverter(typeof(HotkeyListJsonConverter))]
     public List<Hotkey> Hotkeys { get; set; } = new List<Hotkey>();
 
 
@@ -63,21 +66,45 @@ public class IgTool
     /// </summary>
     public bool IsEmpty => string.IsNullOrEmpty(ToolId) || string.IsNullOrEmpty(Executable);
 
+}
 
-    /// <summary>
-    /// Converts <see cref="IgTool"/> instance to <see cref="ExpandoObject"/>.
-    /// </summary>
-    public ExpandoObject ToExpandoObject()
+
+/// <summary>
+/// Converts <see cref="IgTool.Hotkeys"/> to <see cref="string[]"/> and vice versa.
+/// </summary>
+public class HotkeyListJsonConverter : JsonConverter<List<Hotkey>>
+{
+    public override List<Hotkey>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var obj = new ExpandoObject();
+        if (reader.TokenType != JsonTokenType.StartArray) return null;
 
-        _ = obj.TryAdd(nameof(ToolId), ToolId);
-        _ = obj.TryAdd(nameof(ToolName), ToolName);
-        _ = obj.TryAdd(nameof(Executable), Executable);
-        _ = obj.TryAdd(nameof(Arguments), Arguments);
-        _ = obj.TryAdd(nameof(IsIntegrated), IsIntegrated);
-        _ = obj.TryAdd(nameof(Hotkeys), Hotkeys.Select(i => i.ToString()).ToArray());
+        reader.Read();
 
-        return obj;
+        var elements = new Stack<string>();
+        while (reader.TokenType != JsonTokenType.EndArray)
+        {
+            elements.Push(JsonSerializer.Deserialize<string>(ref reader, options)!);
+            reader.Read();
+        }
+
+        return elements.Distinct(StringComparer.OrdinalIgnoreCase)
+            .Select(i => new Hotkey(i))
+            .ToList();
+    }
+
+
+    public override void Write(Utf8JsonWriter writer, List<Hotkey> value, JsonSerializerOptions options)
+    {
+        writer.WriteStartArray();
+
+        var reversed = new Stack<Hotkey>(value);
+
+        foreach (var item in reversed)
+        {
+            JsonSerializer.Serialize(writer, item.ToString(), options);
+        }
+
+        writer.WriteEndArray();
     }
 }
+
