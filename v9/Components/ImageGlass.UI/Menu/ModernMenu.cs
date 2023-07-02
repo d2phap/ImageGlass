@@ -139,11 +139,10 @@ public class ModernMenu : ContextMenuStrip
     /// <summary>
     /// Apply these fixes:
     /// <list type="bullet">
-    ///   <item>Menu height when DPI changes</item>
+    ///   <item>DPI scaling for menu height, font size</item>
     ///   <item>Windows 11 round border</item>
     ///   <item>Dropdown direction</item>
     /// </list>
-    /// to the provided menu component.
     /// </summary>
     /// <param name="items"></param>
     public void FixGeneralIssues(

@@ -174,7 +174,7 @@
           </label>
         </div>
 
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-2">
           <div class="mb-1" lang-text="FrmSettings.Tab.General._InAppMessageDuration">[InAppMessageDuration]</div>
           <input type="number" name="InAppMessageDuration" required min="0" max="60000" />
         </div>
@@ -188,12 +188,12 @@
       <section>
         <header lang-text="FrmSettings.Tab.Image._ImageLoading">[Image loading]</header>
         <div class="d-flex align-items-end">
-          <div class="me-2 mb-2">
+          <div class="me-2 mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageLoadingOrder">[ImageLoadingOrder]</div>
             <select name="ImageLoadingOrder" required data-enum="ImageOrderBy">
             </select>
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <select name="ImageLoadingOrderType" required data-enum="ImageOrderType">
             </select>
           </div>
@@ -242,7 +242,7 @@
         </div>
 
         <!-- Embedded thumbnail -->
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-2">
           <div class="mb-2">
             <b lang-text="FrmSettings.Tab.Image._EmbeddedThumbnail">[Embedded thumbnail]</b>
           </div>
@@ -281,7 +281,7 @@
       <!-- Image > Image booster -->
       <section>
         <header lang-text="FrmSettings.Tab.Image._ImageBooster">[Image booster]</header>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageBoosterCacheCount">[ImageBoosterCacheCount]</div>
           <select name="ImageBoosterCacheCount" required>
             <option value="0">0</option>
@@ -297,12 +297,12 @@
             <option value="10">10</option>
           </select>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension">
             [ImageBoosterCacheMaxDimension]</div>
           <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="1000000" />
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb">
             [ImageBoosterCacheMaxFileSizeInMb]
           </div>
@@ -320,8 +320,8 @@
             <div lang-text="FrmSettings.Tab.Image._ShouldUseColorProfileForAll">[ShouldUseColorProfileForAll]</div>
           </label>
         </div>
-        <div class="mt-3 mb-2">
-          <div class="d-flex align-items-end">
+        <div class="mt-4 mb-2">
+          <div class="mb-3 d-flex align-items-end">
             <div class="me-2">
               <div class="mb-1" lang-text="FrmSettings.Tab.Image._ColorProfile">[ColorProfile]</div>
               <select name="ColorProfile" required data-enum="ColorProfileOption">
@@ -329,7 +329,7 @@
             </div>
             <button id="Btn_BrowseColorProfile" type="button" class="aniFadeIn" lang-text="_._Browse">[Browse...]</button>
           </div>
-          <div id="Section_CustomColorProfile" class="mt-2 aniFadeIn">
+          <div id="Section_CustomColorProfile" class="aniFadeIn">
             <a id="Lnk_CustomColorProfile" class="text-nowrap" href="#"></a>
           </div>
         </div>
@@ -375,7 +375,7 @@
         </div>
 
         <!-- Slideshow interval -->
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-2">
           <div class="mb-2">
             <b lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval:]</b>
             <b id="Lbl_SlideshowInterval"></b>
@@ -399,7 +399,7 @@
       <!-- Slideshow > Slideshow notification -->
       <section>
         <header lang-text="FrmSettings.Tab.Slideshow._SlideshowNotification">[Slideshow notification]</header>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound">
             [Number of images to trigger a notification sound]
           </div>
@@ -432,11 +432,11 @@
             <div lang-text="FrmSettings.Tab.Edit._ShouldPreserveModifiedDate">[ShouldPreserveModifiedDate]</div>
           </label>
         </div>
-        <div class="mb-2 mt-3">
+        <div class="mb-3 mt-4">
           <div class="mb-1" lang-text="FrmSettings.Tab.Edit._ImageEditQuality">[ImageEditQuality]</div>
           <input type="number" name="ImageEditQuality" required min="0" max="100" />
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
           <select name="AfterEditingAction" required data-enum="AfterEditAppAction">
           </select>
@@ -486,7 +486,7 @@
             <div lang-text="FrmSettings.Tab.Viewer._CenterWindowFit">[CenterWindowFit]</div>
           </label>
         </div>
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-2">
           <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
           <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" />
         </div>
@@ -501,13 +501,13 @@
           <div class="mb-2">
             <b lang-text="FrmSettings.Tab.Viewer._ImageInterpolation">[Image interpolation]</b>
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown">
               [ImageInterpolationScaleDown]</div>
             <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
             </select>
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp">[ImageInterpolationScaleUp]
             </div>
             <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
@@ -515,11 +515,11 @@
           </div>
         </div>
         
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
           <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" />
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
           <textarea name="ZoomLevels" rows="3" spellcheck="false"></textarea>
         </div>
@@ -544,7 +544,7 @@
             <div lang-text="FrmSettings.Tab.Toolbar._EnableCenterToolbar">[EnableCenterToolbar]</div>
           </label>
         </div>
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
           <input type="number" name="ToolbarIconHeight" required min="10" max="1000" />
         </div>
@@ -576,15 +576,15 @@
           </label>
         </div>
 
-        <div class="mt-3 mb-2">
+        <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._ThumbnailSize">[ThumbnailSize]</div>
           <input type="number" name="ThumbnailSize" required min="20" max="500" />
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
           <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" />
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
           <input type="number" name="GalleryColumns" required min="1" max="100" />
         </div>
@@ -606,27 +606,27 @@
       <!-- Mouse & Keyboard > Mouse wheel action -->
       <section>
         <header lang-text="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Mouse wheel action]</header>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="_.MouseWheelEvent._Scroll">[Scroll]</div>
           <select id="Cmb_MouseWheel_Scroll" required data-enum="MouseWheelAction">
           </select>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="_.MouseWheelEvent._CtrlAndScroll">[CtrlAndScroll]</div>
           <select id="Cmb_MouseWheel_CtrlAndScroll" required data-enum="MouseWheelAction">
           </select>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="_.MouseWheelEvent._ShiftAndScroll">[ShiftAndScroll]</div>
           <select id="Cmb_MouseWheel_ShiftAndScroll" required data-enum="MouseWheelAction">
           </select>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="_.MouseWheelEvent._AltAndScroll">[AltAndScroll]</div>
           <select id="Cmb_MouseWheel_AltAndScroll" required data-enum="MouseWheelAction">
           </select>
         </div>
-        <div class="mb-2 mt-3">
+        <div class="mb-3 mt-4">
           <button id="Btn_ResetMouseWheelAction" type="button" lang-text="_._ResetToDefault">[Reset to default]</button>
         </div>
       </section>
@@ -691,7 +691,7 @@
       <!-- Tools > Tools -->
       <section>
         <header lang-text="FrmSettings.Nav._Tools">[Tools]</header>
-        <div class="mb-2 d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-center">
           <a class="text-nowrap me-2" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
             lang-text="FrmMain.MnuGetMoreTools">
             [Get more tools...]
@@ -728,12 +728,13 @@
       <!-- Language > Language -->
       <section>
         <header lang-text="FrmSettings.Nav._Language">[Language]</header>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
-          <select id="Cmb_LanguageList" name="Language" class="me-2">
-          </select>
-
-          <button id="Btn_RefreshLanguageList" type="button" lang-text="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
+          <div class="d-flex align-items-center">
+            <select id="Cmb_LanguageList" name="Language" class="me-2">
+            </select>
+            <button id="Btn_RefreshLanguageList" type="button" lang-text="FrmSettings.Tab.Language._Refresh">[Refresh]</button>
+          </div>
         </div>
         <div class="mb-2 mt-3">
           <a id="Lnk_InstallLanguage" href="#" lang-text="FrmSettings.Tab.Language._InstallNewLanguagePack">
@@ -762,12 +763,12 @@
       <!-- Appearance > Appearance -->
       <section>
         <header lang-text="FrmSettings.Nav._Appearance">[Appearance]</header>
-        <div class="mb-2">
+        <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Appearance._WindowBackdrop">[WindowBackdrop]</div>
           <select name="WindowBackdrop" required data-enum="BackdropStyle">
           </select>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div>
             <div class="mb-1">
               <span lang-text="FrmSettings.Tab.Appearance._BackgroundColor">[BackgroundColor]</span>
@@ -783,7 +784,7 @@
             </span>
           </div>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
           <div>
             <div class="mb-1">
               <span lang-text="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">[SlideshowBackgroundColor]</span>
@@ -807,7 +808,7 @@
         <input type="hidden" name="DarkTheme" />
         <input type="hidden" name="LightTheme" />
 
-        <div class="mb-2 d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-center">
           <a class="text-nowrap me-2" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
             lang-text="FrmSettings.Tab.Appearance._Theme._GetMoreThemes">
             [Get more theme packs...]
@@ -825,6 +826,7 @@
             </button>
           </div>
         </div>
+
         <ul id="List_ThemeList" class="ig-listbox mb-2"></ul>
       </section>
     </section>
@@ -838,15 +840,15 @@
           <span class="edit-only" lang-text="FrmSettings.Tab.Tools._EditTool">[Edit external tool]</span>
         </header>
         <div class="dialog-body" style="width: 33rem;">
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="_._ID">[ID]</div>
             <input type="text" name="_ToolId" class="w-100" required spellcheck="false" />
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="_._Name">[Name]</div>
             <input type="text" name="_ToolName" class="w-100" required spellcheck="false" />
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
               <input type="text" name="_Executable" class="me-2 w-100" required spellcheck="false"
@@ -854,15 +856,15 @@
               <button id="btnBrowseTool" type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="_._Arguments">[Arguments]</div>
             <input type="text" name="_Arguments" class="w-100" spellcheck="false" value="<file>" />
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
             <ul class="hotkey-list mb-1"></ul>
           </div>
-          <div class="mb-2">
+          <div class="mb-3 mt-4">
             <label class="ig-checkbox">
               <input type="checkbox" name="_IsIntegrated" />
               <div lang-html="FrmSettings.Tab.Tools._IntegratedWith">

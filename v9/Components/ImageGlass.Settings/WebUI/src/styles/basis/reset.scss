@@ -374,7 +374,7 @@ progress {
   color: rgb(var(--AppText));
   background-color: rgb(var(--ControlBg));
   border-radius: var(--border-radius);
-  border: 0.075rem solid var(--ControlBorder);
+  border: 0.1rem solid var(--ControlBorder);
   transition: all ease 300ms;
   &::selection {
     background-color: rgb(var(--Accent) / 0.55);
