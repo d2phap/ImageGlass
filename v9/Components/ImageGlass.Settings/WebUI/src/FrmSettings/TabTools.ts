@@ -276,7 +276,8 @@ export default class TabTools {
     const filePaths = await openFilePicker() ?? [];
     if (!filePaths.length) return;
 
-    query<HTMLInputElement>('[name="_Executable"]').value = filePaths[0];
+    query<HTMLInputElement>('[name="_Executable"]').value = `"${filePaths[0]}"`;
+    TabTools.updateToolCommandPreview();
   }
 
 }
