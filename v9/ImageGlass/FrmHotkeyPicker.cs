@@ -85,6 +85,15 @@ public partial class FrmHotkeyPicker : DialogForm
     }
 
 
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        // allow all keys to be captured
+        e.SuppressKeyPress = false;
+    }
+
+
     #endregion // Override / Virtual methods
 
 
