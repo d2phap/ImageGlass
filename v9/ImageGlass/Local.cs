@@ -95,7 +95,7 @@ internal class Local
     /// Occurs when the FrmMain's state needs to be updated.
     /// </summary>
     public static event FrmMainUpdateRequestedHandler? FrmMainUpdateRequested;
-    public delegate void FrmMainUpdateRequestedHandler(UpdateRequests e);
+    public delegate void FrmMainUpdateRequestedHandler(UpdateRequestEventArgs e);
 
     /// <summary>
     /// Occurs when the FrmMain's state needs to be updated.
@@ -203,9 +203,13 @@ internal class Local
     /// <summary>
     /// Raise <see cref="FrmMainUpdateRequested"/> event.
     /// </summary>
-    public static void UpdateFrmMain(UpdateRequests e)
+    public static void UpdateFrmMain(UpdateRequests requests, Action<UpdateRequests>? onUpdated = null)
     {
-        FrmMainUpdateRequested?.Invoke(e);
+        FrmMainUpdateRequested?.Invoke(new UpdateRequestEventArgs()
+        {
+            Requests = requests,
+            OnUpdated = onUpdated,
+        });
     }
 
 

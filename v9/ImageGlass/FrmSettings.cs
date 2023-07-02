@@ -524,7 +524,13 @@ public partial class FrmSettings : WebForm
         if (updateAppearance) requests |= UpdateRequests.Appearance;
         if (updateTheme) requests |= UpdateRequests.Theme;
 
-        Local.UpdateFrmMain(requests);
+        Local.UpdateFrmMain(requests, (e) =>
+        {
+            if (e.HasFlag(UpdateRequests.Language))
+            {
+                WebUI.UpdateLangJson(true);
+            }
+        });
     }
 
 

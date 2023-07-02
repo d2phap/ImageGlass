@@ -113,3 +113,16 @@ public class ImageSaveEventArgs : EventArgs
     }
 }
 
+
+public class UpdateRequestEventArgs : EventArgs
+{
+    /// <summary>
+    /// Gets the update requests
+    /// </summary>
+    public UpdateRequests Requests { get; init; }
+
+    /// <summary>
+    /// Gets the action to execute after update requests made
+    /// </summary>
+    public Action<UpdateRequests>? OnUpdated { get; init; }
+}

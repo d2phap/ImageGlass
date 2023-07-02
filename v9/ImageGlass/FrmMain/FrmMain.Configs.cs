@@ -308,7 +308,6 @@ public partial class FrmMain
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
     }
 
-
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
         _ = SaveConfigsOnClosing();
@@ -378,37 +377,37 @@ public partial class FrmMain
     /// <summary>
     /// Processes internal update requests
     /// </summary>
-    private void Local_FrmMainUpdateRequested(UpdateRequests e)
+    private void Local_FrmMainUpdateRequested(UpdateRequestEventArgs e)
     {
-        if (e.HasFlag(UpdateRequests.ReloadImage))
+        if (e.Requests.HasFlag(UpdateRequests.ReloadImage))
         {
             IG_Reload();
         }
 
-        if (e.HasFlag(UpdateRequests.ReloadImageList))
+        if (e.Requests.HasFlag(UpdateRequests.ReloadImageList))
         {
             IG_ReloadList();
         }
 
-        if (e.HasFlag(UpdateRequests.Slideshow))
+        if (e.Requests.HasFlag(UpdateRequests.Slideshow))
         {
             // TODO:
         }
 
-        if (e.HasFlag(UpdateRequests.ToolbarIcons))
+        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons))
         {
             Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
             ToolbarContext.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
         }
 
-        if (e.HasFlag(UpdateRequests.ToolbarIcons) || e.HasFlag(UpdateRequests.ToolbarAlignment))
+        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons) || e.Requests.HasFlag(UpdateRequests.ToolbarAlignment))
         {
             Toolbar.Alignment = Config.EnableCenterToolbar
                 ? ToolbarAlignment.Center
                 : ToolbarAlignment.Left;
         }
 
-        if (e.HasFlag(UpdateRequests.Gallery))
+        if (e.Requests.HasFlag(UpdateRequests.Gallery))
         {
             Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
             Gallery.ShowItemText = Config.ShowGalleryFileName;
@@ -418,29 +417,29 @@ public partial class FrmMain
             UpdateGallerySize();
         }
 
-        if (e.HasFlag(UpdateRequests.Language))
+        if (e.Requests.HasFlag(UpdateRequests.Language))
         {
             Config.TriggerRequestUpdatingLanguage();
         }
 
-        if (e.HasFlag(UpdateRequests.Theme))
+        if (e.Requests.HasFlag(UpdateRequests.Theme))
         {
             Config.LoadThemePack(WinColorsApi.IsDarkMode, true, true);
             Config.TriggerRequestUpdatingTheme();
         }
 
-        if (e.HasFlag(UpdateRequests.Appearance))
+        if (e.Requests.HasFlag(UpdateRequests.Appearance))
         {
             Config.TriggerRequestUpdatingTheme();
         }
 
-        if (e.HasFlag(UpdateRequests.MenuHotkeys))
+        if (e.Requests.HasFlag(UpdateRequests.MenuHotkeys))
         {
             LoadMenuHotkeys();
             LoadToolbarItemsText(Toolbar);
         }
 
-        if (e.HasFlag(UpdateRequests.MouseActions))
+        if (e.Requests.HasFlag(UpdateRequests.MouseActions))
         {
             var executable = nameof(IG_OpenContextMenu);
             var hasRightClick = Config.MouseClickActions.ContainsKey(MouseClickEvent.RightClick);
@@ -477,6 +476,9 @@ public partial class FrmMain
                 PicMain.ContextMenuStrip = null;
             }
         }
+
+
+        e.OnUpdated?.Invoke(e.Requests);
     }
 
 
