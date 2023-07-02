@@ -201,6 +201,36 @@ public class ModernMenu : ContextMenuStrip
     }
 
 
+    /// <summary>
+    /// Finds <see cref="ToolStripMenuItem"/> item by name.
+    /// </summary>
+    public ToolStripMenuItem? FindMenuItem(string menuName)
+    {
+        if (string.IsNullOrEmpty(menuName)) return null;
+
+
+        ToolStripMenuItem? FindMenuRecursive(ToolStripMenuItem menuItem)
+        {
+            if (menuItem.Name == menuName) return menuItem;
+
+            foreach (var child in menuItem.DropDownItems.OfType<ToolStripMenuItem>())
+            {
+                var item = FindMenuRecursive(child);
+                if (item != null) return item;
+            }
+
+            return null;
+        }
+
+
+        foreach (ToolStripMenuItem mnuItem in ActualItems)
+        {
+            var item = FindMenuRecursive(mnuItem);
+            if (item != null) return item;
+        }
+
+        return null;
+    }
 
     #endregion
 
