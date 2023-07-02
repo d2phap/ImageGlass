@@ -34,7 +34,7 @@ public class Hotkey
     {
         get
         {
-            var str = KeyCode.ToString();
+            var str = KeyCode == Keys.None ? string.Empty : KeyCode.ToString();
 
             if (str.StartsWith("Oem")
                 || (str.StartsWith("D") && str.Length == 2) // D0 -> D9

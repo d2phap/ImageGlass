@@ -71,7 +71,7 @@ public partial class FrmSettings : WebForm
         """);
     }
 
-    
+
     protected override async Task OnWeb2ReadyAsync()
     {
         await base.OnWeb2ReadyAsync();
@@ -688,9 +688,9 @@ public partial class FrmSettings : WebForm
 
 
     /// <summary>
-    /// Open hotkey picker, returns <c>"null"</c> if user cancels the dialog.
+    /// Open hotkey picker, returns <c>string.Empty</c> if user cancels the dialog or does not press any key
     /// </summary>
-    private string? OpenHotkeyPickerJson()
+    private string OpenHotkeyPickerJson()
     {
         using var frm = new FrmHotkeyPicker()
         {
@@ -703,7 +703,7 @@ public partial class FrmSettings : WebForm
             return frm.HotkeyValue.ToString();
         }
 
-        return "null";
+        return string.Empty;
     }
 
 }

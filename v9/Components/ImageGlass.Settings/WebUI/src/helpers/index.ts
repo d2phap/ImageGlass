@@ -190,7 +190,7 @@ export const renderHotkeyList = async (
       }
       else if (action === 'add') {
         const hotkey = await openHotkeyPicker();
-        if (hotkey === null) return;
+        if (!hotkey) return;
 
         renderHotkeyList(ulSelector, [...hotkeys, hotkey], onChange);
         if (onChange) await Promise.resolve(onChange(action));
