@@ -80,19 +80,19 @@ public class Hotkey
         try
         {
 
-            var keyStrings = s.Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var keyStrings = s.ToLowerInvariant().Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             foreach (var str in keyStrings)
             {
-                if (str.Equals("ctrl", StringComparison.OrdinalIgnoreCase))
+                if (str.Equals("ctrl"))
                 {
                     hotkey |= Keys.Control;
                 }
-                else if (str.Equals("shift", StringComparison.OrdinalIgnoreCase))
+                else if (str.Equals("shift"))
                 {
                     hotkey |= Keys.Shift;
                 }
-                else if (str.Equals("alt", StringComparison.OrdinalIgnoreCase))
+                else if (str.Equals("alt"))
                 {
                     hotkey |= Keys.Alt;
                 }
@@ -176,4 +176,5 @@ public class Hotkey
 
         return string.Join('+', modifiers);
     }
+
 }
