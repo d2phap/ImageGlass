@@ -290,7 +290,7 @@ public partial class WebForm : ThemedForm
 
         WebV.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
 
-        OnWeb2ReadyAsync();
+        _ = OnWeb2ReadyAsync();
     }
 
 

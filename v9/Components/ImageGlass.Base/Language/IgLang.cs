@@ -517,7 +517,7 @@ public class IgLang : Dictionary<string, string>
         // Slideshow > Slideshow
         Add("FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow", "Automatically hide main window");
         Add("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
-        Add("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in fullscreen mode");
+        Add("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
         Add("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
         Add("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
@@ -564,7 +564,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Toolbar
         // Toolbar > Toolbar
-        Add("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in Fullscreen mode");
+        Add("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
         Add("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
         Add("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
         #endregion // Tab Toolbar
@@ -572,7 +572,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Gallery
         // Gallery > Gallery
-        Add("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in Fullscreen mode");
+        Add("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in full screen mode");
         Add("FrmSettings.Tab.Gallery._ShowGalleryScrollbars", "Show gallery scrollbars");
         Add("FrmSettings.Tab.Gallery._ShowGalleryFileName", "Show thumbnail filename");
         Add("FrmSettings.Tab.Gallery._ThumbnailSize", "Thumbnail size (in pixels)");
