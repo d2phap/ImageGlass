@@ -62,9 +62,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="WebUI\node_modules\**" />
-    <EmbeddedResource Remove="WebUI\node_modules\**" />
-    <None Remove="WebUI\node_modules\**" />
+    <Compile Remove="WebUI\**" />
+    <EmbeddedResource Remove="WebUI\**" />
+    <None Remove="WebUI\**" />
   </ItemGroup>
 
     <ItemGroup>
@@ -97,10 +97,6 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="WebUI\" />
     </ItemGroup>
 
 </Project>
