@@ -305,7 +305,7 @@ public partial class FrmMain : ThemedForm
         if (tagModel == null) return;
 
         // execute action
-        ExecuteUserAction(tagModel.OnClick);
+        _ = ExecuteUserActionAsync(tagModel.OnClick);
     }
 
 
@@ -1535,7 +1535,7 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Executes user action
     /// </summary>
-    public void ExecuteUserAction(SingleAction? ac)
+    public async Task ExecuteUserActionAsync(SingleAction? ac)
     {
         if (ac == null) return;
         if (string.IsNullOrEmpty(ac.Executable)) return;
@@ -1546,19 +1546,12 @@ public partial class FrmMain : ThemedForm
 
         // Executable is name of main menu item
         #region Main menu item executable
-        if (ac.Executable.StartsWith("Mnu"))
-        {
-            var field = GetType().GetField(ac.Executable);
-            var mnu = field?.GetValue(this) as ToolStripMenuItem;
+        var mnu = MnuMain.FindMenuItem(ac.Executable);
 
-            if (mnu is not null)
-            {
-                mnu.PerformClick();
-            }
-            else
-            {
-                error = new MissingFieldException(string.Format(Config.Language[$"{langPath}._MenuNotFound"], ac.Executable));
-            }
+        if (mnu != null) mnu.PerformClick();
+        else if (ac.Executable.StartsWith("Mnu"))
+        {
+            error = new MissingFieldException(string.Format(Config.Language[$"{langPath}._MenuNotFound"], ac.Executable));
         }
         #endregion
 
@@ -1621,6 +1614,7 @@ public partial class FrmMain : ThemedForm
                 try
                 {
                     method.Invoke(this, paramters.ToArray());
+                    error = null;
                 }
                 catch (Exception ex) { error = ex; }
             }
@@ -1641,22 +1635,11 @@ public partial class FrmMain : ThemedForm
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             var procArgs = $"{ac.Arguments}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
 
-            // run external command line
-            using var proc = new Process
+            var result = await BHelper.RunExeCmd(ac.Executable, procArgs, true);
+            if (result != IgExitCode.Done)
             {
-                StartInfo = new(ac.Executable)
-                {
-                    Arguments = procArgs,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                },
-            };
-
-            try
-            {
-                proc.Start();
+                error = new Exception(string.Format(Config.Language[$"{langPath}._Win32ExeError"], ac.Executable));
             }
-            catch { }
         }
 
         #endregion
@@ -1665,7 +1648,7 @@ public partial class FrmMain : ThemedForm
         // run next action
         if (error == null)
         {
-            ExecuteUserAction(ac.NextAction);
+            await ExecuteUserActionAsync(ac.NextAction);
         }
         // show error if any
         else
@@ -1699,12 +1682,12 @@ public partial class FrmMain : ThemedForm
                 if (executable != nameof(IG_OpenContextMenu)
                     && executable != nameof(IG_OpenMainMenu))
                 {
-                    ExecuteUserAction(action);
+                    _ = ExecuteUserActionAsync(action);
                 }
             }
             else
             {
-                ExecuteUserAction(action);
+                _ = ExecuteUserActionAsync(action);
             }
 
             // update toggling value

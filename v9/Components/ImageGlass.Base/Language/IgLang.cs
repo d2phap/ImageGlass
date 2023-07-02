@@ -148,9 +148,10 @@ public class IgLang : Dictionary<string, string>
         Add($"_._NotSupported", "Unsupported format"); //v9.0
         Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
 
-        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
-        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
-        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported."); // v9.0
+        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action"); // v9.0
+        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke the action"); // v9.0
+        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported"); // v9.0
+        Add("_._UserAction._Win32ExeError", "Cannot execute command '{0}'. Make sure the name is correct."); // v9.0
 
         // Gallery tooltip
         Add($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
