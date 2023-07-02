@@ -150,19 +150,20 @@ public class ModernMenu : ContextMenuStrip
         ToolStripDropDown menu,
         float originalIconSize)
     {
-        // standard icon size
         var dpiScale = CurrentDpi / 96f;
-        var iconH = originalIconSize * dpiScale;
+        var currentFontSize = SystemInformation.MenuFont.SizeInPoints;
+
+        // standard menu height
+        var fontSizeDiff = Math.Max(0, currentFontSize - 9 - dpiScale) * dpiScale;
+        var iconH = (originalIconSize + fontSizeDiff) * dpiScale;
+
 
         for (int i = 0; i < menu.Items.Count; i++)
         {
             if (menu.Items[i] is not ToolStripMenuItem mnuItem) continue;
 
-            if (dpiScale >= 1.75f)
-            {
-                var fontSize = dpiScale * 16 / 4.2f;
-                mnuItem.Font = new Font(Font.FontFamily, fontSize);
-            }
+            // fix font size scaling
+            mnuItem.Font = new Font(Font.FontFamily, currentFontSize);
 
             // Fix menu height
             #region Fix menu height
