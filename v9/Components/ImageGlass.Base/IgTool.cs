@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using System.Dynamic;
+
 namespace ImageGlass.Base;
 
 public class IgTool
@@ -51,8 +53,31 @@ public class IgTool
 
 
     /// <summary>
+    /// Gets, sets tool hotkeys.
+    /// </summary>
+    public List<Hotkey> Hotkeys { get; set; } = new List<Hotkey>();
+
+
+    /// <summary>
     /// Checks if the current <see cref="IgTool"/> instance is empty.
     /// </summary>
     public bool IsEmpty => string.IsNullOrEmpty(ToolId) || string.IsNullOrEmpty(Executable);
 
+
+    /// <summary>
+    /// Converts <see cref="IgTool"/> instance to <see cref="ExpandoObject"/>.
+    /// </summary>
+    public ExpandoObject ToExpandoObject()
+    {
+        var obj = new ExpandoObject();
+
+        _ = obj.TryAdd(nameof(ToolId), ToolId);
+        _ = obj.TryAdd(nameof(ToolName), ToolName);
+        _ = obj.TryAdd(nameof(Executable), Executable);
+        _ = obj.TryAdd(nameof(Arguments), Arguments);
+        _ = obj.TryAdd(nameof(IsIntegrated), IsIntegrated);
+        _ = obj.TryAdd(nameof(Hotkeys), Hotkeys.Select(i => i.ToString()).ToArray());
+
+        return obj;
+    }
 }

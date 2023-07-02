@@ -35,7 +35,7 @@ public partial class FrmMain
     /// <summary>
     /// Hotkeys list of main menu
     /// </summary>
-    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys = new()
+    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys { get; set; } = new()
     {
 	    // Open main menu
 	    { nameof(MnuMain),                  new() { new(Keys.Alt | Keys.F) } },
@@ -226,7 +226,7 @@ public partial class FrmMain
 
         // load menu
         LoadExternalTools();
-        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
+        CurrentMenuHotkeys = Config.GetAllHotkeys(CurrentMenuHotkeys);
         Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
 
         // TODO: hide menu items that haven't implemented

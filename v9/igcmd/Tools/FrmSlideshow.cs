@@ -60,7 +60,7 @@ public partial class FrmSlideshow : ThemedForm
     /// <summary>
     /// Hotkeys list of main menu
     /// </summary>
-    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys = new()
+    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys { get; set; } = new()
     {
         // Open context menu
 	    { nameof(MnuContext),               new() { new(Keys.Alt | Keys.F) } },
@@ -213,7 +213,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // load menu hotkeys
-        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
+        CurrentMenuHotkeys = Config.GetAllHotkeys(CurrentMenuHotkeys);
         LoadMenuHotkeys();
         LoadMenuTagData();
 

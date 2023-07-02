@@ -665,6 +665,7 @@ public static class Config
             Executable = "exifglass",
             Arguments = Constants.FILE_MACRO,
             IsIntegrated = true,
+            Hotkeys = new List<Hotkey>(1) { new Hotkey(Keys.X) },
         },
     };
 
@@ -992,7 +993,20 @@ public static class Config
         // Tools
         var toolList = items.GetSection(nameof(Tools))
             .GetChildren()
-            .Select(i => i.Get<IgTool>())
+            .Select(i =>
+            {
+                var tool = i.Get<IgTool>();
+                var hotkeysArr = i.GetChildren()
+                    .FirstOrDefault(i => i.Key == "Hotkeys")
+                    ?.Get<string[]>() ?? Array.Empty<string>();
+
+                tool.Hotkeys = hotkeysArr.Distinct()
+                    .Where(i => !string.IsNullOrEmpty(i))
+                    .Select(i => new Hotkey(i))
+                    .ToList();
+
+                return tool;
+            })
             .Where(i => i != null && !i.IsEmpty);
         if (toolList != null && toolList.Any())
         {
@@ -1219,7 +1233,7 @@ public static class Config
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(Layout), Layout);
-        settings.TryAdd(nameof(Tools), Tools);
+        settings.TryAdd(nameof(Tools), Tools.Select(i => i.ToExpandoObject()));
 
         #endregion
 
@@ -1588,22 +1602,45 @@ public static class Config
 
 
     /// <summary>
-    /// Merge <paramref name="srcDict"/> dictionary
-    /// into <paramref name="destDict"/> dictionary
+    /// Gets all hotkeys by merging <see cref="Config.MenuHotkeys"/>
+    /// and <see cref="Config.Tools"/> into <c><paramref name="defaultDict"/></c>.
     /// </summary>
-    public static void MergeHotkeys(ref Dictionary<string, List<Hotkey>> destDict, Dictionary<string, List<Hotkey>> srcDict)
+    public static Dictionary<string, List<Hotkey>> GetAllHotkeys(Dictionary<string, List<Hotkey>> defaultDict)
     {
-        foreach (var item in srcDict)
+        var result = defaultDict;
+
+        // merge menu hotkeys
+        foreach (var item in Config.MenuHotkeys)
         {
-            if (destDict.ContainsKey(item.Key))
+            if (result.ContainsKey(item.Key))
             {
-                destDict[item.Key] = item.Value;
+                result[item.Key] = item.Value;
             }
             else
             {
-                destDict.Add(item.Key, item.Value);
+                result.Add(item.Key, item.Value);
             }
         }
+
+
+        var toolHotkeys = Config.Tools
+            .Where(i => i.Hotkeys.Count > 0)
+            .ToDictionary(i => i.ToolId, i => i.Hotkeys);
+
+        // merge tool hotkeys
+        foreach (var item in toolHotkeys)
+        {
+            if (result.ContainsKey(item.Key))
+            {
+                result[item.Key] = item.Value;
+            }
+            else
+            {
+                result.Add(item.Key, item.Value);
+            }
+        }
+
+        return result;
     }
 
 
