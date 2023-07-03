@@ -319,7 +319,7 @@ public partial class FrmMain : ThemedForm
     /// <param name="args"></param>
     public void LoadImagesFromCmdArgs(string[] args)
     {
-        var pathToLoad = "";
+        var pathToLoad = string.Empty;
 
         if (args.Length >= 2)
         {
@@ -365,7 +365,7 @@ public partial class FrmMain : ThemedForm
 
         if (pathType == PathType.Dir)
         {
-            _ = PrepareLoadingAsync(new string[] { inputPath }, "");
+            _ = PrepareLoadingAsync(new string[] { inputPath }, string.Empty);
         }
         else
         {
@@ -394,7 +394,7 @@ public partial class FrmMain : ThemedForm
         if (string.IsNullOrEmpty(filePath))
         {
             // load images list
-            await LoadImageListAsync(paths, currentFile ?? filePath ?? "");
+            await LoadImageListAsync(paths, currentFile ?? filePath);
 
             // load the current image
             await ViewNextCancellableAsync(0);
@@ -405,7 +405,7 @@ public partial class FrmMain : ThemedForm
             _ = ViewNextCancellableAsync(0, filePath: filePath);
 
             // load images list
-            _ = LoadImageListAsync(paths, currentFile ?? filePath ?? "");
+            _ = LoadImageListAsync(paths, currentFile ?? filePath);
         }
     }
 
@@ -417,9 +417,10 @@ public partial class FrmMain : ThemedForm
     /// <param name="currentFilePath">The image file path to view first</param>
     public async Task LoadImageListAsync(
         IEnumerable<string> inputPaths,
-        string currentFilePath)
+        string? currentFilePath)
     {
         if (!inputPaths.Any()) return;
+        currentFilePath ??= string.Empty;
 
         await Task.Run(() =>
         {
@@ -464,7 +465,7 @@ public partial class FrmMain : ThemedForm
                     }
                     else
                     {
-                        dirPath = Path.GetDirectoryName(aPath) ?? "";
+                        dirPath = Path.GetDirectoryName(aPath) ?? string.Empty;
                     }
                 }
 
@@ -492,7 +493,9 @@ public partial class FrmMain : ThemedForm
             }
 
 
-            Local.InitialInputPath = hasInitFile ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
+            Local.InitialInputPath = hasInitFile
+                ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : string.Empty)
+                : currentFile;
 
 
             // sort list
@@ -976,7 +979,7 @@ public partial class FrmMain : ThemedForm
         PicMain.ClearMessage();
         if (e.Index >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
-            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
+            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], null, delayMs: 1500);
         }
 
         // Select thumbnail item
@@ -999,7 +1002,7 @@ public partial class FrmMain : ThemedForm
         if (e.Error != null)
         {
             Local.IsImageError = true;
-            Local.ImageModifiedPath = "";
+            Local.ImageModifiedPath = string.Empty;
 
             IG_Unload();
 
@@ -1337,7 +1340,7 @@ public partial class FrmMain : ThemedForm
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Name)))
                 {
-                    var askterisk = Local.ImageTransform.HasChanges ? "*" : "";
+                    var askterisk = Local.ImageTransform.HasChanges ? "*" : string.Empty;
                     ImageInfo.Name = Path.GetFileName(fullPath) + askterisk;
                 }
                 else
@@ -1351,7 +1354,7 @@ public partial class FrmMain : ThemedForm
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Path)))
                 {
-                    var askterisk = Local.ImageTransform.HasChanges ? "*" : "";
+                    var askterisk = Local.ImageTransform.HasChanges ? "*" : string.Empty;
                     ImageInfo.Path = fullPath + askterisk;
                 }
                 else

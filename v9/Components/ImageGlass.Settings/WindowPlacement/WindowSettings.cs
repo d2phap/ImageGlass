@@ -89,13 +89,13 @@ public class WindowSettings
     /// <summary>
     /// Retrieves WindowPlacement object from FrmMain config
     /// </summary>
-    public static WindowPlacement GetFrmMainPlacementFromConfig()
+    public static WindowPlacement GetFrmMainPlacementFromConfig(int extraX = 0, int extraY = 0)
     {
         return new WindowPlacement(new WpRect(
-            Config.FrmMainPositionX,
-            Config.FrmMainPositionY,
-            Config.FrmMainPositionX + Config.FrmMainWidth,
-            Config.FrmMainPositionY + Config.FrmMainHeight
+            Config.FrmMainPositionX + extraX,
+            Config.FrmMainPositionY + extraY,
+            Config.FrmMainPositionX + extraX + Config.FrmMainWidth,
+            Config.FrmMainPositionY + extraY + Config.FrmMainHeight
           ), Config.FrmMainState);
     }
 

@@ -275,7 +275,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
             }
 
 
-            var displayName = "";
+            var displayName = string.Empty;
             if (Constants.AspectRatioValue.TryGetValue(arValue, out var enumValue))
             {
                 displayName = string.Join(":", enumValue);

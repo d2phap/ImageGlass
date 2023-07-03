@@ -814,7 +814,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(currentFile).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuPrint)}";
 
-        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
 
 
         // print clipboard image
@@ -881,7 +881,7 @@ public partial class FrmMain
         // print clipboard image
         if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
 
             // save image to temp file
             filePath = await Local.SaveImageAsTempFileAsync(".png");
@@ -1095,7 +1095,7 @@ public partial class FrmMain
         var langPath = $"{Name}.{nameof(MnuCopyImageData)}";
 
         PicMain.ClearMessage();
-        PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
+        PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], null, delayMs: 1500);
 
         // copy the selected area
         if (!PicMain.SourceSelection.IsEmpty)
@@ -1584,7 +1584,7 @@ public partial class FrmMain
 
         if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
 
             filePath = await Local.SaveImageAsTempFileAsync(".png");
         }
@@ -1638,7 +1638,7 @@ public partial class FrmMain
         string? filePath;
         if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
             filePath = await Local.SaveImageAsTempFileAsync(".png");
         }
         else
@@ -2030,7 +2030,7 @@ public partial class FrmMain
         var defaultExt = ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
-        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
 
 
         // print clipboard image
@@ -2106,7 +2106,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuSetLockScreen)}";
 
-        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], null, delayMs: 500);
 
 
         // print clipboard image

@@ -882,16 +882,14 @@ public partial class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the message heading text
     /// </summary>
-    [Category("Misc")]
-    [DefaultValue("")]
+    [Browsable(false)]
     public string TextHeading { get; set; } = string.Empty;
 
 
     /// <summary>
     /// Gets, sets border radius of message box
     /// </summary>
-    [Category("Misc")]
-    [DefaultValue(1f)]
+    [Browsable(false)]
     public float MessageBorderRadius { get; set; } = 6f;
 
 
@@ -2550,7 +2548,7 @@ public partial class DXCanvas : DXControl
     /// Set it <b>0</b> to disable,
     /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    public void ShowMessage(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
+    public void ShowMessage(string text, string? heading = null, int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
         if (InvokeRequired)
         {
@@ -2590,7 +2588,7 @@ public partial class DXCanvas : DXControl
         _msgTokenSrc?.Cancel();
         _msgTokenSrc = new();
 
-        ShowMessagePrivate(text, string.Empty, durationMs, delayMs, forceUpdate);
+        ShowMessagePrivate(text, null, durationMs, delayMs, forceUpdate);
     }
 
 
@@ -3229,7 +3227,7 @@ public partial class DXCanvas : DXControl
     /// Set it <b>0</b> to disable,
     /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    private async void ShowMessagePrivate(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
+    private async void ShowMessagePrivate(string text, string? heading = null, int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
         if (durationMs == 0) return;
 
@@ -3242,7 +3240,7 @@ public partial class DXCanvas : DXControl
                 await Task.Delay(delayMs, token);
             }
 
-            TextHeading = heading;
+            TextHeading = heading ?? string.Empty;
             Text = text;
 
             if (forceUpdate)

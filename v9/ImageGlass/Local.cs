@@ -282,7 +282,7 @@ internal class Local
     /// <para>Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after a rescan of the image list, only the _sub_-folders images were re-loaded!</para>
     /// <para>But if we reload the list using the original image, then the original folder's images, and the sub-folders, are reloaded.</para>
     /// </summary>
-    public static string InitialInputPath { get; set; } = "";
+    public static string InitialInputPath { get; set; } = string.Empty;
 
     /// <summary>
     /// The 'current' image sorting order. A reconciliation between the user's Settings selection and the sorting order from Windows Explorer, to be used to sort the active image list.
@@ -299,7 +299,7 @@ internal class Local
     /// through a set of images and using "Save As" to always save to the same file type, this
     /// memory prevents them from having to manually re-select their desired extension.
     /// </summary>
-    public static string SaveAsFilterExt { get; set; } = "";
+    public static string SaveAsFilterExt { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets, sets color channel of image
@@ -309,7 +309,7 @@ internal class Local
     /// <summary>
     /// Gets, sets value if image data was modified
     /// </summary>
-    public static string ImageModifiedPath { get; set; } = "";
+    public static string ImageModifiedPath { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets, sets the temporary image data
@@ -420,7 +420,7 @@ internal class Local
     public static async Task BroadcastMessageToAllToolServersAsync(string msgName, object? data)
     {
         if (Local.ToolPipeServers.Count == 0) return;
-        var msgData = BHelper.ToJson(data ?? "") ?? "";
+        var msgData = BHelper.ToJson(data ?? string.Empty) ?? string.Empty;
 
         // emit event to all tools
         await Parallel.ForEachAsync(

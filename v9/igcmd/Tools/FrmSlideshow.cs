@@ -39,7 +39,7 @@ public partial class FrmSlideshow : ThemedForm
     private ImageGlassTool _igTool = new();
     private string _initImagePath;
 
-    private CancellationTokenSource _loadImageCancelToken = new();
+    private CancellationTokenSource? _loadCancelTokenSrc = new();
     private MovableForm _movableForm;
     private ImageBooster _images = new();
     private int _currentIndex = -1;
@@ -190,7 +190,8 @@ public partial class FrmSlideshow : ThemedForm
             // load window placement from settings here to save the initial
             // position of window so that when user exists the fullscreen mode,
             // it can be restore correctly
-            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+            WindowSettings.SetPlacementToWindow(this,
+                WindowSettings.GetFrmMainPlacementFromConfig(SystemInformation.CaptionHeight, SystemInformation.CaptionHeight));
 
             IG_ToggleFullScreen(true, false);
         }
@@ -198,7 +199,8 @@ public partial class FrmSlideshow : ThemedForm
         else
         {
             // load window placement from settings
-            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+            WindowSettings.SetPlacementToWindow(this,
+                WindowSettings.GetFrmMainPlacementFromConfig(SystemInformation.CaptionHeight, SystemInformation.CaptionHeight));
 
             // toggle frameless window
             IG_ToggleFrameless(Config.EnableFrameless, false);
@@ -209,7 +211,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // load the init image
-        _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
+        _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadCancelTokenSrc));
 
 
         // load menu hotkeys
@@ -407,7 +409,7 @@ public partial class FrmSlideshow : ThemedForm
                     // update the current image if it's not same
                     if (!string.IsNullOrEmpty(data.InitFilePath) && newInitFile)
                     {
-                        _ = LoadImageAsync(_initImagePath, _loadImageCancelToken);
+                        _ = LoadImageAsync(_initImagePath, _loadCancelTokenSrc);
                     }
 
                     await LoadImageListAsync(data.Files, _initImagePath);
@@ -674,8 +676,8 @@ public partial class FrmSlideshow : ThemedForm
     /// </summary>
     private async Task ViewNextImageAsync(int step = 0)
     {
-        _loadImageCancelToken?.Cancel();
-        _loadImageCancelToken = new();
+        _loadCancelTokenSrc?.Cancel();
+        _loadCancelTokenSrc = new();
 
 
         // Issue #609: do not auto-reactivate slideshow if disabled
@@ -737,7 +739,7 @@ public partial class FrmSlideshow : ThemedForm
         #endregion // Validate image index
 
 
-        await LoadImageAsync(null, _loadImageCancelToken);
+        await LoadImageAsync(null, _loadCancelTokenSrc);
     }
 
 
@@ -821,7 +823,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         PicMain.ClearMessage();
-        PicMain.ShowMessage(Config.Language[$"FrmMain._Loading"], "", delayMs: 1500);
+        PicMain.ShowMessage(Config.Language[$"FrmMain._Loading"], null, delayMs: 1500);
 
 
         _ = BHelper.RunAsThread(() => LoadImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath));
