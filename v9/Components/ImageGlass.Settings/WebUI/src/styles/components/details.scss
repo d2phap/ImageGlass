@@ -1,6 +1,5 @@
 details {
   padding-left: 1.35rem;
-  transition: all ease 300ms;
 
   summary {
     display: inline-block;
@@ -9,7 +8,7 @@ details {
     margin-bottom: 0.5em;
     border-radius: 0.125em;
     padding: 0 0.125em 0.1em 0.125em;
-    transition: all ease 300ms;
+    transition: background ease 300ms, color ease 300ms;
 
     & > * {
       display: inline;
@@ -38,7 +37,7 @@ details {
     &:active {
       background-color: rgb(var(--InvertColor) / 0.05);
       filter: brightness(0.95);
-      transition: all ease 80ms;
+      transition: background ease 80ms, color ease 80ms;
     }
   }
 

@@ -10,6 +10,7 @@
 
   // normal style
   &+ * {
+    --focus-color: var(--Accent);
     min-height: var(--box-size);
     padding-left: calc(var(--box-size) + 0.5em);
 
@@ -23,12 +24,12 @@
       left: 0;
       top: 0.1rem;
 
-      transition: all ease 100ms;
+      transition: background ease 100ms, border ease 100ms;
     }
 
     &::before {
       background-color: rgb(var(--ControlBg));
-      border: 0.075rem solid var(--ControlBorder);
+      border: 0.1rem solid var(--ControlBorder);
       border-radius: var(--box-border-radius);
     }
     &::after {
@@ -56,6 +57,10 @@
       background-color: rgb(var(--ControlBgPressed));
     }
   }
+  &:focus-visible + *::before {
+    @include focusAnimation();
+  }
+
   &:active + * {
     &::before {
       background-color: rgb(var(--ControlBgPressed));
@@ -142,6 +147,10 @@ label.ig-radio {
       content: none;
     }
     &:not(:checked):focus-visible + *::before {
+      @include focusAnimation();
+    }
+
+    &:focus-visible + *::before {
       @include focusAnimation();
     }
 

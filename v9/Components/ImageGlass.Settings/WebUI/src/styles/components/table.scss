@@ -12,7 +12,7 @@
   --cell-shadow-background: inset 0 0 0 0 transparent;
 
   overflow: auto;
-  border: 0.075rem solid var(--ControlBorder);
+  border: 0.1rem solid var(--ControlBorder);
   border-radius: var(--border-radius);
   min-height: 4rem;
   max-height: calc(200 * var(--fontScale) * 1px);
@@ -71,10 +71,10 @@
           top: 0;
 
           box-shadow:
-            inset 0 0.075rem 0 0 var(--header-border-top-color),
-            inset 0 -0.075rem 0 0 var(--header-border-bottom-color),
-            inset 0.075rem 0 0 0 var(--header-border-left-color),
-            inset -0.075rem 0 0 0 var(--header-border-right-color);
+            inset 0 0.1rem 0 0 var(--header-border-top-color),
+            inset 0 -0.1rem 0 0 var(--header-border-bottom-color),
+            inset 0.1rem 0 0 0 var(--header-border-left-color),
+            inset -0.1rem 0 0 0 var(--header-border-right-color);
   
           // for sticky header column
           &.cell-sticky {
@@ -96,11 +96,10 @@
         padding: 0.34rem 0.5rem;
         background-color: rgb(var(--AppBg));
         box-shadow: var(--cell-shadow-background),
-          inset 0 0.075rem 0 0 var(--cell-border-top-color),
-          inset 0 -0.075rem 0 0 var(--cell-border-bottom-color),
-          inset 0.075rem 0 0 0 var(--cell-border-left-color),
-          inset -0.075rem 0 0 0 var(--cell-border-right-color);
-        transition: all ease 100ms;
+          inset 0 0.1rem 0 0 var(--cell-border-top-color),
+          inset 0 -0.1rem 0 0 var(--cell-border-bottom-color),
+          inset 0.1rem 0 0 0 var(--cell-border-left-color),
+          inset -0.1rem 0 0 0 var(--cell-border-right-color);
 
         // for sticky row column
         &.cell-sticky {

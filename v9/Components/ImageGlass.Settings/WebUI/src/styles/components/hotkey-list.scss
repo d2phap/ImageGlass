@@ -8,7 +8,7 @@
   align-items: center;
 
   border-radius: var(--border-radius);
-  border: 0.075rem solid var(--ControlBorder);
+  border: 0.1rem solid var(--ControlBorder);
   background-color: rgb(var(--ControlBg));
 
   &> li {
@@ -22,10 +22,10 @@
       min-height: calc(var(--control-height) * 1px);
 
       background-color: rgb(var(--AppBg) / 0.75);
-      border: solid 0.075rem rgb(var(--InvertColor) / 0.15);
+      border: solid 0.1rem rgb(var(--InvertColor) / 0.15);
       border-bottom-color: rgb(var(--InvertColor) / 0.15);
       border-radius: var(--border-radius);
-      box-shadow: inset 0 -0.075rem 0 rgb(var(--InvertColor) / 0.15);
+      box-shadow: inset 0 -0.1rem 0 rgb(var(--InvertColor) / 0.15);
 
       kbd {
         border: 0;
@@ -57,7 +57,7 @@
         &:active {
           background-color: rgb(var(--InvertColor) / 0.2);
           border-color: rgb(var(--Accent));
-          transition: all ease 80ms;
+          transition: background ease 80ms, border ease 80ms;
         }
       }
     }

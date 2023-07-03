@@ -16,6 +16,7 @@ html {
   color: rgb(var(--AppText));
   accent-color: rgb(var(--Accent));
   overflow: hidden;
+  transition: background ease 300ms;
 }
 body {
   margin: 0;
@@ -97,12 +98,13 @@ a,
 a:visited {
   display: inline-block;
   text-underline-position: under;
-  transition: all ease 200ms;
+  transition: background ease 200ms;
   color: rgb(var(--Accent));
   border-radius: 0.125em;
   padding: 0 0.125em 0.1em 0.125em;
 }
 a {
+  --focus-color: var(--Accent);
   cursor: default;
 
   &:focus-visible,
@@ -114,11 +116,12 @@ a {
   &:focus-visible {
     outline: none;
     box-shadow: inset 0 0 0 1px rgb(var(--Accent) / 0.1);
+    @include focusAnimation();
   }
   &:active {
     background-color: rgb(var(--InvertColor) / 0.05);
     filter: brightness(0.95);
-    transition: all ease 80ms;
+    transition: background ease 80ms;
   }
 }
 html[color-mode=light] a {
@@ -346,69 +349,4 @@ progress {
 // Always hide an element with the `hidden` HTML attribute.
 [hidden] {
   display: none !important;
-}
-
-
-@keyframes aniFocus {
-  0% {
-    box-shadow: 0 0 0 0.075rem rgb(var(--focus-color));
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgb(var(--focus-color));
-  }
-}
-
-@mixin focusAnimation() {
-  animation: aniFocus 1000ms ease forwards;
-}
-
-@mixin baseControl() {
-  --focus-color: var(--Accent);
-
-  min-width: calc(var(--control-height) * 1px);
-  width: calc(var(--control-width) * 1px);
-  min-height: calc(var(--control-height) * 1px);
-  padding: 0.325rem;
-  font-size: inherit;
-  font-family: var(--fontBase);
-  color: rgb(var(--AppText));
-  background-color: rgb(var(--ControlBg));
-  border-radius: var(--border-radius);
-  border: 0.1rem solid var(--ControlBorder);
-  transition: all ease 300ms;
-  &::selection {
-    background-color: rgb(var(--Accent) / 0.55);
-  }
-
-  &:hover {
-    background-color: rgb(var(--ControlBgHover));
-    border-color: var(--ControlBorderHover);
-  }
-  &:focus {
-    outline: none;
-    border-color: rgb(var(--Accent));
-  }
-  &:focus-visible {
-    @include focusAnimation();
-  }
-  &:active {
-    background-color: rgb(var(--ControlBgPressed));
-    border-color: rgb(var(--Accent));
-    transition: all ease 80ms;
-  }
-  &:invalid {
-    border-color: rgb(var(--BgDanger));
-
-    &:focus-visible {
-      --focus-color: var(--BgDanger);
-      @include focusAnimation();
-    }
-  }
-
-  &[disabled],
-  &:disabled {
-    color: rgb(var(--AppText) / 0.45);
-    border-color: var(--ControlBorderDisabled);
-    background-color: rgb(var(--ControlBgDisabled));
-  }
 }

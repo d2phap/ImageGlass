@@ -9,13 +9,6 @@ button {
   white-space: nowrap;
   padding: 0.3rem 1rem 0.35rem 1rem;
 
-  // font-family: var(--fontBase);
-  // color: rgb(var(--AppText));
-  // background-color: rgb(var(--ControlBg));
-  // border-radius: var(--border-radius);
-  // border: 0.075rem solid var(--ControlBorder);
-  // transition: all ease 300ms;
-
   * {
     pointer-events: none;
   }
@@ -35,14 +28,6 @@ button {
     background-color: rgb(var(--ControlBg));
   }
 
-  // &:hover {
-  //   background-color: rgb(var(--ControlBgHover));
-  //   border-color: var(--ControlBorderHover);
-  // }
-  // &:focus {
-  //   outline: none;
-  //   border-color: rgb(var(--Accent));
-  // }
 
   &[type=submit] {
     background-color: var(--ControlCtaBg);
@@ -63,15 +48,8 @@ button {
   &[type=submit]:active {
     background-color: rgb(var(--ControlBgPressed));
     border-color: rgb(var(--Accent));
-    transition: all ease 80ms;
+    transition: background ease 80ms, border ease 80ms, shadow ease 80ms;
   }
-
-  // &[disabled],
-  // &:disabled {
-  //   color: rgb(var(--AppText) / 0.45);
-  //   border-color: var(--ControlBorderDisabled);
-  //   background-color: rgb(var(--ControlBgDisabled));
-  // }
 
 
   // color picker button
