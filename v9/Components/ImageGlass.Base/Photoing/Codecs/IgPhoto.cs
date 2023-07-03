@@ -170,7 +170,7 @@ public class IgPhoto : IDisposable
             // done loading
             IsDone = true;
         }
-        catch (OperationCanceledException)
+        catch (Exception ex) when (ex is ObjectDisposedException or OperationCanceledException)
         {
             Unload();
             Dispose();
@@ -220,7 +220,11 @@ public class IgPhoto : IDisposable
     /// </summary>
     public void CancelLoading()
     {
-        _tokenSrc?.Cancel();
+        try
+        {
+            _tokenSrc?.Cancel();
+        }
+        catch (ObjectDisposedException) { }
     }
 
     #endregion

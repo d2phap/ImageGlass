@@ -107,7 +107,7 @@ public partial class FrmMain
     public void IG_Unload()
     {
         // cancel the current loading image
-        _loadCancelToken?.Cancel();
+        _loadCancelTokenSrc?.Cancel();
 
         if (Local.ClipboardImage != null)
         {
@@ -1162,7 +1162,7 @@ public partial class FrmMain
     public void LoadClipboardImage(WicBitmapSource? img)
     {
         // cancel the current loading image
-        _loadCancelToken?.Cancel();
+        _loadCancelTokenSrc?.Cancel();
 
         Local.ClipboardImage?.Dispose();
         Local.ClipboardImage = img;

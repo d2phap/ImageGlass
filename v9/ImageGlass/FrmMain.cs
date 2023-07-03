@@ -37,7 +37,7 @@ public partial class FrmMain : ThemedForm
     public readonly ModernToolbar ToolbarContext = new ModernToolbar();
 
     // cancellation tokens of synchronious task
-    private CancellationTokenSource _loadCancelToken = new();
+    private CancellationTokenSource? _loadCancelTokenSrc = new();
     private IProgress<ProgressReporterEventArgs> _uiReporter;
     private MovableForm _movableForm;
     private bool _isShowingImagePreview = false;
@@ -698,8 +698,8 @@ public partial class FrmMain : ThemedForm
         bool resetZoom = true,
         bool isSkipCache = false,
         int? frameIndex = null,
-        string filePath = "",
-        CancellationTokenSource? token = null)
+        string? filePath = null,
+        CancellationTokenSource? tokenSrc = null)
     {
         Local.ImageTransform.Clear();
 
@@ -721,7 +721,7 @@ public partial class FrmMain : ThemedForm
         try
         {
             // check if loading is cancelled
-            token?.Token.ThrowIfCancellationRequested();
+            tokenSrc?.Token.ThrowIfCancellationRequested();
             IgPhoto? photo = null;
 
             var readSettings = new CodecReadOptions()
@@ -825,7 +825,7 @@ public partial class FrmMain : ThemedForm
 
 
             // check if loading is cancelled
-            token?.Token.ThrowIfCancellationRequested();
+            tokenSrc?.Token.ThrowIfCancellationRequested();
 
             // apply image list settings
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
@@ -835,20 +835,20 @@ public partial class FrmMain : ThemedForm
             // directly load the image file, skip image list
             if (photo != null)
             {
-                await photo.LoadAsync(readSettings, token);
+                await photo.LoadAsync(readSettings, tokenSrc);
             }
             else
             {
                 photo = await Local.Images.GetAsync(
                     imageIndex,
                     useCache: !isSkipCache,
-                    tokenSrc: token
+                    tokenSrc: tokenSrc
                 );
             }
 
 
             // check if loading is cancelled
-            token?.Token.ThrowIfCancellationRequested();
+            tokenSrc?.Token.ThrowIfCancellationRequested();
 
 
             _uiReporter.Report(new(new ImageLoadedEventArgs()
@@ -896,12 +896,13 @@ public partial class FrmMain : ThemedForm
         bool resetZoom = true,
         bool isSkipCache = false,
         int? frameIndex = null,
-        string filePath = "")
+        string? filePath = null)
     {
-        _loadCancelToken?.Cancel();
-        _loadCancelToken = new();
+        _loadCancelTokenSrc?.Cancel();
+        _loadCancelTokenSrc?.Dispose();
+        _loadCancelTokenSrc = new();
 
-        await ViewNextAsync(step, resetZoom, isSkipCache, frameIndex, filePath, _loadCancelToken);
+        await ViewNextAsync(step, resetZoom, isSkipCache, frameIndex, filePath, _loadCancelTokenSrc);
     }
 
 
@@ -984,7 +985,7 @@ public partial class FrmMain : ThemedForm
         // show image preview if it's not cached
         if (!Local.Images.IsCached(Local.CurrentIndex))
         {
-            ShowImagePreview(e.FilePath, _loadCancelToken.Token);
+            ShowImagePreview(e.FilePath, _loadCancelTokenSrc.Token);
         }
 
         _ = Task.Run(() => LoadImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
@@ -997,7 +998,6 @@ public partial class FrmMain : ThemedForm
         // image error
         if (e.Error != null)
         {
-            PicMain.SetImage(null);
             Local.IsImageError = true;
             Local.ImageModifiedPath = "";
 
