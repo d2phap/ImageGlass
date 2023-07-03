@@ -1,8 +1,8 @@
 import { getChangedSettingsFromTab } from '@/helpers';
 
-export default class TabMouseKeyboard {
+export default class TabMouse {
   /**
-   * Loads settings for tab Mouse & Keyboard.
+   * Loads settings for tab Mouse.
    */
   static loadSettings() {
     query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value = _pageSettings.config.MouseWheelActions?.Scroll || 'DoNothing';
@@ -13,10 +13,10 @@ export default class TabMouseKeyboard {
 
 
   /**
-   * Adds events for tab Mouse & Keyboard.
+   * Adds events for tab Mouse.
    */
   static addEvents() {
-    query('#Btn_ResetMouseWheelAction').addEventListener('click', TabMouseKeyboard.resetDefaultMouseWheelActions, false);
+    query('#Btn_ResetMouseWheelAction').addEventListener('click', TabMouse.resetDefaultMouseWheelActions, false);
   }
 
 
@@ -24,7 +24,7 @@ export default class TabMouseKeyboard {
    * Save settings as JSON object.
    */
   static exportSettings() {
-    const settings = getChangedSettingsFromTab('mouse_keyboard');
+    const settings = getChangedSettingsFromTab('mouse');
 
     // MouseWheelActions
     const newWheelScrollValue = query<HTMLSelectElement>('#Cmb_MouseWheel_Scroll').value;

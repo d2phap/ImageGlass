@@ -210,4 +210,11 @@
       text-overflow: ellipsis;
     }
   }
+
+  .command-preview {
+    min-height: calc(3rem * var(--fontScale));
+    max-height: calc(4rem * var(--fontScale));
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

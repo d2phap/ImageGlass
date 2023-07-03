@@ -450,7 +450,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Nav._Toolbar", "Toolbar");
         Add("FrmSettings.Nav._Gallery", "Gallery");
         Add("FrmSettings.Nav._Layout", "Layout");
-        Add("FrmSettings.Nav._MouseKeyboard", "Mouse & Keyboard");
+        Add("FrmSettings.Nav._Mouse", "Mouse");
+        Add("FrmSettings.Nav._Keyboard", "Keyboard");
         Add("FrmSettings.Nav._FileTypeAssociations", "File type associations");
         Add("FrmSettings.Nav._Tools", "Tools");
         Add("FrmSettings.Nav._Language", "Language");
@@ -588,8 +589,13 @@ public class IgLang : Dictionary<string, string>
 
 
         #region Tab Mouse & Keyboard
-        // Mouse & Keyboard > Mouse wheel action
-        Add("FrmSettings.Tab.MouseKeyboard._MouseWheelAction", "Mouse wheel action");
+        // Mouse > Mouse wheel action
+        Add("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
+        #endregion // Tab Mouse
+
+
+        #region Tab Keyboard
+
         #endregion // Tab Mouse & Keyboard
 
 

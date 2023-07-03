@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" color-mode="light_" page="settings">
+<html lang="en" color-mode="light" page="settings">
 
 <head>
   <meta charset="UTF-8">
@@ -68,8 +68,14 @@
         </li>
         <li>
           <label>
-            <input type="radio" name="nav" value="mouse_keyboard" />
-            <span lang-text="FrmSettings.Nav._MouseKeyboard">[Mouse & Keyboard]</span>
+            <input type="radio" name="nav" value="mouse" />
+            <span lang-text="FrmSettings.Nav._Mouse">[Mouse]</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="keyboard" />
+            <span lang-text="FrmSettings.Nav._Keyboard">[Keyboard]</span>
           </label>
         </li>
         <li>
@@ -601,11 +607,11 @@
     </section>
 
 
-    <!-- Tab: Mouse & Keyboard -->
-    <section class="tab-page" tab="mouse_keyboard">
-      <!-- Mouse & Keyboard > Mouse wheel action -->
+    <!-- Tab: Mouse -->
+    <section class="tab-page" tab="mouse">
+      <!-- Mouse > Mouse wheel action -->
       <section>
-        <header lang-text="FrmSettings.Tab.MouseKeyboard._MouseWheelAction">[Mouse wheel action]</header>
+        <header lang-text="FrmSettings.Tab.Mouse._MouseWheelAction">[Mouse wheel action]</header>
         <div class="mb-3">
           <div class="mb-1" lang-text="_.MouseWheelEvent._Scroll">[Scroll]</div>
           <select id="Cmb_MouseWheel_Scroll" required data-enum="MouseWheelAction">
@@ -631,7 +637,7 @@
         </div>
       </section>
 
-      <!-- Mouse & Keyboard > Mouse click action -->
+      <!-- Mouse > Mouse click action -->
       <section hidden>
         <header>[Mouse click action]</header>
         <div class="ig-table mb-2">
@@ -670,6 +676,17 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Keyboard -->
+    <section class="tab-page" tab="keyboard">
+      <!-- Keyboard > Keyboard -->
+      <section>
+        <header lang-text="FrmSettings.Nav._FileTypeAssociations">[Keyboard]</header>
+        <div class="mb-2">
         </div>
       </section>
     </section>
@@ -874,8 +891,7 @@
           </div>
           <div class="mt-4">
             <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>
-            <pre class="text-code px-2 py-1 my-0"
-              style="min-height: calc(3rem * var(--fontScale)); max-height: calc(4rem * var(--fontScale));"><code id="Tool_CommandPreview"></code></pre>
+            <pre class="command-preview text-code px-2 py-1"><code id="Tool_CommandPreview"></code></pre>
           </div>
         </div>
         <footer class="dialog-footer">

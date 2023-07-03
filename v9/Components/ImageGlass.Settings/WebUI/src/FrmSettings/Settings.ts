@@ -1,7 +1,8 @@
 import TabGeneral from './TabGeneral';
 import TabImage from './TabImage';
 import TabSlideshow from './TabSlideshow';
-import TabMouseKeyboard from './TabMouseKeyboard';
+import TabMouse from './TabMouse';
+import TabKeyboard from './TabKeyboard';
 import TabLanguage from './TabLanguage';
 import TabEdit from './TabEdit';
 import TabViewer from './TabViewer';
@@ -75,7 +76,8 @@ export default class Settings {
     TabToolbar.loadSettings();
     TabGallery.loadSettings();
     TabLanguage.loadSettings();
-    TabMouseKeyboard.loadSettings();
+    TabMouse.loadSettings();
+    TabKeyboard.loadSettings();
     TabFileAssocs.loadSettings();
     TabTools.loadSettings();
     TabLanguage.loadSettings();
@@ -118,7 +120,8 @@ export default class Settings {
       ...TabToolbar.exportSettings(),
       ...TabGallery.exportSettings(),
       ...TabLayout.exportSettings(),
-      ...TabMouseKeyboard.exportSettings(),
+      ...TabMouse.exportSettings(),
+      ...TabKeyboard.exportSettings(),
       ...TabFileAssocs.exportSettings(),
       ...TabTools.exportSettings(),
       ...TabLanguage.exportSettings(),
