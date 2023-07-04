@@ -567,11 +567,11 @@ public partial class FrmMain
         Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
         Gallery.ShowItemText = Config.ShowGalleryFileName;
 
-        // update gallery size
-        UpdateGallerySize();
-
         // toggle gallery
         Gallery.Visible = Config.ShowGallery;
+
+        // update gallery size
+        UpdateGallerySize();
 
         // update menu item state
         MnuToggleGallery.Checked = Config.ShowGallery;
@@ -601,7 +601,7 @@ public partial class FrmMain
 
         // update thumbnail size
         Gallery.ThumbnailSize = this.ScaleToDpi(new Size(Config.ThumbnailSize, Config.ThumbnailSize));
-
+        Gallery.Refresh(true, false);
 
         // Thumbnails view
         if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
@@ -614,7 +614,7 @@ public partial class FrmMain
                 + this.ScaleToDpi(Config.GalleryColumns);
             if (Config.GalleryColumns == 1)
             {
-                gapWidth = (int)this.ScaleToDpi(1.5f);
+                gapWidth = (int)SystemInformation.MenuFont.SizeInPoints;
             }
 
             var scrollBarSize = 0;
@@ -639,6 +639,10 @@ public partial class FrmMain
         // HorizontalStrip view
         else
         {
+            var itemHeight = Gallery.Renderer.MeasureItem(Gallery.View).Height;
+            var itemPadding = (itemHeight - Gallery.ThumbnailSize.Height) / 2;
+
+
             // calculate scrollbar size
             var scrollBarSize = 0;
             if (Gallery.ScrollBars && Gallery.HScrollBar.Visible)
@@ -649,13 +653,13 @@ public partial class FrmMain
                 scrollBarSize = Gallery.HScrollBar.Height;
             }
 
-            var gapWidth = this.ScaleToDpi(1.5f); // random gap
+            var gapWidth = SystemInformation.MenuHeight + itemPadding / 4; // random gap
 
             // Gallery bar
             Gallery.Height = Gallery.ThumbnailSize.Height
                 + Gallery.Padding.Vertical
                 + (int)gapWidth + scrollBarSize
-                + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
+                + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height);
         }
 
         Gallery.ResumeLayout(false);

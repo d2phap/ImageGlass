@@ -1438,7 +1438,7 @@ public partial class ImageGallery : Control, IComponent
     /// <param name="force">Forces a refresh even if the renderer is suspended.</param>
     /// <param name="lazy">Refreshes the control only if a set amount of time
     /// has passed since the last refresh.</param>
-    internal void Refresh(bool force, bool lazy)
+    public void Refresh(bool force, bool lazy)
     {
         if (force)
             base.Refresh();
