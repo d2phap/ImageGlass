@@ -1264,6 +1264,7 @@ public partial class FrmMain
         {
             Gallery.View = ImageGlass.Gallery.View.Thumbnails;
             Gallery.ScrollBars = true;
+            Gallery.TooltipDirection = ImageGlass.Gallery.TooltipDirection.Bottom;
 
             Gallery.Resizer = Gallery.Dock == DockStyle.Left
                 ? ResizerType.HTRIGHT
@@ -1285,6 +1286,10 @@ public partial class FrmMain
             Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
 
             Gallery.Resizer = ResizerType.None;
+            Gallery.TooltipDirection = Gallery.Dock == DockStyle.Bottom
+                ? ImageGlass.Gallery.TooltipDirection.Top
+                : ImageGlass.Gallery.TooltipDirection.Bottom;
+
             PicMain.Padding = new Padding();
         }
         UpdateGallerySize();

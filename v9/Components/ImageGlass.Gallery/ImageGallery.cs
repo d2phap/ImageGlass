@@ -1367,23 +1367,41 @@ public partial class ImageGallery : Control, IComponent
 
             // calculate tooltip position
             var tooltipPosY = 0;
-            const int GAP = 4;
+            var GAP = Font.Height / 2;
             var bounds = layoutManager.GetItemBounds(item.Index);
 
+            // measure tooltip content height
+            var g = CreateGraphics();
+            using var titleFont = new Font(Font, FontStyle.Bold);
+            var titleSize = g.MeasureString(args.TooltipTitle, titleFont);
+            var contentSize = g.MeasureString(args.TooltipContent, Font);
+            var tooltipHeight = (int)(titleSize.Height + contentSize.Height);
+
+            // tooltip direction
             if (TooltipDirection == TooltipDirection.Top)
             {
-                var g = CreateGraphics();
-                using var titleFont = new Font(Font, FontStyle.Bold);
-                var titleSize = g.MeasureString(args.TooltipTitle, titleFont);
-                var contentSize = g.MeasureString(args.TooltipContent, Font);
-                var tooltipHeight = (int)(titleSize.Height + contentSize.Height);
-
                 tooltipPosY = bounds.Y - GAP - tooltipHeight;
             }
             else if (TooltipDirection == TooltipDirection.Bottom)
             {
-                tooltipPosY = bounds.Bottom + GAP;
+                var screenLoc = PointToScreen(bounds.Location);
+                var workingArea = Screen.FromPoint(screenLoc)?.WorkingArea ?? new();
+
+                var posY = bounds.Bottom + GAP;
+                var screenPosY = PointToScreen(new Point(0, posY)).Y;
+
+                // if tooltip covert the current thumbnail
+                if (screenPosY + tooltipHeight > workingArea.Bottom)
+                {
+                    // forced to direction to top
+                    tooltipPosY = bounds.Y - GAP - tooltipHeight;
+                }
+                else
+                {
+                    tooltipPosY = posY;
+                }
             }
+
 
             // show tooltip
             mTooltip.ToolTipTitle = args.TooltipTitle;
