@@ -1068,6 +1068,7 @@ public partial class FrmMain
 
                 // fix the tool's path
                 tool.Executable = frm.ExecutablePath;
+                WebUI.UpdateToolListJson(true);
 
                 // run again
                 _ = await Local.OpenPipedToolAsync(tool);
