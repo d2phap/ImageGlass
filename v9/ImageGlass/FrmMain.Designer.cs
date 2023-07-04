@@ -177,8 +177,6 @@ namespace ImageGlass
             Toolbar.Size = new Size(1661, 62);
             Toolbar.TabIndex = 1;
             Toolbar.Theme = null;
-            Toolbar.ToolTipDirection = UI.TooltipDirection.Bottom;
-            Toolbar.ToolTipText = "";
             Toolbar.ItemClicked += Toolbar_ItemClicked;
             // 
             // MnuMain

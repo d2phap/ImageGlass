@@ -25,7 +25,6 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using WicNet;
@@ -296,6 +295,7 @@ public partial class FrmMain : ThemedForm
 
         e.TooltipContent = sb.ToString();
         e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth} x {e.Item.Details.OriginalHeight})";
+        e.TooltipSize = (Gallery.Tooltip as ModernTooltip)?.CalculateSize(e.TooltipContent);
     }
 
 

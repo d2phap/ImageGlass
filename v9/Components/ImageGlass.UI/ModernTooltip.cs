@@ -36,7 +36,7 @@ public class ModernTooltip : ToolTip
     /// <summary>
     /// Gets, sets all padding of tooltip.
     /// </summary>
-    public int AllPadding { get; set; } = (int)SystemInformation.MenuFont.SizeInPoints;
+    public int AllPadding { get; set; } = (int)SystemInformation.MenuFont.SizeInPoints / 2;
 
 
     /// <summary>
@@ -75,8 +75,9 @@ public class ModernTooltip : ToolTip
     {
         _ = WindowApi.SetRoundCorner(TooltipHandle, WindowCorner.RoundSmall);
 
-        var padding = DpiApi.Scale(AllPadding);
-        e.ToolTipSize = new Size(e.ToolTipSize.Width + padding, e.ToolTipSize.Height + padding);
+        // get the correct size of the tooltip
+        var tooltipContent = GetToolTip(e.AssociatedControl);
+        e.ToolTipSize = CalculateSize(tooltipContent);
 
         BackColor = Colors.AppBg;
         ForeColor = Colors.AppText;
@@ -87,15 +88,17 @@ public class ModernTooltip : ToolTip
     {
         e.DrawBackground();
 
-        var padding = DpiApi.Scale(AllPadding / 2);
+        var padding = DpiApi.Scale(AllPadding);
         var bounds = e.Bounds;
         bounds.Offset(padding, 0);
+
 
         // draw tooltip title
         var titleFontHeight = 0;
         if (!string.IsNullOrWhiteSpace(ToolTipTitle))
         {
-            using var titleFont = new Font(e.Font.FontFamily, e.Font.SizeInPoints, FontStyle.Bold);
+            using var titleFont = new Font(SystemInformation.MenuFont.FontFamily, SystemInformation.MenuFont.SizeInPoints, FontStyle.Bold);
+
             titleFontHeight = titleFont.Height;
             bounds.Offset(0, padding);
 
@@ -105,9 +108,40 @@ public class ModernTooltip : ToolTip
 
         // draw tooltip content
         bounds.Offset(0, titleFontHeight + padding);
-        TextRenderer.DrawText(e.Graphics, e.ToolTipText, e.Font, bounds, ForeColor, TextFormatFlags.Top);
+        TextRenderer.DrawText(e.Graphics, e.ToolTipText, SystemInformation.MenuFont, bounds, ForeColor, TextFormatFlags.Top);
     }
 
+
+    /// <summary>
+    /// Calculates tooltip size according to the system font.
+    /// </summary>
+    /// <param name="tooltipContent">The content of the tooltip excluding <c>ToolTipTitle</c>.</param>
+    public Size CalculateSize(string tooltipContent)
+    {
+        using var g = Graphics.FromHwnd(TooltipHandle);
+        if (g == null) return new();
+
+
+        var padding = DpiApi.Scale(AllPadding);
+        var titleSize = new SizeF();
+        var contentSize = g.MeasureString(tooltipContent, SystemInformation.MenuFont);
+
+        // get tooltip title size
+        if (!string.IsNullOrWhiteSpace(ToolTipTitle))
+        {
+            using var titleFont = new Font(SystemInformation.MenuFont, FontStyle.Bold);
+            titleSize = g.MeasureString(ToolTipTitle, titleFont);
+
+            // bottom margin for tooltip title
+            titleSize.Height += padding;
+        }
+
+
+        var tooltipWidth = Math.Max(titleSize.Width, contentSize.Width) + padding;
+        var tooltipHeight = titleSize.Height + contentSize.Height + padding * 2;
+
+        return new SizeF(tooltipWidth, tooltipHeight).ToSize();
+    }
 
 }
 

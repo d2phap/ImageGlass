@@ -99,16 +99,6 @@ public class ModernToolbar : ToolStrip
     }
 
     /// <summary>
-    /// Tooltip display text
-    /// </summary>
-    public string ToolTipText { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Gets, sets tooltip direction value
-    /// </summary>
-    public TooltipDirection ToolTipDirection { get; set; } = TooltipDirection.Bottom;
-
-    /// <summary>
     /// Gets, sets value indicates that the tooltip is shown
     /// </summary>
     public bool HideTooltips { get; set; } = false;
@@ -401,15 +391,18 @@ public class ModernToolbar : ToolStrip
 
         try
         {
-            const int TOOLTIP_HEIGHT = 28;
             var tooltipPosY = 0;
 
-            if (ToolTipDirection == TooltipDirection.Top)
+            if (Dock == DockStyle.Bottom)
             {
-                tooltipPosY = item.Bounds.Top - item.Padding.Top - TOOLTIP_HEIGHT;
+                // tooltip direction is bottom
+                tooltipPosY = item.Bounds.Top
+                    - item.Padding.Top
+                    - (int)DpiApi.Scale(SystemInformation.MenuFont.Size);
             }
-            else if (ToolTipDirection == TooltipDirection.Bottom)
+            else
             {
+                // tooltip direction is top
                 tooltipPosY = item.Bounds.Bottom + item.Padding.Bottom;
             }
 

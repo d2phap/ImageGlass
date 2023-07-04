@@ -604,6 +604,11 @@ public class ItemTooltipShowingEventArgs : EventArgs
     public string TooltipContent { get; set; } = string.Empty;
 
     /// <summary>
+    /// Gets, sets the tooltip size.
+    /// </summary>
+    public Size? TooltipSize { get; set; } = null;
+
+    /// <summary>
     /// Gets the thumbnail item.
     /// </summary>
     public ImageGalleryItem Item { get; init; }

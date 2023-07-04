@@ -1369,13 +1369,22 @@ public partial class ImageGallery : Control, IComponent
             var tooltipPosY = 0;
             var GAP = Font.Height / 2;
             var bounds = layoutManager.GetItemBounds(item.Index);
+            var tooltipHeight = 0;
 
             // measure tooltip content height
-            var g = CreateGraphics();
-            using var titleFont = new Font(Font, FontStyle.Bold);
-            var titleSize = g.MeasureString(args.TooltipTitle, titleFont);
-            var contentSize = g.MeasureString(args.TooltipContent, Font);
-            var tooltipHeight = (int)(titleSize.Height + contentSize.Height);
+            if (args.TooltipSize == null)
+            {
+                var g = CreateGraphics();
+                using var titleFont = new Font(Font, FontStyle.Bold);
+                var titleSize = g.MeasureString(args.TooltipTitle, titleFont);
+                var contentSize = g.MeasureString(args.TooltipContent, Font);
+                tooltipHeight = (int)(titleSize.Height + contentSize.Height);
+            }
+            else
+            {
+                tooltipHeight = args.TooltipSize.Value.Height;
+            }
+
 
             // tooltip direction
             if (TooltipDirection == TooltipDirection.Top)
@@ -1390,7 +1399,7 @@ public partial class ImageGallery : Control, IComponent
                 var posY = bounds.Bottom + GAP;
                 var screenPosY = PointToScreen(new Point(0, posY)).Y;
 
-                // if tooltip covert the current thumbnail
+                // if tooltip cover the current thumbnail
                 if (screenPosY + tooltipHeight > workingArea.Bottom)
                 {
                     // forced to direction to top
@@ -1405,7 +1414,7 @@ public partial class ImageGallery : Control, IComponent
 
             // show tooltip
             mTooltip.ToolTipTitle = args.TooltipTitle;
-            mTooltip.Show(args.TooltipContent, this, bounds.X, tooltipPosY);
+            mTooltip.Show(args.TooltipContent, this, Math.Max(0, bounds.X), tooltipPosY);
 
 
             // duration
