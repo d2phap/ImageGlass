@@ -1741,7 +1741,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // disable round corner in full screen
-        WindowApi.SetRoundCorner(Handle, !Config.EnableFullscreenSlideshow);
+        WindowApi.SetRoundCorner(Handle, Config.EnableFullscreenSlideshow ? WindowCorner.DoNotRound : WindowCorner.Round);
 
         SetFullScreenMode(enable.Value);
 

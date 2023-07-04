@@ -2389,7 +2389,7 @@ public partial class FrmMain
         }
 
         // disable round corner in full screen
-        WindowApi.SetRoundCorner(Handle, !Config.EnableFullScreen);
+        WindowApi.SetRoundCorner(Handle, Config.EnableFullScreen ? WindowCorner.DoNotRound : WindowCorner.Round);
 
         SetFullScreenMode(
             enable: enable.Value,

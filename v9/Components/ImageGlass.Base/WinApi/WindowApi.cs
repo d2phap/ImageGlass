@@ -144,24 +144,22 @@ public class WindowApi
     /// <param name="wndHandle">Window's handle.</param>
     /// <param name="enable"><c>true</c> to make the corner round, <c>false</c> to use square.</param>
     /// <returns>Returns <c>true</c> if succeeded, else <c>false</c>.</returns>
-    public static bool SetRoundCorner(IntPtr wndHandle, bool enable = true)
+    public static bool SetRoundCorner(IntPtr wndHandle, WindowCorner style = WindowCorner.Round)
     {
         if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return false;
 
         HRESULT result;
         unsafe
         {
-            var preference = enable
-                ? DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND
-                : DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND;
-
             result = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
                 DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
-                &preference, sizeof(uint));
+                &style, sizeof(uint));
         }
 
         return result.Succeeded;
     }
+
+    
 
 
     /// <summary>
@@ -403,12 +401,25 @@ public enum SHOW_WINDOW_CMD : uint
 /// The DWM_WINDOW_CORNER_PREFERENCE enum for DwmSetWindowAttribute's third parameter, 
 /// which tells the function what value of the enum to set.
 /// </summary>
-internal enum DWM_WINDOW_CORNER_PREFERENCE
+public enum WindowCorner
 {
-    DWMWCP_DEFAULT = 0,
-    DWMWCP_DONOTROUND = 1,
-    DWMWCP_ROUND = 2,
-    DWMWCP_ROUNDSMALL = 3,
+    // DWMWCP_DEFAULT
+    Default = 0,
+
+    /// <summary>
+    /// DWMWCP_DONOTROUND
+    /// </summary>
+    DoNotRound = 1,
+
+    /// <summary>
+    /// DWMWCP_ROUND
+    /// </summary>
+    Round = 2,
+
+    /// <summary>
+    /// DWMWCP_ROUNDSMALL
+    /// </summary>
+    RoundSmall = 3,
 }
 
 internal enum DWMWINDOWATTRIBUTE_UNDOCUMENTED
