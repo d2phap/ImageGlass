@@ -327,7 +327,7 @@ public class ModernCheckBox : CheckBox
 
         var initX = Padding.Left;
         var initY = Padding.Top;
-        var borderRadius = DpiApi.Transform(2f);
+        var borderRadius = DpiApi.Scale(2f);
         var checkBoxSize = Font.Height * 0.8f;
         var checkBoxRect = new RectangleF(
             initX,
@@ -345,7 +345,7 @@ public class ModernCheckBox : CheckBox
         }
 
         // draw checkbox border
-        using (var p = new Pen(borderColor, DpiApi.Transform(1f)))
+        using (var p = new Pen(borderColor, DpiApi.Scale(1f)))
         {
             p.Alignment = PenAlignment.Outset;
             p.LineJoin = LineJoin.Round;

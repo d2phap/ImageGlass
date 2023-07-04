@@ -129,7 +129,7 @@ public class ModernComboBox : ComboBox
                 ? ColorPalatte.AppText
                 : ColorPalatte.AppTextDisabled;
 
-            var penWidth = DpiApi.Transform(1.1f);
+            var penWidth = DpiApi.Scale(1.1f);
             var borderColor = ColorPalatte.ControlBorder;
             var fillColor = _hover ? ColorPalatte.ControlBgHover : ColorPalatte.ControlBg;
 

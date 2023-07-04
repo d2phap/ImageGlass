@@ -75,7 +75,7 @@ public class ModernTooltip : ToolTip
     {
         _ = WindowApi.SetRoundCorner(TooltipHandle, WindowCorner.RoundSmall);
 
-        var padding = DpiApi.Transform(AllPadding);
+        var padding = DpiApi.Scale(AllPadding);
         e.ToolTipSize = new Size(e.ToolTipSize.Width + padding, e.ToolTipSize.Height + padding);
 
         BackColor = Colors.AppBg;
@@ -87,7 +87,7 @@ public class ModernTooltip : ToolTip
     {
         e.DrawBackground();
 
-        var padding = DpiApi.Transform(AllPadding / 2);
+        var padding = DpiApi.Scale(AllPadding / 2);
         var bounds = e.Bounds;
         bounds.Offset(padding, 0);
 

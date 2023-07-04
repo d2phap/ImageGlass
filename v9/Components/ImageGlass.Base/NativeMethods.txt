@@ -20,3 +20,5 @@ SendMessage
 GetSystemMetrics
 SetWindowTheme
 SetWindowPos
+MonitorFromPoint
+GetDpiForMonitor

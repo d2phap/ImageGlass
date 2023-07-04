@@ -83,7 +83,7 @@ public class ModernGalleryRenderer : StyleRenderer
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
     public override void DrawItem(Graphics g, ImageGalleryItem item, ItemState state, Rectangle bounds)
     {
-        var itemPadding = DpiApi.Transform(new SizeF(4, 4)).ToSize();
+        var itemPadding = DpiApi.Scale(new SizeF(4, 4)).ToSize();
         var textSize = new Size(0, 0);
 
 
@@ -91,7 +91,7 @@ public class ModernGalleryRenderer : StyleRenderer
         #region Draw background
 
         using var bgBrush = new SolidBrush(Color.Transparent);
-        using var penBorder = new Pen(bgBrush.Color, DpiApi.Transform(1.05f))
+        using var penBorder = new Pen(bgBrush.Color, DpiApi.Scale(1.05f))
         {
             Alignment = PenAlignment.Inset,
         };

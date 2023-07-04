@@ -27,7 +27,7 @@ namespace ImageGlass.UI;
 public class ModernMenuRenderer : ToolStripProfessionalRenderer
 {
     private IgTheme _theme { get; set; }
-    private static Padding ContentMargin => DpiApi.Transform(new Padding(5, 2, 5, 2));
+    private static Padding ContentMargin => DpiApi.Scale(new Padding(5, 2, 5, 2));
 
 
     public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
@@ -82,7 +82,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
             var lineColor = _theme.Colors.MenuBgColor.Blend(_theme.Colors.MenuBgColor.InvertBlackOrWhite(), 0.9f);
 
-            using var pen = new Pen(lineColor, DpiApi.Transform(1f));
+            using var pen = new Pen(lineColor, DpiApi.Scale(1f));
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
@@ -103,7 +103,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             textColor = _theme.Colors.MenuBgColor.InvertBlackOrWhite(100);
         }
 
-        using var pen = new Pen(textColor, DpiApi.Transform(1.15f))
+        using var pen = new Pen(textColor, DpiApi.Scale(1.15f))
         {
             LineJoin = LineJoin.Round,
             StartCap = LineCap.Round,
@@ -135,7 +135,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             if (!string.IsNullOrWhiteSpace(mnu?.ShortcutKeyDisplayString))
             {
                 var shortcutSize = e.Graphics.MeasureString(mnu.ShortcutKeyDisplayString, mnu.Font);
-                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Transform(13),
+                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Scale(13),
                     e.Item.Height / 2 - shortcutSize.Height / 2,
                     shortcutSize.Width,
                     shortcutSize.Height);
@@ -188,7 +188,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         // draw check mark for checkbox
         else
         {
-            using var pen = new Pen(checkMarkBrush, DpiApi.Transform(1.6f))
+            using var pen = new Pen(checkMarkBrush, DpiApi.Scale(1.6f))
             {
                 LineJoin = LineJoin.Round,
                 StartCap = LineCap.Round,
@@ -238,7 +238,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Colors.MenuBgHoverColor);
-            using var penBorder = new Pen(brush, DpiApi.Transform(1f));
+            using var penBorder = new Pen(brush, DpiApi.Scale(1f));
 
             // draw
             g.FillRoundedRectangle(brush, rect, radius);
@@ -280,7 +280,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 : BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var checkAreaBrush = new SolidBrush(bgColor);
-            using var checkAreaPen = new Pen(checkAreaBrush, DpiApi.Transform(1f))
+            using var checkAreaPen = new Pen(checkAreaBrush, DpiApi.Scale(1f))
             {
                 Alignment = PenAlignment.Inset,
                 LineJoin = LineJoin.Round,

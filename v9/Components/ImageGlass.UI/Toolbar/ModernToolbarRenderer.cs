@@ -70,7 +70,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             brushBg.Color = Theme.Colors.ToolbarItemHoverColor;
         }
 
-        using var penBorder = new Pen(brushBg.Color, DpiApi.Transform(1.05f))
+        using var penBorder = new Pen(brushBg.Color, DpiApi.Scale(1.05f))
         {
             Alignment = PenAlignment.Outset,
             LineJoin = LineJoin.Round,
@@ -157,7 +157,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             return;
         }
 
-        using var penBorder = new Pen(brush.Color, DpiApi.Transform(1f))
+        using var penBorder = new Pen(brush.Color, DpiApi.Scale(1f))
         {
             Alignment = PenAlignment.Outset,
             LineJoin = LineJoin.Round,
@@ -221,7 +221,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         var x = e.Item.Width / 2 - 1;
-        var penWidth = DpiApi.Transform(1f);
+        var penWidth = DpiApi.Scale(1f);
 
         using var penDark = new Pen(Color.Black.WithAlpha(100), penWidth);
         using var penLight = new Pen(Color.White.WithAlpha(100), penWidth);

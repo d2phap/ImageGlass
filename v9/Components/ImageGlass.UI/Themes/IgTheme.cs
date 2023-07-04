@@ -74,7 +74,7 @@ public class IgTheme : IDisposable
     /// </summary>
     public int ToolbarActualIconHeight
     {
-        get => DpiApi.Transform(_iconHeight);
+        get => DpiApi.Scale(_iconHeight);
         set => _iconHeight = value;
     }
 

@@ -360,9 +360,9 @@ public partial class DXCanvas : DXControl
             if (ClientSelection.IsEmpty) return new List<SelectionResizer>();
 
 
-            var resizerSize = DpiApi.Transform(Font.Size * 1.3f);
-            var resizerMargin = DpiApi.Transform(2);
-            var hitSize = DpiApi.Transform(resizerSize * 1.3f);
+            var resizerSize = DpiApi.Scale(Font.Size * 1.3f);
+            var resizerMargin = DpiApi.Scale(2);
+            var hitSize = DpiApi.Scale(resizerSize * 1.3f);
 
             // top left
             var topLeft = new RectangleF(

@@ -154,7 +154,7 @@ public class ModernNumericUpDown : NumericUpDown
             arrowColor = ColorPalatte.AppText;
         }
 
-        using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))
+        using (var p = new Pen(arrowColor, DpiApi.Scale(1.1f)))
         {
             var x = upArea.Width / 2 - 3;
             var y = upArea.Height / 2 - 2;
@@ -180,7 +180,7 @@ public class ModernNumericUpDown : NumericUpDown
             arrowColor = ColorPalatte.AppText;
         }
 
-        using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))
+        using (var p = new Pen(arrowColor, DpiApi.Scale(1.1f)))
         {
             var x = downArea.Width / 2 - 3;
             var y = downArea.Top + downArea.Height / 2 - 2;
@@ -234,7 +234,7 @@ public class ModernNumericUpDown : NumericUpDown
             borderColor = borderColor.WithBrightness(0.3f);
         }
 
-        using (var pen = new Pen(borderColor, DpiApi.Transform(1.1f)))
+        using (var pen = new Pen(borderColor, DpiApi.Scale(1.1f)))
         {
             pen.Alignment = PenAlignment.Outset;
             pen.LineJoin = LineJoin.Round;

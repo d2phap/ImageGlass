@@ -291,7 +291,7 @@ public partial class FrmSlideshow : ThemedForm
         SuspendLayout();
 
         // scale toolbar icons corresponding to DPI
-        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
+        var newIconHeight = DpiApi.Scale(Config.ToolbarIconHeight);
 
         // reload theme
         Config.Theme.LoadTheme(newIconHeight);
@@ -463,7 +463,7 @@ public partial class FrmSlideshow : ThemedForm
         // calculate background size
         var gapX = fontSize.Width / 4;
         var gapY = fontSize.Height / 4;
-        var padding = DpiApi.Transform(30);
+        var padding = DpiApi.Scale(30);
         var bgSize = new SizeF(fontSize.Width + gapX, fontSize.Height + gapY);
         var bgX = PicMain.Width - bgSize.Width - padding;
         var bgY = PicMain.Height - bgSize.Height - padding;
@@ -1391,7 +1391,7 @@ public partial class FrmSlideshow : ThemedForm
         // clear items
         MnuLoadingOrders.DropDown.Items.Clear();
 
-        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = DpiApi.Scale(Constants.MENU_ICON_HEIGHT);
 
         // add ImageOrderBy items
         foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))

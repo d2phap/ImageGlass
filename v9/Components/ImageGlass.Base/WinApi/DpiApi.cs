@@ -17,6 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Windows.Win32;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.HiDpi;
+
 namespace ImageGlass.Base.WinApi;
 
 public static class DpiApi
@@ -54,36 +58,63 @@ public static class DpiApi
 
 
     /// <summary>
-    /// Transform a number after applying <see cref="DpiScale"/>
+    /// Scales a number after applying <see cref="DpiScale"/>
     /// </summary>
-    public static T Transform<T>(T num)
+    public static T Scale<T>(T num, float? dpiScale = null)
     {
+        dpiScale ??= DpiScale;
+
         var type = typeof(T);
-        var value = float.Parse(num.ToString()) * DpiScale;
+        var value = float.Parse(num.ToString()) * dpiScale;
 
         return (T)Convert.ChangeType(value, type);
     }
 
 
     /// <summary>
-    /// Transform padding after applying <see cref="DpiScale"/>
+    /// Scales padding after applying <see cref="DpiScale"/>
     /// </summary>
-    public static Padding Transform(Padding padding)
+    public static Padding Scale(Padding padding, float? dpiScale = null)
     {
         return new Padding(
-            Transform(padding.Left),
-            Transform(padding.Top),
-            Transform(padding.Right),
-            Transform(padding.Bottom));
+            Scale(padding.Left, dpiScale),
+            Scale(padding.Top, dpiScale),
+            Scale(padding.Right, dpiScale),
+            Scale(padding.Bottom, dpiScale));
     }
 
 
     /// <summary>
-    /// Transform padding after applying <see cref="DpiScale"/>
+    /// Scales padding after applying <see cref="DpiScale"/>
     /// </summary>
-    public static SizeF Transform(SizeF size)
+    public static SizeF Scale(SizeF size, float? dpiScale = null)
     {
-        return new SizeF(Transform(size.Width), Transform(size.Height));
+        return new SizeF(Scale(size.Width, dpiScale), Scale(size.Height, dpiScale));
+    }
+
+
+
+    /// <summary>
+    /// Gets DPI scale from a screen.
+    /// </summary>
+    public static float GetDpiScale(this Screen screen)
+    {
+        var point = new Point(screen.Bounds.Left + 1, screen.Bounds.Top + 1);
+
+        return GetDpiScale(point);
+    }
+
+
+    /// <summary>
+    /// Gets DPI scale from a point on the screen.
+    /// </summary>
+    public static float GetDpiScale(Point screenPoint)
+    {
+        var hMonitor = PInvoke.MonitorFromPoint(screenPoint, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+        _ = PInvoke.GetDpiForMonitor(hMonitor, MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out var dpiX, out _);
+
+
+        return (float)dpiX / DPI_DEFAULT;
     }
 
 }

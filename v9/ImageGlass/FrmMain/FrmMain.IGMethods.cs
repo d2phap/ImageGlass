@@ -2847,7 +2847,7 @@ public partial class FrmMain
         if (visible)
         {
             // set default location offset on the parent form
-            var padding = DpiApi.Transform(10);
+            var padding = DpiApi.Scale(10);
             var x = padding;
             var y = PicMain.Top + padding;
             var loc = PointToScreen(new Point(x, y));
