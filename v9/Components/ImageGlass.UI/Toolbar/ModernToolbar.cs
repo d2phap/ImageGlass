@@ -35,7 +35,7 @@ public class ModernToolbar : ToolStrip
     private ToolbarAlignment _alignment = ToolbarAlignment.Center;
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
-    private readonly ToolTip _tooltip = new();
+    private readonly ModernTooltip _tooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();
     private ToolStripItem? _hoveredItem = null;
     private ContextMenuStrip _mainMenu = new();
@@ -519,6 +519,7 @@ public class ModernToolbar : ToolStrip
 
         if (Theme is null) return;
 
+        _tooltip.DarkMode = Theme.Settings.IsDarkMode;
         SuspendLayout();
 
         // update toolbar theme

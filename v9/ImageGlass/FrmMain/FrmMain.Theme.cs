@@ -78,6 +78,7 @@ public partial class FrmMain
         Gallery.EnableTransparent = hasTransparency;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Gallery.BackColor = Config.Theme.Colors.GalleryBgColor;
+        Gallery.Tooltip = new ModernTooltip() { DarkMode = darkMode };
 
 
         // navigation buttons

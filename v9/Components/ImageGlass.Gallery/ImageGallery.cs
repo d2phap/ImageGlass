@@ -69,7 +69,7 @@ public partial class ImageGallery : Control, IComponent
     private Point mViewOffset = new();
     private bool mShowScrollBars = false;
     private bool mShowItemText = false;
-    private readonly ToolTip mTooltip = new();
+    private ToolTip? mTooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();
 
     // Renderer variables
@@ -108,6 +108,19 @@ public partial class ImageGallery : Control, IComponent
     /// Gets current style renderer.
     /// </summary>
     public StyleRenderer Renderer => mRenderer;
+
+    /// <summary>
+    /// Gets, set tooltip.
+    /// </summary>
+    public ToolTip? Tooltip
+    {
+        get => mTooltip;
+        set
+        {
+            mTooltip?.Dispose();
+            mTooltip = value;
+        }
+    }
 
     /// <summary>
     /// Enable transparent background.
@@ -1328,7 +1341,7 @@ public partial class ImageGallery : Control, IComponent
     public void HideItemTooltip()
     {
         _tooltipTokenSrc.Cancel();
-        mTooltip.Hide(this);
+        mTooltip?.Hide(this);
     }
 
     /// <summary>
@@ -1339,8 +1352,9 @@ public partial class ImageGallery : Control, IComponent
     {
         _tooltipTokenSrc?.Cancel();
         _tooltipTokenSrc = new();
-        mTooltip.Hide(this);
-        if (item is null) return;
+        mTooltip?.Hide(this);
+
+        if (mTooltip is null || item is null) return;
 
         try
         {
