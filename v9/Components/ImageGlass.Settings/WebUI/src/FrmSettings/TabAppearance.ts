@@ -91,6 +91,16 @@ export default class TabAppearance {
 
 
   /**
+   * Updates `_pageSettings.config.BackgroundColor` value and load UI.
+   */
+  static loadBackgroundColorConfig(hexColor: string) {
+    _pageSettings.config.BackgroundColor = hexColor;
+    query<HTMLInputElement>('[name="BackgroundColor"]').value = hexColor;
+    TabAppearance.handleBackgroundColorChanged();
+  }
+
+
+  /**
    * Loads all themes into the list.
    */
   private static loadThemeList(list?: ITheme[]) {

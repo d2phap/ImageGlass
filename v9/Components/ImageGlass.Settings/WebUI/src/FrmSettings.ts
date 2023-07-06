@@ -68,6 +68,7 @@ _pageSettings.setSidebarActiveMenu = Sidebar.setActiveMenu;
 _pageSettings.loadLanguage = Language.load;
 _pageSettings.loadSettings = Settings.load;
 _pageSettings.loadLanguageList = TabLanguage.loadLanguageList;
+_pageSettings.loadBackgroundColorConfig = TabAppearance.loadBackgroundColorConfig;
 
 
 // sidebar

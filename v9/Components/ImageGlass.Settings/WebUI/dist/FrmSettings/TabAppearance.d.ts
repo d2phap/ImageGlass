@@ -16,6 +16,10 @@ export default class TabAppearance {
      */
     static exportSettings(): Record<string, any>;
     /**
+     * Updates `_pageSettings.config.BackgroundColor` value and load UI.
+     */
+    static loadBackgroundColorConfig(hexColor: string): void;
+    /**
      * Loads all themes into the list.
      */
     private static loadThemeList;

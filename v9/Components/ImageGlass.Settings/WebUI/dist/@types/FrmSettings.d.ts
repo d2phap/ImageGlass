@@ -1,6 +1,7 @@
 import Language from '@/FrmSettings/Language';
 import Settings from '@/FrmSettings/Settings';
 import Sidebar from '@/FrmSettings/Sidebar';
+import TabAppearance from '@/FrmSettings/TabAppearance';
 import TabLanguage from '@/FrmSettings/TabLanguage';
 export type ILanguage = {
     FileName: string;
@@ -70,4 +71,5 @@ export type IPageSettings = Record<string, any> & {
     loadLanguage?: typeof Language.load;
     loadSettings?: typeof Settings.load;
     loadLanguageList?: typeof TabLanguage.loadLanguageList;
+    loadBackgroundColorConfig?: typeof TabAppearance.loadBackgroundColorConfig;
 };
