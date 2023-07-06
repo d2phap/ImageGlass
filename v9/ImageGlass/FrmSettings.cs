@@ -280,7 +280,7 @@ public partial class FrmSettings : WebForm
     #endregion // Protected / override methods
 
 
-    private static void ApplySettings(string dataJson)
+    private void ApplySettings(string dataJson)
     {
         var dict = BHelper.ParseJson<ExpandoObject>(dataJson)
             .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
@@ -529,6 +529,15 @@ public partial class FrmSettings : WebForm
             if (e.HasFlag(UpdateRequests.Language))
             {
                 WebUI.UpdateLangJson(true);
+            }
+
+            if (e.HasFlag(UpdateRequests.Theme))
+            {
+                // load the new value of Background color setting when theme is changed
+                var bgColorHex = ThemeUtils.ColorToHex(Config.BackgroundColor);
+                _ = Web2.ExecuteScriptAsync($"""
+                    _pageSettings.loadBackgroundColorConfig('{bgColorHex}');
+                """);
             }
         });
     }
