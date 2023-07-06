@@ -95,7 +95,7 @@ public class ThemedForm : ModernForm
     protected virtual void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
         // theme mode is changed, need to load the corresponding theme pack
-        Config.LoadThemePack(e.IsDarkMode, true, true);
+        Config.LoadThemePack(e.IsDarkMode, true, true, false);
 
         // emits the event
         RequestUpdatingColorMode?.Invoke(e);

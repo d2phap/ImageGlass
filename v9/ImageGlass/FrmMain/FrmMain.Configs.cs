@@ -424,7 +424,7 @@ public partial class FrmMain
 
         if (e.Requests.HasFlag(UpdateRequests.Theme))
         {
-            Config.LoadThemePack(WinColorsApi.IsDarkMode, true, true);
+            Config.LoadThemePack(WinColorsApi.IsDarkMode, true, true, true);
             Config.TriggerRequestUpdatingTheme();
         }
 

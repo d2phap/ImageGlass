@@ -1043,7 +1043,7 @@ public static class Config
 
 
         // load theme
-        LoadThemePack(WinColorsApi.IsDarkMode, true, true);
+        LoadThemePack(WinColorsApi.IsDarkMode, true, true, false);
 
 
         #region SlideshowBackgroundColor
@@ -1451,8 +1451,9 @@ public static class Config
     /// <param name="throwIfThemeInvalid">
     /// If theme pack is invalid, should throw exception?
     /// </param>
+    /// <param name="forceUpdateBackground">Force updating background according to theme value</param>
     /// <exception cref="InvalidDataException"></exception>
-    public static void LoadThemePack(bool darkMode, bool useFallBackTheme, bool throwIfThemeInvalid)
+    public static void LoadThemePack(bool darkMode, bool useFallBackTheme, bool throwIfThemeInvalid, bool forceUpdateBackground)
     {
         var themeFolderName = darkMode ? DarkTheme : LightTheme;
         if (string.IsNullOrEmpty(themeFolderName))
@@ -1500,7 +1501,7 @@ public static class Config
         th.LoadThemeColors();
 
         // load background color
-        if (Config.BackgroundColor == Theme.Colors.BgColor)
+        if (Config.BackgroundColor == Theme.Colors.BgColor || forceUpdateBackground)
         {
             Config.BackgroundColor = th.Colors.BgColor;
         }
