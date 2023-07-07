@@ -2,11 +2,11 @@ import { WebviewEventHandlerFn } from './webview';
 /**
  * Gets the first matched element with the query selector.
  */
-export declare const query: <T = HTMLElement>(selector: string) => T;
+export declare const query: <T = HTMLElement>(selector: string, hideWarning?: boolean) => T;
 /**
  * Gets all matched elements with the query selector.
  */
-export declare const queryAll: <T = HTMLElement>(selector: string) => T[];
+export declare const queryAll: <T = HTMLElement>(selector: string, hideWarning?: boolean) => T[];
 /**
  * Add event listerner from backend.
  * @param name Event name

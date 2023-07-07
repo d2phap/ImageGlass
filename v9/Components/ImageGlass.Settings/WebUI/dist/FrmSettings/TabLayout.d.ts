@@ -16,6 +16,7 @@ export default class TabLayout {
     private static loadLayoutMapDOM;
     private static convertRawLayoutToLayoutObject;
     private static getLayoutSettingObjectFromDOM;
+    private static handleLayoutInputsChanged;
     private static handleLayoutItemDragStart;
     private static handleLayoutItemDragOver;
     private static handleLayoutItemDragEnter;

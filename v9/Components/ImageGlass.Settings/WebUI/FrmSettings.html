@@ -643,7 +643,11 @@
               </div>
               <div class="mb-3">
                 <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <input class="w-control-compact" type="number" name="_Layout.Toolbar.Order" step="1" min="0" max="3" />
+                <select name="_Layout.Toolbar.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
               </div>
             </div>
     
@@ -657,7 +661,11 @@
               </div>
               <div class="mb-3">
                 <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <input class="w-control-compact" type="number" name="_Layout.ToolbarContext.Order" step="1" min="0" />
+                <select name="_Layout.ToolbarContext.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
               </div>
             </div>
     
@@ -671,9 +679,13 @@
                   <option value="Right" lang-text="_.Position._Right">[Right]</option>
                 </select>
               </div>
-              <div class="mb-3">
+              <div id="Section_LayoutGalleryOrder" class="mb-3 aniFadeIn">
                 <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <input class="w-control-compact" type="number" name="_Layout.Gallery.Order" step="1" min="0" />
+                <select name="_Layout.Gallery.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
               </div>
             </div>
           </div>

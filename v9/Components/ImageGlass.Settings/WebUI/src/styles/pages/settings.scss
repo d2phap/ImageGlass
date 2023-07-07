@@ -219,8 +219,8 @@
   }
 
   .app-layout {
-    height: calc(410px * var(--fontScale));
-    width: calc(410px * var(--fontScale));
+    height: calc(360px * var(--fontScale));
+    width: calc(360px * var(--fontScale));
     display: grid;
     grid-template-areas: "region-top region-top region-top"
       "region-left region-center region-right"

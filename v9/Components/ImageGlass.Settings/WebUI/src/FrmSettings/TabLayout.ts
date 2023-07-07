@@ -29,7 +29,20 @@ export default class TabLayout {
    * Adds events for tab Layout.
    */
   static addEvents() {
-    //
+    query('[name="_Layout.Toolbar.Position"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Toolbar.Position"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Toolbar.Order"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Toolbar.Order"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+
+    query('[name="_Layout.ToolbarContext.Position"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.ToolbarContext.Position"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.ToolbarContext.Order"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.ToolbarContext.Order"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+
+    query('[name="_Layout.Gallery.Position"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Gallery.Position"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Gallery.Order"]').removeEventListener('change', TabLayout.handleLayoutInputsChanged, false);
+    query('[name="_Layout.Gallery.Order"]').addEventListener('change', TabLayout.handleLayoutInputsChanged, false);
   }
 
 
@@ -64,7 +77,7 @@ export default class TabLayout {
       const { position, order } = layout[controlName];
 
       query<HTMLSelectElement>(`[name="_Layout.${controlName}.Position"]`).value = position;
-      query<HTMLInputElement>(`[name="_Layout.${controlName}.Order"]`).value = order;
+      query<HTMLSelectElement>(`[name="_Layout.${controlName}.Order"]`).value = order;
     });
 
     TabLayout.loadLayoutMapDOM(layout);
@@ -81,7 +94,10 @@ export default class TabLayout {
       if (!Object.prototype.hasOwnProperty.call(layout, controlName)) continue;
       const item = layout[controlName as LayoutControlName];
 
-      query(`.app-layout [data-position="${item.position}"] .region-drop[data-order="${item.order}"]`).innerHTML = `
+      const regionEl = query(`.app-layout [data-position="${item.position}"i] .region-drop[data-order="${item.order}"]`);
+      if (regionEl === null) continue;
+
+      regionEl.innerHTML = `
         <button draggable="true" tabindex="-1" data-control="${controlName}">
           <span lang-text="FrmSettings.Tab.Layout._${controlName}">[${controlName}]</span>
         </button>`;
@@ -141,13 +157,25 @@ export default class TabLayout {
 
     ['Toolbar', 'ToolbarContext', 'Gallery'].forEach((controlName: LayoutControlName) => {
       const position = query<HTMLSelectElement>(`[name="_Layout.${controlName}.Position"]`).value || '0';
-      const order = query<HTMLInputElement>(`[name="_Layout.${controlName}.Order"]`).value || '0';
+      const order = query<HTMLSelectElement>(`[name="_Layout.${controlName}.Order"]`).value || '0';
       if (callbackFn) callbackFn({ controlName, position, order });
 
       layout[controlName] = { position, order };
     });
 
     return layout as ILayoutObject;
+  }
+
+
+  private static handleLayoutInputsChanged(e: Event) {
+    e.preventDefault();
+
+    const layout = TabLayout.getLayoutSettingObjectFromDOM();
+    TabLayout.loadLayoutMapDOM(layout);
+
+    // hide gallery order if the position is either left / right
+    const hideGalleryOrder = layout.Gallery.position === 'Left' || layout.Gallery.position === 'Right';
+    query('#Section_LayoutGalleryOrder').toggleAttribute('hidden', hideGalleryOrder);
   }
 
 
@@ -163,8 +191,8 @@ export default class TabLayout {
 
     // don't allow to drop toolbar to left/right position
     if (fromControlName.toLowerCase().includes('toolbar')) {
-      query('[data-position="Left"] .region-drop').classList.add('nodrop');
-      query('[data-position="Right"] .region-drop').classList.add('nodrop');
+      query('[data-position="Left"i] .region-drop').classList.add('nodrop');
+      query('[data-position="Right"i] .region-drop').classList.add('nodrop');
     }
 
     // disable child el to receive drag events
@@ -196,8 +224,8 @@ export default class TabLayout {
   private static handleLayoutItemDragEnd(e: DragEvent) {
     e.preventDefault();
 
-    query('[data-position="Left"] .region-drop').classList.remove('nodrop');
-    query('[data-position="Right"] .region-drop').classList.remove('nodrop');
+    query('[data-position="Left"i] .region-drop').classList.remove('nodrop');
+    query('[data-position="Right"i] .region-drop').classList.remove('nodrop');
 
     // re-enable child el to receive drag events
     queryAll('.app-layout button[draggable="true"]').forEach(el => {
@@ -211,7 +239,7 @@ export default class TabLayout {
     toDropEl.classList.remove('drag--enter');
 
     const toBtnEl = toDropEl.querySelector('button[draggable="true"]') as (HTMLButtonElement | null);
-    const toControlName = toBtnEl?.getAttribute('data-control') || '';
+    const toControlName = (toBtnEl?.getAttribute('data-control') || '') as LayoutControlName;
 
     // get the drop data
     const jsonData = e.dataTransfer.getData('application/json') || '{}';
@@ -230,7 +258,7 @@ export default class TabLayout {
     }
 
 
-    const fromDropEl = query(`.app-layout [data-position="${fromPosition}"] .region-drop[data-order="${fromOrder}"]`) as HTMLElement;
+    const fromDropEl = query(`.app-layout [data-position="${fromPosition}"i] .region-drop[data-order="${fromOrder}"]`) as HTMLElement;
     const fromBtnEl = fromDropEl.querySelector('button[draggable="true"]') as HTMLButtonElement;
 
     // if the drop region is already occupied
@@ -238,14 +266,20 @@ export default class TabLayout {
       // swap the elements
       fromDropEl?.appendChild(toBtnEl);
 
-      query<HTMLSelectElement>(`select[name="_Layout.${toControlName}.Position"]`).value = fromPosition;
-      query<HTMLInputElement>(`input[name="_Layout.${toControlName}.Order"]`).value = fromOrder;
+      query<HTMLSelectElement>(`[name="_Layout.${toControlName}.Position"]`).value = fromPosition;
+      query<HTMLSelectElement>(`[name="_Layout.${toControlName}.Order"]`).value = fromOrder;
     }
 
     // drop the btn to the drop target
     toDropEl.appendChild(fromBtnEl);
 
-    query<HTMLSelectElement>(`select[name="_Layout.${fromControlName}.Position"]`).value = position;
-    query<HTMLInputElement>(`input[name="_Layout.${fromControlName}.Order"]`).value = order;
+    query<HTMLSelectElement>(`[name="_Layout.${fromControlName}.Position"]`).value = position;
+    query<HTMLSelectElement>(`[name="_Layout.${fromControlName}.Order"]`).value = order;
+
+    // hide gallery order if the position is either left / right
+    if (fromControlName === 'Gallery') {
+      const hideGalleryOrder = position === 'Left' || position === 'Right';
+      query('#Section_LayoutGalleryOrder').toggleAttribute('hidden', hideGalleryOrder);
+    }
   }
 }
