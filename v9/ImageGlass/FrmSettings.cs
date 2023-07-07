@@ -296,6 +296,7 @@ public partial class FrmSettings : WebForm
         var updateLanguage = false;
         var updateAppearance = false;
         var updateTheme = false;
+        var updateLayout = false;
 
 
         // Tab General
@@ -457,6 +458,7 @@ public partial class FrmSettings : WebForm
 
         // Tab Layout
         #region Tab Layout
+        if (Config.SetFromJson(dict, nameof(Config.Layout)).Done) { updateLayout = true; }
 
         #endregion // Tab Layout
 
@@ -523,6 +525,7 @@ public partial class FrmSettings : WebForm
         if (updateLanguage) requests |= UpdateRequests.Language;
         if (updateAppearance) requests |= UpdateRequests.Appearance;
         if (updateTheme) requests |= UpdateRequests.Theme;
+        if (updateLayout) requests |= UpdateRequests.Layout;
 
         Local.UpdateFrmMain(requests, (e) =>
         {

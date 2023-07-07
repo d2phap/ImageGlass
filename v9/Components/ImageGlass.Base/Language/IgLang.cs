@@ -167,6 +167,12 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
         Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
 
+        // layout position
+        Add($"_.Position._Left", "Left");
+        Add($"_.Position._Right", "Right");
+        Add($"_.Position._Top", "Top");
+        Add($"_.Position._Bottom", "Bottom");
+
 
         #region Enums
 
@@ -584,11 +590,17 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Layout
         // Layout > Layout
-
+        Add("FrmSettings.Tab.Layout._Order", "Order");
+        Add("FrmSettings.Tab.Layout._Toolbar", "Toolbar");
+        Add("FrmSettings.Tab.Layout._ToolbarContext", "Contextual toolbar");
+        Add("FrmSettings.Tab.Layout._Gallery", "Gallery");
+        Add("FrmSettings.Tab.Layout._ToolbarPosition", "Toolbar position");
+        Add("FrmSettings.Tab.Layout._ToolbarContextPosition", "Contextual toolbar position");
+        Add("FrmSettings.Tab.Layout._GalleryPosition", "Gallery position");
         #endregion // Tab Layout
 
 
-        #region Tab Mouse & Keyboard
+        #region Tab Mouse
         // Mouse > Mouse wheel action
         Add("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
         #endregion // Tab Mouse
@@ -646,6 +658,9 @@ public class IgLang : Dictionary<string, string>
 
 
         #endregion // FrmSettings
+
+
+
 
 
         #region TAB Edit

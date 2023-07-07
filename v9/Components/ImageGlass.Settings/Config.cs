@@ -1429,6 +1429,21 @@ public static class Config
             }
             Done = true;
         }
+        // Layout
+        else if (configName == nameof(Config.Layout))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, string>>(newValue);
+            if (dict != null)
+            {
+                Config.Layout.Clear();
+                foreach (var item in dict)
+                {
+                    _ = Config.Layout.TryAdd(item.Key, item.Value);
+                }
+
+                Done = true;
+            }
+        }
         else
         {
             // unsupported type
