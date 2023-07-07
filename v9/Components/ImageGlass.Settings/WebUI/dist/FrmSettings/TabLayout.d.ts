@@ -1,4 +1,5 @@
 export default class TabLayout {
+    private static get defaultLayout();
     /**
      * Loads settings for tab Layout.
      */
@@ -11,6 +12,10 @@ export default class TabLayout {
      * Save settings as JSON object.
      */
     static exportSettings(): Record<string, any>;
+    private static loadLayoutConfigs;
+    private static loadLayoutMapDOM;
+    private static convertRawLayoutToLayoutObject;
+    private static getLayoutSettingObjectFromDOM;
     private static handleLayoutItemDragStart;
     private static handleLayoutItemDragOver;
     private static handleLayoutItemDragEnter;

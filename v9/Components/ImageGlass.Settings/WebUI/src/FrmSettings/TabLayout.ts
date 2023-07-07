@@ -1,10 +1,27 @@
 import { getChangedSettingsFromTab } from '@/helpers';
+import Language from './Language';
+
+type LayoutControlName = 'Toolbar' | 'ToolbarContext' | 'Gallery';
+type ILayoutObject = Record<LayoutControlName, {
+  position: string,
+  order: string,
+}>;
 
 export default class TabLayout {
+  private static get defaultLayout(): ILayoutObject {
+    return {
+      Toolbar:        { position: 'Top',    order: '0' },
+      ToolbarContext: { position: 'Bottom', order: '1' },
+      Gallery:        { position: 'Bottom', order: '0' },
+    };
+  }
+
+
   /**
    * Loads settings for tab Layout.
    */
   static loadSettings() {
+    TabLayout.loadLayoutConfigs();
   }
 
 
@@ -12,12 +29,73 @@ export default class TabLayout {
    * Adds events for tab Layout.
    */
   static addEvents() {
-    queryAll('[tab="layout"] .app-layout button[draggable="true"]').forEach(btnEl => {
+    //
+  }
+
+
+  /**
+   * Save settings as JSON object.
+   */
+  static exportSettings() {
+    const settings = getChangedSettingsFromTab('layout');
+
+    const oldLayout = TabLayout.convertRawLayoutToLayoutObject();
+
+    // get layout settings
+    let hasChanged = false;
+    const layout: Record<string, string> = {};
+    TabLayout.getLayoutSettingObjectFromDOM(item => {
+      if (oldLayout[item.controlName].position !== item.position) hasChanged = true;
+      if (oldLayout[item.controlName].order !== item.order) hasChanged = true;
+
+      layout[item.controlName] = [item.position, item.order].join(';');
+    });
+
+    if (hasChanged) settings.Layout = layout;
+
+    return settings;
+  }
+
+
+  private static loadLayoutConfigs() {
+    const layout = TabLayout.convertRawLayoutToLayoutObject(_pageSettings.config?.Layout);
+
+    Object.keys(layout).forEach((controlName: LayoutControlName) => {
+      const { position, order } = layout[controlName];
+
+      query<HTMLSelectElement>(`[name="_Layout.${controlName}.Position"]`).value = position;
+      query<HTMLInputElement>(`[name="_Layout.${controlName}.Order"]`).value = order;
+    });
+
+    TabLayout.loadLayoutMapDOM(layout);
+  }
+
+
+  private static loadLayoutMapDOM(layout?: ILayoutObject) {
+    layout ||= TabLayout.getLayoutSettingObjectFromDOM();
+
+    // clear all DOM buttons
+    queryAll('.app-layout .region-drop[data-order]').forEach(el => el.innerHTML = '');
+
+    for (const controlName in layout) {
+      if (!Object.prototype.hasOwnProperty.call(layout, controlName)) continue;
+      const item = layout[controlName as LayoutControlName];
+
+      query(`.app-layout [data-position="${item.position}"] .region-drop[data-order="${item.order}"]`).innerHTML = `
+        <button draggable="true" tabindex="-1" data-control="${controlName}">
+          <span lang-text="FrmSettings.Tab.Layout._${controlName}">[${controlName}]</span>
+        </button>`;
+    }
+
+    Language.load();
+
+    // add drag/drop events
+    queryAll('.app-layout button[draggable="true"]').forEach(btnEl => {
       btnEl.removeEventListener('dragstart', TabLayout.handleLayoutItemDragStart, false);
       btnEl.addEventListener('dragstart', TabLayout.handleLayoutItemDragStart, false);
     });
 
-    queryAll('[tab="layout"] .app-layout .region-drop').forEach(el => {
+    queryAll('.app-layout .region-drop').forEach(el => {
       el.removeEventListener('dragover', (e) => TabLayout.handleLayoutItemDragOver(e), false);
       el.addEventListener('dragover', (e) => TabLayout.handleLayoutItemDragOver(e), false);
 
@@ -35,11 +113,41 @@ export default class TabLayout {
   }
 
 
-  /**
-   * Save settings as JSON object.
-   */
-  static exportSettings() {
-    return getChangedSettingsFromTab('layout');
+  private static convertRawLayoutToLayoutObject(rawLayout?: Partial<Record<LayoutControlName, string>>): ILayoutObject {
+    rawLayout ||= {};
+    const layout = TabLayout.defaultLayout;
+
+    for (const key in layout) {
+      if (!Object.prototype.hasOwnProperty.call(layout, key)) continue;
+      const controlName = key as LayoutControlName;
+
+      const arr = rawLayout[controlName]?.split(';').filter(Boolean) || [];
+      let position = arr[0] ?? layout[controlName].position;
+      let order = arr[1] ?? layout[controlName].order;
+
+      layout[controlName] = { position, order };
+    }
+
+    return layout as ILayoutObject;
+  }
+
+
+  private static getLayoutSettingObjectFromDOM(callbackFn?: (item: {
+    controlName: LayoutControlName,
+    position: string,
+    order: string,
+  }) => any): ILayoutObject {
+    const layout: Partial<ILayoutObject> = {};
+
+    ['Toolbar', 'ToolbarContext', 'Gallery'].forEach((controlName: LayoutControlName) => {
+      const position = query<HTMLSelectElement>(`[name="_Layout.${controlName}.Position"]`).value || '0';
+      const order = query<HTMLInputElement>(`[name="_Layout.${controlName}.Order"]`).value || '0';
+      if (callbackFn) callbackFn({ controlName, position, order });
+
+      layout[controlName] = { position, order };
+    });
+
+    return layout as ILayoutObject;
   }
 
 
