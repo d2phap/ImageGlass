@@ -394,6 +394,11 @@ public partial class FrmMain
             // TODO:
         }
 
+        if (e.Requests.HasFlag(UpdateRequests.Layout))
+        {
+            LoadAppLayout(true);
+        }
+
         if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons))
         {
             Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
@@ -1219,7 +1224,7 @@ public partial class FrmMain
     /// <summary>
     /// Makes app layout changes according to <see cref="Config.Layout"/>.
     /// </summary>
-    private void LoadAppLayout()
+    private void LoadAppLayout(bool forcedUpdateLayout = false)
     {
         const string SEPARATOR = ";";
         var dict = new Dictionary<Control, (DockStyle Dock, int DockOrder)>()
@@ -1284,7 +1289,8 @@ public partial class FrmMain
         }
         else
         {
-            Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+            Gallery.View = ImageGlass.Gallery.View.HorizontalStrip;
+            Gallery.ScrollBars = Config.ShowGalleryScrollbars;
 
             Gallery.Resizer = ResizerType.None;
             Gallery.TooltipDirection = Gallery.Dock == DockStyle.Bottom
@@ -1306,12 +1312,18 @@ public partial class FrmMain
         }
 
 
-        // make sure Gallery does not cover toolbar
-        Gallery.BringToFront();
+        // make sure Gallery does not cover toolbar in vertical layout
+        if (Gallery.Dock == DockStyle.Left || Gallery.Dock == DockStyle.Right)
+        {
+            Gallery.BringToFront();
+        }
 
         // make sure PicMain always on top
         PicMain.BringToFront();
         ResumeLayout(false);
+
+        // perform layout update
+        if (forcedUpdateLayout) PerformLayout();
     }
 
 }
