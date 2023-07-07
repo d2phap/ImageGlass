@@ -217,4 +217,124 @@
     margin-top: 0;
     margin-bottom: 0;
   }
+
+  .app-layout {
+    height: calc(410px * var(--fontScale));
+    width: calc(410px * var(--fontScale));
+    display: grid;
+    grid-template-areas: "region-top region-top region-top"
+      "region-left region-center region-right"
+      "region-bottom region-bottom region-bottom";
+    grid-template-rows: min-content auto min-content;
+    grid-template-columns: min-content auto min-content;
+    background-color: rgb(var(--ControlBg) / 0.5);
+    border: 0.1rem solid var(--ControlBorder);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: background ease 300ms, border ease 300ms, shadow ease 300ms;
+
+    &:hover {
+      border-color: var(--ControlBorderHover);
+    }
+
+    .region-drop {
+      background-color: rgb(var(--AppBg) / 0.15);
+      border: 0.1rem dashed rgb(var(--InvertColor) / 0.1);
+      border-radius: var(--border-radius);
+      transition: background ease 300ms, border ease 300ms, shadow ease 300ms;
+
+      &:has(button[draggable]) {
+        border-color: transparent;
+      }
+
+      &.drag--enter {
+        background-color: rgb(var(--Accent) / 0.1);
+        border-color: rgb(var(--Accent)) !important;
+        border-width: 0.15rem;
+      }
+      &.nodrop {
+        pointer-events: none !important;
+        opacity: 0.4;
+      }
+    }
+    button[draggable] {
+      --control-width: none;
+      @include baseControl();
+
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      min-width: 0;
+      border: 0.1rem solid transparent;
+      border-radius: var(--border-radius);
+      background-color: rgb(var(--Accent) / 0.2);
+  
+      &:hover {
+        border-color: var(--ControlCtaBorderHover);
+      }
+    }
+
+
+    [data-position="top"i],
+    [data-position="bottom"i],
+    [data-position="left"i],
+    [data-position="right"i] {
+      padding: 1rem;
+      transition: background ease 300ms, border ease 300ms, shadow ease 300ms;
+    }
+
+    [data-position="top"i],
+    [data-position="bottom"i] {
+      .region-drop {
+        height: 2rem;
+        margin-bottom: 0.5rem;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+    [data-position="left"i],
+    [data-position="right"i] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .region-drop {
+        width: 2rem;
+        height: 100%;
+
+        button[draggable] span {
+          writing-mode: vertical-rl;
+        }
+      }
+    }
+
+
+    .region-center {
+      grid-area: region-center;
+
+      --cell-size: 1.25rem;
+      background-image: conic-gradient(#00000010 25%, #fff1 0 50%, #00000010 0 75%, #fff1 0);
+      background-size: var(--cell-size) var(--cell-size);
+      background-repeat: repeat;
+    }
+    [data-position="top"i] {
+      grid-area: region-top;
+      border-bottom: 0.1rem solid var(--ControlBorder);
+    }
+    [data-position="bottom"i] {
+      grid-area: region-bottom;
+      border-top: 0.1rem solid var(--ControlBorder);
+    }
+    [data-position="left"i] {
+      grid-area: region-left;
+      border-right: 0.1rem solid var(--ControlBorder);
+    }
+    [data-position="right"i] {
+      grid-area: region-right;
+      border-left: 0.1rem solid var(--ControlBorder);
+    }
+  }
 }

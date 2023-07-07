@@ -1,6 +1,5 @@
 button {
   --control-width: none;
-
   @include baseControl();
 
   overflow: hidden;

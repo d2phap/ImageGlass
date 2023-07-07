@@ -75,7 +75,7 @@ export default class Settings {
     TabViewer.loadSettings();
     TabToolbar.loadSettings();
     TabGallery.loadSettings();
-    TabLanguage.loadSettings();
+    TabLayout.loadSettings();
     TabMouse.loadSettings();
     TabKeyboard.loadSettings();
     TabFileAssocs.loadSettings();

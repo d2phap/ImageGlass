@@ -17,6 +17,7 @@ import TabGallery from './FrmSettings/TabGallery';
 import TabAppearance from './FrmSettings/TabAppearance';
 import TabFileAssocs from './FrmSettings/TabFileAssocs';
 import TabTools from './FrmSettings/TabTools';
+import TabLayout from './FrmSettings/TabLayout';
 
 
 // initialize webview event listeners
@@ -33,7 +34,7 @@ window.postAsync = postAsync;
 
 if (!window._pageSettings) {
   window._pageSettings = {
-    initTab: 'tools',
+    initTab: 'layout',
     config: {},
     lang: {},
     langList: [],
@@ -87,7 +88,7 @@ TabEdit.addEvents();
 TabViewer.addEvents();
 TabToolbar.addEvents();
 TabGallery.addEvents();
-TabLanguage.addEvents();
+TabLayout.addEvents();
 TabMouse.addEvents();
 TabFileAssocs.addEvents();
 TabTools.addEvents();
