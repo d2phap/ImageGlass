@@ -20,7 +20,7 @@ export class Webview {
       const handler = this.eventHandlers[eName];
       const hasHandler = !!handler;
 
-      console.info(`Received event '${eName}' (handler=${hasHandler}) with data:`, eData);
+      console.info(`ℹ️ Received event '${eName}' (handler=${hasHandler}) with data:`, eData);
 
       if (!hasHandler) return;
       handler(eName, eData);

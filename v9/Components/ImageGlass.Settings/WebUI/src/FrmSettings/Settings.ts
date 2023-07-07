@@ -38,8 +38,11 @@ export default class Settings {
 
 
       // find the html element
-      const el = query(`[name="${configKey}"]`);
-      if (!el) continue;
+      const el = query(`[name="${configKey}"]`, true);
+      if (!el) {
+        console.info(`>> Settings.load(): config '${configKey}' not found`);
+        continue;
+      }
 
 
       // check the tag name and type
@@ -157,7 +160,7 @@ export default class Settings {
       }
 
       const enumKeys = _pageSettings.enums[enumName];
-      const selectEls = queryAll<HTMLSelectElement>(`select[data-enum="${enumName}"]`);
+      const selectEls = queryAll<HTMLSelectElement>(`select[data-enum="${enumName}"]`, true);
 
       for (const el of selectEls) {
         enumKeys.forEach(key => {

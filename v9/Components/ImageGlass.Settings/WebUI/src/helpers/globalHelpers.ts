@@ -5,9 +5,15 @@ import { WebviewEventHandlerFn } from './webview';
 /**
  * Gets the first matched element with the query selector.
  */
-export const query = <T = HTMLElement>(selector: string): T | null => {
+export const query = <T = HTMLElement>(selector: string, hideWarning = false): T | null => {
   try {
-    return document.querySelector(selector) as T;
+    const el = document.querySelector(selector) as T;
+
+    if (!el && !hideWarning) {
+      console.info(`⚠️ query() returns NULL with selector '${selector}'`);
+    }
+
+    return el;
   }
   catch {}
 
@@ -18,9 +24,15 @@ export const query = <T = HTMLElement>(selector: string): T | null => {
 /**
  * Gets all matched elements with the query selector.
  */
-export const queryAll = <T = HTMLElement>(selector: string) => {
+export const queryAll = <T = HTMLElement>(selector: string, hideWarning = false) => {
   try {
-    return Array.from(document.querySelectorAll(selector)) as T[];
+    const els = Array.from(document.querySelectorAll(selector)) as T[];
+
+    if (els.length === 0 && !hideWarning) {
+      console.info(`⚠️ queryAll() returns ZERO elements with selector '${selector}'`);
+    }
+
+    return els;
   }
   catch {}
 

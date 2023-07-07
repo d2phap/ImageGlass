@@ -11,15 +11,15 @@ export default class Language {
   
       const langValue = _pageSettings.lang[langKey];
   
-      queryAll(`[lang-text="${langKey}"]`).forEach(el => {
+      queryAll(`[lang-text="${langKey}"]`, true).forEach(el => {
         el.innerText = langValue;
       });
 
-      queryAll(`[lang-title="${langKey}"]`).forEach(el => {
+      queryAll(`[lang-title="${langKey}"]`, true).forEach(el => {
         el.title = langValue;
       });
 
-      queryAll(`[lang-html="${langKey}"]`).forEach(el => {
+      queryAll(`[lang-html="${langKey}"]`, true).forEach(el => {
         let html = langValue;
 
         for (let i = 0; i < el.childElementCount; i++) {
