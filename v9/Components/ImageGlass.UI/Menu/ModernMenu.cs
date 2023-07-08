@@ -86,6 +86,7 @@ public class ModernMenu : ContextMenuStrip
     }
 
 
+    // Protected override
     #region Protected override
 
     protected override void OnHandleCreated(EventArgs e)
@@ -131,10 +132,11 @@ public class ModernMenu : ContextMenuStrip
         IsOpen = false;
     }
 
-    #endregion
+    #endregion // Protected override
 
 
-    #region Public function
+    // Public functions
+    #region Public functions
 
     /// <summary>
     /// Apply these fixes:
@@ -232,47 +234,34 @@ public class ModernMenu : ContextMenuStrip
         return null;
     }
 
-    #endregion
+    #endregion // Public functions
 
 
+    // Private functions
     #region Private functions
 
     private void Item_DropDownOpening(object? sender, EventArgs e)
     {
         var mnuItem = sender as ToolStripMenuItem;
-        if (mnuItem is null || !mnuItem.HasDropDownItems)
-        {
-            return; // not a dropdown item
-        }
+        // not a dropdown item
+        if (mnuItem is null || !mnuItem.HasDropDownItems) return;
+
 
         #region Fix dropdown direction
 
-        // get position of current menu item
-        var pos = new Point(mnuItem.GetCurrentParent().Left, mnuItem.GetCurrentParent().Top);
+        // current bounds of the current monitor
+        var workingArea = Screen.FromControl(this).WorkingArea;
 
-        // Current bounds of the current monitor
-        var currentScreen = Screen.FromPoint(pos);
+        // get width of all submenu dropdowns
+        var openingDropdownWidth = GetWidthOfAllOpeningDropdowns(mnuItem);
 
-        // Find the width of sub-menu
-        var maxWidth = 0;
-        foreach (var subItem in mnuItem.DropDownItems)
+        // get the ideal right bound of the last submenu dropdown
+        var lastSubmenuRight = Left + Width + openingDropdownWidth;
+
+        // if cannot fit the last submenu into right side
+        if (lastSubmenuRight > workingArea.Right)
         {
-            if (subItem is ToolStripMenuItem mnu)
-            {
-                maxWidth = Math.Max(mnu.Width, maxWidth);
-            }
-        }
-        maxWidth += 10; // Add a little wiggle room
-
-        var farRight = pos.X + Width + maxWidth;
-        var farLeft = pos.X - maxWidth;
-
-        // get left and right distance to compare
-        var leftGap = farLeft - currentScreen.Bounds.Left;
-        var rightGap = currentScreen.Bounds.Right - farRight;
-
-        if (leftGap >= rightGap)
-        {
+            // show it on the left
             mnuItem.DropDownDirection = ToolStripDropDownDirection.Left;
         }
         else
@@ -280,10 +269,23 @@ public class ModernMenu : ContextMenuStrip
             mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
         }
 
-        #endregion
+        #endregion // Fix dropdown direction
+
     }
 
-    #endregion
+
+    /// <summary>
+    /// Gets the total width of all opening submenu dropdowns
+    /// </summary>
+    private int GetWidthOfAllOpeningDropdowns(ToolStripMenuItem mnuItem)
+    {
+        if (mnuItem is not ToolStripMenuItem) return 0;
+        var parent = mnuItem.OwnerItem as ToolStripMenuItem;
+
+        return mnuItem.DropDown.Width + GetWidthOfAllOpeningDropdowns(parent);
+    }
+
+    #endregion // Private functions
 
 
 }
