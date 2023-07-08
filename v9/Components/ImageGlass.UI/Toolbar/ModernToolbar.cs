@@ -361,6 +361,15 @@ public class ModernToolbar : ToolStrip
         var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
         var y = Visible ? Height : 10;
 
+        var workingArea = Screen.FromControl(this).WorkingArea;
+        var screenMenuBottom = PointToScreen(new Point(0, y + MainMenu.Height)).Y;
+
+        // make sure main menu does not cover the toolbar
+        if (screenMenuBottom > workingArea.Bottom)
+        {
+            y = y - MainMenu.Height - Height;
+        }
+
         MainMenu.Show(this, x, y);
     }
 
