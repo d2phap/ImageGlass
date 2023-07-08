@@ -38,7 +38,9 @@ public class ModernToolbar : ToolStrip
     private readonly ModernTooltip _tooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();
     private ToolStripItem? _hoveredItem = null;
-    private ContextMenuStrip _mainMenu = new();
+
+    private static Container _mainMenuContainer = new Container();
+    private ModernMenu _mainMenu = new(_mainMenuContainer);
 
     private ToolStripButton _mainMenuButton => new()
     {
@@ -83,7 +85,7 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Gets, sets main menu
     /// </summary>
-    public ContextMenuStrip MainMenu
+    public ModernMenu MainMenu
     {
         get => _mainMenu;
         set
@@ -216,6 +218,7 @@ public class ModernToolbar : ToolStrip
             OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
             _tooltip.Dispose();
             _tooltipTokenSrc.Dispose();
+            _mainMenuContainer.Dispose();
         }
     }
 
@@ -358,6 +361,9 @@ public class ModernToolbar : ToolStrip
     /// </summary>
     public void ShowMainMenu()
     {
+        // update correct height of the menu
+        MainMenu.FixGeneralIssues();
+
         var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
         var y = Visible ? Height : 10;
 
@@ -369,7 +375,7 @@ public class ModernToolbar : ToolStrip
         {
             y = y - MainMenu.Height - Height;
         }
-
+        
         MainMenu.Show(this, x, y);
     }
 

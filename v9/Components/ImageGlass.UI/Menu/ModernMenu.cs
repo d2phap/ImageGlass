@@ -116,7 +116,7 @@ public class ModernMenu : ContextMenuStrip
 
         if (!DesignMode)
         {
-            FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT);
+            FixGeneralIssues();
         }
     }
 
@@ -146,11 +146,18 @@ public class ModernMenu : ContextMenuStrip
     ///   <item>Dropdown direction</item>
     /// </list>
     /// </summary>
-    /// <param name="items"></param>
+    /// <param name="menu">
+    /// The menu to fix,
+    /// if it's <c>null</c>, the <paramref name="menu"/> is the current <see cref="ModernMenu"/> instance
+    /// </param>
+    /// <param name="originalIconSize">
+    /// Original icon size of menu item. Default value is <see cref="Constants.MENU_ICON_HEIGHT"/>
+    /// </param>
     public void FixGeneralIssues(
-        ToolStripDropDown menu,
-        float originalIconSize)
+        ToolStripDropDown? menu = null,
+        float originalIconSize = Constants.MENU_ICON_HEIGHT)
     {
+        menu ??= this;
         var dpiScale = CurrentDpi / 96f;
         var currentFontSize = SystemInformation.MenuFont.SizeInPoints;
 
