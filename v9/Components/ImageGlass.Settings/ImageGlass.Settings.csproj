@@ -72,7 +72,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
         <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
     </ItemGroup>
 
     <ItemGroup>

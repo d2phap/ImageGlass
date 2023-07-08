@@ -61,7 +61,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="D2Phap.DXControl" Version="2.5.0" />
+    <PackageReference Include="D2Phap.DXControl" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup>
