@@ -18,7 +18,7 @@
   background-color: rgb(var(--ControlBg));
   border-radius: var(--border-radius);
   border: 0.1rem solid var(--ControlBorder);
-  transition: background ease 300ms, border ease 300ms, shadow ease 300ms;
+  transition: background ease 300ms, border ease 300ms, box-shadow ease 300ms;
 
   &::selection {
     background-color: rgb(var(--Accent) / 0.55);

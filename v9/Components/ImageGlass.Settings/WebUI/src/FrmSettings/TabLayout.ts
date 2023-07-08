@@ -189,6 +189,10 @@ export default class TabLayout {
     e.dataTransfer.setData('application/json', data);
     e.dataTransfer.effectAllowed = 'move';
 
+    // set custom drag image
+    const btnContentEl = btnEl.querySelector('*') as HTMLElement;
+    e.dataTransfer.setDragImage(btnContentEl, -20, 0);
+
     // don't allow to drop toolbar to left/right position
     if (fromControlName.toLowerCase().includes('toolbar')) {
       query('[data-position="Left"i] .region-drop').classList.add('nodrop');
