@@ -104,8 +104,16 @@ public class Hotkey
                     }
                     else
                     {
-                        var kc = new KeysConverter();
-                        var key = (Keys?)kc.ConvertFromString(str);
+                        Keys? key = null;
+                        try
+                        {
+                            var kc = new KeysConverter();
+                            key = (Keys?)kc.ConvertFromInvariantString(str);
+                        }
+                        catch (ArgumentException)
+                        {
+                            key = BHelper.ParseEnum<Keys>(str);
+                        }
 
                         if (key is not null)
                         {
