@@ -817,6 +817,9 @@ public partial class FrmMain : ThemedForm
             // set busy state
             Local.IsBusy = true;
 
+            // check if we should use Webview2 viewer
+            PicMain.UseWebview2 = imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
+
             _uiReporter.Report(new(new ImageLoadingEventArgs()
             {
                 Index = Local.CurrentIndex,
@@ -835,20 +838,24 @@ public partial class FrmMain : ThemedForm
             Local.Images.ReadOptions = readSettings;
 
 
-            // directly load the image file, skip image list
-            if (photo != null)
-            {
-                await photo.LoadAsync(readSettings, tokenSrc);
-            }
-            else
-            {
-                photo = await Local.Images.GetAsync(
-                    imageIndex,
-                    useCache: !isSkipCache,
-                    tokenSrc: tokenSrc
-                );
-            }
+            // if we can use native viewer
+            if (!PicMain.UseWebview2) {
 
+                // directly load the image file, skip image list
+                if (photo != null)
+                {
+                    await photo.LoadAsync(readSettings, tokenSrc);
+                }
+                else
+                {
+                    photo = await Local.Images.GetAsync(
+                        imageIndex,
+                        useCache: !isSkipCache,
+                        tokenSrc: tokenSrc
+                    );
+                }
+            }
+            
 
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
@@ -931,7 +938,7 @@ public partial class FrmMain : ThemedForm
             && e.Data is ImageLoadedEventArgs e2)
         {
             Local.RaiseImageLoadedEvent(e2);
-            HandleImageProgress_Loaded(e2);
+            _ = HandleImageProgress_LoadedAsync(e2);
             return;
         }
 
@@ -996,10 +1003,26 @@ public partial class FrmMain : ThemedForm
 
 
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
-    private void HandleImageProgress_Loaded(ImageLoadedEventArgs e)
+    private async Task HandleImageProgress_LoadedAsync(ImageLoadedEventArgs e)
     {
+        Exception? error = null;
+
+        // if image needs to display in Webview2 viweer
+        if (PicMain.UseWebview2)
+        {
+            PicMain.SetImage(null);
+            PicMain.ClearMessage();
+
+            try
+            {
+                await PicMain.SetImageUsingWebview2Async(e.FilePath, _loadCancelTokenSrc.Token);
+            }
+            catch (Exception ex) { error = ex; }
+        }
+
+
         // image error
-        if (e.Error != null)
+        if (error != null)
         {
             Local.IsImageError = true;
             Local.ImageModifiedPath = string.Empty;
@@ -1017,11 +1040,12 @@ public partial class FrmMain : ThemedForm
                 $"\r\n";
 
             PicMain.ShowMessage(debugInfo +
-                e.Error.Source + ": " + e.Error.Message,
+                error.Source + ": " + error.Message,
                 Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + $" {emoji}");
         }
 
-        else if (!(e.Data?.ImgData.IsImageNull ?? true))
+        // use native viewer to display image
+        else if (!(e.Data?.ImgData.IsImageNull ?? true) && !PicMain.UseWebview2)
         {
             // delete clipboard image
             Local.ClipboardImage?.Dispose();
@@ -1055,6 +1079,7 @@ public partial class FrmMain : ThemedForm
 
             PicMain.ClearMessage();
         }
+
 
 
         if (Local.CurrentIndex >= 0)
