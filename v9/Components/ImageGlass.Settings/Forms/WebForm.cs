@@ -105,6 +105,17 @@ public partial class WebForm : ThemedForm
     }
 
 
+    protected override void OnWindowStateChanging(WindowStateChangedEventArgs e)
+    {
+        base.OnWindowStateChanging(e);
+
+        if (e.State == FormWindowState.Minimized)
+        {
+            _ = SuspendWebview2Async();
+        }
+    }
+
+
     protected override void OnActivated(EventArgs e)
     {
         base.OnActivated(e);
@@ -404,4 +415,23 @@ public partial class WebForm : ThemedForm
             action();
         }, null);
     }
+
+
+    /// <summary>
+    /// Suspends the <see cref="Web2"/> to have the <see cref="WebView2"/> consume less memory.
+    /// </summary>
+    public async Task SuspendWebview2Async(int delayMs = 1000)
+    {
+        await Task.Delay(1000);
+
+        if (Web2.CoreWebView2 != null)
+        {
+            try
+            {
+                _ = Web2.CoreWebView2.TrySuspendAsync();
+            }
+            catch (InvalidOperationException) { }
+        }
+    }
+
 }
