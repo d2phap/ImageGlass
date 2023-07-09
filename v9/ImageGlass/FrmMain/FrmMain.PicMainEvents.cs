@@ -37,6 +37,8 @@ public partial class FrmMain
         e.DropImageType = DropImageType.Link;
         e.Message = string.Format(Config.Language[$"{Name}._OpenWith"], "%1");
         e.MessageReplacementToken = App.AppName;
+#else
+        e.Effect = DragDropEffects.Link;
 #endif
     }
 

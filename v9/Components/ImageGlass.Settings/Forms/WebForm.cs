@@ -258,15 +258,31 @@ public partial class WebForm : ThemedForm
     {
         await WebV.ExecuteScriptAsync("""
             window.onkeydown = (e) => {
-                console.log("ListentoKeyDownEvents", e);
-
-                const dialog = document.querySelector('dialog[open]');
-                if (dialog) {
-                    const closeDialogKeyPressed = e.key === 'Escape' && !e.ctrlKey && !e.altKey && !e.shiftKey;
-                    if (closeDialogKeyPressed) return;
+                e.preventDefault();
+        
+                const ctrl = e.ctrlKey ? 'ctrl' : '';
+                const shift = e.shiftKey ? 'shift' : '';
+                const alt = e.altKey ? 'alt' : '';
+        
+                let key = e.key.toLowerCase();
+                const keyMaps = {
+                    control: '',
+                    shift: '',
+                    alt: '',
+                    arrowleft: 'left',
+                    arrowright: 'right',
+                    arrowup: 'up',
+                    arrowdown: 'down',
+                    backspace: 'back',
+                };
+                if (keyMaps[key] !== undefined) {
+                    key = keyMaps[key];
                 }
-
-                window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
+        
+                const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
+        
+                console.log('KEYDOWN', keyCombo);
+                window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
             }
         """);
     }
@@ -327,14 +343,14 @@ public partial class WebForm : ThemedForm
     private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
     {
         var msg = BHelper.ParseJson<WebMessageModel>(e.WebMessageAsJson);
-        if (msg.Name == "KeyDown")
+        if (msg.Name == "KEYDOWN")
         {
-            if (msg.Data == "Escape")
+            if (msg.Data == "escape")
             {
                 Close();
             }
 #if DEBUG
-            else if (msg.Data == "F12")
+            else if (msg.Data == "ctrl+shift+i")
             {
                 WebV.CoreWebView2.OpenDevToolsWindow();
             }
