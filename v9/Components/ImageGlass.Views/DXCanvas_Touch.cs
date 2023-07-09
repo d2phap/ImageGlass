@@ -42,7 +42,7 @@ public partial class DXCanvas
 
     private void Gesture_Zoom(object? sender, WinTouch.ZoomEventArgs e)
     {
-        if (e.Begin || e.PercentChange == 0) return;
+        if (e.Begin || e.PercentChange == 0 || UseWebview2) return;
 
 
         var zoomPoint = PointToClient(e.Location);
@@ -55,6 +55,8 @@ public partial class DXCanvas
 
     private void Gesture_Pan(object? sender, PanEventArgs e)
     {
+        if (UseWebview2) return;
+
         var clientLoc = PointToClient(e.Location);
 
         if (e.Begin)

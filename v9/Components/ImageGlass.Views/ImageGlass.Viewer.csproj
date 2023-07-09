@@ -10,6 +10,7 @@
     <FileVersion>$(Version)</FileVersion>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Configurations>Debug;Release;Publish_Release</Configurations>
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
@@ -62,6 +63,7 @@
 
   <ItemGroup>
     <PackageReference Include="D2Phap.DXControl" Version="2.6.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
   </ItemGroup>
 
   <ItemGroup>

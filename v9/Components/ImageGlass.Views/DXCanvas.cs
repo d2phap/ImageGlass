@@ -1040,6 +1040,8 @@ public partial class DXCanvas : DXControl
 
         _clickTimer.Dispose();
         _msgTokenSrc?.Dispose();
+
+        DisposeWebview2Control();
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
@@ -1224,7 +1226,6 @@ public partial class DXCanvas : DXControl
             Invalidate();
         }
     }
-
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
@@ -1861,7 +1862,7 @@ public partial class DXCanvas : DXControl
         // draw text heading
         if (hasHeading)
         {
-            var headingColor = AccentColor.Blend(Color.White, 0.7f);
+            var headingColor = AccentColor;//.Blend(Color.White, 0.7f);
             g.DrawText(TextHeading, Font.Name, headingFontSize, hRegion, headingColor, DeviceDpi, StringAlignment.Center);
         }
 
