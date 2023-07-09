@@ -134,17 +134,9 @@ public partial class ModernForm : Form
 
 
     /// <summary>
-    /// Occurs when the Maximize button on title bar is clicked.
+    /// Occurs when the window state is changed.
     /// </summary>
-    public event MaximizeButtonClickedHandler? MaximizeButtonClicked;
-    public delegate void MaximizeButtonClickedHandler(EventArgs e);
-
-
-    /// <summary>
-    /// Occurs when the Restore button on title bar is clicked.
-    /// </summary>
-    public event RestoreButtonClickedHandler? RestoreButtonClicked;
-    public delegate void RestoreButtonClickedHandler(EventArgs e);
+    public event EventHandler<WindowStateChangedEventArgs>? WindowStateChanged;
 
 
     /// <summary>
@@ -176,17 +168,20 @@ public partial class ModernForm : Form
         // WM_SYSCOMMAND
         if (m.Msg == 0x0112)
         {
-            // When user clicks on MAXIMIZE button on title bar
             if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
             {
                 // The window is being maximized
-                MaximizeButtonClicked?.Invoke(EventArgs.Empty);
+                OnWindowStateChanging(new(FormWindowState.Maximized));
             }
-            // When user clicks on the RESTORE button on title bar
             else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
             {
                 // The window is being restored
-                RestoreButtonClicked?.Invoke(EventArgs.Empty);
+                OnWindowStateChanging(new(FormWindowState.Normal));
+            }
+            else if (m.WParam == new IntPtr(0xF020)) // SC_MINIMIZE
+            {
+                // The window is being minimized
+                OnWindowStateChanging(new(FormWindowState.Minimized));
             }
         }
         //else if (m.Msg == DpiApi.WM_DPICHANGED)
@@ -205,6 +200,7 @@ public partial class ModernForm : Form
 
         base.WndProc(ref m);
     }
+
 
     protected override void OnDpiChanged(DpiChangedEventArgs e)
     {
@@ -226,6 +222,16 @@ public partial class ModernForm : Form
         {
             DpiApi.CurrentDpi = _dpi;
         }
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="WindowStateChanged"/> event.
+    /// </summary>
+    /// <param name="e"></param>
+    protected virtual void OnWindowStateChanging(WindowStateChangedEventArgs e)
+    {
+        WindowStateChanged?.Invoke(this, e);
     }
 
 

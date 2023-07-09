@@ -36,3 +36,24 @@ public class SystemAccentColorChangedEventArgs
     public bool Handled { get; set; } = false;
 
 }
+
+
+public class WindowStateChangedEventArgs
+{
+    /// <summary>
+    /// Gets form state.
+    /// </summary>
+    public FormWindowState State { get; set; }
+
+
+    /// <summary>
+    /// Gets, sets value indicates that the event is already handled.
+    /// </summary>
+    public bool Handled { get; set; } = false;
+
+
+    public WindowStateChangedEventArgs(FormWindowState state)
+    {
+        State = state;
+    }
+}
