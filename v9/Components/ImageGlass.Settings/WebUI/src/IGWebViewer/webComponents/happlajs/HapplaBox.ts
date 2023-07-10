@@ -11,6 +11,7 @@ export class HapplaBox {
 
   #isContentElDOMChanged = false;
   #contentDOMObserver: MutationObserver;
+  #resizeObserver: ResizeObserver;
 
   private animationFrame: number;
   private isMoving = false;
@@ -36,15 +37,16 @@ export class HapplaBox {
       top: 0, bottom: 0,
     },
 
-    onBeforeContentReady: () => undefined,
-    onContentReady: () => undefined,
+    onBeforeContentReady() {},
+    onContentReady() {},
+    onResizing() {},
 
-    onBeforeZoomChanged: () => undefined,
-    onAfterZoomChanged: () => undefined,
-    onAfterTransformed: () => undefined,
+    onBeforeZoomChanged() {},
+    onAfterZoomChanged() {},
+    onAfterTransformed() {},
 
-    onPanning: () => undefined,
-    onAfterPanned: () => undefined,
+    onPanning() {},
+    onAfterPanned() {},
   };
 
 
@@ -81,6 +83,7 @@ export class HapplaBox {
     this.applyTransform = this.applyTransform.bind(this);
 
     this.onContentElDOMChanged = this.onContentElDOMChanged.bind(this);
+    this.onResizing = this.onResizing.bind(this);
     this.onMouseWheel = this.onMouseWheel.bind(this);
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onPointerUp = this.onPointerUp.bind(this);
@@ -90,6 +93,7 @@ export class HapplaBox {
 
     // create content DOM observer
     this.#contentDOMObserver = new MutationObserver(this.onContentElDOMChanged);
+    this.#resizeObserver = new ResizeObserver(this.onResizing);
 
     this.disable();
 
@@ -148,6 +152,10 @@ export class HapplaBox {
     });
 
     this.#isContentElDOMChanged = isContentElDOMChanged;
+  }
+
+  private onResizing() {
+    this.options.onResizing();
   }
 
   private onMouseWheel(e: WheelEvent) {
@@ -471,6 +479,8 @@ export class HapplaBox {
 
   public enable() {
     this.applyTransform();
+
+    this.#resizeObserver.observe(this.boxEl);
     this.#contentDOMObserver.observe(this.contentEl, {
       attributes: false,
       childList: true,
@@ -488,6 +498,7 @@ export class HapplaBox {
   }
 
   public disable() {
+    this.#resizeObserver.disconnect();
     this.#contentDOMObserver.disconnect();
 
     this.boxEl.removeEventListener('mousewheel', this.onMouseWheel);

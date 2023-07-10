@@ -1,6 +1,6 @@
 import merge from 'lodash.merge';
 import { HapplaBox } from './happlajs/HapplaBox';
-import { ViewportOptions, ZoomMode } from './happlajs/HapplaBoxTypes';
+import { IHapplaBoxOptions, ZoomMode } from './happlajs/HapplaBoxTypes';
 import { taggedTemplate } from '@/helpers';
 
 const styles = `
@@ -48,15 +48,12 @@ const imgTemplate = taggedTemplate<{
 
 export class HapplaBoxHTMLElement extends HTMLElement {
   #box: HapplaBox;
-  #resizeObserver: ResizeObserver;
 
   #containerEl: HTMLDivElement;
   #wrapperEl: HTMLDivElement;
   #contentEl: HTMLDivElement;
 
-  #options: ViewportOptions = {
-    onResizing: () => undefined,
-  };
+  #options: IHapplaBoxOptions = {};
 
   constructor() {
     super();
@@ -66,14 +63,9 @@ export class HapplaBoxHTMLElement extends HTMLElement {
 
     // private events
     this.onAuxClicked = this.onAuxClicked.bind(this);
-    this.onResize = this.onResize.bind(this);
 
     // initialize template
     this.createTemplate();
-
-    // resize event observer
-    this.#resizeObserver = new ResizeObserver(this.onResize);
-    this.#resizeObserver.observe(this.shadowRoot.host);
   }
 
   get options() {
@@ -81,11 +73,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
   private disconnectedCallback() {
-    this.#resizeObserver.disconnect();
-  }
-
-  private onResize() {
-    this.#options.onResizing();
+    this.#box.disable();
   }
 
   private onAuxClicked(e: PointerEvent) {
@@ -134,7 +122,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
 
-  public initialize(options: ViewportOptions = {}) {
+  public initialize(options: IHapplaBoxOptions = {}) {
     this.#options = merge(this.#options, options);
     this.#box = new HapplaBox(this.#containerEl, this.#contentEl, this.#options);
 

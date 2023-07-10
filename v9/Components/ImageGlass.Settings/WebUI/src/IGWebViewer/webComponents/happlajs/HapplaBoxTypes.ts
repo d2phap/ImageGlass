@@ -46,6 +46,7 @@ export interface IHapplaBoxOptions {
 
   onBeforeContentReady?: () => void;
   onContentReady?: () => void;
+  onResizing?: () => void;
 
   onBeforeZoomChanged?: ZoomEventFunction;
   onAfterZoomChanged?: ZoomEventFunction;
@@ -53,8 +54,4 @@ export interface IHapplaBoxOptions {
 
   onPanning?: PanEventFunction;
   onAfterPanned?: PanEventFunction;
-}
-
-export interface ViewportOptions extends IHapplaBoxOptions {
-  onResizing?: () => void;
 }

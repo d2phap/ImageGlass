@@ -37,6 +37,7 @@ export default class HapplaBoxViewer {
 
   private static onResizing() {
     console.log('onResizing');
+    boxEl.setZoomMode();
   }
 
 
