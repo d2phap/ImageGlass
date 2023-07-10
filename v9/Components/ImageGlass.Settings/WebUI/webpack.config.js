@@ -12,6 +12,7 @@ const configs = {
   entry: {
     main: './src/main.ts',
     FrmSettings: './src/FrmSettings.ts',
+    IGWebViewer: './src/IGWebViewer.ts',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
