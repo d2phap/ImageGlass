@@ -63,6 +63,35 @@ export const escapeHtml = (html: string) => {
 
 
 /**
+ * Creates tagged template function. Example:
+ * ```ts
+ * const imgTemplate = taggedTemplate`<img src="${'src'}" alt="${'alt'}" />`;
+ * const html = imgTemplate({
+ *    src: 'https://imageglass.org/photo.jpg',
+ *    alt: 'Photo from imageglass.org',
+ * });
+ * ```
+ * which is compiled as:
+ * ```html
+ * <img src="https://imageglass.org/photo.jpg" alt="Photo from imageglass.org" />
+ * ```
+ */
+export const taggedTemplate = <T = Record<string, any>>(strings: TemplateStringsArray, ...keys: string[]) => {
+  return (data: T) => {
+    const dict: Record<string, any> = data || {};
+    const result = [strings[0]];
+
+    keys.forEach((key, i) => {
+      const value = dict[key];
+      result.push(value, strings[i + 1]);
+    });
+
+    return result.join('');
+  };
+};
+
+
+/**
  * Opens modal dialog and return value.
  * @param selector Dialog selector.
  * @param data The data to pass to the dialog.
