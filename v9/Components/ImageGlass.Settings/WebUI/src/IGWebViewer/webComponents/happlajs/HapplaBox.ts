@@ -25,8 +25,8 @@ export class HapplaBox {
     imageRendering: InterpolationMode.Auto,
 
     allowZoom: true,
-    minZoom: 0.02,
-    maxZoom: 50,
+    minZoom: 0.01,
+    maxZoom: 100,
     zoomFactor: 1,
     panOffset: { x: 0, y: 0 },
 
@@ -165,7 +165,7 @@ export class HapplaBox {
     }
 
     const direction = e.deltaY < 0 ? 'up' : 'down';
-    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 200; // speed
+    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
     const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
 
     this.zoomDistance(delta, e.clientX, e.clientY);
