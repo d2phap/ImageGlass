@@ -103,7 +103,6 @@ export class HapplaBoxHTMLElement extends HTMLElement {
 
     const css = new CSSStyleSheet();
     css.replaceSync(styles);
-    console.log(css);
     this.shadowRoot.adoptedStyleSheets = [css];
 
 
@@ -143,13 +142,17 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
   public async loadImage(url: string, zoomMode: ZoomMode = ZoomMode.AutoZoom) {
-    this.#wrapperEl.classList.remove('opacity-1');
-    this.#contentEl.innerHTML = imgTemplate({ src: url });
+    const html = imgTemplate({ src: url });
+    await this.loadHtml(html, zoomMode);
+  }
 
-    await this.#box.waitForContentReady();
+  public async loadHtml(html: string, zoomMode: ZoomMode = ZoomMode.AutoZoom) {
+    this.#wrapperEl.style.opacity = '0';
+
+    await this.#box.loadHtmlContent(html);
     await this.setZoomMode(zoomMode);
 
-    this.#wrapperEl.classList.add('opacity-1');
+    this.#wrapperEl.style.opacity = '1';
   }
 
   public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {

@@ -16,5 +16,5 @@ window.post = post;
 window.postAsync = postAsync;
 
 
-// load the viewer
-HapplaBoxViewer.load();
+// initialize the viewer
+HapplaBoxViewer.initialize();

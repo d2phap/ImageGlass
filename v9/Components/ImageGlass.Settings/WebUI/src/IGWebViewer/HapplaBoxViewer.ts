@@ -3,7 +3,7 @@ import { HapplaBoxHTMLElement, defineHapplaBoxHTMLElement } from './webComponent
 let boxEl: HapplaBoxHTMLElement = undefined;
 
 export default class HapplaBoxViewer {
-  static load() {
+  static initialize() {
     defineHapplaBoxHTMLElement();
     boxEl = document.querySelector('happla-box').shadowRoot.host as HapplaBoxHTMLElement;
     boxEl.setAttribute('checkerboard', 'true');

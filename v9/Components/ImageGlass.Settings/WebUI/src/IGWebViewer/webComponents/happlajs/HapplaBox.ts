@@ -9,6 +9,9 @@ export class HapplaBox {
   private domMatrix: DOMMatrix;
   private isPointerDown = false;
 
+  #isContentElDOMChanged = false;
+  #contentDOMObserver: MutationObserver;
+
   private animationFrame: number;
   private isMoving = false;
   private arrowLeftDown = false;
@@ -76,14 +79,17 @@ export class HapplaBox {
     this.zoomTo = this.zoomTo.bind(this);
     this.panTo = this.panTo.bind(this);
     this.applyTransform = this.applyTransform.bind(this);
-    this.waitForContentReady = this.waitForContentReady.bind(this);
 
+    this.onContentElDOMChanged = this.onContentElDOMChanged.bind(this);
     this.onMouseWheel = this.onMouseWheel.bind(this);
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onPointerUp = this.onPointerUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+
+    // create content DOM observer
+    this.#contentDOMObserver = new MutationObserver(this.onContentElDOMChanged);
 
     this.disable();
 
@@ -132,6 +138,18 @@ export class HapplaBox {
 
 
   // #region Private functions
+  private onContentElDOMChanged(mutations: MutationRecord[]) {
+    let isContentElDOMChanged = false;
+
+    mutations.forEach(m => {
+      if (m.type === 'childList') {
+        isContentElDOMChanged = true;
+      }
+    });
+
+    this.#isContentElDOMChanged = isContentElDOMChanged;
+  }
+
   private onMouseWheel(e: WheelEvent) {
     // ignore horizontal scroll events
     if (e.deltaY === 0) {
@@ -139,7 +157,7 @@ export class HapplaBox {
     }
 
     const direction = e.deltaY < 0 ? 'up' : 'down';
-    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 300; // speed
+    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 200; // speed
     const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
 
     this.zoomDistance(delta, e.clientX, e.clientY);
@@ -365,6 +383,25 @@ export class HapplaBox {
 
 
   // #region Public functions
+  public async loadHtmlContent(html: string) {
+    this.#isContentElDOMChanged = false;
+    this.contentEl.innerHTML = html;
+
+    while (!this.#isContentElDOMChanged) {
+      await pause(10);
+    }
+
+    const list = this.contentEl.querySelectorAll('img');
+    const imgs = Array.from(list);
+
+    while (imgs.some((i) => !i.complete)) {
+      await pause(10);
+    }
+
+    // emit event onContentReady
+    this.options.onContentReady();
+  }
+
   public async panTo(x: number, y: number, duration?: number) {
     this.domMatrix.e = x;
     this.domMatrix.f = y;
@@ -411,8 +448,8 @@ export class HapplaBox {
     this.zoomToPoint(factor, { x, y, duration });
   }
 
-  public applyTransform(duration: number = 0) {
-    return new Promise((resolve) => {
+  public async applyTransform(duration: number = 0) {
+    await new Promise((resolve) => {
       this.contentEl.style.transform = `${this.domMatrix.toString()}`;
 
       // apply animation
@@ -426,15 +463,18 @@ export class HapplaBox {
         this.contentEl.style.transition = '';
         resolve(undefined);
       }
-    })
-      .then(() => {
-        // raise event
-        this.options.onAfterTransformed(this.domMatrix);
-      });
+    });
+
+    // raise event
+    this.options.onAfterTransformed(this.domMatrix);
   }
 
   public enable() {
     this.applyTransform();
+    this.#contentDOMObserver.observe(this.contentEl, {
+      attributes: false,
+      childList: true,
+    });
 
     this.boxEl.addEventListener('wheel', this.onMouseWheel, { passive: true });
 
@@ -448,6 +488,8 @@ export class HapplaBox {
   }
 
   public disable() {
+    this.#contentDOMObserver.disconnect();
+
     this.boxEl.removeEventListener('mousewheel', this.onMouseWheel);
 
     this.boxEl.removeEventListener('pointerdown', this.onPointerDown);
@@ -457,18 +499,6 @@ export class HapplaBox {
 
     this.boxEl.removeEventListener('keydown', this.onKeyDown);
     this.boxEl.removeEventListener('keyup', this.onKeyUp);
-  }
-
-  public async waitForContentReady() {
-    const list = this.contentEl.querySelectorAll('img');
-    const imgs = Array.from(list);
-
-    while (imgs.some((i) => !i.complete)) {
-      await pause(10);
-    }
-
-    // emit event onContentReady
-    this.options.onContentReady();
   }
   // #endregion
 }
