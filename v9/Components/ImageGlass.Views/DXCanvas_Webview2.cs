@@ -23,30 +23,31 @@ using Microsoft.Web.WebView2.WinForms;
 
 namespace ImageGlass.Viewer;
 
+
 public partial class DXCanvas
 {
     private bool _useWebview2 = false;
-    private WebView2? _webView2 = null;
+    private Web2? _web2 = null;
 
 
     // Properties
     #region Properties
 
     /// <summary>
-    /// Gets the <see cref="WebView2"/> instance.
+    /// Gets the <see cref="Web2"/> instance.
     /// </summary>
-    private WebView2 Web2 => _webView2;
+    private Web2 Web2 => _web2;
 
 
     /// <summary>
     /// Gets value indicates that <see cref="Web2"/> is ready to use.
     /// </summary>
-    private bool IsWeb2Ready => Web2 != null && Web2.CoreWebView2 != null;
+    private bool IsWeb2Ready => Web2 != null && Web2.IsWeb2Ready;
 
 
     /// <summary>
     /// Gets, sets value indicates that the <see cref="DXCanvas"/>
-    /// should use <see cref="WebView2"/> to render the image.
+    /// should use <see cref="Web2"/> to render the image.
     /// </summary>
     public bool UseWebview2
     {
@@ -55,13 +56,13 @@ public partial class DXCanvas
         {
             if (_useWebview2 != value)
             {
-                if (value && _webView2 == null)
+                if (value && _web2 == null)
                 {
-                    _ = InitializeWebview2ControlAsync();
+                    _ = InitializeWeb2Async();
                 }
                 else
                 {
-                    _ = SetWebview2ControlVisibilityAsync(value);
+                    _ = Web2.SetWeb2VisibilityAsync(value);
                 }
             }
 
@@ -78,20 +79,19 @@ public partial class DXCanvas
     /// <summary>
     /// Initializes <see cref="Web2"/> control, adds it into the <see cref="DXCanvas"/> control.
     /// </summary>
-    private async Task InitializeWebview2ControlAsync()
+    private async Task InitializeWeb2Async()
     {
         if (InvokeRequired)
         {
-            await Invoke(InitializeWebview2ControlAsync);
+            await Invoke(InitializeWeb2Async);
             return;
         }
 
-        _webView2 = new WebView2();
+        _web2 = new Web2();
 
         ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
         SuspendLayout();
 
-        Web2.DefaultBackgroundColor = Color.Transparent;
         Web2.AllowExternalDrop = true;
         Web2.CreationProperties = null;
         Web2.Name = nameof(Web2);
@@ -99,7 +99,7 @@ public partial class DXCanvas
         Web2.Dock = DockStyle.Fill;
         Web2.ZoomFactor = 1D;
         Web2.Visible = true;
-        Web2.WebMessageReceived += Web2_WebMessageReceived;
+        Web2.Web2MessageReceived += Web2_Web2MessageReceived;
 
 
         try
@@ -108,94 +108,13 @@ public partial class DXCanvas
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"{ex.Message}\r\n\r\n at InitializeWebview2ControlAsync() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"{ex.Message}\r\n\r\n at {nameof(InitializeWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
         ResumeLayout(false);
 
-        await EnsureCoreWebview2Async();
-    }
-
-
-    /// <summary>
-    /// Ensures <see cref="WebView2"/> is ready to work.
-    /// </summary>
-    private async Task EnsureCoreWebview2Async()
-    {
-        var options = new CoreWebView2EnvironmentOptions
-        {
-            AdditionalBrowserArguments = "--disable-web-security --allow-file-access-from-files --allow-file-access",
-        };
-
-        try
-        {
-            var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
-                options: options);
-
-            await Web2.EnsureCoreWebView2Async(env);
-
-            Web2.CoreWebView2.Settings.IsZoomControlEnabled = false;
-            Web2.CoreWebView2.Settings.IsStatusBarEnabled = false;
-            Web2.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
-            Web2.CoreWebView2.Settings.IsGeneralAutofillEnabled = false;
-            Web2.CoreWebView2.Settings.IsPasswordAutosaveEnabled = false;
-            Web2.CoreWebView2.Settings.IsPinchZoomEnabled = false;
-            Web2.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
-            Web2.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
-            Web2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-            Web2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
-
-            // DevTools
-            Web2.CoreWebView2.Settings.AreDevToolsEnabled = false;
-#if DEBUG
-            Web2.CoreWebView2.Settings.AreDevToolsEnabled = true;
-#endif
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Failed to initialize Webview2!\r\n\r\n" +
-                $"{ex.Message}\r\n\r\n" +
-                $"at EnsureCoreWebview2Async() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-
-    /// <summary>
-    /// Starts listening to keydown event.
-    /// </summary>
-    private async Task StartListeningToKeyDownWebEventAsync()
-    {
-        await Web2.ExecuteScriptAsync("""
-            window.onkeydown = (e) => {
-                e.preventDefault();
-        
-                const ctrl = e.ctrlKey ? 'ctrl' : '';
-                const shift = e.shiftKey ? 'shift' : '';
-                const alt = e.altKey ? 'alt' : '';
-        
-                let key = e.key.toLowerCase();
-                const keyMaps = {
-                    control: '',
-                    shift: '',
-                    alt: '',
-                    arrowleft: 'left',
-                    arrowright: 'right',
-                    arrowup: 'up',
-                    arrowdown: 'down',
-                    backspace: 'back',
-                };
-                if (keyMaps[key] !== undefined) {
-                    key = keyMaps[key];
-                }
-        
-                const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
-        
-                console.log('KEYDOWN', keyCombo);
-                window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
-            }
-        """);
+        await Web2.EnsureWeb2Async();
     }
 
 
@@ -204,33 +123,9 @@ public partial class DXCanvas
     /// </summary>
     private void DisposeWebview2Control()
     {
-        Controls.Remove(_webView2);
-        _webView2?.Dispose();
-        _webView2 = null;
-    }
-
-
-    /// <summary>
-    /// Sets the visibility of <see cref="Web2"/>.
-    /// If the <paramref name="visible"/> is <c>false</c>,
-    /// the <see cref="Web2"/> will be also suspended to have the <see cref="WebView2"/> consume less memory.
-    /// </summary>
-    public async Task SetWebview2ControlVisibilityAsync(bool visible)
-    {
-        Web2.Visible = visible;
-
-        if (!visible)
-        {
-            await Task.Delay(1000);
-            if (Web2.CoreWebView2 != null)
-            {
-                try
-                {
-                    _ = Web2.CoreWebView2.TrySuspendAsync();
-                }
-                catch (InvalidOperationException) { }
-            }
-        }
+        Controls.Remove(_web2);
+        _web2?.Dispose();
+        _web2 = null;
     }
 
 
@@ -240,23 +135,9 @@ public partial class DXCanvas
 
 
 
-    private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
+    private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
-        var msg = BHelper.ParseJson<WebMessageModel>(e.WebMessageAsJson);
-
-        if (msg.Name.Equals("KEYDOWN") && !string.IsNullOrWhiteSpace(msg.Data))
-        {
-#if DEBUG
-            if (msg.Data == "ctrl+shift+i")
-            {
-                Web2.CoreWebView2.OpenDevToolsWindow();
-                return;
-            }
-#endif
-
-            var hotkey = new Hotkey(msg.Data);
-            this.OnKeyDown(new(hotkey.KeyData));
-        }
+        
     }
 
 
