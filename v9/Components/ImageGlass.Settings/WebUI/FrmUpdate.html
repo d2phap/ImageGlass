@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="dark" page="update">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check for update</title>
+  <link rel="stylesheet" href="./dist/styles.css">
+</head>
+
+<body id="app">
+  <div id="top">
+    <aside>
+      <span class="icon status--checking">🌀</span>
+      <span class="icon status--updated">🥰</span>
+      <span class="icon status--outdated">🤩</span>
+    </aside>
+
+    <main>
+      <h1 class="mt-0 text-accent">
+        <span class="status--checking">{{_StatusChecking}}</span>
+        <span class="status--updated">{{_StatusUpdated}}</span>
+        <span class="status--outdated">{{_StatusOutdated}}</span>
+      </h1>
+
+      <p>
+      <div>{{_CurrentVersion}}</div>
+      <div>
+        <span class="status--updated status--outdated">
+          {{_LatestVersion}}
+        </span>
+      </div>
+      <div>
+        <span class="status--updated status--outdated">
+          {{_PublishedDate}}
+        </span>
+      </div>
+      </p>
+
+      <p>
+        <button id="BtnImageGlassStore">{{MsStoreBadge}}</button>
+      </p>
+
+
+      <h2>
+        <a class="status--updated status--outdated" target="_blank" href="{{ReleaseLink}}">
+          {{ReleaseTitle}}
+        </a>
+      </h2>
+      <div>
+        <span class="status--updated status--outdated">
+          {{ReleaseDetails}}
+        </span>
+      </div>
+      <br />
+    </main>
+  </div>
+
+
+  <footer class="panel">
+    <button id="BtnUpdate" type="submit">{{_Update}}</button>
+    <button id="BtnClose">{{_Close}}</button>
+  </footer>
+
+  <script src="./dist/FrmUpdate.js"></script>
+</body>
+
+</html>

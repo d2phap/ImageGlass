@@ -13,10 +13,12 @@ const configs = {
   entry: {
     main: './src/main.ts',
     FrmSettings: './src/FrmSettings.ts',
+    FrmAbout: './src/FrmAbout.ts',
+    FrmUpdate: './src/FrmUpdate.ts',
     DXCanvas_Webview2: './src/DXCanvas_Webview2.ts',
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './dist/dist'),
     publicPath: './dist/',
     filename: '[name].js',
 
@@ -78,8 +80,10 @@ const configs = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './FrmSettings.html', to: './' },
-        { from: './DXCanvas_Webview2.html', to: './' },
+        { from: './DXCanvas_Webview2.html', to: '../' },
+        { from: './FrmSettings.html', to: '../' },
+        { from: './FrmAbout.html', to: '../' },
+        { from: './FrmUpdate.html', to: '../' },
       ],
     }),
     new BomPlugin(true),

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="dark" page="about">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About ImageGlass</title>
+  <link rel="stylesheet" href="./dist/styles.css">
+</head>
+
+<body id="app">
+  <div id="top">
+    <aside style="padding-right: 2rem;">
+      <img src="{{AppLogo}}" height="64" width="64" alt="ImageGlass logo" />
+    </aside>
+
+    <main>
+      <h1 class="mt-0 mb-0 text-accent">ImageGlass <sup class="app-code">{{AppCode}}</sup></h1>
+      <p>{{_Slogan}}</p><br />
+
+      <h3 class="mb-0 mt-0">
+        {{_Version}} {{AppVersion}} ({{AppArchitecture}})<br />
+        .NET Runtime: {{AppRuntime}}
+      </h3>
+      <p>
+        Copyright © 2010-{{CopyrightsYear}} by Dương Diệu Pháp.<br />
+        All rights reserved.
+      </p>
+
+      <p>
+        <a target="_blank"
+          href="https://imageglass.org/support#donate?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+          {{_Donate}}
+        </a>
+
+        <a target="_blank"
+          href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+          {{_License}}
+        </a>
+
+        <a target="_blank"
+          href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+          {{_Privacy}}
+        </a>
+      </p>
+
+      <p>
+        <button id="BtnImageGlassStore">
+          {{MsStoreBadge}}
+        </button>
+      </p>
+
+      <h4 class="mb-0">
+        {{_Thanks}}
+      </h4>
+      <ul>
+        <li>{{_LogoDesigner}} Nguyễn Quốc Tuấn</li>
+        <li>
+          {{_Collaborator}} Kevin Routley (<a target="_blank"
+            href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)
+        </li>
+      </ul>
+
+      <h4 class="mb-0">{{_Contact}}</h4>
+      <ul>
+        <li>{{_Homepage}} <a target="_blank"
+            href="https://imageglass.org?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">https://imageglass.org</a>
+        </li>
+        <li>
+          GitHub: <a target="_blank"
+            href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a>
+        </li>
+        <li>{{_Email}} <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
+      </ul><br />
+
+
+      <details>
+        <summary>
+          <h3>{{_Credits}}</h3>
+        </summary>
+
+        <div>
+          <h4 class="mt-0 mb-0">WicNet</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2022 Simon Mourier. All rights reserved.</li>
+          </ul>
+
+          <h4 class="mb-0">D2Phap.DXControl</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2022-2023 Dương Diệu Pháp. All rights reserved.</li>
+          </ul>
+
+
+          <h4 class="mb-0">Magick.NET</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2013-2023 Dirk Lemstra.</li>
+          </ul>
+
+
+          <h4 class="mb-0">ExplorerSortOrder</h4>
+          <ul>
+            <li>Distributed under the terms of the Apache License 2.0.</li>
+            <li>Copyright © 2019 Kevin Routley.</li>
+          </ul>
+
+
+          <h4 class="mb-0">ImageGlass.Gallery</h4>
+          <ul>
+            <li>This software uses code of ImageListView licensed under the Apache License 2.0.</li>
+            <li>Copyright © 2013 Özgür Özçıtak.</li>
+          </ul>
+
+
+          <h4 class="mb-0">libwebp</h4>
+          <ul>
+            <li>This software uses code of libwebp.</li>
+            <li>Copyright (c) 2010, Google Inc. All rights reserved.</li>
+          </ul>
+
+
+          <h4 class="mb-0">All Microsoft.Extensions libraries</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © Microsoft Corporation. All rights reserved.</li>
+          </ul>
+        </div>
+      </details>
+      <br />
+    </main>
+  </div>
+
+
+  <footer class="panel">
+    <button id="BtnCheckForUpdate" type="submit">{{_CheckForUpdate}}</button>
+    <button id="BtnDonate">{{_Donate}}</button>
+    <button id="BtnClose">{{_Close}}</button>
+  </footer>
+
+  <script src="./dist/FrmAbout.js"></script>
+</body>
+</html>

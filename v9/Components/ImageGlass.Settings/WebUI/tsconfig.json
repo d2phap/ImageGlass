@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "typeRoots": ["./node_modules/@types", "./src/@types"],
-    "outDir": "./dist/",
+    "outDir": "./dist/dist",
     "noImplicitAny": true,
     "declaration": true,
     "esModuleInterop": true,
