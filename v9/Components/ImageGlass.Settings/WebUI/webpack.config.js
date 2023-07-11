@@ -3,6 +3,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BomPlugin = require('webpack-utf8-bom');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const pkJson = require('./package.json');
@@ -12,7 +13,7 @@ const configs = {
   entry: {
     main: './src/main.ts',
     FrmSettings: './src/FrmSettings.ts',
-    IGWebViewer: './src/IGWebViewer.ts',
+    DXCanvas_Webview2: './src/DXCanvas_Webview2.ts',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -74,6 +75,12 @@ const configs = {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, './dist')],
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './FrmSettings.html', to: './' },
+        { from: './DXCanvas_Webview2.html', to: './' },
+      ],
     }),
     new BomPlugin(true),
   ],

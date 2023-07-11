@@ -1,6 +1,6 @@
 import { Webview } from './helpers/webview';
 import { query, queryAll, on, post, postAsync } from './helpers/globalHelpers';
-import HapplaBoxViewer from './IGWebViewer/HapplaBoxViewer';
+import HapplaBoxViewer from './DXCanvas_Webview2/HapplaBoxViewer';
 
 
 // initialize webview event listeners
