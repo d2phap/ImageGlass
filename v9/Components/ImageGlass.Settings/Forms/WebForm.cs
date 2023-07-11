@@ -127,14 +127,14 @@ public partial class WebForm : ThemedForm
     protected override void OnActivated(EventArgs e)
     {
         base.OnActivated(e);
-        _ = Web2.SetWeb2WindowFocusAsync(false);
+        _ = Web2.SetWeb2WindowFocusAsync(true);
     }
 
 
     protected override void OnDeactivate(EventArgs e)
     {
         base.OnDeactivate(e);
-        _ = Web2.SetWeb2WindowFocusAsync(true);
+        _ = Web2.SetWeb2WindowFocusAsync(false);
     }
 
 
