@@ -29,18 +29,6 @@ public static class WebUI
     #region Public properties 
 
     /// <summary>
-    /// Gets CSS content
-    /// </summary>
-    public static string Styles { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets JavaScript content of FrmSettings
-    /// </summary>
-    public static string FrmSettingsJs { get; set; } = string.Empty;
-
-
-    /// <summary>
     /// Gets current language as JSON
     /// </summary>
     public static string LangJson { get; set; } = string.Empty;
@@ -55,25 +43,25 @@ public static class WebUI
     /// <summary>
     /// Gets all language packs as JSON
     /// </summary>
-    public static  string LangListJson { get; set; } = string.Empty;
+    public static string LangListJson { get; set; } = string.Empty;
 
 
     /// <summary>
     /// Gets all theme packs as JSON
     /// </summary>
-    public static  string ThemeListJson { get; set; } = string.Empty;
+    public static string ThemeListJson { get; set; } = string.Empty;
 
 
     /// <summary>
     /// Gets all tools as JSON
     /// </summary>
-    public static  string ToolListJson { get; set; } = string.Empty;
+    public static string ToolListJson { get; set; } = string.Empty;
 
 
     /// <summary>
     /// Gets all enums as JSON
     /// </summary>
-    public static  string EnumsJson
+    public static string EnumsJson
     {
         get
         {
@@ -106,30 +94,6 @@ public static class WebUI
 
     // Public functions
     #region Public functions
-
-    /// <summary>
-    /// Updates value of <see cref="Styles"/>.
-    /// </summary>
-    public static async Task UpdateStylesAsync(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(Styles) && !forced) return;
-
-        var cssPath = App.StartUpDir(Dir.WebUI, "styles.css");
-        WebUI.Styles = await File.ReadAllTextAsync(cssPath);
-    }
-
-
-    /// <summary>
-    /// Updates value of <see cref="FrmSettingsJs"/>.
-    /// </summary>
-    public static async Task UpdateFrmSettingsJsAsync(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(FrmSettingsJs) && !forced) return;
-
-        var jsPath = App.StartUpDir(Dir.WebUI, "FrmSettings.js");
-        WebUI.FrmSettingsJs = await File.ReadAllTextAsync(jsPath);
-    }
-
 
     /// <summary>
     /// Updates value of <see cref="LangJson"/>.

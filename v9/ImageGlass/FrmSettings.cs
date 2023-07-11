@@ -41,7 +41,7 @@ public partial class FrmSettings : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        PageName = "settings";
+        Web2.PageName = "settings";
         Text = Config.Language[$"{nameof(FrmSettings)}._Text"];
         CloseFormHotkey = Keys.Escape;
 
@@ -60,25 +60,20 @@ public partial class FrmSettings : WebForm
     }
 
 
-    protected override void OnRequestUpdatingLanguage()
-    {
-        // get language as json string
-        var configLangJson = BHelper.ToJson(Config.Language);
-
-        _ = Web2.ExecuteScriptAsync($"""
-            window._pageSettings.lang = {configLangJson};
-            window._pageSettings.loadLanguage();
-        """);
-    }
-
-
     protected override async Task OnWeb2ReadyAsync()
     {
         await base.OnWeb2ReadyAsync();
 
+        var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmSettings)}.html");
+        Web2.CoreWebView2.Navigate(htmlFilePath);
+    }
+
+
+    protected override async Task OnWeb2NavigationCompleted()
+    {
+        await base.OnWeb2NavigationCompleted();
+
         // update the setting data
-        await WebUI.UpdateFrmSettingsJsAsync();
-        WebUI.UpdateLangJson();
         WebUI.UpdateLangListJson();
         WebUI.UpdateToolListJson();
         await WebUI.UpdateSvgIconsJsonAsync();
@@ -96,45 +91,44 @@ public partial class FrmSettings : WebForm
         var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME).Replace("\\", "\\\\");
 
 
-        // load html content
-        await LoadWeb2ContentAsync(Settings.Properties.Resources.Page_Settings +
-            @$"
-            <script>
-                window._pageSettings = {{
-                    initTab: '{Local.LastOpenedSetting}',
-                    startUpDir: '{startupDir}',
-                    configDir: '{configDir}',
-                    userConfigFilePath: '{userConfigFilePath}',
-                    FILE_MACRO: '{Constants.FILE_MACRO}',
-                    enums: {WebUI.EnumsJson},
-                    defaultThemeDir: '{defaultThemeDir}',
-                    toolList: {WebUI.ToolListJson},
-                    langList: {WebUI.LangListJson},
-                    themeList: {WebUI.ThemeListJson},
-                    icons: {WebUI.SvgIconsJson},
-                    config: {configJson},
-                    lang: {WebUI.LangJson},
-                }};
-            </script>
-            <script>{WebUI.FrmSettingsJs}</script>
-            ");
+        await Web2.ExecuteScriptAsync(@$"
+            window._pageSettings = {{
+                initTab: '{Local.LastOpenedSetting}',
+                startUpDir: '{startupDir}',
+                configDir: '{configDir}',
+                userConfigFilePath: '{userConfigFilePath}',
+                FILE_MACRO: '{Constants.FILE_MACRO}',
+                enums: {WebUI.EnumsJson},
+                defaultThemeDir: '{defaultThemeDir}',
+                toolList: {WebUI.ToolListJson},
+                langList: {WebUI.LangListJson},
+                themeList: {WebUI.ThemeListJson},
+                icons: {WebUI.SvgIconsJson},
+                config: {configJson},
+            }};
+
+            window._page.loadSettings();
+            window._page.loadLanguage();
+        ");
     }
 
 
-    protected override void OnWeb2MessageReceived(string name, string data)
+    protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
     {
+        await base.OnWeb2MessageReceivedAsync(e);
+
         // Footer
         #region Footer
-        if (name.Equals("BtnOK"))
+        if (e.Name.Equals("BtnOK"))
         {
-            ApplySettings(data);
+            ApplySettings(e.Data);
             Close();
         }
-        else if (name.Equals("BtnApply"))
+        else if (e.Name.Equals("BtnApply"))
         {
-            ApplySettings(data);
+            ApplySettings(e.Data);
         }
-        else if (name.Equals("BtnCancel"))
+        else if (e.Name.Equals("BtnCancel"))
         {
             Close();
         }
@@ -144,82 +138,73 @@ public partial class FrmSettings : WebForm
         // Sidebar
         #region Sidebar
         // sidebar tab changed
-        else if (name.Equals("Sidebar_Changed"))
+        else if (e.Name.Equals("Sidebar_Changed"))
         {
-            Local.LastOpenedSetting = data;
+            Local.LastOpenedSetting = e.Data;
         }
         #endregion // Sidebar
 
 
         // Tab General
         #region Tab General
-        else if (name.Equals("Lnk_StartupDir"))
+        else if (e.Name.Equals("Lnk_StartupDir"))
         {
-            BHelper.OpenFilePath(data);
+            BHelper.OpenFilePath(e.Data);
         }
-        else if (name.Equals("Lnk_ConfigDir"))
+        else if (e.Name.Equals("Lnk_ConfigDir"))
         {
-            BHelper.OpenFilePath(data);
+            BHelper.OpenFilePath(e.Data);
         }
-        else if (name.Equals("Lnk_UserConfigFile"))
+        else if (e.Name.Equals("Lnk_UserConfigFile"))
         {
-            _ = OpenUserConfigFileAsync(data);
+            _ = OpenUserConfigFileAsync(e.Data);
         }
         #endregion // Tab General
 
 
         // Tab Image
         #region Tab Image
-        else if (name.Equals("Btn_BrowseColorProfile"))
+        else if (e.Name.Equals("Btn_BrowseColorProfile"))
         {
-            SafeRunUi(() =>
+            Web2.SafeRunUi(() =>
             {
                 var profileFilePath = SelectColorProfileFile();
                 profileFilePath = profileFilePath.Replace("\\", "\\\\");
 
                 if (!String.IsNullOrEmpty(profileFilePath))
                 {
-                    PostMessage(name, $"\"{profileFilePath}\"");
+                    Web2.PostWeb2Message(e.Name, $"\"{profileFilePath}\"");
                 }
             });
         }
-        else if (name.Equals("Lnk_CustomColorProfile"))
+        else if (e.Name.Equals("Lnk_CustomColorProfile"))
         {
-            BHelper.OpenFilePath(data);
+            BHelper.OpenFilePath(e.Data);
         }
         #endregion // Tab Image
 
 
-        // Tab Tools
-        #region Tab Tools
-        else if (name.Equals("Tool_Create"))
-        {
-
-        }
-        #endregion // Tab Tools
-
-
         // Tab Language
         #region Tab Language
-        else if (name.Equals("Btn_RefreshLanguageList"))
+        else if (e.Name.Equals("Btn_RefreshLanguageList"))
         {
             WebUI.UpdateLangListJson(true);
-            PostMessage(name, WebUI.LangListJson);
+            Web2.PostWeb2Message(e.Name, WebUI.LangListJson);
         }
-        else if (name.Equals("Lnk_InstallLanguage"))
+        else if (e.Name.Equals("Lnk_InstallLanguage"))
         {
-            SafeRunUi(() => _ = InstallLanguagePackAsync());
+            Web2.SafeRunUi(() => _ = InstallLanguagePackAsync());
         }
         #endregion // Tab Language
 
 
         // Tab Appearance
         #region Tab Appearance
-        else if (name.Equals("Btn_BackgroundColor") || name.Equals("Btn_SlideshowBackgroundColor"))
+        else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))
         {
-            SafeRunUi(() =>
+            Web2.SafeRunUi(() =>
             {
-                var currentColor = ThemeUtils.ColorFromHex(data);
+                var currentColor = ThemeUtils.ColorFromHex(e.Data);
                 var newColor = OpenColorPicker(currentColor);
                 var hexColor = string.Empty;
 
@@ -228,26 +213,26 @@ public partial class FrmSettings : WebForm
                     hexColor = ThemeUtils.ColorToHex(newColor.Value);
                 }
 
-                PostMessage(name, $"\"{hexColor}\"");
+                Web2.PostWeb2Message(e.Name, $"\"{hexColor}\"");
             });
         }
-        else if (name.Equals("Btn_InstallTheme"))
+        else if (e.Name.Equals("Btn_InstallTheme"))
         {
-            SafeRunUi(() => _ = InstallThemeAsync());
+            Web2.SafeRunUi(() => _ = InstallThemeAsync());
         }
-        else if (name.Equals("Btn_RefreshThemeList"))
+        else if (e.Name.Equals("Btn_RefreshThemeList"))
         {
             WebUI.UpdateThemeListJson(true);
-            PostMessage("Btn_RefreshThemeList", WebUI.ThemeListJson);
+            Web2.PostWeb2Message("Btn_RefreshThemeList", WebUI.ThemeListJson);
         }
-        else if (name.Equals("Btn_OpenThemeFolder"))
+        else if (e.Name.Equals("Btn_OpenThemeFolder"))
         {
             var igDefaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
             BHelper.OpenFilePath(igDefaultThemeDir);
         }
-        else if (name.Equals("Delete_Theme_Pack"))
+        else if (e.Name.Equals("Delete_Theme_Pack"))
         {
-            _ = UninstallThemeAsync(data);
+            _ = UninstallThemeAsync(e.Data);
         }
         #endregion // Tab Appearance
 
@@ -255,27 +240,29 @@ public partial class FrmSettings : WebForm
         // Global
         #region Global
         // open file picker
-        else if (name.Equals("OpenFilePicker"))
+        else if (e.Name.Equals("OpenFilePicker"))
         {
-            SafeRunUi(() =>
+            Web2.SafeRunUi(() =>
             {
-                var filePaths = OpenFilePickerJson(data);
-                PostMessage("OpenFilePicker", filePaths);
+                var filePaths = OpenFilePickerJson(e.Data);
+                Web2.PostWeb2Message("OpenFilePicker", filePaths);
             });
         }
 
         // open hotkey picker
-        else if (name.Equals("OpenHotkeyPicker"))
+        else if (e.Name.Equals("OpenHotkeyPicker"))
         {
-            SafeRunUi(() =>
+            Web2.SafeRunUi(() =>
             {
                 var hotkey = OpenHotkeyPickerJson();
 
-                PostMessage("OpenHotkeyPicker", $"\"{hotkey}\"");
+                Web2.PostWeb2Message("OpenHotkeyPicker", $"\"{hotkey}\"");
             });
         }
         #endregion // Global
+
     }
+
 
     #endregion // Protected / override methods
 
@@ -539,7 +526,7 @@ public partial class FrmSettings : WebForm
                 // load the new value of Background color setting when theme is changed
                 var bgColorHex = ThemeUtils.ColorToHex(Config.BackgroundColor);
                 _ = Web2.ExecuteScriptAsync($"""
-                    _pageSettings.loadBackgroundColorConfig('{bgColorHex}');
+                    _page.loadBackgroundColorConfig('{bgColorHex}');
                 """);
             }
         });
@@ -558,7 +545,7 @@ public partial class FrmSettings : WebForm
 
         if (o.ShowDialog() != DialogResult.OK)
         {
-            PostMessage("Lnk_InstallLanguage", "null");
+            Web2.PostWeb2Message("Lnk_InstallLanguage", "null");
             return;
         }
 
@@ -570,7 +557,7 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateLangListJson(true);
-            PostMessage("Lnk_InstallLanguage", WebUI.LangListJson);
+            Web2.PostWeb2Message("Lnk_InstallLanguage", WebUI.LangListJson);
         }
     }
 
@@ -613,7 +600,7 @@ public partial class FrmSettings : WebForm
 
         if (o.ShowDialog() != DialogResult.OK)
         {
-            PostMessage("Btn_InstallTheme", "null");
+            Web2.PostWeb2Message("Btn_InstallTheme", "null");
             return;
         }
 
@@ -625,7 +612,7 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateThemeListJson(true);
-            PostMessage("Btn_InstallTheme", WebUI.ThemeListJson);
+            Web2.PostWeb2Message("Btn_InstallTheme", WebUI.ThemeListJson);
         }
     }
 
@@ -639,7 +626,7 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateThemeListJson(true);
-            PostMessage("Delete_Theme_Pack", WebUI.ThemeListJson);
+            Web2.PostWeb2Message("Delete_Theme_Pack", WebUI.ThemeListJson);
         }
     }
 

@@ -44,7 +44,7 @@ public partial class FrmUpdate : WebForm
         if (DesignMode) return;
 
         Config.UpdateFormIcon(this);
-        PageName = "update";
+        Web2.PageName = "update";
         Text = Config.Language[$"_._CheckForUpdate"];
 
         // center window in screen
@@ -57,11 +57,52 @@ public partial class FrmUpdate : WebForm
     protected override async Task OnWeb2ReadyAsync()
     {
         await base.OnWeb2ReadyAsync();
-        _ = CheckForUpdateAsync();
+
+        var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmUpdate)}.html");
+        Web2.CoreWebView2.Navigate(htmlFilePath);
     }
 
 
-    protected override IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
+    protected override async Task OnWeb2NavigationCompleted()
+    {
+        await base.OnWeb2NavigationCompleted();
+
+        // check for update
+        await _updater.GetUpdatesAsync();
+        await Task.Delay(1000);
+
+        // show result
+        var status = _updater.HasNewUpdate ? "outdated" : "updated";
+        await Web2.ExecuteScriptAsync($"""
+            document.documentElement.setAttribute('app-status', '{status}');
+        """);
+    }
+
+
+    protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
+    {
+        await base.OnWeb2MessageReceivedAsync(e);
+
+        if (e.Name.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenImageGlassMsStore();
+        }
+        else if (e.Name.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"app_{Web2.PageName}");
+        }
+        else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Close();
+        }
+    }
+
+    #endregion // Protected / override methods
+
+
+
+
+    private IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
     {
         var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
@@ -104,69 +145,6 @@ public partial class FrmUpdate : WebForm
             ("{{_Update}}", Config.Language[$"_._Update"]),
             ("{{_Close}}", Config.Language[$"_._Close"]),
         };
-    }
-
-
-    protected override void OnWeb2NavigationCompleted()
-    {
-        _ = Web2.ExecuteScriptAsync("""
-            function Button_Clicked(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(e);
-                window.chrome.webview?.postMessage({ Name: 'Button_Clicked', Data: e.target.id });
-            };
-
-            document.getElementById('BtnImageGlassStore').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnUpdate').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnClose').addEventListener('click', Button_Clicked, false);
-
-            document.getElementById('BtnUpdate').focus();
-        """);
-    }
-
-
-    protected override void OnWeb2MessageReceived(string name, string data)
-    {
-        if (name == "Button_Clicked")
-        {
-            if (data.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
-            {
-                BHelper.OpenImageGlassMsStore();
-            }
-            else if (data.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
-            {
-                BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"app_{PageName}");
-            }
-            else if (data.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Close();
-            }
-        }
-    }
-
-    #endregion // Protected / override methods
-
-
-    private async Task CheckForUpdateAsync()
-    {
-        // show checking progress
-        await LoadWeb2ContentAsync(ImageGlass.Settings.Properties.Resources.Page_Update);
-        var status = "checking";
-        await Web2.ExecuteScriptAsync($"""
-            document.documentElement.setAttribute('app-status', '{status}');
-        """);
-        await Task.Delay(1000);
-
-
-        // update the status
-        await _updater.GetUpdatesAsync();
-        status = _updater.HasNewUpdate ? "outdated" : "updated";
-        await LoadWeb2ContentAsync(ImageGlass.Settings.Properties.Resources.Page_Update);
-
-        await Web2.ExecuteScriptAsync($"""
-            document.documentElement.setAttribute('app-status', '{status}');
-        """);
     }
 
 }

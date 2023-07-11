@@ -20,6 +20,8 @@ using ImageGlass.Base;
 using ImageGlass.Properties;
 using ImageGlass.Settings;
 using System.Text;
+using System.Windows.Markup;
+using System.Xml.Linq;
 
 namespace ImageGlass;
 
@@ -39,7 +41,7 @@ public partial class FrmAbout : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        PageName = "about";
+        Web2.PageName = "about";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
     }
 
@@ -48,11 +50,39 @@ public partial class FrmAbout : WebForm
     {
         await base.OnWeb2ReadyAsync();
 
-        _ = LoadWeb2ContentAsync(Settings.Properties.Resources.Page_About);
+        var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmAbout)}.html");
+        Web2.CoreWebView2.Navigate(htmlFilePath);
     }
 
 
-    protected override IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
+    protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
+    {
+        await base.OnWeb2MessageReceivedAsync(e);
+
+        if (e.Name.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenImageGlassMsStore();
+        }
+        else if (e.Name.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Local.FrmMain.IG_CheckForUpdate(true);
+        }
+        else if (e.Name.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
+        }
+        else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Close();
+        }
+    }
+
+    #endregion // Protected / override methods
+
+
+
+
+    protected IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
     {
         var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
@@ -87,49 +117,5 @@ public partial class FrmAbout : WebForm
     }
 
 
-    protected override void OnWeb2NavigationCompleted()
-    {
-        _ = Web2.ExecuteScriptAsync("""
-            function Button_Clicked(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(e);
-                window.chrome.webview?.postMessage({ Name: 'Button_Clicked', Data: e.target.id });
-            };
-
-            document.getElementById('BtnImageGlassStore').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnCheckForUpdate').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnDonate').addEventListener('click', Button_Clicked, false);
-            document.getElementById('BtnClose').addEventListener('click', Button_Clicked, false);
-
-            document.getElementById('BtnCheckForUpdate').focus();
-        """);
-    }
-
-
-    protected override void OnWeb2MessageReceived(string name, string data)
-    {
-        if (name == "Button_Clicked")
-        {
-            if (data.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
-            {
-                BHelper.OpenImageGlassMsStore();
-            }
-            else if (data.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Local.FrmMain.IG_CheckForUpdate(true);
-            }
-            else if (data.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
-            {
-                BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
-            }
-            else if (data.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Close();
-            }
-        }
-    }
-
-    #endregion // Protected / override methods
 
 }
