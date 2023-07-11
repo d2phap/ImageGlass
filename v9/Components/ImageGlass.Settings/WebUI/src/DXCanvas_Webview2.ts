@@ -1,19 +1,6 @@
-import { Webview } from './helpers/webview';
-import { query, queryAll, on, post, postAsync } from './helpers/globalHelpers';
+import './main';
+
 import HapplaBoxViewer from './DXCanvas_Webview2/HapplaBoxViewer';
-
-
-// initialize webview event listeners
-window._webview = new Webview();
-_webview.startListening();
-
-
-// export to global
-window.query = query;
-window.queryAll = queryAll;
-window.on = on;
-window.post = post;
-window.postAsync = postAsync;
 
 
 // initialize the viewer

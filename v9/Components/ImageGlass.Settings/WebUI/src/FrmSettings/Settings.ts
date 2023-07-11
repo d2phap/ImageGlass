@@ -85,13 +85,37 @@ export default class Settings {
     TabTools.loadSettings();
     TabLanguage.loadSettings();
     TabAppearance.loadSettings();
+
+    // Adds event listeners for all settings.
+    Settings.addEventListeners();
+  }
+
+
+  /**
+   * Adds event listeners for all settings.
+   */
+  private static addEventListeners() {
+    Settings.addEventsForFooter();
+    TabGeneral.addEvents();
+    TabImage.addEvents();
+    TabSlideshow.addEvents();
+    TabEdit.addEvents();
+    TabViewer.addEvents();
+    TabToolbar.addEvents();
+    TabGallery.addEvents();
+    TabLayout.addEvents();
+    TabMouse.addEvents();
+    TabFileAssocs.addEvents();
+    TabTools.addEvents();
+    TabLanguage.addEvents();
+    TabAppearance.addEvents();
   }
 
 
   /**
    * Adds events for the footer of setting.
    */
-  static addEventsForFooter() {
+  private static addEventsForFooter() {
     query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 
     query('#BtnOK').addEventListener('click', () => {
