@@ -91,6 +91,11 @@ public class Web2 : WebView2
     /// </summary>
     public event EventHandler<Web2MessageReceivedEventArgs> Web2MessageReceived;
 
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> receives keydown.
+    /// </summary>
+    public event EventHandler<KeyEventArgs> Web2KeyDown;
+
     #endregion // Public events
 
 
@@ -174,6 +179,24 @@ public class Web2 : WebView2
         await Task.CompletedTask;
     }
 
+
+    /// <summary>
+    /// Triggers <see cref="Web2KeyDown"/> event.
+    /// </summary>
+    protected virtual async Task OnWeb2KeyDownAsync(KeyEventArgs e)
+    {
+        if (InvokeRequired)
+        {
+            await Invoke(async delegate
+            {
+                await OnWeb2KeyDownAsync(e);
+            });
+            return;
+        }
+
+        Web2KeyDown?.Invoke(this, e);
+        await Task.CompletedTask;
+    }
 
     #endregion // Override/ virtual methods
 
@@ -380,7 +403,8 @@ public class Web2 : WebView2
 #endif
 
             var hotkey = new Hotkey(msg.Data);
-            this.OnKeyDown(new(hotkey.KeyData));
+
+            _ = OnWeb2KeyDownAsync(new KeyEventArgs(hotkey.KeyData));
         }
         else
         {
