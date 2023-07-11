@@ -18,42 +18,43 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Settings;
-using ImageGlass.Settings.Properties;
 using ImageGlass.UI;
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.WinForms;
 
 namespace ImageGlass;
 
 public partial class WebForm : ThemedForm
 {
-    private bool _isNavigationCompleted = false;
-
-
-    /// <summary>
-    /// Gets, sets campaign for hyperlink url.
-    /// </summary>
-    protected string PageName { get; set; } = "unknown";
-
+    // Public events
+    #region Public events
 
     /// <summary>
-    /// Gets the <see cref="WebView2"/> instance.
+    /// Occurs when <see cref="Web2"/> is ready to use.
     /// </summary>
-    protected WebView2 Web2 => WebV;
+    public event EventHandler<EventArgs> Web2Ready;
+
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> navigation is completed
+    /// </summary>
+    public event EventHandler<EventArgs> Web2NavigationCompleted;
+
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> receives a message from web view.
+    /// </summary>
+    public event EventHandler<Web2MessageReceivedEventArgs> Web2MessageReceived;
+
+    #endregion // Public events
 
 
     public WebForm()
     {
         InitializeComponent();
-
-        WebV.CoreWebView2InitializationCompleted += Web2_CoreWebView2InitializationCompleted;
-        WebV.NavigationCompleted += Web2_NavigationCompleted;
-        WebV.WebMessageReceived += Web2_WebMessageReceived;
+        Web2.Web2Ready += Web2_Web2Ready;
+        Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
+        Web2.Web2MessageReceived += Web2_Web2MessageReceived;
 
         BackdropStyle = BackdropStyle.Mica;
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
-
 
 
     // Protected / override methods
@@ -64,7 +65,7 @@ public partial class WebForm : ThemedForm
         base.OnLoad(e);
         Config.UpdateFormIcon(this);
 
-        _ = InitWebview2();
+        _ = Web2.EnsureWeb2Async();
     }
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
@@ -74,6 +75,9 @@ public partial class WebForm : ThemedForm
             BackColor = Config.Theme.ColorPalatte.AppBg;
         }
 
+        Web2.DarkMode = darkMode;
+        Web2.AccentColor = Config.Theme.ColorPalatte.Accent;
+
         base.ApplyTheme(darkMode, style);
     }
 
@@ -81,8 +85,6 @@ public partial class WebForm : ThemedForm
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
         base.OnRequestUpdatingColorMode(e);
-
-        _ = SetWeb2ColorModeAsync();
 
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
@@ -92,16 +94,22 @@ public partial class WebForm : ThemedForm
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         base.OnSystemAccentColorChanged(e);
-
-        _ = SetWeb2AccentColorAsync();
+        _ = Web2.SetWeb2AccentColorAsync(e.AccentColor);
     }
 
 
     protected override void OnRequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
     {
         base.OnRequestUpdatingTheme(e);
+        _ = Web2.SetWeb2DarkModeAsync(e.Theme.Settings.IsDarkMode);
+    }
 
-        _ = SetWeb2ColorModeAsync();
+
+    protected override void OnRequestUpdatingLanguage()
+    {
+        base.OnRequestUpdatingLanguage();
+
+        _ = LoadLanguageAsync(true);
     }
 
 
@@ -111,7 +119,7 @@ public partial class WebForm : ThemedForm
 
         if (e.State == FormWindowState.Minimized)
         {
-            _ = SuspendWebview2Async();
+            _ = Web2.TrySuspendWeb2Async();
         }
     }
 
@@ -119,14 +127,14 @@ public partial class WebForm : ThemedForm
     protected override void OnActivated(EventArgs e)
     {
         base.OnActivated(e);
-        _ = SetWeb2WindowFocusAsync(true);
+        _ = Web2.SetWeb2WindowFocusAsync(false);
     }
 
 
     protected override void OnDeactivate(EventArgs e)
     {
         base.OnDeactivate(e);
-        _ = SetWeb2WindowFocusAsync(false);
+        _ = Web2.SetWeb2WindowFocusAsync(true);
     }
 
 
@@ -137,317 +145,72 @@ public partial class WebForm : ThemedForm
     #region Virtual methods
 
     /// <summary>
-    /// Occurs when Web2 is ready.
+    /// Occurs when the <see cref="Web2"/> control is ready.
     /// </summary>
     protected virtual async Task OnWeb2ReadyAsync()
     {
+        Web2Ready?.Invoke(this, EventArgs.Empty);
         await Task.CompletedTask;
     }
 
 
     /// <summary>
-    /// Occurs when Web2 sends a message to <see cref="WebForm"/>.
+    /// Occurs when the <see cref="Web2"/> navigation is completed.
     /// </summary>
-    /// <param name="name">The name of the message</param>
-    /// <param name="data">The data of the message</param>
-    protected virtual void OnWeb2MessageReceived(string name, string data)
+    protected virtual async Task OnWeb2NavigationCompleted()
     {
+        _ = LoadLanguageAsync(false);
 
+        Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
+        await Task.CompletedTask;
     }
 
 
     /// <summary>
-    /// Provides variables to parse HTML templates.
+    /// Triggers <see cref="Web2MessageReceived"/> event.
     /// </summary>
-    protected virtual IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
+    protected virtual async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
     {
-        return Enumerable.Empty<(string, string)>();
+        Web2MessageReceived?.Invoke(this, e);
+        await Task.CompletedTask;
     }
-
-
-    /// <summary>
-    /// Occurs when the WebView2 navigation is completed.
-    /// </summary>
-    protected virtual void OnWeb2NavigationCompleted()
-    {
-
-    }
-
 
     #endregion // Virtual methods
 
 
-    // Private methods
-    #region Private methods
+    // Web2 events
+    #region Web2 events
 
-    /// <summary>
-    /// Initialize Webview2 control.
-    /// </summary>
-    private async Task InitWebview2()
+    private void Web2_Web2Ready(object? sender, EventArgs e)
     {
-        var options = new CoreWebView2EnvironmentOptions
-        {
-            AdditionalBrowserArguments = "--disable-web-security --allow-file-access-from-files --allow-file-access",
-        };
-
-        try
-        {
-            var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
-                options: options);
-
-            await WebV.EnsureCoreWebView2Async(env);
-        }
-        catch (Exception ex)
-        {
-            Config.ShowError(this,
-                description: ex.Source,
-                title: Config.Language["_._Error"],
-                heading: ex.Message,
-                details: ex.ToString());
-
-            Close();
-        }
-    }
-
-
-    /// <summary>
-    /// Sets accent color to Webview2 content.
-    /// </summary>
-    private async Task SetWeb2AccentColorAsync()
-    {
-        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
-        var rgb = $"{accent.R} {accent.G} {accent.B}";
-
-        await WebV.ExecuteScriptAsync($"""
-            document.documentElement.style.setProperty('--Accent', '{rgb}');
-            """);
-    }
-
-
-    /// <summary>
-    /// Sets color mode for Webview2 content.
-    /// </summary>
-    private async Task SetWeb2ColorModeAsync()
-    {
-        var colorMode = Config.Theme.Settings.IsDarkMode ? "dark" : "light";
-
-        await WebV.ExecuteScriptAsync($"""
-            document.documentElement.setAttribute('color-mode', '{colorMode}');
-            """);
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="focus"></param>
-    /// <returns></returns>
-    private async Task SetWeb2WindowFocusAsync(bool focus)
-    {
-        await WebV.ExecuteScriptAsync($"""
-            document.documentElement.setAttribute('window-focus', '{focus.ToString().ToLower()}');
-            """);
-    }
-
-
-    /// <summary>
-    /// Starts listening to keydown event
-    /// </summary>
-    private async Task StartListeningToKeyDownEventAsync()
-    {
-        await WebV.ExecuteScriptAsync("""
-            window.onkeydown = (e) => {
-                e.preventDefault();
-        
-                const ctrl = e.ctrlKey ? 'ctrl' : '';
-                const shift = e.shiftKey ? 'shift' : '';
-                const alt = e.altKey ? 'alt' : '';
-        
-                let key = e.key.toLowerCase();
-                const keyMaps = {
-                    control: '',
-                    shift: '',
-                    alt: '',
-                    arrowleft: 'left',
-                    arrowright: 'right',
-                    arrowup: 'up',
-                    arrowdown: 'down',
-                    backspace: 'back',
-                };
-                if (keyMaps[key] !== undefined) {
-                    key = keyMaps[key];
-                }
-        
-                const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
-        
-                console.log('KEYDOWN', keyCombo);
-                window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
-            }
-        """);
-    }
-
-
-    #endregion // Private methods
-
-
-    // Webview2 events
-    #region Webview2 events
-
-    private void Web2_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
-    {
-        WebV.DefaultBackgroundColor = Color.Transparent;
-        if (WebV.CoreWebView2 == null) return;
-
-        WebV.CoreWebView2.Settings.IsZoomControlEnabled = false;
-        WebV.CoreWebView2.Settings.IsStatusBarEnabled = false;
-        WebV.CoreWebView2.Settings.IsBuiltInErrorPageEnabled = false;
-        WebV.CoreWebView2.Settings.IsGeneralAutofillEnabled = false;
-        WebV.CoreWebView2.Settings.IsPasswordAutosaveEnabled = false;
-        WebV.CoreWebView2.Settings.IsPinchZoomEnabled = false;
-        WebV.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
-        WebV.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
-        WebV.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-        WebV.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
-
-        WebV.CoreWebView2.Settings.AreDevToolsEnabled = false;
-#if DEBUG
-        WebV.CoreWebView2.Settings.AreDevToolsEnabled = true;
-#endif
-
-        WebV.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-
         _ = OnWeb2ReadyAsync();
     }
 
-
-    private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+    private void Web2_Web2NavigationCompleted(object? sender, EventArgs e)
     {
-        _isNavigationCompleted = true;
-
-        _ = SetWeb2ColorModeAsync();
-        _ = SetWeb2AccentColorAsync();
-        _ = StartListeningToKeyDownEventAsync();
-
-        OnWeb2NavigationCompleted();
+        _ = OnWeb2NavigationCompleted();
     }
 
-
-    private void CoreWebView2_NewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
+    private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
-        e.Handled = true;
-        BHelper.OpenUrl(e.Uri, $"app_{PageName}");
+        _ = OnWeb2MessageReceivedAsync(e);
     }
 
-
-    private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
-    {
-        var msg = BHelper.ParseJson<WebMessageModel>(e.WebMessageAsJson);
-        if (msg.Name == "KEYDOWN")
-        {
-            if (msg.Data == "escape")
-            {
-                Close();
-            }
-#if DEBUG
-            else if (msg.Data == "ctrl+shift+i")
-            {
-                WebV.CoreWebView2.OpenDevToolsWindow();
-            }
-#endif
-        }
-
-        OnWeb2MessageReceived(msg.Name, msg.Data ?? string.Empty);
-    }
-
-    #endregion // Webview2 events
+    #endregion // Web2 events
 
 
     /// <summary>
-    /// Reloads Web2 content.
+    /// Updates language
     /// </summary>
-    public async Task LoadWeb2ContentAsync(string html)
+    public async Task LoadLanguageAsync(bool forced)
     {
-        _isNavigationCompleted = false;
+        // get language as json string
+        WebUI.UpdateLangJson(forced);
 
-        // get templates
-        await WebUI.UpdateStylesAsync();
-        var templates = new List<(string, string)>(3)
-        {
-            ("{{styles.css}}", WebUI.Styles),
-            ("{{body.html}}", html),
-            ("{{PageName}}", PageName),
-        };
-        templates.AddRange(OnWebTemplateParsing());
-
-        var pageHtml = Resources.Layout.ReplaceMultiple(templates);
-        WebV.CoreWebView2.NavigateToString(pageHtml);
-
-        // wait for the navigation completed
-        while (!_isNavigationCompleted)
-        {
-            await Task.Delay(100);
-        }
-    }
-
-
-    /// <summary>
-    /// Post a message to client.
-    /// </summary>
-    /// <param name="name">Name of the message</param>
-    /// <param name="dataJson">Message data</param>
-    public void PostMessage(string name, string dataJson)
-    {
-        var json = @$"
-{{
-    ""Name"": ""{name}"",
-    ""Data"": {dataJson}
-}}";
-
-        try
-        {
-            Web2.CoreWebView2.PostWebMessageAsJson(json);
-        }
-        catch (Exception ex)
-        {
-            _ = Config.ShowError(this, description: ex.Message,
-                title: Text,
-                details: $"JSON data:\r\n{json}\r\n\r\n" +
-                    $"Error detail:\r\n" + ex.ToString());
-        }
-    }
-
-
-    /// <summary>
-    /// Safely run the action after the current event handler is completed,
-    /// to avoid potential reentrancy caused by running a nested message loop
-    /// in the WebView2 event handler.
-    /// Source: <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/threading-model#reentrancy"/>
-    /// </summary>
-    public static void SafeRunUi(Action action)
-    {
-        SynchronizationContext.Current.Post((_) =>
-        {
-            action();
-        }, null);
-    }
-
-
-    /// <summary>
-    /// Suspends the <see cref="Web2"/> to have the <see cref="WebView2"/> consume less memory.
-    /// </summary>
-    public async Task SuspendWebview2Async(int delayMs = 1000)
-    {
-        await Task.Delay(1000);
-
-        if (Web2.CoreWebView2 != null)
-        {
-            try
-            {
-                _ = Web2.CoreWebView2.TrySuspendAsync();
-            }
-            catch (InvalidOperationException) { }
-        }
+        await Web2.ExecuteScriptAsync($"""
+            window._page.lang = {WebUI.LangJson};
+            window._page.loadLanguage();
+        """);
     }
 
 }

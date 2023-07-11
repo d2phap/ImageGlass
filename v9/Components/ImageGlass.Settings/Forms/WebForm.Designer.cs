@@ -28,37 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            WebV = new Microsoft.Web.WebView2.WinForms.WebView2();
-            ((System.ComponentModel.ISupportInitialize)WebV).BeginInit();
+            Web2 = new Base.Web2();
+            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
             // 
             // Web2
             // 
-            WebV.AllowExternalDrop = true;
-            WebV.CreationProperties = null;
-            WebV.DefaultBackgroundColor = Color.White;
-            WebV.Dock = DockStyle.Fill;
-            WebV.Location = new Point(0, 0);
-            WebV.Name = "Web2";
-            WebV.Size = new Size(1468, 1312);
-            WebV.TabIndex = 0;
-            WebV.ZoomFactor = 1D;
+            Web2.AccentColor = Color.Blue;
+            Web2.AllowExternalDrop = true;
+            Web2.CreationProperties = null;
+            Web2.DarkMode = true;
+            Web2.DefaultBackgroundColor = Color.Transparent;
+            Web2.Dock = DockStyle.Fill;
+            Web2.Location = new Point(0, 0);
+            Web2.Name = "Web2";
+            Web2.PageName = "unknown";
+            Web2.Size = new Size(1468, 1312);
+            Web2.TabIndex = 1;
+            Web2.ZoomFactor = 1D;
             // 
-            // FrmAbout
+            // WebForm
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1468, 1312);
-            Controls.Add(WebV);
+            Controls.Add(Web2);
             MaximizeBox = false;
-            Name = "FrmAbout";
-            Text = "[About]";
-            ((System.ComponentModel.ISupportInitialize)WebV).EndInit();
+            Name = "WebForm";
+            Text = "[WebForm]";
+            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Microsoft.Web.WebView2.WinForms.WebView2 WebV;
+        protected Base.Web2 Web2;
     }
 }
