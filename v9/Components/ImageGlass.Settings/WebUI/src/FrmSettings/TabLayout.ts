@@ -1,5 +1,5 @@
 import { getChangedSettingsFromTab } from '@/helpers';
-import Language from './Language';
+import Language from '../common/Language';
 
 type LayoutControlName = 'Toolbar' | 'ToolbarContext' | 'Gallery';
 type ILayoutObject = Record<LayoutControlName, {

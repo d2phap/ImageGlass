@@ -1,4 +1,4 @@
-import Language from '@/FrmSettings/Language';
+import Language from '@/common/Language';
 
 
 /**

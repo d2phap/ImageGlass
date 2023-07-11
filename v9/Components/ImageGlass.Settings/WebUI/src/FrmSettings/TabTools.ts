@@ -6,7 +6,7 @@ import {
   openModalDialog,
   renderHotkeyList,
 } from '@/helpers';
-import Language from './Language';
+import Language from '../common/Language';
 
 
 export default class TabTools {

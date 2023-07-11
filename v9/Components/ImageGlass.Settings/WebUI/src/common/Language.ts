@@ -4,12 +4,12 @@ export default class Language {
    * Loads language.
    */
   static load() {
-    for (const langKey in _pageSettings.lang) {
-      if (!Object.prototype.hasOwnProperty.call(_pageSettings.lang, langKey)) {
+    for (const langKey in _page.lang) {
+      if (!Object.prototype.hasOwnProperty.call(_page.lang, langKey)) {
         continue;
       }
   
-      const langValue = _pageSettings.lang[langKey];
+      const langValue = _page.lang[langKey];
   
       queryAll(`[lang-text="${langKey}"]`, true).forEach(el => {
         el.innerText = langValue;

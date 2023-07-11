@@ -1,4 +1,4 @@
-import Language from '@/FrmSettings/Language';
+import Language from '@/common/Language';
 import Settings from '@/FrmSettings/Settings';
 import Sidebar from '@/FrmSettings/Sidebar';
 import TabAppearance from '@/FrmSettings/TabAppearance';
@@ -44,7 +44,6 @@ export type ITheme = {
 export type IPageSettings = Record<string, any> & {
   initTab: string,
   config: Record<string, any>,
-  lang: Record<string, string>,
   langList: ILanguage[],
   toolList: ITool[],
   themeList: ITheme[],
@@ -74,7 +73,6 @@ export type IPageSettings = Record<string, any> & {
 
   // global functions
   setSidebarActiveMenu?: typeof Sidebar.setActiveMenu,
-  loadLanguage?: typeof Language.load,
   loadSettings?: typeof Settings.load,
   loadLanguageList?: typeof TabLanguage.loadLanguageList,
   loadBackgroundColorConfig?: typeof TabAppearance.loadBackgroundColorConfig;
