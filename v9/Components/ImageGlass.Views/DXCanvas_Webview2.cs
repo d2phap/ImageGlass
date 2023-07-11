@@ -99,8 +99,9 @@ public partial class DXCanvas
         Web2.Dock = DockStyle.Fill;
         Web2.ZoomFactor = 1D;
         Web2.Visible = true;
+        Web2.Web2KeyDown += Web2_Web2KeyDown;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
-
+        
 
         try
         {
@@ -117,6 +118,7 @@ public partial class DXCanvas
         await Web2.EnsureWeb2Async();
     }
 
+    
 
     /// <summary>
     /// Dispose <see cref="WebView2"/> resources.
@@ -124,6 +126,9 @@ public partial class DXCanvas
     private void DisposeWebview2Control()
     {
         Controls.Remove(_web2);
+
+        _web2.Web2KeyDown -= Web2_Web2KeyDown;
+        _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
         _web2?.Dispose();
         _web2 = null;
     }
@@ -132,13 +137,21 @@ public partial class DXCanvas
     #endregion // Private methods
 
 
+    // Web2 events
+    #region Web2 events
 
+    private void Web2_Web2KeyDown(object? sender, KeyEventArgs e)
+    {
+        this.OnKeyDown(e);
+    }
 
 
     private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
         
     }
+
+    #endregion // Web2 events
 
 
 
