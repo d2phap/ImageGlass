@@ -69,11 +69,6 @@ public class Web2 : WebView2
     /// </summary>
     public bool IsWeb2Ready => this.CoreWebView2 != null;
 
-    /// <summary>
-    /// Gets, sets template file path for the <see cref="Web2"/>.
-    /// </summary>
-    public string TemplateFilePath { get; set; } = string.Empty;
-
     #endregion // Properties
 
 
@@ -164,13 +159,13 @@ public class Web2 : WebView2
     /// <summary>
     /// Triggers <see cref="Web2MessageReceived"/> event.
     /// </summary>
-    protected virtual async Task OnWeb2MessageMessageReceivedAsync(Web2MessageReceivedEventArgs e)
+    protected virtual async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
     {
         if (InvokeRequired)
         {
             await Invoke(async delegate
             {
-                await OnWeb2MessageMessageReceivedAsync(e);
+                await OnWeb2MessageReceivedAsync(e);
             });
             return;
         }
@@ -297,15 +292,24 @@ public class Web2 : WebView2
 
         if (!visible)
         {
-            await Task.Delay(1000);
-            if (!this.IsWeb2Ready) return;
-
-            try
-            {
-                _ = this.CoreWebView2.TrySuspendAsync();
-            }
-            catch (InvalidOperationException) { }
+            await TrySuspendWeb2Async();
         }
+    }
+
+
+    /// <summary>
+    /// Tries to suspend the <see cref="Web2"/> instance to consume less memory.
+    /// </summary>
+    public async Task TrySuspendWeb2Async(int delayMs = 1000)
+    {
+        await Task.Delay(delayMs);
+        if (!this.IsWeb2Ready) return;
+
+        try
+        {
+            _ = this.CoreWebView2.TrySuspendAsync();
+        }
+        catch (InvalidOperationException) { }
     }
 
 
@@ -363,7 +367,7 @@ public class Web2 : WebView2
 
     private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
     {
-        var msg = BHelper.ParseJson<WebMessageModel>(e.WebMessageAsJson);
+        var msg = BHelper.ParseJson<Web2MessageReceivedEventArgs>(e.WebMessageAsJson);
 
         if (msg.Name.Equals("KEYDOWN") && !string.IsNullOrWhiteSpace(msg.Data))
         {
@@ -380,7 +384,7 @@ public class Web2 : WebView2
         }
         else
         {
-            OnWeb2MessageMessageReceivedAsync(new Web2MessageReceivedEventArgs(msg.Name.Trim(), msg.Data.Trim()));
+            _ = OnWeb2MessageReceivedAsync(new Web2MessageReceivedEventArgs(msg.Name.Trim(), msg.Data?.Trim()));
         }
     }
 
