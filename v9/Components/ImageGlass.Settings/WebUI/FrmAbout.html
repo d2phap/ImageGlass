@@ -16,10 +16,10 @@
 
     <main>
       <h1 class="mt-0 mb-0 text-accent">ImageGlass <sup class="app-code">{{AppCode}}</sup></h1>
-      <p>{{_Slogan}}</p><br />
+      <p lang-text="FrmAbout._Slogan">[_Slogan]</p><br />
 
       <h3 class="mb-0 mt-0">
-        {{_Version}} {{AppVersion}} ({{AppArchitecture}})<br />
+        <span lang-text="FrmAbout._Version">[Version]</span> {{AppVersion}} ({{AppArchitecture}})<br />
         .NET Runtime: {{AppRuntime}}
       </h3>
       <p>
@@ -29,54 +29,65 @@
 
       <p>
         <a target="_blank"
-          href="https://imageglass.org/support#donate?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
-          {{_Donate}}
+          href="https://imageglass.org/support#donate?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._Donate">
+          [Donate]
         </a>
 
         <a target="_blank"
-          href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
-          {{_License}}
+          href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._License">
+          [License]
         </a>
 
         <a target="_blank"
-          href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
-          {{_Privacy}}
+          href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._Privacy">
+          [Privacy]
         </a>
       </p>
 
       <p>
         <button id="BtnImageGlassStore">
-          {{MsStoreBadge}}
+          <img src="./img/MsStoreBadge.svg" />
         </button>
       </p>
 
-      <h4 class="mb-0">
-        {{_Thanks}}
+      <h4 class="mb-0" lang-text="FrmAbout._Thanks">
+        [Thanks]
       </h4>
       <ul>
-        <li>{{_LogoDesigner}} Nguyễn Quốc Tuấn</li>
         <li>
-          {{_Collaborator}} Kevin Routley (<a target="_blank"
-            href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)
+          <span lang-text="FrmAbout._LogoDesigner">[Logo designer:]</span>
+          Nguyễn Quốc Tuấn
+        </li>
+        <li>
+          <span lang-text="FrmAbout._Collaborator">[Collaborator:]</span>
+          Kevin Routley (<a target="_blank" href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)
         </li>
       </ul>
 
-      <h4 class="mb-0">{{_Contact}}</h4>
+      <h4 class="mb-0" lang-text="FrmAbout._Contact">[Contact:]</h4>
       <ul>
-        <li>{{_Homepage}} <a target="_blank"
+        <li>
+          <span lang-text="FrmAbout._Homepage">[Homepage:]</span>
+          <a target="_blank"
             href="https://imageglass.org?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">https://imageglass.org</a>
         </li>
         <li>
           GitHub: <a target="_blank"
             href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a>
         </li>
-        <li>{{_Email}} <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
+        <li>
+          <span lang-text="FrmAbout._Email">[Email:]</span>
+          <a href="mailto:phap@imageglass.org">phap@imageglass.org</a>
+        </li>
       </ul><br />
 
 
       <details>
         <summary>
-          <h3>{{_Credits}}</h3>
+          <h3 lang-text="FrmAbout._Credits">[Credits]</h3>
         </summary>
 
         <div>
@@ -134,9 +145,9 @@
 
 
   <footer class="panel">
-    <button id="BtnCheckForUpdate" type="submit">{{_CheckForUpdate}}</button>
-    <button id="BtnDonate">{{_Donate}}</button>
-    <button id="BtnClose">{{_Close}}</button>
+    <button id="BtnCheckForUpdate" type="submit" lang-text="_._CheckForUpdate">[Check for update]</button>
+    <button id="BtnDonate" lang-text="FrmAbout._Donate">[Donate]</button>
+    <button id="BtnClose" lang-text="_._Close">[Close]</button>
   </footer>
 
   <script src="./dist/FrmAbout.js"></script>

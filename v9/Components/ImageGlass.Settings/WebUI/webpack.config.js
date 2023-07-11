@@ -80,6 +80,7 @@ const configs = {
     }),
     new CopyPlugin({
       patterns: [
+        { from: './img/*.*', to: '../' },
         { from: './DXCanvas_Webview2.html', to: '../' },
         { from: './FrmSettings.html', to: '../' },
         { from: './FrmAbout.html', to: '../' },
