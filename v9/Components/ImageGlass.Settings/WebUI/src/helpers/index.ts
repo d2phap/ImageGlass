@@ -92,7 +92,8 @@ export const taggedTemplate = <T = Record<string, any>>(strings: TemplateStrings
 
 
 /**
- * Opens modal dialog and return value.
+ * Opens modal dialog.
+ * It returns `true` if the dialog form is submitted, otherwise `false`.
  * @param selector Dialog selector.
  * @param data The data to pass to the dialog.
  */
@@ -103,6 +104,7 @@ export const openModalDialog = async (
   onOpen?: (el: HTMLDialogElement) => any,
   onSubmit?: (e: SubmitEvent) => any) => {
   let isClosed = false;
+  let isSubmitted = false;
   const dialogEl = query<HTMLDialogElement>(selector);
   dialogEl.classList.remove('dialog--create', 'dialog--edit');
   dialogEl.classList.add(`dialog--${purpose}`);
@@ -130,6 +132,7 @@ export const openModalDialog = async (
   // on submit
   query<HTMLFormElement>(`${selector} > form`).addEventListener('submit', async (e) => {
     if (onSubmit) await Promise.resolve(onSubmit(e));
+    isSubmitted = true;
   });
 
   console.log(data);
@@ -148,7 +151,7 @@ export const openModalDialog = async (
     await pause(100);
   }
 
-  return dialogEl;
+  return isSubmitted;
 };
 
 

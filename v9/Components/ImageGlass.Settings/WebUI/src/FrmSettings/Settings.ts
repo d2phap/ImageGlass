@@ -38,7 +38,7 @@ export default class Settings {
 
 
       // find the html element
-      const el = query(`[name="${configKey}"]`, true);
+      const el = query(`[name="${configKey}"]`, null, true);
       if (!el) {
         console.info(`>> Settings.load(): config '${configKey}' not found`);
         continue;
@@ -184,7 +184,7 @@ export default class Settings {
       }
 
       const enumKeys = _pageSettings.enums[enumName];
-      const selectEls = queryAll<HTMLSelectElement>(`select[data-enum="${enumName}"]`, true);
+      const selectEls = queryAll<HTMLSelectElement>(`select[data-enum="${enumName}"]`, null, true);
 
       for (const el of selectEls) {
         enumKeys.forEach(key => {

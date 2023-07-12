@@ -34,15 +34,17 @@ export default class TabTools {
         IsIntegrated: false,
       } as ITool;
 
-      await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, async () => {
+      const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, async () => {
         TabTools.addEventsForToolDialog();
         TabTools.updateToolCommandPreview();
 
         await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', defaultTool.Hotkeys);
       });
 
-      const tool = TabTools.getToolDialogFormData();
-      TabTools.setToolItemToList(tool.ToolId, tool);
+      if (isSubmitted) {
+        const tool = TabTools.getToolDialogFormData();
+        TabTools.setToolItemToList(tool.ToolId, tool);
+      }
     }, false);
   }
 
@@ -99,13 +101,14 @@ export default class TabTools {
       `;
 
       const trHtml = `
-        <tr data-tool-id="${item.ToolId}"
-          data-tool-name="${item.ToolName}"
-          data-tool-integrated="${item.IsIntegrated}"
-          data-tool-executable="${item.Executable}"
-          data-tool-arguments="${item.Arguments}"
-          data-tool-hotkeys="${(item.Hotkeys || []).join(TabTools.HOTKEY_SEPARATOR)}">
-          <td class="cell-counter"></td>
+        <tr data-toolId="${item.ToolId}">
+          <td class="cell-counter">
+            <code hidden name="_ToolName">${escapeHtml(item.ToolName)}</code>
+            <code hidden name="_IsIntegrated">${item.IsIntegrated}</code>
+            <code hidden name="_Executable">${escapeHtml(item.Executable)}</code>
+            <code hidden name="_Arguments">${escapeHtml(item.Arguments)}</code>
+            <code hidden name="_Hotkeys">${(item.Hotkeys || []).join(TabTools.HOTKEY_SEPARATOR)}</code>
+          </td>
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
           <td class="text-nowrap">${item.ToolName}</td>
           <td class="text-center">${chkIntegratedHtml}</td>
@@ -133,7 +136,7 @@ export default class TabTools {
       el.addEventListener('click', async () => {
         const action = el.getAttribute('data-action');
         const trEl = el.closest('tr');
-        const toolId = trEl.getAttribute('data-tool-id');
+        const toolId = trEl.getAttribute('data-toolId');
 
         if (action === 'delete') {
           trEl.remove();
@@ -152,14 +155,14 @@ export default class TabTools {
    */
   private static getToolListFromDom() {
     const trEls = queryAll<HTMLTableRowElement>('#Table_ToolList > tbody > tr');
-    const toolList = trEls.map(el => {
-      const toolId = el.getAttribute('data-tool-id') ?? '';
-      const toolName = el.getAttribute('data-tool-name') ?? '';
-      const toolIntegrated = el.getAttribute('data-tool-integrated') === 'true';
-      const toolExecutable = el.getAttribute('data-tool-executable') ?? '';
-      const toolArguments = el.getAttribute('data-tool-arguments') ?? '';
+    const toolList = trEls.map(trEl => {
+      const toolId = trEl.getAttribute('data-toolId') || '';
+      const toolName = query('[name="_ToolName"]', trEl).innerText || '';
+      const toolIntegrated = (query('[name="_IsIntegrated"]', trEl).innerText) === 'true';
+      const toolExecutable = query('[name="_Executable"]', trEl).innerText || '';
+      const toolArguments = query('[name="_Arguments"]', trEl).innerText || '';
 
-      const hotkeysStr = el.getAttribute('data-tool-hotkeys') ?? '';
+      const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
       const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
 
       return {
@@ -181,31 +184,33 @@ export default class TabTools {
    * @param toolId Tool id
    */
   private static async editTool(toolId: string) {
-    const trEl = query<HTMLTableRowElement>(`#Table_ToolList tr[data-tool-id="${toolId}"]`);
+    const trEl = query<HTMLTableRowElement>(`#Table_ToolList tr[data-toolId="${toolId}"]`);
 
-    const hotkeysStr = trEl.getAttribute('data-tool-hotkeys') || '';
+    const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
     const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
 
     let tool: ITool = {
       ToolId: toolId,
-      ToolName: trEl.getAttribute('data-tool-name') || '',
-      Executable: trEl.getAttribute('data-tool-executable') || '',
-      Arguments: trEl.getAttribute('data-tool-arguments') || '',
-      IsIntegrated: trEl.getAttribute('data-tool-integrated') === 'true',
+      ToolName: query('[name="_ToolName"]', trEl).innerText || '',
+      Executable: query('[name="_Executable"]', trEl).innerText || '',
+      Arguments: query('[name="_Arguments"]', trEl).innerText || '',
+      IsIntegrated: query('[name="_IsIntegrated"]', trEl).innerText === 'true',
       Hotkeys: toolHotkeys,
     };
 
     // open dialog
-    await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, async () => {
-      query<HTMLInputElement>('[name="_IsIntegrated"]').checked = tool.IsIntegrated ?? false;
+    const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, async () => {
+      query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked = tool.IsIntegrated ?? false;
       TabTools.addEventsForToolDialog();
       TabTools.updateToolCommandPreview();
 
       await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', tool.Hotkeys);
     });
 
-    tool = TabTools.getToolDialogFormData();
-    TabTools.setToolItemToList(toolId, tool);
+    if (isSubmitted) {
+      tool = TabTools.getToolDialogFormData();
+      TabTools.setToolItemToList(toolId, tool);
+    }
   }
 
 
@@ -250,11 +255,11 @@ export default class TabTools {
 
 
   private static addEventsForToolDialog() {
-    query('[name="_Executable"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
-    query('[name="_Executable"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
+    query('#Dialog_AddOrEditTool [name="_Executable"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
+    query('#Dialog_AddOrEditTool [name="_Executable"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
 
-    query('[name="_Arguments"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
-    query('[name="_Arguments"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
+    query('#Dialog_AddOrEditTool [name="_Arguments"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
+    query('#Dialog_AddOrEditTool [name="_Arguments"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
 
     query('#btnBrowseTool').removeEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
     query('#btnBrowseTool').addEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
@@ -262,10 +267,10 @@ export default class TabTools {
 
 
   private static updateToolCommandPreview() {
-    let executable = query<HTMLInputElement>('[name="_Executable"]').value || '';
+    let executable = query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value || '';
     executable = executable.trim();
 
-    let args = query<HTMLInputElement>('[name="_Arguments"]').value || '';
+    let args = query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Arguments"]').value || '';
     args = args.trim().replaceAll('<file>', '"C:\\fake dir\\photo.jpg"');
 
     query('#Tool_CommandPreview').innerText = [executable, args].filter(Boolean).join(' ');
@@ -276,7 +281,7 @@ export default class TabTools {
     const filePaths = await openFilePicker() ?? [];
     if (!filePaths.length) return;
 
-    query<HTMLInputElement>('[name="_Executable"]').value = `"${filePaths[0]}"`;
+    query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value = `"${filePaths[0]}"`;
     TabTools.updateToolCommandPreview();
   }
 

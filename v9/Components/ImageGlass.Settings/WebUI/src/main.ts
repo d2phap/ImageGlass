@@ -58,6 +58,6 @@ window.onkeydown = (e: KeyboardEvent) => {
     return;
   }
 
-  console.log('KEYDOWN', keyCombo);
+  console.info('⌨️ KEYDOWN', keyCombo);
   post('KEYDOWN', keyCombo);
 };
