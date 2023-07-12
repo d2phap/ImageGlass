@@ -70,20 +70,20 @@
 
     .theme-preview {
       padding-right: 0.5rem;
+      position: relative;
 
       .theme-preview-img {
         background-color: rgb(var(--AppBg) / 0.25);
         border: 1px solid rgb(var(--AppText) / 0.15);
         border-radius: var(--border-radius);
         overflow: hidden;
-        position: relative;
         width: 130px;
         height: 80px;
 
         .theme-mode {
           position: absolute;
           top: 0.25rem;
-          right: 0.25rem;
+          right: 1.25rem;
           z-index: 1;
           display: inline-block;
           width: 1rem;

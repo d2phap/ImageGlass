@@ -11,19 +11,22 @@
 <body id="app">
   <div id="top">
     <aside style="padding-right: 2rem;">
-      <img src="{{AppLogo}}" height="64" width="64" alt="ImageGlass logo" />
+      <img id="Img_AppLogo" src="[AppLogo]" height="64" width="64" alt="ImageGlass logo" />
     </aside>
 
     <main>
-      <h1 class="mt-0 mb-0 text-accent">ImageGlass <sup class="app-code">{{AppCode}}</sup></h1>
-      <p lang-text="FrmAbout._Slogan">[_Slogan]</p><br />
+      <h1 class="mt-0 mb-0 text-accent">
+        ImageGlass <sup id="Lbl_AppCode" class="app-code">[AppCode]</sup>
+      </h1>
+      <p lang-text="FrmAbout._Slogan">[Slogan]</p><br />
 
       <h3 class="mb-0 mt-0">
-        <span lang-text="FrmAbout._Version">[Version]</span> {{AppVersion}} ({{AppArchitecture}})<br />
-        .NET Runtime: {{AppRuntime}}
+        <span lang-text="FrmAbout._Version">[Version]</span>
+        <span id="Lbl_AppVersion">[9.0.0.0]</span> (<span id="Lbl_AppArchitecture">[64-bit]</span>)<br />
+        .NET Runtime: <span id="Lbl_AppRuntime">[.NET 7]</span>
       </h3>
       <p>
-        Copyright © 2010-{{CopyrightsYear}} by Dương Diệu Pháp.<br />
+        Copyright © <span id="Lbl_CopyrightsYear">[2010-2023]</span> by Dương Diệu Pháp.<br />
         All rights reserved.
       </p>
 

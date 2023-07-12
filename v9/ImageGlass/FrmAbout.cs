@@ -55,6 +55,26 @@ public partial class FrmAbout : WebForm
     }
 
 
+    protected override async Task OnWeb2NavigationCompleted()
+    {
+        await base.OnWeb2NavigationCompleted();
+
+        // load data
+        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
+        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+
+        await Web2.ExecuteScriptAsync(@$"
+            window._page.loadData({{
+                AppLogo: 'data:image/png;base64,{base64Logo}',
+                AppCode: '{Constants.APP_CODE}',
+                AppVersion: '{App.Version}',
+                AppArchitecture: '{archInfo}',
+                AppRuntime: '{Environment.Version.ToString()}',
+            }});
+        ");
+    }
+
+
     protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
     {
         await base.OnWeb2MessageReceivedAsync(e);
@@ -78,44 +98,5 @@ public partial class FrmAbout : WebForm
     }
 
     #endregion // Protected / override methods
-
-
-
-
-    protected IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
-    {
-        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
-        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
-        var msStoreBadge = Encoding.UTF8.GetString(Settings.Properties.Resources.MsStoreBadge);
-
-        return new List<(string Variable, string Value)>
-        {
-            ("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
-            ("{{AppCode}}", Constants.APP_CODE),
-            ("{{AppVersion}}", App.Version),
-            ("{{AppArchitecture}}", archInfo),
-            ("{{AppRuntime}}", Environment.Version.ToString()),
-            ("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
-            ("{{MsStoreBadge}}", msStoreBadge),
-
-            // language
-            //("{{_Slogan}}", Config.Language[$"{nameof(FrmAbout)}._Slogan"]),
-            //("{{_Version}}", Config.Language[$"{nameof(FrmAbout)}._Version"]),
-            //("{{_License}}", Config.Language[$"{nameof(FrmAbout)}._License"]),
-            //("{{_Privacy}}", Config.Language[$"{nameof(FrmAbout)}._Privacy"]),
-            //("{{_Thanks}}", Config.Language[$"{nameof(FrmAbout)}._Thanks"]),
-            //("{{_LogoDesigner}}", Config.Language[$"{nameof(FrmAbout)}._LogoDesigner"]),
-            //("{{_Collaborator}}", Config.Language[$"{nameof(FrmAbout)}._Collaborator"]),
-            //("{{_Contact}}", Config.Language[$"{nameof(FrmAbout)}._Contact"]),
-            //("{{_Homepage}}", Config.Language[$"{nameof(FrmAbout)}._Homepage"]),
-            //("{{_Email}}", Config.Language[$"{nameof(FrmAbout)}._Email"]),
-            //("{{_Credits}}", Config.Language[$"{nameof(FrmAbout)}._Credits"]),
-            //("{{_Donate}}", Config.Language[$"{nameof(FrmAbout)}._Donate"]),
-            //("{{_CheckForUpdate}}", Config.Language[$"_._CheckForUpdate"]),
-            //("{{_Close}}", Config.Language[$"_._Close"]),
-        };
-    }
-
-
 
 }
