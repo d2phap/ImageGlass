@@ -22,7 +22,6 @@ if (!window._page) {
     lang: {},
   };
 }
-
 _page.loadLanguage = Language.load;
 
 
@@ -30,3 +29,35 @@ _page.loadLanguage = Language.load;
 pause(1000).then(() => {
   document.documentElement.style.setProperty('--transitionMs', '300ms');
 });
+
+
+// handle keydown event
+window.onkeydown = (e: KeyboardEvent) => {
+  const ctrl = e.ctrlKey ? 'ctrl' : '';
+  const shift = e.shiftKey ? 'shift' : '';
+  const alt = e.altKey ? 'alt' : '';
+
+  let key = e.key.toLowerCase();
+  const keyMaps: Record<string, string> = {
+    control: '',
+    shift: '',
+    alt: '',
+    arrowleft: 'left',
+    arrowright: 'right',
+    arrowup: 'up',
+    arrowdown: 'down',
+    backspace: 'back',
+  };
+  if (keyMaps[key] !== undefined) {
+    key = keyMaps[key];
+  }
+  const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
+
+  // preserve ESCAPE key for closing HTML5 dialog
+  if (keyCombo === 'escape' && document.querySelector('dialog[open]')) {
+    return;
+  }
+
+  console.log('KEYDOWN', keyCombo);
+  post('KEYDOWN', keyCombo);
+};

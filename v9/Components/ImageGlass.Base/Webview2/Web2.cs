@@ -425,9 +425,8 @@ public class Web2 : WebView2
     {
         var darkModeTask = SetWeb2DarkModeAsync(DarkMode);
         var accentColorTask = SetWeb2AccentColorAsync(AccentColor);
-        var keyDownTask = ListenToWeb2KeyDownEventAsync();
 
-        await Task.WhenAll(darkModeTask, accentColorTask, keyDownTask);
+        await Task.WhenAll(darkModeTask, accentColorTask);
         await OnWeb2NavigationCompleted();
     }
 
@@ -440,50 +439,5 @@ public class Web2 : WebView2
 
 
     #endregion // Webview2 Events
-
-
-
-    // Private methods
-    #region Private methods
-
-    /// <summary>
-    /// Starts listening to keydown event.
-    /// </summary>
-    private async Task ListenToWeb2KeyDownEventAsync()
-    {
-        await this.ExecuteScriptAsync("""
-            window.onkeydown = (e) => {
-                const ctrl = e.ctrlKey ? 'ctrl' : '';
-                const shift = e.shiftKey ? 'shift' : '';
-                const alt = e.altKey ? 'alt' : '';
-        
-                let key = e.key.toLowerCase();
-                const keyMaps = {
-                    control: '',
-                    shift: '',
-                    alt: '',
-                    arrowleft: 'left',
-                    arrowright: 'right',
-                    arrowup: 'up',
-                    arrowdown: 'down',
-                    backspace: 'back',
-                };
-                if (keyMaps[key] !== undefined) {
-                    key = keyMaps[key];
-                }
-                const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
-
-                // preserve ESCAPE key for closing HTML5 dialog
-                if (keyCombo === 'escape' && document.querySelector('dialog[open]') {
-                    return;
-                }
-        
-                console.log('KEYDOWN', keyCombo);
-                window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
-            }
-        """);
-    }
-
-    #endregion // Private methods
 
 }
