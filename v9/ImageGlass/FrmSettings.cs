@@ -75,7 +75,6 @@ public partial class FrmSettings : WebForm
         Web2.CoreWebView2.Navigate(htmlFilePath);
     }
 
-
     protected override async Task OnWeb2NavigationCompleted()
     {
         await base.OnWeb2NavigationCompleted();

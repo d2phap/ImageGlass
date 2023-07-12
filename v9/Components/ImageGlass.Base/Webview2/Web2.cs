@@ -27,7 +27,7 @@ namespace ImageGlass.Base;
 public class Web2 : WebView2
 {
     private bool _darkMode = true;
-    private Color _accentColor = Color.Blue;
+    private Color _accentColor = Color.FromArgb(28, 146, 255);
 
 
     // Properties
@@ -413,14 +413,14 @@ public class Web2 : WebView2
     }
 
 
-    private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+    private async void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         var darkModeTask = SetWeb2DarkModeAsync(DarkMode);
         var accentColorTask = SetWeb2AccentColorAsync(AccentColor);
         var keyDownTask = ListenToWeb2KeyDownEventAsync();
 
-        _ = Task.WhenAll(darkModeTask, accentColorTask, keyDownTask)
-            .ContinueWith(async (_) => await OnWeb2NavigationCompleted());
+        await Task.WhenAll(darkModeTask, accentColorTask, keyDownTask);
+        await OnWeb2NavigationCompleted();
     }
 
 

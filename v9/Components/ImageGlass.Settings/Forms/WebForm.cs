@@ -52,6 +52,10 @@ public partial class WebForm : ThemedForm
         Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
 
+        // hide the control by default
+        // we will show it when the navigation is completed
+        Web2.Visible = false;
+
         BackdropStyle = BackdropStyle.Mica;
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
@@ -159,10 +163,12 @@ public partial class WebForm : ThemedForm
     /// </summary>
     protected virtual async Task OnWeb2NavigationCompleted()
     {
-        _ = LoadLanguageAsync(false);
+        await LoadLanguageAsync(false);
 
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
-        await Task.CompletedTask;
+
+        // show the control when the navigation is completed
+        Web2.Visible = true;
     }
 
 
