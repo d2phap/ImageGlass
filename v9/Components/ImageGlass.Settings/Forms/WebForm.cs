@@ -51,6 +51,7 @@ public partial class WebForm : ThemedForm
         Web2.Web2Ready += Web2_Web2Ready;
         Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
+        Web2.Web2KeyDown += Web2_Web2KeyDown;
 
         // hide the control by default
         // we will show it when the navigation is completed
@@ -71,6 +72,7 @@ public partial class WebForm : ThemedForm
 
         _ = Web2.EnsureWeb2Async();
     }
+
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
@@ -200,6 +202,18 @@ public partial class WebForm : ThemedForm
     private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
         _ = OnWeb2MessageReceivedAsync(e);
+    }
+
+    private void Web2_Web2KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.KeyData == CloseFormHotkey)
+        {
+            CloseFormByKeys();
+        }
+        else
+        {
+            this.OnKeyDown(e);
+        }
     }
 
     #endregion // Web2 events

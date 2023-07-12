@@ -43,6 +43,7 @@ public partial class FrmAbout : WebForm
 
         Web2.PageName = "about";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
+        CloseFormHotkey = Keys.Escape;
     }
 
 

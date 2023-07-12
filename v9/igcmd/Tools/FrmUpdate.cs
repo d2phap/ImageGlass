@@ -46,6 +46,7 @@ public partial class FrmUpdate : WebForm
         Config.UpdateFormIcon(this);
         Web2.PageName = "update";
         Text = Config.Language[$"_._CheckForUpdate"];
+        CloseFormHotkey = Keys.Escape;
 
         // center window in screen
         var workingArea = Screen.FromControl(this).WorkingArea;

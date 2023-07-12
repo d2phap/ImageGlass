@@ -463,8 +463,12 @@ public class Web2 : WebView2
                 if (keyMaps[key] !== undefined) {
                     key = keyMaps[key];
                 }
-        
                 const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
+
+                // preserve ESCAPE key for closing HTML5 dialog
+                if (keyCombo === 'escape' && document.querySelector('dialog[open]') {
+                    return;
+                }
         
                 console.log('KEYDOWN', keyCombo);
                 window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
