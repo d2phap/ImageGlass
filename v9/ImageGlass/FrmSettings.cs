@@ -175,16 +175,13 @@ public partial class FrmSettings : WebForm
         #region Tab Image
         else if (e.Name.Equals("Btn_BrowseColorProfile"))
         {
-            Web2.SafeRunUi(() =>
-            {
-                var profileFilePath = SelectColorProfileFile();
-                profileFilePath = profileFilePath.Replace("\\", "\\\\");
+            var profileFilePath = SelectColorProfileFile();
+            profileFilePath = profileFilePath.Replace("\\", "\\\\");
 
-                if (!String.IsNullOrEmpty(profileFilePath))
-                {
-                    Web2.PostWeb2Message(e.Name, $"\"{profileFilePath}\"");
-                }
-            });
+            if (!String.IsNullOrEmpty(profileFilePath))
+            {
+                Web2.PostWeb2Message(e.Name, $"\"{profileFilePath}\"");
+            }
         }
         else if (e.Name.Equals("Lnk_CustomColorProfile"))
         {
@@ -202,7 +199,7 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("Lnk_InstallLanguage"))
         {
-            Web2.SafeRunUi(() => _ = InstallLanguagePackAsync());
+            _ = InstallLanguagePackAsync();
         }
         #endregion // Tab Language
 
@@ -211,23 +208,20 @@ public partial class FrmSettings : WebForm
         #region Tab Appearance
         else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))
         {
-            Web2.SafeRunUi(() =>
+            var currentColor = ThemeUtils.ColorFromHex(e.Data);
+            var newColor = OpenColorPicker(currentColor);
+            var hexColor = string.Empty;
+
+            if (newColor != null)
             {
-                var currentColor = ThemeUtils.ColorFromHex(e.Data);
-                var newColor = OpenColorPicker(currentColor);
-                var hexColor = string.Empty;
+                hexColor = ThemeUtils.ColorToHex(newColor.Value);
+            }
 
-                if (newColor != null)
-                {
-                    hexColor = ThemeUtils.ColorToHex(newColor.Value);
-                }
-
-                Web2.PostWeb2Message(e.Name, $"\"{hexColor}\"");
-            });
+            Web2.PostWeb2Message(e.Name, $"\"{hexColor}\"");
         }
         else if (e.Name.Equals("Btn_InstallTheme"))
         {
-            Web2.SafeRunUi(() => _ = InstallThemeAsync());
+            _ = InstallThemeAsync();
         }
         else if (e.Name.Equals("Btn_RefreshThemeList"))
         {
@@ -251,22 +245,15 @@ public partial class FrmSettings : WebForm
         // open file picker
         else if (e.Name.Equals("OpenFilePicker"))
         {
-            Web2.SafeRunUi(() =>
-            {
-                var filePaths = OpenFilePickerJson(e.Data);
-                Web2.PostWeb2Message("OpenFilePicker", filePaths);
-            });
+            var filePaths = OpenFilePickerJson(e.Data);
+            Web2.PostWeb2Message("OpenFilePicker", filePaths);
         }
 
         // open hotkey picker
         else if (e.Name.Equals("OpenHotkeyPicker"))
         {
-            Web2.SafeRunUi(() =>
-            {
-                var hotkey = OpenHotkeyPickerJson();
-
-                Web2.PostWeb2Message("OpenHotkeyPicker", $"\"{hotkey}\"");
-            });
+            var hotkey = OpenHotkeyPickerJson();
+            Web2.PostWeb2Message("OpenHotkeyPicker", $"\"{hotkey}\"");
         }
         #endregion // Global
 

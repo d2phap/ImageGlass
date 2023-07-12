@@ -221,7 +221,7 @@ public class Web2 : WebView2
                 userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
                 options: options);
 
-            await this.EnsureCoreWebView2Async(env);
+            await this.EnsureCoreWebView2Async(env).ConfigureAwait(true);
 
             this.CoreWebView2.Settings.IsZoomControlEnabled = false;
             this.CoreWebView2.Settings.IsStatusBarEnabled = false;
@@ -374,21 +374,6 @@ public class Web2 : WebView2
         }
     }
 
-
-    /// <summary>
-    /// Safely run the action after the current event handler is completed,
-    /// to avoid potential reentrancy caused by running a nested message loop
-    /// in the WebView2 event handler.
-    /// Source: <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/threading-model#reentrancy"/>
-    /// </summary>
-    public static void SafeRunUi(Action action)
-    {
-        SynchronizationContext.Current.Post((_) =>
-        {
-            action();
-        }, null);
-    }
-
     #endregion // Public methods
 
 
@@ -412,11 +397,17 @@ public class Web2 : WebView2
 
             var hotkey = new Hotkey(msg.Data);
 
-            _ = OnWeb2KeyDownAsync(new KeyEventArgs(hotkey.KeyData));
+            SafeRunUi(async () =>
+            {
+                await OnWeb2KeyDownAsync(new KeyEventArgs(hotkey.KeyData));
+            });
         }
         else
         {
-            _ = OnWeb2MessageReceivedAsync(new Web2MessageReceivedEventArgs(msg.Name.Trim(), msg.Data?.Trim()));
+            SafeRunUi(async () =>
+            {
+                await OnWeb2MessageReceivedAsync(new Web2MessageReceivedEventArgs(msg.Name.Trim(), msg.Data?.Trim()));
+            });
         }
     }
 
@@ -437,6 +428,20 @@ public class Web2 : WebView2
         BHelper.OpenUrl(e.Uri, $"app_{PageName}");
     }
 
+
+    /// <summary>
+    /// Safely run the action after the current event handler is completed,
+    /// to avoid potential reentrancy caused by running a nested message loop
+    /// in the WebView2 event handler.
+    /// Source: <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/threading-model#reentrancy"/>
+    /// </summary>
+    private static void SafeRunUi(Action action)
+    {
+        SynchronizationContext.Current.Post((_) =>
+        {
+            action();
+        }, null);
+    }
 
     #endregion // Webview2 Events
 
