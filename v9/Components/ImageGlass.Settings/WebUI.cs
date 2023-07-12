@@ -184,18 +184,13 @@ public static class WebUI
 
 
             // PreviewImage
-            var previewImgB64 = "";
             if (th.JsonModel.Settings.TryGetValue(nameof(th.Settings.PreviewImage), out var previewImgName))
             {
                 var previewImgPath = Path.Combine(th.FolderPath, previewImgName.ToString());
+                var previewImgUri = new Uri(previewImgPath);
 
-                // get thumbnail
-                using var bmp = ShellThumbnailApi.GetThumbnail(previewImgPath, 256, 256, ShellThumbnailOptions.ThumbnailOnly);
-
-                // convert to base-64
-                previewImgB64 = "data:image/png;charset=utf-8;base64," + BHelper.ToBase64Png(bmp);
+                obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgUri.AbsoluteUri);
             }
-            obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgB64);
 
             return obj;
         }));

@@ -247,9 +247,17 @@ public class Web2 : WebView2
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"{nameof(Web2)}: Failed to initialize Webview2!\r\n\r\n" +
-                $"{ex.Message}\r\n\r\n" +
-                $"at {nameof(EnsureWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Operation aborted (0x80004004 (E_ABORT))
+            if (ex.HResult == -2147467260)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show($"{nameof(Web2)}: Failed to initialize Webview2!\r\n\r\n" +
+                    $"{ex.Message}\r\n\r\n" +
+                    $"at {nameof(EnsureWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 

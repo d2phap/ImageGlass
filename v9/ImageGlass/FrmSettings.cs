@@ -49,6 +49,7 @@ public partial class FrmSettings : WebForm
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());
     }
 
+
     protected override void OnRequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
     {
         base.OnRequestUpdatingTheme(e);
@@ -56,6 +57,7 @@ public partial class FrmSettings : WebForm
         // set app logo on titlebar
         Config.UpdateFormIcon(this);
     }
+
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
@@ -74,6 +76,7 @@ public partial class FrmSettings : WebForm
         var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmSettings)}.html");
         Web2.CoreWebView2.Navigate(htmlFilePath);
     }
+
 
     protected override async Task OnWeb2NavigationCompleted()
     {
@@ -272,6 +275,9 @@ public partial class FrmSettings : WebForm
 
     #endregion // Protected / override methods
 
+
+    // Private methods
+    #region Private methods
 
     private void ApplySettings(string dataJson)
     {
@@ -710,5 +716,8 @@ public partial class FrmSettings : WebForm
 
         return string.Empty;
     }
+
+    #endregion // Private methods
+
 
 }
