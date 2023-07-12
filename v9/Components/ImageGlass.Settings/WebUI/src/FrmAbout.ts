@@ -21,6 +21,8 @@ window._page.loadData = (data: Record<string, string> = {}) => {
   query('#Lbl_CopyrightsYear').innerText = `2010-${new Date().getUTCFullYear()}`;
 
   query('#Img_AppLogo').setAttribute('src', data.AppLogo || '');
+  query('#Img_AppLogo').toggleAttribute('hidden', false);
+
   query('#Lbl_AppCode').innerText = data.AppCode || '';
   query('#Lbl_AppVersion').innerText = data.AppVersion || '';
   query('#Lbl_AppArchitecture').innerText = data.AppArchitecture || '';

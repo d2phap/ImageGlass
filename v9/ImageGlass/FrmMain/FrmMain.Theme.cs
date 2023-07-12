@@ -88,6 +88,8 @@ public partial class FrmMain
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
+        // set app logo on titlebar
+        Config.UpdateFormIcon(this);
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();

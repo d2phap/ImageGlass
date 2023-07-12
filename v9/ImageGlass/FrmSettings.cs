@@ -49,6 +49,13 @@ public partial class FrmSettings : WebForm
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmSettingsPlacementFromConfig());
     }
 
+    protected override void OnRequestUpdatingTheme(RequestUpdatingThemeEventArgs e)
+    {
+        base.OnRequestUpdatingTheme(e);
+
+        // set app logo on titlebar
+        Config.UpdateFormIcon(this);
+    }
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {

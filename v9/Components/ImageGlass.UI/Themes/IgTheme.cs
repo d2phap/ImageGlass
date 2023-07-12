@@ -258,7 +258,7 @@ public class IgTheme : IDisposable
                 // property is Bitmap
                 if (prop?.PropertyType == typeof(Bitmap))
                 {
-                    var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
+                    var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), 256, 256);
 
                     prop.SetValue(Settings, bmp);
                     return;
