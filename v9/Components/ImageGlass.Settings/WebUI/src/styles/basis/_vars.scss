@@ -27,11 +27,12 @@
   --BgWarning: 255 139 0;
   --BgDanger: 255 0 83;
 
-  --control-width: calc(200 * var(--fontScale));
-  --control-height: calc(28 * var(--fontScale));
-  --border-radius: calc(0.2rem * var(--fontScale));
+  --controlWidth: calc(200 * var(--fontScale));
+  --controlHeight: calc(28 * var(--fontScale));
+  --borderRadius: calc(0.2rem * var(--fontScale));
   --shadow: 0 0.1rem 0.8rem -0.4rem rgb(0 0 0 / 50%);
-  --scrollBarSize-px: calc(0.75rem * var(--fontScale)); // 12px
+  --scrollbarSizePx: calc(0.75rem * var(--fontScale)); // 12px
+  --transitionMs: 0ms; // disable from the begining
 
   --fontSize: 12.5;
   --designFontSize: 12.5;

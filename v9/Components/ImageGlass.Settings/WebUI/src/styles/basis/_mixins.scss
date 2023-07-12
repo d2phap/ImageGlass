@@ -8,17 +8,19 @@
 @mixin baseControl() {
   --focus-color: var(--Accent);
 
-  min-width: calc(var(--control-height) * 1px);
-  width: calc(var(--control-width) * 1px);
-  min-height: calc(var(--control-height) * 1px);
+  min-width: calc(var(--controlHeight) * 1px);
+  width: calc(var(--controlWidth) * 1px);
+  min-height: calc(var(--controlHeight) * 1px);
   padding: 0.325rem;
   font-size: inherit;
   font-family: var(--fontBase);
   color: rgb(var(--AppText));
   background-color: rgb(var(--ControlBg));
-  border-radius: var(--border-radius);
+  border-radius: var(--borderRadius);
   border: 0.1rem solid var(--ControlBorder);
-  transition: background ease 300ms, border ease 300ms, box-shadow ease 300ms;
+  transition: background ease var(--transitionMs),
+    border ease var(--transitionMs),
+    box-shadow ease var(--transitionMs);
 
   &::selection {
     background-color: rgb(var(--Accent) / 0.55);

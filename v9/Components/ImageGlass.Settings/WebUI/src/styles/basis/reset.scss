@@ -17,7 +17,7 @@ html {
   color: rgb(var(--AppText));
   accent-color: rgb(var(--Accent));
   overflow: hidden;
-  transition: background ease 300ms;
+  transition: background ease var(--transitionMs);
 }
 body {
   margin: 0;
@@ -57,7 +57,7 @@ kbd {
   background-color: rgb(var(--ControlBg) / 1);
   border: solid 1px rgb(var(--InvertColor) / 0.1);
   border-bottom-color: rgb(var(--InvertColor) / 0.1);
-  border-radius: var(--border-radius);
+  border-radius: var(--borderRadius);
   box-shadow: inset 0 -1px 0 rgb(var(--InvertColor) / 0.1);
 }
 
@@ -99,7 +99,7 @@ a,
 a:visited {
   display: inline-block;
   text-underline-position: under;
-  transition: background ease 200ms;
+  transition: background ease var(--transitionMs);
   color: rgb(var(--Accent));
   border-radius: 0.125em;
   padding: 0 0.125em 0.1em 0.125em;
@@ -122,7 +122,7 @@ a {
   &:active {
     background-color: rgb(var(--InvertColor) / 0.05);
     filter: brightness(0.95);
-    transition: background ease 80ms;
+    transition: background ease calc(var(--transitionMs) / 3);
   }
 }
 html[color-mode=light] a {

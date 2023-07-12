@@ -13,7 +13,7 @@
 
   overflow: auto;
   border: 0.1rem solid var(--ControlBorder);
-  border-radius: var(--border-radius);
+  border-radius: var(--borderRadius);
   min-height: 4rem;
   max-height: calc(200 * var(--fontScale) * 1px);
   max-width: 100%;

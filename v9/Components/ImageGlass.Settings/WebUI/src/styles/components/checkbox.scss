@@ -24,7 +24,8 @@
       left: 0;
       top: 0.1rem;
 
-      transition: background ease 100ms, border ease 100ms;
+      transition: background ease calc(var(--transitionMs) / 2),
+        border ease calc(var(--transitionMs) / 2);
     }
 
     &::before {

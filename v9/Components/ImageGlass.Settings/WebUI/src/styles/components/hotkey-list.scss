@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   align-items: center;
 
-  border-radius: var(--border-radius);
+  border-radius: var(--borderRadius);
   border: 0.1rem solid var(--ControlBorder);
   background-color: rgb(var(--ControlBg));
 
@@ -19,12 +19,12 @@
 
     &.hotkey-item {
       margin-right: 0.25rem;
-      min-height: calc(var(--control-height) * 1px);
+      min-height: calc(var(--controlHeight) * 1px);
 
       background-color: rgb(var(--AppBg) / 0.75);
       border: solid 0.1rem rgb(var(--InvertColor) / 0.15);
       border-bottom-color: rgb(var(--InvertColor) / 0.15);
-      border-radius: var(--border-radius);
+      border-radius: var(--borderRadius);
       box-shadow: inset 0 -0.1rem 0 rgb(var(--InvertColor) / 0.15);
 
       kbd {
@@ -39,7 +39,7 @@
         border-color: transparent;
         min-width: 0;
         max-height: 0;
-        min-height: calc(var(--control-height) * 0.75px);
+        min-height: calc(var(--controlHeight) * 0.75px);
         padding: 0.325em 0.25em;
         margin: 0.125em 0.25em 0.125em 0.125em;
         background-color: rgb(var(--InvertColor) / 0.05);
@@ -57,7 +57,8 @@
         &:active {
           background-color: rgb(var(--InvertColor) / 0.2);
           border-color: rgb(var(--Accent));
-          transition: background ease 80ms, border ease 80ms;
+          transition: background ease calc(var(--transitionMs) / 3),
+            border ease calc(var(--transitionMs) / 3);
         }
       }
     }

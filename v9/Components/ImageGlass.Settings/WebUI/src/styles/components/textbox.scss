@@ -40,7 +40,7 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 textarea {
-  --control-width: calc(410 * var(--fontScale));
+  --controlWidth: calc(410 * var(--fontScale));
 
   resize: none;
   min-height: 4em;

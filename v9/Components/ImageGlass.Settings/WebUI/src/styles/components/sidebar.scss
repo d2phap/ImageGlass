@@ -28,11 +28,13 @@ ul.ig-sidebar {
           align-items: center;
           position: relative;
           width: 100%;
-          min-height: var(--control-height);
+          min-height: var(--controlHeight);
           padding: 0.5rem 0.75rem;
           margin-bottom: 0.125rem;
-          border-radius: calc(var(--border-radius) * 1.25);
-          transition: background ease 200ms, border ease 200ms, color ease 200ms;
+          border-radius: calc(var(--borderRadius) * 1.25);
+          transition: background ease calc(var(--transitionMs) / 1.5),
+            border ease calc(var(--transitionMs) / 1.5),
+            color ease calc(var(--transitionMs) / 1.5);
 
           // active indicator
           &::before {
@@ -43,7 +45,9 @@ ul.ig-sidebar {
             background-color: rgb(var(--Accent));
             border-radius: 2rem;
             opacity: 0;
-            transition: background ease 300ms, border ease 300ms, color ease 300ms;
+            transition: background ease var(--transitionMs),
+              border ease 300ms,
+              color ease 300ms;
 
             position: absolute;
             left: 0;
@@ -63,7 +67,9 @@ ul.ig-sidebar {
 
         &:active+* {
           background-color: rgb(var(--InvertColor) / 0.1);
-          transition: background ease 80ms, border ease 80ms, color ease 80ms;
+          transition: background ease calc(var(--transitionMs) / 3),
+            border ease calc(var(--transitionMs) / 3),
+            color ease calc(var(--transitionMs) / 3);
         }
 
 

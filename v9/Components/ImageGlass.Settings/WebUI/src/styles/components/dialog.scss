@@ -2,12 +2,15 @@ dialog {
   padding: 0;
   overflow: hidden;
   border-color: rgb(var(--InvertColor) / 0.275);
-  border-radius: calc(var(--border-radius) * 3.5);
+  border-radius: calc(var(--borderRadius) * 3.5);
 
   color: rgb(var(--AppText) / 1);
   background-color: rgb(var(--AppBg) / 1);
   box-shadow: 0 1rem 3rem -0.5rem rgba(0, 0, 0, 0.4);
-  transition: background ease 80ms, border ease 80ms, color ease 80ms, box-shadow ease 80ms;
+  transition: background ease calc(var(--transitionMs) / 3),
+    border ease calc(var(--transitionMs) / 3),
+    color ease calc(var(--transitionMs) / 3),
+    box-shadow ease calc(var(--transitionMs) / 3);
 
   &::backdrop {
     position: fixed;
@@ -24,7 +27,7 @@ dialog {
   .dialog-header {
     padding: 0.5rem 1rem;
     background-color: rgb(var(--Accent) / 0.075);
-    transition: background ease 150ms;
+    transition: background ease calc(var(--transitionMs) / 1.3);
   }
 
   .dialog-footer {
@@ -33,7 +36,7 @@ dialog {
     display: flex;
     align-items: center;
     justify-content: end;
-    transition: background ease 150ms;
+    transition: background ease calc(var(--transitionMs) / 1.3);
 
     &> button {
       min-width: calc(6.5rem * var(--fontScale));

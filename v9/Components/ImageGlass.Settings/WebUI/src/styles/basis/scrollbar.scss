@@ -1,7 +1,7 @@
 
 ::-webkit-scrollbar {
-  width: var(--scrollBarSize-px);
-  height: var(--scrollBarSize-px);
+  width: var(--scrollbarSizePx);
+  height: var(--scrollbarSizePx);
   background: transparent;
   border-radius: 1px;
   cursor: pointer;
@@ -17,17 +17,17 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: rgb(var(--AppText) / 0.3);
-  border-radius: var(--scrollBarSize-px);
+  border-radius: var(--scrollbarSizePx);
   border-color: transparent;
   border-style: solid;
-  border-width: calc((var(--scrollBarSize-px) / 2) - 1px);
+  border-width: calc((var(--scrollbarSizePx) / 2) - 1px);
   background-clip: padding-box;
   cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  border-width: calc((var(--scrollBarSize-px) / 3) - 1px);
-  border-radius: calc(var(--scrollBarSize-px) / 3);
+  border-width: calc((var(--scrollbarSizePx) / 3) - 1px);
+  border-radius: calc(var(--scrollbarSizePx) / 3);
   background-color: rgb(var(--AppText) / 0.35);
 }
 

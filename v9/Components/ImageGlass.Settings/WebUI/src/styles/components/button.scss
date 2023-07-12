@@ -1,5 +1,5 @@
 button {
-  --control-width: none;
+  --controlWidth: none;
   @include baseControl();
 
   overflow: hidden;
@@ -47,19 +47,21 @@ button {
   &[type=submit]:active {
     background-color: rgb(var(--ControlBgPressed));
     border-color: rgb(var(--Accent));
-    transition: background ease 80ms, border ease 80ms, shadow ease 80ms;
-  }
+    transition: background ease calc(var(--transitionMs) / 3),
+      border ease calc(var(--transitionMs) / 3),
+      box-shadow ease calc(var(--transitionMs) / 3);
+    }
 
 
   // color picker button
   &.color-picker {
-    --color-margin-px: calc(var(--control-height) * 0.2px);
+    --color-margin-px: calc(var(--controlHeight) * 0.2px);
     padding: 0 0.5em;
 
     .color-display,
     .color-checkerboard {
       display: block;
-      border-radius: calc(var(--border-radius) / 2);
+      border-radius: calc(var(--borderRadius) / 2);
       padding: 0.125em 0.75em;
 
       position: absolute;

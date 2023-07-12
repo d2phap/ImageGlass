@@ -5,13 +5,15 @@
   margin-bottom: 0;
   padding: 0.5rem;
   border: 0.1rem solid var(--ControlBorder);
-  border-radius: var(--border-radius);
+  border-radius: var(--borderRadius);
   background-color: rgb(var(--ControlBg) / 0.5);
 
   &> li {
     padding: 0.5rem;
-    border-radius: var(--border-radius);
-    transition: background ease 200ms, border ease 200ms, color ease 200ms;
+    border-radius: var(--borderRadius);
+    transition: background ease calc(var(--transitionMs) / 3),
+      border ease calc(var(--transitionMs) / 3),
+      color ease calc(var(--transitionMs) / 3);
 
     &:hover {
       background-color: rgb(var(--InvertColor) / 0.1);

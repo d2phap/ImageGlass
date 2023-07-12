@@ -8,7 +8,7 @@ details {
     margin-bottom: 0.5em;
     border-radius: 0.125em;
     padding: 0 0.125em 0.1em 0.125em;
-    transition: background ease 300ms, color ease 300ms;
+    transition: background ease var(--transitionMs), color ease var(--transitionMs);
 
     & > * {
       display: inline;
@@ -37,7 +37,8 @@ details {
     &:active {
       background-color: rgb(var(--InvertColor) / 0.05);
       filter: brightness(0.95);
-      transition: background ease 80ms, color ease 80ms;
+      transition: background ease calc(var(--transitionMs) / 3),
+        color ease calc(var(--transitionMs) / 3);
     }
   }
 

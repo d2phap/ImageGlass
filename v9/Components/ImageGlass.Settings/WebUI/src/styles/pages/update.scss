@@ -54,7 +54,7 @@
 
   .icon {
     font-size: 2.5rem;
-    transition: all ease 300ms;
+    transition: all ease var(--transitionMs);
     position: absolute;
     top: 0;
     left: 0;
