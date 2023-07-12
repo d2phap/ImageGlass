@@ -38,11 +38,9 @@ if (!window._pageSettings) {
   };
 }
 _page.loadSettings = Settings.load;
+_page.setActiveMenu = Sidebar.setActiveMenu;
 _page.loadBackgroundColorConfig = TabAppearance.loadBackgroundColorConfig;
 
 
 // sidebar
 Sidebar.addEvents();
-
-// load the last open tab
-Sidebar.setActiveMenu(_pageSettings.initTab);

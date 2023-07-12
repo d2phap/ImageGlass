@@ -1,9 +1,3 @@
-import Language from '@/common/Language';
-import Settings from '@/FrmSettings/Settings';
-import Sidebar from '@/FrmSettings/Sidebar';
-import TabAppearance from '@/FrmSettings/TabAppearance';
-import TabLanguage from '@/FrmSettings/TabLanguage';
-
 export type ILanguage = {
   FileName: string,
   Metadata: Record<string, any> & {
@@ -42,7 +36,6 @@ export type ITheme = {
 };
 
 export type IPageSettings = Record<string, any> & {
-  initTab: string,
   config: Record<string, any>,
   langList: ILanguage[],
   toolList: ITool[],
@@ -70,10 +63,4 @@ export type IPageSettings = Record<string, any> & {
     Moon: string,
   },
   FILE_MACRO: string;
-
-  // global functions
-  setSidebarActiveMenu?: typeof Sidebar.setActiveMenu,
-  loadSettings?: typeof Settings.load,
-  loadLanguageList?: typeof TabLanguage.loadLanguageList,
-  loadBackgroundColorConfig?: typeof TabAppearance.loadBackgroundColorConfig;
 };

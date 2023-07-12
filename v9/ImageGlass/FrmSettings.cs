@@ -99,7 +99,6 @@ public partial class FrmSettings : WebForm
 
         await Web2.ExecuteScriptAsync(@$"
             window._pageSettings = {{
-                initTab: '{Local.LastOpenedSetting}',
                 startUpDir: '{startupDir}',
                 configDir: '{configDir}',
                 userConfigFilePath: '{userConfigFilePath}',
@@ -115,6 +114,7 @@ public partial class FrmSettings : WebForm
 
             window._page.loadSettings();
             window._page.loadLanguage();
+            window._page.setActiveMenu('{Local.LastOpenedSetting}');
         ");
     }
 
