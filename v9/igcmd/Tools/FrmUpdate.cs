@@ -67,15 +67,43 @@ public partial class FrmUpdate : WebForm
     {
         await base.OnWeb2NavigationCompleted();
 
+
+        // show loading status
+        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+        await Web2.ExecuteScriptAsync(@$"
+            window._page.loadData({{
+                CurrentVersion: '{App.Version} ({archInfo})',
+            }});
+
+            document.documentElement.setAttribute('app-status', 'checking');
+        ");
+
+
         // check for update
         await _updater.GetUpdatesAsync();
         await Task.Delay(1000);
 
+
         // show result
         var status = _updater.HasNewUpdate ? "outdated" : "updated";
-        await Web2.ExecuteScriptAsync($"""
+        var newVersion = _updater.CurrentReleaseInfo?.Version ?? "";
+        var releasedDate = _updater.CurrentReleaseInfo?.PublishedDate.ToString(Constants.DATETIME_FORMAT) ?? "";
+        var releaseTitle = _updater.CurrentReleaseInfo?.Title ?? "";
+        var releaseLink = _updater.CurrentReleaseInfo?.ChangelogUrl.ToString() ?? "";
+        var releaseDetails = _updater.CurrentReleaseInfo?.Description?.Replace("\r\n", "<br/>") ?? "";
+
+        await Web2.ExecuteScriptAsync(@$"
+            window._page.loadData({{
+                CurrentVersion: '{App.Version} ({archInfo})',
+                LatestVersion: '{newVersion}',
+                PublishedDate: '{releasedDate}',
+                ReleaseTitle: '{releaseTitle}',
+                ReleaseLink: '{releaseLink}',
+                ReleaseDetails: `{releaseDetails}`,
+            }});
+
             document.documentElement.setAttribute('app-status', '{status}');
-        """);
+        ");
     }
 
 
@@ -99,52 +127,5 @@ public partial class FrmUpdate : WebForm
 
     #endregion // Protected / override methods
 
-
-
-
-    private IEnumerable<(string Variable, string Value)> OnWebTemplateParsing()
-    {
-        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
-        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
-        var msStoreBadge = Encoding.UTF8.GetString(ImageGlass.Settings.Properties.Resources.MsStoreBadge);
-
-        var newVersion = _updater.CurrentReleaseInfo?.Version ?? "";
-        var releasedDate = _updater.CurrentReleaseInfo?.PublishedDate.ToString(Constants.DATETIME_FORMAT) ?? "";
-        var releaseTitle = _updater.CurrentReleaseInfo?.Title ?? "";
-        var releaseLink = _updater.CurrentReleaseInfo?.ChangelogUrl.ToString() ?? "";
-        var releaseDetails = _updater.CurrentReleaseInfo?.Description?.Replace("\r\n", "<br/>") ?? "";
-
-
-        return new List<(string Variable, string Value)>
-        {
-            ("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
-            ("{{AppCode}}", Constants.APP_CODE),
-            ("{{MsStoreBadge}}", msStoreBadge),
-
-            ("{{ReleaseTitle}}", releaseTitle),
-            ("{{ReleaseLink}}", releaseLink),
-            ("{{ReleaseDetails}}", releaseDetails),
-
-            // language
-            ("{{_StatusChecking}}", Config.Language[$"{nameof(FrmUpdate)}._StatusChecking"]),
-            ("{{_StatusUpdated}}", Config.Language[$"{nameof(FrmUpdate)}._StatusUpdated"]),
-            ("{{_StatusOutdated}}", Config.Language[$"{nameof(FrmUpdate)}._StatusOutdated"]),
-
-            ("{{_CurrentVersion}}", string.Format(
-                Config.Language[$"{nameof(FrmUpdate)}._CurrentVersion"],
-                $"{App.Version} ({archInfo})")),
-
-            ("{{_LatestVersion}}", string.Format(
-                Config.Language[$"{nameof(FrmUpdate)}._LatestVersion"],
-                $"{newVersion} ({archInfo})")),
-
-            ("{{_PublishedDate}}", string.Format(
-                Config.Language[$"{nameof(FrmUpdate)}._PublishedDate"],
-                releasedDate)),
-
-            ("{{_Update}}", Config.Language[$"_._Update"]),
-            ("{{_Close}}", Config.Language[$"_._Close"]),
-        };
-    }
 
 }

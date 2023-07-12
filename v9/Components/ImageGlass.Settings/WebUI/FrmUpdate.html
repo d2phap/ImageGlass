@@ -18,38 +18,47 @@
 
     <main>
       <h1 class="mt-0 text-accent">
-        <span class="status--checking">{{_StatusChecking}}</span>
-        <span class="status--updated">{{_StatusUpdated}}</span>
-        <span class="status--outdated">{{_StatusOutdated}}</span>
+        <span class="status--checking" lang-text="FrmUpdate._StatusChecking">[Checking for update…]</span>
+        <span class="status--updated" lang-text="FrmUpdate._StatusUpdated">[You are using the latest version!]</span>
+        <span class="status--outdated" lang-text="FrmUpdate._StatusOutdated">[A new update is available!]</span>
       </h1>
 
       <p>
-      <div>{{_CurrentVersion}}</div>
       <div>
-        <span class="status--updated status--outdated">
-          {{_LatestVersion}}
+        <span lang-html="FrmUpdate._CurrentVersion">
+          [Current version:]
+          <span id="Lbl_CurrentVersion">[9.0.0.0]</span>
         </span>
       </div>
       <div>
-        <span class="status--updated status--outdated">
-          {{_PublishedDate}}
+        <span class="status--updated status--outdated" lang-html="FrmUpdate._LatestVersion">
+          [Latest version:]
+          <span id="LbL_LatestVersion" class="ms-1">[9.0.0.0]</span>
+        </span>
+      </div>
+      <div>
+        <span class="status--updated status--outdated" lang-html="FrmUpdate._PublishedDate">
+          [Published date:]
+          <span id="Lbl_PublishedDate" class="ms-1">[2023/01/01]</span>
         </span>
       </div>
       </p>
 
       <p>
-        <button id="BtnImageGlassStore">{{MsStoreBadge}}</button>
+        <button id="BtnImageGlassStore">
+          <img src="./img/MsStoreBadge.svg" />
+        </button>
       </p>
 
 
       <h2>
-        <a class="status--updated status--outdated" target="_blank" href="{{ReleaseLink}}">
-          {{ReleaseTitle}}
+        <a id="Lnk_ReleaseLink" class="status--updated status--outdated" target="_blank" href="[ReleaseLink]">
+          [ReleaseTitle]
         </a>
       </h2>
       <div>
-        <span class="status--updated status--outdated">
-          {{ReleaseDetails}}
+        <span id="Section_ReleaseDetails" class="status--updated status--outdated">
+          [ReleaseDetails]
         </span>
       </div>
       <br />
@@ -58,8 +67,8 @@
 
 
   <footer class="panel">
-    <button id="BtnUpdate" type="submit">{{_Update}}</button>
-    <button id="BtnClose">{{_Close}}</button>
+    <button id="BtnUpdate" type="submit" lang-text="_._Update">[Update]</button>
+    <button id="BtnClose" lang-text="_._Close">[Close]</button>
   </footer>
 
   <script src="./dist/FrmUpdate.js"></script>

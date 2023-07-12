@@ -118,7 +118,12 @@ internal static class Program
 
             if (updater.HasNewUpdate || showIfNewUpdate.Value)
             {
-                _ = BHelper.RunIgcmd(IgCommands.CHECK_FOR_UPDATE);
+                var configArgs = 
+                    $"/{nameof(Config.DarkTheme)}=\"{Config.DarkTheme}\" " +
+                    $"/{nameof(Config.LightTheme)}=\"{Config.LightTheme}\" " +
+                    $"/{nameof(Config.Language)}=\"{Config.Language.FileName}\" ";
+
+                _ = BHelper.RunIgcmd(@$"{IgCommands.CHECK_FOR_UPDATE} {configArgs}");
             }
         });
     }
