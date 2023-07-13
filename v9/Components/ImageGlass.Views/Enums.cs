@@ -116,3 +116,18 @@ public enum AnimatorSource
     GifAnimator,
     ImageAnimator,
 }
+
+
+public static class Web2BackendMsgNames
+{
+    public static string SET_HTML => "SET_HTML";
+    public static string SET_IMAGE => "SET_IMAGE";
+
+}
+
+
+public static class Web2FrontendMsgNames
+{
+    public static string ZOOM_CHANGED => "ZOOM_CHANGED";
+
+}

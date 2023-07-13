@@ -26,6 +26,7 @@ namespace ImageGlass.Viewer;
 
 public partial class DXCanvas
 {
+    private bool _isWeb2NavigationDone = false;
     private bool _useWebview2 = false;
     private Web2? _web2 = null;
 
@@ -73,6 +74,12 @@ public partial class DXCanvas
     #endregion // Properties
 
 
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> navigation is completed
+    /// </summary>
+    public event EventHandler<EventArgs> Web2NavigationCompleted;
+
+
     // Private methods
     #region Private methods
 
@@ -88,6 +95,7 @@ public partial class DXCanvas
         }
 
         _web2 = new Web2();
+        _isWeb2NavigationDone = false;
 
         ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
         SuspendLayout();
@@ -99,9 +107,12 @@ public partial class DXCanvas
         Web2.Dock = DockStyle.Fill;
         Web2.ZoomFactor = 1D;
         Web2.Visible = true;
-        Web2.Web2KeyDown += Web2_Web2KeyDown;
+
+        Web2.Web2Ready += Web2_Web2Ready;
+        Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
-        
+        Web2.Web2KeyDown += Web2_Web2KeyDown;
+
 
         try
         {
@@ -127,6 +138,8 @@ public partial class DXCanvas
     {
         Controls.Remove(_web2);
 
+        _web2.Web2Ready -= Web2_Web2Ready;
+        _web2.Web2NavigationCompleted -= Web2_Web2NavigationCompleted;
         _web2.Web2KeyDown -= Web2_Web2KeyDown;
         _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
         _web2?.Dispose();
@@ -140,6 +153,20 @@ public partial class DXCanvas
     // Web2 events
     #region Web2 events
 
+    private void Web2_Web2Ready(object? sender, EventArgs e)
+    {
+        var htmlFilePath = App.StartUpDir(Dir.WebUI, "DXCanvas_Webview2.html");
+        Web2.CoreWebView2.Navigate(htmlFilePath);
+    }
+
+
+    private void Web2_Web2NavigationCompleted(object? sender, EventArgs e)
+    {
+        _isWeb2NavigationDone = true;
+        Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
+    }
+
+
     private void Web2_Web2KeyDown(object? sender, KeyEventArgs e)
     {
         this.OnKeyDown(e);
@@ -148,7 +175,18 @@ public partial class DXCanvas
 
     private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
-        
+        if (e.Name == Web2FrontendMsgNames.ZOOM_CHANGED)
+        {
+            _ = float.TryParse(e.Data, out _zoomFactor);
+            OnZoomChanged?.Invoke(this, new ZoomEventArgs()
+            {
+                ZoomFactor = _zoomFactor,
+                IsManualZoom = false,
+                IsZoomModeChange = false,
+                IsPreviewingImage = false,
+                ChangeSource = ZoomChangeSource.Unknown,
+            });
+        }
     }
 
     #endregion // Web2 events
@@ -156,80 +194,60 @@ public partial class DXCanvas
 
 
 
-    /// <summary>
-    /// Loads the file into <see cref="WebView2"/>.
-    /// </summary>
-    public async Task SetImageUsingWebview2Async(string filePath, CancellationToken token)
-    {
-        var textContent = await File.ReadAllTextAsync(filePath, token);
 
+    /// <summary>
+    /// Updates language of <see cref="Web2"/>.
+    /// </summary>
+    public async Task LoadWeb2LanguageAsync(string langJson)
+    {
+        await Web2.ExecuteScriptAsync($"""
+            window._page.lang = {langJson};
+            window._page.loadLanguage();
+        """);
+    }
+
+
+    /// <summary>
+    /// Loads the image file into <see cref="Web2"/>.
+    /// </summary>
+    public async Task SetImageWeb2Async(string? filePath, CancellationToken token = default)
+    {
         try
         {
-            while (!IsWeb2Ready)
+            string dataJson;
+            string msgName;
+
+            // if image file is SVG, we read its content
+            if (!string.IsNullOrWhiteSpace(filePath)
+                && filePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase))
             {
-                await Task.Delay(100, token);
+                var textContent = await File.ReadAllTextAsync(filePath, token);
+                dataJson = BHelper.ToJson(textContent);
+                msgName = Web2BackendMsgNames.SET_HTML;
+            }
+            else
+            {
+                dataJson = BHelper.ToJson(filePath);
+                msgName = Web2BackendMsgNames.SET_IMAGE;
+            }
+
+
+            // wait for the Web2 navigation is completed
+            while (!_isWeb2NavigationDone)
+            {
+                await Task.Delay(10, token);
             }
 
             token.ThrowIfCancellationRequested();
 
-
-            var html = $$"""
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                </head>
-                <body>
-                    {{textContent}}
-
-                    <script>
-                        window.onkeydown = (e) => {
-                            e.preventDefault();
-                
-                            const ctrl = e.ctrlKey ? 'ctrl' : '';
-                            const shift = e.shiftKey ? 'shift' : '';
-                            const alt = e.altKey ? 'alt' : '';
-
-                            let key = e.key.toLowerCase();
-                            const keyMaps = {
-                                control: '',
-                                shift: '',
-                                alt: '',
-                                arrowleft: 'left',
-                                arrowright: 'right',
-                                arrowup: 'up',
-                                arrowdown: 'down',
-                                backspace: 'back',
-                            };
-                            if (keyMaps[key] !== undefined) {
-                                key = keyMaps[key];
-                            }
-
-                            const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
-
-                            console.log('KEYDOWN', keyCombo);
-                            window.chrome.webview?.postMessage({ Name: 'KEYDOWN', Data: keyCombo });
-                        }
-                    </script>
-                </body>
-                </html>
-                """;
-
-            Web2.CoreWebView2.NavigateToString(html);
+            Web2.PostWeb2Message(msgName, dataJson);
         }
         catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException) { }
         catch (Exception ex)
         {
-            Web2.CoreWebView2.Navigate("about:blank");
-            UseWebview2 = false;
-
-            if (ex.Message.Contains("does not fall within the expected range"))
-            {
-                throw new InvalidDataException($"The content of '{filePath}' file is not valid", ex);
-            }
-            else throw ex;
+            throw ex;
         }
     }
+
 
 }

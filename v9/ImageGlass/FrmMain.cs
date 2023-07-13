@@ -1015,7 +1015,7 @@ public partial class FrmMain : ThemedForm
 
             try
             {
-                await PicMain.SetImageUsingWebview2Async(e.FilePath, _loadCancelTokenSrc.Token);
+                await PicMain.SetImageWeb2Async(e.FilePath, _loadCancelTokenSrc.Token);
             }
             catch (Exception ex) { error = ex; }
         }

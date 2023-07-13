@@ -84,6 +84,7 @@ public partial class FrmMain
         _ = HandlePicMainDragDropAsync(e);
     }
 
+
     private async Task HandlePicMainDragDropAsync(DragEventArgs e)
     {
         // Drag file from DESKTOP to APP
@@ -379,10 +380,12 @@ public partial class FrmMain
         _ = ViewNextCancellableAsync(-1);
     }
 
+
     private void PicMain_OnNavRightClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextCancellableAsync(1);
     }
+
 
     private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
@@ -393,6 +396,13 @@ public partial class FrmMain
         }
 
         LoadImageInfo(ImageInfoUpdateTypes.Zoom);
+    }
+
+
+    private void PicMain_Web2NavigationCompleted(object sender, EventArgs e)
+    {
+        WebUI.UpdateLangJson();
+        _ = PicMain.LoadWeb2LanguageAsync(WebUI.LangJson);
     }
 
 }
