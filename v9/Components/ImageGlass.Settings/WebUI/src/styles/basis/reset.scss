@@ -4,11 +4,10 @@
   box-sizing: border-box;
   -webkit-user-select: none;
   user-select: none;
-
-  &:not([draggable]) {
-    -webkit-user-drag: none;
-    user-drag: none;
-  }
+}
+*:not([draggable]) {
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 html {

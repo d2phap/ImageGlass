@@ -11,7 +11,6 @@ const pkJson = require('./package.json');
 
 const configs = {
   entry: {
-    main: './src/main.ts',
     FrmSettings: './src/FrmSettings.ts',
     FrmAbout: './src/FrmAbout.ts',
     FrmUpdate: './src/FrmUpdate.ts',

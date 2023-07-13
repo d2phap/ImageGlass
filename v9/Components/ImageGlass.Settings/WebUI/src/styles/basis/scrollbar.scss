@@ -3,34 +3,31 @@
   width: var(--scrollbarSizePx);
   height: var(--scrollbarSizePx);
   background: transparent;
-  border-radius: 1px;
+  background-color: rgb(0 0 0 / 0.85);
   cursor: pointer;
-
-  &:hover {
-    border-color: rgb(var(--InvertColor) / 0.05);
-    background-color: rgb(var(--AppText) / 0.1);
-  }
-  &:active {
-    background-color: rgb(var(--AppText) / 0.125);
+}
+html[color-mode=light] {
+  ::-webkit-scrollbar {
+    background-color: rgb(0 0 0 / 0.05);
   }
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--AppText) / 0.3);
-  border-radius: var(--scrollbarSizePx);
+  background-color: rgb(var(--AppText) / 0.45);
+  border-radius: 0.35rem;
   border-color: transparent;
   border-style: solid;
-  border-width: calc((var(--scrollbarSizePx) / 2) - 1px);
+  border-width: calc((var(--scrollbarSizePx) / 2.25) - 1px);
   background-clip: padding-box;
   cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  border-width: calc((var(--scrollbarSizePx) / 3) - 1px);
-  border-radius: calc(var(--scrollbarSizePx) / 3);
-  background-color: rgb(var(--AppText) / 0.35);
+  border-width: calc((var(--scrollbarSizePx) / 3.25) - 1px);
+  border-radius: calc(var(--scrollbarSizePx) / 3.5);
+  background-color: rgb(var(--AppText) / 0.5);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background-color: rgb(var(--AppText) / 0.5);
+  background-color: rgb(var(--AppText) / 0.55);
 }
