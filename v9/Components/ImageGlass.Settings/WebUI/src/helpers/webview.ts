@@ -18,7 +18,7 @@ export class Webview {
       const eName = data?.Name ?? '';
       const eData = data?.Data ?? '';
       const handler = this.eventHandlers[eName];
-      const hasHandler = !!handler;
+      const hasHandler = handler !== undefined;
 
       console.info(`🎈 Received event '${eName}' (handler=${hasHandler}) with data:`, eData);
 

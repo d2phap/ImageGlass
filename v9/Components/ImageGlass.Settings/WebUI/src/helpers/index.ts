@@ -135,7 +135,6 @@ export const openModalDialog = async (
     isSubmitted = true;
   });
 
-  console.log(data);
   Object.keys(data).forEach(key => {
     const inputEl = query<HTMLInputElement>(`${selector} [name="_${key}"]`);
     if (inputEl) inputEl.value = data[key];
