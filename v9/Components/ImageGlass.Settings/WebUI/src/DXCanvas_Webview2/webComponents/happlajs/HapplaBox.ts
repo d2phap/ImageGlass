@@ -88,8 +88,8 @@ export class HapplaBox {
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onPointerUp = this.onPointerUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
+    // this.onKeyDown = this.onKeyDown.bind(this);
+    // this.onKeyUp = this.onKeyUp.bind(this);
 
     // create content DOM observer
     this.#contentDOMObserver = new MutationObserver(this.onContentElDOMChanged);
@@ -216,68 +216,68 @@ export class HapplaBox {
     this.options.onAfterPanned(this.domMatrix.e, this.domMatrix.f);
   }
 
-  private onKeyDown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowLeft':
-        this.arrowLeftDown = true;
-        if (!this.isMoving) {
-          this.isMoving = true;
-          this.startMoving();
-        }
-        break;
-      case 'ArrowUp':
-        this.arrowUpDown = true;
-        if (!this.isMoving) {
-          this.isMoving = true;
-          this.startMoving();
-        }
-        break;
-      case 'ArrowRight':
-        this.arrowRightDown = true;
-        if (!this.isMoving) {
-          this.isMoving = true;
-          this.startMoving();
-        }
-        break;
-      case 'ArrowDown':
-        this.arrowDownDown = true;
-        if (!this.isMoving) {
-          this.isMoving = true;
-          this.startMoving();
-        }
-        break;
-      default:
-        break;
-    }
-  }
+  // private onKeyDown(event: KeyboardEvent) {
+  //   switch (event.key) {
+  //     case 'ArrowLeft':
+  //       this.arrowLeftDown = true;
+  //       if (!this.isMoving) {
+  //         this.isMoving = true;
+  //         this.startMoving();
+  //       }
+  //       break;
+  //     case 'ArrowUp':
+  //       this.arrowUpDown = true;
+  //       if (!this.isMoving) {
+  //         this.isMoving = true;
+  //         this.startMoving();
+  //       }
+  //       break;
+  //     case 'ArrowRight':
+  //       this.arrowRightDown = true;
+  //       if (!this.isMoving) {
+  //         this.isMoving = true;
+  //         this.startMoving();
+  //       }
+  //       break;
+  //     case 'ArrowDown':
+  //       this.arrowDownDown = true;
+  //       if (!this.isMoving) {
+  //         this.isMoving = true;
+  //         this.startMoving();
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
-  private onKeyUp(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowLeft':
-        this.arrowLeftDown = false;
-        break;
-      case 'ArrowUp':
-        this.arrowUpDown = false;
-        break;
-      case 'ArrowRight':
-        this.arrowRightDown = false;
-        break;
-      case 'ArrowDown':
-        this.arrowDownDown = false;
-        break;
-      default:
-        break;
-    }
+  // private onKeyUp(event: KeyboardEvent) {
+  //   switch (event.key) {
+  //     case 'ArrowLeft':
+  //       this.arrowLeftDown = false;
+  //       break;
+  //     case 'ArrowUp':
+  //       this.arrowUpDown = false;
+  //       break;
+  //     case 'ArrowRight':
+  //       this.arrowRightDown = false;
+  //       break;
+  //     case 'ArrowDown':
+  //       this.arrowDownDown = false;
+  //       break;
+  //     default:
+  //       break;
+  //   }
 
-    if ([
-      this.arrowLeftDown,
-      this.arrowUpDown,
-      this.arrowRightDown,
-      this.arrowDownDown,
-    ].every((keyDown) => !keyDown)) {
-      this.stopMoving();
-    }
-  }
+  //   if ([
+  //     this.arrowLeftDown,
+  //     this.arrowUpDown,
+  //     this.arrowRightDown,
+  //     this.arrowDownDown,
+  //   ].every((keyDown) => !keyDown)) {
+  //     this.stopMoving();
+  //   }
+  // }
 
   private dpi(value: number) {
     return value / this.options.scaleRatio;
@@ -392,6 +392,8 @@ export class HapplaBox {
 
   // #region Public functions
   public async loadHtmlContent(html: string) {
+    await this.zoomTo(0.01);
+
     this.#isContentElDOMChanged = false;
     this.contentEl.innerHTML = html;
 
@@ -456,7 +458,7 @@ export class HapplaBox {
     this.zoomToPoint(factor, { x, y, duration });
   }
 
-  public async applyTransform(duration: number = 0) {
+  public async applyTransform(duration = 0) {
     await new Promise((resolve) => {
       this.contentEl.style.transform = `${this.domMatrix.toString()}`;
 
@@ -493,8 +495,8 @@ export class HapplaBox {
     this.boxEl.addEventListener('pointerleave', this.onPointerUp);
     this.boxEl.addEventListener('pointermove', this.onPointerMove);
 
-    this.boxEl.addEventListener('keydown', this.onKeyDown);
-    this.boxEl.addEventListener('keyup', this.onKeyUp);
+    // this.boxEl.addEventListener('keydown', this.onKeyDown);
+    // this.boxEl.addEventListener('keyup', this.onKeyUp);
   }
 
   public disable() {
@@ -508,8 +510,8 @@ export class HapplaBox {
     this.boxEl.removeEventListener('pointerleave', this.onPointerUp);
     this.boxEl.removeEventListener('pointermove', this.onPointerMove);
 
-    this.boxEl.removeEventListener('keydown', this.onKeyDown);
-    this.boxEl.removeEventListener('keyup', this.onKeyUp);
+    // this.boxEl.removeEventListener('keydown', this.onKeyDown);
+    // this.boxEl.removeEventListener('keyup', this.onKeyUp);
   }
   // #endregion
 }
