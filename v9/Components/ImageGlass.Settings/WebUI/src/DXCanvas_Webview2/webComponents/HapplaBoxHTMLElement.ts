@@ -16,6 +16,10 @@ const styles = `
     width: 100vw;
     height: 100vh;
   }
+  .happlabox-container:focus,
+  .happlabox-container:focus-visible {
+    outline: none;
+  }
 
   :host([checkerboard=true i]) .happlabox-container {
     background-size: 1.5rem 1.5rem;
@@ -138,6 +142,22 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     this.#wrapperEl.style.opacity = '0';
 
     await this.#box.loadHtmlContent(html);
+
+    // fixed sixe of SVG
+    const svgEls = Array.from(this.#contentEl.querySelectorAll('svg:not([width]), svg:not([height])'));
+    svgEls.forEach((svgEl: SVGMarkerElement) => {
+      const { width, height } = svgEl.viewBox.baseVal;
+
+      if (width === 0 || height === 0) {
+        svgEl.style.width = '100vw';
+        svgEl.style.height = '100vw';
+      }
+      else {
+        svgEl.setAttribute('width', width.toString());
+        svgEl.setAttribute('height', height.toString());
+      }
+    });
+
     await this.setZoomMode(zoomMode);
 
     this.#wrapperEl.style.opacity = '1';
