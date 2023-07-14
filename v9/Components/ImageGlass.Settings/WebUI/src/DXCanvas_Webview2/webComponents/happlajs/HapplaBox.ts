@@ -1,7 +1,6 @@
 import merge from 'lodash.merge';
-import { IHapplaBoxOptions, InterpolationMode, IPadding } from './HapplaBoxTypes';
+import { IHapplaBoxOptions, InterpolationMode, IPadding, ZoomMode } from './HapplaBoxTypes';
 import { pause } from '@/helpers';
-
 
 export class HapplaBox {
   private contentEl: HTMLElement;
@@ -9,9 +8,11 @@ export class HapplaBox {
   private domMatrix: DOMMatrix;
   private isPointerDown = false;
 
-  #isContentElDOMChanged = false;
   #contentDOMObserver: MutationObserver;
   #resizeObserver: ResizeObserver;
+
+  #isContentElDOMChanged = false;
+  #isManualZoom = false;
 
   private animationFrame: number;
   private isMoving = false;
@@ -168,7 +169,7 @@ export class HapplaBox {
     const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
     const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
 
-    this.zoomDistance(delta, e.clientX, e.clientY);
+    this.zoomDistance(delta, e.clientX, e.clientY, true);
   }
 
   private onPointerDown(e: PointerEvent) {
@@ -310,10 +311,14 @@ export class HapplaBox {
     this.applyTransform();
   }
 
-  private zoomDistance(delta: number, dx?: number, dy?: number, duration?: number) {
-    if (!this.options.allowZoom) {
-      return;
-    }
+  private zoomDistance(
+    delta: number,
+    dx?: number,
+    dy?: number,
+    isManualZoom = false,
+    duration: number = 0,
+  ) {
+    if (!this.options.allowZoom) return;
 
     // update the current zoom factor
     this.options.zoomFactor = this.domMatrix.a;
@@ -322,7 +327,13 @@ export class HapplaBox {
     const newZoom = oldZoom * delta;
 
     // raise event onBeforeZoomChanged
-    this.options.onBeforeZoomChanged(this.zoomFactor, this.domMatrix.e, this.domMatrix.f);
+    this.options.onBeforeZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom,
+      isZoomModeChanged: false,
+    });
 
     // restrict the zoom factor
     this.options.zoomFactor = Math.min(
@@ -353,7 +364,13 @@ export class HapplaBox {
       .multiplySelf(this.domMatrix);
 
     // raise event onAfterZoomChanged
-    this.options.onAfterZoomChanged(this.zoomFactor, this.domMatrix.e, this.domMatrix.f);
+    this.options.onAfterZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom,
+      isZoomModeChanged: false,
+    });
 
 
     this.updateImageRendering();
@@ -392,7 +409,7 @@ export class HapplaBox {
 
   // #region Public functions
   public async loadHtmlContent(html: string) {
-    await this.zoomTo(0.01);
+    await this.zoomTo(0.01, { isManualZoom: false });
 
     this.#isContentElDOMChanged = false;
     this.contentEl.innerHTML = html;
@@ -419,30 +436,53 @@ export class HapplaBox {
     await this.applyTransform(duration);
   }
 
-  public async zoomToPoint(factor: number, options: { x?: number, y?: number, duration?: number }) {
-    // restrict the zoom factor
-    this.options.zoomFactor = Math.min(
-      Math.max(this.options.minZoom, this.dpi(factor)),
-      this.options.maxZoom,
-    );
+  public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {
+    const fullW = this.contentEl.scrollWidth / this.scaleRatio;
+    const fullH = this.contentEl.scrollHeight / this.scaleRatio;
+    const horizontalPadding = this.padding.left + this.padding.right;
+    const verticalPadding = this.padding.top + this.padding.bottom;
+    const widthScale = (this.boxEl.clientWidth - horizontalPadding) / fullW;
+    const heightScale = (this.boxEl.clientHeight - verticalPadding) / fullH;
+    let zoomFactor = 1;
 
-    // raise event onBeforeZoomChanged
-    this.options.onBeforeZoomChanged(this.zoomFactor, this.domMatrix.e, this.domMatrix.f);
+    if (mode === ZoomMode.ScaleToWidth) {
+      zoomFactor = widthScale;
+    }
+    else if (mode === ZoomMode.ScaleToHeight) {
+      zoomFactor = heightScale;
+    }
+    else if (mode === ZoomMode.ScaleToFit) {
+      zoomFactor = Math.min(widthScale, heightScale);
+    }
+    else if (mode === ZoomMode.ScaleToFill) {
+      zoomFactor = Math.max(widthScale, heightScale);
+    }
+    else if (mode === ZoomMode.LockZoom) {
+      zoomFactor = this.zoomFactor;
+    }
+    // AutoZoom
+    else {
+      // viewport size >= content size
+      if (widthScale >= 1 && heightScale >= 1) {
+        zoomFactor = 1; // show original size
+      }
+      else {
+        zoomFactor = Math.min(widthScale, heightScale);
+      }
+    }
 
-    // apply scale and translate value
-    this.domMatrix.a = this.options.zoomFactor;
-    this.domMatrix.d = this.options.zoomFactor;
-    this.domMatrix.e = (options.x || 0) + this.options.padding.left;
-    this.domMatrix.f = (options.y || 0) + this.options.padding.top;
-
-    // raise event onAfterZoomChanged
-    this.options.onAfterZoomChanged(this.zoomFactor, this.domMatrix.e, this.domMatrix.f);
-
-    this.updateImageRendering();
-    await this.applyTransform(options.duration);
+    this.zoomTo(zoomFactor, {
+      isManualZoom: false,
+      duration,
+      isZoomModeChanged: true,
+    });
   }
 
-  public async zoomTo(factor: number, duration?: number) {
+  public async zoomTo(factor: number, options: {
+    isManualZoom?: boolean,
+    duration?: number,
+    isZoomModeChanged?: boolean,
+  } = {}) {
     const fullW = this.contentEl.scrollWidth / this.scaleRatio;
     const fullH = this.contentEl.scrollHeight / this.scaleRatio;
     const horizontalPadding = this.padding.left + this.padding.right;
@@ -455,7 +495,53 @@ export class HapplaBox {
     // await this.panTo(-fullW, -fullH);
 
     // change zoom factor
-    this.zoomToPoint(factor, { x, y, duration });
+    this.zoomToPoint(factor, {
+      x, y,
+      duration: options.duration,
+      isManualZoom: options.isManualZoom,
+      isZoomModeChanged: options.isZoomModeChanged,
+    });
+  }
+
+  public async zoomToPoint(factor: number, options: {
+    x?: number,
+    y?: number,
+    duration?: number,
+    isManualZoom?: boolean,
+    isZoomModeChanged?: boolean,
+  } = {}) {
+    // restrict the zoom factor
+    this.options.zoomFactor = Math.min(
+      Math.max(this.options.minZoom, this.dpi(factor)),
+      this.options.maxZoom,
+    );
+
+    // raise event onBeforeZoomChanged
+    this.options.onBeforeZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom: options.isManualZoom || false,
+      isZoomModeChanged: options.isZoomModeChanged || false,
+    });
+
+    // apply scale and translate value
+    this.domMatrix.a = this.options.zoomFactor;
+    this.domMatrix.d = this.options.zoomFactor;
+    this.domMatrix.e = (options.x || 0) + this.options.padding.left;
+    this.domMatrix.f = (options.y || 0) + this.options.padding.top;
+
+    // raise event onAfterZoomChanged
+    this.options.onAfterZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom: options.isManualZoom || false,
+      isZoomModeChanged: options.isZoomModeChanged || false,
+    });
+
+    this.updateImageRendering();
+    await this.applyTransform(options.duration);
   }
 
   public async applyTransform(duration = 0) {

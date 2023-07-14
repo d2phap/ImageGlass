@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/brace-style': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': isProduction ? 'error' : 'warn',
     'arrow-parens': 'off',

@@ -163,42 +163,8 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     this.#wrapperEl.style.opacity = '1';
   }
 
-  public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {
-    const fullW = this.#contentEl.scrollWidth / this.#box.scaleRatio;
-    const fullH = this.#contentEl.scrollHeight / this.#box.scaleRatio;
-    const horizontalPadding = this.#box.padding.left + this.#box.padding.right;
-    const verticalPadding = this.#box.padding.top + this.#box.padding.bottom;
-    const widthScale = (this.#containerEl.clientWidth - horizontalPadding) / fullW;
-    const heightScale = (this.#containerEl.clientHeight - verticalPadding) / fullH;
-    let zoomFactor = 1;
-
-    if (mode === ZoomMode.ScaleToWidth) {
-      zoomFactor = widthScale;
-    }
-    else if (mode === ZoomMode.ScaleToHeight) {
-      zoomFactor = heightScale;
-    }
-    else if (mode === ZoomMode.ScaleToFit) {
-      zoomFactor = Math.min(widthScale, heightScale);
-    }
-    else if (mode === ZoomMode.ScaleToFill) {
-      zoomFactor = Math.max(widthScale, heightScale);
-    }
-    else if (mode === ZoomMode.LockZoom) {
-      zoomFactor = this.#box.zoomFactor;
-    }
-    // AutoZoom
-    else {
-      // viewport size >= content size
-      if (widthScale >= 1 && heightScale >= 1) {
-        zoomFactor = 1; // show original size
-      }
-      else {
-        zoomFactor = Math.min(widthScale, heightScale);
-      }
-    }
-
-    this.#box.zoomTo(zoomFactor, duration);
+  public setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {
+    return this.#box.setZoomMode(mode, duration);
   }
 
   public focus() {

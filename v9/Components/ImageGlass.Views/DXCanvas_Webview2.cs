@@ -18,8 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
+using System.Dynamic;
 
 namespace ImageGlass.Viewer;
 
@@ -129,7 +129,7 @@ public partial class DXCanvas
         await Web2.EnsureWeb2Async();
     }
 
-    
+
 
     /// <summary>
     /// Dispose <see cref="WebView2"/> resources.
@@ -177,12 +177,29 @@ public partial class DXCanvas
     {
         if (e.Name == Web2FrontendMsgNames.ZOOM_CHANGED)
         {
-            _ = float.TryParse(e.Data, out _zoomFactor);
+            var isZoomModeChanged = false;
+            var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
+            .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+
+            if (dict.TryGetValue("zoomFactor", out var zoomFactor))
+            {
+                _ = float.TryParse(zoomFactor, out _zoomFactor);
+            }
+            if (dict.TryGetValue("isManualZoom", out var isManualZoom))
+            {
+                _isManualZoom = isManualZoom.Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            }
+            if (dict.TryGetValue("isZoomModeChanged", out var zoomModeChanged))
+            {
+                isZoomModeChanged = zoomModeChanged.Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            }
+
+
             OnZoomChanged?.Invoke(this, new ZoomEventArgs()
             {
                 ZoomFactor = _zoomFactor,
-                IsManualZoom = false,
-                IsZoomModeChange = false,
+                IsManualZoom = _isManualZoom,
+                IsZoomModeChange = isZoomModeChanged,
                 IsPreviewingImage = false,
                 ChangeSource = ZoomChangeSource.Unknown,
             });

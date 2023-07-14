@@ -12,7 +12,13 @@ export type IPadding = {
   bottom?: number,
 };
 
-export type ZoomEventFunction = (zoomFactor: number, x: number, y: number) => void;
+export type ZoomEventFunction = (e: {
+  zoomFactor: number,
+  x: number,
+  y: number,
+  isManualZoom: boolean,
+  isZoomModeChanged: boolean,
+}) => void;
 export type TransformEventFunction = (matrix: DOMMatrix) => void;
 export type PanEventFunction = (x: number, y: number) => void;
 
@@ -30,6 +36,7 @@ export enum ZoomMode {
   ScaleToFit = 'ScaleToFit',
   ScaleToFill = 'ScaleToFill',
 }
+
 
 export interface IHapplaBoxOptions {
   allowZoom?: boolean;

@@ -10,37 +10,38 @@ enum Web2FrontendMsgNames {
   ZOOM_CHANGED = 'ZOOM_CHANGED',
 }
 
-let boxEl: HapplaBoxHTMLElement = undefined;
+let _boxEl: HapplaBoxHTMLElement = undefined;
+let _isManualZoom = false;
 
 export default class HapplaBoxViewer {
   static initialize() {
     defineHapplaBoxHTMLElement();
-    boxEl = document.querySelector('happla-box').shadowRoot.host as HapplaBoxHTMLElement;
+    _boxEl = document.querySelector('happla-box').shadowRoot.host as HapplaBoxHTMLElement;
 
-    boxEl.initialize({
+    _boxEl.initialize({
       zoomFactor: 1,
       onAfterZoomChanged: HapplaBoxViewer.onAfterZoomChanged,
       onResizing: HapplaBoxViewer.onResizing,
     });
 
-    boxEl.addEventListener('dragenter', (e) => {
+    _boxEl.addEventListener('dragenter', (e) => {
       e.stopPropagation();
       e.preventDefault();
     });
 
-    boxEl.addEventListener('dragover', (e) => {
+    _boxEl.addEventListener('dragover', (e) => {
       e.stopPropagation();
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
     });
 
-    boxEl.addEventListener('drop', (e) => {
+    _boxEl.addEventListener('drop', (e) => {
       e.stopPropagation();
       e.preventDefault();
       console.info(e.dataTransfer.files);
     });
 
-    boxEl.focus();
+    _boxEl.focus();
 
     // listen to Web2 Backend message
     on(Web2BackendMsgNames.SET_IMAGE, HapplaBoxViewer.onWeb2LoadContentRequested);
@@ -48,19 +49,33 @@ export default class HapplaBoxViewer {
   }
 
   private static onResizing() {
-    boxEl.setZoomMode();
+    if (!_isManualZoom) {
+      _boxEl.setZoomMode();
+    }
   }
 
-  private static onAfterZoomChanged(factor: number) {
-    post(Web2FrontendMsgNames.ZOOM_CHANGED, factor, true);
+  private static onAfterZoomChanged(e: {
+    zoomFactor: number,
+    x: number,
+    y: number,
+    isManualZoom: boolean,
+    isZoomModeChanged: boolean,
+  }) {
+    _isManualZoom = e.isManualZoom;
+
+    post(Web2FrontendMsgNames.ZOOM_CHANGED, {
+      zoomFactor: e.zoomFactor,
+      isManualZoom: e.isManualZoom,
+      isZoomModeChanged: e.isZoomModeChanged,
+    }, true);
   }
 
   private static async onWeb2LoadContentRequested(eventName: Web2BackendMsgNames, data: string) {
     if (eventName === Web2BackendMsgNames.SET_IMAGE) {
-      await boxEl.loadImage(data);
+      await _boxEl.loadImage(data);
     }
     else if (eventName === Web2BackendMsgNames.SET_HTML) {
-      await boxEl.loadHtml(data);
+      await _boxEl.loadHtml(data);
     }
   }
 }
