@@ -7,7 +7,6 @@ import TabAppearance from './FrmSettings/TabAppearance';
 
 if (!window._pageSettings) {
   window._pageSettings = {
-    initTab: 'layout',
     config: {},
     langList: [],
     toolList: [],

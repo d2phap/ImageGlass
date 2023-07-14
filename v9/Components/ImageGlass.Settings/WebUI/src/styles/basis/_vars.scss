@@ -29,7 +29,8 @@
 
   --controlWidth: calc(200 * var(--fontScale));
   --controlHeight: calc(28 * var(--fontScale));
-  --borderRadius: calc(0.2rem * var(--fontScale));
+  --baseBorderRadius: 0.2rem;
+  --borderRadius: calc(var(--baseBorderRadius) * var(--fontScale));
   --shadow: 0 0.1rem 0.8rem -0.4rem rgb(0 0 0 / 50%);
   --scrollbarSizePx: calc(0.875rem * var(--fontScale));
   --transitionMs: 0ms; // disable from the begining

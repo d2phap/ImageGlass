@@ -52,7 +52,7 @@ public partial class FrmAbout : WebForm
         await base.OnWeb2ReadyAsync();
 
         var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmAbout)}.html");
-        Web2.CoreWebView2.Navigate(htmlFilePath);
+        Web2.Source = new Uri(htmlFilePath);
     }
 
 

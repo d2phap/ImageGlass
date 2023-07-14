@@ -121,7 +121,7 @@
 label.ig-checkbox,
 label.ig-radio {
   --box-size: 1.125em;
-  --box-border-radius: 0.15em;
+  --box-border-radius: var(--borderRadius);
 
   position: relative;
   display: inline-flex;

@@ -100,7 +100,7 @@ a:visited {
   text-underline-position: under;
   transition: background ease var(--transitionMs);
   color: rgb(var(--Accent));
-  border-radius: 0.125em;
+  border-radius: var(--borderRadius);
   padding: 0 0.125em 0.1em 0.125em;
 }
 a {

@@ -156,7 +156,7 @@ public partial class DXCanvas
     private void Web2_Web2Ready(object? sender, EventArgs e)
     {
         var htmlFilePath = App.StartUpDir(Dir.WebUI, "DXCanvas_Webview2.html");
-        Web2.CoreWebView2.Navigate(htmlFilePath);
+        Web2.Source = new Uri(htmlFilePath);
     }
 
 

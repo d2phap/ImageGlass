@@ -100,6 +100,7 @@
           inset 0 -0.1rem 0 0 var(--cell-border-bottom-color),
           inset 0.1rem 0 0 0 var(--cell-border-left-color),
           inset -0.1rem 0 0 0 var(--cell-border-right-color);
+        transition: background ease calc(var(--transitionMs) / 2), box-shadow ease calc(var(--transitionMs) / 2);
 
         // for sticky row column
         &.cell-sticky {

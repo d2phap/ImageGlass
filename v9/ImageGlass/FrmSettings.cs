@@ -74,7 +74,7 @@ public partial class FrmSettings : WebForm
         await base.OnWeb2ReadyAsync();
 
         var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmSettings)}.html");
-        Web2.CoreWebView2.Navigate(htmlFilePath);
+        Web2.Source = new Uri(htmlFilePath);
     }
 
 
