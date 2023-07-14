@@ -231,20 +231,21 @@ public partial class DXCanvas
     {
         try
         {
-            string dataJson;
             string msgName;
+            var obj = new ExpandoObject();
+            _ = obj.TryAdd("ZoomMode", ZoomMode.ToString());
 
             // if image file is SVG, we read its content
             if (!string.IsNullOrWhiteSpace(filePath)
                 && filePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase))
             {
                 var textContent = await File.ReadAllTextAsync(filePath, token);
-                dataJson = BHelper.ToJson(textContent);
+                _ = obj.TryAdd("Html", textContent);
                 msgName = Web2BackendMsgNames.SET_HTML;
             }
             else
             {
-                dataJson = BHelper.ToJson(filePath);
+                _ = obj.TryAdd("Url", filePath);
                 msgName = Web2BackendMsgNames.SET_IMAGE;
             }
 
@@ -257,7 +258,8 @@ public partial class DXCanvas
 
             token.ThrowIfCancellationRequested();
 
-            Web2.PostWeb2Message(msgName, dataJson);
+            var json = BHelper.ToJson(obj);
+            Web2.PostWeb2Message(msgName, json);
         }
         catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException) { }
         catch (Exception ex)

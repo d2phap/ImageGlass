@@ -122,6 +122,7 @@ public static class Web2BackendMsgNames
 {
     public static string SET_HTML => "SET_HTML";
     public static string SET_IMAGE => "SET_IMAGE";
+    public static string SET_ZOOM_MODE => "SET_ZOOM_MODE";
 
 }
 

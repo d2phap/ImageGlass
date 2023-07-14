@@ -27,9 +27,9 @@ public enum ZoomMode
 {
     AutoZoom = 1,
     LockZoom = 2,
-    ScaleToFit = 3,
-    ScaleToWidth = 4,
-    ScaleToHeight = 5,
+    ScaleToWidth = 3,
+    ScaleToHeight = 4,
+    ScaleToFit = 5,
     ScaleToFill = 6,
 }
 

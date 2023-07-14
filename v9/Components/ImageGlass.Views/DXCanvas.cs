@@ -26,6 +26,7 @@ using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.Dynamic;
 using System.Numerics;
 using WicNet;
 using InterpolationMode = D2Phap.InterpolationMode;
@@ -2117,6 +2118,18 @@ public partial class DXCanvas : DXControl
         _zoomFactor = CalculateZoomFactor(zoomMode, SourceWidth, SourceHeight, Width, Height);
         _isManualZoom = isManualZoom;
         _shouldRecalculateDrawingRegion = true;
+
+
+        // use webview
+        if (UseWebview2)
+        {
+            var obj = new ExpandoObject();
+            _ = obj.TryAdd("ZoomMode", zoomMode.ToString());
+            _ = obj.TryAdd("IsManualZoom", isManualZoom);
+
+            Web2.PostWeb2Message(Web2BackendMsgNames.SET_ZOOM_MODE, BHelper.ToJson(obj));
+            return;
+        }
 
 
         if (!IsReady || Source == ImageSource.Null) return;

@@ -1,9 +1,11 @@
 import { HapplaBoxHTMLElement, defineHapplaBoxHTMLElement } from './webComponents/HapplaBoxHTMLElement';
+import { ZoomMode } from './webComponents/happlajs/HapplaBoxTypes';
 
 
 enum Web2BackendMsgNames {
   SET_HTML = 'SET_HTML',
   SET_IMAGE = 'SET_IMAGE',
+  SET_ZOOM_MODE = 'SET_ZOOM_MODE',
 }
 
 enum Web2FrontendMsgNames {
@@ -11,6 +13,7 @@ enum Web2FrontendMsgNames {
 }
 
 let _boxEl: HapplaBoxHTMLElement = undefined;
+let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
 let _isManualZoom = false;
 
 export default class HapplaBoxViewer {
@@ -46,11 +49,12 @@ export default class HapplaBoxViewer {
     // listen to Web2 Backend message
     on(Web2BackendMsgNames.SET_IMAGE, HapplaBoxViewer.onWeb2LoadContentRequested);
     on(Web2BackendMsgNames.SET_HTML, HapplaBoxViewer.onWeb2LoadContentRequested);
+    on(Web2BackendMsgNames.SET_ZOOM_MODE, HapplaBoxViewer.onWeb2ZoomModeChanged);
   }
 
   private static onResizing() {
     if (!_isManualZoom) {
-      _boxEl.setZoomMode();
+      _boxEl.setZoomMode(_zoomMode);
     }
   }
 
@@ -70,12 +74,26 @@ export default class HapplaBoxViewer {
     }, true);
   }
 
-  private static async onWeb2LoadContentRequested(eventName: Web2BackendMsgNames, data: string) {
+  private static async onWeb2LoadContentRequested(eventName: Web2BackendMsgNames, data: {
+    ZoomMode: ZoomMode,
+    Html?: string,
+    Url?: string,
+  }) {
+    _zoomMode = data.ZoomMode;
+
     if (eventName === Web2BackendMsgNames.SET_IMAGE) {
-      await _boxEl.loadImage(data);
+      await _boxEl.loadImage(data.Url, _zoomMode);
     }
     else if (eventName === Web2BackendMsgNames.SET_HTML) {
-      await _boxEl.loadHtml(data);
+      await _boxEl.loadHtml(data.Html, _zoomMode);
     }
+  }
+
+  private static async onWeb2ZoomModeChanged(_: Web2BackendMsgNames, data: {
+    ZoomMode: ZoomMode,
+    IsManualZoom: boolean,
+  }) {
+    _zoomMode = data.ZoomMode;
+    await _boxEl.setZoomMode(data.ZoomMode, 300);
   }
 }
