@@ -99,9 +99,9 @@ public class IgPhoto : IDisposable
     public IgImgData ImgData { get; internal set; } = new();
 
     /// <summary>
-    /// Gets image metadata
+    /// Gets, sets image metadata
     /// </summary>
-    public IgMetadata? Metadata { get; internal set; }
+    public IgMetadata? Metadata { get; set; }
 
     #endregion
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.Photoing.Codecs;
 using Microsoft.Web.WebView2.WinForms;
 using System.Dynamic;
 
@@ -227,25 +228,29 @@ public partial class DXCanvas
     /// <summary>
     /// Loads the image file into <see cref="Web2"/>.
     /// </summary>
-    public async Task SetImageWeb2Async(string? filePath, CancellationToken token = default)
+    public async Task SetImageWeb2Async(IgPhoto? data, CancellationToken token = default)
     {
+        if (data == null) return;
+
         try
         {
+            LoadImageDataWeb2(data?.Metadata);
+
             string msgName;
             var obj = new ExpandoObject();
             _ = obj.TryAdd("ZoomMode", ZoomMode.ToString());
 
             // if image file is SVG, we read its content
-            if (!string.IsNullOrWhiteSpace(filePath)
-                && filePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase))
+            if (!string.IsNullOrWhiteSpace(data.Filename)
+                && data.Filename.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase))
             {
-                var textContent = await File.ReadAllTextAsync(filePath, token);
+                var textContent = await File.ReadAllTextAsync(data.Filename, token);
                 _ = obj.TryAdd("Html", textContent);
                 msgName = Web2BackendMsgNames.SET_HTML;
             }
             else
             {
-                _ = obj.TryAdd("Url", filePath);
+                _ = obj.TryAdd("Url", data.Filename);
                 msgName = Web2BackendMsgNames.SET_IMAGE;
             }
 
@@ -266,6 +271,19 @@ public partial class DXCanvas
         {
             throw ex;
         }
+    }
+
+
+    /// <summary>
+    /// Loads image data for Webview2.
+    /// </summary>
+    private void LoadImageDataWeb2(IgMetadata? imgData)
+    {
+        SourceWidth = imgData?.Width ?? 0;
+        SourceHeight = imgData?.Height ?? 0;
+        CanImageAnimate = false;
+        HasAlphaPixels = true;
+        UseHardwareAcceleration = true;
     }
 
 

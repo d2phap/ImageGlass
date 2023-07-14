@@ -838,8 +838,15 @@ public partial class FrmMain : ThemedForm
             Local.Images.ReadOptions = readSettings;
 
 
-            // if we can use native viewer
-            if (!PicMain.UseWebview2) {
+            // if we are using Webview2
+            if (PicMain.UseWebview2)
+            {
+                photo = new IgPhoto(imgFilePath)
+                {
+                    Metadata = Local.Metadata,
+                };
+            }
+            else {
 
                 // directly load the image file, skip image list
                 if (photo != null)
@@ -1015,7 +1022,7 @@ public partial class FrmMain : ThemedForm
 
             try
             {
-                await PicMain.SetImageWeb2Async(e.FilePath, _loadCancelTokenSrc.Token);
+                await PicMain.SetImageWeb2Async(e.Data, _loadCancelTokenSrc.Token);
             }
             catch (Exception ex) { error = ex; }
         }
