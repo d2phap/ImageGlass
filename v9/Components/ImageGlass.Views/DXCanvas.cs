@@ -2180,6 +2180,8 @@ public partial class DXCanvas : DXControl
     /// <param name="sources">Source of animation</param>
     public void StartAnimation(AnimationSource sources)
     {
+        if (UseWebview2) return;
+
         _animationSource = sources;
         RequestUpdateFrame = true;
     }

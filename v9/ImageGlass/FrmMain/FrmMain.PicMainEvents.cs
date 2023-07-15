@@ -162,12 +162,6 @@ public partial class FrmMain
         var hotkey = new Hotkey(e.KeyData);
         var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
 
-        if (PicMain.UseWebview2)
-        {
-            this.OnKeyDown(e);
-            return;
-        }
-
         // zoom in
         if (actions.Contains(nameof(MnuZoomIn))
             || actions.Contains(nameof(IG_ZoomIn)))
@@ -231,6 +225,13 @@ public partial class FrmMain
             PicMain.StartAnimation(AnimationSource.PanDown);
             return;
         }
+    }
+
+
+    private void PicMain_Web2KeyDown(object sender, KeyEventArgs e)
+    {
+        // pass keydown to FrmMain
+        this.OnKeyDown(e);
     }
 
 

@@ -86,6 +86,11 @@ public partial class DXCanvas
     /// </summary>
     public event EventHandler<MouseEventArgs> Web2PointerDown;
 
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> received <c>keydown</c> event.
+    /// </summary>
+    public event EventHandler<KeyEventArgs> Web2KeyDown;
+
 
     // Private methods
     #region Private methods
@@ -179,7 +184,7 @@ public partial class DXCanvas
 
     private void Web2_Web2KeyDown(object? sender, KeyEventArgs e)
     {
-        this.OnKeyDown(e);
+        Web2KeyDown?.Invoke(this, e);
     }
 
 
