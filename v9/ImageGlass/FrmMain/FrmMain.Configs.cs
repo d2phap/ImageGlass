@@ -453,7 +453,7 @@ public partial class FrmMain
             if (hasRightClick)
             {
                 var toggleAction = Config.MouseClickActions[MouseClickEvent.RightClick];
-                var isToggled = ToggleAction.IsToggled(toggleAction.Id);
+                var isToggled = ToggleAction.IsToggleOff(toggleAction.Id);
                 var action = isToggled
                     ? toggleAction.ToggleOff
                     : toggleAction.ToggleOn;

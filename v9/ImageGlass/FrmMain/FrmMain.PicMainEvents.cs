@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.Viewer;
 
@@ -181,7 +180,7 @@ public partial class FrmMain
             {
                 PicMain.StartAnimation(AnimationSource.ZoomIn);
             }
-            
+
             return;
         }
 
@@ -197,7 +196,7 @@ public partial class FrmMain
             {
                 PicMain.StartAnimation(AnimationSource.ZoomOut);
             }
-            
+
             return;
         }
 
@@ -235,6 +234,15 @@ public partial class FrmMain
     }
 
 
+    private void PicMain_Web2PointerDown(object sender, MouseEventArgs e)
+    {
+        // make sure all menus closed when mouse clicked
+        MnuMain.Close();
+        MnuContext.Close();
+        MnuSubMenu.Close();
+    }
+
+
     private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
@@ -243,7 +251,26 @@ public partial class FrmMain
         }
         else if (e.Button == MouseButtons.Right)
         {
-            ExecuteMouseAction(MouseClickEvent.RightClick);
+            var actionExecutable = ExecuteMouseAction(MouseClickEvent.RightClick);
+
+            // handle right-click action for webview2
+            if (PicMain.UseWebview2)
+            {
+                var titleBarHeight = SystemInformation.CaptionHeight;
+
+                var point = this.PointToScreen(e.Location);
+                point.X += PicMain.Left;
+                point.Y += PicMain.Top;
+
+                if (actionExecutable == nameof(IG_OpenMainMenu))
+                {
+                    MnuMain.Show(point);
+                }
+                else if (string.IsNullOrEmpty(actionExecutable) || actionExecutable == nameof(IG_OpenContextMenu))
+                {
+                    MnuContext.Show(point);
+                }
+            }
         }
         else if (e.Button == MouseButtons.Middle)
         {

@@ -62,9 +62,9 @@ public class ToggleAction
 
 
     /// <summary>
-    /// Checks if the given action is toggled
+    /// Checks if the given action is toggle off action
     /// </summary>
-    public static bool IsToggled(Guid actionId)
+    public static bool IsToggleOff(Guid actionId)
     {
         if (_manager.TryGetValue(actionId, out var isToggled))
         {

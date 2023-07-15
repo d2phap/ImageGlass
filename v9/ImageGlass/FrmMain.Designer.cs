@@ -1010,6 +1010,7 @@ namespace ImageGlass
             PicMain.MouseDoubleClick += PicMain_MouseDoubleClick;
             PicMain.MouseWheel += PicMain_MouseWheel;
             PicMain.Web2NavigationCompleted += PicMain_Web2NavigationCompleted;
+            PicMain.Web2PointerDown += PicMain_Web2PointerDown;
             // 
             // Gallery
             // 

@@ -846,7 +846,8 @@ public partial class FrmMain : ThemedForm
                     Metadata = Local.Metadata,
                 };
             }
-            else {
+            else
+            {
 
                 // directly load the image file, skip image list
                 if (photo != null)
@@ -862,7 +863,7 @@ public partial class FrmMain : ThemedForm
                     );
                 }
             }
-            
+
 
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
@@ -1694,25 +1695,25 @@ public partial class FrmMain : ThemedForm
 
 
     /// <summary>
-    /// Executes action from mouse event
+    /// Executes action from mouse event, returns the action executable.
     /// </summary>
-    public void ExecuteMouseAction(MouseClickEvent e)
+    public string? ExecuteMouseAction(MouseClickEvent e)
     {
         if (Config.MouseClickActions.TryGetValue(e, out var toggleAction))
         {
-            var isToggled = ToggleAction.IsToggled(toggleAction.Id);
-            var action = isToggled
+            var isToggleOff = ToggleAction.IsToggleOff(toggleAction.Id);
+            var action = isToggleOff
                 ? toggleAction.ToggleOff
                 : toggleAction.ToggleOn;
 
             var executable = action?.Executable.Trim();
+            if (string.IsNullOrWhiteSpace(executable)) return null;
 
 
             if (e == MouseClickEvent.RightClick)
             {
                 // update PicMain's context menu
                 Local.UpdateFrmMain(UpdateRequests.MouseActions);
-
 
                 if (executable != nameof(IG_OpenContextMenu)
                     && executable != nameof(IG_OpenMainMenu))
@@ -1726,8 +1727,12 @@ public partial class FrmMain : ThemedForm
             }
 
             // update toggling value
-            ToggleAction.SetToggleValue(toggleAction.Id, !isToggled);
+            ToggleAction.SetToggleValue(toggleAction.Id, !isToggleOff);
+
+            return executable;
         }
+
+        return null;
     }
 
 
