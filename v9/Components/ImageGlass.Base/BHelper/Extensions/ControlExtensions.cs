@@ -46,6 +46,30 @@ public static class ControlExtensions
 
 
     /// <summary>
+    /// Scales the given point to the current control's DPI.
+    /// </summary>
+    public static PointF ScaleToDpi(this Control control, PointF point)
+    {
+        var x = control.ScaleToDpi(point.X);
+        var y = control.ScaleToDpi(point.Y);
+
+        return new PointF(x, y);
+    }
+
+
+    /// <summary>
+    /// Scales the given point to the current control's DPI.
+    /// </summary>
+    public static Point ScaleToDpi(this Control control, Point point)
+    {
+        var x = control.ScaleToDpi(point.X);
+        var y = control.ScaleToDpi(point.Y);
+
+        return new Point(x, y);
+    }
+
+
+    /// <summary>
     /// Scales the given size to the current control's DPI.
     /// </summary>
     public static SizeF ScaleToDpi(this Control control, SizeF size)

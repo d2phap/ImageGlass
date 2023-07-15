@@ -129,6 +129,7 @@ public static class Web2BackendMsgNames
 
 public static class Web2FrontendMsgNames
 {
-    public static string ZOOM_CHANGED => "ZOOM_CHANGED";
+    public static string ON_ZOOM_CHANGED => "ON_ZOOM_CHANGED";
+    public static string ON_POINTER_DOWN => "ON_POINTER_DOWN";
 
 }

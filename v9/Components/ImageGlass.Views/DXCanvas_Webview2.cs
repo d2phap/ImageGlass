@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 using System.Dynamic;
 
@@ -76,9 +77,14 @@ public partial class DXCanvas
 
 
     /// <summary>
-    /// Occurs when <see cref="Web2"/> navigation is completed
+    /// Occurs when <see cref="Web2"/> navigation is completed.
     /// </summary>
     public event EventHandler<EventArgs> Web2NavigationCompleted;
+
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> received <c>pointerdown</c> event.
+    /// </summary>
+    public event EventHandler<MouseEventArgs> Web2PointerDown;
 
 
     // Private methods
@@ -113,6 +119,7 @@ public partial class DXCanvas
         Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
         Web2.Web2KeyDown += Web2_Web2KeyDown;
+        Web2.Web2ContextMenuRequested += Web2_Web2ContextMenuRequested;
 
 
         try
@@ -131,7 +138,6 @@ public partial class DXCanvas
     }
 
 
-
     /// <summary>
     /// Dispose <see cref="WebView2"/> resources.
     /// </summary>
@@ -139,12 +145,15 @@ public partial class DXCanvas
     {
         Controls.Remove(_web2);
 
-        _web2.Web2Ready -= Web2_Web2Ready;
-        _web2.Web2NavigationCompleted -= Web2_Web2NavigationCompleted;
-        _web2.Web2KeyDown -= Web2_Web2KeyDown;
-        _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
-        _web2?.Dispose();
-        _web2 = null;
+        if (_web2 != null)
+        {
+            _web2.Web2Ready -= Web2_Web2Ready;
+            _web2.Web2NavigationCompleted -= Web2_Web2NavigationCompleted;
+            _web2.Web2KeyDown -= Web2_Web2KeyDown;
+            _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
+            _web2.Dispose();
+            _web2 = null;
+        }
     }
 
 
@@ -174,13 +183,38 @@ public partial class DXCanvas
     }
 
 
+    private MouseEventArgs? _web2PointerDownEventArgs = null;
+
+    private void Web2_Web2ContextMenuRequested(object? sender, CoreWebView2ContextMenuRequestedEventArgs e)
+    {
+        if (_web2PointerDownEventArgs == null)
+        {
+            _web2PointerDownEventArgs ??= new(MouseButtons.Right, 1, e.Location.X, e.Location.Y, 0);
+        }
+        else
+        {
+            _web2PointerDownEventArgs = new(
+                MouseButtons.Right,
+                _web2PointerDownEventArgs.Clicks,
+                _web2PointerDownEventArgs.X,
+                _web2PointerDownEventArgs.Y,
+                _web2PointerDownEventArgs.Delta
+            );
+        }
+
+        base.OnMouseClick(_web2PointerDownEventArgs);
+
+        _web2PointerDownEventArgs = null;
+    }
+
+
     private void Web2_Web2MessageReceived(object? sender, Web2MessageReceivedEventArgs e)
     {
-        if (e.Name == Web2FrontendMsgNames.ZOOM_CHANGED)
+        if (e.Name == Web2FrontendMsgNames.ON_ZOOM_CHANGED)
         {
             var isZoomModeChanged = false;
             var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
-            .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+                .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
 
             if (dict.TryGetValue("zoomFactor", out var zoomFactor))
             {
@@ -204,6 +238,11 @@ public partial class DXCanvas
                 IsPreviewingImage = false,
                 ChangeSource = ZoomChangeSource.Unknown,
             });
+        }
+        else if (e.Name == Web2FrontendMsgNames.ON_POINTER_DOWN)
+        {
+            _web2PointerDownEventArgs = ParseMouseEventJson(e.Data);
+            Web2PointerDown?.Invoke(this, _web2PointerDownEventArgs);
         }
     }
 
@@ -286,5 +325,41 @@ public partial class DXCanvas
         UseHardwareAcceleration = true;
     }
 
+
+    /// <summary>
+    /// Parses JSON string to <see cref="MouseEventArgs"/>.
+    /// </summary>
+    private MouseEventArgs ParseMouseEventJson(string json)
+    {
+        var dict = BHelper.ParseJson<ExpandoObject>(json)
+            .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+
+        var x = 0f;
+        var y = 0f;
+        var button = MouseButtons.Left;
+
+        if (dict.TryGetValue("x", out var xStr))
+        {
+            _ = float.TryParse(xStr, out x);
+        }
+        if (dict.TryGetValue("y", out var yStr))
+        {
+            _ = float.TryParse(yStr, out y);
+        }
+        if (dict.TryGetValue("button", out var buttonStr))
+        {
+            _ = int.TryParse(buttonStr, out var btnIndex);
+
+            if (btnIndex == 1) button = MouseButtons.Middle;
+            else if (btnIndex == 2) button = MouseButtons.Right;
+            else if (btnIndex == 3) button = MouseButtons.XButton1;
+            else if (btnIndex == 4) button = MouseButtons.XButton2;
+            else button = MouseButtons.Left;
+        }
+
+        var point = this.ScaleToDpi(new Point((int)x, (int)y));
+
+        return new MouseEventArgs(button, 1, point.X, point.Y, 0);
+    }
 
 }

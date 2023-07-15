@@ -96,6 +96,11 @@ public class Web2 : WebView2
     /// </summary>
     public event EventHandler<KeyEventArgs> Web2KeyDown;
 
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> is opening context menu.
+    /// </summary>
+    public event EventHandler<CoreWebView2ContextMenuRequestedEventArgs> Web2ContextMenuRequested;
+
     #endregion // Public events
 
 
@@ -198,6 +203,25 @@ public class Web2 : WebView2
         await Task.CompletedTask;
     }
 
+
+    /// <summary>
+    /// Triggers <see cref="Web2ContextMenuRequested"/> event.
+    /// </summary>
+    protected virtual async Task OnWeb2ContextMenuRequested(CoreWebView2ContextMenuRequestedEventArgs e)
+    {
+        if (InvokeRequired)
+        {
+            await Invoke(async delegate
+            {
+                await OnWeb2ContextMenuRequested(e);
+            });
+            return;
+        }
+
+        Web2ContextMenuRequested?.Invoke(this, e);
+        await Task.CompletedTask;
+    }
+
     #endregion // Override/ virtual methods
 
 
@@ -231,7 +255,7 @@ public class Web2 : WebView2
             this.CoreWebView2.Settings.IsPinchZoomEnabled = false;
             this.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
             this.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
-            this.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            this.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
             this.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
 
             // DevTools
@@ -241,6 +265,7 @@ public class Web2 : WebView2
 #endif
 
             this.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+            this.CoreWebView2.ContextMenuRequested += CoreWebView2_ContextMenuRequested;
 
 
             await OnWeb2ReadyAsync();
@@ -434,6 +459,15 @@ public class Web2 : WebView2
     {
         e.Handled = true;
         BHelper.OpenUrl(e.Uri, $"app_{PageName}");
+    }
+
+
+    private void CoreWebView2_ContextMenuRequested(object? sender, CoreWebView2ContextMenuRequestedEventArgs e)
+    {
+        // block the default context menu
+        e.Handled = true;
+
+        _ = OnWeb2ContextMenuRequested(e);
     }
 
 

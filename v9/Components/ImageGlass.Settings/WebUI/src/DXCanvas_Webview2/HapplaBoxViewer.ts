@@ -9,7 +9,8 @@ enum Web2BackendMsgNames {
 }
 
 enum Web2FrontendMsgNames {
-  ZOOM_CHANGED = 'ZOOM_CHANGED',
+  ON_ZOOM_CHANGED = 'ON_ZOOM_CHANGED',
+  ON_POINTER_DOWN = 'ON_POINTER_DOWN',
 }
 
 let _boxEl: HapplaBoxHTMLElement = undefined;
@@ -44,6 +45,15 @@ export default class HapplaBoxViewer {
       console.info(e.dataTransfer.files);
     });
 
+    _boxEl.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
+        button: e.button,
+        x: e.pageX,
+        y: e.pageY,
+      }, true);
+    });
+
     _boxEl.focus();
 
     // listen to Web2 Backend message
@@ -67,7 +77,7 @@ export default class HapplaBoxViewer {
   }) {
     _isManualZoom = e.isManualZoom;
 
-    post(Web2FrontendMsgNames.ZOOM_CHANGED, {
+    post(Web2FrontendMsgNames.ON_ZOOM_CHANGED, {
       zoomFactor: e.zoomFactor,
       isManualZoom: e.isManualZoom,
       isZoomModeChanged: e.isZoomModeChanged,

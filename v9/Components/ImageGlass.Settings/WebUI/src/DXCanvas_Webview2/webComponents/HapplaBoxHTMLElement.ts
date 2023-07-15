@@ -65,9 +65,6 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     // private methods
     this.createTemplate = this.createTemplate.bind(this);
 
-    // private events
-    this.onAuxClicked = this.onAuxClicked.bind(this);
-
     // initialize template
     this.createTemplate();
   }
@@ -80,14 +77,6 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     this.#box.disable();
   }
 
-  private onAuxClicked(e: PointerEvent) {
-    e.stopPropagation();
-
-    // right click
-    if (e.button === 2) {
-      // todo
-    }
-  }
 
   private createTemplate() {
     // initialize component
@@ -112,11 +101,6 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     containerEl.tabIndex = 0;
     containerEl.classList.add('happlabox-container');
     containerEl.appendChild(wrapperEl);
-
-    // disable browser default context menu
-    containerEl.addEventListener('contextmenu', e => e.preventDefault(), true);
-    containerEl.addEventListener('auxclick', this.onAuxClicked, true);
-
 
     this.#contentEl = contentEl;
     this.#wrapperEl = wrapperEl;
