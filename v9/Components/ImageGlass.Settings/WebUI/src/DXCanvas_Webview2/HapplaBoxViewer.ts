@@ -6,6 +6,7 @@ enum Web2BackendMsgNames {
   SET_HTML = 'SET_HTML',
   SET_IMAGE = 'SET_IMAGE',
   SET_ZOOM_MODE = 'SET_ZOOM_MODE',
+  SET_ZOOM_FACTOR = 'SET_ZOOM_FACTOR',
 }
 
 enum Web2FrontendMsgNames {
@@ -13,8 +14,10 @@ enum Web2FrontendMsgNames {
   ON_POINTER_DOWN = 'ON_POINTER_DOWN',
 }
 
+const _transitionDuration = 300;
 let _boxEl: HapplaBoxHTMLElement = undefined;
 let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
+let _zoomFactor = 1;
 let _isManualZoom = false;
 
 export default class HapplaBoxViewer {
@@ -48,9 +51,9 @@ export default class HapplaBoxViewer {
     _boxEl.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
-        button: e.button,
-        x: e.pageX,
-        y: e.pageY,
+        Button: e.button,
+        X: e.pageX,
+        Y: e.pageY,
       }, true);
     });
 
@@ -60,6 +63,7 @@ export default class HapplaBoxViewer {
     on(Web2BackendMsgNames.SET_IMAGE, HapplaBoxViewer.onWeb2LoadContentRequested);
     on(Web2BackendMsgNames.SET_HTML, HapplaBoxViewer.onWeb2LoadContentRequested);
     on(Web2BackendMsgNames.SET_ZOOM_MODE, HapplaBoxViewer.onWeb2ZoomModeChanged);
+    on(Web2BackendMsgNames.SET_ZOOM_FACTOR, HapplaBoxViewer.onWeb2ZoomFactorChanged);
   }
 
   private static onResizing() {
@@ -75,12 +79,13 @@ export default class HapplaBoxViewer {
     isManualZoom: boolean,
     isZoomModeChanged: boolean,
   }) {
+    _zoomFactor = _zoomFactor;
     _isManualZoom = e.isManualZoom;
 
     post(Web2FrontendMsgNames.ON_ZOOM_CHANGED, {
-      zoomFactor: e.zoomFactor,
-      isManualZoom: e.isManualZoom,
-      isZoomModeChanged: e.isZoomModeChanged,
+      ZoomFactor: e.zoomFactor,
+      IsManualZoom: e.isManualZoom,
+      IsZoomModeChanged: e.isZoomModeChanged,
     }, true);
   }
 
@@ -104,6 +109,13 @@ export default class HapplaBoxViewer {
     IsManualZoom: boolean,
   }) {
     _zoomMode = data.ZoomMode;
-    await _boxEl.setZoomMode(data.ZoomMode, 300);
+    await _boxEl.setZoomMode(data.ZoomMode, _transitionDuration);
+  }
+
+  private static async onWeb2ZoomFactorChanged(_: Web2BackendMsgNames, data: {
+    ZoomFactor: number,
+    IsManualZoom: boolean,
+  }) {
+    await _boxEl.setZoomFactor(data.ZoomFactor, data.IsManualZoom, _transitionDuration);
   }
 }

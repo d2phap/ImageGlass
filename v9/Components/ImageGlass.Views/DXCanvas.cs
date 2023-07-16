@@ -2046,8 +2046,14 @@ public partial class DXCanvas : DXControl
 
         _zoomFactor = Math.Min(MaxZoom, Math.Max(zoomValue, MinZoom));
         _isManualZoom = isManualZoom;
-        _shouldRecalculateDrawingRegion = true;
 
+        if (UseWebview2)
+        {
+            SetZoomFactorWeb2(zoomValue, isManualZoom);
+            return;
+        }
+
+        _shouldRecalculateDrawingRegion = true;
         Invalidate();
 
         OnZoomChanged?.Invoke(this, new ZoomEventArgs()

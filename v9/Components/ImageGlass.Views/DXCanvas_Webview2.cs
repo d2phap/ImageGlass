@@ -134,15 +134,15 @@ public partial class DXCanvas
             var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
                 .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
 
-            if (dict.TryGetValue("zoomFactor", out var zoomFactor))
+            if (dict.TryGetValue("ZoomFactor", out var zoomFactor))
             {
                 _ = float.TryParse(zoomFactor, out _zoomFactor);
             }
-            if (dict.TryGetValue("isManualZoom", out var isManualZoom))
+            if (dict.TryGetValue("IsManualZoom", out var isManualZoom))
             {
                 _isManualZoom = isManualZoom.Equals("true", StringComparison.InvariantCultureIgnoreCase);
             }
-            if (dict.TryGetValue("isZoomModeChanged", out var zoomModeChanged))
+            if (dict.TryGetValue("IsZoomModeChanged", out var zoomModeChanged))
             {
                 isZoomModeChanged = zoomModeChanged.Equals("true", StringComparison.InvariantCultureIgnoreCase);
             }
@@ -340,15 +340,15 @@ public partial class DXCanvas
         var y = 0f;
         var button = MouseButtons.Left;
 
-        if (dict.TryGetValue("x", out var xStr))
+        if (dict.TryGetValue("X", out var xStr))
         {
             _ = float.TryParse(xStr, out x);
         }
-        if (dict.TryGetValue("y", out var yStr))
+        if (dict.TryGetValue("Y", out var yStr))
         {
             _ = float.TryParse(yStr, out y);
         }
-        if (dict.TryGetValue("button", out var buttonStr))
+        if (dict.TryGetValue("Button", out var buttonStr))
         {
             _ = int.TryParse(buttonStr, out var btnIndex);
 
@@ -363,5 +363,21 @@ public partial class DXCanvas
 
         return new MouseEventArgs(button, 1, point.X, point.Y, 0);
     }
+
+
+    /// <summary>
+    /// Sets zoom factor for <see cref="Web2"/>.
+    /// </summary>
+    private void SetZoomFactorWeb2(float zoomValue, bool isManualZoom)
+    {
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("ZoomFactor", zoomValue);
+        _ = obj.TryAdd("IsManualZoom", isManualZoom);
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.SET_ZOOM_FACTOR, BHelper.ToJson(obj));
+    }
+
+    #endregion // Private methods
+
 
 }

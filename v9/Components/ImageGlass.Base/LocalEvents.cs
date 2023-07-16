@@ -49,9 +49,14 @@ public class ImageLoadingEventArgs : ImageEventArgs
     public uint FrameIndex { get; init; }
 
     /// <summary>
-    /// Gets the value indicating that the image is being viewed as a separate frame.
+    /// Gets the value indicates that the image is being viewed as a separate frame.
     /// </summary>
     public bool IsViewingSeparateFrame { get; init; }
+
+    /// <summary>
+    /// Gets the value indicates that we will use <c>Webview2</c> to render the image.
+    /// </summary>
+    public bool UseWebview2 { get; init; }
 }
 
 public class ImageLoadedEventArgs : ImageEventArgs
@@ -80,6 +85,11 @@ public class ImageLoadedEventArgs : ImageEventArgs
     /// Gets the value indicating that the image is being viewed as a separate frame.
     /// </summary>
     public bool IsViewingSeparateFrame { get; init; }
+
+    /// <summary>
+    /// Gets the value indicates that we will use <c>Webview2</c> to render the image.
+    /// </summary>
+    public bool UseWebview2 { get; init; }
 }
 
 public class ImageListLoadedEventArgs : EventArgs
