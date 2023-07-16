@@ -2082,6 +2082,8 @@ public partial class DXCanvas : DXControl
     /// </summary>
     public float CalculateZoomFactor(ZoomMode zoomMode, float srcWidth, float srcHeight, int viewportW, int viewportH)
     {
+        if (srcWidth == 0 || srcHeight == 0) return _zoomFactor;
+
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
         var widthScale = (viewportW - horizontalPadding) / srcWidth;

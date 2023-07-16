@@ -997,7 +997,6 @@ namespace ImageGlass
             PicMain.Size = new Size(1661, 833);
             PicMain.SourceSelection = (RectangleF)resources.GetObject("PicMain.SourceSelection");
             PicMain.TabIndex = 2;
-            PicMain.ZoomFactor = float.NaN;
             PicMain.OnZoomChanged += PicMain_OnZoomChanged;
             PicMain.OnNavLeftClicked += PicMain_OnNavLeftClicked;
             PicMain.OnNavRightClicked += PicMain_OnNavRightClicked;
