@@ -114,7 +114,8 @@ export default class HapplaBoxViewer {
   private static async onWeb2ZoomFactorChanged(_: Web2BackendMsgNames, data: {
     ZoomFactor: number,
     IsManualZoom: boolean,
+    ZoomDelta: number,
   }) {
-    await _boxEl.setZoomFactor(data.ZoomFactor, data.IsManualZoom, _transitionDuration);
+    await _boxEl.setZoomFactor(data.ZoomFactor, data.IsManualZoom, data.ZoomDelta, _transitionDuration);
   }
 }

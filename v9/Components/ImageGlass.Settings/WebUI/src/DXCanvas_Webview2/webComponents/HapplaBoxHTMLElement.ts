@@ -151,7 +151,14 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     return this.#box.setZoomMode(mode, zoomLockFactor, duration);
   }
 
-  public setZoomFactor(zoomFactor: number, isManualZoom: boolean, duration = 0) {
+  public setZoomFactor(zoomFactor: number, isManualZoom: boolean, zoomDelta = 1, duration = 0) {
+    const x = this.#box.pointerLocation.x ?? -1;
+    const y = this.#box.pointerLocation.y ?? -1;
+
+    if (zoomDelta !== 0 && x >= 0 && y >= 0) {
+      return this.#box.zoomByDelta(zoomDelta, x, y, isManualZoom, duration);
+    }
+
     return this.#box.zoomTo(zoomFactor, { isManualZoom, duration });
   }
 

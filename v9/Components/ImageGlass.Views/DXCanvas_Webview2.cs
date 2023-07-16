@@ -369,14 +369,25 @@ public partial class DXCanvas
     /// <summary>
     /// Sets zoom factor for <see cref="Web2"/>.
     /// </summary>
-    private void SetZoomFactorWeb2(float zoomFactor, bool isManualZoom)
+    /// <param name="zoomFactor"></param>
+    /// <param name="isManualZoom"></param>
+    /// <param name="zoomDelta">
+    /// <list type="bullet">
+    ///   <item>If <c>zoomFactor equals 1</c>, use <paramref name="zoomFactor"/> to zoom.</item>
+    ///   <item>If <c>zoomFactor is greater than 1</c>, performs zoom in.</item>
+    ///   <item>If <c>zoomFactor is less than 1</c>, performs zoom out.</item>
+    /// </list>
+    /// </param>
+    private void SetZoomFactorWeb2(float zoomFactor, bool isManualZoom, float zoomDelta = 1f)
     {
         var obj = new ExpandoObject();
         _ = obj.TryAdd("ZoomFactor", zoomFactor);
         _ = obj.TryAdd("IsManualZoom", isManualZoom);
+        _ = obj.TryAdd("ZoomDelta", zoomDelta);
 
         Web2.PostWeb2Message(Web2BackendMsgNames.SET_ZOOM_FACTOR, BHelper.ToJson(obj));
     }
+
 
     #endregion // Private methods
 

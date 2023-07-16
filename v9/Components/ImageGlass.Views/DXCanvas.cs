@@ -2419,13 +2419,21 @@ public partial class DXCanvas : DXControl
             location = ImageViewportCenterPoint;
         }
 
+
         _oldZoomFactor = _zoomFactor;
         _zoomFactor = newZoomFactor;
         _shouldRecalculateDrawingRegion = true;
-
-
         _isManualZoom = true;
         _zoommedPoint = location.ToVector2();
+
+        if (UseWebview2)
+        {
+            var newDelta = _zoomFactor / _oldZoomFactor;
+            SetZoomFactorWeb2(_zoomFactor, _isManualZoom, newDelta);
+
+            return false;
+        }
+
 
         if (requestRerender)
         {
