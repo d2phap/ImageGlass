@@ -12,7 +12,7 @@ export class HapplaBox {
   #resizeObserver: ResizeObserver;
 
   #isContentElDOMChanged = false;
-  #isManualZoom = false;
+  #pointerLocation: { x?: number, y?: number } = {};
 
   private animationFrame: number;
   private isMoving = false;
@@ -69,7 +69,7 @@ export class HapplaBox {
       .scaleSelf(this.zoomFactor)
       .translateSelf(this.options.panOffset.x, this.options.panOffset.y);
 
-    this.zoomDistance = this.zoomDistance.bind(this);
+    this.zoomByDelta = this.zoomByDelta.bind(this);
     this.moveDistance = this.moveDistance.bind(this);
     this.startMoving = this.startMoving.bind(this);
     this.stopMoving = this.stopMoving.bind(this);
@@ -86,6 +86,8 @@ export class HapplaBox {
     this.onContentElDOMChanged = this.onContentElDOMChanged.bind(this);
     this.onResizing = this.onResizing.bind(this);
     this.onMouseWheel = this.onMouseWheel.bind(this);
+    this.onPointerEnter = this.onPointerEnter.bind(this);
+    this.onPointerLeave = this.onPointerLeave.bind(this);
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onPointerUp = this.onPointerUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
@@ -107,6 +109,10 @@ export class HapplaBox {
   }
 
   // #region Getters & Setters
+  get pointerLocation(): { x?: number, y?: number } {
+    return this.#pointerLocation || {};
+  }
+
   get imageRendering() {
     return this.options.imageRendering;
   }
@@ -167,7 +173,16 @@ export class HapplaBox {
     const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
     const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
 
-    this.zoomDistance(delta, e.clientX, e.clientY, true);
+    this.zoomByDelta(delta, e.clientX, e.clientY, true);
+  }
+
+  private onPointerEnter(e: PointerEvent) {
+    this.#pointerLocation = { x: e.pageX, y: e.pageY };
+  }
+
+  private onPointerLeave(e: PointerEvent) {
+    this.#pointerLocation = {};
+    this.onPointerUp(e);
   }
 
   private onPointerDown(e: PointerEvent) {
@@ -184,19 +199,21 @@ export class HapplaBox {
     this.options.panOffset.y = e.clientY;
   }
 
-  private onPointerMove(event: PointerEvent) {
+  private onPointerMove(e: PointerEvent) {
+    this.#pointerLocation = { x: e.pageX, y: e.pageY };
+
     // Only run this function if the pointer is down
     if (!this.isPointerDown) {
       return;
     }
 
     this.moveDistance(
-      event.clientX - this.options.panOffset.x,
-      event.clientY - this.options.panOffset.y,
+      e.clientX - this.options.panOffset.x,
+      e.clientY - this.options.panOffset.y,
     );
 
-    this.options.panOffset.x = event.clientX;
-    this.options.panOffset.y = event.clientY;
+    this.options.panOffset.x = e.clientX;
+    this.options.panOffset.y = e.clientY;
 
     this.options.onPanning(this.domMatrix.e, this.domMatrix.f);
   }
@@ -307,72 +324,6 @@ export class HapplaBox {
     this.options.onPanning(this.domMatrix.e, this.domMatrix.f);
 
     this.applyTransform();
-  }
-
-  private zoomDistance(
-    delta: number,
-    dx?: number,
-    dy?: number,
-    isManualZoom = false,
-    duration: number = 0,
-  ) {
-    if (!this.options.allowZoom) return;
-
-    // update the current zoom factor
-    this.options.zoomFactor = this.domMatrix.a;
-
-    const oldZoom = this.options.zoomFactor;
-    const newZoom = oldZoom * delta;
-
-    // raise event onBeforeZoomChanged
-    this.options.onBeforeZoomChanged({
-      zoomFactor: this.zoomFactor,
-      x: this.domMatrix.e,
-      y: this.domMatrix.f,
-      isManualZoom,
-      isZoomModeChanged: false,
-    });
-
-    // restrict the zoom factor
-    this.options.zoomFactor = Math.min(
-      Math.max(this.options.minZoom, newZoom),
-      this.options.maxZoom,
-    );
-
-    const newX = (dx ?? this.boxEl.offsetLeft) - this.boxEl.offsetLeft;
-    const newY = (dy ?? this.boxEl.offsetTop) - this.boxEl.offsetTop;
-    let newDelta = delta;
-
-    // check zoom -> maxZoom
-    if (newZoom * this.options.scaleRatio > this.options.maxZoom) {
-      newDelta = this.dpi(this.options.maxZoom) / oldZoom;
-      this.options.zoomFactor = this.dpi(this.options.maxZoom);
-    }
-
-    // check zoom -> minZoom
-    else if (newZoom * this.options.scaleRatio < this.options.minZoom) {
-      newDelta = this.dpi(this.options.minZoom) / oldZoom;
-      this.options.zoomFactor = this.dpi(this.options.minZoom);
-    }
-
-    this.domMatrix = new DOMMatrix()
-      .translateSelf(newX, newY)
-      .scaleSelf(newDelta)
-      .translateSelf(-newX, -newY)
-      .multiplySelf(this.domMatrix);
-
-    // raise event onAfterZoomChanged
-    this.options.onAfterZoomChanged({
-      zoomFactor: this.zoomFactor,
-      x: this.domMatrix.e,
-      y: this.domMatrix.f,
-      isManualZoom,
-      isZoomModeChanged: false,
-    });
-
-
-    this.updateImageRendering();
-    this.applyTransform(duration);
   }
 
   private startMoving() {
@@ -545,6 +496,74 @@ export class HapplaBox {
     await this.applyTransform(options.duration);
   }
 
+  public async zoomByDelta(
+    // zoom in: delta > 1
+    // zoom out: delta < 1
+    delta: number,
+    pageX?: number,
+    pageY?: number,
+    isManualZoom = false,
+    duration: number = 0,
+  ) {
+    if (!this.options.allowZoom) return;
+
+    // update the current zoom factor
+    this.options.zoomFactor = this.domMatrix.a;
+
+    const oldZoom = this.options.zoomFactor;
+    const newZoom = oldZoom * delta;
+
+    // raise event onBeforeZoomChanged
+    this.options.onBeforeZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom,
+      isZoomModeChanged: false,
+    });
+
+    // restrict the zoom factor
+    this.options.zoomFactor = Math.min(
+      Math.max(this.options.minZoom, newZoom),
+      this.options.maxZoom,
+    );
+
+    const newX = (pageX ?? this.boxEl.offsetLeft) - this.boxEl.offsetLeft;
+    const newY = (pageY ?? this.boxEl.offsetTop) - this.boxEl.offsetTop;
+    let newDelta = delta;
+
+    // check zoom -> maxZoom
+    if (newZoom * this.options.scaleRatio > this.options.maxZoom) {
+      newDelta = this.dpi(this.options.maxZoom) / oldZoom;
+      this.options.zoomFactor = this.dpi(this.options.maxZoom);
+    }
+
+    // check zoom -> minZoom
+    else if (newZoom * this.options.scaleRatio < this.options.minZoom) {
+      newDelta = this.dpi(this.options.minZoom) / oldZoom;
+      this.options.zoomFactor = this.dpi(this.options.minZoom);
+    }
+
+    this.domMatrix = new DOMMatrix()
+      .translateSelf(newX, newY)
+      .scaleSelf(newDelta)
+      .translateSelf(-newX, -newY)
+      .multiplySelf(this.domMatrix);
+
+    // raise event onAfterZoomChanged
+    this.options.onAfterZoomChanged({
+      zoomFactor: this.zoomFactor,
+      x: this.domMatrix.e,
+      y: this.domMatrix.f,
+      isManualZoom,
+      isZoomModeChanged: false,
+    });
+
+
+    this.updateImageRendering();
+    await this.applyTransform(duration);
+  }
+
   public async applyTransform(duration = 0) {
     await new Promise((resolve) => {
       this.boxContentEl.style.transform = `${this.domMatrix.toString()}`;
@@ -577,9 +596,10 @@ export class HapplaBox {
 
     this.boxEl.addEventListener('wheel', this.onMouseWheel, { passive: true });
 
+    this.boxEl.addEventListener('pointerenter', this.onPointerEnter);
+    this.boxEl.addEventListener('pointerleave', this.onPointerLeave);
     this.boxEl.addEventListener('pointerdown', this.onPointerDown);
     this.boxEl.addEventListener('pointerup', this.onPointerUp);
-    this.boxEl.addEventListener('pointerleave', this.onPointerUp);
     this.boxEl.addEventListener('pointermove', this.onPointerMove);
 
     // this.boxEl.addEventListener('keydown', this.onKeyDown);
@@ -592,9 +612,10 @@ export class HapplaBox {
 
     this.boxEl.removeEventListener('mousewheel', this.onMouseWheel);
 
+    this.boxEl.removeEventListener('pointerenter', this.onPointerEnter);
+    this.boxEl.removeEventListener('pointerleave', this.onPointerLeave);
     this.boxEl.removeEventListener('pointerdown', this.onPointerDown);
     this.boxEl.removeEventListener('pointerup', this.onPointerUp);
-    this.boxEl.removeEventListener('pointerleave', this.onPointerUp);
     this.boxEl.removeEventListener('pointermove', this.onPointerMove);
 
     // this.boxEl.removeEventListener('keydown', this.onKeyDown);
