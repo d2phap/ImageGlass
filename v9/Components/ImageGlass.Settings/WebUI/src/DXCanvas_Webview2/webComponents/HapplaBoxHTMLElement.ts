@@ -117,12 +117,12 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     this.#box.enable();
   }
 
-  public async loadImage(url: string, zoomMode: ZoomMode = ZoomMode.AutoZoom) {
+  public async loadImage(url: string, zoomMode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1) {
     const html = imgTemplate({ src: url });
-    await this.loadHtml(html, zoomMode);
+    await this.loadHtml(html, zoomMode, zoomLockFactor);
   }
 
-  public async loadHtml(html: string, zoomMode: ZoomMode = ZoomMode.AutoZoom) {
+  public async loadHtml(html: string, zoomMode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1) {
     this.#wrapperEl.style.opacity = '0';
 
     await this.#box.loadHtmlContent(html);
@@ -142,16 +142,16 @@ export class HapplaBoxHTMLElement extends HTMLElement {
       }
     });
 
-    await this.setZoomMode(zoomMode);
+    await this.setZoomMode(zoomMode, zoomLockFactor);
 
     this.#wrapperEl.style.opacity = '1';
   }
 
-  public setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {
-    return this.#box.setZoomMode(mode, duration);
+  public setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1, duration = 0) {
+    return this.#box.setZoomMode(mode, zoomLockFactor, duration);
   }
 
-  public setZoomFactor(zoomFactor: number, isManualZoom: boolean, duration?: number) {
+  public setZoomFactor(zoomFactor: number, isManualZoom: boolean, duration = 0) {
     return this.#box.zoomTo(zoomFactor, { isManualZoom, duration });
   }
 

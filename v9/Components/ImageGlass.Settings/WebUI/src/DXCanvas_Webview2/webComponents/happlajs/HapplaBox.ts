@@ -409,7 +409,12 @@ export class HapplaBox {
 
   // #region Public functions
   public async loadHtmlContent(html: string) {
+    // move and scale image to center to avoid flickering
+    const currentZoomFactor = this.options.zoomFactor;
     await this.zoomTo(0.01, { isManualZoom: false });
+
+    // restore original zoom factor for ZoomLock
+    this.options.zoomFactor = currentZoomFactor;
 
     this.#isContentElDOMChanged = false;
     this.contentEl.innerHTML = html;
@@ -436,7 +441,7 @@ export class HapplaBox {
     await this.applyTransform(duration);
   }
 
-  public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, duration?: number) {
+  public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1, duration = 0) {
     const fullW = this.contentEl.scrollWidth / this.scaleRatio;
     const fullH = this.contentEl.scrollHeight / this.scaleRatio;
     const horizontalPadding = this.padding.left + this.padding.right;
@@ -458,7 +463,7 @@ export class HapplaBox {
       zoomFactor = Math.max(widthScale, heightScale);
     }
     else if (mode === ZoomMode.LockZoom) {
-      zoomFactor = this.zoomFactor;
+      zoomFactor = zoomLockFactor > 0 ? zoomLockFactor : this.zoomFactor;
     }
     // AutoZoom
     else {

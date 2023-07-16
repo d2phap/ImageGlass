@@ -17,7 +17,6 @@ enum Web2FrontendMsgNames {
 const _transitionDuration = 300;
 let _boxEl: HapplaBoxHTMLElement = undefined;
 let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
-let _zoomFactor = 1;
 let _isManualZoom = false;
 
 export default class HapplaBoxViewer {
@@ -79,7 +78,6 @@ export default class HapplaBoxViewer {
     isManualZoom: boolean,
     isZoomModeChanged: boolean,
   }) {
-    _zoomFactor = _zoomFactor;
     _isManualZoom = e.isManualZoom;
 
     post(Web2FrontendMsgNames.ON_ZOOM_CHANGED, {
@@ -91,16 +89,17 @@ export default class HapplaBoxViewer {
 
   private static async onWeb2LoadContentRequested(eventName: Web2BackendMsgNames, data: {
     ZoomMode: ZoomMode,
+    ZoomFactor: number,
     Html?: string,
     Url?: string,
   }) {
     _zoomMode = data.ZoomMode;
 
     if (eventName === Web2BackendMsgNames.SET_IMAGE) {
-      await _boxEl.loadImage(data.Url, _zoomMode);
+      await _boxEl.loadImage(data.Url, _zoomMode, data.ZoomFactor);
     }
     else if (eventName === Web2BackendMsgNames.SET_HTML) {
-      await _boxEl.loadHtml(data.Html, _zoomMode);
+      await _boxEl.loadHtml(data.Html, _zoomMode, data.ZoomFactor);
     }
   }
 
@@ -109,7 +108,7 @@ export default class HapplaBoxViewer {
     IsManualZoom: boolean,
   }) {
     _zoomMode = data.ZoomMode;
-    await _boxEl.setZoomMode(data.ZoomMode, _transitionDuration);
+    await _boxEl.setZoomMode(data.ZoomMode, -1, _transitionDuration);
   }
 
   private static async onWeb2ZoomFactorChanged(_: Web2BackendMsgNames, data: {

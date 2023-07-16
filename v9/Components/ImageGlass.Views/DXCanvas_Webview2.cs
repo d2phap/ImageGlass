@@ -191,6 +191,7 @@ public partial class DXCanvas
             string msgName;
             var obj = new ExpandoObject();
             _ = obj.TryAdd("ZoomMode", ZoomMode.ToString());
+            _ = obj.TryAdd("ZoomFactor", ZoomFactor);
 
             // if image file is SVG, we read its content
             if (!string.IsNullOrWhiteSpace(data.Filename)
