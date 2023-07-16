@@ -812,14 +812,13 @@ public partial class FrmMain : ThemedForm
             var imgFilePath = string.IsNullOrEmpty(filePath)
                 ? Local.Images.GetFilePath(Local.CurrentIndex)
                 : filePath;
+            // check if we should use Webview2 viewer
+            var useWebview2 = imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
 
 
             // set busy state
             Local.IsBusy = true;
-
-            // check if we should use Webview2 viewer
-            PicMain.UseWebview2 = imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
-
+            
             _uiReporter.Report(new(new ImageLoadingEventArgs()
             {
                 Index = Local.CurrentIndex,
@@ -827,6 +826,7 @@ public partial class FrmMain : ThemedForm
                 FilePath = imgFilePath,
                 FrameIndex = Local.CurrentFrameIndex,
                 IsViewingSeparateFrame = frameIndex != null,
+                UseWebview2 = useWebview2,
             }, nameof(Local.RaiseImageLoadingEvent)));
 
 
@@ -839,7 +839,7 @@ public partial class FrmMain : ThemedForm
 
 
             // if we are using Webview2
-            if (PicMain.UseWebview2)
+            if (useWebview2)
             {
                 photo = new IgPhoto(imgFilePath)
                 {
@@ -878,6 +878,7 @@ public partial class FrmMain : ThemedForm
                 Data = photo,
                 Error = photo?.Error,
                 ResetZoom = resetZoom,
+                UseWebview2 = useWebview2,
             }, nameof(Local.RaiseImageLoadedEvent)));
 
         }
@@ -1016,9 +1017,8 @@ public partial class FrmMain : ThemedForm
         Exception? error = null;
 
         // if image needs to display in Webview2 viweer
-        if (PicMain.UseWebview2)
+        if (e.UseWebview2)
         {
-            PicMain.SetImage(null);
             PicMain.ClearMessage();
 
             try
@@ -1053,7 +1053,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // use native viewer to display image
-        else if (!(e.Data?.ImgData.IsImageNull ?? true) && !PicMain.UseWebview2)
+        else if (!(e.Data?.ImgData.IsImageNull ?? true))
         {
             // delete clipboard image
             Local.ClipboardImage?.Dispose();

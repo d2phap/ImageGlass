@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.WinForms;
 using System.Dynamic;
 
 namespace ImageGlass.Viewer;
@@ -29,7 +28,6 @@ namespace ImageGlass.Viewer;
 public partial class DXCanvas
 {
     private bool _isWeb2NavigationDone = false;
-    private bool _useWebview2 = false;
     private Web2? _web2 = null;
 
 
@@ -52,29 +50,14 @@ public partial class DXCanvas
     /// Gets, sets value indicates that the <see cref="DXCanvas"/>
     /// should use <see cref="Web2"/> to render the image.
     /// </summary>
-    public bool UseWebview2
-    {
-        get => _useWebview2;
-        set
-        {
-            if (_useWebview2 != value)
-            {
-                if (value && _web2 == null)
-                {
-                    _ = InitializeWeb2Async();
-                }
-                else
-                {
-                    _ = Web2.SetWeb2VisibilityAsync(value);
-                }
-            }
-
-            _useWebview2 = value;
-        }
-    }
+    public bool UseWebview2 => _imageSource == ImageSource.Webview2;
 
     #endregion // Properties
 
+
+
+    // Public events
+    #region Public events
 
     /// <summary>
     /// Occurs when <see cref="Web2"/> navigation is completed.
@@ -91,78 +74,8 @@ public partial class DXCanvas
     /// </summary>
     public event EventHandler<KeyEventArgs> Web2KeyDown;
 
+    #endregion // Public events
 
-    // Private methods
-    #region Private methods
-
-    /// <summary>
-    /// Initializes <see cref="Web2"/> control, adds it into the <see cref="DXCanvas"/> control.
-    /// </summary>
-    private async Task InitializeWeb2Async()
-    {
-        if (InvokeRequired)
-        {
-            await Invoke(InitializeWeb2Async);
-            return;
-        }
-
-        _web2 = new Web2();
-        _isWeb2NavigationDone = false;
-
-        ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
-        SuspendLayout();
-
-        Web2.AllowExternalDrop = true;
-        Web2.CreationProperties = null;
-        Web2.Name = nameof(Web2);
-        Web2.Size = Size;
-        Web2.Dock = DockStyle.Fill;
-        Web2.ZoomFactor = 1D;
-        Web2.Visible = true;
-
-        Web2.Web2Ready += Web2_Web2Ready;
-        Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
-        Web2.Web2MessageReceived += Web2_Web2MessageReceived;
-        Web2.Web2KeyDown += Web2_Web2KeyDown;
-        Web2.Web2ContextMenuRequested += Web2_Web2ContextMenuRequested;
-
-
-        try
-        {
-            Controls.Add(Web2);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"{ex.Message}\r\n\r\n at {nameof(InitializeWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
-        ResumeLayout(false);
-
-        await Web2.EnsureWeb2Async();
-    }
-
-
-    /// <summary>
-    /// Dispose <see cref="WebView2"/> resources.
-    /// </summary>
-    private void DisposeWebview2Control()
-    {
-        Controls.Remove(_web2);
-
-        if (_web2 != null)
-        {
-            _web2.Web2Ready -= Web2_Web2Ready;
-            _web2.Web2NavigationCompleted -= Web2_Web2NavigationCompleted;
-            _web2.Web2KeyDown -= Web2_Web2KeyDown;
-            _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
-            _web2.Dispose();
-            _web2 = null;
-        }
-    }
-
-
-    #endregion // Private methods
 
 
     // Web2 events
@@ -255,19 +168,8 @@ public partial class DXCanvas
 
 
 
-
-
-    /// <summary>
-    /// Updates language of <see cref="Web2"/>.
-    /// </summary>
-    public async Task LoadWeb2LanguageAsync(string langJson)
-    {
-        await Web2.ExecuteScriptAsync($"""
-            window._page.lang = {langJson};
-            window._page.loadLanguage();
-        """);
-    }
-
+    // Public methods
+    #region Public methods
 
     /// <summary>
     /// Loads the image file into <see cref="Web2"/>.
@@ -278,6 +180,12 @@ public partial class DXCanvas
 
         try
         {
+            await InitializeWeb2Async();
+
+            // release native resources
+            SetImage(null);
+
+            // load image data for web2
             LoadImageDataWeb2(data?.Metadata);
 
             string msgName;
@@ -319,10 +227,99 @@ public partial class DXCanvas
 
 
     /// <summary>
+    /// Updates language of <see cref="Web2"/>.
+    /// </summary>
+    public async Task LoadWeb2LanguageAsync(string langJson)
+    {
+        await Web2.ExecuteScriptAsync($"""
+            window._page.lang = {langJson};
+            window._page.loadLanguage();
+        """);
+    }
+
+
+    #endregion // Public methods
+
+
+
+    // Private methods
+    #region Private methods
+
+    /// <summary>
+    /// Initializes <see cref="Web2"/> control, adds it into the <see cref="DXCanvas"/> control.
+    /// </summary>
+    private async Task InitializeWeb2Async()
+    {
+        if (InvokeRequired)
+        {
+            await Invoke(InitializeWeb2Async);
+            return;
+        }
+
+        if (_web2 != null) return;
+
+        _web2 = new Web2();
+        _isWeb2NavigationDone = false;
+
+        ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
+        SuspendLayout();
+
+        Web2.AllowExternalDrop = true;
+        Web2.CreationProperties = null;
+        Web2.Name = nameof(Web2);
+        Web2.Size = Size;
+        Web2.Dock = DockStyle.Fill;
+        Web2.ZoomFactor = 1D;
+        Web2.Visible = true;
+
+        Web2.Web2Ready += Web2_Web2Ready;
+        Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
+        Web2.Web2MessageReceived += Web2_Web2MessageReceived;
+        Web2.Web2KeyDown += Web2_Web2KeyDown;
+        Web2.Web2ContextMenuRequested += Web2_Web2ContextMenuRequested;
+
+
+        try
+        {
+            Controls.Add(Web2);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ex.Message}\r\n\r\n at {nameof(InitializeWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
+        ResumeLayout(false);
+
+        await Web2.EnsureWeb2Async();
+    }
+
+
+    /// <summary>
+    /// Dispose <see cref="Web2"/> resources.
+    /// </summary>
+    private void DisposeWeb2Control()
+    {
+        Controls.Remove(_web2);
+
+        if (_web2 != null)
+        {
+            _web2.Web2Ready -= Web2_Web2Ready;
+            _web2.Web2NavigationCompleted -= Web2_Web2NavigationCompleted;
+            _web2.Web2KeyDown -= Web2_Web2KeyDown;
+            _web2.Web2MessageReceived -= Web2_Web2MessageReceived;
+            _web2.Dispose();
+            _web2 = null;
+        }
+    }
+
+
+    /// <summary>
     /// Loads image data for Webview2.
     /// </summary>
     private void LoadImageDataWeb2(IgMetadata? imgData)
     {
+        Source = ImageSource.Webview2;
         SourceWidth = imgData?.Width ?? 0;
         SourceHeight = imgData?.Height ?? 0;
         CanImageAnimate = false;

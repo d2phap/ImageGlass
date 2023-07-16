@@ -98,6 +98,8 @@ public partial class DXCanvas : DXControl
     private TextureBrush? _checkerboardBrushGdip;
     private ComObject<ID2D1BitmapBrush1>? _checkerboardBrushD2D;
 
+    // Image source
+    private ImageSource _imageSource = ImageSource.Null;
     private AnimatorSource _animatorSource = AnimatorSource.None;
     private ImgAnimator? _imgAnimator = null;
     private AnimationSource _animationSource = AnimationSource.None;
@@ -520,7 +522,15 @@ public partial class DXCanvas : DXControl
     /// Checks if the input image is null.
     /// </summary>
     [Browsable(false)]
-    public ImageSource Source { get; private set; } = ImageSource.Null;
+    public ImageSource Source
+    {
+        get => _imageSource;
+        private set
+        {
+            _imageSource = value;
+            _ = Web2.SetWeb2VisibilityAsync(value == ImageSource.Webview2);
+        }
+    }
 
     /// <summary>
     /// Gets the input image's width.
@@ -1042,7 +1052,7 @@ public partial class DXCanvas : DXControl
         _clickTimer.Dispose();
         _msgTokenSrc?.Dispose();
 
-        DisposeWebview2Control();
+        DisposeWeb2Control();
     }
 
     protected override void OnMouseClick(MouseEventArgs e)

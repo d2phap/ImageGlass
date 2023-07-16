@@ -50,6 +50,7 @@ public enum ImageSource
 
     Direct2D = 1 << 1,
     GDIPlus = 1 << 2,
+    Webview2 = 1 << 3,
 }
 
 
