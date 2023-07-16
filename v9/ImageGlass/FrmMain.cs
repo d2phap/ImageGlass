@@ -818,7 +818,7 @@ public partial class FrmMain : ThemedForm
 
             // set busy state
             Local.IsBusy = true;
-            
+
             _uiReporter.Report(new(new ImageLoadingEventArgs()
             {
                 Index = Local.CurrentIndex,

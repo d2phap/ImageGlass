@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
+using ImageGlass.Base.WinApi;
 using Microsoft.Web.WebView2.Core;
 using System.Dynamic;
 
@@ -29,6 +30,7 @@ public partial class DXCanvas
 {
     private bool _isWeb2NavigationDone = false;
     private Web2? _web2 = null;
+    private MouseEventArgs? _web2PointerDownEventArgs = null;
 
 
     // Properties
@@ -101,8 +103,6 @@ public partial class DXCanvas
     }
 
 
-    private MouseEventArgs? _web2PointerDownEventArgs = null;
-
     private void Web2_Web2ContextMenuRequested(object? sender, CoreWebView2ContextMenuRequestedEventArgs e)
     {
         if (_web2PointerDownEventArgs == null)
@@ -161,6 +161,11 @@ public partial class DXCanvas
         {
             _web2PointerDownEventArgs = ParseMouseEventJson(e.Data);
             Web2PointerDown?.Invoke(this, _web2PointerDownEventArgs);
+        }
+        else if (e.Name == Web2FrontendMsgNames.ON_MOUSE_WHEEL)
+        {
+            var mouseWheelEventArgs = ParseMouseEventJson(e.Data);
+            this.OnMouseWheel(mouseWheelEventArgs);
         }
     }
 
@@ -337,10 +342,16 @@ public partial class DXCanvas
         var dict = BHelper.ParseJson<ExpandoObject>(json)
             .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
 
+        var dpi = DpiApi.DpiScale;
         var x = 0f;
         var y = 0f;
+        var delta = 0d;
         var button = MouseButtons.Left;
 
+        if (dict.TryGetValue("Dpi", out var dpiStr))
+        {
+            _ = float.TryParse(dpiStr, out dpi);
+        }
         if (dict.TryGetValue("X", out var xStr))
         {
             _ = float.TryParse(xStr, out x);
@@ -348,6 +359,18 @@ public partial class DXCanvas
         if (dict.TryGetValue("Y", out var yStr))
         {
             _ = float.TryParse(yStr, out y);
+        }
+        if (dict.TryGetValue("Delta", out var deltaStr))
+        {
+            if (double.TryParse(deltaStr, out delta))
+            {
+                // delta direction is opposite
+                delta *= -1;
+                if (delta <= -100 || delta >= 100)
+                {
+                    delta = Math.CopySign(SystemInformation.MouseWheelScrollDelta, delta);
+                }
+            }
         }
         if (dict.TryGetValue("Button", out var buttonStr))
         {
@@ -360,9 +383,9 @@ public partial class DXCanvas
             else button = MouseButtons.Left;
         }
 
-        var point = this.ScaleToDpi(new Point((int)x, (int)y));
+        var point = new Point((int)(x * dpi), (int)(y * dpi));
 
-        return new MouseEventArgs(button, 1, point.X, point.Y, 0);
+        return new MouseEventArgs(button, 1, point.X, point.Y, (int)delta);
     }
 
 

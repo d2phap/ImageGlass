@@ -133,5 +133,6 @@ public static class Web2FrontendMsgNames
 {
     public static string ON_ZOOM_CHANGED => "ON_ZOOM_CHANGED";
     public static string ON_POINTER_DOWN => "ON_POINTER_DOWN";
+    public static string ON_MOUSE_WHEEL => "ON_MOUSE_WHEEL";
 
 }
