@@ -528,7 +528,11 @@ public partial class DXCanvas : DXControl
         private set
         {
             _imageSource = value;
-            _ = Web2.SetWeb2VisibilityAsync(value == ImageSource.Webview2);
+
+            if (_web2 != null)
+            {
+                _ = _web2.SetWeb2VisibilityAsync(value == ImageSource.Webview2);
+            }
         }
     }
 
