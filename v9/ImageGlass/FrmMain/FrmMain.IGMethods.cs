@@ -498,7 +498,7 @@ public partial class FrmMain
     {
         var point = PicMain.PointToClient(Cursor.Position);
 
-        PicMain.ZoomToPoint(factor, point);
+        _ = PicMain.ZoomToPoint(factor, point);
     }
 
 

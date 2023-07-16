@@ -2309,6 +2309,13 @@ public partial class DXCanvas : DXControl
             _shouldRecalculateDrawingRegion = true;
             _isManualZoom = true;
 
+            // if using Webview2
+            if (UseWebview2)
+            {
+                SetZoomFactorWeb2(_zoomFactor, _isManualZoom);
+                return true;
+            }
+
             PanTo(zoomedDistance.Width, zoomedDistance.Height, requestRerender);
 
             // emit OnZoomChanged event
