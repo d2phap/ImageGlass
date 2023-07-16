@@ -9,19 +9,19 @@ const styles = `
     user-select: none;
   }
 
-  .happlabox-container {
+  .hp-box {
     margin: auto;
     max-width: 100vw;
     max-height: 100vh;
     width: 100vw;
     height: 100vh;
   }
-  .happlabox-container:focus,
-  .happlabox-container:focus-visible {
+  .hp-box:focus,
+  .hp-box:focus-visible {
     outline: none;
   }
 
-  :host([checkerboard=true i]) .happlabox-container {
+  :host([checkerboard=true i]) .hp-box {
     background-size: 1.5rem 1.5rem;
     background-image: conic-gradient(
       rgb(255 255 255 / 0.1) 25%,
@@ -31,14 +31,14 @@ const styles = `
     );
   }
 
-  .happlabox-wrapper {
+  .hp-box-wrapper {
     width: 100%;
     height: 100%;
     opacity: 0;
     transition: all 100ms ease;
   }
 
-  .happlabox-content {
+  .hp-box-content {
     display: inline-flex;
   }
 `;
@@ -53,9 +53,9 @@ const imgTemplate = taggedTemplate<{
 export class HapplaBoxHTMLElement extends HTMLElement {
   #box: HapplaBox;
 
-  #containerEl: HTMLDivElement;
+  #boxEl: HTMLDivElement;
   #wrapperEl: HTMLDivElement;
-  #contentEl: HTMLDivElement;
+  #boxContentEl: HTMLDivElement;
 
   #options: IHapplaBoxOptions = {};
 
@@ -88,31 +88,31 @@ export class HapplaBoxHTMLElement extends HTMLElement {
 
 
     // content
-    const contentEl = document.createElement('div');
-    contentEl.classList.add('happlabox-content');
+    const boxContentEl = document.createElement('div');
+    boxContentEl.classList.add('hp-box-content');
 
     // wrapper
     const wrapperEl = document.createElement('div');
-    wrapperEl.classList.add('happlabox-wrapper');
-    wrapperEl.appendChild(contentEl);
+    wrapperEl.classList.add('hp-box-wrapper');
+    wrapperEl.appendChild(boxContentEl);
 
     // container
-    const containerEl = document.createElement('div');
-    containerEl.tabIndex = 0;
-    containerEl.classList.add('happlabox-container');
-    containerEl.appendChild(wrapperEl);
+    const boxEl = document.createElement('div');
+    boxEl.tabIndex = 0;
+    boxEl.classList.add('hp-box');
+    boxEl.appendChild(wrapperEl);
 
-    this.#contentEl = contentEl;
+    this.#boxContentEl = boxContentEl;
     this.#wrapperEl = wrapperEl;
-    this.#containerEl = containerEl;
+    this.#boxEl = boxEl;
 
-    this.shadowRoot.appendChild(this.#containerEl);
+    this.shadowRoot.appendChild(this.#boxEl);
   }
 
 
   public initialize(options: IHapplaBoxOptions = {}) {
     this.#options = merge(this.#options, options);
-    this.#box = new HapplaBox(this.#containerEl, this.#contentEl, this.#options);
+    this.#box = new HapplaBox(this.#boxEl, this.#boxContentEl, this.#options);
 
     this.#box.enable();
   }
@@ -128,7 +128,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     await this.#box.loadHtmlContent(html);
 
     // fixed sixe of SVG
-    const svgEls = Array.from(this.#contentEl.querySelectorAll('svg:not([width]), svg:not([height])'));
+    const svgEls = Array.from(this.#boxContentEl.querySelectorAll('svg:not([width]), svg:not([height])'));
     svgEls.forEach((svgEl: SVGMarkerElement) => {
       const { width, height } = svgEl.viewBox.baseVal;
 
@@ -156,7 +156,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
   public focus() {
-    this.#containerEl.focus({ preventScroll: true });
+    this.#boxEl.focus({ preventScroll: true });
   }
 }
 

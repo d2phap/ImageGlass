@@ -3,8 +3,8 @@ import { IHapplaBoxOptions, InterpolationMode, IPadding, ZoomMode } from './Happ
 import { pause } from '@/helpers';
 
 export class HapplaBox {
-  private contentEl: HTMLElement;
   private boxEl: HTMLElement;
+  private boxContentEl: HTMLElement;
   private domMatrix: DOMMatrix;
   private isPointerDown = false;
 
@@ -54,12 +54,12 @@ export class HapplaBox {
   /**
    * Initializes HapplaBox element.
    * @param boxEl Box element
-   * @param contentEl Content element
+   * @param boxContentEl Content element
    * @param options Options
    */
-  constructor(boxEl: HTMLElement, contentEl: HTMLElement, options?: IHapplaBoxOptions) {
+  constructor(boxEl: HTMLElement, boxContentEl: HTMLElement, options?: IHapplaBoxOptions) {
     this.boxEl = boxEl;
-    this.contentEl = contentEl;
+    this.boxContentEl = boxContentEl;
     this.options = merge({}, this.defaultOptions, options);
 
     // correct zoomFactor after calculating scaleRatio
@@ -98,7 +98,7 @@ export class HapplaBox {
 
     this.disable();
 
-    this.contentEl.style.transformOrigin = 'top left';
+    this.boxContentEl.style.transformOrigin = 'top left';
     this.boxEl.style.touchAction = 'none';
     this.boxEl.style.overflow = 'hidden';
 
@@ -161,9 +161,7 @@ export class HapplaBox {
 
   private onMouseWheel(e: WheelEvent) {
     // ignore horizontal scroll events
-    if (e.deltaY === 0) {
-      return;
-    }
+    if (e.deltaY === 0) return;
 
     const direction = e.deltaY < 0 ? 'up' : 'down';
     const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
@@ -288,15 +286,15 @@ export class HapplaBox {
     switch (this.imageRendering) {
       case InterpolationMode.Auto:
         if (this.zoomFactor <= 1.0) {
-          this.contentEl.style.imageRendering = InterpolationMode.CrispEdges;
+          this.boxContentEl.style.imageRendering = InterpolationMode.CrispEdges;
         }
         else {
-          this.contentEl.style.imageRendering = InterpolationMode.Pixelated;
+          this.boxContentEl.style.imageRendering = InterpolationMode.Pixelated;
         }
         break;
 
       default:
-        this.contentEl.style.imageRendering = this.imageRendering;
+        this.boxContentEl.style.imageRendering = this.imageRendering;
         break;
     }
   }
@@ -417,13 +415,13 @@ export class HapplaBox {
     this.options.zoomFactor = currentZoomFactor;
 
     this.#isContentElDOMChanged = false;
-    this.contentEl.innerHTML = html;
+    this.boxContentEl.innerHTML = html;
 
     while (!this.#isContentElDOMChanged) {
       await pause(10);
     }
 
-    const list = this.contentEl.querySelectorAll('img');
+    const list = this.boxContentEl.querySelectorAll('img');
     const imgs = Array.from(list);
 
     while (imgs.some((i) => !i.complete)) {
@@ -442,8 +440,8 @@ export class HapplaBox {
   }
 
   public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1, duration = 0) {
-    const fullW = this.contentEl.scrollWidth / this.scaleRatio;
-    const fullH = this.contentEl.scrollHeight / this.scaleRatio;
+    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio;
+    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio;
     const horizontalPadding = this.padding.left + this.padding.right;
     const verticalPadding = this.padding.top + this.padding.bottom;
     const widthScale = (this.boxEl.clientWidth - horizontalPadding) / fullW;
@@ -488,16 +486,14 @@ export class HapplaBox {
     duration?: number,
     isZoomModeChanged?: boolean,
   } = {}) {
-    const fullW = this.contentEl.scrollWidth / this.scaleRatio;
-    const fullH = this.contentEl.scrollHeight / this.scaleRatio;
+    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio;
+    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio;
     const horizontalPadding = this.padding.left + this.padding.right;
     const verticalPadding = this.padding.top + this.padding.bottom;
 
+    // center point
     let x = (this.boxEl.offsetWidth - horizontalPadding - (fullW * factor)) / 2;
     let y = (this.boxEl.offsetHeight - verticalPadding - (fullH * factor)) / 2;
-
-    // // move to center point
-    // await this.panTo(-fullW, -fullH);
 
     // change zoom factor
     this.zoomToPoint(factor, {
@@ -551,17 +547,17 @@ export class HapplaBox {
 
   public async applyTransform(duration = 0) {
     await new Promise((resolve) => {
-      this.contentEl.style.transform = `${this.domMatrix.toString()}`;
+      this.boxContentEl.style.transform = `${this.domMatrix.toString()}`;
 
       // apply animation
       if (duration > 0) {
         const transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-        this.contentEl.style.transition = transition;
+        this.boxContentEl.style.transition = transition;
 
         setTimeout(resolve, duration);
       }
       else {
-        this.contentEl.style.transition = '';
+        this.boxContentEl.style.transition = '';
         resolve(undefined);
       }
     });
@@ -574,7 +570,7 @@ export class HapplaBox {
     this.applyTransform();
 
     this.#resizeObserver.observe(this.boxEl);
-    this.#contentDOMObserver.observe(this.contentEl, {
+    this.#contentDOMObserver.observe(this.boxContentEl, {
       attributes: false,
       childList: true,
     });
