@@ -1,4 +1,4 @@
-import merge from 'lodash.merge';
+
 import { HapplaBox } from './happlajs/HapplaBox';
 import { IHapplaBoxOptions, ZoomMode } from './happlajs/HapplaBoxTypes';
 import { taggedTemplate } from '@/helpers';
@@ -57,8 +57,6 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   #wrapperEl: HTMLDivElement;
   #boxContentEl: HTMLDivElement;
 
-  #options: IHapplaBoxOptions = {};
-
   constructor() {
     super();
 
@@ -70,7 +68,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
   get options() {
-    return this.#options;
+    return this.#box.options;
   }
 
   private disconnectedCallback() {
@@ -111,8 +109,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
 
 
   public initialize(options: IHapplaBoxOptions = {}) {
-    this.#options = merge(this.#options, options);
-    this.#box = new HapplaBox(this.#boxEl, this.#boxContentEl, this.#options);
+    this.#box = new HapplaBox(this.#boxEl, this.#boxContentEl, options);
 
     this.#box.enable();
   }

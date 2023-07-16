@@ -92,10 +92,7 @@ export const postAsync = async <T = unknown>(name: string, data?: any, convertTo
     _webview.removeEvent(name);
   });
 
-  const msgData = convertToJson ? JSON.stringify(data) : data;
-
-  // @ts-ignore
-  window.chrome.webview?.postMessage({ name, data: msgData });
+  post(name, data, convertToJson);
 
   // wait for the returned data
   while (!hasResult) {

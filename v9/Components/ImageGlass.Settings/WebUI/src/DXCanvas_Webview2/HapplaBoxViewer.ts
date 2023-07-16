@@ -1,5 +1,5 @@
 import { HapplaBoxHTMLElement, defineHapplaBoxHTMLElement } from './webComponents/HapplaBoxHTMLElement';
-import { ZoomMode } from './webComponents/happlajs/HapplaBoxTypes';
+import { IMouseEventArgs, ILoadContentRequestedEventArgs, IZoomEventArgs, ZoomMode } from './webComponents/happlajs/HapplaBoxTypes';
 
 
 enum Web2BackendMsgNames {
@@ -12,6 +12,7 @@ enum Web2BackendMsgNames {
 enum Web2FrontendMsgNames {
   ON_ZOOM_CHANGED = 'ON_ZOOM_CHANGED',
   ON_POINTER_DOWN = 'ON_POINTER_DOWN',
+  ON_MOUSE_WHEEL = 'ON_MOUSE_WHEEL',
 }
 
 const _transitionDuration = 300;
@@ -28,6 +29,7 @@ export default class HapplaBoxViewer {
       zoomFactor: 1,
       onAfterZoomChanged: HapplaBoxViewer.onAfterZoomChanged,
       onResizing: HapplaBoxViewer.onResizing,
+      onMouseWheel: HapplaBoxViewer.onMouseWheel,
     });
 
     _boxEl.addEventListener('dragenter', (e) => {
@@ -47,14 +49,7 @@ export default class HapplaBoxViewer {
       console.info(e.dataTransfer.files);
     });
 
-    _boxEl.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
-        Button: e.button,
-        X: e.pageX,
-        Y: e.pageY,
-      }, true);
-    });
+    _boxEl.addEventListener('pointerdown', HapplaBoxViewer.onPointerDown);
 
     _boxEl.focus();
 
@@ -71,13 +66,29 @@ export default class HapplaBoxViewer {
     }
   }
 
-  private static onAfterZoomChanged(e: {
-    zoomFactor: number,
-    x: number,
-    y: number,
-    isManualZoom: boolean,
-    isZoomModeChanged: boolean,
-  }) {
+  private static onPointerDown(e: PointerEvent) {
+    e.preventDefault();
+    post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
+      Dpi: _boxEl.options.scaleRatio,
+      Button: e.button,
+      X: e.pageX,
+      Y: e.pageY,
+      Delta: 0,
+    } as IMouseEventArgs, true);
+  }
+
+  private static onMouseWheel(e: WheelEvent) {
+    e.preventDefault();
+    post(Web2FrontendMsgNames.ON_MOUSE_WHEEL, {
+      Dpi: _boxEl.options.scaleRatio,
+      Button: e.button,
+      Delta: e.deltaY,
+      X: e.pageX,
+      Y: e.pageY,
+    } as IMouseEventArgs, true);
+  }
+
+  private static onAfterZoomChanged(e: IZoomEventArgs) {
     _isManualZoom = e.isManualZoom;
 
     post(Web2FrontendMsgNames.ON_ZOOM_CHANGED, {
@@ -87,19 +98,17 @@ export default class HapplaBoxViewer {
     }, true);
   }
 
-  private static async onWeb2LoadContentRequested(eventName: Web2BackendMsgNames, data: {
-    ZoomMode: ZoomMode,
-    ZoomFactor: number,
-    Html?: string,
-    Url?: string,
-  }) {
-    _zoomMode = data.ZoomMode;
+  private static async onWeb2LoadContentRequested(
+    eventName: Web2BackendMsgNames,
+    e: ILoadContentRequestedEventArgs,
+  ) {
+    _zoomMode = e.ZoomMode;
 
     if (eventName === Web2BackendMsgNames.SET_IMAGE) {
-      await _boxEl.loadImage(data.Url, _zoomMode, data.ZoomFactor);
+      await _boxEl.loadImage(e.Url, _zoomMode, e.ZoomFactor);
     }
     else if (eventName === Web2BackendMsgNames.SET_HTML) {
-      await _boxEl.loadHtml(data.Html, _zoomMode, data.ZoomFactor);
+      await _boxEl.loadHtml(e.Html, _zoomMode, e.ZoomFactor);
     }
   }
 

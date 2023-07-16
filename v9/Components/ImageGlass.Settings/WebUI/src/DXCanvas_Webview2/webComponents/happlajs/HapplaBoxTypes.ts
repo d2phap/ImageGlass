@@ -12,13 +12,23 @@ export type IPadding = {
   bottom?: number,
 };
 
-export type ZoomEventFunction = (e: {
+export type IMouseEventArgs = {
+  Dpi: number;
+  Button: number;
+  X: number;
+  Y: number;
+  Delta: number;
+};
+
+export type IZoomEventArgs = {
   zoomFactor: number,
   x: number,
   y: number,
   isManualZoom: boolean,
   isZoomModeChanged: boolean,
-}) => void;
+};
+
+export type ZoomEventFunction = (e: IZoomEventArgs) => void;
 export type TransformEventFunction = (matrix: DOMMatrix) => void;
 export type PanEventFunction = (x: number, y: number) => void;
 
@@ -37,6 +47,13 @@ export enum ZoomMode {
   ScaleToFill = 'ScaleToFill',
 }
 
+export type ILoadContentRequestedEventArgs = {
+  ZoomMode: ZoomMode,
+  ZoomFactor: number,
+  Html?: string,
+  Url?: string,
+};
+
 
 export interface IHapplaBoxOptions {
   allowZoom?: boolean;
@@ -54,6 +71,7 @@ export interface IHapplaBoxOptions {
   onBeforeContentReady?: () => void;
   onContentReady?: () => void;
   onResizing?: () => void;
+  onMouseWheel?: (e: WheelEvent) => void;
 
   onBeforeZoomChanged?: ZoomEventFunction;
   onAfterZoomChanged?: ZoomEventFunction;

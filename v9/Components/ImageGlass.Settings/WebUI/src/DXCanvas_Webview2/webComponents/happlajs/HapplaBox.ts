@@ -21,8 +21,8 @@ export class HapplaBox {
   private arrowUpDown = false;
   private arrowDownDown = false;
 
-  private options: IHapplaBoxOptions = {};
-  private defaultOptions: IHapplaBoxOptions = {
+  #options: IHapplaBoxOptions = {};
+  #defaultOptions: IHapplaBoxOptions = {
     imageRendering: InterpolationMode.Auto,
 
     allowZoom: true,
@@ -41,6 +41,7 @@ export class HapplaBox {
     onBeforeContentReady() {},
     onContentReady() {},
     onResizing() {},
+    onMouseWheel() {},
 
     onBeforeZoomChanged() {},
     onAfterZoomChanged() {},
@@ -60,14 +61,14 @@ export class HapplaBox {
   constructor(boxEl: HTMLElement, boxContentEl: HTMLElement, options?: IHapplaBoxOptions) {
     this.boxEl = boxEl;
     this.boxContentEl = boxContentEl;
-    this.options = merge({}, this.defaultOptions, options);
+    this.#options = merge({}, this.#defaultOptions, options);
 
     // correct zoomFactor after calculating scaleRatio
-    this.options.zoomFactor /= this.options.scaleRatio;
+    this.#options.zoomFactor /= this.#options.scaleRatio;
 
     this.domMatrix = new DOMMatrix()
       .scaleSelf(this.zoomFactor)
-      .translateSelf(this.options.panOffset.x, this.options.panOffset.y);
+      .translateSelf(this.#options.panOffset.x, this.#options.panOffset.y);
 
     this.zoomByDelta = this.zoomByDelta.bind(this);
     this.moveDistance = this.moveDistance.bind(this);
@@ -105,45 +106,49 @@ export class HapplaBox {
     this.boxEl.style.overflow = 'hidden';
 
     // emit event onBeforeContentReady
-    this.options.onBeforeContentReady();
+    this.#options.onBeforeContentReady();
   }
 
   // #region Getters & Setters
+  get options() {
+    return this.#options;
+  }
+
   get pointerLocation(): { x?: number, y?: number } {
     return this.#pointerLocation || {};
   }
 
   get imageRendering() {
-    return this.options.imageRendering;
+    return this.#options.imageRendering;
   }
 
   set imageRendering(value: InterpolationMode) {
-    this.options.imageRendering = value;
+    this.#options.imageRendering = value;
 
     this.updateImageRendering();
   }
 
   get scaleRatio() {
-    return this.options.scaleRatio;
+    return this.#options.scaleRatio;
   }
 
   set scaleRatio(value: number) {
-    this.options.scaleRatio = value;
+    this.#options.scaleRatio = value;
   }
 
   get padding() {
-    return this.options.padding;
+    return this.#options.padding;
   }
 
   set padding(value: IPadding) {
-    this.options.padding = value;
+    this.#options.padding = value;
   }
 
   /**
    * Gets zoom factor after computing device ratio (DPI)
    */
   get zoomFactor() {
-    return this.options.zoomFactor * this.options.scaleRatio;
+    return this.#options.zoomFactor * this.#options.scaleRatio;
   }
   // #endregion
 
@@ -162,18 +167,14 @@ export class HapplaBox {
   }
 
   private onResizing() {
-    this.options.onResizing();
+    this.#options.onResizing();
   }
 
   private onMouseWheel(e: WheelEvent) {
     // ignore horizontal scroll events
     if (e.deltaY === 0) return;
 
-    const direction = e.deltaY < 0 ? 'up' : 'down';
-    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
-    const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
-
-    this.zoomByDelta(delta, e.clientX, e.clientY, true);
+    this.#options.onMouseWheel(e);
   }
 
   private onPointerEnter(e: PointerEvent) {
@@ -195,8 +196,8 @@ export class HapplaBox {
     this.isPointerDown = true;
 
     // We get the pointer position on click so we can get the value once the user starts to drag
-    this.options.panOffset.x = e.clientX;
-    this.options.panOffset.y = e.clientY;
+    this.#options.panOffset.x = e.clientX;
+    this.#options.panOffset.y = e.clientY;
   }
 
   private onPointerMove(e: PointerEvent) {
@@ -208,14 +209,14 @@ export class HapplaBox {
     }
 
     this.moveDistance(
-      e.clientX - this.options.panOffset.x,
-      e.clientY - this.options.panOffset.y,
+      e.clientX - this.#options.panOffset.x,
+      e.clientY - this.#options.panOffset.y,
     );
 
-    this.options.panOffset.x = e.clientX;
-    this.options.panOffset.y = e.clientY;
+    this.#options.panOffset.x = e.clientX;
+    this.#options.panOffset.y = e.clientY;
 
-    this.options.onPanning(this.domMatrix.e, this.domMatrix.f);
+    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
   }
 
   private onPointerUp(e: PointerEvent) {
@@ -226,10 +227,10 @@ export class HapplaBox {
     this.boxEl.releasePointerCapture(e.pointerId);
     this.isPointerDown = false;
 
-    this.options.panOffset.x += e.clientX - this.options.panOffset.x;
-    this.options.panOffset.y += e.clientY - this.options.panOffset.y;
+    this.#options.panOffset.x += e.clientX - this.#options.panOffset.x;
+    this.#options.panOffset.y += e.clientY - this.#options.panOffset.y;
 
-    this.options.onAfterPanned(this.domMatrix.e, this.domMatrix.f);
+    this.#options.onAfterPanned(this.domMatrix.e, this.domMatrix.f);
   }
 
   // private onKeyDown(event: KeyboardEvent) {
@@ -296,7 +297,7 @@ export class HapplaBox {
   // }
 
   private dpi(value: number) {
-    return value / this.options.scaleRatio;
+    return value / this.#options.scaleRatio;
   }
 
   private updateImageRendering() {
@@ -321,7 +322,7 @@ export class HapplaBox {
     this.domMatrix.e += x;
     this.domMatrix.f += y;
 
-    this.options.onPanning(this.domMatrix.e, this.domMatrix.f);
+    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
 
     this.applyTransform();
   }
@@ -359,11 +360,11 @@ export class HapplaBox {
   // #region Public functions
   public async loadHtmlContent(html: string) {
     // move and scale image to center to avoid flickering
-    const currentZoomFactor = this.options.zoomFactor;
+    const currentZoomFactor = this.#options.zoomFactor;
     await this.zoomTo(0.01, { isManualZoom: false });
 
     // restore original zoom factor for ZoomLock
-    this.options.zoomFactor = currentZoomFactor;
+    this.#options.zoomFactor = currentZoomFactor;
 
     this.#isContentElDOMChanged = false;
     this.boxContentEl.innerHTML = html;
@@ -380,7 +381,7 @@ export class HapplaBox {
     }
 
     // emit event onContentReady
-    this.options.onContentReady();
+    this.#options.onContentReady();
   }
 
   public async panTo(x: number, y: number, duration?: number) {
@@ -463,13 +464,13 @@ export class HapplaBox {
     isZoomModeChanged?: boolean,
   } = {}) {
     // restrict the zoom factor
-    this.options.zoomFactor = Math.min(
-      Math.max(this.options.minZoom, this.dpi(factor)),
-      this.options.maxZoom,
+    this.#options.zoomFactor = Math.min(
+      Math.max(this.#options.minZoom, this.dpi(factor)),
+      this.#options.maxZoom,
     );
 
     // raise event onBeforeZoomChanged
-    this.options.onBeforeZoomChanged({
+    this.#options.onBeforeZoomChanged({
       zoomFactor: this.zoomFactor,
       x: this.domMatrix.e,
       y: this.domMatrix.f,
@@ -478,13 +479,13 @@ export class HapplaBox {
     });
 
     // apply scale and translate value
-    this.domMatrix.a = this.options.zoomFactor;
-    this.domMatrix.d = this.options.zoomFactor;
-    this.domMatrix.e = (options.x || 0) + this.options.padding.left;
-    this.domMatrix.f = (options.y || 0) + this.options.padding.top;
+    this.domMatrix.a = this.#options.zoomFactor;
+    this.domMatrix.d = this.#options.zoomFactor;
+    this.domMatrix.e = (options.x || 0) + this.#options.padding.left;
+    this.domMatrix.f = (options.y || 0) + this.#options.padding.top;
 
     // raise event onAfterZoomChanged
-    this.options.onAfterZoomChanged({
+    this.#options.onAfterZoomChanged({
       zoomFactor: this.zoomFactor,
       x: this.domMatrix.e,
       y: this.domMatrix.f,
@@ -505,16 +506,16 @@ export class HapplaBox {
     isManualZoom = false,
     duration: number = 0,
   ) {
-    if (!this.options.allowZoom) return;
+    if (!this.#options.allowZoom) return;
 
     // update the current zoom factor
-    this.options.zoomFactor = this.domMatrix.a;
+    this.#options.zoomFactor = this.domMatrix.a;
 
-    const oldZoom = this.options.zoomFactor;
+    const oldZoom = this.#options.zoomFactor;
     const newZoom = oldZoom * delta;
 
     // raise event onBeforeZoomChanged
-    this.options.onBeforeZoomChanged({
+    this.#options.onBeforeZoomChanged({
       zoomFactor: this.zoomFactor,
       x: this.domMatrix.e,
       y: this.domMatrix.f,
@@ -523,9 +524,9 @@ export class HapplaBox {
     });
 
     // restrict the zoom factor
-    this.options.zoomFactor = Math.min(
-      Math.max(this.options.minZoom, newZoom),
-      this.options.maxZoom,
+    this.#options.zoomFactor = Math.min(
+      Math.max(this.#options.minZoom, newZoom),
+      this.#options.maxZoom,
     );
 
     const newX = (pageX ?? this.boxEl.offsetLeft) - this.boxEl.offsetLeft;
@@ -533,15 +534,15 @@ export class HapplaBox {
     let newDelta = delta;
 
     // check zoom -> maxZoom
-    if (newZoom * this.options.scaleRatio > this.options.maxZoom) {
-      newDelta = this.dpi(this.options.maxZoom) / oldZoom;
-      this.options.zoomFactor = this.dpi(this.options.maxZoom);
+    if (newZoom * this.#options.scaleRatio > this.#options.maxZoom) {
+      newDelta = this.dpi(this.#options.maxZoom) / oldZoom;
+      this.#options.zoomFactor = this.dpi(this.#options.maxZoom);
     }
 
     // check zoom -> minZoom
-    else if (newZoom * this.options.scaleRatio < this.options.minZoom) {
-      newDelta = this.dpi(this.options.minZoom) / oldZoom;
-      this.options.zoomFactor = this.dpi(this.options.minZoom);
+    else if (newZoom * this.#options.scaleRatio < this.#options.minZoom) {
+      newDelta = this.dpi(this.#options.minZoom) / oldZoom;
+      this.#options.zoomFactor = this.dpi(this.#options.minZoom);
     }
 
     this.domMatrix = new DOMMatrix()
@@ -551,7 +552,7 @@ export class HapplaBox {
       .multiplySelf(this.domMatrix);
 
     // raise event onAfterZoomChanged
-    this.options.onAfterZoomChanged({
+    this.#options.onAfterZoomChanged({
       zoomFactor: this.zoomFactor,
       x: this.domMatrix.e,
       y: this.domMatrix.f,
@@ -582,7 +583,7 @@ export class HapplaBox {
     });
 
     // raise event
-    this.options.onAfterTransformed(this.domMatrix);
+    this.#options.onAfterTransformed(this.domMatrix);
   }
 
   public enable() {
