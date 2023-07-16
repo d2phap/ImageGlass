@@ -130,41 +130,17 @@ public partial class DXCanvas
     {
         if (e.Name == Web2FrontendMsgNames.ON_ZOOM_CHANGED)
         {
-            var isZoomModeChanged = false;
-            var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
-                .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
-
-            if (dict.TryGetValue("ZoomFactor", out var zoomFactor))
-            {
-                _ = float.TryParse(zoomFactor, out _zoomFactor);
-            }
-            if (dict.TryGetValue("IsManualZoom", out var isManualZoom))
-            {
-                _isManualZoom = isManualZoom.Equals("true", StringComparison.InvariantCultureIgnoreCase);
-            }
-            if (dict.TryGetValue("IsZoomModeChanged", out var zoomModeChanged))
-            {
-                isZoomModeChanged = zoomModeChanged.Equals("true", StringComparison.InvariantCultureIgnoreCase);
-            }
-
-
-            OnZoomChanged?.Invoke(this, new ZoomEventArgs()
-            {
-                ZoomFactor = _zoomFactor,
-                IsManualZoom = _isManualZoom,
-                IsZoomModeChange = isZoomModeChanged,
-                IsPreviewingImage = false,
-                ChangeSource = ZoomChangeSource.Unknown,
-            });
+            var zoomEventArgs = ParseZoomEventJson(e.Data);
+            OnZoomChanged?.Invoke(this, zoomEventArgs);
         }
         else if (e.Name == Web2FrontendMsgNames.ON_POINTER_DOWN)
         {
-            _web2PointerDownEventArgs = ParseMouseEventJson(e.Data);
+            _web2PointerDownEventArgs = DXCanvas.ParseMouseEventJson(e.Data);
             Web2PointerDown?.Invoke(this, _web2PointerDownEventArgs);
         }
         else if (e.Name == Web2FrontendMsgNames.ON_MOUSE_WHEEL)
         {
-            var mouseWheelEventArgs = ParseMouseEventJson(e.Data);
+            var mouseWheelEventArgs = DXCanvas.ParseMouseEventJson(e.Data);
             this.OnMouseWheel(mouseWheelEventArgs);
         }
     }
@@ -335,9 +311,43 @@ public partial class DXCanvas
 
 
     /// <summary>
+    /// Parses JSON string to <see cref="ZoomEventArgs"/>.
+    /// </summary>
+    private ZoomEventArgs ParseZoomEventJson(string json)
+    {
+        var isZoomModeChanged = false;
+        var dict = BHelper.ParseJson<ExpandoObject>(json)
+            .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+
+        if (dict.TryGetValue("ZoomFactor", out var zoomFactor))
+        {
+            _ = float.TryParse(zoomFactor, out _zoomFactor);
+        }
+        if (dict.TryGetValue("IsManualZoom", out var isManualZoom))
+        {
+            _isManualZoom = isManualZoom.Equals("true", StringComparison.InvariantCultureIgnoreCase);
+        }
+        if (dict.TryGetValue("IsZoomModeChanged", out var zoomModeChanged))
+        {
+            isZoomModeChanged = zoomModeChanged.Equals("true", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+
+        return new ZoomEventArgs()
+        {
+            ZoomFactor = _zoomFactor,
+            IsManualZoom = _isManualZoom,
+            IsZoomModeChange = isZoomModeChanged,
+            IsPreviewingImage = false,
+            ChangeSource = ZoomChangeSource.Unknown,
+        };
+    }
+
+
+    /// <summary>
     /// Parses JSON string to <see cref="MouseEventArgs"/>.
     /// </summary>
-    private MouseEventArgs ParseMouseEventJson(string json)
+    private static MouseEventArgs ParseMouseEventJson(string json)
     {
         var dict = BHelper.ParseJson<ExpandoObject>(json)
             .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);

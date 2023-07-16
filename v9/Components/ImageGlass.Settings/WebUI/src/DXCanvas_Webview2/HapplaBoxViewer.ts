@@ -78,7 +78,6 @@ export default class HapplaBoxViewer {
   }
 
   private static onMouseWheel(e: WheelEvent) {
-    e.preventDefault();
     post(Web2FrontendMsgNames.ON_MOUSE_WHEEL, {
       Dpi: _boxEl.options.scaleRatio,
       Button: e.button,
