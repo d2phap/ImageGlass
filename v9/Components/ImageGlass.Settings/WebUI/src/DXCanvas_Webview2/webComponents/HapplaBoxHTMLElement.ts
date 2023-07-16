@@ -123,6 +123,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
   }
 
   public async loadHtml(html: string, zoomMode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1) {
+    this.#wrapperEl.style.transition = 'none';
     this.#wrapperEl.style.opacity = '0';
 
     await this.#box.loadHtmlContent(html);
@@ -144,6 +145,7 @@ export class HapplaBoxHTMLElement extends HTMLElement {
 
     await this.setZoomMode(zoomMode, zoomLockFactor);
 
+    this.#wrapperEl.style.transition = '';
     this.#wrapperEl.style.opacity = '1';
   }
 
@@ -155,8 +157,8 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     const x = this.#box.pointerLocation.x ?? -1;
     const y = this.#box.pointerLocation.y ?? -1;
 
-    if (zoomDelta !== 0 && x >= 0 && y >= 0) {
-      return this.#box.zoomByDelta(zoomDelta, x, y, isManualZoom, duration);
+    if (zoomDelta !== 1 && x >= 0 && y >= 0) {
+      return this.#box.zoomByDelta(zoomDelta, x, y, isManualZoom, duration / 3);
     }
 
     return this.#box.zoomTo(zoomFactor, { isManualZoom, duration });
