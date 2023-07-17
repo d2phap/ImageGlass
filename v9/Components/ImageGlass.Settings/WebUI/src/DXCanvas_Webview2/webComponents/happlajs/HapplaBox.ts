@@ -382,17 +382,24 @@ export class HapplaBox {
     let newX = x;
     let newY = y;
 
+    const scaledPadding = {
+      left: this.padding.left * this.zoomFactor / this.scaleRatio,
+      top: this.padding.top * this.zoomFactor / this.scaleRatio,
+      right: this.padding.right * this.zoomFactor / this.scaleRatio,
+      bottom: this.padding.bottom * this.zoomFactor / this.scaleRatio,
+    };
+
     // left bound
-    if (newX > this.padding.left) newX = this.padding.left;
+    if (newX > scaledPadding.left) newX = scaledPadding.left;
 
     // right bound
-    if (newX + contentBounds.width < boxBounds.right - this.padding.right) newX = this.domMatrix.e;
+    if (newX + contentBounds.width < boxBounds.right - scaledPadding.right) newX = this.domMatrix.e;
 
     // top bound
-    if (newY > this.padding.top) newY = this.padding.top;
+    if (newY > scaledPadding.top) newY = scaledPadding.top;
 
     // bottom bound
-    if (newY + contentBounds.height < boxBounds.bottom - this.padding.bottom) newY = this.domMatrix.f;
+    if (newY + contentBounds.height < boxBounds.bottom - scaledPadding.bottom) newY = this.domMatrix.f;
 
     this.domMatrix.e = newX;
     this.domMatrix.f = newY;
