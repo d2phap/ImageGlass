@@ -71,9 +71,9 @@ export class HapplaBox {
       .translateSelf(this.#options.panOffset.x, this.#options.panOffset.y);
 
     this.zoomByDelta = this.zoomByDelta.bind(this);
-    this.moveDistance = this.moveDistance.bind(this);
-    this.startMoving = this.startMoving.bind(this);
-    this.stopMoving = this.stopMoving.bind(this);
+    this.panToDistance = this.panToDistance.bind(this);
+    this.startPanningAnimation = this.startPanningAnimation.bind(this);
+    this.stopPanningAnimation = this.stopPanningAnimation.bind(this);
     this.dpi = this.dpi.bind(this);
     this.updateImageRendering = this.updateImageRendering.bind(this);
 
@@ -208,7 +208,7 @@ export class HapplaBox {
       return;
     }
 
-    this.moveDistance(
+    this.panToDistance(
       e.clientX - this.#options.panOffset.x,
       e.clientY - this.#options.panOffset.y,
     );
@@ -317,17 +317,16 @@ export class HapplaBox {
     }
   }
 
-  private moveDistance(x = 0, y = 0) {
+  private async panToDistance(dx = 0, dy = 0, duration?: number) {
     // Update the transform coordinates with the distance from origin and current position
-    this.domMatrix.e += x;
-    this.domMatrix.f += y;
+    this.domMatrix.e += dx;
+    this.domMatrix.f += dy;
 
     this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
-
-    this.applyTransform();
+    await this.applyTransform(duration);
   }
 
-  private startMoving() {
+  private startPanningAnimation() {
     const speed = 20;
     let x = 0;
     let y = 0;
@@ -346,11 +345,11 @@ export class HapplaBox {
       y = -speed;
     }
 
-    this.moveDistance(x, y);
-    this.animationFrame = requestAnimationFrame(this.startMoving);
+    this.panToDistance(x, y);
+    this.animationFrame = requestAnimationFrame(this.startPanningAnimation);
   }
 
-  private stopMoving() {
+  private stopPanningAnimation() {
     cancelAnimationFrame(this.animationFrame);
     this.isMoving = false;
   }
@@ -388,6 +387,7 @@ export class HapplaBox {
     this.domMatrix.e = x;
     this.domMatrix.f = y;
 
+    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
     await this.applyTransform(duration);
   }
 
