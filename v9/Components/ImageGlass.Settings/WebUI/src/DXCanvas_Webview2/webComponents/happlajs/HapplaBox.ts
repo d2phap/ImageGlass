@@ -15,7 +15,6 @@ export class HapplaBox {
   #pointerLocation: { x?: number, y?: number } = {};
 
   private animationFrame: number;
-  private isMoving = false;
   private arrowLeftDown = false;
   private arrowRightDown = false;
   private arrowUpDown = false;
@@ -29,7 +28,7 @@ export class HapplaBox {
     minZoom: 0.01,
     maxZoom: 100,
     zoomFactor: 1,
-    panOffset: { x: 0, y: 0 },
+    panOffset: new DOMPoint(0, 0),
 
     allowPan: true,
     scaleRatio: window.devicePixelRatio,
@@ -200,23 +199,19 @@ export class HapplaBox {
     this.#options.panOffset.y = e.clientY;
   }
 
-  private onPointerMove(e: PointerEvent) {
+  private async onPointerMove(e: PointerEvent) {
     this.#pointerLocation = { x: e.pageX, y: e.pageY };
 
     // Only run this function if the pointer is down
-    if (!this.isPointerDown) {
-      return;
-    }
+    if (!this.isPointerDown) return;
 
-    this.panToDistance(
+    await this.panToDistance(
       e.clientX - this.#options.panOffset.x,
       e.clientY - this.#options.panOffset.y,
     );
 
     this.#options.panOffset.x = e.clientX;
     this.#options.panOffset.y = e.clientY;
-
-    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
   }
 
   private onPointerUp(e: PointerEvent) {
@@ -317,16 +312,7 @@ export class HapplaBox {
     }
   }
 
-  private async panToDistance(dx = 0, dy = 0, duration?: number) {
-    // Update the transform coordinates with the distance from origin and current position
-    this.domMatrix.e += dx;
-    this.domMatrix.f += dy;
-
-    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
-    await this.applyTransform(duration);
-  }
-
-  private startPanningAnimation() {
+  private async startPanningAnimation() {
     const speed = 20;
     let x = 0;
     let y = 0;
@@ -345,7 +331,7 @@ export class HapplaBox {
       y = -speed;
     }
 
-    this.panToDistance(x, y);
+    await this.panToDistance(x, y);
     this.animationFrame = requestAnimationFrame(this.startPanningAnimation);
   }
 
@@ -383,11 +369,35 @@ export class HapplaBox {
     this.#options.onContentReady();
   }
 
-  public async panTo(x: number, y: number, duration?: number) {
-    this.domMatrix.e = x;
-    this.domMatrix.f = y;
+  public panToDistance(dx = 0, dy = 0, duration?: number) {
+    const x = this.domMatrix.e + dx;
+    const y = this.domMatrix.f + dy;
 
-    this.#options.onPanning(this.domMatrix.e, this.domMatrix.f);
+    return this.panTo(x, y, duration);
+  }
+
+  public async panTo(x: number, y: number, duration?: number) {
+    const boxBounds = this.boxEl.getBoundingClientRect();
+    const contentBounds = this.boxContentEl.getBoundingClientRect();
+    let newX = x;
+    let newY = y;
+
+    // left bound
+    if (newX > this.padding.left) newX = this.padding.left;
+
+    // right bound
+    if (newX + contentBounds.width < boxBounds.right - this.padding.right) newX = this.domMatrix.e;
+
+    // top bound
+    if (newY > this.padding.top) newY = this.padding.top;
+
+    // bottom bound
+    if (newY + contentBounds.height < boxBounds.bottom - this.padding.bottom) newY = this.domMatrix.f;
+
+    this.domMatrix.e = newX;
+    this.domMatrix.f = newY;
+
+    this.#options.onPanning(newX, newY);
     await this.applyTransform(duration);
   }
 

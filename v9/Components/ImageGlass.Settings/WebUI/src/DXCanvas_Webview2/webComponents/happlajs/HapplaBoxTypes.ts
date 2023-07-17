@@ -62,7 +62,7 @@ export interface IHapplaBoxOptions {
   maxZoom?: number;
 
   allowPan?: boolean;
-  panOffset?: { x: number, y: number };
+  panOffset?: DOMPoint;
 
   imageRendering?: InterpolationMode;
   scaleRatio?: number;
