@@ -1,6 +1,7 @@
 import merge from 'lodash.merge';
-import { IHapplaBoxOptions, InterpolationMode, IPadding, ZoomMode } from './HapplaBoxTypes';
+import { IHapplaBoxOptions, InterpolationMode, ZoomMode } from './HapplaBoxTypes';
 import { pause } from '@/helpers';
+import { DOMPadding } from './DOMPadding';
 
 export class HapplaBox {
   private boxEl: HTMLElement;
@@ -33,10 +34,7 @@ export class HapplaBox {
 
     allowPan: true,
     scaleRatio: window.devicePixelRatio,
-    padding: {
-      left: 0, right: 0,
-      top: 0, bottom: 0,
-    },
+    padding: new DOMPadding(),
 
     onBeforeContentReady() {},
     onContentReady() {},
@@ -140,7 +138,7 @@ export class HapplaBox {
     return this.#options.padding;
   }
 
-  set padding(value: IPadding) {
+  set padding(value: DOMPadding) {
     this.#options.padding = value;
   }
 
@@ -381,12 +379,7 @@ export class HapplaBox {
     let newX = x;
     let newY = y;
 
-    const scaledPadding = {
-      left: this.padding.left * this.zoomFactor / this.scaleRatio,
-      top: this.padding.top * this.zoomFactor / this.scaleRatio,
-      right: this.padding.right * this.zoomFactor / this.scaleRatio,
-      bottom: this.padding.bottom * this.zoomFactor / this.scaleRatio,
-    };
+    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
 
     // left bound
     if (newX > scaledPadding.left) newX = scaledPadding.left;
@@ -408,9 +401,7 @@ export class HapplaBox {
   }
 
   public async zoomByDelta(
-    // zoom in: delta > 1
-    // zoom out: delta < 1
-    delta: number,
+    delta: number, // zoom in: delta > 1, zoom out: delta < 1
     pageX?: number,
     pageY?: number,
     isManualZoom = false,
@@ -438,10 +429,9 @@ export class HapplaBox {
     const fullH = this.boxContentEl.scrollHeight / this.scaleRatio;
     if (fullW === 0 || fullH === 0) return;
 
-    const horizontalPadding = this.padding.left + this.padding.right;
-    const verticalPadding = this.padding.top + this.padding.bottom;
-    const widthScale = (this.boxEl.clientWidth - horizontalPadding) / fullW;
-    const heightScale = (this.boxEl.clientHeight - verticalPadding) / fullH;
+    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
+    const widthScale = (this.boxEl.clientWidth - scaledPadding.horizontal) / fullW;
+    const heightScale = (this.boxEl.clientHeight - scaledPadding.vertical) / fullH;
     let zoomFactor = 1;
 
     if (mode === ZoomMode.ScaleToWidth) {
@@ -482,14 +472,13 @@ export class HapplaBox {
     duration?: number,
     isZoomModeChanged?: boolean,
   } = {}) {
-    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio;
-    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio;
-    const horizontalPadding = this.padding.left + this.padding.right;
-    const verticalPadding = this.padding.top + this.padding.bottom;
+    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio * factor;
+    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio * factor;
+    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
 
     // center point
-    const x = (this.boxEl.offsetWidth - horizontalPadding - (fullW * factor)) / 2;
-    const y = (this.boxEl.offsetHeight - verticalPadding - (fullH * factor)) / 2;
+    const x = (this.boxEl.offsetWidth - fullW) / 2 + scaledPadding.left / 2 - scaledPadding.right / 2;
+    const y = (this.boxEl.offsetHeight - fullH) / 2 + scaledPadding.top / 2 - scaledPadding.bottom / 2;
 
     // change zoom factor
     this.zoomToPoint(factor, {

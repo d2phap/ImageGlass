@@ -1,16 +1,4 @@
-
-export type IRect = {
-  left: number,
-  right: number,
-  top: number,
-  bottom: number,
-};
-export type IPadding = {
-  left?: number,
-  right?: number,
-  top?: number,
-  bottom?: number,
-};
+import { DOMPadding } from './DOMPadding';
 
 export type IMouseEventArgs = {
   Dpi: number;
@@ -66,7 +54,7 @@ export interface IHapplaBoxOptions {
 
   imageRendering?: InterpolationMode;
   scaleRatio?: number;
-  padding?: IPadding,
+  padding?: DOMPadding,
 
   onBeforeContentReady?: () => void;
   onContentReady?: () => void;
