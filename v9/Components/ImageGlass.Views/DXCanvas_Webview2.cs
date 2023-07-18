@@ -210,6 +210,9 @@ public partial class DXCanvas
 
             var json = BHelper.ToJson(obj);
             Web2.PostWeb2Message(msgName, json);
+
+            // make sure it's focus to receive keydown events
+            this.Focus();
         }
         catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException) { }
         catch (Exception ex)
