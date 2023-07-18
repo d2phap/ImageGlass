@@ -31,13 +31,20 @@ pause(1000).then(() => {
 });
 
 
-// handle keydown event
-window.onkeydown = (e: KeyboardEvent) => {
-  const ctrl = e.ctrlKey ? 'ctrl' : '';
-  const shift = e.shiftKey ? 'shift' : '';
-  const alt = e.altKey ? 'alt' : '';
-
+const getHotkeys = (e: KeyboardEvent) => {
   let key = e.key.toLowerCase();
+
+  const ctrl = e.ctrlKey
+    ? 'ctrl'
+    : (key === 'control' ? 'ctrl' : '');
+  const shift = e.shiftKey
+    ? 'shift'
+    : (key === 'shift' ? 'shift' : '');
+  const alt = e.altKey
+    ? 'alt'
+    : (key === 'alt' ? 'alt' : '');
+
+
   const keyMaps: Record<string, string> = {
     control: '',
     shift: '',
@@ -48,16 +55,36 @@ window.onkeydown = (e: KeyboardEvent) => {
     arrowdown: 'down',
     backspace: 'back',
   };
+
   if (keyMaps[key] !== undefined) {
     key = keyMaps[key];
   }
-  const keyCombo = [ctrl, shift, alt, key].filter(Boolean).join('+');
+
+  const hotkeys = [ctrl, shift, alt, key].filter(Boolean).join('+');
+
+  return hotkeys;
+};
+
+// handle keydown event
+window.onkeydown = (e: KeyboardEvent) => {
+  const hotkeys = getHotkeys(e);
 
   // preserve ESCAPE key for closing HTML5 dialog
-  if (keyCombo === 'escape' && document.querySelector('dialog[open]')) {
+  if (hotkeys === 'escape' && document.querySelector('dialog[open]')) {
     return;
   }
 
-  console.info('⌨️ KEYDOWN', keyCombo);
-  post('KEYDOWN', keyCombo);
+  console.info('⌨️ KEYDOWN', hotkeys);
+  if (!hotkeys) return;
+  post('KEYDOWN', hotkeys);
+};
+
+
+// handle keyup event
+window.onkeyup = (e: KeyboardEvent) => {
+  const hotkeys = getHotkeys(e);
+
+  console.info('⌨️ KEYUP', hotkeys, e);
+  if (!hotkeys) return;
+  post('KEYUP', hotkeys);
 };

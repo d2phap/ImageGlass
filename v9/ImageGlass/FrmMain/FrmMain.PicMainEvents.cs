@@ -235,6 +235,13 @@ public partial class FrmMain
     }
 
 
+    private void PicMain_Web2KeyUp(object sender, KeyEventArgs e)
+    {
+        // pass keyup to FrmMain
+        this.OnKeyUp(e);
+    }
+
+
     private void PicMain_Web2PointerDown(object sender, MouseEventArgs e)
     {
         // make sure all menus closed when mouse clicked

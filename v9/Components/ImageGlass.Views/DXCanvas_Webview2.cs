@@ -76,6 +76,11 @@ public partial class DXCanvas
     /// </summary>
     public event EventHandler<KeyEventArgs> Web2KeyDown;
 
+    /// <summary>
+    /// Occurs when <see cref="Web2"/> received <c>keyup</c> event.
+    /// </summary>
+    public event EventHandler<KeyEventArgs> Web2KeyUp;
+
     #endregion // Public events
 
 
@@ -100,6 +105,12 @@ public partial class DXCanvas
     private void Web2_Web2KeyDown(object? sender, KeyEventArgs e)
     {
         Web2KeyDown?.Invoke(this, e);
+    }
+
+
+    private void Web2_Web2KeyUp(object? sender, KeyEventArgs e)
+    {
+        Web2KeyUp?.Invoke(this, e);
     }
 
 
@@ -258,6 +269,7 @@ public partial class DXCanvas
         Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;
         Web2.Web2MessageReceived += Web2_Web2MessageReceived;
         Web2.Web2KeyDown += Web2_Web2KeyDown;
+        Web2.Web2KeyUp += Web2_Web2KeyUp;
         Web2.Web2ContextMenuRequested += Web2_Web2ContextMenuRequested;
 
 

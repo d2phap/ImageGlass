@@ -97,6 +97,11 @@ public class Web2 : WebView2
     public event EventHandler<KeyEventArgs> Web2KeyDown;
 
     /// <summary>
+    /// Occurs when <see cref="Web2"/> receives keyup.
+    /// </summary>
+    public event EventHandler<KeyEventArgs> Web2KeyUp;
+
+    /// <summary>
     /// Occurs when <see cref="Web2"/> is opening context menu.
     /// </summary>
     public event EventHandler<CoreWebView2ContextMenuRequestedEventArgs> Web2ContextMenuRequested;
@@ -200,6 +205,25 @@ public class Web2 : WebView2
         }
 
         Web2KeyDown?.Invoke(this, e);
+        await Task.CompletedTask;
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="Web2KeyUp"/> event.
+    /// </summary>
+    protected virtual async Task OnWeb2KeyUpAsync(KeyEventArgs e)
+    {
+        if (InvokeRequired)
+        {
+            await Invoke(async delegate
+            {
+                await OnWeb2KeyUpAsync(e);
+            });
+            return;
+        }
+
+        Web2KeyUp?.Invoke(this, e);
         await Task.CompletedTask;
     }
 
@@ -410,7 +434,15 @@ public class Web2 : WebView2
     {
         var msg = BHelper.ParseJson<Web2MessageReceivedEventArgs>(e.WebMessageAsJson);
 
-        if (msg.Name.Equals("KEYDOWN") && !string.IsNullOrWhiteSpace(msg.Data))
+        if (msg.Name.Equals("KEYUP") && !string.IsNullOrWhiteSpace(msg.Data))
+        {
+            var hotkey = new Hotkey(msg.Data);
+            SafeRunUi(async () =>
+            {
+                await OnWeb2KeyUpAsync(new KeyEventArgs(hotkey.KeyData));
+            });
+        }
+        else if (msg.Name.Equals("KEYDOWN") && !string.IsNullOrWhiteSpace(msg.Data))
         {
 #if DEBUG
             if (msg.Data == "ctrl+shift+i")
@@ -421,7 +453,6 @@ public class Web2 : WebView2
 #endif
 
             var hotkey = new Hotkey(msg.Data);
-
             SafeRunUi(async () =>
             {
                 await OnWeb2KeyDownAsync(new KeyEventArgs(hotkey.KeyData));

@@ -1011,6 +1011,7 @@ namespace ImageGlass
             PicMain.Web2NavigationCompleted += PicMain_Web2NavigationCompleted;
             PicMain.Web2PointerDown += PicMain_Web2PointerDown;
             PicMain.Web2KeyDown += PicMain_Web2KeyDown;
+            PicMain.Web2KeyUp += PicMain_Web2KeyUp;
             // 
             // Gallery
             // 
