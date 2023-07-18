@@ -84,7 +84,7 @@ window.onkeydown = (e: KeyboardEvent) => {
 window.onkeyup = (e: KeyboardEvent) => {
   const hotkeys = getHotkeys(e);
 
-  console.info('⌨️ KEYUP', hotkeys, e);
+  console.info('⌨️ KEYUP', hotkeys);
   if (!hotkeys) return;
   post('KEYUP', hotkeys);
 };

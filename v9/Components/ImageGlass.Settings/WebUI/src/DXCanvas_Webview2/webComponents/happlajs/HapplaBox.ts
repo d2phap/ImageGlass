@@ -172,10 +172,10 @@ export class HapplaBox {
     // ignore horizontal scroll events
     if (e.deltaY === 0) return;
 
-    const direction = e.deltaY < 0 ? 'up' : 'down';
-    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
-    const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
-    this.zoomByDelta(delta, e.pageX, e.pageY);
+    // const direction = e.deltaY < 0 ? 'up' : 'down';
+    // const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
+    // const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
+    // this.zoomByDelta(delta, e.pageX, e.pageY);
 
     this.#options.onMouseWheel(e);
   }
@@ -315,6 +315,30 @@ export class HapplaBox {
         break;
     }
   }
+
+  private async animatePanning(direction: PanDirection, panSpeed = 20) {
+    const speed = this.dpi(panSpeed || 20);
+    let x = 0;
+    let y = 0;
+
+    if (direction === 'PanLeft') {
+      x = speed;
+    }
+    else if (direction === 'PanRight') {
+      x = -speed;
+    }
+
+    if (direction === 'PanUp') {
+      y = speed;
+    }
+    else if (direction === 'PanDown') {
+      y = -speed;
+    }
+
+    await this.panToDistance(x, y);
+
+    this.panningAnimationFrame = requestAnimationFrame(() => this.animatePanning(direction, panSpeed));
+  }
   // #endregion
 
 
@@ -343,30 +367,6 @@ export class HapplaBox {
 
     this.isPanning = true;
     this.animatePanning(direction, panSpeed);
-  }
-
-  private async animatePanning(direction: PanDirection, panSpeed = 20) {
-    const speed = this.dpi(panSpeed || 20);
-    let x = 0;
-    let y = 0;
-
-    if (direction === 'PanLeft') {
-      x = speed;
-    }
-    else if (direction === 'PanRight') {
-      x = -speed;
-    }
-
-    if (direction === 'PanUp') {
-      y = speed;
-    }
-    else if (direction === 'PanDown') {
-      y = -speed;
-    }
-
-    await this.panToDistance(x, y);
-
-    this.panningAnimationFrame = requestAnimationFrame(() => this.animatePanning(direction, panSpeed));
   }
 
   public stopPanningAnimation() {
