@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { IHapplaBoxOptions, InterpolationMode, ZoomMode } from './HapplaBoxTypes';
+import { IHapplaBoxOptions, InterpolationMode, PanDirection, ZoomMode } from './HapplaBoxTypes';
 import { pause } from '@/helpers';
 import { DOMPadding } from './DOMPadding';
 
@@ -15,12 +15,12 @@ export class HapplaBox {
   #isContentElDOMChanged = false;
   #pointerLocation: { x?: number, y?: number } = {};
 
-  private animationFrame: number;
-  private isMoving = false;
-  private arrowLeftDown = false;
-  private arrowRightDown = false;
-  private arrowUpDown = false;
-  private arrowDownDown = false;
+  private panningAnimationFrame: number;
+  private isPanning = false;
+  // private arrowLeftDown = false;
+  // private arrowRightDown = false;
+  // private arrowUpDown = false;
+  // private arrowDownDown = false;
 
   #options: IHapplaBoxOptions = {};
   #defaultOptions: IHapplaBoxOptions = {
@@ -315,34 +315,6 @@ export class HapplaBox {
         break;
     }
   }
-
-  private async startPanningAnimation() {
-    const speed = 20;
-    let x = 0;
-    let y = 0;
-
-    if (this.arrowLeftDown && !this.arrowRightDown) {
-      x = speed;
-    }
-    else if (!this.arrowLeftDown && this.arrowRightDown) {
-      x = -speed;
-    }
-
-    if (this.arrowUpDown && !this.arrowDownDown) {
-      y = speed;
-    }
-    else if (!this.arrowUpDown && this.arrowDownDown) {
-      y = -speed;
-    }
-
-    await this.panToDistance(x, y);
-    this.animationFrame = requestAnimationFrame(this.startPanningAnimation);
-  }
-
-  private stopPanningAnimation() {
-    cancelAnimationFrame(this.animationFrame);
-    this.isMoving = false;
-  }
   // #endregion
 
 
@@ -364,6 +336,42 @@ export class HapplaBox {
 
     // emit event onContentReady
     this.#options.onContentReady();
+  }
+
+  public async startPanningAnimation(direction: PanDirection, panSpeed = 20) {
+    if (this.isPanning) return;
+
+    this.isPanning = true;
+    this.animatePanning(direction, panSpeed);
+  }
+
+  private async animatePanning(direction: PanDirection, panSpeed = 20) {
+    const speed = this.dpi(panSpeed || 20);
+    let x = 0;
+    let y = 0;
+
+    if (direction === 'PanLeft') {
+      x = speed;
+    }
+    else if (direction === 'PanRight') {
+      x = -speed;
+    }
+
+    if (direction === 'PanUp') {
+      y = speed;
+    }
+    else if (direction === 'PanDown') {
+      y = -speed;
+    }
+
+    await this.panToDistance(x, y);
+
+    this.panningAnimationFrame = requestAnimationFrame(() => this.animatePanning(direction, panSpeed));
+  }
+
+  public stopPanningAnimation() {
+    cancelAnimationFrame(this.panningAnimationFrame);
+    this.isPanning = false;
   }
 
   public panToDistance(dx = 0, dy = 0, duration?: number) {

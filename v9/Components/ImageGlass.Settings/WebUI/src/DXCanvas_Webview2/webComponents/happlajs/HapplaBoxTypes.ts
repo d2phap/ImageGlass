@@ -19,6 +19,7 @@ export type IZoomEventArgs = {
 export type ZoomEventFunction = (e: IZoomEventArgs) => void;
 export type TransformEventFunction = (matrix: DOMMatrix) => void;
 export type PanEventFunction = (x: number, y: number) => void;
+export type PanDirection = 'PanLeft' | 'PanRight' | 'PanUp' | 'PanDown';
 
 export enum InterpolationMode {
   Pixelated = 'pixelated',
