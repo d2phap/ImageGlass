@@ -15,6 +15,7 @@ export class HapplaBox {
   #pointerLocation: { x?: number, y?: number } = {};
 
   private animationFrame: number;
+  private isMoving = false;
   private arrowLeftDown = false;
   private arrowRightDown = false;
   private arrowUpDown = false;
@@ -66,7 +67,7 @@ export class HapplaBox {
     this.#options.zoomFactor /= this.#options.scaleRatio;
 
     this.domMatrix = new DOMMatrix()
-      .scaleSelf(this.zoomFactor)
+      .scaleSelf(this.dpi(this.zoomFactor))
       .translateSelf(this.#options.panOffset.x, this.#options.panOffset.y);
 
     this.zoomByDelta = this.zoomByDelta.bind(this);
@@ -79,7 +80,7 @@ export class HapplaBox {
     this.enable = this.enable.bind(this);
     this.disable = this.disable.bind(this);
     this.zoomToPoint = this.zoomToPoint.bind(this);
-    this.zoomTo = this.zoomTo.bind(this);
+    this.zoomToCenter = this.zoomToCenter.bind(this);
     this.panTo = this.panTo.bind(this);
     this.applyTransform = this.applyTransform.bind(this);
 
@@ -172,6 +173,11 @@ export class HapplaBox {
   private onMouseWheel(e: WheelEvent) {
     // ignore horizontal scroll events
     if (e.deltaY === 0) return;
+
+    const direction = e.deltaY < 0 ? 'up' : 'down';
+    const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
+    const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
+    this.zoomByDelta(delta, e.pageX, e.pageY);
 
     this.#options.onMouseWheel(e);
   }
@@ -344,13 +350,6 @@ export class HapplaBox {
 
   // #region Public functions
   public async loadHtmlContent(html: string) {
-    // move and scale image to center to avoid flickering
-    const currentZoomFactor = this.#options.zoomFactor;
-    await this.zoomTo(0.01, { isManualZoom: false });
-
-    // restore original zoom factor for ZoomLock
-    this.#options.zoomFactor = currentZoomFactor;
-
     this.#isContentElDOMChanged = false;
     this.boxContentEl.innerHTML = html;
 
@@ -408,9 +407,37 @@ export class HapplaBox {
     await this.applyTransform(duration);
   }
 
+  public async zoomByDelta(
+    // zoom in: delta > 1
+    // zoom out: delta < 1
+    delta: number,
+    pageX?: number,
+    pageY?: number,
+    isManualZoom = false,
+    duration: number = 0,
+  ) {
+    if (!this.#options.allowZoom) return;
+
+    const oldZoom = this.#options.zoomFactor * this.scaleRatio;
+    const newZoom = oldZoom * delta;
+
+    const x = (pageX ?? this.boxEl.offsetLeft) - this.boxEl.offsetLeft;
+    const y = (pageY ?? this.boxEl.offsetTop) - this.boxEl.offsetTop;
+
+    return this.zoomToPoint(newZoom, {
+      x, y,
+      duration,
+      isManualZoom,
+      useDelta: true,
+      isZoomModeChanged: false,
+    });
+  }
+
   public async setZoomMode(mode: ZoomMode = ZoomMode.AutoZoom, zoomLockFactor = -1, duration = 0) {
     const fullW = this.boxContentEl.scrollWidth / this.scaleRatio;
     const fullH = this.boxContentEl.scrollHeight / this.scaleRatio;
+    if (fullW === 0 || fullH === 0) return;
+
     const horizontalPadding = this.padding.left + this.padding.right;
     const verticalPadding = this.padding.top + this.padding.bottom;
     const widthScale = (this.boxEl.clientWidth - horizontalPadding) / fullW;
@@ -443,14 +470,14 @@ export class HapplaBox {
       }
     }
 
-    this.zoomTo(zoomFactor, {
+    this.zoomToCenter(zoomFactor, {
       isManualZoom: false,
       duration,
       isZoomModeChanged: true,
     });
   }
 
-  public async zoomTo(factor: number, options: {
+  public async zoomToCenter(factor: number, options: {
     isManualZoom?: boolean,
     duration?: number,
     isZoomModeChanged?: boolean,
@@ -461,8 +488,8 @@ export class HapplaBox {
     const verticalPadding = this.padding.top + this.padding.bottom;
 
     // center point
-    let x = (this.boxEl.offsetWidth - horizontalPadding - (fullW * factor)) / 2;
-    let y = (this.boxEl.offsetHeight - verticalPadding - (fullH * factor)) / 2;
+    const x = (this.boxEl.offsetWidth - horizontalPadding - (fullW * factor)) / 2;
+    const y = (this.boxEl.offsetHeight - verticalPadding - (fullH * factor)) / 2;
 
     // change zoom factor
     this.zoomToPoint(factor, {
@@ -477,12 +504,19 @@ export class HapplaBox {
     x?: number,
     y?: number,
     duration?: number,
+    useDelta?: boolean,
     isManualZoom?: boolean,
     isZoomModeChanged?: boolean,
   } = {}) {
+    let newZoomFactor = this.dpi(factor);
+    const oldZoomFactor = this.#options.zoomFactor;
+
+    // when useDelta = false, we must set an init location for the matrix
+    const setInitLocation = !options.useDelta ?? true;
+
     // restrict the zoom factor
-    this.#options.zoomFactor = Math.min(
-      Math.max(this.#options.minZoom, this.dpi(factor)),
+    newZoomFactor = Math.min(
+      Math.max(this.#options.minZoom, newZoomFactor),
       this.#options.maxZoom,
     );
 
@@ -495,11 +529,21 @@ export class HapplaBox {
       isZoomModeChanged: options.isZoomModeChanged || false,
     });
 
-    // apply scale and translate value
-    this.domMatrix.a = this.#options.zoomFactor;
-    this.domMatrix.d = this.#options.zoomFactor;
-    this.domMatrix.e = (options.x || 0) + this.#options.padding.left;
-    this.domMatrix.f = (options.y || 0) + this.#options.padding.top;
+    // use delta to transform the matrix
+    const delta = newZoomFactor / oldZoomFactor;
+    this.#options.zoomFactor = newZoomFactor;
+
+    if (setInitLocation) {
+      this.domMatrix.e = options.x;
+      this.domMatrix.f = options.y;
+    }
+
+    // apply scale and translate value using zoom delta value
+    this.domMatrix = new DOMMatrix()
+      .translateSelf(options.x, options.y)
+      .scaleSelf(delta)
+      .translateSelf(-options.x, -options.y)
+      .multiplySelf(this.domMatrix);
 
     // raise event onAfterZoomChanged
     this.#options.onAfterZoomChanged({
@@ -512,74 +556,6 @@ export class HapplaBox {
 
     this.updateImageRendering();
     await this.applyTransform(options.duration);
-  }
-
-  public async zoomByDelta(
-    // zoom in: delta > 1
-    // zoom out: delta < 1
-    delta: number,
-    pageX?: number,
-    pageY?: number,
-    isManualZoom = false,
-    duration: number = 0,
-  ) {
-    if (!this.#options.allowZoom) return;
-
-    // update the current zoom factor
-    this.#options.zoomFactor = this.domMatrix.a;
-
-    const oldZoom = this.#options.zoomFactor;
-    const newZoom = oldZoom * delta;
-
-    // raise event onBeforeZoomChanged
-    this.#options.onBeforeZoomChanged({
-      zoomFactor: this.zoomFactor,
-      x: this.domMatrix.e,
-      y: this.domMatrix.f,
-      isManualZoom,
-      isZoomModeChanged: false,
-    });
-
-    // restrict the zoom factor
-    this.#options.zoomFactor = Math.min(
-      Math.max(this.#options.minZoom, newZoom),
-      this.#options.maxZoom,
-    );
-
-    const newX = (pageX ?? this.boxEl.offsetLeft) - this.boxEl.offsetLeft;
-    const newY = (pageY ?? this.boxEl.offsetTop) - this.boxEl.offsetTop;
-    let newDelta = delta;
-
-    // check zoom -> maxZoom
-    if (newZoom * this.#options.scaleRatio > this.#options.maxZoom) {
-      newDelta = this.dpi(this.#options.maxZoom) / oldZoom;
-      this.#options.zoomFactor = this.dpi(this.#options.maxZoom);
-    }
-
-    // check zoom -> minZoom
-    else if (newZoom * this.#options.scaleRatio < this.#options.minZoom) {
-      newDelta = this.dpi(this.#options.minZoom) / oldZoom;
-      this.#options.zoomFactor = this.dpi(this.#options.minZoom);
-    }
-
-    this.domMatrix = new DOMMatrix()
-      .translateSelf(newX, newY)
-      .scaleSelf(newDelta)
-      .translateSelf(-newX, -newY)
-      .multiplySelf(this.domMatrix);
-
-    // raise event onAfterZoomChanged
-    this.#options.onAfterZoomChanged({
-      zoomFactor: this.zoomFactor,
-      x: this.domMatrix.e,
-      y: this.domMatrix.f,
-      isManualZoom,
-      isZoomModeChanged: false,
-    });
-
-
-    this.updateImageRendering();
-    await this.applyTransform(duration);
   }
 
   public async applyTransform(duration = 0) {
