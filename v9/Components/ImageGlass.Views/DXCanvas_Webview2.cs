@@ -434,6 +434,28 @@ public partial class DXCanvas
     }
 
 
+    /// <summary>
+    /// Starts panning animation for <see cref="Web2"/>.
+    /// </summary>
+    /// <param name="direction">Direction is name of <see cref="AnimatorSource"/></param>.
+    private void StartWeb2PanningAnimation(string direction)
+    {
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("PanSpeed", PanDistance);
+        _ = obj.TryAdd("Direction", direction);
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.START_PANNING, BHelper.ToJson(obj));
+    }
+
+
+    /// <summary>
+    /// Stops panning animation of <see cref="Web2"/>.
+    /// </summary>
+    private void StopWeb2PanningAnimation()
+    {
+        Web2.PostWeb2Message(Web2BackendMsgNames.STOP_PANNING, "null");
+    }
+
     #endregion // Private methods
 
 

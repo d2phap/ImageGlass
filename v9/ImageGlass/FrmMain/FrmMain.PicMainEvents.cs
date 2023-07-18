@@ -121,42 +121,6 @@ public partial class FrmMain
     }
 
 
-    private void PicMain_KeyUp(object? sender, KeyEventArgs e)
-    {
-        // zooming
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomIn))
-        {
-            PicMain.StopAnimation(AnimationSource.ZoomIn);
-        }
-
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomOut))
-        {
-            PicMain.StopAnimation(AnimationSource.ZoomOut);
-        }
-
-        // panning
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanLeft))
-        {
-            PicMain.StopAnimation(AnimationSource.PanLeft);
-        }
-
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanRight))
-        {
-            PicMain.StopAnimation(AnimationSource.PanRight);
-        }
-
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanUp))
-        {
-            PicMain.StopAnimation(AnimationSource.PanUp);
-        }
-
-        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanDown))
-        {
-            PicMain.StopAnimation(AnimationSource.PanDown);
-        }
-    }
-
-
     private void PicMain_KeyDown(object? sender, KeyEventArgs e)
     {
         var hotkey = new Hotkey(e.KeyData);
@@ -224,6 +188,42 @@ public partial class FrmMain
         {
             PicMain.StartAnimation(AnimationSource.PanDown);
             return;
+        }
+    }
+
+
+    private void PicMain_KeyUp(object? sender, KeyEventArgs e)
+    {
+        // zooming
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomIn))
+        {
+            PicMain.StopAnimation(AnimationSource.ZoomIn);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomOut))
+        {
+            PicMain.StopAnimation(AnimationSource.ZoomOut);
+        }
+
+        // panning
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanLeft))
+        {
+            PicMain.StopAnimation(AnimationSource.PanLeft);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanRight))
+        {
+            PicMain.StopAnimation(AnimationSource.PanRight);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanUp))
+        {
+            PicMain.StopAnimation(AnimationSource.PanUp);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanDown))
+        {
+            PicMain.StopAnimation(AnimationSource.PanDown);
         }
     }
 

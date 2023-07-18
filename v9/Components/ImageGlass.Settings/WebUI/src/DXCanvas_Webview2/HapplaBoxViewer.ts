@@ -1,5 +1,5 @@
 import { HapplaBoxHTMLElement, defineHapplaBoxHTMLElement } from './webComponents/HapplaBoxHTMLElement';
-import { IMouseEventArgs, ILoadContentRequestedEventArgs, IZoomEventArgs, ZoomMode } from './webComponents/happlajs/HapplaBoxTypes';
+import { IMouseEventArgs, ILoadContentRequestedEventArgs, IZoomEventArgs, ZoomMode, PanDirection } from './webComponents/happlajs/HapplaBoxTypes';
 
 
 enum Web2BackendMsgNames {
@@ -7,6 +7,8 @@ enum Web2BackendMsgNames {
   SET_IMAGE = 'SET_IMAGE',
   SET_ZOOM_MODE = 'SET_ZOOM_MODE',
   SET_ZOOM_FACTOR = 'SET_ZOOM_FACTOR',
+  START_PANNING = 'START_PANNING',
+  STOP_PANNING = 'STOP_PANNING',
 }
 
 enum Web2FrontendMsgNames {
@@ -58,6 +60,8 @@ export default class HapplaBoxViewer {
     on(Web2BackendMsgNames.SET_HTML, HapplaBoxViewer.onWeb2LoadContentRequested);
     on(Web2BackendMsgNames.SET_ZOOM_MODE, HapplaBoxViewer.onWeb2ZoomModeChanged);
     on(Web2BackendMsgNames.SET_ZOOM_FACTOR, HapplaBoxViewer.onWeb2ZoomFactorChanged);
+    on(Web2BackendMsgNames.START_PANNING, HapplaBoxViewer.onWeb2PanStartRequested);
+    on(Web2BackendMsgNames.STOP_PANNING, HapplaBoxViewer.onWeb2PanStopRequested);
   }
 
   private static onResizing() {
@@ -111,19 +115,30 @@ export default class HapplaBoxViewer {
     }
   }
 
-  private static async onWeb2ZoomModeChanged(_: Web2BackendMsgNames, data: {
+  private static async onWeb2ZoomModeChanged(_: Web2BackendMsgNames, e: {
     ZoomMode: ZoomMode,
     IsManualZoom: boolean,
   }) {
-    _zoomMode = data.ZoomMode;
-    await _boxEl.setZoomMode(data.ZoomMode, -1, _transitionDuration);
+    _zoomMode = e.ZoomMode;
+    await _boxEl.setZoomMode(e.ZoomMode, -1, _transitionDuration);
   }
 
-  private static async onWeb2ZoomFactorChanged(_: Web2BackendMsgNames, data: {
+  private static async onWeb2ZoomFactorChanged(_: Web2BackendMsgNames, e: {
     ZoomFactor: number,
     IsManualZoom: boolean,
     ZoomDelta: number,
   }) {
-    await _boxEl.setZoomFactor(data.ZoomFactor, data.IsManualZoom, data.ZoomDelta, _transitionDuration);
+    await _boxEl.setZoomFactor(e.ZoomFactor, e.IsManualZoom, e.ZoomDelta, _transitionDuration);
+  }
+
+  private static async onWeb2PanStartRequested(_: Web2BackendMsgNames, e: {
+    PanSpeed: number,
+    Direction: PanDirection,
+  }) {
+    await _boxEl.startPanningAnimation(e.Direction, e.PanSpeed);
+  }
+
+  private static async onWeb2PanStopRequested() {
+    _boxEl.stopPanningAnimation();
   }
 }

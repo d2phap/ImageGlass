@@ -1387,6 +1387,7 @@ public partial class DXCanvas : DXControl
         }
 
         base.OnFrame(e);
+        if (UseWebview2) return;
 
 
         // Panning
@@ -2202,7 +2203,25 @@ public partial class DXCanvas : DXControl
     /// <param name="sources">Source of animation</param>
     public void StartAnimation(AnimationSource sources)
     {
-        if (UseWebview2) return;
+        if (UseWebview2)
+        {
+            if (sources.HasFlag(AnimationSource.PanLeft))
+            {
+                StartWeb2PanningAnimation(nameof(AnimationSource.PanLeft));
+            }
+            else if (sources.HasFlag(AnimationSource.PanRight))
+            {
+                StartWeb2PanningAnimation(nameof(AnimationSource.PanRight));
+            }
+            else if (sources.HasFlag(AnimationSource.PanUp))
+            {
+                StartWeb2PanningAnimation(nameof(AnimationSource.PanUp));
+            }
+            else if (sources.HasFlag(AnimationSource.PanDown))
+            {
+                StartWeb2PanningAnimation(nameof(AnimationSource.PanDown));
+            }
+        }
 
         _animationSource = sources;
         RequestUpdateFrame = true;
@@ -2215,6 +2234,11 @@ public partial class DXCanvas : DXControl
     /// <param name="sources">Source of animation</param>
     public void StopAnimation(AnimationSource sources)
     {
+        if (UseWebview2)
+        {
+            StopWeb2PanningAnimation();
+        }
+
         _animationSource ^= sources;
         RequestUpdateFrame = false;
     }

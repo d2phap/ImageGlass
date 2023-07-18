@@ -1,6 +1,6 @@
 
 import { HapplaBox } from './happlajs/HapplaBox';
-import { IHapplaBoxOptions, ZoomMode } from './happlajs/HapplaBoxTypes';
+import { IHapplaBoxOptions, PanDirection, ZoomMode } from './happlajs/HapplaBoxTypes';
 import { taggedTemplate } from '@/helpers';
 
 const styles = `
@@ -160,6 +160,14 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     }
 
     return this.#box.zoomToCenter(zoomFactor, { isManualZoom, duration });
+  }
+
+  public startPanningAnimation(direction: PanDirection, speed: number) {
+    return this.#box.startPanningAnimation(direction, speed);
+  }
+
+  public stopPanningAnimation() {
+    this.#box.stopPanningAnimation();
   }
 
   public focus() {
