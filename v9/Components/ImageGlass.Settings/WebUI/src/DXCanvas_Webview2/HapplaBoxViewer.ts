@@ -28,7 +28,6 @@ enum Web2FrontendMsgNames {
 const _transitionDuration = 300;
 let _boxEl: HapplaBoxHTMLElement = undefined;
 let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
-let _isManualZoom = false;
 
 export default class HapplaBoxViewer {
   static initialize() {
@@ -38,7 +37,6 @@ export default class HapplaBoxViewer {
     _boxEl.initialize({
       zoomFactor: 1,
       onAfterZoomChanged: HapplaBoxViewer.onAfterZoomChanged,
-      onResizing: HapplaBoxViewer.onResizing,
       onMouseWheel: HapplaBoxViewer.onMouseWheel,
     });
 
@@ -76,12 +74,6 @@ export default class HapplaBoxViewer {
     post(Web2FrontendMsgNames.ON_FILE_DROP, e.dataTransfer.files, false);
   }
 
-  private static onResizing() {
-    if (!_isManualZoom) {
-      _boxEl.setZoomMode(_zoomMode);
-    }
-  }
-
   private static onPointerDown(e: PointerEvent) {
     e.preventDefault();
     post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
@@ -104,8 +96,6 @@ export default class HapplaBoxViewer {
   }
 
   private static onAfterZoomChanged(e: IZoomEventArgs) {
-    _isManualZoom = e.isManualZoom;
-
     post(Web2FrontendMsgNames.ON_ZOOM_CHANGED, {
       ZoomFactor: e.zoomFactor,
       IsManualZoom: e.isManualZoom,

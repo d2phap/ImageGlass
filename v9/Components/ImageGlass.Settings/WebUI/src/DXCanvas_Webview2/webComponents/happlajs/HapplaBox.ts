@@ -19,10 +19,6 @@ export class HapplaBox {
   private zoomingAnimationFrame: number;
   private isPanning = false;
   private isZooming = false;
-  // private arrowLeftDown = false;
-  // private arrowRightDown = false;
-  // private arrowUpDown = false;
-  // private arrowDownDown = false;
 
   #options: IHapplaBoxOptions = {};
   #defaultOptions: IHapplaBoxOptions = {
@@ -70,17 +66,25 @@ export class HapplaBox {
       .scaleSelf(this.dpi(this.zoomFactor))
       .translateSelf(this.#options.panOffset.x, this.#options.panOffset.y);
 
-    this.zoomByDelta = this.zoomByDelta.bind(this);
-    this.panToDistance = this.panToDistance.bind(this);
-    this.startPanningAnimation = this.startPanningAnimation.bind(this);
-    this.stopPanningAnimation = this.stopPanningAnimation.bind(this);
+
     this.dpi = this.dpi.bind(this);
     this.updateImageRendering = this.updateImageRendering.bind(this);
+    this.checkIfNeedRecenter = this.checkIfNeedRecenter.bind(this);
+    this.getCenterPoint = this.getCenterPoint.bind(this);
+    this.animatePanning = this.animatePanning.bind(this);
+    this.animateZooming = this.animateZooming.bind(this);
 
     this.enable = this.enable.bind(this);
     this.disable = this.disable.bind(this);
-    this.zoomToPoint = this.zoomToPoint.bind(this);
+    this.startPanningAnimation = this.startPanningAnimation.bind(this);
+    this.stopPanningAnimation = this.stopPanningAnimation.bind(this);
+    this.startZoomingAnimation = this.startZoomingAnimation.bind(this);
+    this.stopZoomingAnimation = this.stopZoomingAnimation.bind(this);
     this.zoomToCenter = this.zoomToCenter.bind(this);
+    this.zoomByDelta = this.zoomByDelta.bind(this);
+    this.zoomToPoint = this.zoomToPoint.bind(this);
+    this.recenter = this.recenter.bind(this);
+    this.panToDistance = this.panToDistance.bind(this);
     this.panTo = this.panTo.bind(this);
     this.applyTransform = this.applyTransform.bind(this);
 
@@ -92,8 +96,6 @@ export class HapplaBox {
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onPointerUp = this.onPointerUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
-    // this.onKeyDown = this.onKeyDown.bind(this);
-    // this.onKeyUp = this.onKeyUp.bind(this);
 
     // create content DOM observer
     this.#contentDOMObserver = new MutationObserver(this.onContentElDOMChanged);
@@ -166,18 +168,17 @@ export class HapplaBox {
     this.#isContentElDOMChanged = isContentElDOMChanged;
   }
 
-  private onResizing() {
+  private async onResizing() {
+    if (this.checkIfNeedRecenter()) {
+      await this.recenter();
+    }
+
     this.#options.onResizing();
   }
 
   private onMouseWheel(e: WheelEvent) {
     // ignore horizontal scroll events
     if (e.deltaY === 0) return;
-
-    // const direction = e.deltaY < 0 ? 'up' : 'down';
-    // const normalizedDeltaY = 1 + Math.abs(e.deltaY) / 1000; // speed
-    // const delta = direction === 'up' ? normalizedDeltaY : 1 / normalizedDeltaY;
-    // this.zoomByDelta(delta, e.pageX, e.pageY);
 
     this.#options.onMouseWheel(e);
   }
@@ -234,69 +235,6 @@ export class HapplaBox {
     this.#options.onAfterPanned(this.domMatrix.e, this.domMatrix.f);
   }
 
-  // private onKeyDown(event: KeyboardEvent) {
-  //   switch (event.key) {
-  //     case 'ArrowLeft':
-  //       this.arrowLeftDown = true;
-  //       if (!this.isMoving) {
-  //         this.isMoving = true;
-  //         this.startMoving();
-  //       }
-  //       break;
-  //     case 'ArrowUp':
-  //       this.arrowUpDown = true;
-  //       if (!this.isMoving) {
-  //         this.isMoving = true;
-  //         this.startMoving();
-  //       }
-  //       break;
-  //     case 'ArrowRight':
-  //       this.arrowRightDown = true;
-  //       if (!this.isMoving) {
-  //         this.isMoving = true;
-  //         this.startMoving();
-  //       }
-  //       break;
-  //     case 'ArrowDown':
-  //       this.arrowDownDown = true;
-  //       if (!this.isMoving) {
-  //         this.isMoving = true;
-  //         this.startMoving();
-  //       }
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
-  // private onKeyUp(event: KeyboardEvent) {
-  //   switch (event.key) {
-  //     case 'ArrowLeft':
-  //       this.arrowLeftDown = false;
-  //       break;
-  //     case 'ArrowUp':
-  //       this.arrowUpDown = false;
-  //       break;
-  //     case 'ArrowRight':
-  //       this.arrowRightDown = false;
-  //       break;
-  //     case 'ArrowDown':
-  //       this.arrowDownDown = false;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   if ([
-  //     this.arrowLeftDown,
-  //     this.arrowUpDown,
-  //     this.arrowRightDown,
-  //     this.arrowDownDown,
-  //   ].every((keyDown) => !keyDown)) {
-  //     this.stopMoving();
-  //   }
-  // }
-
   private dpi(value: number) {
     return value / this.#options.scaleRatio;
   }
@@ -328,6 +266,17 @@ export class HapplaBox {
     const y = (this.boxEl.offsetHeight - fullH) / 2 + scaledPadding.top / 2 - scaledPadding.bottom / 2;
 
     return new DOMPoint(x, y);
+  }
+
+  private checkIfNeedRecenter() {
+    const boxBounds = this.boxEl.getBoundingClientRect();
+    const contentBounds = this.boxContentEl.getBoundingClientRect();
+    const isInsideBox = contentBounds.left >= boxBounds.left
+      || contentBounds.top >= boxBounds.top
+      || contentBounds.right <= boxBounds.right
+      || contentBounds.bottom <= boxBounds.bottom;
+
+    return isInsideBox;
   }
 
   private async animatePanning(direction: PanDirection, panSpeed = 20) {
@@ -421,6 +370,14 @@ export class HapplaBox {
   public stopZoomingAnimation() {
     cancelAnimationFrame(this.zoomingAnimationFrame);
     this.isZooming = false;
+  }
+
+  public async recenter(duration?: number) {
+    const { x, y } = this.getCenterPoint(this.#options.zoomFactor);
+    this.domMatrix.e = x;
+    this.domMatrix.f = y;
+
+    await this.applyTransform(duration);
   }
 
   public panToDistance(dx = 0, dy = 0, duration?: number) {
@@ -529,8 +486,13 @@ export class HapplaBox {
     duration?: number,
     isZoomModeChanged?: boolean,
   } = {}) {
+    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio * factor;
+    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio * factor;
+    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
+
     // center point
-    const { x, y } = this.getCenterPoint(factor);
+    const x = (this.boxEl.offsetWidth - fullW) / 2 + scaledPadding.left / 2 - scaledPadding.right / 2;
+    const y = (this.boxEl.offsetHeight - fullH) / 2 + scaledPadding.top / 2 - scaledPadding.bottom / 2;
 
     // change zoom factor
     this.zoomToPoint(factor, {
@@ -549,8 +511,10 @@ export class HapplaBox {
     isManualZoom?: boolean,
     isZoomModeChanged?: boolean,
   } = {}) {
+    let { x, y } = options;
     let newZoomFactor = this.dpi(factor);
     const oldZoomFactor = this.#options.zoomFactor;
+    const needRecenter = this.checkIfNeedRecenter();
 
     // when useDelta = false, we must set an init location for the matrix
     const setInitLocation = !options.useDelta ?? true;
@@ -570,30 +534,18 @@ export class HapplaBox {
       isZoomModeChanged: options.isZoomModeChanged || false,
     });
 
-
-    // move the content to center the box
-    const boxBounds = this.boxEl.getBoundingClientRect();
-    const contentBounds = this.boxContentEl.getBoundingClientRect();
-    let x = options.x;
-    let y = options.y;
-    const isInsideBox = contentBounds.left >= boxBounds.left
-      || contentBounds.top >= boxBounds.top
-      || contentBounds.right <= boxBounds.right
-      || contentBounds.bottom <= boxBounds.bottom;
-
-    if (isInsideBox) {
-      // center point
+    // recenter the content
+    if (needRecenter) {
       const center = this.getCenterPoint(newZoomFactor);
       x = center.x;
       y = center.y;
     }
 
-
     // use delta to transform the matrix
     const delta = newZoomFactor / oldZoomFactor;
     this.#options.zoomFactor = newZoomFactor;
 
-    if (setInitLocation || isInsideBox) {
+    if (setInitLocation || needRecenter) {
       this.domMatrix.e = x;
       this.domMatrix.f = y;
     }
