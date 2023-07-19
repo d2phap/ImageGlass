@@ -16,7 +16,9 @@ export class HapplaBox {
   #pointerLocation: { x?: number, y?: number } = {};
 
   private panningAnimationFrame: number;
+  private zoomingAnimationFrame: number;
   private isPanning = false;
+  private isZooming = false;
   // private arrowLeftDown = false;
   // private arrowRightDown = false;
   // private arrowUpDown = false;
@@ -339,6 +341,29 @@ export class HapplaBox {
 
     this.panningAnimationFrame = requestAnimationFrame(() => this.animatePanning(direction, panSpeed));
   }
+
+  private async animateZooming(isZoomOut: boolean, zoomSpeed = 20) {
+    const zoomDelta = isZoomOut ? -20 : 20;
+    const speed = zoomDelta / (501 - zoomSpeed);
+    let newZoomFactor = this.#options.zoomFactor;
+
+    // zoom out
+    if (isZoomOut) {
+      newZoomFactor = this.#options.zoomFactor / (1 - speed);
+    }
+    // zoom in
+    else {
+      newZoomFactor = this.#options.zoomFactor * (1 + speed);
+    }
+
+    const newDelta = newZoomFactor / this.#options.zoomFactor;
+    const x = this.pointerLocation.x ?? -1;
+    const y = this.pointerLocation.y ?? -1;
+
+    await this.zoomByDelta(newDelta, x, y, true);
+
+    this.zoomingAnimationFrame = requestAnimationFrame(() => this.animateZooming(isZoomOut, zoomSpeed));
+  }
   // #endregion
 
 
@@ -372,6 +397,18 @@ export class HapplaBox {
   public stopPanningAnimation() {
     cancelAnimationFrame(this.panningAnimationFrame);
     this.isPanning = false;
+  }
+
+  public async startZoomingAnimation(isZoomOut: boolean, zoomSpeed = 20) {
+    if (this.isZooming) return;
+
+    this.isZooming = true;
+    this.animateZooming(isZoomOut, zoomSpeed);
+  }
+
+  public stopZoomingAnimation() {
+    cancelAnimationFrame(this.zoomingAnimationFrame);
+    this.isZooming = false;
   }
 
   public panToDistance(dx = 0, dy = 0, duration?: number) {
