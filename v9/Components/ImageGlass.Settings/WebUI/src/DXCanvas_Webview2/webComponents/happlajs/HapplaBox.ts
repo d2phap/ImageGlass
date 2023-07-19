@@ -318,6 +318,18 @@ export class HapplaBox {
     }
   }
 
+  private getCenterPoint(zoomFactor: number) {
+    const fullW = this.boxContentEl.scrollWidth * zoomFactor;
+    const fullH = this.boxContentEl.scrollHeight * zoomFactor;
+    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
+
+    // center point
+    const x = (this.boxEl.offsetWidth - fullW) / 2 + scaledPadding.left / 2 - scaledPadding.right / 2;
+    const y = (this.boxEl.offsetHeight - fullH) / 2 + scaledPadding.top / 2 - scaledPadding.bottom / 2;
+
+    return new DOMPoint(x, y);
+  }
+
   private async animatePanning(direction: PanDirection, panSpeed = 20) {
     const speed = this.dpi(panSpeed || 20);
     let x = 0;
@@ -517,13 +529,8 @@ export class HapplaBox {
     duration?: number,
     isZoomModeChanged?: boolean,
   } = {}) {
-    const fullW = this.boxContentEl.scrollWidth / this.scaleRatio * factor;
-    const fullH = this.boxContentEl.scrollHeight / this.scaleRatio * factor;
-    const scaledPadding = this.padding.multiply(1 / this.scaleRatio);
-
     // center point
-    const x = (this.boxEl.offsetWidth - fullW) / 2 + scaledPadding.left / 2 - scaledPadding.right / 2;
-    const y = (this.boxEl.offsetHeight - fullH) / 2 + scaledPadding.top / 2 - scaledPadding.bottom / 2;
+    const { x, y } = this.getCenterPoint(factor);
 
     // change zoom factor
     this.zoomToPoint(factor, {
@@ -563,20 +570,39 @@ export class HapplaBox {
       isZoomModeChanged: options.isZoomModeChanged || false,
     });
 
+
+    // move the content to center the box
+    const boxBounds = this.boxEl.getBoundingClientRect();
+    const contentBounds = this.boxContentEl.getBoundingClientRect();
+    let x = options.x;
+    let y = options.y;
+    const isInsideBox = contentBounds.left >= boxBounds.left
+      || contentBounds.top >= boxBounds.top
+      || contentBounds.right <= boxBounds.right
+      || contentBounds.bottom <= boxBounds.bottom;
+
+    if (isInsideBox) {
+      // center point
+      const center = this.getCenterPoint(newZoomFactor);
+      x = center.x;
+      y = center.y;
+    }
+
+
     // use delta to transform the matrix
     const delta = newZoomFactor / oldZoomFactor;
     this.#options.zoomFactor = newZoomFactor;
 
-    if (setInitLocation) {
-      this.domMatrix.e = options.x;
-      this.domMatrix.f = options.y;
+    if (setInitLocation || isInsideBox) {
+      this.domMatrix.e = x;
+      this.domMatrix.f = y;
     }
 
     // apply scale and translate value using zoom delta value
     this.domMatrix = new DOMMatrix()
-      .translateSelf(options.x, options.y)
+      .translateSelf(x, y)
       .scaleSelf(delta)
-      .translateSelf(-options.x, -options.y)
+      .translateSelf(-x, -y)
       .multiplySelf(this.domMatrix);
 
     // raise event onAfterZoomChanged
