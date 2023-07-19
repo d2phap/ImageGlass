@@ -448,25 +448,73 @@ public partial class DXCanvas
 
 
     /// <summary>
+    /// Starts animation for <see cref="Web2"/>.
+    /// </summary>
+    private void StartWeb2Animation(AnimationSource sources)
+    {
+        // Panning
+        if (sources.HasFlag(AnimationSource.PanLeft))
+        {
+            StartWeb2PanningAnimation("left");
+        }
+        else if (sources.HasFlag(AnimationSource.PanRight))
+        {
+            StartWeb2PanningAnimation("right");
+        }
+        else if (sources.HasFlag(AnimationSource.PanUp))
+        {
+            StartWeb2PanningAnimation("up");
+        }
+        else if (sources.HasFlag(AnimationSource.PanDown))
+        {
+            StartWeb2PanningAnimation("down");
+        }
+
+        // Zooming
+        else if (sources.HasFlag(AnimationSource.ZoomIn))
+        {
+            StartWeb2ZoomingAnimation(false);
+        }
+        else if (sources.HasFlag(AnimationSource.ZoomOut))
+        {
+            StartWeb2ZoomingAnimation(true);
+        }
+    }
+
+
+    /// <summary>
     /// Starts panning animation for <see cref="Web2"/>.
     /// </summary>
-    /// <param name="direction">Direction is name of <see cref="AnimatorSource"/></param>.
+    /// <param name="direction">Direction is either <c>left</c>, <c>right</c>, <c>up</c> or <c>down</c>.</param>.
     private void StartWeb2PanningAnimation(string direction)
     {
         var obj = new ExpandoObject();
         _ = obj.TryAdd("PanSpeed", PanDistance);
         _ = obj.TryAdd("Direction", direction);
 
-        Web2.PostWeb2Message(Web2BackendMsgNames.START_PANNING, BHelper.ToJson(obj));
+        Web2.PostWeb2Message(Web2BackendMsgNames.START_PANNING_ANIMATION, BHelper.ToJson(obj));
     }
 
 
     /// <summary>
-    /// Stops panning animation of <see cref="Web2"/>.
+    /// Starts zooming animation for <see cref="Web2"/>.
     /// </summary>
-    private void StopWeb2PanningAnimation()
+    private void StartWeb2ZoomingAnimation(bool isZoomOut)
     {
-        Web2.PostWeb2Message(Web2BackendMsgNames.STOP_PANNING, "null");
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("IsZoomOut", isZoomOut);
+        _ = obj.TryAdd("ZoomSpeed", ZoomSpeed);
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.START_ZOOMING_ANIMATION, BHelper.ToJson(obj));
+    }
+
+
+    /// <summary>
+    /// Stops animations of <see cref="Web2"/>.
+    /// </summary>
+    private void StopWeb2Animations()
+    {
+        Web2.PostWeb2Message(Web2BackendMsgNames.STOP_ANIMATIONS, "null");
     }
 
     #endregion // Private methods

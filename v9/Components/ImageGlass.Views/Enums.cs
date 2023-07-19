@@ -125,8 +125,9 @@ public static class Web2BackendMsgNames
     public static string SET_IMAGE => "SET_IMAGE";
     public static string SET_ZOOM_MODE => "SET_ZOOM_MODE";
     public static string SET_ZOOM_FACTOR => "SET_ZOOM_FACTOR";
-    public static string START_PANNING => "START_PANNING";
-    public static string STOP_PANNING => "STOP_PANNING";
+    public static string START_PANNING_ANIMATION => "START_PANNING_ANIMATION";
+    public static string START_ZOOMING_ANIMATION => "START_ZOOMING_ANIMATION";
+    public static string STOP_ANIMATIONS => "STOP_ANIMATIONS";
 
 }
 
