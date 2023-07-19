@@ -154,6 +154,16 @@ public partial class DXCanvas
             var mouseWheelEventArgs = DXCanvas.ParseMouseEventJson(e.Data);
             this.OnMouseWheel(mouseWheelEventArgs);
         }
+        else if (e.Name == Web2FrontendMsgNames.ON_FILE_DROP)
+        {
+            var filePaths = e.AdditionalObjects.Where(i => i is CoreWebView2File)
+                .Select(i => (i as CoreWebView2File).Path)
+                .ToArray();
+
+            var dataObj = new DataObject(DataFormats.FileDrop, filePaths);
+            var args = new DragEventArgs(dataObj, 0, 0, 0, DragDropEffects.All, DragDropEffects.Link);
+            this.OnDragDrop(args);
+        }
     }
 
     #endregion // Web2 events

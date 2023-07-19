@@ -49,13 +49,14 @@ public partial class FrmMain
             if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
 
-            var dataTest = e.Data.GetData(DataFormats.FileDrop, false);
+            var data = e.Data.GetData(DataFormats.FileDrop, false);
 
             // observed: null w/ long path and long path support not enabled
-            if (dataTest == null)
+            if (data == null)
                 return;
 
-            var filePath = ((string[])dataTest)[0];
+            if (data is not string[] paths) return;
+            var filePath = paths[0];
 
             // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because
             // we set the drag effect to Move, which is not allowed
@@ -86,20 +87,16 @@ public partial class FrmMain
 
     private async Task HandlePicMainDragDropAsync(DragEventArgs e)
     {
-        // Drag file from DESKTOP to APP
-        if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
-            return;
+        if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+        if (e.Data.GetData(DataFormats.FileDrop, false) is not string[] paths) return;
 
-        var filePaths = (string[]?)e.Data.GetData(DataFormats.FileDrop, false);
-
-        if (filePaths.Length > 1)
+        if (paths.Length > 1)
         {
-            await PrepareLoadingAsync(filePaths);
-
+            await PrepareLoadingAsync(paths);
             return;
         }
 
-        var filePath = BHelper.ResolvePath(filePaths[0]);
+        var filePath = BHelper.ResolvePath(paths[0]);
         var imageIndex = Local.Images.IndexOf(filePath);
 
         // The file is located another folder, load the entire folder
