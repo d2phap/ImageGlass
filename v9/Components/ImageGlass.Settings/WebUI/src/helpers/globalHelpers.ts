@@ -67,6 +67,12 @@ export const on = (name: string, handler: WebviewEventHandlerFn) => {
  * @param convertToJson Converts {@link data} to JSON. Default value is `false`.
  */
 export const post = (name: string, data?: any, convertToJson = false) => {
+  if (data instanceof FileList && !convertToJson) {
+    // @ts-ignore
+    window.chrome.webview?.postMessageWithAdditionalObjects({ name, data: null }, data);
+    return;
+  }
+
   const msgData = convertToJson ? JSON.stringify(data) : data;
 
   // @ts-ignore

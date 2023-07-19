@@ -15,6 +15,7 @@ enum Web2FrontendMsgNames {
   ON_ZOOM_CHANGED = 'ON_ZOOM_CHANGED',
   ON_POINTER_DOWN = 'ON_POINTER_DOWN',
   ON_MOUSE_WHEEL = 'ON_MOUSE_WHEEL',
+  ON_FILE_DROP = 'ON_FILE_DROP',
 }
 
 const _transitionDuration = 300;
@@ -34,25 +35,10 @@ export default class HapplaBoxViewer {
       onMouseWheel: HapplaBoxViewer.onMouseWheel,
     });
 
-    _boxEl.addEventListener('dragenter', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    });
-
-    _boxEl.addEventListener('dragover', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'copy';
-    });
-
-    _boxEl.addEventListener('drop', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      console.info(e.dataTransfer.files);
-    });
-
+    _boxEl.addEventListener('dragenter', HapplaBoxViewer.onFileDragEntered);
+    _boxEl.addEventListener('dragover', HapplaBoxViewer.onFileDragOver);
+    _boxEl.addEventListener('drop', HapplaBoxViewer.onFileDropped);
     _boxEl.addEventListener('pointerdown', HapplaBoxViewer.onPointerDown);
-
     _boxEl.focus();
 
     // listen to Web2 Backend message
@@ -62,6 +48,24 @@ export default class HapplaBoxViewer {
     on(Web2BackendMsgNames.SET_ZOOM_FACTOR, HapplaBoxViewer.onWeb2ZoomFactorChanged);
     on(Web2BackendMsgNames.START_PANNING, HapplaBoxViewer.onWeb2PanStartRequested);
     on(Web2BackendMsgNames.STOP_PANNING, HapplaBoxViewer.onWeb2PanStopRequested);
+  }
+
+  private static onFileDragEntered(e: DragEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  private static onFileDragOver(e: DragEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'link';
+  }
+
+  private static onFileDropped(e: DragEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    post(Web2FrontendMsgNames.ON_FILE_DROP, e.dataTransfer.files, false);
   }
 
   private static onResizing() {
