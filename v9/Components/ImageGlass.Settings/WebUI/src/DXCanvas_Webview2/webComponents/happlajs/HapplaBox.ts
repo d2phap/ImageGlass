@@ -323,17 +323,17 @@ export class HapplaBox {
     let x = 0;
     let y = 0;
 
-    if (direction === 'PanLeft') {
+    if (direction === 'left') {
       x = speed;
     }
-    else if (direction === 'PanRight') {
+    else if (direction === 'right') {
       x = -speed;
     }
 
-    if (direction === 'PanUp') {
+    if (direction === 'up') {
       y = speed;
     }
-    else if (direction === 'PanDown') {
+    else if (direction === 'down') {
       y = -speed;
     }
 

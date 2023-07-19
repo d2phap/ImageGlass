@@ -166,8 +166,13 @@ export class HapplaBoxHTMLElement extends HTMLElement {
     return this.#box.startPanningAnimation(direction, speed);
   }
 
-  public stopPanningAnimation() {
+  public startZoomingAnimation(isZoomOut: boolean, speed: number) {
+    return this.#box.startZoomingAnimation(isZoomOut, speed);
+  }
+
+  public stopAnimations() {
     this.#box.stopPanningAnimation();
+    this.#box.stopZoomingAnimation();
   }
 
   public focus() {
