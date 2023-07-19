@@ -16,9 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+using System.Collections.ObjectModel;
+
 namespace ImageGlass.Base;
 
-public class Web2MessageReceivedEventArgs: EventArgs
+public class Web2MessageReceivedEventArgs : EventArgs
 {
     /// <summary>
     /// Gets the name of the message.
@@ -30,10 +33,16 @@ public class Web2MessageReceivedEventArgs: EventArgs
     /// </summary>
     public string Data { get; init; }
 
+    /// <summary>
+    /// Gets the additional received WebMessage objects.
+    /// </summary>
+    public IReadOnlyList<object> AdditionalObjects { get; init; }
 
-    public Web2MessageReceivedEventArgs(string name, string data = "")
+
+    public Web2MessageReceivedEventArgs(string? name, string? data, IReadOnlyList<object>? additionalObjects)
     {
-        Name = name;
-        Data = data;
+        Name = name ?? string.Empty;
+        Data = data ?? string.Empty;
+        AdditionalObjects = additionalObjects ?? new ReadOnlyCollection<object>(Array.Empty<object>());
     }
 }

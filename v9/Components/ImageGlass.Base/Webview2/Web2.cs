@@ -462,7 +462,12 @@ public class Web2 : WebView2
         {
             SafeRunUi(async () =>
             {
-                await OnWeb2MessageReceivedAsync(new Web2MessageReceivedEventArgs(msg.Name.Trim(), msg.Data?.Trim()));
+                var args = new Web2MessageReceivedEventArgs(
+                    msg.Name.Trim(),
+                    msg.Data?.Trim(),
+                    e.AdditionalObjects
+                );
+                await OnWeb2MessageReceivedAsync(args);
             });
         }
     }
