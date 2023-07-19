@@ -475,6 +475,15 @@ public class Web2 : WebView2
 
     private async void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
+        // disable console.log in Release
+        var logTask = Task.CompletedTask;
+#if !DEBUG
+        logTask = this.ExecuteScriptAsync($"""
+            console.log = () => undefined;
+            console.info = () => undefined;
+        """);
+#endif
+
         var borderRadiusTask = Task.CompletedTask;
         if (BHelper.IsOS(WindowsOS.Win10))
         {
@@ -486,7 +495,7 @@ public class Web2 : WebView2
         var darkModeTask = SetWeb2DarkModeAsync(DarkMode);
         var accentColorTask = SetWeb2AccentColorAsync(AccentColor);
 
-        await Task.WhenAll(borderRadiusTask, darkModeTask, accentColorTask);
+        await Task.WhenAll(logTask, borderRadiusTask, darkModeTask, accentColorTask);
         await OnWeb2NavigationCompleted();
     }
 
