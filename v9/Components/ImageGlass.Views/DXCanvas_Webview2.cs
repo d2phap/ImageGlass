@@ -30,6 +30,7 @@ public partial class DXCanvas
 {
     private bool _isWeb2NavigationDone = false;
     private Web2? _web2 = null;
+    private bool _web2DarkMode = true;
     private MouseEventArgs? _web2PointerDownEventArgs = null;
 
 
@@ -53,6 +54,23 @@ public partial class DXCanvas
     /// should use <see cref="Web2"/> to render the image.
     /// </summary>
     public bool UseWebview2 => _imageSource == ImageSource.Webview2;
+
+
+    /// <summary>
+    /// Gets, sets value of dark mode of <see cref="Web2"/>.
+    /// </summary>
+    public bool Web2DarkMode
+    {
+        get => _web2DarkMode;
+        set
+        {
+            _web2DarkMode = value;
+            if (Web2 != null)
+            {
+                Web2.DarkMode = value;
+            }
+        }
+    }
 
     #endregion // Properties
 
@@ -98,6 +116,9 @@ public partial class DXCanvas
     private void Web2_Web2NavigationCompleted(object? sender, EventArgs e)
     {
         _isWeb2NavigationDone = true;
+        Web2.DarkMode = Web2DarkMode;
+        Web2.AccentColor = AccentColor;
+
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
     }
 
@@ -182,6 +203,8 @@ public partial class DXCanvas
 
         try
         {
+            var shouldSetStyles = !_isWeb2NavigationDone;
+
             await InitializeWeb2Async();
 
             // release native resources
@@ -519,7 +542,7 @@ public partial class DXCanvas
 
 
     /// <summary>
-    /// Set message of <see cref="Web2"/>.
+    /// Sets message of <see cref="Web2"/>.
     /// </summary>
     private void ShowWeb2Message(string text, string? heading = null)
     {
@@ -530,6 +553,15 @@ public partial class DXCanvas
         Web2.PostWeb2Message(Web2BackendMsgNames.SET_MESSAGE, BHelper.ToJson(obj));
     }
 
+
+    /// <summary>
+    /// Sets styles for Web2.
+    /// </summary>
+    public void UpdateWeb2Styles(bool isDarkMode)
+    {
+        Web2.AccentColor = AccentColor;
+        Web2.DarkMode = isDarkMode;
+    }
 
     #endregion // Private methods
 

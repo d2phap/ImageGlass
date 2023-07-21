@@ -57,6 +57,7 @@ public partial class DXCanvas : DXControl
         Interval = SystemInformation.DoubleClickTime / 2,
     };
 
+    private Color _accentColor = Color.Blue;
     private float _imageOpacity = 1f;
     private float _opacityStep = 0.05f;
     private ImageDrawingState _imageDrawingState = ImageDrawingState.NotStarted;
@@ -268,11 +269,20 @@ public partial class DXCanvas : DXControl
     [Browsable(false)]
     public ImageDrawingState ImageDrawingState => _imageDrawingState;
 
-
+    
     /// <summary>
     /// Gets, sets accent color.
     /// </summary>
-    public Color AccentColor { get; set; } = Color.Blue;
+    public Color AccentColor
+    {
+        get => _accentColor;
+        set
+        {
+            _accentColor = value;
+
+            if (Web2 != null) Web2.AccentColor = _accentColor;
+        }
+    }
 
 
     /// <summary>
@@ -1590,6 +1600,7 @@ public partial class DXCanvas : DXControl
     /// <param name="g">Drawing graphic object.</param>
     protected virtual void DrawImageLayer(IGraphics g)
     {
+        if (UseWebview2) return;
         if (Source == ImageSource.Null) return;
 
         if (UseHardwareAcceleration)
@@ -1627,6 +1638,8 @@ public partial class DXCanvas : DXControl
 
         if (CheckerboardMode == CheckerboardMode.Image)
         {
+            if (UseWebview2) return;
+
             // no need to draw checkerboard if image does not has alpha pixels
             if (!HasAlphaPixels) return;
 
@@ -1664,6 +1677,7 @@ public partial class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
+        if (UseWebview2) return;
         if (Source == ImageSource.Null || (_mouseDownButton != MouseButtons.Left && ClientSelection.IsEmpty))
             return;
 
@@ -1797,6 +1811,8 @@ public partial class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawMessageLayer(IGraphics g)
     {
+        if (UseWebview2) return;
+
         var hasHeading = !string.IsNullOrEmpty(TextHeading);
         var hasText = !string.IsNullOrEmpty(Text);
 

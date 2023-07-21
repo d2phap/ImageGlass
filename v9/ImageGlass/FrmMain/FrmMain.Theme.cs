@@ -72,6 +72,7 @@ public partial class FrmMain
         // viewer
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
+        PicMain.Web2DarkMode = darkMode;
 
 
         // Thumbnail bar
@@ -90,6 +91,9 @@ public partial class FrmMain
 
         // set app logo on titlebar
         Config.UpdateFormIcon(this);
+
+        // update webview2 styles
+        if (PicMain.UseWebview2) PicMain.UpdateWeb2Styles(darkMode);
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
