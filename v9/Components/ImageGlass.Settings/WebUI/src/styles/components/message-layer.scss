@@ -16,7 +16,7 @@
     flex-direction: column;
     text-align: center;
     padding: 0.5rem;
-    background-color: rgb(var(--AppBg) / 0.8);
+    background-color: rgb(0 0 0 / 0.8);
     border-radius: var(--borderRadius);
   }
 
@@ -32,4 +32,8 @@
   .message-text {
     color: rgb(var(--AppText));
   }
+}
+
+html[color-mode=light] #layerMessage .layer-wrapper {
+  background-color: rgb(255 255 255 / 0.8);
 }
