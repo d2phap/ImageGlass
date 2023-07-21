@@ -16,6 +16,7 @@ enum Web2BackendMsgNames {
   START_PANNING_ANIMATION = 'START_PANNING_ANIMATION',
   START_ZOOMING_ANIMATION = 'START_ZOOMING_ANIMATION',
   STOP_ANIMATIONS = 'STOP_ANIMATIONS',
+  SET_MESSAGE = 'SET_MESSAGE',
 }
 
 enum Web2FrontendMsgNames {
@@ -30,6 +31,7 @@ let _boxEl: HapplaBoxHTMLElement = undefined;
 let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
 
 export default class HapplaBoxViewer {
+
   static initialize() {
     defineHapplaBoxHTMLElement();
     _boxEl = document.querySelector('happla-box').shadowRoot.host as HapplaBoxHTMLElement;
@@ -54,6 +56,7 @@ export default class HapplaBoxViewer {
     on(Web2BackendMsgNames.START_PANNING_ANIMATION, HapplaBoxViewer.onWeb2StartPanAnimationRequested);
     on(Web2BackendMsgNames.START_ZOOMING_ANIMATION, HapplaBoxViewer.onWeb2StartZoomAnimationRequested);
     on(Web2BackendMsgNames.STOP_ANIMATIONS, HapplaBoxViewer.onWeb2StopAnimationsRequested);
+    on(Web2BackendMsgNames.SET_MESSAGE, HapplaBoxViewer.onWeb2SetMessage);
   }
 
   private static onFileDragEntered(e: DragEvent) {
@@ -149,5 +152,27 @@ export default class HapplaBoxViewer {
 
   private static async onWeb2StopAnimationsRequested() {
     _boxEl.stopAnimations();
+  }
+
+  private static onWeb2SetMessage(_: Web2BackendMsgNames, e: {
+    Heading: string,
+    Text: string,
+  }) {
+    const layerEl = query('#layerMessage');
+    const headingEl = query('.message-heading', layerEl);
+    const textEl = query('.message-text', layerEl);
+
+    // update text
+    headingEl.innerText = e.Heading;
+    textEl.innerText = e.Text;
+
+    const isHeadingHidden = !e.Heading;
+    const isTextHidden = !e.Text;
+    const isLayerHidden = isHeadingHidden && isTextHidden;
+
+    // update visibility
+    layerEl.hidden = isLayerHidden;
+    headingEl.hidden = isHeadingHidden;
+    textEl.hidden = isTextHidden;
   }
 }
