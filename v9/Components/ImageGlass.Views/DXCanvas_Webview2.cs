@@ -517,6 +517,20 @@ public partial class DXCanvas
         Web2.PostWeb2Message(Web2BackendMsgNames.STOP_ANIMATIONS, "null");
     }
 
+
+    /// <summary>
+    /// Set message of <see cref="Web2"/>.
+    /// </summary>
+    private void ShowWeb2Message(string text, string? heading = null)
+    {
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("Text", text ?? string.Empty);
+        _ = obj.TryAdd("Heading", heading ?? string.Empty);
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.SET_MESSAGE, BHelper.ToJson(obj));
+    }
+
+
     #endregion // Private methods
 
 

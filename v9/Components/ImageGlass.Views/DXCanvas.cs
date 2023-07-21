@@ -3305,10 +3305,8 @@ public partial class DXCanvas : DXControl
             TextHeading = heading ?? string.Empty;
             Text = text;
 
-            if (forceUpdate)
-            {
-                Invalidate();
-            }
+            if (UseWebview2) ShowWeb2Message(Text, TextHeading);
+            if (forceUpdate) Invalidate();
 
             if (durationMs > 0)
             {
@@ -3322,10 +3320,8 @@ public partial class DXCanvas : DXControl
         {
             TextHeading = Text = string.Empty;
 
-            if (forceUpdate)
-            {
-                Invalidate();
-            }
+            if (UseWebview2) ShowWeb2Message(Text, TextHeading);
+            if (forceUpdate) Invalidate();
         }
     }
 
