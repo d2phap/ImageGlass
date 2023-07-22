@@ -17,6 +17,7 @@ enum Web2BackendMsgNames {
   START_ZOOMING_ANIMATION = 'START_ZOOMING_ANIMATION',
   STOP_ANIMATIONS = 'STOP_ANIMATIONS',
   SET_MESSAGE = 'SET_MESSAGE',
+  SET_NAVIGATION = 'SET_NAVIGATION',
 }
 
 enum Web2FrontendMsgNames {
@@ -57,6 +58,7 @@ export default class HapplaBoxViewer {
     on(Web2BackendMsgNames.START_ZOOMING_ANIMATION, HapplaBoxViewer.onWeb2StartZoomAnimationRequested);
     on(Web2BackendMsgNames.STOP_ANIMATIONS, HapplaBoxViewer.onWeb2StopAnimationsRequested);
     on(Web2BackendMsgNames.SET_MESSAGE, HapplaBoxViewer.onWeb2SetMessage);
+    on(Web2BackendMsgNames.SET_NAVIGATION, HapplaBoxViewer.onWeb2SetNavigation);
   }
 
   private static onFileDragEntered(e: DragEvent) {
@@ -158,9 +160,9 @@ export default class HapplaBoxViewer {
     Heading: string,
     Text: string,
   }) {
-    const layerEl = query('#layerMessage');
-    const headingEl = query('.message-heading', layerEl);
-    const textEl = query('.message-text', layerEl);
+    const msgLayerEl = query('#layerMessage');
+    const headingEl = query('.message-heading', msgLayerEl);
+    const textEl = query('.message-text', msgLayerEl);
 
     // update text
     headingEl.innerText = e.Heading;
@@ -171,8 +173,22 @@ export default class HapplaBoxViewer {
     const isLayerHidden = isHeadingHidden && isTextHidden;
 
     // update visibility
-    layerEl.hidden = isLayerHidden;
+    msgLayerEl.hidden = isLayerHidden;
     headingEl.hidden = isHeadingHidden;
     textEl.hidden = isTextHidden;
+  }
+
+  private static onWeb2SetNavigation(_: Web2BackendMsgNames, e: {
+    Visible: boolean,
+    LeftImageUrl: string,
+    RightImageUrl: string,
+  }) {
+    const navLayerEl = query('#layerNavigation');
+    const navLeftImgEl = query<HTMLImageElement>('.nav-left img', navLayerEl);
+    const navRightImgEl = query<HTMLImageElement>('.nav-right img', navLayerEl);
+
+    navLayerEl.hidden = !e.Visible;
+    navLeftImgEl.src = e.LeftImageUrl;
+    navRightImgEl.src = e.RightImageUrl;
   }
 }
