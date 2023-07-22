@@ -851,15 +851,8 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the navigation button color when hovered.
     /// </summary>
     [Category("Navigation")]
-    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
-    public Color NavHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
-
-    /// <summary>
-    /// Gets, sets the navigation button color when pressed.
-    /// </summary>
-    [Category("Navigation")]
-    [DefaultValue(typeof(Color), "200, 0, 0, 0")]
-    public Color NavPressedColor { get; set; } = Color.FromArgb(200, Color.Black);
+    [DefaultValue(typeof(Color), "255, 0, 0, 0")]
+    public Color NavButtonColor { get; set; } = Color.Black;
 
     /// <summary>
     /// Gets, sets the left navigation button icon image.
@@ -1923,13 +1916,13 @@ public partial class DXCanvas : DXControl
 
             if (_isNavLeftPressed)
             {
-                leftColor = NavPressedColor;
-                iconOpacity = 0.7f;
-                iconY = 1;
+                leftColor = NavButtonColor.WithAlpha(240);
+                iconOpacity = 0.6f;
+                iconY = this.ScaleToDpi(1);
             }
             else if (_isNavLeftHovered)
             {
-                leftColor = NavHoveredColor;
+                leftColor = NavButtonColor.WithAlpha(200);
             }
 
             // draw background
@@ -1990,13 +1983,13 @@ public partial class DXCanvas : DXControl
 
             if (_isNavRightPressed)
             {
-                rightColor = NavPressedColor;
-                iconOpacity = 0.7f;
-                iconY = 1;
+                rightColor = NavButtonColor.WithAlpha(240);
+                iconOpacity = 0.6f;
+                iconY = this.ScaleToDpi(1);
             }
             else if (_isNavRightHovered)
             {
-                rightColor = NavHoveredColor;
+                rightColor = NavButtonColor.WithAlpha(200);
             }
 
             // draw background

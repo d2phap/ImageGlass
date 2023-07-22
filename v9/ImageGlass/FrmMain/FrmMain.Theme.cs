@@ -83,9 +83,7 @@ public partial class FrmMain
 
 
         // navigation buttons
-        var navColor = Config.Theme.Colors.ToolbarBgColor;
-        PicMain.NavHoveredColor = navColor.WithAlpha(200);
-        PicMain.NavPressedColor = navColor.WithAlpha(240);
+        PicMain.NavButtonColor = Config.Theme.Colors.ToolbarBgColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 

@@ -184,7 +184,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         // when button has text
         if (e.Item.DisplayStyle == ToolStripItemDisplayStyle.ImageAndText)
         {
-            rect.X += (int)(2 * this.DpiScale);
+            rect.X += (int)(2 * DpiScale);
         }
 
         // change opacity of the image
@@ -209,7 +209,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         if (e.Item.Pressed)
         {
             // move the image down 1px for "pressed" effect
-            rect.Y += 1;
+            rect.Y += (int)DpiScale;
         }
 
         e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, e.Item.Pressed ? imgAttrs : null);
