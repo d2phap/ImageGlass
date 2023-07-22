@@ -149,7 +149,6 @@ public partial class DXCanvas
         Web2.DarkMode = Web2DarkMode;
         Web2.AccentColor = AccentColor;
         SetWeb2NavButtonImage();
-        _ = SetWeb2NavButtonColorAsync();
 
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
     }
@@ -216,6 +215,24 @@ public partial class DXCanvas
             var dataObj = new DataObject(DataFormats.FileDrop, filePaths);
             var args = new DragEventArgs(dataObj, 0, 0, 0, DragDropEffects.All, DragDropEffects.Link);
             this.OnDragDrop(args);
+        }
+        else if (e.Name == Web2FrontendMsgNames.ON_NAV_CLICK)
+        {
+            var pointerEventArgs = DXCanvas.ParseMouseEventJson(e.Data);
+            var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
+                .ToDictionary(i => i.Key, i => i.Value.ToString() ?? string.Empty);
+
+            if (dict.TryGetValue("NavigationButton", out var navBtn))
+            {
+                if (navBtn.Equals("left", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    OnNavLeftClicked?.Invoke(this, pointerEventArgs);
+                }
+                else if (navBtn.Equals("right", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    OnNavRightClicked?.Invoke(this, pointerEventArgs);
+                }
+            }
         }
     }
 
@@ -304,8 +321,6 @@ public partial class DXCanvas
     {
         Web2.AccentColor = AccentColor;
         Web2.DarkMode = isDarkMode;
-
-        _ = SetWeb2NavButtonColorAsync();
         SetWeb2NavButtonImage();
     }
 
@@ -593,20 +608,6 @@ public partial class DXCanvas
         _ = obj.TryAdd("Heading", heading ?? string.Empty);
 
         Web2.PostWeb2Message(Web2BackendMsgNames.SET_MESSAGE, BHelper.ToJson(obj));
-    }
-
-
-    /// <summary>
-    /// Sets Navigation arrow button color for <see cref="Web2"/>.
-    /// </summary>
-    private async Task SetWeb2NavButtonColorAsync()
-    {
-        if (Web2 == null) return;
-
-        var rgb = $"{NavButtonColor.R} {NavButtonColor.G} {NavButtonColor.B}";
-        await Web2.ExecuteScriptAsync($"""
-            document.documentElement.style.setProperty('--navButtonColor', '{rgb}');
-        """);
     }
 
 

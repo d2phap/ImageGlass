@@ -140,5 +140,6 @@ public static class Web2FrontendMsgNames
     public static string ON_POINTER_DOWN => "ON_POINTER_DOWN";
     public static string ON_MOUSE_WHEEL => "ON_MOUSE_WHEEL";
     public static string ON_FILE_DROP => "ON_FILE_DROP";
+    public static string ON_NAV_CLICK => "ON_NAV_CLICK";
 
 }
