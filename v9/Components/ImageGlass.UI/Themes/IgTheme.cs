@@ -134,6 +134,50 @@ public class IgTheme : IDisposable
     /// </summary>
     public IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(Settings.IsDarkMode);
 
+    /// <summary>
+    /// Gets the full path of left navigation button image.
+    /// </summary>
+    public string NavLeftImagePath
+    {
+        get
+        {
+            if (JsonModel == null) return string.Empty;
+
+            if (JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.NavButtonLeft), out var imgObj))
+            {
+                var imgName = imgObj.ToString();
+                if (!string.IsNullOrWhiteSpace(imgName))
+                {
+                    return Path.Combine(FolderPath, imgName);
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Gets the full path of right navigation button image.
+    /// </summary>
+    public string NavRightImagePath
+    {
+        get
+        {
+            if (JsonModel == null) return string.Empty;
+
+            if (JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.NavButtonRight), out var imgObj))
+            {
+                var imgName = imgObj.ToString();
+                if (!string.IsNullOrWhiteSpace(imgName))
+                {
+                    return Path.Combine(FolderPath, imgName);
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+
 
     /// <summary>
     /// Initializes theme pack and reads the theme config file.
