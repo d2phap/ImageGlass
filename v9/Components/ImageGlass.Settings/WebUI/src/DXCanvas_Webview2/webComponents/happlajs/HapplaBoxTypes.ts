@@ -6,6 +6,7 @@ export type IMouseEventArgs = {
   X: number;
   Y: number;
   Delta: number;
+  NavigationButton?: 'left' | 'right' | '';
 };
 
 export type IZoomEventArgs = {

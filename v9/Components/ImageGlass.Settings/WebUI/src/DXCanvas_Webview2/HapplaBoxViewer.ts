@@ -25,11 +25,14 @@ enum Web2FrontendMsgNames {
   ON_POINTER_DOWN = 'ON_POINTER_DOWN',
   ON_MOUSE_WHEEL = 'ON_MOUSE_WHEEL',
   ON_FILE_DROP = 'ON_FILE_DROP',
+  ON_NAV_CLICK = 'ON_NAV_CLICK',
 }
 
 const _transitionDuration = 300;
 let _boxEl: HapplaBoxHTMLElement = undefined;
 let _zoomMode: ZoomMode = ZoomMode.AutoZoom;
+let _isPointerDown = false;
+let _navHitTest: 'left' | 'right' | '' = '';
 
 export default class HapplaBoxViewer {
 
@@ -46,7 +49,11 @@ export default class HapplaBoxViewer {
     _boxEl.addEventListener('dragenter', HapplaBoxViewer.onFileDragEntered);
     _boxEl.addEventListener('dragover', HapplaBoxViewer.onFileDragOver);
     _boxEl.addEventListener('drop', HapplaBoxViewer.onFileDropped);
+
+    _boxEl.addEventListener('pointerleave', HapplaBoxViewer.onPointerLeave);
+    _boxEl.addEventListener('pointerup', HapplaBoxViewer.onPointerUp);
     _boxEl.addEventListener('pointerdown', HapplaBoxViewer.onPointerDown);
+    _boxEl.addEventListener('pointermove', HapplaBoxViewer.onPointerMove);
     _boxEl.focus();
 
     // listen to Web2 Backend message
@@ -79,8 +86,29 @@ export default class HapplaBoxViewer {
     post(Web2FrontendMsgNames.ON_FILE_DROP, e.dataTransfer.files, false);
   }
 
+
+  private static onPointerLeave(e: PointerEvent) {
+    e.preventDefault();
+
+    const navLeftEl = query('#layerNavigation .nav-left');
+    const navRightEl = query('#layerNavigation .nav-right');
+    navLeftEl.classList.remove('is--visible');
+    navRightEl.classList.remove('is--visible');
+  }
+
   private static onPointerDown(e: PointerEvent) {
     e.preventDefault();
+    _isPointerDown = true;
+
+    const navLeftEl = query('#layerNavigation .nav-left');
+    const navRightEl = query('#layerNavigation .nav-right');
+    _navHitTest = HapplaBoxViewer.hitTestNav(e);
+
+    navLeftEl.classList.toggle('is--visible', _navHitTest === 'left');
+    navRightEl.classList.toggle('is--visible', _navHitTest === 'right');
+    navLeftEl.classList.toggle('is--active', _navHitTest === 'left');
+    navRightEl.classList.toggle('is--active', _navHitTest === 'right');
+
     post(Web2FrontendMsgNames.ON_POINTER_DOWN, {
       Dpi: _boxEl.options.scaleRatio,
       Button: e.button,
@@ -88,6 +116,45 @@ export default class HapplaBoxViewer {
       Y: e.pageY,
       Delta: 0,
     } as IMouseEventArgs, true);
+  }
+
+  private static onPointerUp(e: PointerEvent) {
+    e.preventDefault();
+    _isPointerDown = false;
+    _navHitTest = '';
+
+    const navLeftEl = query('#layerNavigation .nav-left');
+    const navRightEl = query('#layerNavigation .nav-right');
+    navLeftEl.classList.toggle('is--active', false);
+    navRightEl.classList.toggle('is--active', false);
+
+    const nav = HapplaBoxViewer.hitTestNav(e);
+    if (nav === '') return;
+
+    post(Web2FrontendMsgNames.ON_NAV_CLICK, {
+      NavigationButton: nav,
+      Button: e.button,
+      X: e.pageX,
+      Y: e.pageY,
+      Delta: 0,
+    } as IMouseEventArgs, true);
+  }
+
+  private static onPointerMove(e: PointerEvent) {
+    e.preventDefault();
+
+    const navLeftEl = query('#layerNavigation .nav-left');
+    const navRightEl = query('#layerNavigation .nav-right');
+    const nav = HapplaBoxViewer.hitTestNav(e);
+
+    if (!_isPointerDown) {
+      navLeftEl.classList.toggle('is--visible', nav === 'left');
+      navRightEl.classList.toggle('is--visible', nav === 'right');
+    }
+    else {
+      navLeftEl.classList.toggle('is--active', _navHitTest === 'left');
+      navRightEl.classList.toggle('is--active', _navHitTest === 'right');
+    }
   }
 
   private static onMouseWheel(e: WheelEvent) {
@@ -190,5 +257,46 @@ export default class HapplaBoxViewer {
     navLayerEl.hidden = !e.Visible;
     navLeftImgEl.src = e.LeftImageUrl;
     navRightImgEl.src = e.RightImageUrl;
+  }
+
+  private static hitTestNav(e: PointerEvent) {
+    if (e.button > 0) return ''; // only check if left-mouse clicked or no button clicked
+
+    const boxBounds = _boxEl.getBoundingClientRect();
+    const layerNavEl = query('#layerNavigation');
+    const navLeftEl = query('#layerNavigation .nav-left');
+    const navRightEl = query('#layerNavigation .nav-right');
+
+    if (boxBounds.width < navLeftEl.clientWidth + navRightEl.clientWidth
+      || layerNavEl.hidden) return '';
+
+
+    // check right nav
+    // right clickable region
+    const rectRight = new DOMRect(
+      navRightEl.offsetLeft,
+      0,
+      boxBounds.width - navRightEl.offsetLeft,
+      boxBounds.height,
+    );
+    const isRightNav = rectRight.x <= e.x && e.x < rectRight.right
+      && rectRight.y <= e.y && e.y < rectRight.bottom;
+    if (isRightNav) return 'right';
+
+
+    // check left nav
+    // left clickable region
+    const rectLeft = new DOMRect(
+      0,
+      0,
+      navLeftEl.offsetLeft + navLeftEl.clientWidth,
+      boxBounds.height,
+    );
+    const isLeftNav = rectLeft.x <= e.x && e.x < rectLeft.right
+      && rectLeft.y <= e.y && e.y < rectLeft.bottom;
+    if (isLeftNav) return 'left';
+
+
+    return '';
   }
 }

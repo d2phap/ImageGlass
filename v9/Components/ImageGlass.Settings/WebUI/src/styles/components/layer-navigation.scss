@@ -9,7 +9,7 @@
   right: 0;
   z-index: 2000;
   padding: 0 0.6rem;
-  // pointer-events: none;
+  pointer-events: none;
 
   .nav-left,
   .nav-right {
@@ -18,27 +18,25 @@
     align-items: center;
     justify-content: center;
     margin-right: auto;
-    border: 0.1rem solid rgb(var(--navButtonColor) / 0.5);
+    background-color: rgb(var(--Accent) / 0.8);
+    border: 0.1rem solid rgb(var(--Accent) / 0.5);
     border-radius: 100%;
     width: 3.675rem;
     height: 3.675rem;
+    visibility: hidden;
 
     img {
       width: 1.8375rem;
       height: 1.8375rem;
     }
 
-    &:hover,
-    .is--hovered {
-      background-color: rgb(var(--navButtonColor) / 0.8);
-
-      img {
-        opacity: 1;
-      }
+    &.is--visible {
+      visibility: visible !important;
     }
+
     &:active,
     &.is--active {
-      background-color: rgb(var(--navButtonColor) / 0.95);
+      background-color: rgb(var(--Accent) / 0.95);
 
       img {
         opacity: 0.6;
