@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: center;
     margin-right: auto;
-    background-color: rgb(var(--AppBg) / 0.8);
+    background-color: rgb(var(--AppBg) / 0.78);
     border-radius: 100%;
     width: 3.675rem;
     height: 3.675rem;
@@ -51,7 +51,7 @@
 
     &:active,
     &.is--active {
-      background-color: rgb(var(--AppBg) / 0.95);
+      background-color: rgb(var(--AppBg) / 0.94);
 
       img {
         opacity: 0.6;

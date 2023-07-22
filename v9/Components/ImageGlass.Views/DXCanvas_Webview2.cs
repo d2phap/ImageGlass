@@ -84,7 +84,7 @@ public partial class DXCanvas
         set
         {
             _web2NavLeftImagePath = value;
-            SetWeb2NavButtonImage();
+            SetWeb2NavButtonStyles();
         }
     }
 
@@ -98,7 +98,7 @@ public partial class DXCanvas
         set
         {
             _web2NavRightImagePath = value;
-            SetWeb2NavButtonImage();
+            SetWeb2NavButtonStyles();
         }
     }
 
@@ -148,7 +148,7 @@ public partial class DXCanvas
         _isWeb2NavigationDone = true;
         Web2.DarkMode = Web2DarkMode;
         Web2.AccentColor = AccentColor;
-        SetWeb2NavButtonImage();
+        SetWeb2NavButtonStyles();
 
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
     }
@@ -321,7 +321,7 @@ public partial class DXCanvas
     {
         Web2.AccentColor = AccentColor;
         Web2.DarkMode = isDarkMode;
-        SetWeb2NavButtonImage();
+        SetWeb2NavButtonStyles();
     }
 
     #endregion // Public methods
@@ -614,7 +614,7 @@ public partial class DXCanvas
     /// <summary>
     /// Sets navigation button image for <see cref="Web2"/>.
     /// </summary>
-    private void SetWeb2NavButtonImage()
+    private void SetWeb2NavButtonStyles()
     {
         if (Web2 == null) return;
 

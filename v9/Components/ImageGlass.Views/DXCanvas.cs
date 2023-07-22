@@ -838,6 +838,8 @@ public partial class DXCanvas : DXControl
                 _navDisplay = value;
                 Invalidate();
             }
+
+            SetWeb2NavButtonStyles();
         }
     }
 
