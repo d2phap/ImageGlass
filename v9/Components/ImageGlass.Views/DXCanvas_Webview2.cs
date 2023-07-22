@@ -31,6 +31,8 @@ public partial class DXCanvas
     private bool _isWeb2NavigationDone = false;
     private Web2? _web2 = null;
     private bool _web2DarkMode = true;
+    private string _web2NavLeftImagePath = string.Empty;
+    private string _web2NavRightImagePath = string.Empty;
     private MouseEventArgs? _web2PointerDownEventArgs = null;
 
 
@@ -69,6 +71,34 @@ public partial class DXCanvas
             {
                 Web2.DarkMode = value;
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the left navigation image path for <see cref="Web2"/>.
+    /// </summary>
+    public string Web2NavLeftImagePath
+    {
+        get => _web2NavLeftImagePath;
+        set
+        {
+            _web2NavLeftImagePath = value;
+            SetWeb2NavButtonImage();
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the right navigation image path for <see cref="Web2"/>.
+    /// </summary>
+    public string Web2NavRightImagePath
+    {
+        get => _web2NavRightImagePath;
+        set
+        {
+            _web2NavRightImagePath = value;
+            SetWeb2NavButtonImage();
         }
     }
 
@@ -118,6 +148,8 @@ public partial class DXCanvas
         _isWeb2NavigationDone = true;
         Web2.DarkMode = Web2DarkMode;
         Web2.AccentColor = AccentColor;
+        SetWeb2NavButtonImage();
+        _ = SetWeb2NavButtonColorAsync();
 
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
     }
@@ -203,8 +235,6 @@ public partial class DXCanvas
 
         try
         {
-            var shouldSetStyles = !_isWeb2NavigationDone;
-
             await InitializeWeb2Async();
 
             // release native resources
@@ -266,6 +296,18 @@ public partial class DXCanvas
         """);
     }
 
+
+    /// <summary>
+    /// Sets styles for Web2.
+    /// </summary>
+    public void UpdateWeb2Styles(bool isDarkMode)
+    {
+        Web2.AccentColor = AccentColor;
+        Web2.DarkMode = isDarkMode;
+
+        _ = SetWeb2NavButtonColorAsync();
+        SetWeb2NavButtonImage();
+    }
 
     #endregion // Public methods
 
@@ -555,13 +597,48 @@ public partial class DXCanvas
 
 
     /// <summary>
-    /// Sets styles for Web2.
+    /// Sets Navigation arrow button color for <see cref="Web2"/>.
     /// </summary>
-    public void UpdateWeb2Styles(bool isDarkMode)
+    private async Task SetWeb2NavButtonColorAsync()
     {
-        Web2.AccentColor = AccentColor;
-        Web2.DarkMode = isDarkMode;
+        if (Web2 == null) return;
+
+        var rgb = $"{NavButtonColor.R} {NavButtonColor.G} {NavButtonColor.B}";
+        await Web2.ExecuteScriptAsync($"""
+            document.documentElement.style.setProperty('--navButtonColor', '{rgb}');
+        """);
     }
+
+
+    /// <summary>
+    /// Sets navigation button image for <see cref="Web2"/>.
+    /// </summary>
+    private void SetWeb2NavButtonImage()
+    {
+        if (Web2 == null) return;
+
+        var leftImageUrl = string.Empty;
+        var rightImageUrl = string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(Web2NavLeftImagePath))
+        {
+            leftImageUrl = new Uri(Web2NavLeftImagePath).AbsoluteUri;
+        }
+        if (!string.IsNullOrWhiteSpace(Web2NavRightImagePath))
+        {
+            rightImageUrl = new Uri(Web2NavRightImagePath).AbsoluteUri;
+        }
+
+
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("Visible", NavDisplay != Base.PhotoBox.NavButtonDisplay.None);
+        _ = obj.TryAdd("LeftImageUrl", leftImageUrl);
+        _ = obj.TryAdd("RightImageUrl", rightImageUrl);
+
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.SET_NAVIGATION, BHelper.ToJson(obj));
+    }
+
 
     #endregion // Private methods
 

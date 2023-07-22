@@ -83,9 +83,12 @@ public partial class FrmMain
 
 
         // navigation buttons
-        PicMain.NavButtonColor = Config.Theme.Colors.ToolbarBgColor;
+        PicMain.NavButtonColor = Config.Theme.Colors.ToolbarItemHoverColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
+        PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;
+        PicMain.Web2NavRightImagePath = Config.Theme.NavRightImagePath;
+
 
         // set app logo on titlebar
         Config.UpdateFormIcon(this);

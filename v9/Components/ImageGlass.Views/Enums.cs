@@ -129,6 +129,7 @@ public static class Web2BackendMsgNames
     public static string START_ZOOMING_ANIMATION => "START_ZOOMING_ANIMATION";
     public static string STOP_ANIMATIONS => "STOP_ANIMATIONS";
     public static string SET_MESSAGE => "SET_MESSAGE";
+    public static string SET_NAVIGATION => "SET_NAVIGATION";
 
 }
 
