@@ -120,8 +120,6 @@ export default class HapplaBoxViewer {
 
   private static onPointerUp(e: PointerEvent) {
     e.preventDefault();
-    _isPointerDown = false;
-    _navHitTest = '';
 
     const navLeftEl = query('#layerNavigation .nav-left');
     const navRightEl = query('#layerNavigation .nav-right');
@@ -129,15 +127,18 @@ export default class HapplaBoxViewer {
     navRightEl.classList.toggle('is--active', false);
 
     const nav = HapplaBoxViewer.hitTestNav(e);
-    if (nav === '') return;
+    if (_isPointerDown && _navHitTest !== '' && _navHitTest === nav) {
+      post(Web2FrontendMsgNames.ON_NAV_CLICK, {
+        NavigationButton: nav,
+        Button: e.button,
+        X: e.pageX,
+        Y: e.pageY,
+        Delta: 0,
+      } as IMouseEventArgs, true);
+    }
 
-    post(Web2FrontendMsgNames.ON_NAV_CLICK, {
-      NavigationButton: nav,
-      Button: e.button,
-      X: e.pageX,
-      Y: e.pageY,
-      Delta: 0,
-    } as IMouseEventArgs, true);
+    _isPointerDown = false;
+    _navHitTest = '';
   }
 
   private static onPointerMove(e: PointerEvent) {
