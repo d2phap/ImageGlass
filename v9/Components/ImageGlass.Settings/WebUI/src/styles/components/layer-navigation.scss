@@ -1,0 +1,54 @@
+#layerNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  padding: 0 0.6rem;
+  // pointer-events: none;
+
+  .nav-left,
+  .nav-right {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    border: 0.1rem solid rgb(var(--navButtonColor) / 0.5);
+    border-radius: 100%;
+    width: 3.675rem;
+    height: 3.675rem;
+
+    img {
+      width: 1.8375rem;
+      height: 1.8375rem;
+    }
+
+    &:hover,
+    .is--hovered {
+      background-color: rgb(var(--navButtonColor) / 0.8);
+
+      img {
+        opacity: 1;
+      }
+    }
+    &:active,
+    &.is--active {
+      background-color: rgb(var(--navButtonColor) / 0.95);
+
+      img {
+        opacity: 0.6;
+        transform: translateY(0.05rem);
+      }
+    }
+  }
+
+  .nav-right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
