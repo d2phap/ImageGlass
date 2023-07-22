@@ -395,6 +395,7 @@ public partial class FrmSettings : WebForm
                 ? NavButtonDisplay.Both
                 : NavButtonDisplay.None;
         }
+        _ = Config.SetFromJson(dict, nameof(Config.UseWebview2ForSvg));
         if (Config.SetFromJson(dict, nameof(Config.PanSpeed)).Done)
         {
             Local.FrmMain.PicMain.PanDistance = Config.PanSpeed;

@@ -426,6 +426,11 @@ public static class Config
     /// </summary>
     public static bool ShouldAutoOpenNewAddedImage { get; set; } = false;
 
+    /// <summary>
+    /// Uses Webview2 for viewing SVG format.
+    /// </summary>
+    public static bool UseWebview2ForSvg { get; set; } = true;
+
     #endregion // Boolean items
 
 
@@ -801,6 +806,7 @@ public static class Config
         EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
         EnableRealTimeFileUpdate = items.GetValue(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
         ShouldAutoOpenNewAddedImage = items.GetValue(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
+        UseWebview2ForSvg = items.GetValue(nameof(UseWebview2ForSvg), UseWebview2ForSvg);
 
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideGalleryInFullscreen = items.GetValue(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);
@@ -1137,6 +1143,7 @@ public static class Config
         settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
         settings.TryAdd(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
         settings.TryAdd(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
+        settings.TryAdd(nameof(UseWebview2ForSvg), UseWebview2ForSvg);
 
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);

@@ -557,6 +557,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
         Add("FrmSettings.Tab.Viewer._EnableNavigationButtons", "Show navigation arrow buttons");
         Add("FrmSettings.Tab.Viewer._CenterWindowFit", "Automatically center the window in Window Fit mode");
+        Add("FrmSettings.Tab.Viewer._UseWebview2ForSvg", "Use Webview2 for viewing SVG format");
         Add("FrmSettings.Tab.Viewer._PanSpeed", "Panning speed");
 
         // Viewer > Zooming

@@ -812,8 +812,10 @@ public partial class FrmMain : ThemedForm
             var imgFilePath = string.IsNullOrEmpty(filePath)
                 ? Local.Images.GetFilePath(Local.CurrentIndex)
                 : filePath;
+
             // check if we should use Webview2 viewer
-            var useWebview2 = imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
+            var useWebview2 = Config.UseWebview2ForSvg
+                && imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
 
 
             // set busy state
