@@ -1014,7 +1014,7 @@ public partial class FrmMain : ThemedForm
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
     private async Task HandleImageProgress_LoadedAsync(ImageLoadedEventArgs e)
     {
-        Exception? error = null;
+        var error = e.Error;
 
         // if image needs to display in Webview2 viweer
         if (e.UseWebview2)
