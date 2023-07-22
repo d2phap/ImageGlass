@@ -83,7 +83,6 @@ public partial class FrmMain
 
 
         // navigation buttons
-        PicMain.NavButtonColor = Config.Theme.Colors.ToolbarItemHoverColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
         PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;

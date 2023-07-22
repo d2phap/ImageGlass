@@ -253,7 +253,6 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // navigation buttons
-        PicMain.NavButtonColor = Config.Theme.Colors.ToolbarBgColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 

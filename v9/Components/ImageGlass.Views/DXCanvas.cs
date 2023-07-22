@@ -847,12 +847,6 @@ public partial class DXCanvas : DXControl
     [Browsable(false)]
     public SizeF NavButtonSize { get; set; } = new(60f, 60f);
 
-    /// <summary>
-    /// Gets, sets the navigation button color when hovered.
-    /// </summary>
-    [Category("Navigation")]
-    [DefaultValue(typeof(Color), "255, 0, 0, 0")]
-    public Color NavButtonColor { get; set; } = Color.Black;
 
     /// <summary>
     /// Gets, sets the left navigation button icon image.
@@ -1916,13 +1910,13 @@ public partial class DXCanvas : DXControl
 
             if (_isNavLeftPressed)
             {
-                leftColor = NavButtonColor.WithAlpha(240);
+                leftColor = ForeColor.InvertBlackOrWhite(240);
                 iconOpacity = 0.6f;
                 iconY = this.ScaleToDpi(1);
             }
             else if (_isNavLeftHovered)
             {
-                leftColor = NavButtonColor.WithAlpha(200);
+                leftColor = ForeColor.InvertBlackOrWhite(200);
             }
 
             // draw background
@@ -1936,7 +1930,7 @@ public partial class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(AccentColor, 0.5f, leftColor.A), leftColor.Blend(AccentColor, 0.7f, leftColor.A), 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(AccentColor, 0.35f, leftColor.A), leftColor.Blend(AccentColor, 0.5f, leftColor.A), this.ScaleToDpi(1f));
             }
 
             // draw icon
@@ -1983,13 +1977,13 @@ public partial class DXCanvas : DXControl
 
             if (_isNavRightPressed)
             {
-                rightColor = NavButtonColor.WithAlpha(240);
+                rightColor = ForeColor.InvertBlackOrWhite(240);
                 iconOpacity = 0.6f;
                 iconY = this.ScaleToDpi(1);
             }
             else if (_isNavRightHovered)
             {
-                rightColor = NavButtonColor.WithAlpha(200);
+                rightColor = ForeColor.InvertBlackOrWhite(200);
             }
 
             // draw background
@@ -2003,7 +1997,7 @@ public partial class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(AccentColor, 0.5f, rightColor.A), rightColor.Blend(AccentColor, 0.7f, rightColor.A), 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(AccentColor, 0.35f, rightColor.A), rightColor.Blend(AccentColor, 0.5f, rightColor.A), this.ScaleToDpi(1f));
             }
 
             // draw icon

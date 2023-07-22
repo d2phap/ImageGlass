@@ -13,17 +13,32 @@
 
   .nav-left,
   .nav-right {
+    position: relative;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-right: auto;
-    background-color: rgb(var(--Accent) / 0.8);
-    border: 0.1rem solid rgb(var(--Accent) / 0.5);
+    background-color: rgb(var(--AppBg) / 0.8);
     border-radius: 100%;
     width: 3.675rem;
     height: 3.675rem;
     visibility: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border: 0.1rem solid rgb(var(--Accent) / 0.25);
+      border-radius: 100%;
+      background-color: rgb(var(--Accent) / 0.4);
+    }
 
     img {
       width: 1.8375rem;
@@ -36,7 +51,7 @@
 
     &:active,
     &.is--active {
-      background-color: rgb(var(--Accent) / 0.95);
+      background-color: rgb(var(--AppBg) / 0.95);
 
       img {
         opacity: 0.6;
