@@ -3256,6 +3256,9 @@ namespace ImageGlass {
             // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
+            // Zoom level change event
+            picMain.ZoomChanged += picMain_ZoomChanged;
+
             // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
@@ -3835,6 +3838,11 @@ namespace ImageGlass {
 
             // draw navigation regions
             PaintNavigationRegions(e);
+        }
+
+        private void picMain_ZoomChanged(object sender, EventArgs e) {
+            // If zoom level is actual size, highlight actual size button
+            btnActualSize.Checked = picMain.IsActualSize;
         }
 
         #region File System Watcher events
