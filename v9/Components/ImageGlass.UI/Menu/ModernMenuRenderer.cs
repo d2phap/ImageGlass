@@ -54,11 +54,11 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         {
             if (_theme.Colors.MenuBgColor.GetBrightness() > 0.5) // light background color
             {
-                e.TextColor = ThemeUtils.DarkenColor(_theme.Colors.MenuBgColor, 0.5f);
+                e.TextColor = _theme.Colors.MenuBgColor.WithBrightness(0.5f);
             }
             else // dark background color
             {
-                e.TextColor = ThemeUtils.LightenColor(_theme.Colors.MenuBgColor, 0.5f);
+                e.TextColor = _theme.Colors.MenuBgColor.WithBrightness(-0.5f);
             }
         }
 

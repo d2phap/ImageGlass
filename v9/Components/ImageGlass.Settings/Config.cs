@@ -1215,8 +1215,8 @@ public static class Config
 
         #region Other types items
 
-        settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
-        settings.TryAdd(nameof(SlideshowBackgroundColor), ThemeUtils.ColorToHex(SlideshowBackgroundColor));
+        settings.TryAdd(nameof(BackgroundColor), BackgroundColor.ToHex());
+        settings.TryAdd(nameof(SlideshowBackgroundColor), SlideshowBackgroundColor.ToHex());
 
         var langName = Path.GetFileName(Language.FileName);
         if (string.IsNullOrEmpty(langName))

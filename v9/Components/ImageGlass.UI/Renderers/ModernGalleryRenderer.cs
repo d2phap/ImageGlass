@@ -143,12 +143,12 @@ public class ModernGalleryRenderer : StyleRenderer
                 // light background color
                 if (Theme.Colors.GalleryBgColor.GetBrightness() > 0.5)
                 {
-                    foreColor = ThemeUtils.DarkenColor(Theme.Colors.GalleryBgColor, 0.5f);
+                    foreColor = Theme.Colors.GalleryBgColor.WithBrightness(-0.5f);
                 }
                 // dark background color
                 else
                 {
-                    foreColor = ThemeUtils.LightenColor(Theme.Colors.GalleryBgColor, 0.5f);
+                    foreColor = Theme.Colors.GalleryBgColor.WithBrightness(0.5f);
                 }
             }
 

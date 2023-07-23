@@ -171,7 +171,7 @@ public static class WebUI
             obj.TryAdd(nameof(th.FolderName), th.FolderName);
             obj.TryAdd(nameof(th.FolderPath), th.FolderPath);
             obj.TryAdd(nameof(th.Info), th.JsonModel.Info);
-            obj.TryAdd(nameof(IgTheme.Colors.BgColor), ThemeUtils.ColorToHex(th.Colors.BgColor));
+            obj.TryAdd(nameof(IgTheme.Colors.BgColor), th.Colors.BgColor.ToHex());
 
 
             // IsDarkMode

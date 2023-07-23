@@ -60,90 +60,6 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Parses DWord color to <see cref="Color"/>.
-    /// </summary>
-    /// <param name="dColor">DWord color</param>
-    public static Color ParseDWordColor(int dColor)
-    {
-        int a = (dColor >> 24) & 0xFF,
-            r = (dColor >> 0) & 0xFF,
-            g = (dColor >> 8) & 0xFF,
-            b = (dColor >> 16) & 0xFF;
-
-        return Color.FromArgb(a, r, g, b);
-    }
-
-
-    /// <summary>
-    /// Convert Color to CMYK
-    /// </summary>
-    public static int[] ConvertColorToCMYK(Color c)
-    {
-        if (c.R == 0 && c.G == 0 && c.B == 0)
-        {
-            return new[] { 0, 0, 0, 1 };
-        }
-
-        var black = Math.Min(1.0 - (c.R / 255.0), Math.Min(1.0 - (c.G / 255.0), 1.0 - (c.B / 255.0)));
-        var cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
-        var magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
-        var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
-
-        return new[] {
-            (int)Math.Round(cyan * 100),
-            (int)Math.Round(magenta * 100),
-            (int)Math.Round(yellow * 100),
-            (int)Math.Round(black * 100)
-        };
-    }
-
-
-    /// <summary>
-    /// Convert Color to HSLA
-    /// </summary>
-    public static float[] ConvertColorToHSLA(Color c)
-    {
-        var h = (float)Math.Round(c.GetHue());
-        var s = (float)Math.Round(c.GetSaturation() * 100);
-        var l = (float)Math.Round(c.GetBrightness() * 100);
-        var a = (float)Math.Round(c.A / 255.0, 3);
-
-        return new[] { h, s, l, a };
-    }
-
-
-    /// <summary>
-    /// Convert Color to HSVA
-    /// </summary>
-    public static float[] ConvertColorToHSVA(Color c)
-    {
-        int max = Math.Max(c.R, Math.Max(c.G, c.B));
-        int min = Math.Min(c.R, Math.Min(c.G, c.B));
-
-        var hue = (float)Math.Round(c.GetHue());
-        var saturation = (float)Math.Round(100 * ((max == 0) ? 0 : 1f - (1f * min / max)));
-        var value = (float)Math.Round(max * 100f / 255);
-        var alpha = (float)Math.Round(c.A / 255.0, 3);
-
-        return new[] { hue, saturation, value, alpha };
-    }
-
-
-    /// <summary>
-    /// Convert Color to HEX (with alpha)
-    /// </summary>
-    public static string ColorToHex(Color c, bool @skipAlpha = false)
-    {
-        if (skipAlpha)
-        {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
-        }
-
-        return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
-    }
-
-
-    /// <summary>
     /// Creates a new <see cref="Color"/> from the given hex color string (with alpha).
     /// </summary>
     public static Color ColorFromHex(string hex, bool skipAlpha = false)
@@ -214,36 +130,6 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Makes the color lighter by the given factor (0 = no change, 1 = white).
-    /// </summary>
-    /// <param name="color">The color to make lighter.</param>
-    /// <param name="factor">The factor to make the color lighter (0 = no change, 1 = white).</param>
-    /// <returns>The lighter color.</returns>
-    public static Color LightenColor(Color color, float factor)
-    {
-        const float min = 0.001f;
-        const float max = 1.999f;
-
-        return ControlPaint.Light(color, min + (MinMax(factor, 0f, 1f) * (max - min)));
-    }
-
-
-    /// <summary>
-    /// Makes the color darker by the given factor (0 = no change, 1 = black).
-    /// </summary>
-    /// <param name="color">The color to make darker.</param>
-    /// <param name="factor">The factor to make the color darker (0 = no change, 1 = black).</param>
-    /// <returns>The darker color.</returns>
-    public static Color DarkenColor(Color color, float factor)
-    {
-        const float min = -0.5f;
-        const float max = 1f;
-
-        return ControlPaint.Dark(color, min + (MinMax(factor, 0f, 1f) * (max - min)));
-    }
-
-
-    /// <summary>
     /// Creates image from text.
     /// </summary>
     public static Image CreateImageFromText(string text, Font font, Color textColor, Color? backColor = null)
@@ -304,15 +190,6 @@ public partial class ThemeUtils
 
     #endregion
 
-
-    #region PRIVITE FUNCTIONS
-
-    private static float MinMax(float value, float min, float max)
-    {
-        return Math.Min(Math.Max(value, min), max);
-    }
-
-    #endregion
 }
 
 

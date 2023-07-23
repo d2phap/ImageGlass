@@ -214,7 +214,7 @@ public partial class FrmSettings : WebForm
 
             if (newColor != null)
             {
-                hexColor = ThemeUtils.ColorToHex(newColor.Value);
+                hexColor = newColor.Value.ToHex();
             }
 
             Web2.PostWeb2Message(e.Name, $"\"{hexColor}\"");
@@ -524,7 +524,7 @@ public partial class FrmSettings : WebForm
             if (e.HasFlag(UpdateRequests.Theme))
             {
                 // load the new value of Background color setting when theme is changed
-                var bgColorHex = ThemeUtils.ColorToHex(Config.BackgroundColor);
+                var bgColorHex = Config.BackgroundColor.ToHex();
                 _ = Web2.ExecuteScriptAsync($"""
                     _page.loadBackgroundColorConfig('{bgColorHex}');
                 """);

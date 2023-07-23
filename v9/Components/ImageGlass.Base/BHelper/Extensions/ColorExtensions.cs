@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 namespace ImageGlass.Base;
 
 public static class ColorExtensions
@@ -113,4 +114,90 @@ public static class ColorExtensions
 
         return Color.White.WithAlpha(alpha);
     }
+
+
+    /// <summary>
+    /// Creates a <see cref="Color"/> from DWORD value.
+    /// </summary>
+    public static Color FromDWORD(this Color c, int dColor)
+    {
+        int a = (dColor >> 24) & 0xFF,
+            r = (dColor >> 0) & 0xFF,
+            g = (dColor >> 8) & 0xFF,
+            b = (dColor >> 16) & 0xFF;
+
+        return Color.FromArgb(a, r, g, b);
+    }
+
+
+    /// <summary>
+    /// Converts this color <see cref="c"/> to CMYK values.
+    /// </summary>
+    public static int[] ToCmyk(this Color c)
+    {
+        if (c.R == 0 && c.G == 0 && c.B == 0)
+        {
+            return new[] { 0, 0, 0, 1 };
+        }
+
+        var black = Math.Min(1.0 - (c.R / 255.0), Math.Min(1.0 - (c.G / 255.0), 1.0 - (c.B / 255.0)));
+        var cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
+        var magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
+        var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
+
+        return new[] {
+            (int)Math.Round(cyan * 100),
+            (int)Math.Round(magenta * 100),
+            (int)Math.Round(yellow * 100),
+            (int)Math.Round(black * 100)
+        };
+    }
+
+
+    /// <summary>
+    /// Converts this color <see cref="c"/> to HSLA values.
+    /// </summary>
+    public static float[] ToHsla(this Color c)
+    {
+        var h = (float)Math.Round(c.GetHue());
+        var s = (float)Math.Round(c.GetSaturation() * 100);
+        var l = (float)Math.Round(c.GetBrightness() * 100);
+        var a = (float)Math.Round(c.A / 255.0, 3);
+
+        return new[] { h, s, l, a };
+    }
+
+
+    /// <summary>
+    /// Converts this color <see cref="c"/> to HSVA values.
+    /// </summary>
+    public static float[] ToHsva(this Color c)
+    {
+        int max = Math.Max(c.R, Math.Max(c.G, c.B));
+        int min = Math.Min(c.R, Math.Min(c.G, c.B));
+
+        var hue = (float)Math.Round(c.GetHue());
+        var saturation = (float)Math.Round(100 * ((max == 0) ? 0 : 1f - (1f * min / max)));
+        var value = (float)Math.Round(max * 100f / 255);
+        var alpha = (float)Math.Round(c.A / 255.0, 3);
+
+        return new[] { hue, saturation, value, alpha };
+    }
+
+
+    /// <summary>
+    /// Converts this color <see cref="c"/> to HEXA values.
+    /// </summary>
+    /// <param name="skipAlpha"></param>
+    public static string ToHex(this Color c, bool skipAlpha = false)
+    {
+        if (skipAlpha)
+        {
+            return string.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
+        }
+
+        return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
+    }
+
+
 }
