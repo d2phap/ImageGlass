@@ -158,9 +158,6 @@ public partial class FrmSlideshow : ThemedForm
         _slideshowTimer.Interval = 10; // support milliseconds
         _slideshowTimer.Tick += SlideshowTimer_Tick;
 
-        PicMain.Render += PicMain_Render;
-        PicMain.MouseWheel += PicMain_MouseWheel;
-
 
         // Initialize form movable
         #region Form movable
@@ -238,34 +235,50 @@ public partial class FrmSlideshow : ThemedForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        MnuContext.Theme = Config.Theme;
+        style ??= Config.WindowBackdrop;
+        var hasTransparency = EnableTransparent && style.Value != BackdropStyle.None;
 
-        if (!EnableTransparent)
+        if (!hasTransparency)
         {
             BackColor = Config.SlideshowBackgroundColor.NoAlpha();
         }
 
 
+        // menu
+        MnuContext.Theme = Config.Theme;
+
         // viewer
         PicMain.BackColor = Config.SlideshowBackgroundColor;
         PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
-
-
-        // navigation buttons
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
+        PicMain.Web2DarkMode = darkMode;
+        PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;
+        PicMain.Web2NavRightImagePath = Config.Theme.NavRightImagePath;
 
-        ResumeLayout(false);
+
+        // set app logo on titlebar
+        Config.UpdateFormIcon(this);
+
+        // update webview2 styles
+        if (PicMain.UseWebview2) PicMain.UpdateWeb2Styles(darkMode);
+
+
         base.ApplyTheme(darkMode, style);
+        ResumeLayout(false);
     }
 
 
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         Config.Theme.LoadThemeColors();
+        PicMain.AccentColor = e.AccentColor;
+        PicMain.Invalidate();
 
+        // do not handle this event again in the parent class
+        e.Handled = true;
         base.OnSystemAccentColorChanged(e);
     }
 
@@ -294,7 +307,7 @@ public partial class FrmSlideshow : ThemedForm
         Config.Theme.LoadTheme(newIconHeight);
 
         // update picmain scaling
-        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
+        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
         PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
 
         ResumeLayout(false);
@@ -311,56 +324,16 @@ public partial class FrmSlideshow : ThemedForm
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
-        var hotkey = new Hotkey(keyData);
-        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
-
-        // open context menu
-        if (actions.Contains(nameof(MnuContext)))
+        // to fix arrow keys sometimes does not regconize
+        if (keyData == Keys.Up
+            || keyData == Keys.Down
+            || keyData == Keys.Left
+            || keyData == Keys.Right)
         {
-            MnuContext.Show(this, (PicMain.Width - MnuContext.Width) / 2, (PicMain.Height - MnuContext.Height) / 2);
+            FrmSlideshow_KeyDown(this, new KeyEventArgs(keyData));
+
             return true;
         }
-
-
-        #region Register and run CONTEXT MENU shortcuts
-
-        bool CheckMenuShortcut(ToolStripMenuItem mnu)
-        {
-            var menuHotkeyList = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
-            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == keyData);
-
-            if (menuHotkey != null)
-            {
-                // ignore invisible menu
-                if (mnu.Visible)
-                {
-                    return false;
-                }
-
-                mnu.PerformClick();
-
-                return true;
-            }
-
-            foreach (var child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
-            {
-                CheckMenuShortcut(child);
-            }
-
-            return false;
-        }
-
-
-        // register context menu shortcuts
-        foreach (var item in MnuContext.Items.OfType<ToolStripMenuItem>())
-        {
-            if (CheckMenuShortcut(item))
-            {
-                return true;
-            }
-        }
-        #endregion
-
 
         return base.ProcessCmdKey(ref msg, keyData);
     }
@@ -583,6 +556,20 @@ public partial class FrmSlideshow : ThemedForm
 
     private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
+        if (e.Button == MouseButtons.Right)
+        {
+            // handle right-click action for webview2
+            if (PicMain.UseWebview2)
+            {
+                var point = this.PointToScreen(e.Location);
+                point.X += PicMain.Left;
+                point.Y += PicMain.Top;
+
+                MnuContext.Show(point);
+            }
+        }
+
+
         if (_isCursorHidden)
         {
             Cursor.Show();
@@ -598,10 +585,12 @@ public partial class FrmSlideshow : ThemedForm
         _ = ViewNextImageAsync(-1);
     }
 
+
     private void PicMain_OnNavRightClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextImageAsync(1);
     }
+
 
     private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
@@ -614,6 +603,7 @@ public partial class FrmSlideshow : ThemedForm
         LoadImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
+
     private void PicMain_MouseMove(object? sender, MouseEventArgs e)
     {
         if (_isCursorHidden)
@@ -623,6 +613,47 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         DelayHideCursor();
+    }
+
+
+    private void PicMain_MouseLeave(object sender, EventArgs e)
+    {
+        Cursor.Show();
+        _isCursorHidden = false;
+    }
+
+
+    private void PicMain_Web2NavigationCompleted(object sender, EventArgs e)
+    {
+        WebUI.UpdateLangJson();
+        _ = PicMain.LoadWeb2LanguageAsync(WebUI.LangJson);
+    }
+
+
+    private void PicMain_Web2PointerDown(object sender, MouseEventArgs e)
+    {
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+
+        // make sure all menus closed when mouse clicked
+        MnuContext.Close();
+    }
+
+
+    private void PicMain_Web2KeyDown(object sender, KeyEventArgs e)
+    {
+        // pass keydown to FrmMain
+        this.OnKeyDown(e);
+    }
+
+
+    private void PicMain_Web2KeyUp(object sender, KeyEventArgs e)
+    {
+        // pass keyup to FrmMain
+        this.OnKeyUp(e);
     }
 
     #endregion // PicMain events
@@ -664,6 +695,8 @@ public partial class FrmSlideshow : ThemedForm
 
             // Find the index of current image
             _currentIndex = _images.IndexOf(initFilePath);
+
+            LoadImageInfo(ImageInfoUpdateTypes.All);
         });
     }
 
@@ -751,8 +784,8 @@ public partial class FrmSlideshow : ThemedForm
             Invoke(LoadImageAsync, filePath, tokenSrc);
             return;
         }
-
-        IgPhoto? photo;
+        
+        IgPhoto? photo = null;
         var readSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
@@ -767,42 +800,61 @@ public partial class FrmSlideshow : ThemedForm
             CorrectRotation = true,
         };
 
-
-        // get metadata
-        if (!string.IsNullOrEmpty(filePath))
+        var imgFilePath = filePath;
+        if (string.IsNullOrWhiteSpace(imgFilePath))
         {
-            _currentMetadata = PhotoCodec.LoadMetadata(filePath, readSettings);
+            imgFilePath = _images.GetFilePath(_currentIndex);
         }
         else
         {
-            var currentFilePath = _images.GetFilePath(_currentIndex);
-            _currentMetadata = PhotoCodec.LoadMetadata(currentFilePath, readSettings);
+            photo = new IgPhoto(imgFilePath);
         }
 
 
-        // on image loading
-        OnImageLoading();
-
         try
         {
+            // get metadata
+            _currentMetadata = PhotoCodec.LoadMetadata(imgFilePath, readSettings);
+
+            // check if we should use Webview2 viewer
+            var useWebview2 = Config.UseWebview2ForSvg
+                && imgFilePath.EndsWith(".svg", StringComparison.InvariantCultureIgnoreCase);
+
+            // on image loading
+            OnImageLoading();
+
+
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
 
-            if (!string.IsNullOrEmpty(filePath))
+
+            // if we are using Webview2
+            if (useWebview2)
             {
-                photo = new(filePath);
-                await photo.LoadAsync(readSettings, tokenSrc);
+                photo = new IgPhoto(imgFilePath)
+                {
+                    Metadata = _currentMetadata,
+                };
             }
             else
             {
-                photo = await _images.GetAsync(_currentIndex, tokenSrc: tokenSrc);
+                // directly load the image file, skip image list
+                if (photo != null)
+                {
+                    await photo.LoadAsync(readSettings, tokenSrc);
+                }
+                else
+                {
+                    photo = await _images.GetAsync(_currentIndex, tokenSrc: tokenSrc);
+                }
             }
+
 
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
 
             // on image loaded
-            OnImageLoaded(photo);
+            OnImageLoaded(photo, useWebview2);
         }
         catch (OperationCanceledException)
         {
@@ -823,21 +875,35 @@ public partial class FrmSlideshow : ThemedForm
         PicMain.ShowMessage(Config.Language[$"FrmMain._Loading"], null, delayMs: 1500);
 
 
-        _ = BHelper.RunAsThread(() => LoadImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath));
+        LoadImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath);
     }
 
 
-    private void OnImageLoaded(IgPhoto photo)
+    private void OnImageLoaded(IgPhoto photo, bool useWebview2)
     {
         if (InvokeRequired)
         {
-            OnImageLoaded(photo);
+            OnImageLoaded(photo, useWebview2);
             return;
+        }
+
+        var error = photo.Error;
+
+        // if image needs to display in Webview2 viweer
+        if (useWebview2)
+        {
+            PicMain.ClearMessage();
+
+            try
+            {
+                _ = PicMain.SetImageWeb2Async(photo, _loadCancelTokenSrc.Token);
+            }
+            catch (Exception ex) { error = ex; }
         }
 
 
         // image error
-        if (photo.Error != null)
+        if (error != null)
         {
             PicMain.SetImage(null);
 
@@ -855,7 +921,7 @@ public partial class FrmSlideshow : ThemedForm
                 photo.Error.Source + ": " + photo.Error.Message,
                 Config.Language[$"FrmMain.PicMain._ErrorText"] + $" {emoji}");
         }
-
+        // use native viewer to display image
         else if (!(photo?.ImgData.IsImageNull ?? true))
         {
             var isImageBigForFading = photo.Metadata.Width > 8000
@@ -919,6 +985,60 @@ public partial class FrmSlideshow : ThemedForm
 
     // Slideshow methods
     #region Slideshow methods
+
+    private void FrmSlideshow_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+
+
+        var hotkey = new Hotkey(e.KeyData);
+        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
+
+        // open context menu
+        if (actions.Contains(nameof(MnuContext)))
+        {
+            MnuContext.Show(this, (PicMain.Width - MnuContext.Width) / 2, (PicMain.Height - MnuContext.Height) / 2);
+            return;
+        }
+
+
+        #region Register and run CONTEXT MENU shortcuts
+
+        bool CheckMenuShortcut(ToolStripMenuItem mnu)
+        {
+            var menuHotkeyList = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
+            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == e.KeyData);
+
+            if (menuHotkey != null)
+            {
+                // ignore invisible menu
+                if (mnu.Visible) return false;
+
+                mnu.PerformClick();
+                return true;
+            }
+
+            foreach (var child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
+            {
+                CheckMenuShortcut(child);
+            }
+
+            return false;
+        }
+
+
+        // register context menu shortcuts
+        foreach (var item in MnuContext.Items.OfType<ToolStripMenuItem>())
+        {
+            if (CheckMenuShortcut(item)) return;
+        }
+        #endregion
+    }
+
 
     private void SlideshowTimer_Tick(object? sender, EventArgs e)
     {
@@ -2014,6 +2134,5 @@ public partial class FrmSlideshow : ThemedForm
     }
 
     #endregion // Menu events
-
 
 }
