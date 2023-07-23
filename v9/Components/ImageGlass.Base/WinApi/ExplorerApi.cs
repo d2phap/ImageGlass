@@ -17,10 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Text;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Shell;
 
 namespace ImageGlass.Base.WinApi;
 public static class ExplorerApi
@@ -281,5 +283,302 @@ public static class ExplorerApi
 
         return result.Succeeded;
     }
+
+
+    // File type associations & App protocol
+    #region File type associations & App protocol
+
+    /// <summary>
+    /// Register file type associations and app capabilities to registry
+    /// </summary>
+    /// <param name="extensions">Extension string, ex: <c>*.png;*.svg;</c></param>
+    public static Exception? RegisterAppAndExtensions(string extensions)
+    {
+        const string APP_NAME = "ImageGlass";
+        var capabilitiesPath = $@"Software\{APP_NAME}\Capabilities";
+
+        _ = UnregisterAppAndExtensions(extensions);
+
+
+        try
+        {
+            // register the application:
+            // HKEY_CURRENT_USER\SOFTWARE\RegisteredApplications --------------------------------
+            const string regAppPath = @"Software\RegisteredApplications";
+            using (var key = Registry.CurrentUser.OpenSubKey(regAppPath, true))
+            {
+                key?.SetValue(APP_NAME, capabilitiesPath);
+            }
+
+
+            // register application information:
+            // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities -------------------------------
+            using (var key = Registry.CurrentUser.CreateSubKey(capabilitiesPath, true))
+            {
+                key?.SetValue("ApplicationName", App.AppName);
+                key?.SetValue("ApplicationIcon", $"\"{App.IGExePath}\", 0");
+                key?.SetValue("ApplicationDescription", "A lightweight, versatile image viewer");
+
+
+                // Register application's file type associations:
+                // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
+                using (var faKey = key?.CreateSubKey("FileAssociations", true))
+                {
+                    var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var ext in exts)
+                    {
+                        var extNoDot = ext[1..].ToUpperInvariant();
+                        var extAssocKey = $"{APP_NAME}.AssocFile.{extNoDot}";
+                        var extAssocPath = $@"Software\Classes\{extAssocKey}";
+
+                        // register supported extension
+                        faKey?.SetValue(ext, extAssocKey);
+
+
+                        // write extension info
+                        // HKEY_CURRENT_USER\SOFTWARE\Classes\ImageGlass.AssocFile.<EXT>
+                        using (var extRootKey = Registry.CurrentUser.CreateSubKey(extAssocPath, true))
+                        {
+                            // ImageGlass <EXT> file
+                            extRootKey?.SetValue("", $"{APP_NAME} {extNoDot} file");
+
+
+                            // DefaultIcon -------------------------------------------------------
+                            // get extension icon
+                            var iconPath = App.ConfigDir(PathType.File, Dir.ExtIcons, $"{extNoDot}.ico");
+                            if (!File.Exists(iconPath))
+                            {
+                                iconPath = App.StartUpDir(Dir.ExtIcons, $"{extNoDot}.ico");
+
+                                if (!File.Exists(iconPath))
+                                {
+                                    iconPath = string.Empty;
+                                }
+                            }
+
+                            // set extension icon
+                            if (!string.IsNullOrEmpty(iconPath))
+                            {
+                                using (var faIconKey = extRootKey?.CreateSubKey("DefaultIcon", true))
+                                {
+                                    faIconKey?.SetValue("", iconPath);
+                                }
+                            }
+
+
+                            // shell/open --------------------------------------------------------
+                            using (var shellOpenKey = extRootKey?.CreateSubKey(@"shell\open", true))
+                            {
+                                shellOpenKey?.SetValue("FriendlyAppName", App.AppName);
+
+
+                                // shell/open/command --------------------------------------------
+                                using var shellOpenCmdKey = shellOpenKey?.CreateSubKey("command", true);
+                                shellOpenCmdKey?.SetValue("", $"\"{App.IGExePath}\" \"%1\"");
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // register app protocol
+            _ = RegisterAppProtocol();
+
+
+            unsafe
+            {
+                // notify system change
+                PInvoke.SHChangeNotify(SHCNE_ID.SHCNE_ASSOCCHANGED, SHCNF_FLAGS.SHCNF_IDLIST, (byte*)IntPtr.Zero, (byte*)IntPtr.Zero);
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Unregister file type associations and app information from registry
+    /// </summary>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    public static Exception? UnregisterAppAndExtensions(string extensions)
+    {
+        const string APP_NAME = "ImageGlass";
+
+        // remove registry of ImageGlass v8
+        _ = UnregisterAppAndExtensionsLegacy(extensions);
+
+        try
+        {
+            // Unregister the application:
+            // HKEY_CURRENT_USER\SOFTWARE\RegisteredApplications --------------------------------
+            const string regAppPath = @"Software\RegisteredApplications";
+            using (var key = Registry.CurrentUser.OpenSubKey(regAppPath, true))
+            {
+                if (key.OpenSubKey(APP_NAME, true) != null)
+                {
+                    key?.DeleteValue(APP_NAME);
+                }
+            }
+
+
+            // Delete application information:
+            // HKEY_CURRENT_USER\SOFTWARE\ImageGlass --------------------------------------------
+            using (var key = Registry.CurrentUser.OpenSubKey("Software", true))
+            {
+                key?.DeleteSubKeyTree(APP_NAME, false);
+            }
+
+
+            // Delete file type associations
+            // HKEY_CURRENT_USER\Software\Classes\ImageGlass.AssocFile.<EXT>
+            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in exts)
+            {
+                var extNoDot = ext[1..].ToUpperInvariant();
+                var extAssocPath = $@"Software\Classes\{APP_NAME}.AssocFile.{extNoDot}";
+
+                Registry.ClassesRoot.DeleteSubKeyTree(extAssocPath, false);
+            }
+
+
+            // Delete app protocol
+            _ = UnregisterAppProtocol();
+
+
+            unsafe
+            {
+                // notify system change
+                PInvoke.SHChangeNotify(SHCNE_ID.SHCNE_ASSOCCHANGED, SHCNF_FLAGS.SHCNF_IDLIST, (byte*)IntPtr.Zero, (byte*)IntPtr.Zero);
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Unregister file type associations and app information from registry for <b>ImageGlass v8</b>.
+    /// </summary>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    public static Exception? UnregisterAppAndExtensionsLegacy(string extensions)
+    {
+        const string APP_NAME = "ImageGlass";
+
+        try
+        {
+            // Unregister the application:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications --------------------------------
+            const string regAppPath = @"Software\RegisteredApplications";
+            using (var key = Registry.LocalMachine.OpenSubKey(regAppPath, true))
+            {
+                if (key.OpenSubKey(APP_NAME, true) != null)
+                {
+                    key?.DeleteValue(APP_NAME);
+                }
+            }
+
+
+            // Delete application information:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\ImageGlass --------------------------------------------
+            using (var key = Registry.LocalMachine.OpenSubKey("Software", true))
+            {
+                key?.DeleteSubKeyTree(APP_NAME, false);
+            }
+
+
+            // Delete file type associations
+            // HKEY_CLASSES_ROOT\ImageGlass.AssocFile.<EXT>
+            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in exts)
+            {
+                var extNoDot = ext[1..].ToUpperInvariant();
+                var extAssocKey = $"{APP_NAME}.AssocFile.{extNoDot}";
+
+                Registry.ClassesRoot.DeleteSubKeyTree(extAssocKey, false);
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Register app protocol to registry.
+    /// </summary>
+    public static Exception? RegisterAppProtocol()
+    {
+        try
+        {
+            // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> --------------------------------
+            const string protocolPath = $@"Software\Classes\{Constants.APP_PROTOCOL}";
+            using (var key = Registry.CurrentUser.CreateSubKey(protocolPath, true))
+            {
+                key?.SetValue("", $"URL: {App.AppName} Protocol");
+                key?.SetValue("URL Protocol", "");
+
+                // set protocol icon
+                // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL>\DefaultIcon ----------------
+                using (var subKey = key.CreateSubKey(@"DefaultIcon", true))
+                {
+                    subKey?.SetValue("", $"\"{App.IGExePath}\", 0");
+                }
+
+                // set protocol command
+                // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL>\shell\open\command ---------
+                using (var subKey = key.CreateSubKey(@"shell\open\command", true))
+                {
+                    subKey?.SetValue("", $"\"{App.IGExePath}\" \"%1\"");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Delete app protocol from registry.
+    /// </summary>
+    public static Exception? UnregisterAppProtocol()
+    {
+        try
+        {
+            // HKEY_CURRENT_USER\Software\Classes -----------------------------------------------
+            const string protocolPath = $@"Software\Classes";
+            using (var key = Registry.CurrentUser.OpenSubKey(protocolPath, true))
+            {
+                // delete tree:
+                // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> ----------------------------
+                key?.DeleteSubKeyTree(Constants.APP_PROTOCOL, false);
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+    #endregion // File type associations & App protocol
+
 
 }

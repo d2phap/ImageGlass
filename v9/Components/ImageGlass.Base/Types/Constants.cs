@@ -35,7 +35,7 @@ public static class Constants
     public const string CONFIG_CMD_PREFIX = "/";
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public const string DATE_FORMAT = "yyyy/MM/dd";
-    public const string APP_PROTOCOL = "igm";
+    public const string APP_PROTOCOL = "imageglass";
     public const string APP_CODE = "moon";
     public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
     public const int MAX_IMAGE_DIMENSION = 16_384;
@@ -46,7 +46,6 @@ public static class Constants
     /// </summary>
     public const string FILE_MACRO = "<file>";
 
-    public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";
     public const string THEME_SYSTEM_ACCENT_COLOR = "accent";
 
     // predefined built-in tool names

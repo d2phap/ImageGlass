@@ -79,8 +79,8 @@ public static class Functions
 
 
         var error = enable
-            ? App.RegisterAppAndExtensions(ext)
-            : App.UnregisterAppAndExtensions(ext);
+            ? ExplorerApi.RegisterAppAndExtensions(ext)
+            : ExplorerApi.UnregisterAppAndExtensions(ext);
 
 
         if (error == null)

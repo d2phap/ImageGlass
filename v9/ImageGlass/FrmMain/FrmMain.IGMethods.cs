@@ -1819,13 +1819,9 @@ public partial class FrmMain
     }
 
 
-    public async Task UpdateDefaultPhotoViewerAsync(bool enable)
+    public static async Task UpdateDefaultPhotoViewerAsync(bool enable)
     {
-        var allExts = Config.AllFormats;
-
-        // Issue #664
-        allExts.Remove(".ico");
-        var extensions = Config.GetImageFormats(allExts);
+        var extensions = Config.GetImageFormats(Config.AllFormats);
 
         var cmd = enable
             ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
