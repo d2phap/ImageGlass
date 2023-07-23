@@ -72,7 +72,12 @@ public partial class FrmMain
         // viewer
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
+        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
+        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
+
         PicMain.Web2DarkMode = darkMode;
+        PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;
+        PicMain.Web2NavRightImagePath = Config.Theme.NavRightImagePath;
 
 
         // Thumbnail bar
@@ -80,13 +85,6 @@ public partial class FrmMain
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Gallery.BackColor = Config.Theme.Colors.GalleryBgColor;
         Gallery.Tooltip = new ModernTooltip() { DarkMode = darkMode };
-
-
-        // navigation buttons
-        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
-        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-        PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;
-        PicMain.Web2NavRightImagePath = Config.Theme.NavRightImagePath;
 
 
         // set app logo on titlebar

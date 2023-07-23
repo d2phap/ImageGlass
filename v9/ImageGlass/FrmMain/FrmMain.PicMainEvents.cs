@@ -225,29 +225,6 @@ public partial class FrmMain
     }
 
 
-    private void PicMain_Web2KeyDown(object sender, KeyEventArgs e)
-    {
-        // pass keydown to FrmMain
-        this.OnKeyDown(e);
-    }
-
-
-    private void PicMain_Web2KeyUp(object sender, KeyEventArgs e)
-    {
-        // pass keyup to FrmMain
-        this.OnKeyUp(e);
-    }
-
-
-    private void PicMain_Web2PointerDown(object sender, MouseEventArgs e)
-    {
-        // make sure all menus closed when mouse clicked
-        MnuMain.Close();
-        MnuContext.Close();
-        MnuSubMenu.Close();
-    }
-
-
     private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
@@ -261,8 +238,6 @@ public partial class FrmMain
             // handle right-click action for webview2
             if (PicMain.UseWebview2)
             {
-                var titleBarHeight = SystemInformation.CaptionHeight;
-
                 var point = this.PointToScreen(e.Location);
                 point.X += PicMain.Left;
                 point.Y += PicMain.Top;
@@ -435,6 +410,29 @@ public partial class FrmMain
     {
         WebUI.UpdateLangJson();
         _ = PicMain.LoadWeb2LanguageAsync(WebUI.LangJson);
+    }
+
+
+    private void PicMain_Web2PointerDown(object sender, MouseEventArgs e)
+    {
+        // make sure all menus closed when mouse clicked
+        MnuMain.Close();
+        MnuContext.Close();
+        MnuSubMenu.Close();
+    }
+
+
+    private void PicMain_Web2KeyDown(object sender, KeyEventArgs e)
+    {
+        // pass keydown to FrmMain
+        this.OnKeyDown(e);
+    }
+
+
+    private void PicMain_Web2KeyUp(object sender, KeyEventArgs e)
+    {
+        // pass keyup to FrmMain
+        this.OnKeyUp(e);
     }
 
 }
