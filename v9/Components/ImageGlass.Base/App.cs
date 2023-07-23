@@ -76,7 +76,7 @@ public class App
 
     /// <summary>
     /// Returns the path based on the configuration folder of ImageGlass.
-    /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
+    /// For portable mode, ConfigDir = Installed Dir, else %LocalAppData%\ImageGlass
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
     public static string ConfigDir(PathType type, params string[] paths)
@@ -100,25 +100,6 @@ public class App
         appDataDir = Path.Combine(newPaths.ToArray());
 
         return appDataDir;
-    }
-
-
-    /// <summary>
-    /// Center the given form to the current screen.
-    /// Note***: The method Form.CenterToScreen() contains a bug:
-    /// https://stackoverflow.com/a/6837499/2856887
-    /// </summary>
-    /// <param name="form">The form to center</param>
-    public static void CenterFormToScreen(Form form)
-    {
-        var screen = Screen.FromControl(form);
-
-        var workingArea = screen.WorkingArea;
-        form.Location = new Point()
-        {
-            X = Math.Max(workingArea.X, workingArea.X + ((workingArea.Width - form.Width) / 2)),
-            Y = Math.Max(workingArea.Y, workingArea.Y + ((workingArea.Height - form.Height) / 2))
-        };
     }
 
 

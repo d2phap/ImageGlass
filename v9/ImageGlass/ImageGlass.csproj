@@ -14,11 +14,12 @@
     <AssemblyTitle>ImageGlass Moon</AssemblyTitle>
     <Description>A lightweight, versatile image viewer</Description>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <Company>Duong Dieu Phap</Company>
     <Version>9.0.4.722</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.4</VersionPrefix>
     <VersionSuffix>beta-4</VersionSuffix>
-      
+    
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <DebugType>portable</DebugType>
