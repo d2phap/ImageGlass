@@ -110,6 +110,7 @@ public partial class FrmColorPickerSettings : DialogForm
         ChkShowHexA.Text = Config.Language[$"{Name}.{nameof(ChkShowHexA)}"];
         ChkShowHslA.Text = Config.Language[$"{Name}.{nameof(ChkShowHslA)}"];
         ChkShowHsvA.Text = Config.Language[$"{Name}.{nameof(ChkShowHsvA)}"];
+        ChkShowCIELabA.Text = Config.Language[$"{Name}.{nameof(ChkShowCIELabA)}"];
     }
 
 
@@ -119,6 +120,7 @@ public partial class FrmColorPickerSettings : DialogForm
         ChkShowHexA.Checked = Settings.ShowHexWithAlpha;
         ChkShowHslA.Checked = Settings.ShowHslWithAlpha;
         ChkShowHsvA.Checked = Settings.ShowHsvWithAlpha;
+        ChkShowCIELabA.Checked = Settings.ShowCIELabWithAlpha;
     }
 
 
@@ -128,6 +130,7 @@ public partial class FrmColorPickerSettings : DialogForm
         Settings.ShowHexWithAlpha = ChkShowHexA.Checked;
         Settings.ShowHslWithAlpha = ChkShowHslA.Checked;
         Settings.ShowHsvWithAlpha = ChkShowHsvA.Checked;
+        Settings.ShowCIELabWithAlpha = ChkShowCIELabA.Checked;
     }
 
 

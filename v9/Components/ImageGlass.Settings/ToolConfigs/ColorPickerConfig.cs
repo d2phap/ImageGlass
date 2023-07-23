@@ -52,6 +52,11 @@ public class ColorPickerConfig : IToolConfig
     /// </summary>
     public bool ShowHsvWithAlpha { get; set; } = true;
 
+    /// <summary>
+    /// Shows alpha value of CIELAB code.
+    /// </summary>
+    public bool ShowCIELabWithAlpha { get; set; } = true;
+
 
 
     /// <summary>
@@ -73,6 +78,7 @@ public class ColorPickerConfig : IToolConfig
         ShowHexWithAlpha = config.GetValue(nameof(ShowHexWithAlpha), ShowHexWithAlpha);
         ShowHslWithAlpha = config.GetValue(nameof(ShowHslWithAlpha), ShowHslWithAlpha);
         ShowHsvWithAlpha = config.GetValue(nameof(ShowHsvWithAlpha), ShowHsvWithAlpha);
+        ShowCIELabWithAlpha = config.GetValue(nameof(ShowCIELabWithAlpha), ShowCIELabWithAlpha);
     }
 
 
@@ -84,6 +90,7 @@ public class ColorPickerConfig : IToolConfig
         settings.TryAdd(nameof(ShowHexWithAlpha), ShowHexWithAlpha);
         settings.TryAdd(nameof(ShowHslWithAlpha), ShowHslWithAlpha);
         settings.TryAdd(nameof(ShowHsvWithAlpha), ShowHsvWithAlpha);
+        settings.TryAdd(nameof(ShowCIELabWithAlpha), ShowCIELabWithAlpha);
 
         // save to app config
         Config.ToolSettings.Set(ToolId, settings);

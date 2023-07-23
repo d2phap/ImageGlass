@@ -795,6 +795,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmColorPickerSettings.ChkShowHexA", "Use HEX format with alpha value"); //v5.0
         Add("FrmColorPickerSettings.ChkShowHslA", "Use HSL format with alpha value"); //v5.0
         Add("FrmColorPickerSettings.ChkShowHsvA", "Use HSV format with alpha value"); //v8.0
+        Add("FrmColorPickerSettings.ChkShowCIELabA", "Use CIELAB format with alpha value"); //v9.0
 
         #endregion
 

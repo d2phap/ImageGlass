@@ -17,9 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using ImageGlass.Viewer;
 
 namespace ImageGlass;
@@ -78,7 +76,8 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
             TxtHex.BackColor =
             TxtCmyk.BackColor =
             TxtHsl.BackColor =
-            TxtHsv.BackColor = Config.Theme.ColorPalatte.AppBg;
+            TxtHsv.BackColor =
+            TxtCIELAB.BackColor = Config.Theme.ColorPalatte.AppBg;
 
         ResumeLayout();
     }
@@ -200,6 +199,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         TooltipMain.SetToolTip(BtnCopyCmyk, Config.Language[$"_._Copy"]);
         TooltipMain.SetToolTip(BtnCopyHsl, Config.Language[$"_._Copy"]);
         TooltipMain.SetToolTip(BtnCopyHsv, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyCIELab, Config.Language[$"_._Copy"]);
     }
 
 
@@ -209,6 +209,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         LblHex.Text = Settings.ShowHexWithAlpha ? "HEXA:" : "HEX:";
         LblHsl.Text = Settings.ShowHslWithAlpha ? "HSLA:" : "HSL:";
         LblHsv.Text = Settings.ShowHsvWithAlpha ? "HSVA:" : "HSV:";
+        LblCIELAB.Text = "CIELAB:";
 
         LblCmyk.Text = "CMYK:";
         LblLocation.Text = "X, Y:";
@@ -235,22 +236,26 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         TxtRgb.Text = $"{color.R}, {color.G}, {color.B}{alphaText}";
 
         // HEXA color -----------------------------------------------
-        TxtHex.Text = ThemeUtils.ColorToHex(color, !Settings.ShowHexWithAlpha);
+        TxtHex.Text = color.ToHex(!Settings.ShowHexWithAlpha);
 
         // CMYK color -----------------------------------------------
-        var cmyk = ThemeUtils.ConvertColorToCMYK(color);
+        var cmyk = color.ToCmyk();
         TxtCmyk.Text = $"{cmyk[0]}%, {cmyk[1]}%, {cmyk[2]}%, {cmyk[3]}%";
 
         // HSLA color -----------------------------------------------
-        var hsla = ThemeUtils.ConvertColorToHSLA(color);
+        var hsla = color.ToHsla();
         alphaText = Settings.ShowHslWithAlpha ? $", {hsla[3]}" : "";
         TxtHsl.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%{alphaText}";
 
-        // HSLA color -----------------------------------------------
-        var hsva = ThemeUtils.ConvertColorToHSVA(color);
-        alphaText = Settings.ShowHslWithAlpha ? $", {hsva[3]}" : "";
+        // HSVA color -----------------------------------------------
+        var hsva = color.ToHsva();
+        alphaText = Settings.ShowHsvWithAlpha ? $", {hsva[3]}" : "";
         TxtHsv.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%{alphaText}";
 
+        // CIELAB color -----------------------------------------------
+        var cielab = color.ToCIELAB();
+        alphaText = Settings.ShowCIELabWithAlpha ? $", {cielab.Alpha}" : "";
+        TxtCIELAB.Text = $"{cielab.L}, {cielab.A}, {cielab.B}{alphaText}";
     }
 
 
@@ -282,6 +287,11 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
     private void BtnCopyHsv_Click(object sender, EventArgs e)
     {
         Clipboard.SetText(TxtHsv.Text);
+    }
+
+    private void BtnCopyCIELab_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtCIELAB.Text);
     }
 
     private void BtnSettings_Click(object sender, EventArgs e)

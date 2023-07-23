@@ -53,6 +53,9 @@
             TxtLocation = new UI.ModernTextBox();
             BtnCopyLocation = new UI.ModernButton();
             TooltipMain = new ToolTip(components);
+            LblCIELAB = new UI.ModernLabel();
+            TxtCIELAB = new UI.ModernTextBox();
+            BtnCopyCIELab = new UI.ModernButton();
             TableLayout.SuspendLayout();
             PanColor.SuspendLayout();
             SuspendLayout();
@@ -65,6 +68,9 @@
             TableLayout.ColumnStyles.Add(new ColumnStyle());
             TableLayout.ColumnStyles.Add(new ColumnStyle());
             TableLayout.ColumnStyles.Add(new ColumnStyle());
+            TableLayout.Controls.Add(BtnCopyCIELab, 2, 7);
+            TableLayout.Controls.Add(TxtCIELAB, 1, 7);
+            TableLayout.Controls.Add(LblCIELAB, 0, 7);
             TableLayout.Controls.Add(BtnSettings, 2, 0);
             TableLayout.Controls.Add(BtnCopyHsv, 2, 6);
             TableLayout.Controls.Add(BtnCopyHsl, 2, 5);
@@ -90,7 +96,7 @@
             TableLayout.Margin = new Padding(0);
             TableLayout.Name = "TableLayout";
             TableLayout.Padding = new Padding(40);
-            TableLayout.RowCount = 7;
+            TableLayout.RowCount = 8;
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
@@ -98,8 +104,8 @@
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
-            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            TableLayout.Size = new Size(660, 570);
+            TableLayout.RowStyles.Add(new RowStyle());
+            TableLayout.Size = new Size(660, 640);
             TableLayout.TabIndex = 0;
             // 
             // BtnSettings
@@ -406,6 +412,49 @@
             BtnCopyLocation.TextImageRelation = TextImageRelation.ImageBeforeText;
             BtnCopyLocation.Click += BtnCopyLocation_Click;
             // 
+            // LblLab
+            // 
+            LblCIELAB.Anchor = AnchorStyles.Left;
+            LblCIELAB.AutoSize = true;
+            LblCIELAB.BackColor = Color.Transparent;
+            LblCIELAB.DarkMode = true;
+            LblCIELAB.Location = new Point(43, 542);
+            LblCIELAB.Name = "LblCIELAB";
+            LblCIELAB.Size = new Size(123, 45);
+            LblCIELAB.TabIndex = 13;
+            LblCIELAB.Text = "[CIELAB:]";
+            // 
+            // TxtLab
+            // 
+            TxtCIELAB.BackColor = Color.FromArgb(69, 73, 74);
+            TxtCIELAB.BorderStyle = BorderStyle.FixedSingle;
+            TxtCIELAB.DarkMode = true;
+            TxtCIELAB.Dock = DockStyle.Fill;
+            TxtCIELAB.ForeColor = Color.FromArgb(210, 210, 210);
+            TxtCIELAB.Location = new Point(173, 540);
+            TxtCIELAB.Margin = new Padding(0, 10, 0, 10);
+            TxtCIELAB.Name = "TxtLab";
+            TxtCIELAB.ReadOnly = true;
+            TxtCIELAB.Size = new Size(342, 50);
+            TxtCIELAB.TabIndex = 14;
+            // 
+            // BtnCopyLab
+            // 
+            BtnCopyCIELab.Anchor = AnchorStyles.Right;
+            BtnCopyCIELab.DarkMode = true;
+            BtnCopyCIELab.Image = (Image)resources.GetObject("BtnCopyCIELab.Image");
+            BtnCopyCIELab.ImagePadding = 0;
+            BtnCopyCIELab.Location = new Point(540, 535);
+            BtnCopyCIELab.Margin = new Padding(10, 0, 0, 0);
+            BtnCopyCIELab.Name = "BtnCopyCIELab";
+            BtnCopyCIELab.Padding = new Padding(8);
+            BtnCopyCIELab.Size = new Size(80, 60);
+            BtnCopyCIELab.SvgIcon = UI.IconName.Copy;
+            BtnCopyCIELab.SystemIcon = null;
+            BtnCopyCIELab.TabIndex = 15;
+            BtnCopyCIELab.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyCIELab.Click += BtnCopyCIELab_Click;
+            // 
             // FrmColorPicker
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
@@ -423,6 +472,7 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
 
         #endregion
 
@@ -449,5 +499,8 @@
         private UI.ModernLabel LblCursorLocation;
         private UI.ModernButton BtnSettings;
         private ToolTip TooltipMain;
+        private UI.ModernButton BtnCopyCIELab;
+        private UI.ModernTextBox TxtCIELAB;
+        private UI.ModernLabel LblCIELAB;
     }
 }

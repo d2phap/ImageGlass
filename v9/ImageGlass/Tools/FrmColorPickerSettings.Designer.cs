@@ -33,6 +33,7 @@
             ChkShowRgbA = new UI.ModernCheckBox();
             ChkShowHexA = new UI.ModernCheckBox();
             ChkShowHslA = new UI.ModernCheckBox();
+            ChkShowCIELabA = new UI.ModernCheckBox();
             TableTop.SuspendLayout();
             SuspendLayout();
             // 
@@ -42,6 +43,7 @@
             TableTop.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             TableTop.ColumnCount = 1;
             TableTop.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            TableTop.Controls.Add(ChkShowCIELabA, 0, 4);
             TableTop.Controls.Add(ChkShowHsvA, 0, 3);
             TableTop.Controls.Add(ChkShowRgbA, 0, 0);
             TableTop.Controls.Add(ChkShowHexA, 0, 1);
@@ -51,12 +53,13 @@
             TableTop.Margin = new Padding(0);
             TableTop.Name = "TableTop";
             TableTop.Padding = new Padding(40, 40, 40, 80);
-            TableTop.RowCount = 4;
+            TableTop.RowCount = 5;
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
-            TableTop.Size = new Size(718, 376);
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.Size = new Size(718, 445);
             TableTop.TabIndex = 3;
             // 
             // ChkShowHsvA
@@ -65,7 +68,7 @@
             ChkShowHsvA.BackColor = Color.Transparent;
             ChkShowHsvA.DarkMode = false;
             ChkShowHsvA.Location = new Point(40, 247);
-            ChkShowHsvA.Margin = new Padding(0);
+            ChkShowHsvA.Margin = new Padding(0, 0, 0, 20);
             ChkShowHsvA.Name = "ChkShowHsvA";
             ChkShowHsvA.Size = new Size(542, 49);
             ChkShowHsvA.TabIndex = 4;
@@ -111,6 +114,19 @@
             ChkShowHslA.Text = "[Use HSL format with alpha value]";
             ChkShowHslA.UseVisualStyleBackColor = false;
             // 
+            // ChkShowCIELabA
+            // 
+            ChkShowCIELabA.AutoSize = true;
+            ChkShowCIELabA.BackColor = Color.Transparent;
+            ChkShowCIELabA.DarkMode = false;
+            ChkShowCIELabA.Location = new Point(40, 316);
+            ChkShowCIELabA.Margin = new Padding(0);
+            ChkShowCIELabA.Name = "ChkShowCIELabA";
+            ChkShowCIELabA.Size = new Size(582, 49);
+            ChkShowCIELabA.TabIndex = 5;
+            ChkShowCIELabA.Text = "[Use CIELAB format with alpha value]";
+            ChkShowCIELabA.UseVisualStyleBackColor = false;
+            // 
             // FrmColorPickerSettings
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
@@ -135,5 +151,6 @@
         private UI.ModernCheckBox ChkShowHexA;
         private UI.ModernCheckBox ChkShowHslA;
         private UI.ModernCheckBox ChkShowHsvA;
+        private UI.ModernCheckBox ChkShowCIELabA;
     }
 }
