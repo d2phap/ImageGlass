@@ -54,6 +54,7 @@ const getHotkeys = (e: KeyboardEvent) => {
     arrowup: 'up',
     arrowdown: 'down',
     backspace: 'back',
+    ' ': 'space',
   };
 
   if (keyMaps[key] !== undefined) {
