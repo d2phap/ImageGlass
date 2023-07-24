@@ -157,7 +157,7 @@ public partial class ToolForm : ThemedForm
     public ToolForm() : base()
     {
         InitializeComponent();
-        Opacity = 0.85;
+        Opacity = 0.95;
     }
 
 
@@ -357,7 +357,7 @@ public partial class ToolForm : ThemedForm
         {
             try
             {
-                Opacity = 0.85;
+                Opacity = 0.95;
             }
             catch { }
         }
@@ -372,7 +372,7 @@ public partial class ToolForm : ThemedForm
     {
         try
         {
-            Opacity = 0.85;
+            Opacity = 0.95;
         }
         catch { }
     }
