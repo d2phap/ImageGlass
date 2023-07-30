@@ -1982,15 +1982,16 @@ public partial class FrmSlideshow : ThemedForm
     private void MnuChangeBackgroundColor_Click(object sender, EventArgs e)
     {
         _isColorPickerOpen = true;
-        using var cd = new ColorDialog()
+
+        using var cd = new ModernColorDialog()
         {
-            Color = Config.SlideshowBackgroundColor,
-            FullOpen = true,
+            StartPosition = FormStartPosition.CenterParent,
+            ColorValue = Config.SlideshowBackgroundColor,
         };
 
         if (cd.ShowDialog() == DialogResult.OK)
         {
-            BackColor = PicMain.BackColor = Config.SlideshowBackgroundColor = cd.Color;
+            PicMain.BackColor = Config.SlideshowBackgroundColor = cd.ColorValue;
             PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
 
             _isColorPickerOpen = false;

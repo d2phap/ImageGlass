@@ -34,13 +34,14 @@
             // ColorPicker
             // 
             ColorPicker.BackColor = Color.Transparent;
+            ColorPicker.ColorMode = UI.ColorMode.Luminance;
             ColorPicker.ColorValue = Color.White;
             ColorPicker.DarkMode = false;
             ColorPicker.Dock = DockStyle.Top;
             ColorPicker.Location = new Point(0, 0);
             ColorPicker.Margin = new Padding(0);
             ColorPicker.Name = "ColorPicker";
-            ColorPicker.Padding = new Padding(40);
+            ColorPicker.Padding = new Padding(40, 40, 20, 20);
             ColorPicker.Size = new Size(1434, 836);
             ColorPicker.TabIndex = 3;
             // 
@@ -50,6 +51,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1434, 1132);
             Controls.Add(ColorPicker);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ModernColorDialog";
             Text = "[Color picker]";
             Controls.SetChildIndex(ColorPicker, 0);

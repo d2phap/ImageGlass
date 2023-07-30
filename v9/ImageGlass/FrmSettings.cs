@@ -633,19 +633,15 @@ public partial class FrmSettings : WebForm
 
     private static Color? OpenColorPicker(Color? defaultColor = null)
     {
-        using var cd = new ColorDialog()
+        using var cd = new ModernColorDialog()
         {
-            FullOpen = true,
+            StartPosition = FormStartPosition.CenterParent,
+            ColorValue = defaultColor ?? Color.White,
         };
-
-        if (defaultColor != null)
-        {
-            cd.Color = defaultColor.Value;
-        }
 
         if (cd.ShowDialog() == DialogResult.OK)
         {
-            return cd.Color;
+            return cd.ColorValue;
         }
 
         return defaultColor;
