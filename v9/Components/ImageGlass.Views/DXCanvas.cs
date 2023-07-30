@@ -1653,7 +1653,7 @@ public partial class DXCanvas : DXControl
             var gdiG = g as GdipGraphics;
 
             // create bitmap brush
-            _checkerboardBrushGdip ??= VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            _checkerboardBrushGdip ??= BHelper.CreateCheckerboardTileBrush(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
             gdiG?.Graphics.FillRectangle(_checkerboardBrushGdip, region);

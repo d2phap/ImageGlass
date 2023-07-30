@@ -29,32 +29,6 @@ namespace ImageGlass.Viewer;
 /// </summary>
 public static class VHelper
 {
-    /// <summary>
-    /// Creates checkerboard tile brush (GDI+)
-    /// </summary>
-    public static TextureBrush CreateCheckerBoxTileGdip(float cellSize, Color cellColor1, Color cellColor2)
-    {
-        // draw the tile
-        var width = cellSize * 2;
-        var height = cellSize * 2;
-        var tileImg = new Bitmap((int)width, (int)height);
-
-        using var g = Graphics.FromImage(tileImg);
-        using (Brush brush = new SolidBrush(cellColor1))
-        {
-            g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
-            g.FillRectangle(brush, new RectangleF(cellSize, cellSize, cellSize, cellSize));
-        }
-
-        using (Brush brush = new SolidBrush(cellColor2))
-        {
-            g.FillRectangle(brush, new RectangleF(cellSize, 0, cellSize, cellSize));
-            g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
-        }
-
-        return new TextureBrush(tileImg);
-    }
-
 
     /// <summary>
     /// Creates checkerboard tile brush (Direct2D)
