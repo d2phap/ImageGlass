@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.ComponentModel;
+
 namespace ImageGlass.UI;
 
 public class ModernTextBox : TextBox
@@ -51,8 +53,40 @@ public class ModernTextBox : TextBox
         }
     }
 
+
+    /// <summary>
+    /// Gets, sets value indicates that the text should be selected if the control is focused or clicked.
+    /// </summary>
+    [DefaultValue(false)]
+    public bool SelectAllTextOnFocus { get; set; } = false;
+
+
     public ModernTextBox()
     {
 
     }
+
+
+    protected override void OnClick(EventArgs e)
+    {
+        base.OnClick(e);
+
+        if (SelectAllTextOnFocus)
+        {
+            Select(0, Text.Length);
+        }
+    }
+
+
+    protected override void OnGotFocus(EventArgs e)
+    {
+        base.OnGotFocus(e);
+        Invalidate();
+
+        if (SelectAllTextOnFocus)
+        {
+            Select(0, Text.Length);
+        }
+    }
+
 }
