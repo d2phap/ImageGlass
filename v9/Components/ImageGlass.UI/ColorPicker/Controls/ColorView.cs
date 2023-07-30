@@ -23,7 +23,8 @@ namespace ImageGlass.UI;
 
 public class ColorView : Control
 {
-    private Color _colorValue = Color.Empty;
+    private Color _color1 = Color.Empty;
+    private Color _color2 = Color.Empty;
     private bool _darkMode = false;
     private TextureBrush? _checkerboardBrush = null;
 
@@ -35,17 +36,36 @@ public class ColorView : Control
 
 
     /// <summary>
-    /// Gets, sets color value.
+    /// Gets, sets left color value.
     /// </summary>
-    public Color ColorValue
+    public Color Color1
     {
-        get => _colorValue;
+        get => _color1;
         set
         {
-            var oldColor = _colorValue;
-            _colorValue = value;
+            var oldColor = _color1;
+            _color1 = value;
 
-            if (_colorValue != oldColor)
+            if (_color1 != oldColor)
+            {
+                Refresh();
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets right color value.
+    /// </summary>
+    public Color Color2
+    {
+        get => _color2;
+        set
+        {
+            var oldColor = _color2;
+            _color2 = value;
+
+            if (_color2 != oldColor)
             {
                 Refresh();
             }
@@ -98,17 +118,29 @@ public class ColorView : Control
         e.Graphics.FillRectangle(_checkerboardBrush, e.ClipRectangle);
 
 
-        // draw color
-        using var gradientBrush = new SolidBrush(ColorValue);
-        e.Graphics.FillRectangle(gradientBrush, e.ClipRectangle);
+        // draw color 1 (left side)
+        using var colorBrush = new SolidBrush(Color1);
+        e.Graphics.FillRectangle(colorBrush, new RectangleF(
+            e.ClipRectangle.X,
+            e.ClipRectangle.Y,
+            e.ClipRectangle.Width / 2,
+            e.ClipRectangle.Height));
+
+        // draw color 2 (right side)
+        colorBrush.Color = Color2;
+        e.Graphics.FillRectangle(colorBrush, new RectangleF(
+            e.ClipRectangle.X + e.ClipRectangle.Width / 2,
+            e.ClipRectangle.Y,
+            e.ClipRectangle.Width / 2,
+            e.ClipRectangle.Height));
 
 
-        //// draw border
-        //using var borderPen = new Pen(Color.FromArgb(50, ThemeColor), DpiScale)
-        //{
-        //    Alignment = PenAlignment.Inset,
-        //};
-        //e.Graphics.DrawRectangle(borderPen, e.ClipRectangle);
+        // draw border
+        using var borderPen = new Pen(Color.FromArgb(50, ThemeColor), DpiScale)
+        {
+            Alignment = PenAlignment.Inset,
+        };
+        e.Graphics.DrawRectangle(borderPen, e.ClipRectangle);
     }
 
 }

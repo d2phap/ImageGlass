@@ -47,7 +47,7 @@ public partial class ModernColorPicker : UserControl
             SetColorValue(value);
 
             // color preview
-            ViewOldColor.ColorValue = _colorValue;
+            ViewColors.Color2 = _colorValue;
 
             // color inputs
             LoadColorInputBoxValues();
@@ -113,7 +113,7 @@ public partial class ModernColorPicker : UserControl
         }
 
 
-        ViewNewColor.ColorValue =
+        ViewColors.Color1 =
             SliderAlpha.ColorValue =
             _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
 
@@ -137,7 +137,7 @@ public partial class ModernColorPicker : UserControl
         }
 
 
-        ViewNewColor.ColorValue =
+        ViewColors.Color1 =
             SliderAlpha.ColorValue =
             _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
 
@@ -147,7 +147,7 @@ public partial class ModernColorPicker : UserControl
 
     private void SliderAlpha_ValueChanged(object sender, SliderColorValueChangedEventArgs e)
     {
-        ViewNewColor.ColorValue = _colorValue = e.RgbColor;
+        ViewColors.Color1 = _colorValue = e.RgbColor;
 
         // load color input values
         LoadColorInputBoxValues();
@@ -310,7 +310,7 @@ public partial class ModernColorPicker : UserControl
         SliderAlpha.ColorValue = _colorValue;
 
         // color preview
-        ViewNewColor.ColorValue = _colorValue;
+        ViewColors.Color1 = _colorValue;
 
 
         _suspendColorInputsEvent = true;
