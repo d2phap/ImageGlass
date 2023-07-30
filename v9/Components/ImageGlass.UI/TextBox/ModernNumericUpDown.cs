@@ -58,6 +58,7 @@ public class ModernNumericUpDown : NumericUpDown
     /// <summary>
     /// Gets, sets value indicates that the text should be selected if the control is focused or clicked.
     /// </summary>
+    [DefaultValue(true)]
     public bool SelectAllTextOnFocus { get; set; } = true;
 
 
@@ -303,10 +304,16 @@ public class ModernNumericUpDown : NumericUpDown
     protected override void OnLostFocus(EventArgs e)
     {
         base.OnLostFocus(e);
+
+        // restore display text if user deletes the value
+        if (string.IsNullOrWhiteSpace(Controls[1].Text))
+        {
+            Controls[1].Text = Value.ToString();
+        }
         Invalidate();
     }
 
-    protected override void OnTextBoxLostFocus(object source, EventArgs e)
+    protected override void OnTextBoxLostFocus(object? source, EventArgs e)
     {
         base.OnTextBoxLostFocus(source, e);
         Invalidate();
