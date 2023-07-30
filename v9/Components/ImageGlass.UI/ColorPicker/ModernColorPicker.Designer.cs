@@ -128,7 +128,7 @@
             // BoxGradient
             // 
             BoxGradient.ColorMode = ColorMode.Luminance;
-            BoxGradient.ColorRGB = Color.FromArgb(255, 0, 0);
+            BoxGradient.ColorRgb = Color.FromArgb(255, 0, 0);
             BoxGradient.DarkMode = false;
             BoxGradient.Dock = DockStyle.Top;
             BoxGradient.Location = new Point(0, 0);

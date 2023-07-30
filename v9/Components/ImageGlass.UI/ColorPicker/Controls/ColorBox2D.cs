@@ -24,9 +24,9 @@ namespace ImageGlass.UI;
 [DefaultEvent(nameof(ColorChanged))]
 public partial class ColorBox2D : Control
 {
-    private HslColor _colorHSL = HslColor.FromAhsl(1.0, 1.0, 1.0);
     private ColorMode _colorMode = ColorMode.Luminance;
-    private Color _colorRGB = Color.Empty;
+    private HslColor _colorHsl = HslColor.FromAhsl(1.0, 1.0, 1.0);
+    private Color _colorRgb = Color.Empty;
     private PointF _markerPoint = PointF.Empty;
     private bool _darkMode = false;
     private bool _isPressed = false;
@@ -112,13 +112,13 @@ public partial class ColorBox2D : Control
     /// <summary>
     /// Gets, set HSL color value.
     /// </summary>
-    public HslColor ColorHSL
+    public HslColor ColorHsl
     {
-        get => _colorHSL;
+        get => _colorHsl;
         set
         {
-            _colorHSL = value;
-            _colorRGB = _colorHSL.RgbValue;
+            _colorHsl = value;
+            _colorRgb = _colorHsl.RgbValue;
             ResetMarker();
             Refresh();
         }
@@ -128,13 +128,13 @@ public partial class ColorBox2D : Control
     /// <summary>
     /// Gets, sets RGB color value.
     /// </summary>
-    public Color ColorRGB
+    public Color ColorRgb
     {
-        get => _colorRGB;
+        get => _colorRgb;
         set
         {
-            _colorRGB = value;
-            _colorHSL = HslColor.FromColor(_colorRGB);
+            _colorRgb = value;
+            _colorHsl = HslColor.FromColor(_colorRgb);
             ResetMarker();
             Refresh();
         }
@@ -157,7 +157,7 @@ public partial class ColorBox2D : Control
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint, true);
 
-        _colorRGB = _colorHSL.RgbValue;
+        _colorRgb = _colorHsl.RgbValue;
     }
 
 
@@ -199,22 +199,22 @@ public partial class ColorBox2D : Control
         switch (ColorMode)
         {
             case ColorMode.Hue:
-                color.H = ColorHSL.H;
-                color2.H = ColorHSL.H;
+                color.H = ColorHsl.H;
+                color2.H = ColorHsl.H;
                 color.S = 0.0;
                 color2.S = 1.0;
                 break;
 
             case ColorMode.Saturation:
-                color.S = ColorHSL.S;
-                color2.S = ColorHSL.S;
+                color.S = ColorHsl.S;
+                color2.S = ColorHsl.S;
                 color.L = 1.0;
                 color2.L = 0.0;
                 break;
 
             case ColorMode.Luminance:
-                color.L = ColorHSL.L;
-                color2.L = ColorHSL.L;
+                color.L = ColorHsl.L;
+                color2.L = ColorHsl.L;
                 color.S = 1.0;
                 color2.S = 0.0;
                 break;
@@ -230,18 +230,18 @@ public partial class ColorBox2D : Control
             switch (ColorMode)
             {
                 case ColorMode.Red:
-                    empty = Color.FromArgb(ColorRGB.R, green, 0);
-                    rgbValue = Color.FromArgb(ColorRGB.R, green, 255);
+                    empty = Color.FromArgb(ColorRgb.R, green, 0);
+                    rgbValue = Color.FromArgb(ColorRgb.R, green, 255);
                     break;
 
                 case ColorMode.Green:
-                    empty = Color.FromArgb(green, ColorRGB.G, 0);
-                    rgbValue = Color.FromArgb(green, ColorRGB.G, 255);
+                    empty = Color.FromArgb(green, ColorRgb.G, 0);
+                    rgbValue = Color.FromArgb(green, ColorRgb.G, 255);
                     break;
 
                 case ColorMode.Blue:
-                    empty = Color.FromArgb(0, green, ColorRGB.B);
-                    rgbValue = Color.FromArgb(255, green, ColorRGB.B);
+                    empty = Color.FromArgb(0, green, ColorRgb.B);
+                    rgbValue = Color.FromArgb(255, green, ColorRgb.B);
                     break;
 
                 case ColorMode.Hue:
@@ -344,32 +344,32 @@ public partial class ColorBox2D : Control
             case ColorMode.Red:
                 num2 = (int)Math.Round(255.0 * (1.0 - (y / (Height - Gap))));
                 num3 = (int)Math.Round(255.0 * x / (Width - Gap));
-                return HslColor.FromColor(Color.FromArgb(_colorRGB.R, num2, num3));
+                return HslColor.FromColor(Color.FromArgb(_colorRgb.R, num2, num3));
 
             case ColorMode.Green:
                 num1 = (int)Math.Round(255.0 * (1.0 - y / (Height - Gap)));
                 num3 = (int)Math.Round(255.0 * x / (Width - Gap));
-                return HslColor.FromColor(Color.FromArgb(num1, _colorRGB.G, num3));
+                return HslColor.FromColor(Color.FromArgb(num1, _colorRgb.G, num3));
 
             case ColorMode.Blue:
                 num1 = (int)Math.Round(255.0 * x / (Width - Gap));
                 num2 = (int)Math.Round(255.0 * (1.0 - y / (Height - Gap)));
-                return HslColor.FromColor(Color.FromArgb(num1, num2, _colorRGB.B));
+                return HslColor.FromColor(Color.FromArgb(num1, num2, _colorRgb.B));
 
             case ColorMode.Hue:
-                color.H = _colorHSL.H;
+                color.H = _colorHsl.H;
                 color.S = x / (Width - Gap);
                 color.L = 1.0 - y / (Height - Gap);
                 return color;
 
             case ColorMode.Saturation:
-                color.S = _colorHSL.S;
+                color.S = _colorHsl.S;
                 color.H = x / (Width - Gap);
                 color.L = 1.0 - (y / (Height - Gap));
                 return color;
 
             case ColorMode.Luminance:
-                color.L = _colorHSL.L;
+                color.L = _colorHsl.L;
                 color.H = x / (Width - Gap);
                 color.S = 1.0 - (y / (Height - Gap));
                 return color;
@@ -384,33 +384,33 @@ public partial class ColorBox2D : Control
         switch (_colorMode)
         {
             case ColorMode.Red:
-                _markerPoint.X = (float)((Width - Gap) * _colorRGB.B / 255.0);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRGB.G / 255.0));
+                _markerPoint.X = (float)((Width - Gap) * _colorRgb.B / 255.0);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRgb.G / 255.0));
                 return;
 
             case ColorMode.Green:
-                _markerPoint.X = (float)((Width - Gap) * _colorRGB.B / 255.0);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRGB.R / 255.0));
+                _markerPoint.X = (float)((Width - Gap) * _colorRgb.B / 255.0);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRgb.R / 255.0));
                 return;
 
             case ColorMode.Blue:
-                _markerPoint.X = (float)((Width - Gap) * _colorRGB.R / 255.0);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRGB.G / 255.0));
+                _markerPoint.X = (float)((Width - Gap) * _colorRgb.R / 255.0);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorRgb.G / 255.0));
                 return;
 
             case ColorMode.Hue:
-                _markerPoint.X = (float)((Width - Gap) * _colorHSL.S);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHSL.L));
+                _markerPoint.X = (float)((Width - Gap) * _colorHsl.S);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHsl.L));
                 return;
 
             case ColorMode.Saturation:
-                _markerPoint.X = (float)((Width - Gap) * _colorHSL.H);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHSL.L));
+                _markerPoint.X = (float)((Width - Gap) * _colorHsl.H);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHsl.L));
                 return;
 
             case ColorMode.Luminance:
-                _markerPoint.X = (float)((Width - Gap) * _colorHSL.H);
-                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHSL.S));
+                _markerPoint.X = (float)((Width - Gap) * _colorHsl.H);
+                _markerPoint.Y = (float)((Height - Gap) * (1.0 - _colorHsl.S));
                 return;
         }
     }
@@ -424,11 +424,11 @@ public partial class ColorBox2D : Control
         if (_markerPoint.X != x || _markerPoint.Y != y)
         {
             _markerPoint = new PointF(x, y);
-            _colorHSL = GetColor(x, y);
-            _colorRGB = _colorHSL.RgbValue;
+            _colorHsl = GetColor(x, y);
+            _colorRgb = _colorHsl.RgbValue;
             Refresh();
 
-            ColorChanged?.Invoke(this, new ColorChangedEventArgs(_colorRGB));
+            ColorChanged?.Invoke(this, new ColorChangedEventArgs(_colorRgb));
         }
     }
 

@@ -23,26 +23,26 @@ public class ColorChangedEventArgs : EventArgs
     /// <summary>
     /// Gets RGB color.
     /// </summary>
-    public Color RgbColor { get; private set; } = Color.Empty;
+    public Color ColorRgb { get; private set; } = Color.Empty;
 
 
     /// <summary>
     /// Gets HSL color.
     /// </summary>
-    public HslColor HslColor { get; private set; } = HslColor.Empty;
+    public HslColor ColorHsl { get; private set; } = HslColor.Empty;
 
 
     public ColorChangedEventArgs(Color selectedColor)
     {
-        RgbColor = selectedColor;
-        HslColor = HslColor.FromColor(selectedColor);
+        ColorRgb = selectedColor;
+        ColorHsl = HslColor.FromColor(selectedColor);
     }
 
 
     public ColorChangedEventArgs(HslColor selectedHslColor)
     {
-        RgbColor = selectedHslColor.RgbValue;
-        HslColor = selectedHslColor;
+        ColorRgb = selectedHslColor.RgbValue;
+        ColorHsl = selectedHslColor;
     }
 
 }
@@ -68,26 +68,26 @@ public class SliderColorValueChangedEventArgs : SliderValueChangedEventArgs
     /// <summary>
     /// Gets RGB color.
     /// </summary>
-    public Color RgbColor { get; private set; } = Color.Empty;
+    public Color ColorRgb { get; private set; } = Color.Empty;
 
 
     /// <summary>
     /// Gets HSL color.
     /// </summary>
-    public HslColor HslColor { get; private set; } = HslColor.Empty;
+    public HslColor ColorHsl { get; private set; } = HslColor.Empty;
 
 
     public SliderColorValueChangedEventArgs(float value, object? colorValue) : base(value)
     {
         if (colorValue is Color rgbColor)
         {
-            RgbColor = rgbColor;
-            HslColor = HslColor.FromColor(rgbColor);
+            ColorRgb = rgbColor;
+            ColorHsl = HslColor.FromColor(rgbColor);
         }
         else if (colorValue is HslColor hslColor)
         {
-            RgbColor = hslColor.RgbValue;
-            HslColor = hslColor;
+            ColorRgb = hslColor.RgbValue;
+            ColorHsl = hslColor;
         }
     }
 }

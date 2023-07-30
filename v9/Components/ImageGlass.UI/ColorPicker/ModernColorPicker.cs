@@ -99,23 +99,23 @@ public partial class ModernColorPicker : UserControl
         }
         else if (ColorMode == ColorMode.Saturation)
         {
-            _cacheHsl = HslColor.FromAhsl(_colorValue.A, e.HslColor.H, _cacheHsl.S, e.HslColor.L);
+            _cacheHsl = HslColor.FromAhsl(_colorValue.A, e.ColorHsl.H, _cacheHsl.S, e.ColorHsl.L);
             SliderRgb.ColorHSL = _cacheHsl;
         }
         else if (ColorMode == ColorMode.Luminance)
         {
-            SliderRgb.ColorHSL = e.HslColor;
-            _cacheHsl = e.HslColor;
+            SliderRgb.ColorHSL = e.ColorHsl;
+            _cacheHsl = e.ColorHsl;
         }
         else
         {
-            SliderRgb.ColorRGB = e.RgbColor;
+            SliderRgb.ColorRGB = e.ColorRgb;
         }
 
 
         ViewColors.Color1 =
             SliderAlpha.ColorValue =
-            _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
+            _colorValue = Color.FromArgb(_colorValue.A, e.ColorRgb);
 
         // load color input values
         LoadColorInputBoxValues();
@@ -123,23 +123,23 @@ public partial class ModernColorPicker : UserControl
 
     private void SliderRgb_ValueChanged(object sender, SliderColorValueChangedEventArgs e)
     {
-        _cacheHsl = e.HslColor;
+        _cacheHsl = e.ColorHsl;
 
         if (ColorMode == ColorMode.Hue
             || ColorMode == ColorMode.Saturation
             || ColorMode == ColorMode.Luminance)
         {
-            BoxGradient.ColorHSL = e.HslColor;
+            BoxGradient.ColorHsl = e.ColorHsl;
         }
         else
         {
-            BoxGradient.ColorRGB = e.RgbColor;
+            BoxGradient.ColorRgb = e.ColorRgb;
         }
 
 
         ViewColors.Color1 =
             SliderAlpha.ColorValue =
-            _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
+            _colorValue = Color.FromArgb(_colorValue.A, e.ColorRgb);
 
         // load color input values
         LoadColorInputBoxValues();
@@ -147,7 +147,7 @@ public partial class ModernColorPicker : UserControl
 
     private void SliderAlpha_ValueChanged(object sender, SliderColorValueChangedEventArgs e)
     {
-        ViewColors.Color1 = _colorValue = e.RgbColor;
+        ViewColors.Color1 = _colorValue = e.ColorRgb;
 
         // load color input values
         LoadColorInputBoxValues();
@@ -283,7 +283,7 @@ public partial class ModernColorPicker : UserControl
         SliderRgb.ColorMode = BoxGradient.ColorMode = mode;
 
         // color controls
-        BoxGradient.ColorRGB = _colorValue;
+        BoxGradient.ColorRgb = _colorValue;
         SliderRgb.ColorRGB = _colorValue;
         SliderAlpha.ColorValue = _colorValue;
 
@@ -305,7 +305,7 @@ public partial class ModernColorPicker : UserControl
         _colorValue = value;
 
         // color controls
-        BoxGradient.ColorRGB = _colorValue;
+        BoxGradient.ColorRgb = _colorValue;
         SliderRgb.ColorRGB = _colorValue;
         SliderAlpha.ColorValue = _colorValue;
 
