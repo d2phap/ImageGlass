@@ -32,6 +32,7 @@ public partial class ModernColorPicker : UserControl
 
     private HslColor _cacheHsl = HslColor.Empty;
     private int _alpha = 255;
+    private bool _suspendColorInputsEvent = false;
 
 
     // Public properties
@@ -202,42 +203,78 @@ public partial class ModernColorPicker : UserControl
 
     private void NumH_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        var newHsl = HslColor.FromColor(_colorValue);
+        newHsl.H = (double)NumH.Value / 360d;
+
+        ColorValue = newHsl.RgbValue;
     }
 
     private void NumS_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        var newHsl = HslColor.FromColor(_colorValue);
+        newHsl.S = (double)NumS.Value / 100d;
+
+        ColorValue = newHsl.RgbValue;
     }
 
     private void NumL_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        var newHsl = HslColor.FromColor(_colorValue);
+        newHsl.L = (double)NumV.Value / 100d;
+
+        ColorValue = newHsl.RgbValue;
     }
 
     private void NumR_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        ColorValue = Color.FromArgb(_colorValue.A, (byte)NumR.Value, _colorValue.G, _colorValue.B);
     }
 
     private void NumG_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        ColorValue = Color.FromArgb(_colorValue.A, _colorValue.R, (byte)NumG.Value, _colorValue.B);
     }
 
     private void NumB_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        ColorValue = Color.FromArgb(_colorValue.A, _colorValue.R, _colorValue.G, (byte)NumB.Value);
     }
 
     private void NumA_ValueChanged(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        ColorValue = _colorValue.WithAlpha((int)NumA.Value);
     }
 
-    private void TxtHex_TextChanged(object sender, EventArgs e)
+    private void TxtHex_LostFocus(object sender, EventArgs e)
     {
+        if (_suspendColorInputsEvent) return;
 
+        var newColor = ThemeUtils.ColorFromHex(TxtHex.Text.Trim());
+        if (newColor == Color.Empty)
+        {
+            // restore the original hex value
+            _suspendColorInputsEvent = true;
+            TxtHex.Text = _colorValue.ToHex();
+            _suspendColorInputsEvent = false;
+        }
+        else
+        {
+            ColorValue = newColor;
+        }
     }
 
     #endregion // Control events
@@ -271,6 +308,8 @@ public partial class ModernColorPicker : UserControl
 
     private void LoadColorInputBoxValues()
     {
+        _suspendColorInputsEvent = true;
+
         // RGBA
         NumR.Value = _colorValue.R;
         NumR.Refresh();
@@ -292,6 +331,8 @@ public partial class ModernColorPicker : UserControl
         // HEX
         TxtHex.Text = _colorValue.ToHex();
         TxtHex.Refresh();
+
+        _suspendColorInputsEvent = false;
     }
 
     #endregion // Private methods

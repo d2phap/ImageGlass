@@ -27,6 +27,9 @@ namespace ImageGlass.Settings;
 /// </summary>
 public partial class ModernColorDialog : DialogForm
 {
+    // Public properties
+    #region Public properties
+
     /// <summary>
     /// Gets, sets the selected color value.
     /// </summary>
@@ -46,6 +49,7 @@ public partial class ModernColorDialog : DialogForm
         set => ColorPicker.ColorMode = value;
     }
 
+    #endregion // Public properties
 
 
     public ModernColorDialog()

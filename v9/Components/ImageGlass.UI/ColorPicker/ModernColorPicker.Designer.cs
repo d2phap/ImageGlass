@@ -184,10 +184,11 @@
             TxtHex.Location = new Point(1183, 660);
             TxtHex.Margin = new Padding(10);
             TxtHex.Name = "TxtHex";
+            TxtHex.SelectAllTextOnFocus = true;
             TxtHex.Size = new Size(200, 50);
             TxtHex.TabIndex = 18;
             TxtHex.Text = "#FF0000FF";
-            TxtHex.TextChanged += TxtHex_TextChanged;
+            TxtHex.LostFocus += TxtHex_LostFocus;
             // 
             // NumA
             // 
@@ -197,7 +198,6 @@
             NumA.Margin = new Padding(10);
             NumA.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumA.Name = "NumA";
-            NumA.SelectAllTextOnFocus = true;
             NumA.Size = new Size(200, 50);
             NumA.TabIndex = 17;
             NumA.ValueChanged += NumA_ValueChanged;
@@ -210,7 +210,6 @@
             NumB.Margin = new Padding(10);
             NumB.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumB.Name = "NumB";
-            NumB.SelectAllTextOnFocus = true;
             NumB.Size = new Size(200, 50);
             NumB.TabIndex = 16;
             NumB.ValueChanged += NumB_ValueChanged;
@@ -236,7 +235,6 @@
             NumG.Margin = new Padding(10);
             NumG.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumG.Name = "NumG";
-            NumG.SelectAllTextOnFocus = true;
             NumG.Size = new Size(200, 50);
             NumG.TabIndex = 15;
             NumG.ValueChanged += NumG_ValueChanged;
@@ -262,7 +260,6 @@
             NumR.Margin = new Padding(10, 40, 10, 10);
             NumR.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumR.Name = "NumR";
-            NumR.SelectAllTextOnFocus = true;
             NumR.Size = new Size(200, 50);
             NumR.TabIndex = 14;
             NumR.ValueChanged += NumR_ValueChanged;
@@ -287,7 +284,6 @@
             NumV.Location = new Point(1183, 280);
             NumV.Margin = new Padding(10);
             NumV.Name = "NumV";
-            NumV.SelectAllTextOnFocus = true;
             NumV.Size = new Size(200, 50);
             NumV.TabIndex = 13;
             NumV.ValueChanged += NumL_ValueChanged;
@@ -312,7 +308,6 @@
             NumS.Location = new Point(1183, 210);
             NumS.Margin = new Padding(10);
             NumS.Name = "NumS";
-            NumS.SelectAllTextOnFocus = true;
             NumS.Size = new Size(200, 50);
             NumS.TabIndex = 12;
             NumS.ValueChanged += NumS_ValueChanged;
@@ -338,7 +333,6 @@
             NumH.Margin = new Padding(10);
             NumH.Maximum = new decimal(new int[] { 360, 0, 0, 0 });
             NumH.Name = "NumH";
-            NumH.SelectAllTextOnFocus = true;
             NumH.Size = new Size(200, 50);
             NumH.TabIndex = 11;
             NumH.ValueChanged += NumH_ValueChanged;
