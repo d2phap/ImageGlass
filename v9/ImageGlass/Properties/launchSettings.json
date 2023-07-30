@@ -1,7 +1,8 @@
 {
   "profiles": {
     "ImageGlass": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "nativeDebugging": true
     }
   }
 }

@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using System.ComponentModel;
 
 namespace ImageGlass.UI;
 
@@ -31,7 +30,6 @@ public partial class ModernColorPicker : UserControl
     private bool _darkMode = true;
 
     private HslColor _cacheHsl = HslColor.Empty;
-    private int _alpha = 255;
     private bool _suspendColorInputsEvent = false;
 
 
@@ -46,16 +44,10 @@ public partial class ModernColorPicker : UserControl
         get => _colorValue;
         set
         {
-            _colorValue = value;
-
-            // color controls
-            BoxGradient.ColorRGB = _colorValue;
-            SliderRgb.ColorRGB = _colorValue;
-            SliderAlpha.ColorValue = _colorValue;
+            SetColorValue(value);
 
             // color preview
             ViewOldColor.ColorValue = _colorValue;
-            ViewNewColor.ColorValue = _colorValue;
 
             // color inputs
             LoadColorInputBoxValues();
@@ -107,7 +99,7 @@ public partial class ModernColorPicker : UserControl
         }
         else if (ColorMode == ColorMode.Saturation)
         {
-            _cacheHsl = HslColor.FromAhsl(_alpha, e.HslColor.H, _cacheHsl.S, e.HslColor.L);
+            _cacheHsl = HslColor.FromAhsl(_colorValue.A, e.HslColor.H, _cacheHsl.S, e.HslColor.L);
             SliderRgb.ColorHSL = _cacheHsl;
         }
         else if (ColorMode == ColorMode.Luminance)
@@ -123,7 +115,7 @@ public partial class ModernColorPicker : UserControl
 
         ViewNewColor.ColorValue =
             SliderAlpha.ColorValue =
-            _colorValue = Color.FromArgb(_alpha, e.RgbColor);
+            _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
 
         // load color input values
         LoadColorInputBoxValues();
@@ -147,7 +139,7 @@ public partial class ModernColorPicker : UserControl
 
         ViewNewColor.ColorValue =
             SliderAlpha.ColorValue =
-            _colorValue = Color.FromArgb(_alpha, e.RgbColor);
+            _colorValue = Color.FromArgb(_colorValue.A, e.RgbColor);
 
         // load color input values
         LoadColorInputBoxValues();
@@ -155,8 +147,6 @@ public partial class ModernColorPicker : UserControl
 
     private void SliderAlpha_ValueChanged(object sender, SliderColorValueChangedEventArgs e)
     {
-        _alpha = e.RgbColor.A;
-
         ViewNewColor.ColorValue = _colorValue = e.RgbColor;
 
         // load color input values
@@ -208,7 +198,7 @@ public partial class ModernColorPicker : UserControl
         var newHsl = HslColor.FromColor(_colorValue);
         newHsl.H = (double)NumH.Value / 360d;
 
-        ColorValue = newHsl.RgbValue;
+        SetColorValue(newHsl.RgbValue);
     }
 
     private void NumS_ValueChanged(object sender, EventArgs e)
@@ -218,7 +208,7 @@ public partial class ModernColorPicker : UserControl
         var newHsl = HslColor.FromColor(_colorValue);
         newHsl.S = (double)NumS.Value / 100d;
 
-        ColorValue = newHsl.RgbValue;
+        SetColorValue(newHsl.RgbValue);
     }
 
     private void NumL_ValueChanged(object sender, EventArgs e)
@@ -228,35 +218,39 @@ public partial class ModernColorPicker : UserControl
         var newHsl = HslColor.FromColor(_colorValue);
         newHsl.L = (double)NumV.Value / 100d;
 
-        ColorValue = newHsl.RgbValue;
+        SetColorValue(newHsl.RgbValue);
     }
 
     private void NumR_ValueChanged(object sender, EventArgs e)
     {
         if (_suspendColorInputsEvent) return;
 
-        ColorValue = Color.FromArgb(_colorValue.A, (byte)NumR.Value, _colorValue.G, _colorValue.B);
+        var newColor = Color.FromArgb(_colorValue.A, (byte)NumR.Value, _colorValue.G, _colorValue.B);
+        SetColorValue(newColor);
     }
 
     private void NumG_ValueChanged(object sender, EventArgs e)
     {
         if (_suspendColorInputsEvent) return;
 
-        ColorValue = Color.FromArgb(_colorValue.A, _colorValue.R, (byte)NumG.Value, _colorValue.B);
+        var newColor = Color.FromArgb(_colorValue.A, _colorValue.R, (byte)NumG.Value, _colorValue.B);
+        SetColorValue(newColor);
     }
 
     private void NumB_ValueChanged(object sender, EventArgs e)
     {
         if (_suspendColorInputsEvent) return;
 
-        ColorValue = Color.FromArgb(_colorValue.A, _colorValue.R, _colorValue.G, (byte)NumB.Value);
+        var newColor = Color.FromArgb(_colorValue.A, _colorValue.R, _colorValue.G, (byte)NumB.Value);
+        SetColorValue(newColor);
     }
 
     private void NumA_ValueChanged(object sender, EventArgs e)
     {
         if (_suspendColorInputsEvent) return;
 
-        ColorValue = _colorValue.WithAlpha((int)NumA.Value);
+        var newColor = _colorValue.WithAlpha((int)NumA.Value);
+        SetColorValue(newColor);
     }
 
     private void TxtHex_LostFocus(object sender, EventArgs e)
@@ -273,7 +267,7 @@ public partial class ModernColorPicker : UserControl
         }
         else
         {
-            ColorValue = newColor;
+            SetColorValue(newColor);
         }
     }
 
@@ -303,6 +297,26 @@ public partial class ModernColorPicker : UserControl
             RadS.Checked = mode == ColorMode.Saturation;
             RadV.Checked = mode == ColorMode.Luminance;
         }
+    }
+
+
+    private void SetColorValue(Color value)
+    {
+        _colorValue = value;
+
+        // color controls
+        BoxGradient.ColorRGB = _colorValue;
+        SliderRgb.ColorRGB = _colorValue;
+        SliderAlpha.ColorValue = _colorValue;
+
+        // color preview
+        ViewNewColor.ColorValue = _colorValue;
+
+
+        _suspendColorInputsEvent = true;
+        TxtHex.Text = _colorValue.ToHex();
+        _suspendColorInputsEvent = false;
+        TxtHex.Refresh();
     }
 
 
