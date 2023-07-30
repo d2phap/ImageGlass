@@ -35,18 +35,21 @@
             modernLabel5 = new ModernLabel();
             TxtHex = new ModernTextBox();
             NumA = new ModernNumericUpDown();
-            NumB = new ModernNumericUpDown();
-            RadB = new RadioButton();
-            NumG = new ModernNumericUpDown();
-            RadG = new RadioButton();
+
             NumR = new ModernNumericUpDown();
             RadR = new RadioButton();
-            NumV = new ModernNumericUpDown();
-            RadV = new RadioButton();
-            NumS = new ModernNumericUpDown();
-            RadS = new RadioButton();
+            NumG = new ModernNumericUpDown();
+            RadG = new RadioButton();
+            NumB = new ModernNumericUpDown();
+            RadB = new RadioButton();
+
             NumH = new ModernNumericUpDown();
             RadH = new RadioButton();
+            NumS = new ModernNumericUpDown();
+            RadS = new RadioButton();
+            NumV = new ModernNumericUpDown();
+            RadV = new RadioButton();
+
             BoxGradient = new ColorBox2D();
             SliderRgb = new RgbColorSlider();
             SliderAlpha = new AlphaColorSlider();
@@ -81,40 +84,48 @@
             TableLayout.ColumnStyles.Add(new ColumnStyle());
             TableLayout.ColumnStyles.Add(new ColumnStyle());
             TableLayout.ColumnStyles.Add(new ColumnStyle());
-            TableLayout.Controls.Add(modernLabel8, 4, 4);
-            TableLayout.Controls.Add(modernLabel7, 4, 3);
-            TableLayout.Controls.Add(modernLabel6, 4, 2);
-            TableLayout.Controls.Add(modernLabel5, 4, 1);
-            TableLayout.Controls.Add(TxtHex, 5, 8);
-            TableLayout.Controls.Add(NumA, 5, 7);
-            TableLayout.Controls.Add(NumB, 5, 6);
-            TableLayout.Controls.Add(RadB, 3, 6);
-            TableLayout.Controls.Add(NumG, 5, 5);
-            TableLayout.Controls.Add(RadG, 3, 5);
-            TableLayout.Controls.Add(NumR, 5, 4);
-            TableLayout.Controls.Add(RadR, 3, 4);
-            TableLayout.Controls.Add(NumV, 5, 3);
-            TableLayout.Controls.Add(RadV, 3, 3);
-            TableLayout.Controls.Add(NumS, 5, 2);
-            TableLayout.Controls.Add(RadS, 3, 2);
-            TableLayout.Controls.Add(NumH, 5, 1);
-            TableLayout.Controls.Add(RadH, 3, 1);
             TableLayout.Controls.Add(BoxGradient, 0, 0);
             TableLayout.Controls.Add(SliderRgb, 1, 0);
             TableLayout.Controls.Add(SliderAlpha, 2, 0);
             TableLayout.Controls.Add(TableColorViews, 3, 0);
-            TableLayout.Controls.Add(modernLabel9, 4, 5);
-            TableLayout.Controls.Add(modernLabel10, 4, 6);
-            TableLayout.Controls.Add(modernLabel3, 4, 7);
-            TableLayout.Controls.Add(modernLabel4, 3, 8);
-            TableLayout.Controls.Add(modernLabel1, 6, 1);
-            TableLayout.Controls.Add(modernLabel2, 6, 2);
-            TableLayout.Controls.Add(modernLabel11, 6, 3);
+            
+            TableLayout.Controls.Add(TxtHex, 5, 1);
+
+            TableLayout.Controls.Add(RadR, 3, 2);
+            TableLayout.Controls.Add(RadG, 3, 3);
+            TableLayout.Controls.Add(RadB, 3, 4);
+
+            TableLayout.Controls.Add(RadH, 3, 6);
+            TableLayout.Controls.Add(RadS, 3, 7);
+            TableLayout.Controls.Add(RadV, 3, 8);
+
+            
+            TableLayout.Controls.Add(NumR, 5, 2);
+            TableLayout.Controls.Add(NumG, 5, 3);
+            TableLayout.Controls.Add(NumB, 5, 4);
+            TableLayout.Controls.Add(NumA, 5, 5);
+
+            TableLayout.Controls.Add(NumH, 5, 6);
+            TableLayout.Controls.Add(NumS, 5, 7);
+            TableLayout.Controls.Add(NumV, 5, 8);
+
+            TableLayout.Controls.Add(modernLabel1, 6, 6);
+            TableLayout.Controls.Add(modernLabel2, 6, 7);
+            TableLayout.Controls.Add(modernLabel3, 4, 5);
+            TableLayout.Controls.Add(modernLabel4, 3, 1);
+            TableLayout.Controls.Add(modernLabel5, 4, 6);
+            TableLayout.Controls.Add(modernLabel6, 4, 7);
+            TableLayout.Controls.Add(modernLabel7, 4, 8);
+            TableLayout.Controls.Add(modernLabel8, 4, 2);
+            TableLayout.Controls.Add(modernLabel9, 4, 3);
+            TableLayout.Controls.Add(modernLabel10, 4, 4);
+            TableLayout.Controls.Add(modernLabel11, 6, 8);
+
             TableLayout.Dock = DockStyle.Fill;
             TableLayout.Location = new Point(0, 0);
             TableLayout.Margin = new Padding(0);
             TableLayout.Name = "TableLayout";
-            TableLayout.RowCount = 9;
+            TableLayout.RowCount = 10;
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
@@ -124,6 +135,7 @@
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             TableLayout.Size = new Size(1439, 915);
             TableLayout.TabIndex = 23;
             // 
@@ -132,8 +144,8 @@
             modernLabel8.AutoSize = true;
             modernLabel8.BackColor = Color.Transparent;
             modernLabel8.DarkMode = false;
-            modernLabel8.Location = new Point(1111, 380);
-            modernLabel8.Margin = new Padding(0, 40, 10, 10);
+            modernLabel8.Location = new Point(1111, 210);
+            modernLabel8.Margin = new Padding(0, 10, 10, 10);
             modernLabel8.Name = "modernLabel8";
             modernLabel8.Size = new Size(46, 45);
             modernLabel8.TabIndex = 0;
@@ -144,7 +156,7 @@
             modernLabel7.AutoSize = true;
             modernLabel7.BackColor = Color.Transparent;
             modernLabel7.DarkMode = false;
-            modernLabel7.Location = new Point(1111, 280);
+            modernLabel7.Location = new Point(1111, 660);
             modernLabel7.Margin = new Padding(0, 10, 10, 10);
             modernLabel7.Name = "modernLabel7";
             modernLabel7.Size = new Size(47, 45);
@@ -156,7 +168,7 @@
             modernLabel6.AutoSize = true;
             modernLabel6.BackColor = Color.Transparent;
             modernLabel6.DarkMode = false;
-            modernLabel6.Location = new Point(1111, 210);
+            modernLabel6.Location = new Point(1111, 590);
             modernLabel6.Margin = new Padding(0, 10, 10, 10);
             modernLabel6.Name = "modernLabel6";
             modernLabel6.Size = new Size(44, 45);
@@ -168,8 +180,8 @@
             modernLabel5.AutoSize = true;
             modernLabel5.BackColor = Color.Transparent;
             modernLabel5.DarkMode = false;
-            modernLabel5.Location = new Point(1111, 140);
-            modernLabel5.Margin = new Padding(0, 10, 10, 10);
+            modernLabel5.Location = new Point(1111, 520);
+            modernLabel5.Margin = new Padding(0, 40, 10, 10);
             modernLabel5.Name = "modernLabel5";
             modernLabel5.Size = new Size(50, 45);
             modernLabel5.TabIndex = 0;
@@ -179,46 +191,43 @@
             // 
             TxtHex.BackColor = SystemColors.Window;
             TxtHex.DarkMode = false;
-            TxtHex.Dock = DockStyle.Left;
             TxtHex.ForeColor = SystemColors.WindowText;
-            TxtHex.Location = new Point(1183, 660);
+            TxtHex.Location = new Point(1181, 140);
             TxtHex.Margin = new Padding(10);
             TxtHex.Name = "TxtHex";
             TxtHex.SelectAllTextOnFocus = true;
             TxtHex.Size = new Size(200, 50);
-            TxtHex.TabIndex = 18;
+            TxtHex.TabIndex = 11;
             TxtHex.Text = "#FF0000FF";
             TxtHex.LostFocus += TxtHex_LostFocus;
             // 
             // NumA
             // 
             NumA.DarkMode = false;
-            NumA.Dock = DockStyle.Left;
-            NumA.Location = new Point(1183, 590);
+            NumA.Location = new Point(1181, 420);
             NumA.Margin = new Padding(10);
             NumA.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumA.Name = "NumA";
             NumA.Size = new Size(200, 50);
-            NumA.TabIndex = 17;
+            NumA.TabIndex = 15;
             NumA.ValueChanged += NumA_ValueChanged;
             // 
             // NumB
             // 
             NumB.DarkMode = false;
-            NumB.Dock = DockStyle.Left;
-            NumB.Location = new Point(1183, 520);
+            NumB.Location = new Point(1181, 350);
             NumB.Margin = new Padding(10);
             NumB.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumB.Name = "NumB";
             NumB.Size = new Size(200, 50);
-            NumB.TabIndex = 16;
+            NumB.TabIndex = 14;
             NumB.ValueChanged += NumB_ValueChanged;
             // 
             // RadB
             // 
             RadB.Anchor = AnchorStyles.Left;
             RadB.AutoSize = true;
-            RadB.Location = new Point(1068, 529);
+            RadB.Location = new Point(1068, 359);
             RadB.Margin = new Padding(10);
             RadB.Name = "RadB";
             RadB.Size = new Size(33, 32);
@@ -230,20 +239,19 @@
             // NumG
             // 
             NumG.DarkMode = false;
-            NumG.Dock = DockStyle.Left;
-            NumG.Location = new Point(1183, 450);
+            NumG.Location = new Point(1181, 280);
             NumG.Margin = new Padding(10);
             NumG.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumG.Name = "NumG";
             NumG.Size = new Size(200, 50);
-            NumG.TabIndex = 15;
+            NumG.TabIndex = 13;
             NumG.ValueChanged += NumG_ValueChanged;
             // 
             // RadG
             // 
             RadG.Anchor = AnchorStyles.Left;
             RadG.AutoSize = true;
-            RadG.Location = new Point(1068, 459);
+            RadG.Location = new Point(1068, 289);
             RadG.Margin = new Padding(10);
             RadG.Name = "RadG";
             RadG.Size = new Size(33, 32);
@@ -255,21 +263,20 @@
             // NumR
             // 
             NumR.DarkMode = false;
-            NumR.Dock = DockStyle.Left;
-            NumR.Location = new Point(1183, 380);
-            NumR.Margin = new Padding(10, 40, 10, 10);
+            NumR.Location = new Point(1181, 210);
+            NumR.Margin = new Padding(10);
             NumR.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             NumR.Name = "NumR";
             NumR.Size = new Size(200, 50);
-            NumR.TabIndex = 14;
+            NumR.TabIndex = 12;
             NumR.ValueChanged += NumR_ValueChanged;
             // 
             // RadR
             // 
             RadR.Anchor = AnchorStyles.Left;
             RadR.AutoSize = true;
-            RadR.Location = new Point(1068, 389);
-            RadR.Margin = new Padding(10, 40, 10, 10);
+            RadR.Location = new Point(1068, 219);
+            RadR.Margin = new Padding(10);
             RadR.Name = "RadR";
             RadR.Size = new Size(33, 32);
             RadR.TabIndex = 10;
@@ -280,19 +287,18 @@
             // NumV
             // 
             NumV.DarkMode = false;
-            NumV.Dock = DockStyle.Left;
-            NumV.Location = new Point(1183, 280);
+            NumV.Location = new Point(1181, 660);
             NumV.Margin = new Padding(10);
             NumV.Name = "NumV";
             NumV.Size = new Size(200, 50);
-            NumV.TabIndex = 13;
+            NumV.TabIndex = 18;
             NumV.ValueChanged += NumL_ValueChanged;
             // 
             // RadV
             // 
             RadV.Anchor = AnchorStyles.Left;
             RadV.AutoSize = true;
-            RadV.Location = new Point(1068, 289);
+            RadV.Location = new Point(1068, 669);
             RadV.Margin = new Padding(10);
             RadV.Name = "RadV";
             RadV.Size = new Size(33, 32);
@@ -304,19 +310,18 @@
             // NumS
             // 
             NumS.DarkMode = false;
-            NumS.Dock = DockStyle.Left;
-            NumS.Location = new Point(1183, 210);
+            NumS.Location = new Point(1181, 590);
             NumS.Margin = new Padding(10);
             NumS.Name = "NumS";
             NumS.Size = new Size(200, 50);
-            NumS.TabIndex = 12;
+            NumS.TabIndex = 17;
             NumS.ValueChanged += NumS_ValueChanged;
             // 
             // RadS
             // 
             RadS.Anchor = AnchorStyles.Left;
             RadS.AutoSize = true;
-            RadS.Location = new Point(1068, 219);
+            RadS.Location = new Point(1068, 599);
             RadS.Margin = new Padding(10);
             RadS.Name = "RadS";
             RadS.Size = new Size(33, 32);
@@ -328,21 +333,20 @@
             // NumH
             // 
             NumH.DarkMode = false;
-            NumH.Dock = DockStyle.Left;
-            NumH.Location = new Point(1183, 140);
-            NumH.Margin = new Padding(10);
+            NumH.Location = new Point(1181, 520);
+            NumH.Margin = new Padding(10, 40, 10, 10);
             NumH.Maximum = new decimal(new int[] { 360, 0, 0, 0 });
             NumH.Name = "NumH";
             NumH.Size = new Size(200, 50);
-            NumH.TabIndex = 11;
+            NumH.TabIndex = 16;
             NumH.ValueChanged += NumH_ValueChanged;
             // 
             // RadH
             // 
             RadH.Anchor = AnchorStyles.Left;
             RadH.AutoSize = true;
-            RadH.Location = new Point(1068, 149);
-            RadH.Margin = new Padding(10);
+            RadH.Location = new Point(1068, 529);
+            RadH.Margin = new Padding(10, 40, 10, 10);
             RadH.Name = "RadH";
             RadH.Size = new Size(33, 32);
             RadH.TabIndex = 10;
@@ -360,7 +364,7 @@
             BoxGradient.Margin = new Padding(0, 0, 10, 0);
             BoxGradient.Name = "BoxGradient";
             TableLayout.SetRowSpan(BoxGradient, 9);
-            BoxGradient.Size = new Size(808, 700);
+            BoxGradient.Size = new Size(808, 710);
             BoxGradient.TabIndex = 0;
             BoxGradient.TabStop = false;
             BoxGradient.ColorChanged += BoxGradient_ColorChanged;
@@ -374,7 +378,7 @@
             SliderRgb.Margin = new Padding(10, 0, 10, 0);
             SliderRgb.Name = "SliderRgb";
             TableLayout.SetRowSpan(SliderRgb, 9);
-            SliderRgb.Size = new Size(100, 700);
+            SliderRgb.Size = new Size(100, 710);
             SliderRgb.TabIndex = 0;
             SliderRgb.TabStop = false;
             SliderRgb.Value = 0F;
@@ -388,7 +392,7 @@
             SliderAlpha.Margin = new Padding(10, 0, 10, 0);
             SliderAlpha.Name = "SliderAlpha";
             TableLayout.SetRowSpan(SliderAlpha, 9);
-            SliderAlpha.Size = new Size(100, 700);
+            SliderAlpha.Size = new Size(100, 710);
             SliderAlpha.TabIndex = 0;
             SliderAlpha.TabStop = false;
             SliderAlpha.Value = 0F;
@@ -442,7 +446,7 @@
             modernLabel9.AutoSize = true;
             modernLabel9.BackColor = Color.Transparent;
             modernLabel9.DarkMode = false;
-            modernLabel9.Location = new Point(1111, 450);
+            modernLabel9.Location = new Point(1111, 280);
             modernLabel9.Margin = new Padding(0, 10, 10, 10);
             modernLabel9.Name = "modernLabel9";
             modernLabel9.Size = new Size(49, 45);
@@ -454,7 +458,7 @@
             modernLabel10.AutoSize = true;
             modernLabel10.BackColor = Color.Transparent;
             modernLabel10.DarkMode = false;
-            modernLabel10.Location = new Point(1111, 520);
+            modernLabel10.Location = new Point(1111, 350);
             modernLabel10.Margin = new Padding(0, 10, 10, 10);
             modernLabel10.Name = "modernLabel10";
             modernLabel10.Size = new Size(45, 45);
@@ -466,7 +470,7 @@
             modernLabel3.AutoSize = true;
             modernLabel3.BackColor = Color.Transparent;
             modernLabel3.DarkMode = false;
-            modernLabel3.Location = new Point(1111, 590);
+            modernLabel3.Location = new Point(1111, 420);
             modernLabel3.Margin = new Padding(0, 10, 10, 10);
             modernLabel3.Name = "modernLabel3";
             modernLabel3.Size = new Size(48, 45);
@@ -479,8 +483,8 @@
             modernLabel4.BackColor = Color.Transparent;
             TableLayout.SetColumnSpan(modernLabel4, 2);
             modernLabel4.DarkMode = false;
-            modernLabel4.Location = new Point(1078, 660);
-            modernLabel4.Margin = new Padding(20, 10, 10, 10);
+            modernLabel4.Location = new Point(1068, 140);
+            modernLabel4.Margin = new Padding(10);
             modernLabel4.Name = "modernLabel4";
             modernLabel4.Size = new Size(85, 45);
             modernLabel4.TabIndex = 0;
@@ -491,8 +495,8 @@
             modernLabel1.AutoSize = true;
             modernLabel1.BackColor = Color.Transparent;
             modernLabel1.DarkMode = false;
-            modernLabel1.Location = new Point(1393, 140);
-            modernLabel1.Margin = new Padding(0, 10, 0, 10);
+            modernLabel1.Location = new Point(1393, 520);
+            modernLabel1.Margin = new Padding(0, 40, 0, 10);
             modernLabel1.Name = "modernLabel1";
             modernLabel1.Size = new Size(32, 45);
             modernLabel1.TabIndex = 19;
@@ -503,7 +507,7 @@
             modernLabel2.AutoSize = true;
             modernLabel2.BackColor = Color.Transparent;
             modernLabel2.DarkMode = false;
-            modernLabel2.Location = new Point(1393, 210);
+            modernLabel2.Location = new Point(1393, 590);
             modernLabel2.Margin = new Padding(0, 10, 0, 10);
             modernLabel2.Name = "modernLabel2";
             modernLabel2.Size = new Size(46, 45);
@@ -515,7 +519,7 @@
             modernLabel11.AutoSize = true;
             modernLabel11.BackColor = Color.Transparent;
             modernLabel11.DarkMode = false;
-            modernLabel11.Location = new Point(1393, 280);
+            modernLabel11.Location = new Point(1393, 660);
             modernLabel11.Margin = new Padding(0, 10, 0, 10);
             modernLabel11.Name = "modernLabel11";
             modernLabel11.Size = new Size(46, 45);
