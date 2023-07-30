@@ -61,57 +61,66 @@ public partial class ThemeUtils
 
     /// <summary>
     /// Creates a new <see cref="Color"/> from the given hex color string (with alpha).
+    /// Returns <see cref="Color.Empty"/> if <paramref name="hex"/> is invalid.
     /// </summary>
     public static Color ColorFromHex(string hex, bool skipAlpha = false)
     {
-        // Remove # if present
-        if (hex.IndexOf('#') != -1)
+        try
         {
-            hex = hex.Replace("#", "");
-        }
+            // Remove # if present
+            if (hex.StartsWith('#'))
+            {
+                hex = hex.Substring(1);
+            }
 
-        var red = 0;
-        var green = 0;
-        var blue = 0;
-        var alpha = 255;
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+            var alpha = 255;
 
-        if (hex.Length == 8)
-        {
-            // #RRGGBBAA
-            red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
-            green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-            blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
-            alpha = int.Parse(hex.Substring(6, 2), NumberStyles.AllowHexSpecifier);
-        }
-        else if (hex.Length == 6)
-        {
-            // #RRGGBB
-            red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
-            green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-            blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
-        }
-        else if (hex.Length == 4)
-        {
-            // #RGBA
-            red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
-            green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
-            blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
-            alpha = int.Parse($"{hex[3]}{hex[3]}", NumberStyles.AllowHexSpecifier);
-        }
-        else if (hex.Length == 3)
-        {
-            // #RGB
-            red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
-            green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
-            blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
-        }
+            if (hex.Length == 8)
+            {
+                // #RRGGBBAA
+                red = byte.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                green = byte.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+                alpha = byte.Parse(hex.Substring(6, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 6)
+            {
+                // #RRGGBB
+                red = byte.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                green = byte.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 4)
+            {
+                // #RGBA
+                red = byte.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
+                green = byte.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
+                alpha = byte.Parse($"{hex[3]}{hex[3]}", NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 3)
+            {
+                // #RGB
+                red = byte.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
+                green = byte.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
+            }
+            else
+            {
+                return Color.Empty;
+            }
 
-        if (skipAlpha)
-        {
-            alpha = 255;
-        }
+            if (skipAlpha) alpha = 255;
 
-        return Color.FromArgb(alpha, red, green, blue);
+            return Color.FromArgb(alpha, red, green, blue);
+        }
+        catch
+        {
+            return Color.Empty;
+        }
     }
 
 
