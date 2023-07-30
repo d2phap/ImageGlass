@@ -31,10 +31,12 @@ namespace ImageGlass.UI;
 
 public class LightColors : IColors
 {
+    private bool _designMode = false;
+
     public Color AppBg => Color.White;
     public Color AppText => Color.FromArgb(30, 30, 30); // Normal Text
     public Color AppTextDisabled => Color.FromArgb(113, 113, 113); // Disabled Text
-    public Color Accent => WinColorsApi.GetAccentColor(false);
+    public Color Accent => _designMode ? Color.FromArgb(0, 120, 212) : WinColorsApi.GetAccentColor(true);
 
 
     public Color ControlBg => Color.FromArgb(245, 245, 250); // Control Color
@@ -42,12 +44,12 @@ public class LightColors : IColors
     public Color ControlBgPressed => Color.FromArgb(220, 220, 220); // Control Clicked
     public Color ControlBgPressed2 => Color.FromArgb(230, 231, 234); // Control Clicked 2
     public Color ControlBgDisabled => Color.FromArgb(202, 202, 202);
-    public Color ControlBgAccent => ControlBg.Blend(WinColorsApi.GetAccentColor(true), 0.92f);
-    public Color ControlBgAccentHover => ControlBgHover.Blend(WinColorsApi.GetAccentColor(true), 0.88f);
+    public Color ControlBgAccent => ControlBg.Blend(Accent, 0.92f);
+    public Color ControlBgAccentHover => ControlBgHover.Blend(Accent, 0.88f);
 
 
     public Color ControlBorder => Color.FromArgb(204, 206, 219); // Control Border
-    public Color ControlBorderAccent => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Accent Border
+    public Color ControlBorderAccent => Accent.WithBrightness(0.2f); // Accent Border
 
 
     // status background color
@@ -56,4 +58,10 @@ public class LightColors : IColors
     public Color BgSuccess => Color.FromArgb(219, 255, 242);
     public Color BgWarning => Color.FromArgb(255, 239, 219);
     public Color BgDanger => Color.FromArgb(255, 222, 222);
+
+
+    public LightColors(bool designMode = false)
+    {
+        _designMode = designMode;
+    }
 }

@@ -60,7 +60,7 @@ public partial class ModernForm : Form
 
 
     /// <summary>
-    /// Enables or disables form dark mode.
+    /// Enables or disables form's dark mode.
     /// </summary>
     public virtual bool DarkMode
     {

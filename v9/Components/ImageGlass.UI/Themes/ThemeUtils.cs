@@ -51,11 +51,11 @@ public partial class ThemeUtils
     /// <summary>
     /// Gets theme color palatte
     /// </summary>
-    public static IColors GetThemeColorPalatte(bool darkMode)
+    public static IColors GetThemeColorPalatte(bool darkMode, bool designMode = false)
     {
         return darkMode
-            ? new DarkColors()
-            : new LightColors();
+            ? new DarkColors(designMode)
+            : new LightColors(designMode);
     }
 
 

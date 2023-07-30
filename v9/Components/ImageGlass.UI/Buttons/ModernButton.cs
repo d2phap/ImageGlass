@@ -268,9 +268,11 @@ public class ModernButton : Button
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
-        var colors = ThemeUtils.GetThemeColorPalatte(DarkMode);
-        var accentColor = WinColorsApi.GetAccentColor(true);
+
+        var colors = ThemeUtils.GetThemeColorPalatte(DarkMode, DesignMode);
+        var accentColor = colors.Accent;
         var isCTAStyle = _isDefault || ButtonStyle == ModernButtonStyle.CTA;
+
 
         var textColor = colors.AppText;
         var borderColor = colors.ControlBorder;
