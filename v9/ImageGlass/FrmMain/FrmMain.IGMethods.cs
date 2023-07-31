@@ -27,6 +27,7 @@ using ImageGlass.Viewer;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using WicNet;
 
@@ -760,7 +761,7 @@ public partial class FrmMain
     /// <summary>
     /// Opens project site to report issue
     /// </summary>
-    public void IG_ReportIssue()
+    public static void IG_ReportIssue()
     {
         BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
@@ -769,7 +770,7 @@ public partial class FrmMain
     /// <summary>
     /// Open About dialog
     /// </summary>
-    public void IG_About()
+    public static void IG_About()
     {
         using var frm = new FrmAbout()
         {
@@ -783,7 +784,7 @@ public partial class FrmMain
     /// Check for updates
     /// </summary>
     /// <param name="showNewUpdate"></param>
-    public void IG_CheckForUpdate(bool? showNewUpdate = null)
+    public static void IG_CheckForUpdate(bool? showNewUpdate = null)
     {
         Program.CheckForUpdate(showNewUpdate);
     }
@@ -807,7 +808,7 @@ public partial class FrmMain
     /// <summary>
     /// Exits ImageGlass
     /// </summary>
-    public void IG_Exit()
+    public static void IG_Exit()
     {
         Application.Exit();
     }
@@ -1133,6 +1134,7 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?
@@ -1212,7 +1214,7 @@ public partial class FrmMain
     /// <summary>
     /// Open the current image's location
     /// </summary>
-    public void IG_OpenLocation()
+    public static void IG_OpenLocation()
     {
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
@@ -1713,7 +1715,7 @@ public partial class FrmMain
     /// <summary>
     /// Runs the <see cref="Config.AfterEditingAction"/> action after done editing.
     /// </summary>
-    public void RunActionAfterEditing()
+    public static void RunActionAfterEditing()
     {
         if (Config.AfterEditingAction == AfterEditAppAction.Minimize)
         {
@@ -1824,13 +1826,13 @@ public partial class FrmMain
     }
 
 
-    public void IG_SetDefaultPhotoViewer()
+    public static void IG_SetDefaultPhotoViewer()
     {
         _ = UpdateDefaultPhotoViewerAsync(true);
     }
 
 
-    public void IG_UnsetDefaultPhotoViewer()
+    public static void IG_UnsetDefaultPhotoViewer()
     {
         _ = UpdateDefaultPhotoViewerAsync(false);
     }

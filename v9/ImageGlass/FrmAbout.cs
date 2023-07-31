@@ -86,7 +86,7 @@ public partial class FrmAbout : WebForm
         }
         else if (e.Name.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
         {
-            Local.FrmMain.IG_CheckForUpdate(true);
+            FrmMain.IG_CheckForUpdate(true);
         }
         else if (e.Name.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
         {

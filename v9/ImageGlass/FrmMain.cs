@@ -33,6 +33,7 @@ namespace ImageGlass;
 
 public partial class FrmMain : ThemedForm
 {
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP002:Dispose member", Justification = "<Pending>")]
     public readonly ModernToolbar ToolbarContext = new ModernToolbar();
 
     // cancellation tokens of synchronious task

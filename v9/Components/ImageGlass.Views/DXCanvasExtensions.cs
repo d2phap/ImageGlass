@@ -47,7 +47,7 @@ public static class DXCanvasExtensions
                 var rightClickable = new RectangleF(
                     c.NavRightPos.X - c.NavButtonSize.Width / 2,
                     c.DrawingArea.Top,
-                    c.NavButtonSize.Width + c.NAV_PADDING,
+                    c.NavButtonSize.Width + DXCanvas.NAV_PADDING,
                     c.DrawingArea.Height);
 
                 // check if the point inside the rect;
@@ -62,9 +62,9 @@ public static class DXCanvasExtensions
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                    c.NavLeftPos.X - c.NavButtonSize.Width / 2 - c.NAV_PADDING,
+                    c.NavLeftPos.X - c.NavButtonSize.Width / 2 - DXCanvas.NAV_PADDING,
                     c.DrawingArea.Top,
-                    c.NavButtonSize.Width + c.NAV_PADDING,
+                    c.NavButtonSize.Width + DXCanvas.NAV_PADDING,
                     c.DrawingArea.Height);
 
                 // check if the point inside the rect

@@ -107,7 +107,7 @@ public partial class DXCanvas : DXControl
     private bool _shouldRecalculateDrawingRegion = true;
 
     // Navigation buttons
-    internal float NAV_PADDING => 20f;
+    internal static float NAV_PADDING => 20f;
     private bool _isNavLeftHovered = false;
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;

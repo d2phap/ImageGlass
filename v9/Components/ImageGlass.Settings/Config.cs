@@ -645,6 +645,7 @@ public static class Config
     /// </summary>
     public static void Load()
     {
+#nullable disable
         var items = Source.LoadUserConfigs();
 
         // save the config for all tools
@@ -754,7 +755,7 @@ public static class Config
         InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
         EmbeddedThumbnailMinWidth = items.GetValue(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
         EmbeddedThumbnailMinHeight = items.GetValue(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
-       
+
         #endregion
 
 
@@ -949,6 +950,8 @@ public static class Config
 
         // listen to system events
         SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+
+#nullable enable 
     }
 
 
@@ -1167,8 +1170,139 @@ public static class Config
         if (!settings.TryGetValue(configName, out var newValue)) return (Done, Unsupported);
         newValue ??= string.Empty;
 
+
+        // BackgroundColor
+        if (configName == nameof(Config.BackgroundColor))
+        {
+            BackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            Done = true;
+        }
+
+        // SlideshowBackgroundColor
+        else if (configName == nameof(Config.SlideshowBackgroundColor))
+        {
+            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            Done = true;
+        }
+        
+        // Zoom levels
+        else if (configName == nameof(Config.ZoomLevels))
+        {
+            try
+            {
+                var floats = BHelper.ParseJson<float[]>(newValue);
+                if (floats != null)
+                {
+                    Config.ZoomLevels = floats.Select(i =>
+                    {
+                        // convert % to float
+                        try { return i / 100f; } catch { }
+                        return -1;
+                    })
+                    .OrderBy(i => i)
+                    .Where(i => i > 0)
+                    .Distinct()
+                    .ToArray();
+
+                    Done = true;
+                }
+            }
+            catch { }
+        }
+        
+        // Language
+        else if (configName == nameof(Config.Language))
+        {
+            Config.Language = new IgLang(newValue, App.StartUpDir(Dir.Language));
+            Done = true;
+        }
+        
+        // MouseWheelActions
+        else if (configName == nameof(Config.MouseWheelActions))
+        {
+            var dict = BHelper.ParseJson<Dictionary<MouseWheelEvent, MouseWheelAction>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    if (Config.MouseWheelActions.ContainsKey(key))
+                    {
+                        Config.MouseWheelActions[key] = dict[key];
+                    }
+                    else
+                    {
+                        Config.MouseWheelActions.TryAdd(key, dict[key]);
+                    }
+                }
+                Done = true;
+            }
+        }
+        
+        // MouseClickActions
+        else if (configName == nameof(Config.MouseClickActions))
+        {
+            var dict = BHelper.ParseJson<Dictionary<MouseClickEvent, ToggleAction>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    if (Config.MouseClickActions.ContainsKey(key))
+                    {
+                        Config.MouseClickActions[key] = dict[key];
+                    }
+                    else
+                    {
+                        Config.MouseClickActions.TryAdd(key, dict[key]);
+                    }
+                }
+                Done = true;
+            }
+        }
+        
+        // MenuHotkeys
+        else if (configName == nameof(Config.MenuHotkeys))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, string[]>>(newValue);
+            if (dict != null)
+            {
+                foreach (var key in dict.Keys)
+                {
+                    // Config.MenuHotkeys[key] = 
+                }
+                Done = true;
+            }
+        }
+        
+        // Tools
+        else if (configName == nameof(Config.Tools))
+        {
+            var toolList = BHelper.ParseJson<IgTool?[]>(newValue);
+            if (toolList != null)
+            {
+                Config.Tools.Clear();
+                Config.Tools = toolList.ToList();
+            }
+            Done = true;
+        }
+        
+        // Layout
+        else if (configName == nameof(Config.Layout))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, string>>(newValue);
+            if (dict != null)
+            {
+                Config.Layout.Clear();
+                foreach (var item in dict)
+                {
+                    _ = Config.Layout.TryAdd(item.Key, item.Value);
+                }
+
+                Done = true;
+            }
+        }
+
         // bool
-        if (prop.PropertyType.Equals(typeof(bool)))
+        else if (prop.PropertyType.Equals(typeof(bool)))
         {
             if (bool.TryParse(newValue, out var value))
             {
@@ -1206,127 +1340,6 @@ public static class Config
             if (Enum.TryParse(prop.PropertyType, newValue, true, out var value))
             {
                 prop.SetValue(null, value);
-                Done = true;
-            }
-        }
-        // BackgroundColor
-        else if (configName == nameof(Config.BackgroundColor))
-        {
-            BackgroundColor = ThemeUtils.ColorFromHex(newValue);
-            Done = true;
-        }
-        // SlideshowBackgroundColor
-        else if (configName == nameof(Config.SlideshowBackgroundColor))
-        {
-            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(newValue);
-            Done = true;
-        }
-        // Zoom levels
-        else if (configName == nameof(Config.ZoomLevels))
-        {
-            try
-            {
-                var floats = BHelper.ParseJson<float[]>(newValue);
-                if (floats != null)
-                {
-                    Config.ZoomLevels = floats.Select(i =>
-                    {
-                        // convert % to float
-                        try { return i / 100f; } catch { }
-                        return -1;
-                    })
-                    .OrderBy(i => i)
-                    .Where(i => i > 0)
-                    .Distinct()
-                    .ToArray();
-
-                    Done = true;
-                }
-            }
-            catch { }
-        }
-        // Language
-        else if (configName == nameof(Config.Language))
-        {
-            Config.Language = new IgLang(newValue, App.StartUpDir(Dir.Language));
-            Done = true;
-        }
-        // MouseWheelActions
-        else if (configName == nameof(Config.MouseWheelActions))
-        {
-            var dict = BHelper.ParseJson<Dictionary<MouseWheelEvent, MouseWheelAction>>(newValue);
-            if (dict != null)
-            {
-                foreach (var key in dict.Keys)
-                {
-                    if (Config.MouseWheelActions.ContainsKey(key))
-                    {
-                        Config.MouseWheelActions[key] = dict[key];
-                    }
-                    else
-                    {
-                        Config.MouseWheelActions.TryAdd(key, dict[key]);
-                    }
-                }
-                Done = true;
-            }
-        }
-        // MouseClickActions
-        else if (configName == nameof(Config.MouseClickActions))
-        {
-            var dict = BHelper.ParseJson<Dictionary<MouseClickEvent, ToggleAction>>(newValue);
-            if (dict != null)
-            {
-                foreach (var key in dict.Keys)
-                {
-                    if (Config.MouseClickActions.ContainsKey(key))
-                    {
-                        Config.MouseClickActions[key] = dict[key];
-                    }
-                    else
-                    {
-                        Config.MouseClickActions.TryAdd(key, dict[key]);
-                    }
-                }
-                Done = true;
-            }
-        }
-        // MenuHotkeys
-        else if (configName == nameof(Config.MenuHotkeys))
-        {
-            var dict = BHelper.ParseJson<Dictionary<string, string[]>>(newValue);
-            if (dict != null)
-            {
-                foreach (var key in dict.Keys)
-                {
-                    // Config.MenuHotkeys[key] = 
-                }
-                Done = true;
-            }
-        }
-        // Tools
-        else if (configName == nameof(Config.Tools))
-        {
-            var toolList = BHelper.ParseJson<IgTool?[]>(newValue);
-            if (toolList != null)
-            {
-                Config.Tools.Clear();
-                Config.Tools = toolList.ToList();
-            }
-            Done = true;
-        }
-        // Layout
-        else if (configName == nameof(Config.Layout))
-        {
-            var dict = BHelper.ParseJson<Dictionary<string, string>>(newValue);
-            if (dict != null)
-            {
-                Config.Layout.Clear();
-                foreach (var item in dict)
-                {
-                    _ = Config.Layout.TryAdd(item.Key, item.Value);
-                }
-
                 Done = true;
             }
         }
