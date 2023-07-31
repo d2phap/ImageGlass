@@ -1050,8 +1050,11 @@ public partial class FrmMain : ThemedForm
                 $"\r\nℹ️ Error details:" +
                 $"\r\n";
 
+            var errorLines = error.StackTrace?.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Take(2) ?? Array.Empty<string>();
+            var errDetails = error.Message + "\r\n\r\n" + string.Join("\r\n", errorLines);
+
             PicMain.ShowMessage(debugInfo +
-                error.Source + ": " + error.Message,
+                error.Source + ": " + errDetails,
                 Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + $" {emoji}");
         }
 
