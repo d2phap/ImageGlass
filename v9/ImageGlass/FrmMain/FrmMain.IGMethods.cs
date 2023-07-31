@@ -524,6 +524,23 @@ public partial class FrmMain
         UpdateToolbarItemsState();
     }
 
+
+    /// <summary>
+    /// Sets zoom = 100% if zoom value is less than 100%.
+    /// Otherwise, refresh the image with the current zoom mode.
+    /// </summary>
+    public void IG_AutoSetActualSize()
+    {
+        if (PicMain.ZoomFactor < 1)
+        {
+            IG_SetZoom(1);
+        }
+        else
+        {
+            IG_Refresh();
+        }
+    }
+
     #endregion // Zooming
 
 
