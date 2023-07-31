@@ -47,118 +47,6 @@ public static class Config
 
 
     /// <summary>
-    /// Gets the default set of toolbar buttons
-    /// </summary>
-    public static List<ToolbarItemModel> DefaultToolbarItems => new()
-    {
-        new()
-        {
-            Id = "Btn_OpenFile",
-            Alignment = ToolStripItemAlignment.Right,
-            Image = nameof(Theme.ToolbarIcons.OpenFile),
-            OnClick = new("MnuOpenFile"),
-        },
-        new()
-        {
-            Id = "Btn_ViewPrevious",
-            Image = nameof(Theme.ToolbarIcons.ViewPreviousImage),
-            OnClick = new("MnuViewPrevious"),
-        },
-        new()
-        {
-            Id = "Btn_ViewNext",
-            Image = nameof(Theme.ToolbarIcons.ViewNextImage),
-            OnClick = new("MnuViewNext"),
-        },
-        new() { Type = ToolbarItemModelType.Separator },
-        new()
-        {
-            Id = "Btn_AutoZoom",
-            Image = nameof(Theme.ToolbarIcons.AutoZoom),
-            OnClick = new("MnuAutoZoom"),
-        },
-        new()
-        {
-            Id = "Btn_LockZoom",
-            Image = nameof(Theme.ToolbarIcons.LockZoom),
-            OnClick = new("MnuLockZoom"),
-        },
-        new()
-        {
-            Id = "Btn_ScaleToWidth",
-            Image = nameof(Theme.ToolbarIcons.ScaleToWidth),
-            OnClick = new("MnuScaleToWidth"),
-        },
-        new()
-        {
-            Id = "Btn_ScaleToHeight",
-            Image = nameof(Theme.ToolbarIcons.ScaleToHeight),
-            OnClick = new("MnuScaleToHeight"),
-        },
-        new()
-        {
-            Id = "Btn_ScaleToFit",
-            Image = nameof(Theme.ToolbarIcons.ScaleToFit),
-            OnClick = new("MnuScaleToFit"),
-        },
-        new()
-        {
-            Id = "Btn_ScaleToFill",
-            Image = nameof(Theme.ToolbarIcons.ScaleToFill),
-            OnClick = new("MnuScaleToFill"),
-        },
-        new() { Type = ToolbarItemModelType.Separator },
-        new()
-        {
-            Id = "Btn_Refresh",
-            Image = nameof(Theme.ToolbarIcons.Refresh),
-            OnClick = new("MnuRefresh"),
-        },
-        new()
-        {
-            Id = "Btn_Gallery",
-            Image = nameof(Theme.ToolbarIcons.Gallery),
-            CheckableConfigBinding = nameof(ShowGallery),
-            OnClick = new("MnuToggleGallery"),
-        },
-        new()
-        {
-            Id = "Btn_Checkerboard",
-            Image = nameof(Theme.ToolbarIcons.Checkerboard),
-            CheckableConfigBinding = nameof(ShowCheckerboard),
-            OnClick = new("MnuToggleCheckerboard"),
-        },
-        new() { Type = ToolbarItemModelType.Separator },
-        new()
-        {
-            Id = "Btn_FullScreen",
-            Image = nameof(Theme.ToolbarIcons.FullScreen),
-            CheckableConfigBinding = nameof(EnableFullScreen),
-            OnClick = new("MnuFullScreen"),
-        },
-        new()
-        {
-            Id = "Btn_Slideshow",
-            Image = nameof(Theme.ToolbarIcons.Slideshow),
-            CheckableConfigBinding = nameof(EnableSlideshow),
-            OnClick = new("MnuSlideshow"),
-        },
-        new() { Type = ToolbarItemModelType.Separator },
-        new()
-        {
-            Id = "Btn_Print",
-            Image = nameof(Theme.ToolbarIcons.Print),
-            OnClick = new("MnuPrint"),
-        },
-        new()
-        {
-            Id = "Btn_Delete",
-            Image = nameof(Theme.ToolbarIcons.Delete),
-            OnClick = new("MnuMoveToRecycleBin"),
-        }
-    };
-
-    /// <summary>
     /// The default image info tags
     /// </summary>
     public static List<string> DefaultInfoItems => new()
@@ -630,7 +518,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
-    public static List<ToolbarItemModel> ToolbarItems { get; set; } = DefaultToolbarItems;
+    public static List<ToolbarItemModel> ToolbarItems { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the items for displaying image info
@@ -943,7 +831,7 @@ public static class Config
         var toolbarItems = items.GetSection(nameof(ToolbarItems))
             .GetChildren()
             .Select(i => i.Get<ToolbarItemModel>());
-        ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : DefaultToolbarItems;
+        ToolbarItems = toolbarItems.ToList();
 
 
         // info items
