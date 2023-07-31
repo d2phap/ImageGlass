@@ -1906,7 +1906,7 @@ public partial class FrmMain : ThemedForm
 
     private void MnuNewWindow_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_NewWindow();
     }
 
     private void MnuSave_Click(object sender, EventArgs e)

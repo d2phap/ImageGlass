@@ -74,6 +74,29 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Open the current image in a new window.
+    /// </summary>
+    public void IG_NewWindow()
+    {
+        if (!Config.EnableMultiInstances)
+        {
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuNewWindow)}._Error"],
+                heading: Config.Language[$"{Name}.{nameof(MnuNewWindow)}"],
+                durationMs: Config.InAppMessageDuration);
+
+            return;
+        }
+
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        var newPosXCmd = Config.BuildConfigCmdLine(nameof(Config.FrmMainPositionX),
+            Config.FrmMainPositionX + this.ScaleToDpi(50));
+        var newPosYCmd = Config.BuildConfigCmdLine(nameof(Config.FrmMainPositionY),
+            Config.FrmMainPositionY + this.ScaleToDpi(50));
+
+        _ = BHelper.RunExeAsync(Application.ExecutablePath, $"{newPosXCmd} {newPosYCmd} \"{filePath}\"");
+    }
+
 
     /// <summary>
     /// Refreshes image viewport.

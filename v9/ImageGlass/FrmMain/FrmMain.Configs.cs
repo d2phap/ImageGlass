@@ -1216,7 +1216,7 @@ public partial class FrmMain
     {
         // MnuFile
         //MnuOpenFile.Visible = false;
-        MnuNewWindow.Visible = false;
+        //MnuNewWindow.Visible = false;
         //MnuSave.Visible = false;
         //MnuSaveAs.Visible = false;
         //MnuOpenWith.Visible = false;

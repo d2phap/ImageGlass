@@ -1686,6 +1686,18 @@ public static class Config
     }
 
 
+    /// <summary>
+    /// Builds the command line from config value.
+    /// Example: <c>/EnableFullScreen=True</c>
+    /// </summary>
+    public static string BuildConfigCmdLine(string configName, object? configValue)
+    {
+        if (configValue == null) return string.Empty;
+
+        return $"{Constants.CONFIG_CMD_PREFIX}{configName}={configValue}";
+    }
+
+
     #region Popup functions
 
     /// <summary>
