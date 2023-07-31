@@ -1705,9 +1705,12 @@ public partial class FrmMain : ThemedForm
         if (Config.MouseClickActions.TryGetValue(e, out var toggleAction))
         {
             var isToggleOff = ToggleAction.IsToggleOff(toggleAction.Id);
-            var action = isToggleOff
-                ? toggleAction.ToggleOff
-                : toggleAction.ToggleOn;
+
+            var action = toggleAction.ToggleOn;
+            if (isToggleOff && toggleAction.ToggleOff != null)
+            {
+                action = toggleAction.ToggleOff;
+            }
 
             var executable = action?.Executable.Trim();
             if (string.IsNullOrWhiteSpace(executable)) return null;
