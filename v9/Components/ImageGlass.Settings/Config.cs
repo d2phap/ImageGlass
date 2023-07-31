@@ -625,7 +625,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of formats that only load the first page forcefully
     /// </summary>
-    public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;" };
+    public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;*.jxl" };
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons

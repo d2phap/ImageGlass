@@ -1189,6 +1189,7 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
