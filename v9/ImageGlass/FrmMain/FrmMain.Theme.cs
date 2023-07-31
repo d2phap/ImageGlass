@@ -44,8 +44,8 @@ public partial class FrmMain
         }
         else
         {
-            BackColor =
-                PicMain.BackColor = Config.BackgroundColor.WithAlpha(255);
+            BackColor = Config.Theme.ColorPalatte.AppBg.NoAlpha();
+            PicMain.BackColor = Config.BackgroundColor;
         }
 
         // menu
