@@ -356,36 +356,6 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Returns Exif rotation in degrees. Returns 0 if the metadata
-    /// does not exist or could not be read. A negative value means
-    /// the image needs to be mirrored about the vertical axis.
-    /// </summary>
-    /// <param name="orientationFlag">Orientation Flag</param>
-    /// <returns></returns>
-    public static int GetOrientationDegree(int orientationFlag)
-    {
-        if (orientationFlag == 1)
-            return 0;
-        else if (orientationFlag == 2)
-            return -360;
-        else if (orientationFlag == 3)
-            return 180;
-        else if (orientationFlag == 4)
-            return -180;
-        else if (orientationFlag == 5)
-            return -90;
-        else if (orientationFlag == 6)
-            return 90;
-        else if (orientationFlag == 7)
-            return -270;
-        else if (orientationFlag == 8)
-            return 270;
-
-        return 0;
-    }
-
-
-    /// <summary>
     /// Converts base64 string to byte array, returns MIME type and raw data in byte array.
     /// </summary>
     /// <param name="content">Base64 string</param>

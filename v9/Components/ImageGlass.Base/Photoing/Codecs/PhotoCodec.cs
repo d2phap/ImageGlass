@@ -258,6 +258,7 @@ public static class PhotoCodec
                 if (thumbnailData != null)
                 {
                     imgM.Read(thumbnailData, settings);
+                    imgM.AutoOrient();
                     result = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
                 }
             }
@@ -268,7 +269,7 @@ public static class PhotoCodec
 
 
         // Use JPEG embedded thumbnail
-        if (exifThumbnail)
+        if (exifThumbnail && result == null)
         {
             try
             {
@@ -277,11 +278,10 @@ public static class PhotoCodec
 
                 // Fetch the embedded thumbnail
                 using var thumbM = exifProfile?.CreateThumbnail();
+                
                 if (thumbM != null)
                 {
-                    var ext = Path.GetExtension(filePath).ToLower();
-                    ApplyRotation(thumbM, exifProfile, ext);
-
+                    thumbM.AutoOrient();
                     result = BHelper.ToWicBitmapSource(thumbM.ToBitmapSource());
                 }
             }
@@ -960,7 +960,7 @@ public static class PhotoCodec
                 && thumbM.Width > options.EmbeddedThumbnailMinWidth
                 && thumbM.Height > options.EmbeddedThumbnailMinHeight)
             {
-                if (options.CorrectRotation) ApplyRotation(thumbM, exifProfile, ext);
+                if (options.CorrectRotation) thumbM.AutoOrient();
 
                 ApplySizeSettings(thumbM, options);
             }
@@ -977,7 +977,7 @@ public static class PhotoCodec
             // resize the image
             ApplySizeSettings(refImgM, options);
 
-            if (options.CorrectRotation) ApplyRotation(refImgM, exifProfile, ext);
+            if (options.CorrectRotation) refImgM.AutoOrient();
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
@@ -1088,39 +1088,6 @@ public static class PhotoCodec
         }
 
         return channelImgM;
-    }
-
-
-    /// <summary>
-    /// Applies rotation from EXIF profile
-    /// </summary>
-    /// <param name="imgM"></param>
-    /// <param name="profile"></param>
-    private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile, string ext)
-    {
-        if (ext == ".TGA" || ext == ".NEF" || ext == ".DNG")
-        {
-            imgM.AutoOrient();
-            return;
-        }
-
-        if (profile == null) return;
-
-        // Get Orientation Flag
-        var exifRotationTag = profile.GetValue(ExifTag.Orientation);
-
-        if (exifRotationTag != null)
-        {
-            if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
-            {
-                var orientationDegree = BHelper.GetOrientationDegree(orientationFlag);
-                if (orientationDegree != 0)
-                {
-                    // Rotate image accordingly
-                    imgM.Rotate(orientationDegree);
-                }
-            }
-        }
     }
 
 
