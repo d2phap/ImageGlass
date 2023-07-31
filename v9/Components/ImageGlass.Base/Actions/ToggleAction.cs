@@ -61,6 +61,13 @@ public class ToggleAction
     }
 
 
+    public ToggleAction(SingleAction? toggleOn = null)
+    {
+        Id = Guid.NewGuid();
+        ToggleOn = toggleOn;
+    }
+
+
     /// <summary>
     /// Checks if the given action is toggle off action
     /// </summary>

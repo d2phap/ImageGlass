@@ -185,6 +185,11 @@ public partial class FrmMain
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
         SizeChanged += FrmMainConfig_SizeChanged;
+
+
+        // load default mouse actions
+        LoadDefaultMouseClickActions();
+        LoadDefaultMouseWheelActions();
     }
 
 
@@ -1325,6 +1330,44 @@ public partial class FrmMain
         // perform layout update
         if (forcedUpdateLayout) PerformLayout();
     }
+
+
+    /// <summary>
+    /// Loads the default mouse click actions.
+    /// </summary>
+    public void LoadDefaultMouseClickActions(bool forced = false)
+    {
+        if (forced || !Config.MouseClickActions.Any())
+        {
+            Config.MouseClickActions.Add(MouseClickEvent.LeftDoubleClick,
+                new ToggleAction(new(nameof(IG_AutoSetActualSize))));
+
+            Config.MouseClickActions.Add(MouseClickEvent.WheelClick,
+                new ToggleAction(new(nameof(IG_Refresh))));
+
+            Config.MouseClickActions.Add(MouseClickEvent.XButton1Click,
+                new ToggleAction(new(nameof(IG_ViewPreviousImage))));
+
+            Config.MouseClickActions.Add(MouseClickEvent.XButton2Click,
+                new ToggleAction(new(nameof(IG_ViewNextImage))));
+        }
+    }
+
+
+    /// <summary>
+    /// Loads the default mouse wheel actions.
+    /// </summary>
+    public static void LoadDefaultMouseWheelActions(bool forced = false)
+    {
+        if (forced || !Config.MouseWheelActions.Any())
+        {
+            Config.MouseWheelActions.Add(MouseWheelEvent.Scroll, MouseWheelAction.Zoom);
+            Config.MouseWheelActions.Add(MouseWheelEvent.CtrlAndScroll, MouseWheelAction.PanVertically);
+            Config.MouseWheelActions.Add(MouseWheelEvent.ShiftAndScroll, MouseWheelAction.PanHorizontally);
+            Config.MouseWheelActions.Add(MouseWheelEvent.AltAndScroll, MouseWheelAction.BrowseImages);
+        }
+    }
+
 
 }
 
