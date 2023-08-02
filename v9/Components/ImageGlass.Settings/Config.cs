@@ -562,6 +562,11 @@ public static class Config
         },
     };
 
+    /// <summary>
+    /// Gets, sets the list of disabled menus
+    /// </summary>
+    public static List<string> DisabledMenus { get; set; } = new();
+
     #endregion // Array items
 
 
@@ -899,6 +904,13 @@ public static class Config
             Tools.Clear();
             Tools = toolList.ToList();
         }
+        
+
+        // DisabledMenus
+        DisabledMenus = items.GetSection(nameof(DisabledMenus))
+            .GetChildren()
+            .Select(i => i.Get<string>())
+            .ToList();
 
         #endregion
 
@@ -1123,6 +1135,7 @@ public static class Config
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(Layout), Layout);
         settings.TryAdd(nameof(Tools), Tools);
+        settings.TryAdd(nameof(DisabledMenus), DisabledMenus);
 
         #endregion
 
