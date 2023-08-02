@@ -864,6 +864,8 @@ public partial class FrmMain
         // Toolbar
         LoadToolbarItemsText(Toolbar);
 
+        // load disabled state of menu
+        LoadMenuDisabledState();
     }
 
 
@@ -891,6 +893,27 @@ public partial class FrmMain
             if (item.HasDropDownItems)
             {
                 LoadMenuHotkeys(item.DropDown);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Loads disables state of menu
+    /// </summary>
+    private void LoadMenuDisabledState()
+    {
+        // load DisabledMenus
+        foreach (var mnuName in Config.DisabledMenus)
+        {
+            var field = GetType().GetField(mnuName);
+            if (field?.GetValue(this) is not ToolStripMenuItem mnu) continue;
+
+            mnu.Enabled = false;
+
+            if (!mnu.Text.EndsWith("🔒"))
+            {
+                mnu.Text += " 🔒";
             }
         }
     }
