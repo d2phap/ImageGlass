@@ -791,6 +791,15 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Opens Quick setup dialog.
+    /// </summary>
+    public void IG_OpenQuickSetupDialog()
+    {
+
+    }
+
+
+    /// <summary>
     /// Open About dialog
     /// </summary>
     public static void IG_About()

@@ -73,11 +73,11 @@ public static class Constants
     };
 
     /// <summary>
-    /// First launch version constant.
+    /// Quick setup version constant.
     /// If the value read from config file is less than this value,
-    /// the First-Launch Configs screen will be launched.
+    /// the Quick setup dialog will be opened.
     /// </summary>
-    public const int FIRST_LAUNCH_VERSION = 9;
+    public const int QUICK_SETUP_VERSION = 9;
 
     /// <summary>
     /// The default theme pack

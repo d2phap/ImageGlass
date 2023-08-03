@@ -391,7 +391,7 @@ public class IgLang : Dictionary<string, string>
         #region Help
         Add("FrmMain.MnuHelp", "Help"); //v7.0
         Add("FrmMain.MnuAbout", "About"); //v3.0
-        Add("FrmMain.MnuFirstLaunch", "First-launch configurations…"); //v5.0
+        Add("FrmMain.MnuQuickSetup", "Quick setup ImageGlass…"); //v5.0
         Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
 

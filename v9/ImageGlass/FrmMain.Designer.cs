@@ -135,7 +135,7 @@ namespace ImageGlass
             MnuAbout = new ToolStripMenuItem();
             MnuCheckForUpdate = new ToolStripMenuItem();
             MnuReportIssue = new ToolStripMenuItem();
-            MnuFirstLaunch = new ToolStripMenuItem();
+            MnuQuickSetup = new ToolStripMenuItem();
             toolStripMenuItem22 = new ToolStripSeparator();
             MnuSetDefaultPhotoViewer = new ToolStripMenuItem();
             MnuUnsetDefaultPhotoViewer = new ToolStripMenuItem();
@@ -900,7 +900,7 @@ namespace ImageGlass
             // 
             // MnuHelp
             // 
-            MnuHelp.DropDownItems.AddRange(new ToolStripItem[] { MnuAbout, MnuCheckForUpdate, MnuReportIssue, MnuFirstLaunch, toolStripMenuItem22, MnuSetDefaultPhotoViewer, MnuUnsetDefaultPhotoViewer });
+            MnuHelp.DropDownItems.AddRange(new ToolStripItem[] { MnuAbout, MnuCheckForUpdate, MnuReportIssue, MnuQuickSetup, toolStripMenuItem22, MnuSetDefaultPhotoViewer, MnuUnsetDefaultPhotoViewer });
             MnuHelp.Image = (Image)resources.GetObject("MnuHelp.Image");
             MnuHelp.ImageAlign = ContentAlignment.MiddleLeft;
             MnuHelp.ImageScaling = ToolStripItemImageScaling.None;
@@ -929,12 +929,12 @@ namespace ImageGlass
             MnuReportIssue.Text = "[Report an issue]";
             MnuReportIssue.Click += MnuReportIssue_Click;
             // 
-            // MnuFirstLaunch
+            // MnuQuickSetup
             // 
-            MnuFirstLaunch.Name = "MnuFirstLaunch";
-            MnuFirstLaunch.Size = new Size(595, 54);
-            MnuFirstLaunch.Text = "[First-launch configurations]";
-            MnuFirstLaunch.Click += MnuFirstLaunch_Click;
+            MnuQuickSetup.Name = "MnuQuickSetup";
+            MnuQuickSetup.Size = new Size(595, 54);
+            MnuQuickSetup.Text = "[Quick setup ImageGlass]";
+            MnuQuickSetup.Click += MnuQuickSetup_Click;
             // 
             // toolStripMenuItem22
             // 
@@ -1207,7 +1207,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuAbout;
         public ToolStripMenuItem MnuCheckForUpdate;
         public ToolStripMenuItem MnuReportIssue;
-        public ToolStripMenuItem MnuFirstLaunch;
+        public ToolStripMenuItem MnuQuickSetup;
         private ToolStripSeparator toolStripSeparator1;
         public ToolStripMenuItem itemToPreserveTheSpaceToolStripMenuItem;
         public ToolStripMenuItem itemToPreserveSpaceToolStripMenuItem;

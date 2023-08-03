@@ -232,9 +232,6 @@ public partial class FrmMain
         CurrentMenuHotkeys = Config.GetAllHotkeys(CurrentMenuHotkeys);
         Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
 
-        // TODO: hide menu items that haven't implemented
-        HideUnreadyMenuItems();
-
         // Initialize form movable
         #region Form movable
         _movableForm = new(this)
@@ -850,7 +847,7 @@ public partial class FrmMain
         MnuHelp.Text = lang[$"{Name}.{nameof(MnuHelp)}"];
 
         MnuAbout.Text = lang[$"{Name}.{nameof(MnuAbout)}"];
-        MnuFirstLaunch.Text = lang[$"{Name}.{nameof(MnuFirstLaunch)}"];
+        MnuQuickSetup.Text = lang[$"{Name}.{nameof(MnuQuickSetup)}"];
         MnuReportIssue.Text = lang[$"{Name}.{nameof(MnuReportIssue)}"];
 
         MnuSetDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"];
@@ -1232,106 +1229,6 @@ public partial class FrmMain
         {
             _ = Local.ClosePipedToolAsync(tool);
         }
-    }
-
-
-    private void HideUnreadyMenuItems()
-    {
-        // MnuFile
-        //MnuOpenFile.Visible = false;
-        //MnuNewWindow.Visible = false;
-        //MnuSave.Visible = false;
-        //MnuSaveAs.Visible = false;
-        //MnuOpenWith.Visible = false;
-        //MnuEdit.Visible = false;
-        //MnuPrint.Visible = false;
-        // MnuPrint.Visible = false;
-        //MnuRefresh.Visible = false;
-        //MnuReload.Visible = false;
-        //MnuReloadImageList.Visible = false;
-
-        // MnuNavigation
-        //MnuViewNext.Visible = false;
-        //MnuViewPrevious.Visible = false;
-        //MnuGoTo.Visible = false;
-        //MnuGoToFirst.Visible = false;
-        //MnuGoToLast.Visible = false;
-        //toolStripMenuItem14.Visible = false;
-        //MnuViewNextFrame.Visible = false;
-        //MnuViewPreviousFrame.Visible = false;
-        //MnuViewFirstFrame.Visible = false;
-        //MnuViewLastFrame.Visible = false;
-
-        // MnuZoom
-        //MnuZoomIn.Visible = false;
-        //MnuZoomOut.Visible = false;
-        //MnuCustomZoom.Visible = false;
-        //MnuActualSize.Visible = false;
-        //MnuAutoZoom.Visible = false;
-        //MnuLockZoom.Visible = false;
-        //MnuScaleToWidth.Visible = false;
-        //MnuScaleToHeight.Visible = false;
-        //MnuScaleToFit.Visible = false;
-        //MnuScaleToFill.Visible = false;
-
-        // MnuImage
-        //MnuViewChannels.Visible = false;
-        //MnuLoadingOrders.Visible = false;
-        //toolStripMenuItem16.Visible = false;
-        //MnuRotateLeft.Visible = false;
-        //MnuRotateRight.Visible = false;
-        //MnuFlipHorizontal.Visible = false;
-        //MnuFlipVertical.Visible = false;
-        //toolStripMenuItem17.Visible = false;
-        //MnuRename.Visible = false;
-        //MnuMoveToRecycleBin.Visible = false;
-        //MnuDeleteFromHardDisk.Visible = false;
-        //MnuToggleImageAnimation.Visible = false;
-        //MnuExportFrames.Visible = false;
-        //MnuSetDesktopBackground.Visible = false;
-        //MnuSetLockScreen.Visible = false;
-        //MnuOpenLocation.Visible = false;
-        //MnuImageProperties.Visible = false;
-
-        // MnuClipboard
-        //MnuPasteImage.Visible = false;
-        //MnuCopyImageData.Visible = false;
-        //MnuCopyPath.Visible = false;
-        //MnuCopyFile.Visible = false;
-        //MnuCutFile.Visible = false;
-        //MnuClearClipboard.Visible = false;
-
-        //toolStripMenuItem6.Visible = false;
-        //MnuWindowFit.Visible = false;
-        //MnuFrameless.Visible = false;
-        //MnuFullScreen.Visible = false;
-
-        // MnuSlideshow
-        //MnuSlideshow.Visible = false;
-        //MnuStartSlideshow.Visible = false;
-        //MnuCloseAllSlideshows.Visible = false;
-
-        // MnuLayout
-        //MnuToggleToolbar.Visible = false;
-        //MnuToggleThumbnails.Visible = false;
-        //MnuToggleCheckerboard.Visible = false;
-        //MnuToggleTopMost.Visible = false;
-
-        // MnuTools
-        //MnuTools.Visible = false;
-        //MnuColorPicker.Visible = false;
-        //MnuCropTool.Visible = false;
-        //MnuPageNav.Visible = false;
-        //MnuExifTool.Visible = false;
-
-        // MnuHelp
-        //MnuAbout.Visible = false;
-        //MnuCheckForUpdate.Visible = false;
-        //MnuReportIssue.Visible = false;
-        MnuFirstLaunch.Visible = false;
-
-        //MnuSettings.Visible = false;
-        //MnuExit.Visible = false;
     }
 
 

@@ -325,6 +325,11 @@ public static class Config
     #region Number items
 
     /// <summary>
+    /// Gets, sets the version that requires to open Quick setup ImageGlass dialog.
+    /// </summary>
+    public static int QuickSetupVersion { get; set; } = 0;
+
+    /// <summary>
     /// Gets, sets 'Left' position of main window
     /// </summary>
     public static int FrmMainPositionX { get; set; } = 200;
@@ -375,11 +380,6 @@ public static class Config
     /// Value range is from -500 to 500.
     /// </summary>
     public static float ZoomSpeed { get; set; } = 0;
-
-    /// <summary>
-    /// Gets, sets the version that requires to launch First-launch configuration dialog.
-    /// </summary>
-    public static int FirstLaunchVersion { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets slide show interval (minimum value if it's random)
@@ -711,6 +711,8 @@ public static class Config
         // Number values
         #region Number items
 
+        QuickSetupVersion = items.GetValue(nameof(QuickSetupVersion), QuickSetupVersion);
+
         // FrmMain
         FrmMainPositionX = items.GetValue(nameof(FrmMainPositionX), FrmMainPositionX);
         FrmMainPositionY = items.GetValue(nameof(FrmMainPositionY), FrmMainPositionY);
@@ -725,7 +727,6 @@ public static class Config
 
         PanSpeed = items.GetValue(nameof(PanSpeed), PanSpeed);
         ZoomSpeed = items.GetValue(nameof(ZoomSpeed), ZoomSpeed);
-        FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
         #region Slideshow
         SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
@@ -1047,6 +1048,8 @@ public static class Config
 
         #region Number items
 
+        settings.TryAdd(nameof(QuickSetupVersion), QuickSetupVersion);
+
         // FrmMain
         settings.TryAdd(nameof(FrmMainPositionX), FrmMainPositionX);
         settings.TryAdd(nameof(FrmMainPositionY), FrmMainPositionY);
@@ -1061,7 +1064,6 @@ public static class Config
 
         settings.TryAdd(nameof(PanSpeed), PanSpeed);
         settings.TryAdd(nameof(ZoomSpeed), ZoomSpeed);
-        settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(SlideshowImagesToNotifySound), SlideshowImagesToNotifySound);

@@ -2321,9 +2321,9 @@ public partial class FrmMain : ThemedForm
         IG_ReportIssue();
     }
 
-    private void MnuFirstLaunch_Click(object sender, EventArgs e)
+    private void MnuQuickSetup_Click(object sender, EventArgs e)
     {
-
+        IG_OpenQuickSetupDialog();
     }
 
     private void MnuSetDefaultPhotoViewer_Click(object sender, EventArgs e)
