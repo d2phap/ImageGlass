@@ -14,6 +14,7 @@ const configs = {
     FrmSettings: './src/FrmSettings.ts',
     FrmAbout: './src/FrmAbout.ts',
     FrmUpdate: './src/FrmUpdate.ts',
+    FrmQuickSetup: './src/FrmQuickSetup.ts',
     DXCanvas_Webview2: './src/DXCanvas_Webview2.ts',
   },
   output: {
@@ -84,6 +85,7 @@ const configs = {
         { from: './FrmSettings.html', to: '../' },
         { from: './FrmAbout.html', to: '../' },
         { from: './FrmUpdate.html', to: '../' },
+        { from: './FrmQuickSetup.html', to: '../' },
       ],
     }),
     new BomPlugin(true),
