@@ -44,6 +44,8 @@ public partial class FrmMain : ThemedForm
 
 
     // variable to back up / restore window layout when changing window mode
+    private bool _isFramelessBeforeFullscreen = false;
+    private bool _isWindowFitBeforeFullscreen = false;
     private bool _showToolbar = true;
     private bool _showThumbnails = true;
     private Rectangle _windowBound = new();

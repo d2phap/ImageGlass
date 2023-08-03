@@ -2420,12 +2420,14 @@ public partial class FrmMain
             // exit full screen
             if (Config.EnableWindowFit)
             {
+                _isWindowFitBeforeFullscreen = true;
                 IG_ToggleWindowFit(false, false);
             }
 
             // exit frameless
             if (Config.EnableFrameless)
             {
+                _isFramelessBeforeFullscreen = true;
                 IG_ToggleFrameless(false, false);
             }
         }
@@ -2442,8 +2444,18 @@ public partial class FrmMain
         // update menu item state
         MnuFullScreen.Checked = Config.EnableFullScreen;
 
-        // update toolbar items state
-        UpdateToolbarItemsState();
+        // restore frameless mode when exiting full screen
+        if (!Config.EnableFullScreen)
+        {
+            if (_isFramelessBeforeFullscreen) IG_ToggleFrameless(true, false);
+            if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true, false);
+        }
+        else
+        {
+            // update toolbar items state
+            UpdateToolbarItemsState();
+        }
+        
 
         if (showInAppMessage)
         {
@@ -2576,8 +2588,6 @@ public partial class FrmMain
             }
 
         }
-
-
     }
 
 
