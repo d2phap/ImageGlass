@@ -28,6 +28,7 @@ public static class IgCommands
 
     // igcmd.exe
     public static string SET_WALLPAPER => "set-wallpaper";
+    public static string SET_LOCK_SCREEN => "set-lock-screen";
     public static string SET_DEFAULT_PHOTO_VIEWER => "set-default-viewer";
     public static string UNSET_DEFAULT_PHOTO_VIEWER => "unset-default-viewer";
     public static string START_SLIDESHOW => "start-slideshow";
@@ -37,8 +38,5 @@ public static class IgCommands
     public static string INSTALL_LANGUAGES => "install-languages";
     public static string INSTALL_THEMES => "install-themes";
     public static string UNINSTALL_THEME => "uninstall-theme";
-
-
-    public static string SET_LOCK_SCREEN => "set-lock-screen";
 
 }

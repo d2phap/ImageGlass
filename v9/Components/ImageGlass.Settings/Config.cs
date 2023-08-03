@@ -1709,7 +1709,7 @@ public static class Config
     {
         if (configValue == null) return string.Empty;
 
-        return $"{Constants.CONFIG_CMD_PREFIX}{configName}={configValue}";
+        return $"{Constants.CONFIG_CMD_PREFIX}{configName}=\"{configValue}\"";
     }
 
 

@@ -118,12 +118,11 @@ internal static class Program
 
             if (updater.HasNewUpdate || showIfNewUpdate.Value)
             {
-                var configArgs = 
-                    $"/{nameof(Config.DarkTheme)}=\"{Config.DarkTheme}\" " +
-                    $"/{nameof(Config.LightTheme)}=\"{Config.LightTheme}\" " +
-                    $"/{nameof(Config.Language)}=\"{Config.Language.FileName}\" ";
+                var darkTheme = Config.BuildConfigCmdLine(nameof(Config.DarkTheme), Config.DarkTheme);
+                var lightTheme = Config.BuildConfigCmdLine(nameof(Config.LightTheme), Config.LightTheme);
+                var lang = Config.BuildConfigCmdLine(nameof(Config.Language), Config.Language.FileName);
 
-                _ = BHelper.RunIgcmd(@$"{IgCommands.CHECK_FOR_UPDATE} {configArgs}");
+                _ = BHelper.RunIgcmd(@$"{IgCommands.CHECK_FOR_UPDATE} {darkTheme} {lightTheme} {lang}");
             }
         });
     }
