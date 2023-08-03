@@ -518,7 +518,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
-    public static List<ToolbarItemModel> ToolbarItems { get; set; } = new();
+    public static List<ToolbarItemModel> ToolbarButtons { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the items for displaying image info
@@ -834,11 +834,11 @@ public static class Config
         #endregion
 
 
-        // toolbar items
-        var toolbarItems = items.GetSection(nameof(ToolbarItems))
+        // toolbar buttons
+        var toolbarItems = items.GetSection(nameof(ToolbarButtons))
             .GetChildren()
             .Select(i => i.Get<ToolbarItemModel>());
-        ToolbarItems = toolbarItems.ToList();
+        ToolbarButtons = toolbarItems.ToList();
 
 
         // info items
@@ -1134,7 +1134,7 @@ public static class Config
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
-        settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
+        settings.TryAdd(nameof(ToolbarButtons), ToolbarButtons);
         settings.TryAdd(nameof(Layout), Layout);
         settings.TryAdd(nameof(Tools), Tools);
         settings.TryAdd(nameof(DisabledMenus), DisabledMenus);

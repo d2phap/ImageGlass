@@ -143,7 +143,7 @@ public partial class FrmMain
         Toolbar.Alignment = Config.EnableCenterToolbar
             ? ToolbarAlignment.Center
             : ToolbarAlignment.Left;
-        LoadToolbarButtons(!Config.ToolbarItems.Any());
+        LoadToolbarButtons(!Config.ToolbarButtons.Any());
 
 
         // Thumbnail bar
@@ -494,13 +494,13 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Load toolbar buttons according to <see cref="Config.ToolbarItems"/>.
+    /// Load toolbar buttons according to <see cref="Config.ToolbarButtons"/>.
     /// </summary>
     private void LoadToolbarButtons(bool forcedReset = false)
     {
         if (forcedReset)
         {
-            Config.ToolbarItems = new()
+            Config.ToolbarButtons = new()
             {
                 new()
                 {
@@ -612,7 +612,7 @@ public partial class FrmMain
 
 
         Toolbar.ClearItems();
-        Toolbar.AddItems(Config.ToolbarItems);
+        Toolbar.AddItems(Config.ToolbarButtons);
     }
 
 
