@@ -61,12 +61,41 @@ internal static class Program
         // load application configs
         Config.Load();
 
+        // check and run Quick setup
+        if (CheckAndRunQuickSetup()) return;
+
         // check and run auto-update
         CheckAndRunAutoUpdate();
 
         // checks and runs app instance(s)
         RunAppInstances();
     }
+
+
+    /// <summary>
+    /// Checks if the Quick setup dialog should be opened.
+    /// </summary>
+    /// <returns>
+    /// <list type="bullet">
+    ///   <item><c>true</c> if the Quick setup is required.</item>
+    ///   <item><c>false</c> if the Quick setup is not required.</item>
+    /// </list>
+    /// </returns>
+    public static bool CheckAndRunQuickSetup()
+    {
+        var requiredQuickSetup = false;
+
+        if (Config.QuickSetupVersion < Constants.QUICK_SETUP_VERSION)
+        {
+            FrmMain.IG_OpenQuickSetupDialog();
+
+            requiredQuickSetup = true;
+            Application.Exit();
+        }
+
+        return requiredQuickSetup;
+    }
+
 
 
     /// <summary>

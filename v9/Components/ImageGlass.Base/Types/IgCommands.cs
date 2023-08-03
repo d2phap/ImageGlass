@@ -34,6 +34,8 @@ public static class IgCommands
     public static string START_SLIDESHOW => "start-slideshow";
     public static string EXPORT_FRAMES => "export-frames";
 
+
+    public static string QUICK_SETUP => "quick-setup";
     public static string CHECK_FOR_UPDATE => "check-for-update";
     public static string INSTALL_LANGUAGES => "install-languages";
     public static string INSTALL_THEMES => "install-themes";

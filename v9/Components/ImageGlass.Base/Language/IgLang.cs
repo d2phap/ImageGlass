@@ -726,25 +726,6 @@ public class IgLang : Dictionary<string, string>
 
 
 
-        #region FrmFirstLaunch
-        Add("FrmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
-        Add("FrmFirstLaunch._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
-        Add("FrmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
-        Add("FrmFirstLaunch.btnNextStep", "Next"); //v5.0
-        Add("FrmFirstLaunch.btnNextStep._Done", "Done!"); //v5.0
-        Add("FrmFirstLaunch.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
-
-        Add("FrmFirstLaunch.lblLanguage", "Select Language"); //v5.0
-        Add("FrmFirstLaunch.lblLayout", "Select Layout"); //v5.0
-        Add("FrmFirstLaunch.cmbLayout._Standard", "Standard"); //v5.0
-        Add("FrmFirstLaunch.cmbLayout._Designer", "Designer"); //v5.0
-        Add("FrmFirstLaunch.lblTheme", "Select Theme"); //v5.0
-        Add("FrmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
-        Add("FrmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
-        #endregion
-
-
-
 
 
         #region FrmCrop
@@ -855,6 +836,25 @@ public class IgLang : Dictionary<string, string>
         Add("FrmUpdate._PublishedDate", "Published date: {0}"); //v9.0
         #endregion
 
+
+        #region FrmQuickSetup
+        Add("FrmQuickSetup._Text", "Quick setup ImageGlass"); //v5.0
+
+
+        //Add("FrmQuickSetup._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
+        //Add("FrmQuickSetup.lblStepNumber", "Step {0}/{1}"); //v5.0
+        //Add("FrmQuickSetup.btnNextStep", "Next"); //v5.0
+        //Add("FrmQuickSetup.btnNextStep._Done", "Done!"); //v5.0
+        //Add("FrmQuickSetup.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
+
+        //Add("FrmQuickSetup.lblLanguage", "Select Language"); //v5.0
+        //Add("FrmQuickSetup.lblLayout", "Select Layout"); //v5.0
+        //Add("FrmQuickSetup.cmbLayout._Standard", "Standard"); //v5.0
+        //Add("FrmQuickSetup.cmbLayout._Designer", "Designer"); //v5.0
+        //Add("FrmQuickSetup.lblTheme", "Select Theme"); //v5.0
+        //Add("FrmQuickSetup.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
+        //Add("FrmQuickSetup.btnSetDefaultApp", "Yes"); //v5.0
+        #endregion
 
         #endregion
 

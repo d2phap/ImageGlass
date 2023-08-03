@@ -793,9 +793,9 @@ public partial class FrmMain
     /// <summary>
     /// Opens Quick setup dialog.
     /// </summary>
-    public void IG_OpenQuickSetupDialog()
+    public static void IG_OpenQuickSetupDialog()
     {
-
+        _ = BHelper.RunIgcmd(IgCommands.QUICK_SETUP);
     }
 
 

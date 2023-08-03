@@ -175,6 +175,16 @@ internal static class Program
         #endregion
 
 
+        #region QUICK_SETUP
+        if (topCmd == IgCommands.QUICK_SETUP)
+        {
+            Application.Run(new Tools.FrmQuickSetup());
+
+            return (int)IgExitCode.Done;
+        }
+        #endregion
+
+
         #region INSTALL_LANGUAGES [string filePaths]
         if (topCmd == IgCommands.INSTALL_LANGUAGES)
         {
