@@ -49,7 +49,7 @@ public static class Config
     /// <summary>
     /// The default image info tags
     /// </summary>
-    public static List<string> DefaultInfoItems => new()
+    public static List<string> DefaultImageInfoTags => new()
     {
         nameof(ImageInfo.Name),
         nameof(ImageInfo.ListCount),
@@ -521,9 +521,9 @@ public static class Config
     public static List<ToolbarItemModel> ToolbarButtons { get; set; } = new();
 
     /// <summary>
-    /// Gets, sets the items for displaying image info
+    /// Gets, sets the tags for displaying image info
     /// </summary>
-    public static List<string> InfoItems { get; set; } = DefaultInfoItems;
+    public static List<string> ImageInfoTags { get; set; } = DefaultImageInfoTags;
 
     /// <summary>
     /// Gets, sets hotkeys list of menu
@@ -842,10 +842,10 @@ public static class Config
 
 
         // info items
-        var infoItems = items.GetSection(nameof(InfoItems))
+        var infoItems = items.GetSection(nameof(ImageInfoTags))
             .GetChildren()
             .Select(i => i.Get<string>());
-        InfoItems = infoItems.Any() ? infoItems.ToList() : DefaultInfoItems;
+        ImageInfoTags = infoItems.Any() ? infoItems.ToList() : DefaultImageInfoTags;
 
 
         // hotkeys for menu
@@ -1130,7 +1130,7 @@ public static class Config
         settings.TryAdd(nameof(EditApps), EditApps);
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
-        settings.TryAdd(nameof(InfoItems), InfoItems);
+        settings.TryAdd(nameof(ImageInfoTags), ImageInfoTags);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);

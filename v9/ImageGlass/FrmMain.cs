@@ -1308,7 +1308,7 @@ public partial class FrmMain : ThemedForm
 
 
         // AppName
-        if (Config.InfoItems.Contains(nameof(ImageInfo.AppName)))
+        if (Config.ImageInfoTags.Contains(nameof(ImageInfo.AppName)))
         {
             ImageInfo.AppName = App.AppName;
         }
@@ -1320,7 +1320,7 @@ public partial class FrmMain : ThemedForm
         // Zoom
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.Zoom)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
             {
                 ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
             }
@@ -1339,7 +1339,7 @@ public partial class FrmMain : ThemedForm
             // Dimension
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.Dimension)))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension)))
                 {
                     ImageInfo.Dimension = $"{Local.ClipboardImage.Width} x {Local.ClipboardImage.Height} px";
                 }
@@ -1359,7 +1359,7 @@ public partial class FrmMain : ThemedForm
             // ListCount
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ListCount))
                     && Local.Images.Length > 0)
                 {
                     var listInfo = new StringBuilder(3);
@@ -1380,7 +1380,7 @@ public partial class FrmMain : ThemedForm
             // Name
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Name))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.Name)))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Name)))
                 {
                     var askterisk = Local.ImageTransform.HasChanges ? "*" : string.Empty;
                     ImageInfo.Name = Path.GetFileName(fullPath) + askterisk;
@@ -1394,7 +1394,7 @@ public partial class FrmMain : ThemedForm
             // Path
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Path))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.Path)))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Path)))
                 {
                     var askterisk = Local.ImageTransform.HasChanges ? "*" : string.Empty;
                     ImageInfo.Path = fullPath + askterisk;
@@ -1408,7 +1408,7 @@ public partial class FrmMain : ThemedForm
             // FileSize
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FileSize))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.FileSize))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FileSize))
                     && Local.Metadata != null)
                 {
                     ImageInfo.FileSize = Local.Metadata.FileSizeFormated;
@@ -1422,7 +1422,7 @@ public partial class FrmMain : ThemedForm
             // FrameCount
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.FrameCount))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FrameCount))
                     && Local.Metadata != null
                     && Local.Metadata.FrameCount > 1)
                 {
@@ -1450,7 +1450,7 @@ public partial class FrmMain : ThemedForm
             // Dimension
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.Dimension))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                     && Local.Metadata != null)
                 {
                     ImageInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
@@ -1464,7 +1464,7 @@ public partial class FrmMain : ThemedForm
             // ModifiedDateTime
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ModifiedDateTime))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ModifiedDateTime))
                     && Local.Metadata != null)
                 {
                     ImageInfo.ModifiedDateTime = Local.Metadata.FileLastWriteTimeFormated + " (m)";
@@ -1478,7 +1478,7 @@ public partial class FrmMain : ThemedForm
             // ExifRating
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifRating))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ExifRating))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifRating))
                     && Local.Metadata != null)
                 {
                     ImageInfo.ExifRating = BHelper.FormatStarRatingText(Local.Metadata.ExifRatingPercent);
@@ -1492,7 +1492,7 @@ public partial class FrmMain : ThemedForm
             // ExifDateTime
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ExifDateTime))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTime))
                     && Local.Metadata != null
                     && Local.Metadata.ExifDateTime != null)
                 {
@@ -1507,7 +1507,7 @@ public partial class FrmMain : ThemedForm
             // ExifDateTimeOriginal
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
                     && Local.Metadata != null
                     && Local.Metadata.ExifDateTimeOriginal != null)
                 {
@@ -1524,7 +1524,7 @@ public partial class FrmMain : ThemedForm
             {
                 var dtStr = string.Empty;
 
-                if (Config.InfoItems.Contains(nameof(ImageInfo.DateTimeAuto))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.DateTimeAuto))
                     && Local.Metadata != null)
                 {
                     if (Local.Metadata.ExifDateTimeOriginal != null)
@@ -1547,7 +1547,7 @@ public partial class FrmMain : ThemedForm
             // ColorSpace
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.ColorSpace))
+                if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ColorSpace))
                     && Local.Metadata != null
                     && !string.IsNullOrEmpty(Local.Metadata.ColorSpace))
                 {
@@ -1573,7 +1573,7 @@ public partial class FrmMain : ThemedForm
         }
 
 
-        Text = ImageInfo.ToString(Config.InfoItems, Local.ClipboardImage != null, clipboardImageText);
+        Text = ImageInfo.ToString(Config.ImageInfoTags, Local.ClipboardImage != null, clipboardImageText);
     }
 
 

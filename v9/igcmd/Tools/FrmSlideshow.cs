@@ -1144,7 +1144,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // AppName
-        if (Config.InfoItems.Contains(nameof(ImageInfo.AppName)))
+        if (Config.ImageInfoTags.Contains(nameof(ImageInfo.AppName)))
         {
             ImageInfo.AppName = App.AppName;
         }
@@ -1156,7 +1156,7 @@ public partial class FrmSlideshow : ThemedForm
         // Zoom
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.Zoom)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
             {
                 ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
             }
@@ -1175,7 +1175,7 @@ public partial class FrmSlideshow : ThemedForm
         // ListCount
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ListCount))
                 && _images.Length > 0)
             {
                 var listInfo = new StringBuilder(3);
@@ -1196,7 +1196,7 @@ public partial class FrmSlideshow : ThemedForm
         // Name
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Name))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.Name)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Name)))
             {
                 ImageInfo.Name = Path.GetFileName(filePath);
             }
@@ -1209,7 +1209,7 @@ public partial class FrmSlideshow : ThemedForm
         // Path
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Path))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.Path)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Path)))
             {
                 ImageInfo.Path = filePath;
             }
@@ -1222,7 +1222,7 @@ public partial class FrmSlideshow : ThemedForm
         // FileSize
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FileSize))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.FileSize))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FileSize))
                 && _currentMetadata != null)
             {
                 ImageInfo.FileSize = _currentMetadata.FileSizeFormated;
@@ -1236,7 +1236,7 @@ public partial class FrmSlideshow : ThemedForm
         // FrameCount
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.FrameCount))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FrameCount))
                 && _currentMetadata != null
                 && _currentMetadata.FrameCount > 1)
             {
@@ -1253,7 +1253,7 @@ public partial class FrmSlideshow : ThemedForm
         // Dimension
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.Dimension))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                 && _currentMetadata != null)
             {
                 ImageInfo.Dimension = $"{_currentMetadata.Width} x {_currentMetadata.Height} px";
@@ -1267,7 +1267,7 @@ public partial class FrmSlideshow : ThemedForm
         // ModifiedDateTime
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ModifiedDateTime))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ModifiedDateTime))
                 && _currentMetadata != null)
             {
                 ImageInfo.ModifiedDateTime = _currentMetadata.FileLastWriteTimeFormated + " (m)";
@@ -1281,7 +1281,7 @@ public partial class FrmSlideshow : ThemedForm
         // ExifRating
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifRating))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ExifRating))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifRating))
                 && _currentMetadata != null)
             {
                 ImageInfo.ExifRating = BHelper.FormatStarRatingText(_currentMetadata.ExifRatingPercent);
@@ -1295,7 +1295,7 @@ public partial class FrmSlideshow : ThemedForm
         // ExifDateTime
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ExifDateTime))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTime))
                 && _currentMetadata != null
                 && _currentMetadata.ExifDateTime != null)
             {
@@ -1310,7 +1310,7 @@ public partial class FrmSlideshow : ThemedForm
         // ExifDateTimeOriginal
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
                 && _currentMetadata != null
                 && _currentMetadata.ExifDateTimeOriginal != null)
             {
@@ -1327,7 +1327,7 @@ public partial class FrmSlideshow : ThemedForm
         {
             var dtStr = string.Empty;
 
-            if (Config.InfoItems.Contains(nameof(ImageInfo.DateTimeAuto))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.DateTimeAuto))
                 && _currentMetadata != null)
             {
                 if (_currentMetadata.ExifDateTimeOriginal != null)
@@ -1350,7 +1350,7 @@ public partial class FrmSlideshow : ThemedForm
         // ColorSpace
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.ColorSpace))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ColorSpace))
                 && _currentMetadata != null
                 && !string.IsNullOrEmpty(_currentMetadata.ColorSpace))
             {
@@ -1375,7 +1375,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
 
-        Text = ImageInfo.ToString(Config.InfoItems, false);
+        Text = ImageInfo.ToString(Config.ImageInfoTags, false);
     }
 
 
