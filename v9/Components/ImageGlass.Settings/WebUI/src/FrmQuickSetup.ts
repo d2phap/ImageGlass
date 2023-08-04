@@ -66,26 +66,8 @@ const delayRequestToUpdateLanguage = (langName: string) => {
 };
 
 
-// footer actions
-query('#LnkSkip').addEventListener('click', () => post('SKIP_AND_LAUNCH'), false);
-query('#BtnBack').addEventListener('click', () => {
-  _currentStep--;
-  goToStep(_currentStep);
-}, false);
-query('#BtnNext').addEventListener('click', () => {
-  if (_currentStep >= _stepCount) {
-    post('APPLY_SETTINGS');
-  }
-  else {
-    _currentStep++;
-    goToStep(_currentStep);
-  }
-}, false);
-
-
 // load initial data
 window._page.loadData = (data: Record<string, any> = {}) => {
-  console.log(data);
   _currentLang = data.currentLangName;
   _langList = data.langList || [];
   loadLanguageList();
@@ -101,8 +83,8 @@ queryAll<HTMLInputElement>('[name="_SettingProfile"]').forEach(el => {
     const profileName = query<HTMLInputElement>('[name="_SettingProfile"]:checked').value;
     const isProfessional = profileName === 'professional';
 
-    query<HTMLInputElement>('[name="UseEmbeddedThumbnailRawFormats"]').checked = !isProfessional;
-    query<HTMLInputElement>('[name="ColorProfile"]').checked = isProfessional;
+    query<HTMLInputElement>('#ChkUseEmbeddedThumbnailRawFormats').checked = !isProfessional;
+    query<HTMLInputElement>('#ChkColorProfile').checked = isProfessional;
   });
 });
 
@@ -115,3 +97,28 @@ query<HTMLSelectElement>('#Cmb_LanguageList').addEventListener('change', (e) => 
 
 // default viewer
 query('#BtnSetDefaultViewer').addEventListener('click', () => post('SET_DEFAULT_VIEWER'), false);
+
+
+// footer actions
+query('#LnkSkip').addEventListener('click', () => post('SKIP_AND_LAUNCH'), false);
+query('#BtnBack').addEventListener('click', () => {
+  _currentStep--;
+  goToStep(_currentStep);
+}, false);
+
+query('#BtnNext').addEventListener('click', () => {
+  if (_currentStep >= _stepCount) {
+    const enableColorProfile = query<HTMLInputElement>('#ChkColorProfile').checked;
+    const useThumbnailRawFormats = query<HTMLInputElement>('#ChkUseEmbeddedThumbnailRawFormats').checked;
+
+    post('APPLY_SETTINGS', {
+      Language: _currentLang,
+      ColorProfile: enableColorProfile,
+      UseEmbeddedThumbnailRawFormats: useThumbnailRawFormats,
+    }, true);
+  }
+  else {
+    _currentStep++;
+    goToStep(_currentStep);
+  }
+}, false);

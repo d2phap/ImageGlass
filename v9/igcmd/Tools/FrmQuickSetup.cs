@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass;
 using ImageGlass.Base;
 using ImageGlass.Settings;
+using System.Diagnostics;
 
 namespace igcmd.Tools;
 
@@ -84,7 +85,7 @@ public partial class FrmQuickSetup : WebForm
 
         if (e.Name.Equals("APPLY_SETTINGS", StringComparison.InvariantCultureIgnoreCase))
         {
-            Close();
+            await ApplySettingsAsync(e.Data);
         }
         else if (e.Name.Equals("SKIP_AND_LAUNCH", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -104,5 +105,83 @@ public partial class FrmQuickSetup : WebForm
 
     #endregion // Protected / override methods
 
+
+    private async Task ApplySettingsAsync(string settingJson)
+    {
+        // Parse settings JSON
+        #region Parse settings JSON
+        var dict = BHelper.ParseJson<Dictionary<string, object?>>(settingJson);
+
+        if (dict.TryGetValue("Language", out var lang))
+        {
+            Config.Language = new IgLang(lang?.ToString(), App.StartUpDir(Dir.Language));
+        }
+
+        if (dict.TryGetValue("ColorProfile", out var enableColorProfileObj))
+        {
+            var enableColorProfile = enableColorProfileObj
+                ?.ToString()
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false;
+
+            Config.ColorProfile = enableColorProfile
+                ? nameof(ColorProfileOption.CurrentMonitorProfile)
+                : nameof(ColorProfileOption.None);
+        }
+
+        if (dict.TryGetValue("UseEmbeddedThumbnailRawFormats", out var useThumbnailRawFormatsObj))
+        {
+            Config.UseEmbeddedThumbnailRawFormats = useThumbnailRawFormatsObj
+                ?.ToString()
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? true;
+        }
+
+        #endregion // Parse settings JSON
+
+
+        // Apply settings
+        await Config.WriteAsync();
+
+
+        // kill all ImageGlass processes and relaunch
+        var igProcesses = Process.GetProcesses()
+        .Where(p =>
+            p.Id != Environment.ProcessId &&
+            p.ProcessName.Contains("ImageGlass")
+        ).ToList();
+
+        if (igProcesses.Count > 0)
+        {
+            var result = Config.ShowInfo(this,
+                title: Text,
+                heading: Config.Language[$"{nameof(FrmQuickSetup)}._ConfirmCloseProcess"],
+                icon: ImageGlass.Base.WinApi.SHSTOCKICONID.SIID_HELP,
+                buttons: PopupButton.Yes_No);
+
+            if (result.ExitResult == PopupExitResult.OK)
+            {
+                // Kill all processes
+                igProcesses.ForEach(p => p.Kill());
+
+                LaunchImageGlass();
+            }
+        }
+        else
+        {
+            LaunchImageGlass();
+        }
+
+        Close();
+    }
+
+
+    /// <summary>
+    /// Launch ImageGlass app
+    /// </summary>
+    private static void LaunchImageGlass()
+    {
+        using var p = new Process();
+        p.StartInfo.FileName = App.IGExePath;
+        p.Start();
+    }
 
 }
