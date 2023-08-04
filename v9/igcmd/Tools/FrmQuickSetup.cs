@@ -89,6 +89,10 @@ public partial class FrmQuickSetup : WebForm
         }
         else if (e.Name.Equals("SKIP_AND_LAUNCH", StringComparison.InvariantCultureIgnoreCase))
         {
+            Config.QuickSetupVersion = Constants.QUICK_SETUP_VERSION;
+            await Config.WriteAsync();
+
+            LaunchImageGlass();
             Close();
         }
         else if (e.Name.Equals("LOAD_LANGUAGE", StringComparison.InvariantCultureIgnoreCase))
@@ -108,6 +112,9 @@ public partial class FrmQuickSetup : WebForm
 
     private async Task ApplySettingsAsync(string settingJson)
     {
+        Config.QuickSetupVersion = Constants.QUICK_SETUP_VERSION;
+
+
         // Parse settings JSON
         #region Parse settings JSON
         var dict = BHelper.ParseJson<Dictionary<string, object?>>(settingJson);
@@ -143,6 +150,8 @@ public partial class FrmQuickSetup : WebForm
 
 
         // kill all ImageGlass processes and relaunch
+        #region kill all ImageGlass processes and relaunch
+
         var igProcesses = Process.GetProcesses()
         .Where(p =>
             p.Id != Environment.ProcessId &&
@@ -169,6 +178,8 @@ public partial class FrmQuickSetup : WebForm
         {
             LaunchImageGlass();
         }
+
+        #endregion // kill all ImageGlass processes and relaunch
 
         Close();
     }
