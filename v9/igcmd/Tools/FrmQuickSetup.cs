@@ -72,7 +72,7 @@ public partial class FrmQuickSetup : WebForm
             window._page.loadData({{
                 appLogo: 'data:image/png;base64,{base64Logo}',
                 langList: {WebUI.LangListJson},
-                currentLangName: '{Config.Language.FilePath}',
+                currentLangName: '{Config.Language.FileName}',
             }});
         ");
     }

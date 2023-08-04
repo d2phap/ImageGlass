@@ -28,9 +28,14 @@ namespace ImageGlass.Base;
 public class IgLang : Dictionary<string, string>
 {
     /// <summary>
-    /// Language file path
+    /// Gets the path of language file.
     /// </summary>
     public string FilePath { get; set; } = "English";
+
+    /// <summary>
+    /// Gets the name of language file.
+    /// </summary>
+    public string FileName => Path.GetFileName(FilePath);
 
     /// <summary>
     /// Language information

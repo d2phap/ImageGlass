@@ -32,11 +32,11 @@ const loadLanguageList = () => {
 
   _langList.forEach((lang: ILanguage) => {
     let displayText = `${lang.Metadata.LocalName} (${lang.Metadata.EnglishName})`;
-    if (!lang.FilePath || lang.FilePath.length === 0) {
+    if (!lang.FileName || lang.FileName.length === 0) {
       displayText = lang.Metadata.EnglishName;
     }
 
-    const optionEl = new Option(displayText, lang.FilePath);
+    const optionEl = new Option(displayText, lang.FileName);
     selectEl.add(optionEl);
   });
 

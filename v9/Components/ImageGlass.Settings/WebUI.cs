@@ -140,13 +140,7 @@ public static class WebUI
         {
             var obj = new ExpandoObject();
 
-            var langName = Path.GetFileName(i.FilePath);
-            if (string.IsNullOrEmpty(langName))
-            {
-                langName = i.Metadata.EnglishName;
-            }
-
-            obj.TryAdd(nameof(i.FilePath), langName);
+            obj.TryAdd(nameof(i.FileName), i.FileName);
             obj.TryAdd(nameof(i.Metadata), i.Metadata);
 
             return obj;

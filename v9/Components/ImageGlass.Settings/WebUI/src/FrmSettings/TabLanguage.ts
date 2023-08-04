@@ -49,7 +49,7 @@ export default class TabLanguage {
    */
   private static handleLanguageChanged() {
     const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
-    const lang = _pageSettings.langList.find(i => i.FilePath === langFileName);
+    const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
     if (!lang) return;
   
     query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
@@ -72,11 +72,11 @@ export default class TabLanguage {
 
     _pageSettings.langList.forEach(lang => {
       let displayText = `${lang.Metadata.LocalName} (${lang.Metadata.EnglishName})`;
-      if (!lang.FilePath || lang.FilePath.length === 0) {
+      if (!lang.FileName || lang.FileName.length === 0) {
         displayText = lang.Metadata.EnglishName;
       }
 
-      const optionEl = new Option(displayText, lang.FilePath);
+      const optionEl = new Option(displayText, lang.FileName);
       selectEl.add(optionEl);
     });
 
