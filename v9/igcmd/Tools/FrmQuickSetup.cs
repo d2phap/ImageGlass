@@ -84,7 +84,7 @@ public partial class FrmQuickSetup : WebForm
 
         if (e.Name.Equals("APPLY_SETTINGS", StringComparison.InvariantCultureIgnoreCase))
         {
-
+            Close();
         }
         else if (e.Name.Equals("SKIP_AND_LAUNCH", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -95,6 +95,10 @@ public partial class FrmQuickSetup : WebForm
             Config.Language = new IgLang(e.Data, App.StartUpDir(Dir.Language));
             Config.TriggerRequestUpdatingLanguage();
             WebUI.UpdateLangJson(true);
+        }
+        else if (e.Name.Equals("SET_DEFAULT_VIEWER", StringComparison.InvariantCultureIgnoreCase))
+        {
+            await Config.SetDefaultPhotoViewerAsync(true);
         }
     }
 

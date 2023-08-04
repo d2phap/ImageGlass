@@ -1707,6 +1707,22 @@ public static class Config
     }
 
 
+    /// <summary>
+    /// Sets default photo viewer.
+    /// </summary>
+    public static async Task SetDefaultPhotoViewerAsync(bool enable)
+    {
+        var extensions = Config.GetImageFormats(Config.AllFormats);
+
+        var cmd = enable
+            ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
+            : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
+
+        // run command and show the results
+        _ = await BHelper.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
+    }
+
+
     #region Popup functions
 
     /// <summary>

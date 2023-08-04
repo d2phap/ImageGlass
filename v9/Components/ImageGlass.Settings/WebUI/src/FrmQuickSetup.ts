@@ -111,3 +111,7 @@ queryAll<HTMLInputElement>('[name="_SettingProfile"]').forEach(el => {
 query<HTMLSelectElement>('#Cmb_LanguageList').addEventListener('change', (e) => {
   delayRequestToUpdateLanguage((e.target as HTMLInputElement).value);
 }, false);
+
+
+// default viewer
+query('#BtnSetDefaultViewer').addEventListener('click', () => post('SET_DEFAULT_VIEWER'), false);
