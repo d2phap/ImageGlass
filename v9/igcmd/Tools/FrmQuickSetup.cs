@@ -63,6 +63,18 @@ public partial class FrmQuickSetup : WebForm
     protected override async Task OnWeb2NavigationCompleted()
     {
         await base.OnWeb2NavigationCompleted();
+
+        // load data
+        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
+        WebUI.UpdateLangListJson();
+
+        await Web2.ExecuteScriptAsync(@$"
+            window._page.loadData({{
+                appLogo: 'data:image/png;base64,{base64Logo}',
+                langList: {WebUI.LangListJson},
+                currentLangName: '{Config.Language.FilePath}',
+            }});
+        ");
     }
 
 
@@ -70,11 +82,11 @@ public partial class FrmQuickSetup : WebForm
     {
         await base.OnWeb2MessageReceivedAsync(e);
 
-        if (e.Name.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        if (e.Name.Equals("BtnNext", StringComparison.InvariantCultureIgnoreCase))
         {
-            BHelper.OpenImageGlassMsStore();
+
         }
-        else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("LnkSkip", StringComparison.InvariantCultureIgnoreCase))
         {
             Close();
         }

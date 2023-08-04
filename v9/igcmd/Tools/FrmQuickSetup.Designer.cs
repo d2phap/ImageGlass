@@ -34,7 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1474, 1126);
+            ClientSize = new Size(1200, 1200);
             Name = "FrmQuickSetup";
             Text = "[Quick setup ImageGlass]";
             ResumeLayout(false);

@@ -113,6 +113,9 @@ public class IgLang : Dictionary<string, string>
         Add("_._LearnMore", "Learn more…"); // v9.0
         Add("_._Continue", "Continue"); // v9.0
         Add("_._Quit", "Quit"); // v9.0
+        Add("_._Back", "Back"); // v9.0
+        Add("_._Next", "Next"); // v9.0
+        Add("_._Save", "Save"); // v9.0
         Add("_._Error", "Error"); // v9.0
         Add("_._Warning", "Warning"); // v9.0
         Add("_._Copy", "Copy"); //v9.0
@@ -387,7 +390,7 @@ public class IgLang : Dictionary<string, string>
         #region Help
         Add("FrmMain.MnuHelp", "Help"); //v7.0
         Add("FrmMain.MnuAbout", "About"); //v3.0
-        Add("FrmMain.MnuQuickSetup", "Quick setup ImageGlass…"); //v5.0
+        Add("FrmMain.MnuQuickSetup", "Open ImageGlass Quick setup"); //v5.0
         Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
 
@@ -834,22 +837,22 @@ public class IgLang : Dictionary<string, string>
 
 
         #region FrmQuickSetup
-        Add("FrmQuickSetup._Text", "Quick setup ImageGlass"); //v5.0
 
+        Add("FrmQuickSetup._Text", "ImageGlass Quick setup"); //v9.0
+        Add("FrmQuickSetup._StepInfo", "Step {0}"); //v9.0
+        Add("FrmQuickSetup._SkipQuickSetup", "Skip this and launch ImageGlass"); //v9.0
 
-        //Add("FrmQuickSetup._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
-        //Add("FrmQuickSetup.lblStepNumber", "Step {0}/{1}"); //v5.0
-        //Add("FrmQuickSetup.btnNextStep", "Next"); //v5.0
-        //Add("FrmQuickSetup.btnNextStep._Done", "Done!"); //v5.0
-        //Add("FrmQuickSetup.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
+        Add("FrmQuickSetup._SelectProfile", "I am a…"); //v9.0
+        Add("FrmQuickSetup._StandardUser", "Standard user"); //v9.0
+        Add("FrmQuickSetup._ProfessionalUser", "Professional user"); //v9.0
+        Add("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access the Settings dialog."); // v9.0
 
-        //Add("FrmQuickSetup.lblLanguage", "Select Language"); //v5.0
-        //Add("FrmQuickSetup.lblLayout", "Select Layout"); //v5.0
-        //Add("FrmQuickSetup.cmbLayout._Standard", "Standard"); //v5.0
-        //Add("FrmQuickSetup.cmbLayout._Designer", "Designer"); //v5.0
-        //Add("FrmQuickSetup.lblTheme", "Select Theme"); //v5.0
-        //Add("FrmQuickSetup.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
-        //Add("FrmQuickSetup.btnSetDefaultApp", "Yes"); //v5.0
+        Add("FrmQuickSetup._SettingsWillBeApplied", "Settings will be applied:"); //v9.0
+        Add("FrmQuickSetup._SetDefaultViewer", "Do you want to set ImageGlass as the default photo viewer?"); //v9.0
+        Add("FrmQuickSetup._SetDefaultViewer._Description", "You can reset it in the Settings dialog > File type associations tab."); //v9.0
+
+        Add("FrmQuickSetup._ConfirmCloseProcess", "Before applying the new settings, it's essential to close all ImageGlass processes. Are you ready to proceed?"); //v7.5
+
         #endregion
 
         #endregion

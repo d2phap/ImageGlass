@@ -70,7 +70,10 @@ public partial class WebForm : ThemedForm
         base.OnLoad(e);
         Config.UpdateFormIcon(this);
 
-        _ = Web2.EnsureWeb2Async();
+        if (!DesignMode)
+        {
+            _ = Web2.EnsureWeb2Async();
+        }
     }
 
 
