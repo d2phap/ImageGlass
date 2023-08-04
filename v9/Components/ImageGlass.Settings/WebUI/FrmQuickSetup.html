@@ -9,21 +9,86 @@
 </head>
 
 <body id="app">
-  <div id="top">
-    <aside style="padding-right: 2rem; min-width: calc(2rem + 64px);">
-      
-    </aside>
+  <main>
+    <div class="page-header">
+      <img id="Img_AppLogo" src="[AppLogo]" height="96" width="96" alt="Logo"
+        onerror="this.hidden = true;" />
+      <h2 lang-html="FrmQuickSetup._StepInfo">[Step <span id="LblStepInfo">1/3</span>]</h2>
+    </div>
 
-    <main>
-      FrmQuickSetup
-    </main>
-  </div>
+    <div class="page-content">
+      <section class="step" step="1">
+        <div class="text-center">
+          <div class="mb-2" lang-text="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
+          <div class="d-flex align-items-center">
+            <select id="Cmb_LanguageList" name="Language">
+            </select>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="step" step="2" hidden>
+        <header lang-text="FrmQuickSetup._SelectProfile">[I am a…]</header>
+        <div class="mb-3 d-flex">
+          <label class="ig-box-option me-2">
+            <input type="radio" name="_SettingProfile" value="standard" checked>
+            <div>
+              <div class="emoji-icon">🧑‍💼</div>
+              <div lang-text="FrmQuickSetup._StandardUser">[Standard user]</div>
+            </div>
+          </label>
+
+          <label class="ig-box-option ms-2">
+            <input type="radio" name="_SettingProfile" value="professional">
+            <div>
+              <div class="emoji-icon">👨‍🎨</div>
+              <div lang-text="FrmQuickSetup._ProfessionalUser">[Professional user]</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="mb-3 mt-4">
+          <header class="mb-2" lang-text="FrmQuickSetup._SettingsWillBeApplied">[Settings will be applied:]</header>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="ColorProfile" disabled />
+              <div lang-text="FrmSettings.Tab.Image._ColorManagement">[Color management]</div>
+            </label>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="UseEmbeddedThumbnailRawFormats" disabled checked />
+              <div lang-text="FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats">
+                [UseEmbeddedThumbnailRawFormats]
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <i lang-text="FrmQuickSetup._SettingProfileDescription">[To modify these settings, simply access the Settings dialog]</i>
+        </div>
+      </section>
+
+
+      <section class="step" step="3" hidden>
+        <div class="text-center">
+          <div class="mb-3">
+            <div lang-text="FrmQuickSetup._SetDefaultViewer">[Do you want to set ImageGlass as the default photo viewer?]</div>
+            <div lang-text="FrmQuickSetup._SetDefaultViewer._Description">[You can reset it in the Settings dialog > File type associations tab.]</div>
+          </div>
+          <button type="button" lang-text="_._Yes" style="min-width: 8rem;">[Yes]</button>
+        </div>
+      </section>
+    </div>
+  </main>
 
 
   <footer class="panel">
-    <button id="BtnCheckForUpdate" type="submit" lang-text="_._CheckForUpdate">[Check for update]</button>
-    <button id="BtnDonate" lang-text="FrmQuickSetup._Donate">[Donate]</button>
-    <button id="BtnClose" lang-text="_._Close">[Close]</button>
+    <a id="LnkSkip" class="me-auto" lang-text="FrmQuickSetup._SkipQuickSetup">[Skip this and launch ImageGlass]</a>
+    <button id="BtnBack" type="button" class="ms-2" lang-text="_._Back" hidden>[Back]</button>
+    <button id="BtnNext" type="submit" class="ms-2" lang-text="_._Next">[Next]</button>
   </footer>
 
   <script src="./dist/FrmQuickSetup.js"></script>

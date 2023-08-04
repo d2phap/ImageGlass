@@ -5,7 +5,6 @@
   top: 0;
   right: 0;
   bottom: 0;
-  right: 0;
   pointer-events: none;
 
   // normal style
@@ -70,8 +69,6 @@
   }
   &:disabled + *,
   &[disabled] + * {
-    color: rgb(var(--AppText) / 0.6);
-
     &::before {
       background-color: rgb(var(--ControlBgDisabled));
       border-color: var(--ControlBorderDisabled);

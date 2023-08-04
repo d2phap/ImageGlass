@@ -1,0 +1,70 @@
+[page="quick-setup"] {
+  #app {
+    display: grid;
+    grid-template-areas: "main" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+    overflow: hidden;
+  }
+
+  #app>main {
+    grid-area: main;
+    padding: 1rem;
+    background-color: rgb(var(--AppBg) / 0.75);
+    max-height: fit-content;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #app>footer {
+    grid-area: footer;
+    padding: 1rem;
+    justify-content: end;
+    background-color: rgb(var(--AppBg) / 0.4);
+
+    button {
+      min-width: calc(6.5rem * var(--fontScale));
+    }
+  }
+
+  .page-header {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-content {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    overflow: hidden;
+
+    padding: 2rem 1rem;
+    background-color: rgb(var(--InvertColor) / 0.05);
+    border-radius: calc(var(--borderRadius) * 1.5);
+
+    .step {
+      display: inline-block;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &>header {
+        font-size: 120%;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    .ig-box-option {
+      text-align: center;
+
+      .emoji-icon {
+        display: block;
+        font-size: 300%;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
