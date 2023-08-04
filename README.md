@@ -34,7 +34,25 @@ ImageGlass is a lightweight software designed for seamless viewing of images in 
 </a><br/>
 
 
-## 🛣 Development progress & Roadmap for ImageGlass 9.0
+## 🛣 ImageGlass roadmap
+```mermaid
+gantt
+dateFormat YYYY-MM
+title ImageGlass Roadmap
+
+section v8 Official
+v8.x - Bugfix only             :crit, active, des1, 2023-08,2024-01
+v8.x - Critical bugfix only    :crit, active, des1, 2024-01,2024-04
+v8.x - End of support          :crit, milestone, m1, 2024-04, 1d
+
+section v9 Beta & RC
+v9.0 Beta 5              :done, des2, 2023-08,2023-10
+v9.0 RC                  :active, des2, 2023-10,2024-01
+
+section v9 Official
+v9.0 Official release    :milestone, m1, 2024-01, 1d
+v9 Official              :active, des2, 2024-01,2025-01
+```
 ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches a stable state. In the meanwhile, you will still receive the updates for version 8.x.
 - ✅ [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was released.
 - ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released.
