@@ -14,6 +14,9 @@
     max-height: fit-content;
     overflow-y: auto;
     overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
   }
 
   #app>footer {
@@ -30,18 +33,16 @@
   .page-header {
     text-align: center;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .page-content {
+    flex: 1 0 auto;
     display: flex;
     align-items: start;
     justify-content: center;
     overflow: hidden;
-
-    padding: 2rem 1rem;
-    background-color: rgb(var(--InvertColor) / 0.05);
-    border-radius: calc(var(--borderRadius) * 1.5);
+    padding: 1rem;
 
     .step {
       display: inline-block;
@@ -64,6 +65,10 @@
         display: block;
         font-size: 300%;
         margin-bottom: 0.5rem;
+      }
+
+      .profile-name {
+        font-size: 120%;
       }
     }
   }

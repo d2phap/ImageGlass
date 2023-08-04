@@ -19,7 +19,7 @@
     <div class="page-content">
       <section class="step" step="1">
         <div class="text-center">
-          <div class="mb-2" lang-text="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
+          <div class="mb-3" lang-text="FrmSettings.Tab.Language._DisplayLanguage">[Display language]</div>
           <div class="d-flex align-items-center">
             <select id="Cmb_LanguageList" name="Language">
             </select>
@@ -29,13 +29,13 @@
 
 
       <section class="step" step="2" hidden>
-        <header lang-text="FrmQuickSetup._SelectProfile">[I am a…]</header>
+        <div class="mb-3 text-center" lang-text="FrmQuickSetup._SelectProfile">[Select a profile]</div>
         <div class="mb-3 d-flex">
           <label class="ig-box-option me-2">
             <input type="radio" name="_SettingProfile" value="standard" checked>
             <div>
               <div class="emoji-icon">🧑‍💼</div>
-              <div lang-text="FrmQuickSetup._StandardUser">[Standard user]</div>
+              <div class="profile-name" lang-text="FrmQuickSetup._StandardUser">[Standard user]</div>
             </div>
           </label>
 
@@ -43,7 +43,7 @@
             <input type="radio" name="_SettingProfile" value="professional">
             <div>
               <div class="emoji-icon">👨‍🎨</div>
-              <div lang-text="FrmQuickSetup._ProfessionalUser">[Professional user]</div>
+              <div class="profile-name" lang-text="FrmQuickSetup._ProfessionalUser">[Professional user]</div>
             </div>
           </label>
         </div>

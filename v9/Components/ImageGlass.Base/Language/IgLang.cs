@@ -847,7 +847,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmQuickSetup._StepInfo", "Step {0}"); //v9.0
         Add("FrmQuickSetup._SkipQuickSetup", "Skip this and launch ImageGlass"); //v9.0
 
-        Add("FrmQuickSetup._SelectProfile", "I am a…"); //v9.0
+        Add("FrmQuickSetup._SelectProfile", "Select a profile"); //v9.0
         Add("FrmQuickSetup._StandardUser", "Standard user"); //v9.0
         Add("FrmQuickSetup._ProfessionalUser", "Professional user"); //v9.0
         Add("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access the Settings dialog."); // v9.0
