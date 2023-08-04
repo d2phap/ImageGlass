@@ -149,7 +149,7 @@ internal static class Program
             {
                 var darkTheme = Config.BuildConfigCmdLine(nameof(Config.DarkTheme), Config.DarkTheme);
                 var lightTheme = Config.BuildConfigCmdLine(nameof(Config.LightTheme), Config.LightTheme);
-                var lang = Config.BuildConfigCmdLine(nameof(Config.Language), Config.Language.FileName);
+                var lang = Config.BuildConfigCmdLine(nameof(Config.Language), Config.Language.FilePath);
 
                 _ = BHelper.RunIgcmd(@$"{IgCommands.CHECK_FOR_UPDATE} {darkTheme} {lightTheme} {lang}");
             }

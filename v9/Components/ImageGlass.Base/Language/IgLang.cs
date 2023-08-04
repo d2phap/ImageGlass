@@ -30,7 +30,7 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Language file path
     /// </summary>
-    public string FileName { get; set; } = string.Empty;
+    public string FilePath { get; set; } = "English";
 
     /// <summary>
     /// Language information
@@ -54,16 +54,12 @@ public class IgLang : Dictionary<string, string>
     public IgLang(string fileName, string dirPath = "")
     {
         InitDefaultLanguage();
+        var filePath = Path.Combine(dirPath, fileName);
 
-        FileName = Path.Combine(dirPath, fileName);
-
-        if (File.Exists(FileName))
+        if (File.Exists(filePath))
         {
+            FilePath = filePath;
             ReadFromFile();
-        }
-        else
-        {
-            FileName = "";
         }
     }
 
@@ -73,7 +69,7 @@ public class IgLang : Dictionary<string, string>
     /// </summary>
     public void ReadFromFile()
     {
-        var model = BHelper.ReadJson<IgLangJsonModel>(FileName);
+        var model = BHelper.ReadJson<IgLangJsonModel>(FilePath);
         if (model == null) return;
 
         Metadata = model._Metadata;

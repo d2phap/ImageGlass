@@ -905,7 +905,7 @@ public static class Config
             Tools.Clear();
             Tools = toolList.ToList();
         }
-        
+
 
         // DisabledMenus
         DisabledMenus = items.GetSection(nameof(DisabledMenus))
@@ -1114,7 +1114,7 @@ public static class Config
         settings.TryAdd(nameof(BackgroundColor), BackgroundColor.ToHex());
         settings.TryAdd(nameof(SlideshowBackgroundColor), SlideshowBackgroundColor.ToHex());
 
-        var langName = Path.GetFileName(Language.FileName);
+        var langName = Path.GetFileName(Language.FilePath);
         if (string.IsNullOrEmpty(langName))
         {
             langName = "English";
@@ -1199,7 +1199,7 @@ public static class Config
             SlideshowBackgroundColor = ThemeUtils.ColorFromHex(newValue);
             Done = true;
         }
-        
+
         // Zoom levels
         else if (configName == nameof(Config.ZoomLevels))
         {
@@ -1224,14 +1224,14 @@ public static class Config
             }
             catch { }
         }
-        
+
         // Language
         else if (configName == nameof(Config.Language))
         {
             Config.Language = new IgLang(newValue, App.StartUpDir(Dir.Language));
             Done = true;
         }
-        
+
         // MouseWheelActions
         else if (configName == nameof(Config.MouseWheelActions))
         {
@@ -1252,7 +1252,7 @@ public static class Config
                 Done = true;
             }
         }
-        
+
         // MouseClickActions
         else if (configName == nameof(Config.MouseClickActions))
         {
@@ -1273,7 +1273,7 @@ public static class Config
                 Done = true;
             }
         }
-        
+
         // MenuHotkeys
         else if (configName == nameof(Config.MenuHotkeys))
         {
@@ -1287,7 +1287,7 @@ public static class Config
                 Done = true;
             }
         }
-        
+
         // Tools
         else if (configName == nameof(Config.Tools))
         {
@@ -1299,7 +1299,7 @@ public static class Config
             }
             Done = true;
         }
-        
+
         // Layout
         else if (configName == nameof(Config.Layout))
         {

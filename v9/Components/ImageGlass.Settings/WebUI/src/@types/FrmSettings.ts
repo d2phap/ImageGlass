@@ -1,5 +1,5 @@
 export type ILanguage = {
-  FileName: string,
+  FilePath: string,
   Metadata: Record<string, any> & {
     Code: string,
     EnglishName: string,
