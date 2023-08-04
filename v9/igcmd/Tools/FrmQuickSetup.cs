@@ -82,13 +82,19 @@ public partial class FrmQuickSetup : WebForm
     {
         await base.OnWeb2MessageReceivedAsync(e);
 
-        if (e.Name.Equals("BtnNext", StringComparison.InvariantCultureIgnoreCase))
+        if (e.Name.Equals("APPLY_SETTINGS", StringComparison.InvariantCultureIgnoreCase))
         {
 
         }
-        else if (e.Name.Equals("LnkSkip", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("SKIP_AND_LAUNCH", StringComparison.InvariantCultureIgnoreCase))
         {
             Close();
+        }
+        else if (e.Name.Equals("LOAD_LANGUAGE", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Config.Language = new IgLang(e.Data, App.StartUpDir(Dir.Language));
+            Config.TriggerRequestUpdatingLanguage();
+            WebUI.UpdateLangJson(true);
         }
     }
 

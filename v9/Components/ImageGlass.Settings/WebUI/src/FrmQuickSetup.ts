@@ -6,7 +6,9 @@ let _currentStep = 1;
 
 let _langList: ILanguage[] = [];
 let _currentLang = '';
+let _loadLanguageTimer: any = null;
 
+// Navigates to step
 const goToStep = (stepNumber: number) => {
   _currentStep = Math.max(1, Math.min(stepNumber, _stepCount));
   const isLastStep = _currentStep >= _stepCount;
@@ -21,9 +23,7 @@ const goToStep = (stepNumber: number) => {
 };
 
 
-/**
- * Loads language list to select box.
- */
+// Loads language list to select box.
 const loadLanguageList = () => {
   const selectEl = query<HTMLSelectElement>('#Cmb_LanguageList');
 
@@ -41,21 +41,40 @@ const loadLanguageList = () => {
   });
 
   selectEl.value = _currentLang;
-  // TabLanguage.handleLanguageChanged();
+};
+
+
+// Loads language
+const requestToUpdateLanguage = async (langName: string) => {
+  _currentLang = langName;
+  await postAsync('LOAD_LANGUAGE', _currentLang);
+};
+
+
+// delays loading language
+const delayRequestToUpdateLanguage = (langName: string) => {
+  clearTimeout(_loadLanguageTimer);
+
+  return new Promise((resolve) => {
+    _loadLanguageTimer = setTimeout(async () => {
+      clearTimeout(_loadLanguageTimer);
+
+      await requestToUpdateLanguage(langName);
+      resolve(undefined);
+    }, 100);
+  });
 };
 
 
 // footer actions
-query('#LnkSkip').addEventListener('click', (e) => post((e.target as HTMLElement).id), false);
+query('#LnkSkip').addEventListener('click', () => post('SKIP_AND_LAUNCH'), false);
 query('#BtnBack').addEventListener('click', () => {
   _currentStep--;
   goToStep(_currentStep);
 }, false);
-query('#BtnNext').addEventListener('click', (e) => {
-  const btnEl = e.target as HTMLButtonElement;
-
+query('#BtnNext').addEventListener('click', () => {
   if (_currentStep >= _stepCount) {
-    post(btnEl.id);
+    post('APPLY_SETTINGS');
   }
   else {
     _currentStep++;
@@ -86,3 +105,9 @@ queryAll<HTMLInputElement>('[name="_SettingProfile"]').forEach(el => {
     query<HTMLInputElement>('[name="ColorProfile"]').checked = isProfessional;
   });
 });
+
+
+// language option
+query<HTMLSelectElement>('#Cmb_LanguageList').addEventListener('change', (e) => {
+  delayRequestToUpdateLanguage((e.target as HTMLInputElement).value);
+}, false);
