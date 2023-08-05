@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using System.ComponentModel;
 
 namespace ImageGlass.UI;
@@ -37,7 +38,7 @@ public class ModernTextBox : TextBox
 
             if (_darkMode)
             {
-                var colors = ThemeUtils.GetThemeColorPalatte(_darkMode);
+                var colors = BHelper.GetThemeColorPalatte(_darkMode);
 
                 Padding = new Padding(2, 2, 2, 2);
                 BackColor = colors.ControlBg;

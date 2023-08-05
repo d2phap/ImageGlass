@@ -257,7 +257,7 @@ public partial class ModernColorPicker : UserControl
     {
         if (_suspendColorInputsEvent) return;
 
-        var newColor = ThemeUtils.ColorFromHex(TxtHex.Text.Trim());
+        var newColor = BHelper.ColorFromHex(TxtHex.Text.Trim());
         if (newColor == Color.Empty)
         {
             // restore the original hex value

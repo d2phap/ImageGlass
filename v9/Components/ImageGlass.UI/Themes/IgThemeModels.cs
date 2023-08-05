@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using WicNet;
 
 namespace ImageGlass.UI;
@@ -60,31 +61,31 @@ public record IgThemeInfo
 /// </summary>
 public record IgThemeColors
 {
-    public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#d3d3d3");
-    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f00");
+    public Color TextColor { get; set; } = BHelper.ColorFromHex("#d3d3d3");
+    public Color BgColor { get; set; } = BHelper.ColorFromHex("#151b1f00");
 
 
     // Toolbar
-    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
-    public Color ToolbarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
-    public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+    public Color ToolbarBgColor { get; set; } = BHelper.ColorFromHex("#1E242900");
+    public Color ToolbarTextColor { get; set; } = BHelper.ColorFromHex("#dedede");
+    public Color ToolbarItemHoverColor { get; set; } = BHelper.ColorFromHex("#ffffff33");
+    public Color ToolbarItemActiveColor { get; set; } = BHelper.ColorFromHex("#ffffff22");
+    public Color ToolbarItemSelectedColor { get; set; } = BHelper.ColorFromHex("#ffffff44");
 
 
     // Gallery
-    public Color GalleryBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
-    public Color GalleryTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color GalleryItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color GalleryItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
-    public Color GalleryItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+    public Color GalleryBgColor { get; set; } = BHelper.ColorFromHex("#1E242900");
+    public Color GalleryTextColor { get; set; } = BHelper.ColorFromHex("#dedede");
+    public Color GalleryItemHoverColor { get; set; } = BHelper.ColorFromHex("#ffffff33");
+    public Color GalleryItemActiveColor { get; set; } = BHelper.ColorFromHex("#ffffff22");
+    public Color GalleryItemSelectedColor { get; set; } = BHelper.ColorFromHex("#ffffff44");
 
 
     // Menu
-    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E2429");
-    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff15");
-    public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color MenuBgColor { get; set; } = BHelper.ColorFromHex("#1E2429");
+    public Color MenuBgHoverColor { get; set; } = BHelper.ColorFromHex("#ffffff15");
+    public Color MenuTextColor { get; set; } = BHelper.ColorFromHex("#dedede");
+    public Color MenuTextHoverColor { get; set; } = BHelper.ColorFromHex("#dedede");
 
 }
 

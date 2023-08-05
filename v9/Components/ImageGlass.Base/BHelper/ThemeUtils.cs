@@ -17,32 +17,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Base;
 
-
-public partial class ThemeUtils
+public partial class BHelper
 {
-
-    #region PUBLIC FUNCTIONS
-
     /// <summary>
     /// Gets the background color for the input status.
     /// </summary>
-    public static Color GetBackgroundColorForStatus(StatusType status, bool darkMode = true, int alpha = 255)
+    public static Color GetBackgroundColorForStatus(ColorStatusType status, bool darkMode = true, int alpha = 255)
     {
         var colors = GetThemeColorPalatte(darkMode);
 
         return status switch
         {
-            StatusType.Info => colors.BgInfo.WithAlpha(alpha),
-            StatusType.Success => colors.BgSuccess.WithAlpha(alpha),
-            StatusType.Warning => colors.BgWarning.WithAlpha(alpha),
-            StatusType.Danger => colors.BgDanger.WithAlpha(alpha),
+            ColorStatusType.Info => colors.BgInfo.WithAlpha(alpha),
+            ColorStatusType.Success => colors.BgSuccess.WithAlpha(alpha),
+            ColorStatusType.Warning => colors.BgWarning.WithAlpha(alpha),
+            ColorStatusType.Danger => colors.BgDanger.WithAlpha(alpha),
             _ => colors.BgNeutral.WithAlpha(alpha),
         };
     }
@@ -197,12 +192,10 @@ public partial class ThemeUtils
         return px * 12f / 16f;
     }
 
-    #endregion
-
 }
 
 
-public enum StatusType
+public enum ColorStatusType
 {
     Neutral,
     Info,

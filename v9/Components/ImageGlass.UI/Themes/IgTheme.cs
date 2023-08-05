@@ -132,7 +132,7 @@ public class IgTheme : IDisposable
     /// <summary>
     /// Gets color palatte according to the <see cref="Settings"/><c>.IsDarkMode</c> value.
     /// </summary>
-    public IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(Settings.IsDarkMode);
+    public IColors ColorPalatte => BHelper.GetThemeColorPalatte(Settings.IsDarkMode);
 
     /// <summary>
     /// Gets the full path of left navigation button image.
@@ -372,7 +372,7 @@ public class IgTheme : IDisposable
                     }
                     else
                     {
-                        colorItem = ThemeUtils.ColorFromHex(value);
+                        colorItem = BHelper.ColorFromHex(value);
                     }
 
                     prop.SetValue(Colors, colorItem);

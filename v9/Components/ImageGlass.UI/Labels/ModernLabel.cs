@@ -27,7 +27,7 @@ public class ModernLabel : Label
     private bool _isGrowing;
     private bool _darkMode = false;
 
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
+    private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode);
 
 
     #region Property Region

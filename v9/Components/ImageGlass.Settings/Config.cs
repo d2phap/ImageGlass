@@ -936,7 +936,7 @@ public static class Config
         }
         else
         {
-            BackgroundColor = ThemeUtils.ColorFromHex(bgValue);
+            BackgroundColor = BHelper.ColorFromHex(bgValue);
         }
         #endregion
 
@@ -950,7 +950,7 @@ public static class Config
         bgValue = items.GetValue(nameof(SlideshowBackgroundColor), string.Empty);
         if (!string.IsNullOrEmpty(bgValue))
         {
-            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(bgValue);
+            SlideshowBackgroundColor = BHelper.ColorFromHex(bgValue);
         }
 
         #endregion
@@ -1183,14 +1183,14 @@ public static class Config
         // BackgroundColor
         if (configName == nameof(Config.BackgroundColor))
         {
-            BackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            BackgroundColor = BHelper.ColorFromHex(newValue);
             Done = true;
         }
 
         // SlideshowBackgroundColor
         else if (configName == nameof(Config.SlideshowBackgroundColor))
         {
-            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(newValue);
+            SlideshowBackgroundColor = BHelper.ColorFromHex(newValue);
             Done = true;
         }
 
@@ -1769,7 +1769,7 @@ public static class Config
     {
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+        return Popup.ShowDialog(description, title, heading, details, note, ColorStatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 
@@ -1797,7 +1797,7 @@ public static class Config
         heading ??= Language["_._Warning"];
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+        return Popup.ShowDialog(description, title, heading, details, note, ColorStatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 
@@ -1825,7 +1825,7 @@ public static class Config
         heading ??= Language["_._Error"];
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
+        return Popup.ShowDialog(description, title, heading, details, note, ColorStatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 

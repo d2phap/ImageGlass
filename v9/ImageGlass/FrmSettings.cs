@@ -208,7 +208,7 @@ public partial class FrmSettings : WebForm
         #region Tab Appearance
         else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))
         {
-            var currentColor = ThemeUtils.ColorFromHex(e.Data);
+            var currentColor = BHelper.ColorFromHex(e.Data);
             var newColor = OpenColorPicker(currentColor);
             var hexColor = string.Empty;
 

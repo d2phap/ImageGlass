@@ -30,7 +30,7 @@ public class ModernLinkLabel : LinkLabel
     private bool _darkMode = false;
 
     private ModernControlState _controlState = ModernControlState.Normal;
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
+    private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode);
 
 
     #region Property Region

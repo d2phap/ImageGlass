@@ -32,7 +32,7 @@ public class ModernComboBox : ComboBox
     private bool _hover = false;
     private bool _darkMode = false;
     private int _padding = 10;
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode, DesignMode);
+    private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode, DesignMode);
     private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 3f : 0;
 
 

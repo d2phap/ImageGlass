@@ -31,7 +31,7 @@ public partial class Popup : DialogForm
     private bool _unsignedIntValueOnly = false;
     private bool _floatValueOnly = false;
     private bool _unsignedFloatValueOnly = false;
-    private StatusType _noteStatusType = StatusType.Neutral;
+    private ColorStatusType _noteStatusType = ColorStatusType.Neutral;
 
 
     // Public properties
@@ -151,14 +151,14 @@ public partial class Popup : DialogForm
     /// <summary>
     /// Gets, sets the type of the note.
     /// </summary>
-    public StatusType NoteStatusType
+    public ColorStatusType NoteStatusType
     {
         get => _noteStatusType;
         set
         {
             _noteStatusType = value;
 
-            lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
+            lblNote.BackColor = BHelper.GetBackgroundColorForStatus(value, DarkMode);
             lblNote.ForeColor = Config.Theme.ColorPalatte.AppText;
         }
     }
@@ -444,7 +444,7 @@ public partial class Popup : DialogForm
         SuspendLayout();
 
 
-        lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
+        lblNote.BackColor = BHelper.GetBackgroundColorForStatus(NoteStatusType, darkMode);
         lblNote.ForeColor = Config.Theme.ColorPalatte.AppText;
         SetTextInputStyle(ValidateInput(), darkMode);
 
@@ -589,7 +589,7 @@ public partial class Popup : DialogForm
         {
             BtnAccept.Enabled = false;
 
-            txtValue.BackColor = ThemeUtils.GetBackgroundColorForStatus(StatusType.Danger, darkMode);
+            txtValue.BackColor = BHelper.GetBackgroundColorForStatus(ColorStatusType.Danger, darkMode);
         }
         else
         {
@@ -625,7 +625,7 @@ public partial class Popup : DialogForm
         string heading = "",
         string details = "",
         string note = "",
-        StatusType? noteStatusType = null,
+        ColorStatusType? noteStatusType = null,
         PopupButton buttons = PopupButton.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
@@ -641,7 +641,7 @@ public partial class Popup : DialogForm
             Heading = heading,
             Description = description,
             Note = note,
-            NoteStatusType = noteStatusType ?? StatusType.Neutral,
+            NoteStatusType = noteStatusType ?? ColorStatusType.Neutral,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,

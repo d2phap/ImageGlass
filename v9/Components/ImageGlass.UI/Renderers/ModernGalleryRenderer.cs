@@ -166,7 +166,7 @@ public class ModernGalleryRenderer : StyleRenderer
 
 
             // create text image
-            using var textBmp = ThemeUtils.CreateImageFromText(text, ImageGalleryOwner.Font, foreColor);
+            using var textBmp = BHelper.CreateImageFromText(text, ImageGalleryOwner.Font, foreColor);
 
             var loc = new PointF(
                 textRegion.X + (textRegion.Width / 2 - textBmp.Width / 2),

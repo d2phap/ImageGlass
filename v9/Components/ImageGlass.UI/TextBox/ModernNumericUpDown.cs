@@ -30,7 +30,7 @@ public class ModernNumericUpDown : NumericUpDown
     private bool _mouseDown = false;
     private bool _mouseHover = false;
     private bool _darkMode = false;
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
+    private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode);
     private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 1f : 0;
 
 

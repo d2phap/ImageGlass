@@ -26,7 +26,7 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Base;
 
 
 public class DarkColors : IColors

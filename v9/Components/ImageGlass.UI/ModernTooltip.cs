@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.Reflection;
 
@@ -24,7 +25,7 @@ namespace ImageGlass.UI;
 
 public class ModernTooltip : ToolTip
 {
-    private IColors Colors => ThemeUtils.GetThemeColorPalatte(DarkMode, DesignMode);
+    private IColors Colors => BHelper.GetThemeColorPalatte(DarkMode, DesignMode);
 
 
     /// <summary>

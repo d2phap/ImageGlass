@@ -30,7 +30,7 @@ public class ModernCheckBox : CheckBox
 
     private bool _spacePressed = false;
     private bool _darkMode = false;
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
+    private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode);
 
 
     #region Property Region

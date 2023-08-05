@@ -269,7 +269,7 @@ public class ModernButton : Button
         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
 
-        var colors = ThemeUtils.GetThemeColorPalatte(DarkMode, DesignMode);
+        var colors = BHelper.GetThemeColorPalatte(DarkMode, DesignMode);
         var accentColor = colors.Accent;
         var isCTAStyle = _isDefault || ButtonStyle == ModernButtonStyle.CTA;
 
