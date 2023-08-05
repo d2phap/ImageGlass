@@ -28,15 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
+            // 
+            // Web2
+            // 
+            Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
+            Web2.Size = new Size(1200, 1500);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmQuickSetup
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackdropStyle = ImageGlass.Base.BackdropStyle.Mica;
             ClientSize = new Size(1200, 1500);
             Name = "FrmQuickSetup";
             Text = "[ImageGlass Quick setup]";
+            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
             ResumeLayout(false);
         }
 

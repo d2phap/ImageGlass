@@ -56,6 +56,8 @@ public partial class WebForm : ThemedForm
         // hide the control by default
         // we will show it when the navigation is completed
         Web2.Visible = false;
+
+        _ = Web2.EnsureWeb2Async();
     }
 
 
@@ -67,10 +69,7 @@ public partial class WebForm : ThemedForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        _ = Web2.EnsureWeb2Async();
-
         Config.UpdateFormIcon(this);
-        BackdropStyle = BackdropStyle.Mica;
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 

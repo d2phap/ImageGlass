@@ -28,20 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbout));
+            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
+            // 
+            // Web2
+            // 
+            Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
+            Web2.Size = new Size(1527, 1478);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmAbout
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
+            BackdropStyle = Base.BackdropStyle.Mica;
             ClientSize = new Size(1527, 1478);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Location = new Point(0, 0);
             MinimizeBox = false;
             Name = "FrmAbout";
+            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
             ResumeLayout(false);
         }
 

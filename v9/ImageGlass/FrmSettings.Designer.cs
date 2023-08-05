@@ -31,22 +31,30 @@ namespace ImageGlass
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
+            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
+            // 
+            // Web2
+            // 
+            Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
+            Web2.Size = new Size(2277, 1425);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmSettings
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackdropStyle = Base.BackdropStyle.Mica;
             ClientSize = new Size(2277, 1425);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            Location = new Point(0, 0);
             Margin = new Padding(6);
             MaximizeBox = true;
             MinimumSize = new Size(500, 300);
             Name = "FrmSettings";
             StartPosition = FormStartPosition.Manual;
             Text = "Settings";
+            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
             ResumeLayout(false);
         }
 

@@ -29,20 +29,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUpdate));
+            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
+            // 
+            // Web2
+            // 
+            Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
+            Web2.Size = new Size(1118, 1212);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmUpdate
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(1117, 1049);
+            BackdropStyle = ImageGlass.Base.BackdropStyle.Mica;
+            ClientSize = new Size(1118, 1212);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Location = new Point(0, 0);
             Margin = new Padding(1);
             Name = "FrmUpdate";
             Text = "[Update]";
+            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
             ResumeLayout(false);
         }
 
