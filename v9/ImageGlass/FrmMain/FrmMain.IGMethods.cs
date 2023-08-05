@@ -795,7 +795,7 @@ public partial class FrmMain
     /// </summary>
     public static void IG_OpenQuickSetupDialog()
     {
-        _ = BHelper.RunIgcmd(IgCommands.QUICK_SETUP);
+        _ = Config.RunIgcmd(IgCommands.QUICK_SETUP);
     }
 
 
@@ -2044,9 +2044,7 @@ public partial class FrmMain
             filePath = await Local.SaveImageAsTempFileAsync(".png");
         }
 
-
-        var args = string.Format($"{IgCommands.EXPORT_FRAMES} \"{filePath}\"");
-        await BHelper.RunIgcmd(args);
+        await Config.RunIgcmd($"{IgCommands.EXPORT_FRAMES} \"{filePath}\"");
     }
 
 
@@ -2100,8 +2098,8 @@ public partial class FrmMain
         }
         else
         {
-            var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
-            var result = await BHelper.RunIgcmd(args);
+            var args = $"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}";
+            var result = await Config.RunIgcmd(args);
 
 
             if (result == IgExitCode.Done)
@@ -2170,8 +2168,7 @@ public partial class FrmMain
         }
         else
         {
-            var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
-            var result = await BHelper.RunIgcmd(args);
+            var result = await Config.RunIgcmd($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
 
 
             if (result == IgExitCode.Done)

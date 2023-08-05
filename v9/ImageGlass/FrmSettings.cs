@@ -550,7 +550,7 @@ public partial class FrmSettings : WebForm
         }
 
         var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
-        var result = await BHelper.RunIgcmd(
+        var result = await Config.RunIgcmd(
             $"{IgCommands.INSTALL_LANGUAGES} {IgCommands.SHOW_UI} {filePathsArgs}",
             true);
 
@@ -605,7 +605,7 @@ public partial class FrmSettings : WebForm
         }
 
         var filePathsArgs = string.Join(" ", o.FileNames.Select(f => $"\"{f}\""));
-        var result = await BHelper.RunIgcmd(
+        var result = await Config.RunIgcmd(
             $"{IgCommands.INSTALL_THEMES} {IgCommands.SHOW_UI} {filePathsArgs}",
             true);
 
@@ -619,7 +619,7 @@ public partial class FrmSettings : WebForm
 
     private async Task UninstallThemeAsync(string themeDirPath)
     {
-        var result = await BHelper.RunIgcmd(
+        var result = await Config.RunIgcmd(
             $"{IgCommands.UNINSTALL_THEME} {IgCommands.SHOW_UI} \"{themeDirPath}\"",
             true);
 

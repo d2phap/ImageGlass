@@ -1719,10 +1719,31 @@ public static class Config
             : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
 
         // run command and show the results
-        _ = await BHelper.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
+        _ = await Config.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
     }
 
 
+    /// <summary>
+    /// Runs a command from <c>igcmd.exe</c>, supports auto-elevating process privilege
+    /// if admin permission is required.
+    /// </summary>
+    /// <returns></returns>
+    public static async Task<IgExitCode> RunIgcmd(string args, bool waitForExit = true)
+    {
+        var exePath = App.StartUpDir("igcmd.exe");
+
+        // create command-lines for the current settings
+        var lightThemeCmd = Config.BuildConfigCmdLine(nameof(Config.LightTheme), Config.LightTheme);
+        var darkThemeCmd = Config.BuildConfigCmdLine(nameof(Config.DarkTheme), Config.DarkTheme);
+        var langCmd = Config.BuildConfigCmdLine(nameof(Config.Language), Config.Language.FileName);
+
+        var allArgs = $"{args} {lightThemeCmd} {darkThemeCmd} {langCmd}";
+
+        return await BHelper.RunExeCmd(exePath, allArgs, waitForExit);
+    }
+
+
+    // Popup functions
     #region Popup functions
 
     /// <summary>
