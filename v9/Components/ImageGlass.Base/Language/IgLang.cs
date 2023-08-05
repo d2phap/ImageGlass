@@ -23,17 +23,19 @@ namespace ImageGlass.Base;
 
 
 /// <summary>
-/// ImageGlass language pack (.iglang.json)
+/// ImageGlass language pack (<c>*.iglang.json</c>)
 /// </summary>
 public class IgLang : Dictionary<string, string>
 {
     /// <summary>
     /// Gets the path of language file.
+    /// Example: <c>C:\ImageGlass\Languages\Vietnameses.iglang.json</c>
     /// </summary>
-    public string FilePath { get; set; } = "English";
+    private string FilePath { get; set; } = "English";
 
     /// <summary>
     /// Gets the name of language file.
+    /// Example: <c>Vietnameses.iglang.json</c>
     /// </summary>
     public string FileName => Path.GetFileName(FilePath);
 
