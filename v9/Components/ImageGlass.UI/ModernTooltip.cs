@@ -24,7 +24,7 @@ namespace ImageGlass.UI;
 
 public class ModernTooltip : ToolTip
 {
-    private IColors Colors => ThemeUtils.GetThemeColorPalatte(DarkMode);
+    private IColors Colors => ThemeUtils.GetThemeColorPalatte(DarkMode, DesignMode);
 
 
     /// <summary>

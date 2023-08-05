@@ -231,6 +231,8 @@ public partial class ModernForm : Form
     /// <param name="e"></param>
     protected virtual void OnWindowStateChanging(WindowStateChangedEventArgs e)
     {
+        if (DesignMode) return;
+
         WindowStateChanged?.Invoke(this, e);
     }
 
@@ -240,6 +242,8 @@ public partial class ModernForm : Form
     /// </summary>
     protected virtual void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
+        if (DesignMode) return;
+
         // emits the event
         SystemAccentColorChanged?.Invoke(e);
 
@@ -270,6 +274,8 @@ public partial class ModernForm : Form
     /// </summary>
     protected virtual void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
+        if (DesignMode) return;
+
         DarkMode = darkMode;
         BackdropStyle = style ?? _backdropStyle;
     }
