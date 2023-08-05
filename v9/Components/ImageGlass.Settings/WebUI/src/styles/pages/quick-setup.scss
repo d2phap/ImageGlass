@@ -32,17 +32,17 @@
 
   .page-header {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: auto;
     margin-bottom: 1rem;
   }
 
   .page-content {
-    flex: 1 0 auto;
     display: flex;
     align-items: start;
     justify-content: center;
-    overflow: hidden;
-    padding: 1rem;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    margin-bottom: auto;
 
     .step {
       display: inline-block;
