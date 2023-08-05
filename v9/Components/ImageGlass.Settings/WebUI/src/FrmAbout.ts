@@ -22,9 +22,14 @@ window._page.loadData = (data: Record<string, string> = {}) => {
 
   query('#Img_AppLogo').setAttribute('src', data.AppLogo || '');
   query('#Img_AppLogo').toggleAttribute('hidden', false);
+  query('#Img_AppLogo').addEventListener('click', async () => {
+    const isNotEnabled = !query('#app').style.filter;
+    query('#app').style.filter = isNotEnabled ? 'url("#effectWaving")' : '';
+  });
 
   query('#Lbl_AppCode').innerText = data.AppCode || '';
   query('#Lbl_AppVersion').innerText = data.AppVersion || '';
   query('#Lbl_AppArchitecture').innerText = data.AppArchitecture || '';
   query('#Lbl_AppRuntime').innerText = data.AppRuntime || '';
 };
+

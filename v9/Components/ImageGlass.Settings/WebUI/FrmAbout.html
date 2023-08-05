@@ -154,6 +154,19 @@
     <button id="BtnClose" lang-text="_._Close">[Close]</button>
   </footer>
 
+
+  <svg hidden>
+    <defs>
+      <filter id="effectWaving">
+        <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="3" seed="10" result="turbulence">
+          <animate attributeName="baseFrequency" values="0.01;0.005;0.01;" dur="2.5s" begin="0" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="10" xChannelSelector="R" yChannelSelector="B"
+          result="displacement" />
+      </filter>
+    </defs>
+  </svg>
+
   <script src="./dist/FrmAbout.js"></script>
 </body>
 </html>
