@@ -15,7 +15,7 @@ export const query = <T = HTMLElement>(
     const el = fromEl.querySelector(selector) as T;
 
     if (!el && !hideWarning) {
-      console.warn(`⚠️ query() returns NULL with selector '${selector}'`);
+      console.warn(`🟠 query() returns NULL with selector '${selector}'`);
     }
 
     return el;
@@ -39,7 +39,7 @@ export const queryAll = <T = HTMLElement>(
     const els = Array.from(fromEl.querySelectorAll(selector)) as T[];
 
     if (els.length === 0 && !hideWarning) {
-      console.info(`ℹ queryAll() returns ZERO elements with selector '${selector}'`);
+      console.info(`🔵 queryAll() returns ZERO elements with selector '${selector}'`);
     }
 
     return els;
@@ -68,7 +68,7 @@ export const on = (name: string, handler: WebviewEventHandlerFn) => {
  */
 export const post = (name: string, data?: any, convertToJson = false) => {
   if (data instanceof FileList && !convertToJson) {
-    console.info('ℹ️ Calling webview.postMessageWithAdditionalObjects(): ', name, data);
+    console.info('🔵 Calling webview.postMessageWithAdditionalObjects(): ', name, data);
 
     // @ts-ignore
     window.chrome.webview?.postMessageWithAdditionalObjects({ name, data: null }, data);
@@ -76,7 +76,7 @@ export const post = (name: string, data?: any, convertToJson = false) => {
   }
 
   const msgData = convertToJson ? JSON.stringify(data) : data;
-  console.info('ℹ️ Calling webview.postMessage(): ', name, msgData);
+  console.info('🔵 Calling webview.postMessage(): ', name, msgData);
 
   // @ts-ignore
   window.chrome.webview?.postMessage({ name, data: msgData });

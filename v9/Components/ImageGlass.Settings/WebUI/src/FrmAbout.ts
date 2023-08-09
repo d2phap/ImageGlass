@@ -18,7 +18,7 @@ query('#BtnCheckForUpdate').focus();
 
 
 window._page.loadData = (data: Record<string, string> = {}) => {
-  console.info('ℹ️ Loading data', data);
+  console.info('🔵 Loading data', data);
 
   query('#Lbl_CopyrightsYear').innerText = `2010-${new Date().getUTCFullYear()}`;
 
