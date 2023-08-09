@@ -51,7 +51,6 @@ export default class TabLayout {
    */
   static exportSettings() {
     const settings = getChangedSettingsFromTab('layout');
-
     const oldLayout = TabLayout.convertRawLayoutToLayoutObject();
 
     // get layout settings
@@ -71,7 +70,7 @@ export default class TabLayout {
 
 
   private static loadLayoutConfigs() {
-    const layout = TabLayout.convertRawLayoutToLayoutObject(_pageSettings.config?.Layout);
+    const layout = TabLayout.convertRawLayoutToLayoutObject();
 
     Object.keys(layout).forEach((controlName: LayoutControlName) => {
       const { position, order } = layout[controlName];
@@ -130,7 +129,7 @@ export default class TabLayout {
 
 
   private static convertRawLayoutToLayoutObject(rawLayout?: Partial<Record<LayoutControlName, string>>): ILayoutObject {
-    rawLayout ||= {};
+    rawLayout ||= _pageSettings.config?.Layout || {};
     const layout = TabLayout.defaultLayout;
 
     for (const key in layout) {
@@ -138,8 +137,8 @@ export default class TabLayout {
       const controlName = key as LayoutControlName;
 
       const arr = rawLayout[controlName]?.split(';').filter(Boolean) || [];
-      let position = arr[0] ?? layout[controlName].position;
-      let order = arr[1] ?? layout[controlName].order;
+      const position = arr[0] ?? layout[controlName].position;
+      const order = arr[1] ?? layout[controlName].order;
 
       layout[controlName] = { position, order };
     }
