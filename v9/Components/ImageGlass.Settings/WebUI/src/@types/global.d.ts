@@ -13,6 +13,7 @@ import {
 
 export type IPage = Record<string, any> & {
   lang: Record<string, string>,
+  theme: string,
 
   loadLanguage?: typeof Language.load,
 };

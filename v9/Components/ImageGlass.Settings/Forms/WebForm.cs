@@ -111,6 +111,7 @@ public partial class WebForm : ThemedForm
     {
         base.OnRequestUpdatingTheme(e);
         _ = Web2.SetWeb2DarkModeAsync(e.Theme.Settings.IsDarkMode);
+        _ = SetThemeAsync();
     }
 
 
@@ -168,6 +169,7 @@ public partial class WebForm : ThemedForm
     /// </summary>
     protected virtual async Task OnWeb2NavigationCompleted()
     {
+        await SetThemeAsync();
         await LoadLanguageAsync(false);
 
         Web2NavigationCompleted?.Invoke(this, EventArgs.Empty);
@@ -233,6 +235,17 @@ public partial class WebForm : ThemedForm
         await Web2.ExecuteScriptAsync($"""
             window._page.lang = {WebUI.LangJson};
             window._page.loadLanguage();
+        """);
+    }
+
+
+    /// <summary>
+    /// Sets <c>_page.theme</c> to the <see cref="Config.Theme"/> value.
+    /// </summary>
+    public async Task SetThemeAsync()
+    {
+        await Web2.ExecuteScriptAsync($"""
+            window._page.theme = '{Config.Theme.FolderName}';
         """);
     }
 

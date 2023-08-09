@@ -169,14 +169,15 @@ export default class Settings {
   static updateInitSettings(newSettings: Record<string, any>) {
     console.info('🔵 Calling Settings.updateInitSettings()');
 
-    TabTools._areToolsChanged = false;
     const settingKeys = Object.keys(newSettings);
-
     settingKeys.forEach(key => {
       if (_pageSettings.config.hasOwnProperty(key)) {
         _pageSettings.config[key] = newSettings[key];
       }
     });
+
+    // update settings UI for some tabs
+    TabTools._areToolsChanged = false;
   }
 
 

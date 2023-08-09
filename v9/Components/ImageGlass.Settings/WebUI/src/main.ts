@@ -20,6 +20,7 @@ window.postAsync = postAsync;
 if (!window._page) {
   window._page = {
     lang: {},
+    theme: '',
   };
 }
 _page.loadLanguage = Language.load;

@@ -192,9 +192,7 @@ export default class TabAppearance {
    * Resets the background color to the current theme's background color.
    */
   private static resetBackgroundColor() {
-    const isDarkMode = document.documentElement.getAttribute('color-mode') !== 'light';
-    const currentThemeName = isDarkMode ? _pageSettings.config.DarkTheme : _pageSettings.config.LightTheme;
-    const theme = _pageSettings.themeList.find(i => i.FolderName === currentThemeName);
+    const theme = _pageSettings.themeList.find(i => i.FolderName === _page.theme);
     if (!theme) return;
 
     const colorHex = theme.BgColor || '#00000000';
