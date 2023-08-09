@@ -31,7 +31,7 @@ public class IconFile
         if (svgIcon == IconName.None) return string.Empty;
 
         var name = Enum.GetName(typeof(IconName), svgIcon);
-        return App.ConfigDir(PathType.File, Dir.Icons, $"{name}.svg");
+        return App.StartUpDir(Dir.Icons, $"{name}.svg");
     }
 
 
