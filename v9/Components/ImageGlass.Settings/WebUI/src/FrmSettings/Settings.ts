@@ -169,6 +169,7 @@ export default class Settings {
   static updateInitSettings(newSettings: Record<string, any>) {
     console.info('ℹ️ Calling Settings.updateInitSettings()');
 
+    TabTools._areToolsChanged = false;
     const settingKeys = Object.keys(newSettings);
 
     settingKeys.forEach(key => {

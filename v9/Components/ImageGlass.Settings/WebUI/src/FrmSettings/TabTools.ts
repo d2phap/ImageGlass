@@ -10,6 +10,7 @@ import Language from '../common/Language';
 
 
 export default class TabTools {
+  static _areToolsChanged = false;
   private static HOTKEY_SEPARATOR = '#';
 
   /**
@@ -35,6 +36,7 @@ export default class TabTools {
       } as ITool;
 
       const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, async () => {
+        TabTools._areToolsChanged = true;
         TabTools.addEventsForToolDialog();
         TabTools.updateToolCommandPreview();
 
@@ -54,12 +56,12 @@ export default class TabTools {
    */
   static exportSettings() {
     const settings = getChangedSettingsFromTab('tools');
-    const originalToolListJson = JSON.stringify(_pageSettings.toolList || []);
-
-    settings.Tools = TabTools.getToolListFromDom();
-    const newToolListJson = JSON.stringify(settings.Tools);
-
-    if (newToolListJson === originalToolListJson) {
+    
+    if (TabTools._areToolsChanged) {
+      // get new tool settings
+      settings.Tools = TabTools.getToolListFromDom();
+    }
+    else {
       delete settings.Tools;
     }
 
@@ -140,6 +142,7 @@ export default class TabTools {
 
         if (action === 'delete') {
           trEl.remove();
+          TabTools._areToolsChanged = true;
         }
         else if (action === 'edit') {
           await TabTools.editTool(toolId);
@@ -200,6 +203,7 @@ export default class TabTools {
 
     // open dialog
     const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, async () => {
+      TabTools._areToolsChanged = true;
       query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked = tool.IsIntegrated ?? false;
       TabTools.addEventsForToolDialog();
       TabTools.updateToolCommandPreview();
