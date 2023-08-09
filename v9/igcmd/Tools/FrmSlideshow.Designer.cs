@@ -72,7 +72,7 @@
             PicMain.CheckFPS = false;
             PicMain.ClientSelection = (RectangleF)resources.GetObject("PicMain.ClientSelection");
             PicMain.ContextMenuStrip = MnuContext;
-            PicMain.DebugMode = false;
+            PicMain.EnableDebug = false;
             PicMain.Dock = DockStyle.Fill;
             PicMain.EnableSelection = false;
             PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.SampleLinear;

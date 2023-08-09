@@ -915,10 +915,10 @@ public partial class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Gets, sets debug mode.
+    /// Enables, disables debug mode.
     /// </summary>
     [Browsable(false)]
-    public bool DebugMode
+    public bool EnableDebug
     {
         get => _debugMode;
         set
@@ -1475,7 +1475,7 @@ public partial class DXCanvas : DXControl
         DrawNavigationLayer(g);
 
 
-        if (DebugMode)
+        if (EnableDebug)
         {
             var text = $"FPS: {FPS}";
             var textSize = g.MeasureText(text, Font.Name, Font.Size, textDpi: DeviceDpi);
@@ -1779,7 +1779,7 @@ public partial class DXCanvas : DXControl
 
 
                 // draw debug Hit region
-                if (DebugMode)
+                if (EnableDebug)
                 {
                     g.DrawRectangle(rItem.HitRegion, 0, Color.Red);
                 }
@@ -1872,7 +1872,7 @@ public partial class DXCanvas : DXControl
 
 
         // debug
-        if (DebugMode)
+        if (EnableDebug)
         {
             g.DrawRectangle(drawableArea, MessageBorderRadius, Color.Red);
             g.DrawRectangle(hRegion, MessageBorderRadius, Color.Orange);

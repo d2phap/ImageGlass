@@ -34,6 +34,11 @@ public class Web2 : WebView2
     #region Properties
 
     /// <summary>
+    /// Enables or disables debug mode.
+    /// </summary>
+    public bool EnableDebug { get; set; } = false;
+
+    /// <summary>
     /// Gets, sets dark mode of <see cref="Web2"/>.
     /// </summary>
     public bool DarkMode
@@ -283,10 +288,7 @@ public class Web2 : WebView2
             this.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
 
             // DevTools
-            this.CoreWebView2.Settings.AreDevToolsEnabled = false;
-#if DEBUG
             this.CoreWebView2.Settings.AreDevToolsEnabled = true;
-#endif
 
             this.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
             this.CoreWebView2.ContextMenuRequested += CoreWebView2_ContextMenuRequested;
@@ -444,13 +446,11 @@ public class Web2 : WebView2
         }
         else if (msg.Name.Equals("KEYDOWN") && !string.IsNullOrWhiteSpace(msg.Data))
         {
-#if DEBUG
-            if (msg.Data == "ctrl+shift+i")
+            if (EnableDebug && msg.Data == "ctrl+shift+i")
             {
                 this.CoreWebView2.OpenDevToolsWindow();
                 return;
             }
-#endif
 
             var hotkey = new Hotkey(msg.Data);
             SafeRunUi(async () =>
@@ -477,12 +477,15 @@ public class Web2 : WebView2
     {
         // disable console.log in Release
         var logTask = Task.CompletedTask;
-#if !DEBUG
-        logTask = this.ExecuteScriptAsync($"""
-            console.log = () => undefined;
-            console.info = () => undefined;
-        """);
-#endif
+
+        if (!EnableDebug)
+        {
+           logTask = this.ExecuteScriptAsync($"""
+                console.log = () => undefined;
+                console.info = () => undefined;
+            """);
+        }
+
 
         var borderRadiusTask = Task.CompletedTask;
         if (BHelper.IsOS(WindowsOS.Win10))

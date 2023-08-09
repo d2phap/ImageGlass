@@ -357,6 +357,7 @@ public partial class DXCanvas
         Web2.Dock = DockStyle.Fill;
         Web2.ZoomFactor = 1D;
         Web2.Visible = true;
+        Web2.EnableDebug = EnableDebug;
 
         Web2.Web2Ready += Web2_Web2Ready;
         Web2.Web2NavigationCompleted += Web2_Web2NavigationCompleted;

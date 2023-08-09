@@ -979,7 +979,7 @@ namespace ImageGlass
             PicMain.CheckerboardMode = Base.PhotoBox.CheckerboardMode.Client;
             PicMain.CheckFPS = false;
             PicMain.ClientSelection = (RectangleF)resources.GetObject("PicMain.ClientSelection");
-            PicMain.DebugMode = false;
+            PicMain.EnableDebug = false;
             PicMain.Dock = DockStyle.Fill;
             PicMain.EnableSelection = false;
             PicMain.InterpolationScaleDown = Base.PhotoBox.ImageInterpolation.SampleLinear;

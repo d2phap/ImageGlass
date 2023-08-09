@@ -156,7 +156,7 @@ public partial class FrmMain
 
 
         // PicMain
-        //PicMain.DebugMode = true;
+        PicMain.EnableDebug = Config.EnableDebug;
         PicMain.NavDisplay = Config.EnableNavigationButtons
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;

@@ -56,6 +56,7 @@ public partial class WebForm : ThemedForm
         // hide the control by default
         // we will show it when the navigation is completed
         Web2.Visible = false;
+        Web2.EnableDebug = Config.EnableDebug;
 
         _ = Web2.EnsureWeb2Async();
     }
