@@ -18,6 +18,8 @@ query('#BtnCheckForUpdate').focus();
 
 
 window._page.loadData = (data: Record<string, string> = {}) => {
+  console.info('ℹ️ Loading data', data);
+
   query('#Lbl_CopyrightsYear').innerText = `2010-${new Date().getUTCFullYear()}`;
 
   query('#Img_AppLogo').setAttribute('src', data.AppLogo || '');

@@ -18,6 +18,8 @@ export default class Settings {
    * Loads settings.
    */
   static load() {
+    console.info('ℹ️ Loading settings from `_pageSettings.config`');
+
     Settings.loadSelectBoxEnums();
     TabLanguage.loadLanguageList();
 
@@ -40,7 +42,7 @@ export default class Settings {
       // find the html element
       const el = query(`[name="${configKey}"]`, null, true);
       if (!el) {
-        console.info(`>> Settings.load(): config '${configKey}' not found`);
+        console.info(`ℹ️ >> Settings.load(): config '${configKey}' not found`);
         continue;
       }
 
@@ -138,6 +140,8 @@ export default class Settings {
    * Gets all settings as an object.
    */
   static getAllSettings() {
+    console.info('ℹ️ Calling Settings.getAllSettings()');
+
     const settings: Record<string, any> = {
       ...TabGeneral.exportSettings(),
       ...TabImage.exportSettings(),
@@ -163,6 +167,8 @@ export default class Settings {
    * Updates the `_pageSettings.config`.
    */
   static updateInitSettings(newSettings: Record<string, any>) {
+    console.info('ℹ️ Calling Settings.updateInitSettings()');
+
     const settingKeys = Object.keys(newSettings);
 
     settingKeys.forEach(key => {

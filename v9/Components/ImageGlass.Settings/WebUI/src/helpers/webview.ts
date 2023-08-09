@@ -20,7 +20,7 @@ export class Webview {
       const handler = this.eventHandlers[eName];
       const hasHandler = handler !== undefined;
 
-      console.info(`🎈 Received event '${eName}' (handler=${hasHandler}) with data:`,
+      console.info(`ℹ️🎈 Received event '${eName}' (handler=${hasHandler}) with data:`,
         typeof(eData) === 'string' ? `${eData.substring(0, 100)}...` : eData);
 
       if (!hasHandler) return;

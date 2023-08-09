@@ -17,6 +17,8 @@ query('#BtnUpdate').focus();
 
 
 window._page.loadData = (data: Record<string, any> = {}) => {
+  console.info('ℹ️ Loading data', data);
+
   query('#Lbl_CurrentVersion').innerText = data.CurrentVersion || '';
   query('#LbL_LatestVersion').innerText = data.LatestVersion || '';
   query('#Lbl_PublishedDate').innerText = data.PublishedDate || '';

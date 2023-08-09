@@ -68,6 +68,8 @@ const delayRequestToUpdateLanguage = (langName: string) => {
 
 // load initial data
 window._page.loadData = (data: Record<string, any> = {}) => {
+  console.info('ℹ️ Loading data', data);
+
   _currentLang = data.currentLangName;
   _langList = data.langList || [];
   loadLanguageList();
