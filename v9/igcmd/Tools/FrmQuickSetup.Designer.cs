@@ -35,7 +35,6 @@
             // 
             Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
             Web2.Size = new Size(1200, 1500);
-            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmQuickSetup
             // 

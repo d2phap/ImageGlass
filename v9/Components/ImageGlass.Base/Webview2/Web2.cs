@@ -121,6 +121,7 @@ public class Web2 : WebView2
     public Web2()
     {
         this.DefaultBackgroundColor = Color.Transparent;
+
         this.WebMessageReceived += Web2_WebMessageReceived;
         this.NavigationCompleted += Web2_NavigationCompleted;
     }
@@ -475,9 +476,11 @@ public class Web2 : WebView2
 
     private async void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
-        // disable console.log in Release
+        if (this.Source.AbsoluteUri == "about:blank") return;
+
         var logTask = Task.CompletedTask;
 
+        // disable console.log if not debug mode
         if (!EnableDebug)
         {
            logTask = this.ExecuteScriptAsync($"""

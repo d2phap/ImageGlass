@@ -38,7 +38,6 @@ namespace ImageGlass
             // 
             Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
             Web2.Size = new Size(2277, 1425);
-            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmSettings
             // 
