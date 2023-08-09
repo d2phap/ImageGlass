@@ -32,39 +32,23 @@ export default class TabAppearance {
    * Adds events for tab Appearance.
    */
   static addEvents() {
+    // remove old events
+    query('#Lnk_ResetBackgroundColor').removeEventListener('click', TabAppearance.resetBackgroundColor, false);
+    query('#Lnk_ResetSlideshowBackgroundColor').removeEventListener('click', TabAppearance.resetSlideshowBackgroundColor, false);
+    query('#Btn_BackgroundColor').removeEventListener('click', TabAppearance.onBtn_BackgroundColor, false);
+    query('#Btn_SlideshowBackgroundColor').removeEventListener('click', TabAppearance.onBtn_SlideshowBackgroundColor, false);
+    query('#Btn_InstallTheme').removeEventListener('click', TabAppearance.onBtn_InstallTheme, false);
+    query('#Btn_RefreshThemeList').removeEventListener('click', TabAppearance.onBtn_RefreshThemeList, false);
+    query('#Btn_OpenThemeFolder').removeEventListener('click', TabAppearance.onBtn_OpenThemeFolder, false);
+
+    // add new events
     query('#Lnk_ResetBackgroundColor').addEventListener('click', TabAppearance.resetBackgroundColor, false);
     query('#Lnk_ResetSlideshowBackgroundColor').addEventListener('click', TabAppearance.resetSlideshowBackgroundColor, false);
-
-    query('#Btn_BackgroundColor').addEventListener('click', async () => {
-      const colorEL = query<HTMLInputElement>('[name="BackgroundColor"]');
-      const colorValue = await postAsync<string>('Btn_BackgroundColor', colorEL.value);
-
-      if (colorValue) {
-        colorEL.value = colorValue;
-        TabAppearance.handleBackgroundColorChanged();
-      }
-    }, false);
-    query('#Btn_SlideshowBackgroundColor').addEventListener('click', async () => {
-      const colorEL = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]');
-      const colorValue = await postAsync<string>('Btn_SlideshowBackgroundColor', colorEL.value);
-
-      if (colorValue) {
-        colorEL.value = colorValue;
-        TabAppearance.handleSlideshowBackgroundColorChanged();
-      }
-    }, false);
-
-    query('#Btn_InstallTheme').addEventListener('click', async () => {
-      const newThemeList = await postAsync<ITheme[]>('Btn_InstallTheme');
-      TabAppearance.loadThemeList(newThemeList);
-    }, false);
-
-    query('#Btn_RefreshThemeList').addEventListener('click', async () => {
-      const newThemeList = await postAsync<ITheme[]>('Btn_RefreshThemeList');
-      TabAppearance.loadThemeList(newThemeList);
-    }, false);
-
-    query('#Btn_OpenThemeFolder').addEventListener('click', () => post('Btn_OpenThemeFolder'), false);
+    query('#Btn_BackgroundColor').addEventListener('click', TabAppearance.onBtn_BackgroundColor, false);
+    query('#Btn_SlideshowBackgroundColor').addEventListener('click', TabAppearance.onBtn_SlideshowBackgroundColor, false);
+    query('#Btn_InstallTheme').addEventListener('click', TabAppearance.onBtn_InstallTheme, false);
+    query('#Btn_RefreshThemeList').addEventListener('click', TabAppearance.onBtn_RefreshThemeList, false);
+    query('#Btn_OpenThemeFolder').addEventListener('click', TabAppearance.onBtn_OpenThemeFolder, false);
   }
 
 
@@ -251,4 +235,40 @@ export default class TabAppearance {
     query<HTMLInputElement>('#Btn_SlideshowBackgroundColor > .color-display').style.setProperty('--color-picker-value', colorHex);
     query('#Lbl_SlideshowBackgroundColorValue').innerText = colorHex;
   }
+
+
+  private static async onBtn_BackgroundColor() {
+    const colorEL = query<HTMLInputElement>('[name="BackgroundColor"]');
+    const colorValue = await postAsync<string>('Btn_BackgroundColor', colorEL.value);
+
+    if (colorValue) {
+      colorEL.value = colorValue;
+      TabAppearance.handleBackgroundColorChanged();
+    }
+  }
+
+  private static async onBtn_SlideshowBackgroundColor() {
+    const colorEL = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]');
+    const colorValue = await postAsync<string>('Btn_SlideshowBackgroundColor', colorEL.value);
+
+    if (colorValue) {
+      colorEL.value = colorValue;
+      TabAppearance.handleSlideshowBackgroundColorChanged();
+    }
+  }
+
+  private static async onBtn_InstallTheme() {
+    const newThemeList = await postAsync<ITheme[]>('Btn_InstallTheme');
+    TabAppearance.loadThemeList(newThemeList);
+  }
+
+  private static async onBtn_RefreshThemeList() {
+    const newThemeList = await postAsync<ITheme[]>('Btn_RefreshThemeList');
+    TabAppearance.loadThemeList(newThemeList);
+  }
+
+  private static onBtn_OpenThemeFolder() {
+    post('Btn_OpenThemeFolder');
+  }
+
 }
