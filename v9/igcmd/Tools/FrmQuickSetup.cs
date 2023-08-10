@@ -145,10 +145,6 @@ public partial class FrmQuickSetup : WebForm
         #endregion // Parse settings JSON
 
 
-        // Apply settings
-        await Config.WriteAsync();
-
-
         // kill all ImageGlass processes and relaunch
         #region kill all ImageGlass processes and relaunch
 
@@ -171,16 +167,25 @@ public partial class FrmQuickSetup : WebForm
                 // Kill all processes
                 igProcesses.ForEach(p => p.Kill());
 
-                LaunchImageGlass();
+                await ApplyAndCloseAsync();
             }
         }
         else
         {
-            LaunchImageGlass();
+            await ApplyAndCloseAsync();
         }
 
         #endregion // kill all ImageGlass processes and relaunch
 
+    }
+
+
+    private async Task ApplyAndCloseAsync()
+    {
+        // write settings
+        await Config.WriteAsync();
+
+        LaunchImageGlass();
         Close();
     }
 
