@@ -746,8 +746,6 @@ public partial class FrmMain
     /// <summary>
     /// Toggles form top most
     /// </summary>
-    /// <param name="enableTopMost"></param>
-    /// <returns></returns>
     public bool IG_ToggleTopMost(bool? enableTopMost = null, bool showInAppMessage = true)
     {
         enableTopMost ??= !Config.EnableWindowTopMost;
@@ -2448,7 +2446,7 @@ public partial class FrmMain
             // update toolbar items state
             UpdateToolbarItemsState();
         }
-        
+
 
         if (showInAppMessage)
         {
