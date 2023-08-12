@@ -26,6 +26,7 @@ using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text;
 using WicNet;
 
@@ -1606,32 +1607,33 @@ public partial class FrmMain : ThemedForm
         else if (ac.Executable.StartsWith("IG_"))
         {
             // Find the private method in FrmMain
-            var method = GetType().GetMethod(ac.Executable);
-
-
-            // run built-in method
-            if (method is not null)
+            if (GetType().GetMethod(ac.Executable) is MethodInfo method)
             {
                 // check method's params
-                var paramItems = method.GetParameters();
-                var paramters = new List<object>();
+                var methodParams = method.GetParameters();
+                var paramters = new List<object?>(methodParams.Length);
 
-                if (paramItems.Length == 1)
+
+                for (var i = 0; i < methodParams.Length; i++)
                 {
-                    object? methodArg = null;
-                    var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
+                    var mParam = methodParams[i];
+                    var mParamValue = mParam.DefaultValue;
+                    var type = Nullable.GetUnderlyingType(mParam.ParameterType) ?? mParam.ParameterType;
+
+                    // get argument value
+                    var argument = ac.Arguments.Skip(i).Take(1).FirstOrDefault();
 
                     if (type.IsPrimitive || type.Equals(typeof(string)))
                     {
-                        if (string.IsNullOrEmpty(ac.Arguments.ToString()))
+                        if (string.IsNullOrEmpty(argument?.ToString()))
                         {
-                            methodArg = null;
+                            mParamValue = null;
                         }
                         else
                         {
                             try
                             {
-                                methodArg = Convert.ChangeType(ac.Arguments, type);
+                                mParamValue = Convert.ChangeType(argument, type);
                             }
                             catch (Exception ex) { error = ex; }
                         }
@@ -1644,13 +1646,13 @@ public partial class FrmMain : ThemedForm
                     }
 
 
-                    if (methodArg != null && methodArg.GetType().IsArray)
+                    if (mParamValue != null && mParamValue.GetType().IsArray)
                     {
-                        paramters.AddRange((object[])methodArg);
+                        paramters.Add((object[])mParamValue);
                     }
                     else
                     {
-                        paramters.Add(methodArg);
+                        paramters.Add(mParamValue);
                     }
                 }
 
