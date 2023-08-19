@@ -21,6 +21,7 @@ namespace ImageGlass.UI {
     public class ThemeIconCollection {
         public ThemeImage About { get; set; } = new();
         public ThemeImage ActualSize { get; set; } = new();
+        public ThemeImage ActualSizeAlready { get; set; } = new();
         public ThemeImage AdjustWindowSize { get; set; } = new();
         public ThemeImage Checkerboard { get; set; } = new();
         public ThemeImage Convert { get; set; } = new();

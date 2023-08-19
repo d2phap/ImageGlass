@@ -1,16 +1,27 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <clipPath id="clipPath2783">
+   <g display="none">
+    <rect x=".2892" y=".2892" width="7.5487" height="7.5487" d="M 0.289204,0.289204 H 7.8379148 V 7.8379148 H 0.289204 Z" fill="none" stroke="#999" stroke-width=".57841"/>
+    <rect x="12.162" y=".2892" width="7.5487" height="7.5487" d="m 12.162086,0.289204 h 7.54871 v 7.5487108 h -7.54871 z" fill="none" stroke="#999" stroke-width=".57841"/>
+    <rect x="12.162" y="12.162" width="7.5487" height="7.5487" d="m 12.162086,12.162086 h 7.54871 v 7.54871 h -7.54871 z" fill="none" stroke="#999" stroke-width=".57841"/>
+    <rect x=".2892" y="12.162" width="7.5487" height="7.5487" d="m 0.289204,12.162086 h 7.5487108 v 7.54871 H 0.289204 Z" fill="none" stroke="#999" stroke-width=".57841"/>
+   </g>
+   <path class="powerclip" d="m-3.0581-3.0581h26.116v26.116h-26.116zm3.3474 3.3474v7.5487h7.5487v-7.5487zm11.873 0v7.5487h7.5487v-7.5487zm0 11.873v7.5487h7.5487v-7.5487zm-11.873 0v7.5487h7.5487v-7.5487z"/>
+  </clipPath>
+ </defs>
  <!-- ImageGlass icons http://www.imageglass.org -->
-
  <g>
   <title>background</title>
-  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
-  <g display="none" id="canvasGrid">
-   <rect id="svg_2" fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  <rect id="canvas_background" x="-1" y="-1" width="22" height="22" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect width="100%" height="100%" fill="url(#gridpattern)" stroke-width="0"/>
   </g>
  </g>
  <g>
   <title>Layer 1</title>
-  <ellipse stroke="#dedede" ry="7.899555" rx="7.899555" id="svg_9" cy="8.249556" cx="8.249555" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="19.699652" x2="19.722484" y1="13.835621" x1="13.858454" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+  <rect x="5.7829" y="6.8183" width="8.4343" height="6.3635" fill="none" stroke="#dedede" stroke-width=".7"/>
+  <rect x="2.1919" y="2.1919" width="15.616" height="15.616" d="M 2.1918502,2.1918502 H 17.80815 V 17.80815 H 2.1918502 Z" clip-path="url(#clipPath2783)" fill="none" stroke="#dedede" stroke-width=".7"/>
  </g>
 </svg>

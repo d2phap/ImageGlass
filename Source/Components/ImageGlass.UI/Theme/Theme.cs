@@ -300,6 +300,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ZoomOut.Refresh(iconHeight);
             ToolbarIcons.ScaleToFit.Refresh(iconHeight);
             ToolbarIcons.ActualSize.Refresh(iconHeight);
+            ToolbarIcons.ActualSizeAlready.Refresh(iconHeight);
             ToolbarIcons.LockRatio.Refresh(iconHeight);
             ToolbarIcons.AutoZoom.Refresh(iconHeight);
             ToolbarIcons.ScaleToWidth.Refresh(iconHeight);
@@ -537,6 +538,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout", iconHeight);
             ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit", iconHeight);
             ToolbarIcons.ActualSize = LoadThemeImage(dir, n, "scaletofit", iconHeight);
+            ToolbarIcons.ActualSizeAlready = LoadThemeImage(dir, n, "scaletofitalready", iconHeight);
             ToolbarIcons.LockRatio = LoadThemeImage(dir, n, "zoomlock", iconHeight);
             ToolbarIcons.AutoZoom = LoadThemeImage(dir, n, "autozoom", iconHeight);
             ToolbarIcons.ScaleToWidth = LoadThemeImage(dir, n, "scaletowidth", iconHeight);
@@ -653,6 +655,7 @@ namespace ImageGlass.UI {
             n.SetAttribute("zoomlock", Path.GetFileName(ToolbarIcons.LockRatio.Filename));
             n.SetAttribute("autozoom", Path.GetFileName(ToolbarIcons.AutoZoom.Filename));
             n.SetAttribute("scaletofit", Path.GetFileName(ToolbarIcons.ActualSize.Filename));
+            n.SetAttribute("scaletofitalready", Path.GetFileName(ToolbarIcons.ActualSizeAlready.Filename));
             n.SetAttribute("scaletowidth", Path.GetFileName(ToolbarIcons.ScaleToWidth.Filename));
             n.SetAttribute("scaletoheight", Path.GetFileName(ToolbarIcons.ScaleToHeight.Filename));
             n.SetAttribute("scaletofill", Path.GetFileName(ToolbarIcons.ScaleToFill.Filename));

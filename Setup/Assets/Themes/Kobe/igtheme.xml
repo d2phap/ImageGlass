@@ -30,6 +30,7 @@
         zoomtofit="ScaleToFit.svg"
         scaletofill="ScaleToFill.svg"
         scaletofit="ActualSize.svg"
+        scaletofitalready="ActualSizeAlready.svg"
         scaletowidth="ScaleToWidth.svg"
         scaletoheight="ScaleToHeight.svg"
         autosizewindow="AdjustWindowSize.svg"

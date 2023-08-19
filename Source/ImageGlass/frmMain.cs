@@ -135,6 +135,8 @@ namespace ImageGlass {
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new();
 
+        // Dual icon button handlers
+        private DualIconButton _actualSizeButton;
 
         #endregion
 
@@ -2719,7 +2721,8 @@ namespace ImageGlass {
             btnZoomIn.Image = th.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = th.ToolbarIcons.ZoomOut.Image;
             btnScaleToFit.Image = th.ToolbarIcons.ScaleToFit.Image;
-            btnActualSize.Image = th.ToolbarIcons.ActualSize.Image;
+            _actualSizeButton = new DualIconButton(btnActualSize, th.ToolbarIcons.ActualSize.Image, th.ToolbarIcons.ActualSizeAlready.Image);
+            _actualSizeButton.setImage(picMain.IsActualSize);
             btnZoomLock.Image = th.ToolbarIcons.LockRatio.Image;
             btnAutoZoom.Image = th.ToolbarIcons.AutoZoom.Image;
             btnScaletoWidth.Image = th.ToolbarIcons.ScaleToWidth.Image;
@@ -3255,6 +3258,9 @@ namespace ImageGlass {
 
             // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
+
+            // Zoom level change event
+            picMain.ZoomChanged += picMain_ZoomChanged;
 
             // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
@@ -3835,6 +3841,11 @@ namespace ImageGlass {
 
             // draw navigation regions
             PaintNavigationRegions(e);
+        }
+
+        private void picMain_ZoomChanged(object sender, EventArgs e) {
+            // If zoom level is actual size, use alternate icon for actual size button (if defined)
+            _actualSizeButton.setImage(picMain.IsActualSize);
         }
 
         #region File System Watcher events
@@ -5880,6 +5891,26 @@ namespace ImageGlass {
 
 
         #endregion
+    }
+
+
+    /// <summary>
+    /// DualIconButton manages a button that can have two possible images
+    /// </summary>
+    class DualIconButton {
+        public ToolStripButton Button;
+        public Image MainImage;
+        public Image AltImage;
+
+        public DualIconButton(ToolStripButton toolStripButton, Image mainImage = null, Image altImage = null) {
+            this.Button = toolStripButton;
+            this.MainImage = mainImage;
+            this.AltImage = altImage;
+            setImage();
+        }
+        public void setImage(bool useAltImage = false) {
+            Button.Image = useAltImage && AltImage != null ? AltImage : MainImage;
+        }
     }
 
 }
