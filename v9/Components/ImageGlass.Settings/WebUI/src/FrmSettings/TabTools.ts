@@ -10,7 +10,7 @@ import { ToolDialogHtmlElement } from './webComponents/ToolDialogHtmlElement';
 export default class TabTools {
   static HOTKEY_SEPARATOR = '#';
   static _areToolsChanged = false;
-  static #toolDialog = query<ToolDialogHtmlElement>('#Dialog_Tool');
+  static #toolDialog = query<ToolDialogHtmlElement>('[is="tool-dialog"]');
 
   /**
    * Loads settings for tab Tools.

@@ -2,34 +2,23 @@ import { ITool } from '@/@types/FrmSettings';
 import { openFilePicker, openModalDialogEl, renderHotkeyListEl } from '@/helpers';
 
 const HOTKEY_SEPARATOR = '#';
-const styles = `
-`;
 
-
-export class ToolDialogHtmlElement extends HTMLElement {
-  #dialogEl: HTMLDialogElement;
-
+export class ToolDialogHtmlElement extends HTMLDialogElement {
   constructor() {
     super();
 
     // private methods
-    this.createTemplate = this.createTemplate.bind(this);
-
-    // initialize template
-    this.createTemplate();
+    this.showCreate = this.showCreate.bind(this);
+    this.showEdit = this.showEdit.bind(this);
+    this.getDialogData = this.getDialogData.bind(this);
+    this.addDialogEvents = this.addDialogEvents.bind(this);
+    this.updateToolCommandPreview = this.updateToolCommandPreview.bind(this);
+    this.handleBtnBrowseToolClickEvent = this.handleBtnBrowseToolClickEvent.bind(this);
   }
 
 
-  private createTemplate() {
-    // initialize component
-    this.attachShadow({ mode: 'open' });
-
-    const css = new CSSStyleSheet();
-    css.replaceSync(styles);
-    this.shadowRoot.adoptedStyleSheets = [css];
-
-    this.#dialogEl = document.createElement('dialog');
-    this.#dialogEl.innerHTML = `
+  private connectedCallback() {
+    this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
           <span class="create-only" lang-text="FrmSettings.Tab.Tools._AddNewTool">[Add a new external tool]</span>
@@ -78,8 +67,6 @@ export class ToolDialogHtmlElement extends HTMLElement {
           <button id="BtnCancel" type="button" lang-text="_._Cancel">[Cancel]</button>
         </footer>
       </form>`;
-
-    this.shadowRoot.appendChild(this.#dialogEl);
   }
 
 
@@ -96,11 +83,11 @@ export class ToolDialogHtmlElement extends HTMLElement {
       IsIntegrated: false,
     } as ITool;
 
-    const isSubmitted = await openModalDialogEl(this.#dialogEl, 'create', defaultTool, async () => {
+    const isSubmitted = await openModalDialogEl(this, 'create', defaultTool, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
 
-      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this.#dialogEl);
+      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this);
       await renderHotkeyListEl(hotkeyListEl, defaultTool.Hotkeys);
     });
 
@@ -128,12 +115,12 @@ export class ToolDialogHtmlElement extends HTMLElement {
     };
 
     // open dialog
-    const isSubmitted = await openModalDialogEl(this.#dialogEl, 'edit', tool, async () => {
-      query<HTMLInputElement>('[name="_IsIntegrated"]', this.#dialogEl).checked = tool.IsIntegrated ?? false;
+    const isSubmitted = await openModalDialogEl(this, 'edit', tool, async () => {
+      query<HTMLInputElement>('[name="_IsIntegrated"]', this).checked = tool.IsIntegrated ?? false;
       this.addDialogEvents();
       this.updateToolCommandPreview();
 
-      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this.#dialogEl);
+      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this);
       await renderHotkeyListEl(hotkeyListEl, tool.Hotkeys);
     });
 
@@ -147,12 +134,12 @@ export class ToolDialogHtmlElement extends HTMLElement {
   public getDialogData() {
     // get data
     const tool: ITool = {
-      ToolId: query<HTMLInputElement>('[name="_ToolId"]', this.#dialogEl).value.trim(),
-      ToolName: query<HTMLInputElement>('[name="_ToolName"]', this.#dialogEl).value.trim(),
-      Executable: query<HTMLInputElement>('[name="_Executable"]', this.#dialogEl).value.trim(),
-      Arguments: query<HTMLInputElement>('[name="_Arguments"]', this.#dialogEl).value.trim(),
-      Hotkeys: queryAll('.hotkey-list > .hotkey-item > kbd', this.#dialogEl).map(el => el.innerText),
-      IsIntegrated: query<HTMLInputElement>('[name="_IsIntegrated"]', this.#dialogEl).checked,
+      ToolId: query<HTMLInputElement>('[name="_ToolId"]', this).value.trim(),
+      ToolName: query<HTMLInputElement>('[name="_ToolName"]', this).value.trim(),
+      Executable: query<HTMLInputElement>('[name="_Executable"]', this).value.trim(),
+      Arguments: query<HTMLInputElement>('[name="_Arguments"]', this).value.trim(),
+      Hotkeys: queryAll('.hotkey-list > .hotkey-item > kbd', this).map(el => el.innerText),
+      IsIntegrated: query<HTMLInputElement>('[name="_IsIntegrated"]', this).checked,
     };
 
     return tool;
@@ -160,28 +147,28 @@ export class ToolDialogHtmlElement extends HTMLElement {
 
 
   private addDialogEvents() {
-    query('[name="_Executable"]', this.#dialogEl).removeEventListener('input', this.updateToolCommandPreview, false);
-    query('[name="_Executable"]', this.#dialogEl).addEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Executable"]', this).removeEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Executable"]', this).addEventListener('input', this.updateToolCommandPreview, false);
 
-    query('[name="_Arguments"]', this.#dialogEl).removeEventListener('input', this.updateToolCommandPreview, false);
-    query('[name="_Arguments"]', this.#dialogEl).addEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Arguments"]', this).removeEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Arguments"]', this).addEventListener('input', this.updateToolCommandPreview, false);
 
-    query('#BtnBrowseTool', this.#dialogEl).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
-    query('#BtnBrowseTool', this.#dialogEl).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
+    query('#BtnBrowseTool', this).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
+    query('#BtnBrowseTool', this).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
 
-    query('#BtnCancel', this.#dialogEl).removeEventListener('click', () => this.#dialogEl.close(), false);
-    query('#BtnCancel', this.#dialogEl).addEventListener('click', () => this.#dialogEl.close(), false);
+    query('#BtnCancel', this).removeEventListener('click', () => this.close(), false);
+    query('#BtnCancel', this).addEventListener('click', () => this.close(), false);
   }
 
 
   private updateToolCommandPreview() {
-    let executable = query<HTMLInputElement>('[name="_Executable"]', this.#dialogEl).value || '';
+    let executable = query<HTMLInputElement>('[name="_Executable"]', this).value || '';
     executable = executable.trim();
 
-    let args = query<HTMLInputElement>('[name="_Arguments"]', this.#dialogEl).value || '';
+    let args = query<HTMLInputElement>('[name="_Arguments"]', this).value || '';
     args = args.trim().replaceAll('<file>', '"C:\\fake dir\\photo.jpg"');
 
-    query('#Tool_CommandPreview', this.#dialogEl).innerText = [executable, args].filter(Boolean).join(' ');
+    query('#Tool_CommandPreview', this).innerText = [executable, args].filter(Boolean).join(' ');
   }
 
 
@@ -189,7 +176,7 @@ export class ToolDialogHtmlElement extends HTMLElement {
     const filePaths = await openFilePicker() ?? [];
     if (!filePaths.length) return;
 
-    query<HTMLInputElement>('[name="_Executable"]', this.#dialogEl).value = `"${filePaths[0]}"`;
+    query<HTMLInputElement>('[name="_Executable"]', this).value = `"${filePaths[0]}"`;
     this.updateToolCommandPreview();
   }
 }
@@ -201,4 +188,5 @@ export class ToolDialogHtmlElement extends HTMLElement {
 export const defineToolDialogHtmlElement = () => window.customElements.define(
   'tool-dialog',
   ToolDialogHtmlElement,
+  { extends: 'dialog' },
 );
