@@ -136,7 +136,14 @@ export const openModalDialogEl = async (
 
   Object.keys(data).forEach(key => {
     const inputEl = query<HTMLInputElement>(`[name="_${key}"]`, dialogEl);
-    if (inputEl) inputEl.value = data[key];
+    if (inputEl) {
+      if (inputEl.type === 'checkbox') {
+        inputEl.checked = data[key] === true;
+      }
+      else {
+        inputEl.value = data[key];
+      }
+    }
   });
 
   // on open
