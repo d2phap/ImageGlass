@@ -438,13 +438,22 @@ internal class Local
     /// <summary>
     /// Opens tool as a <see cref="PipeServer"/>.
     /// </summary>
-    /// <param name="tool"></param>
-    /// <returns></returns>
     /// <exception cref="FileNotFoundException"></exception>
     public static async Task<PipeServer?> OpenPipedToolAsync(IgTool? tool)
     {
         if (tool == null || tool.IsEmpty) throw new FileNotFoundException();
         if (ToolPipeServers.TryGetValue(tool.ToolId, out PipeServer? server)) return server;
+
+        var isIntegrated = tool.IsIntegrated ?? false;
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        var args = tool.Arguments?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+
+        // tool is not integrated
+        if (!isIntegrated)
+        {
+            using var _ = ImageGlassTool.LaunchTool(tool.Executable, args, false);
+            return null;
+        }
 
 
         // Create new tool server
@@ -476,8 +485,6 @@ internal class Local
 
         try
         {
-            var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var args = tool.Arguments?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
             var pipeCodeCmd = $"{ImageGlassTool.PIPE_CODE_CMD_LINE}{pipeCode}";
 
             toolProc = ImageGlassTool.LaunchTool(tool.Executable,
