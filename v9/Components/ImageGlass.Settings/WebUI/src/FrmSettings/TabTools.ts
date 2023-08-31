@@ -2,16 +2,15 @@ import { ITool } from '@/@types/FrmSettings';
 import {
   escapeHtml,
   getChangedSettingsFromTab,
-  openFilePicker,
-  openModalDialog,
-  renderHotkeyList,
 } from '@/helpers';
 import Language from '../common/Language';
+import { ToolDialogHtmlElement } from './webComponents/ToolDialogHtmlElement';
 
 
 export default class TabTools {
+  static HOTKEY_SEPARATOR = '#';
   static _areToolsChanged = false;
-  private static HOTKEY_SEPARATOR = '#';
+  static #toolDialog = query<ToolDialogHtmlElement>('#Dialog_Tool');
 
   /**
    * Loads settings for tab Tools.
@@ -25,29 +24,7 @@ export default class TabTools {
    * Adds events for tab Tools.
    */
   static addEvents() {
-    query('#Btn_AddTool').addEventListener('click', async () => {
-      const defaultTool = {
-        ToolId: '',
-        ToolName: '',
-        Executable: '',
-        Arguments: _pageSettings.FILE_MACRO,
-        Hotkeys: [],
-        IsIntegrated: false,
-      } as ITool;
-
-      const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'create', defaultTool, async () => {
-        TabTools._areToolsChanged = true;
-        TabTools.addEventsForToolDialog();
-        TabTools.updateToolCommandPreview();
-
-        await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', defaultTool.Hotkeys);
-      });
-
-      if (isSubmitted) {
-        const tool = TabTools.getToolDialogFormData();
-        TabTools.setToolItemToList(tool.ToolId, tool);
-      }
-    }, false);
+    query('#Btn_AddTool').addEventListener('click', () => TabTools.openToolDialog(), false);
   }
 
 
@@ -145,7 +122,7 @@ export default class TabTools {
           TabTools._areToolsChanged = true;
         }
         else if (action === 'edit') {
-          await TabTools.editTool(toolId);
+          await TabTools.openToolDialog(toolId);
           el.focus();
         }
       }, false);
@@ -183,56 +160,24 @@ export default class TabTools {
 
 
   /**
-   * Open modal dialog to edit the tool.
-   * @param toolId Tool id
+   * Open tool dialog for create or edit.
    */
-  private static async editTool(toolId: string) {
-    const trEl = query<HTMLTableRowElement>(`#Table_ToolList tr[data-toolId="${toolId}"]`);
+  private static async openToolDialog(toolId?: string) {
+    let isSubmitted = false;
 
-    const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
-    const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
-
-    let tool: ITool = {
-      ToolId: toolId,
-      ToolName: query('[name="_ToolName"]', trEl).innerText || '',
-      Executable: query('[name="_Executable"]', trEl).innerText || '',
-      Arguments: query('[name="_Arguments"]', trEl).innerText || '',
-      IsIntegrated: query('[name="_IsIntegrated"]', trEl).innerText === 'true',
-      Hotkeys: toolHotkeys,
-    };
-
-    // open dialog
-    const isSubmitted = await openModalDialog('#Dialog_AddOrEditTool', 'edit', tool, async () => {
-      TabTools._areToolsChanged = true;
-      query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked = tool.IsIntegrated ?? false;
-      TabTools.addEventsForToolDialog();
-      TabTools.updateToolCommandPreview();
-
-      await renderHotkeyList('#Dialog_AddOrEditTool .hotkey-list', tool.Hotkeys);
-    });
+    if (toolId) {
+      isSubmitted = await this.#toolDialog.showEdit(toolId);
+    }
+    else {
+      isSubmitted = await this.#toolDialog.showCreate();
+    }
 
     if (isSubmitted) {
-      tool = TabTools.getToolDialogFormData();
-      TabTools.setToolItemToList(toolId, tool);
+      TabTools._areToolsChanged = true;
+
+      const tool = this.#toolDialog.getDialogData();
+      TabTools.setToolItemToList(tool.ToolId, tool);
     }
-  }
-
-
-  /**
-   * Gets tool data from the modal dialog.
-   */
-  private static getToolDialogFormData() {
-    // get data
-    const tool: ITool = {
-      ToolId: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_ToolId"]').value.trim(),
-      ToolName: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_ToolName"]').value.trim(),
-      Executable: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value.trim(),
-      Arguments: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Arguments"]').value.trim(),
-      Hotkeys: queryAll('#Dialog_AddOrEditTool .hotkey-list > .hotkey-item > kbd').map(el => el.innerText),
-      IsIntegrated: query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_IsIntegrated"]').checked,
-    };
-
-    return tool;
   }
 
 
@@ -256,37 +201,4 @@ export default class TabTools {
 
     TabTools.loadToolList(toolList);
   }
-
-
-  private static addEventsForToolDialog() {
-    query('#Dialog_AddOrEditTool [name="_Executable"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
-    query('#Dialog_AddOrEditTool [name="_Executable"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
-
-    query('#Dialog_AddOrEditTool [name="_Arguments"]').removeEventListener('input', TabTools.updateToolCommandPreview, false);
-    query('#Dialog_AddOrEditTool [name="_Arguments"]').addEventListener('input', TabTools.updateToolCommandPreview, false);
-
-    query('#btnBrowseTool').removeEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
-    query('#btnBrowseTool').addEventListener('click', TabTools.handleBtnBrowseToolClickEvent, false);
-  }
-
-
-  private static updateToolCommandPreview() {
-    let executable = query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value || '';
-    executable = executable.trim();
-
-    let args = query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Arguments"]').value || '';
-    args = args.trim().replaceAll('<file>', '"C:\\fake dir\\photo.jpg"');
-
-    query('#Tool_CommandPreview').innerText = [executable, args].filter(Boolean).join(' ');
-  }
-
-
-  private static async handleBtnBrowseToolClickEvent() {
-    const filePaths = await openFilePicker() ?? [];
-    if (!filePaths.length) return;
-
-    query<HTMLInputElement>('#Dialog_AddOrEditTool [name="_Executable"]').value = `"${filePaths[0]}"`;
-    TabTools.updateToolCommandPreview();
-  }
-
 }

@@ -94,18 +94,17 @@ export const taggedTemplate = <T = Record<string, any>>(strings: TemplateStrings
 /**
  * Opens modal dialog.
  * It returns `true` if the dialog form is submitted, otherwise `false`.
- * @param selector Dialog selector.
+ * @param dialogEl Dialog HTML element.
  * @param data The data to pass to the dialog.
  */
-export const openModalDialog = async (
-  selector: string,
+export const openModalDialogEl = async (
+  dialogEl: HTMLDialogElement,
   purpose: 'create' | 'edit',
   data: Record<string, any> = {},
   onOpen?: (el: HTMLDialogElement) => any,
   onSubmit?: (e: SubmitEvent) => any) => {
   let isClosed = false;
   let isSubmitted = false;
-  const dialogEl = query<HTMLDialogElement>(selector);
   dialogEl.classList.remove('dialog--create', 'dialog--edit');
   dialogEl.classList.add(`dialog--${purpose}`);
 
@@ -130,13 +129,13 @@ export const openModalDialog = async (
   dialogEl.addEventListener('close', () => isClosed = true, false);
 
   // on submit
-  query<HTMLFormElement>(`${selector} > form`).addEventListener('submit', async (e) => {
+  query<HTMLFormElement>('form', dialogEl).addEventListener('submit', async (e) => {
     if (onSubmit) await Promise.resolve(onSubmit(e));
     isSubmitted = true;
   });
 
   Object.keys(data).forEach(key => {
-    const inputEl = query<HTMLInputElement>(`${selector} [name="_${key}"]`);
+    const inputEl = query<HTMLInputElement>(`[name="_${key}"]`, dialogEl);
     if (inputEl) inputEl.value = data[key];
   });
 
@@ -151,6 +150,23 @@ export const openModalDialog = async (
   }
 
   return isSubmitted;
+};
+
+
+/**
+ * Opens modal dialog.
+ * It returns `true` if the dialog form is submitted, otherwise `false`.
+ * @param selector Dialog selector.
+ * @param data The data to pass to the dialog.
+ */
+export const openModalDialog = (
+  selector: string,
+  purpose: 'create' | 'edit',
+  data: Record<string, any> = {},
+  onOpen?: (el: HTMLDialogElement) => any,
+  onSubmit?: (e: SubmitEvent) => any) => {
+  const dialogEl = query<HTMLDialogElement>(selector);
+  return openModalDialogEl(dialogEl, purpose, data, onOpen, onSubmit);
 };
 
 
@@ -179,15 +195,14 @@ export const openHotkeyPicker = async (): Promise<string | null> => {
 
 /**
  * Renders hotkey list
- * @param ulSelector CSS selector of the list element
+ * @param ulEl The list HTML element
  * @param hotkeys Hotkey list to render
  */
-export const renderHotkeyList = async (
-  ulSelector: string,
+export const renderHotkeyListEl = async (
+  ulEl: HTMLUListElement,
   hotkeys: string[],
   onChange?: (action: 'delete' | 'add') => any,
 ) => {
-  const ulEl = query(ulSelector);
   let ulHtml = '';
 
   // load list of hotkeys
@@ -210,10 +225,10 @@ export const renderHotkeyList = async (
   Language.load();
 
   // add event listerner for 'Delete' hotkey
-  queryAll<HTMLButtonElement>(`${ulSelector} button[data-action]`).forEach(el => {
+  queryAll<HTMLButtonElement>('button[data-action]', ulEl).forEach(el => {
     el.addEventListener('click', async () => {
       const action = el.getAttribute('data-action');
-      const newHotkeys = queryAll(`${ulSelector} .hotkey-item > kbd`)
+      const newHotkeys = queryAll('.hotkey-item > kbd', ulEl)
         .map(kbdEl => kbdEl.innerText);
 
       if (action === 'delete') {
@@ -226,12 +241,27 @@ export const renderHotkeyList = async (
         if (!hotkey) return;
 
 
-        renderHotkeyList(ulSelector, [...newHotkeys, hotkey], onChange);
+        renderHotkeyListEl(ulEl, [...newHotkeys, hotkey], onChange);
         if (onChange) await Promise.resolve(onChange(action));
 
         // set focus to the 'Add hotkey' button
-        query<HTMLButtonElement>(`${ulSelector} button[data-action="add"]`)?.focus();
+        query<HTMLButtonElement>('button[data-action="add"]', ulEl)?.focus();
       }
     }, false);
   });
+};
+
+
+/**
+ * Renders hotkey list
+ * @param ulSelector CSS selector of the list element
+ * @param hotkeys Hotkey list to render
+ */
+export const renderHotkeyList = async (
+  ulSelector: string,
+  hotkeys: string[],
+  onChange?: (action: 'delete' | 'add') => any,
+) => {
+  const ulEl = query<HTMLUListElement>(ulSelector);
+  await renderHotkeyListEl(ulEl, hotkeys, onChange);
 };

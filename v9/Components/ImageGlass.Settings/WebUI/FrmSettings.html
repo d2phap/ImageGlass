@@ -936,57 +936,7 @@
     </section>
 
 
-
-    <dialog id="Dialog_AddOrEditTool">
-      <form method="dialog">
-        <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.Tools._AddNewTool">[Add a new external tool]</span>
-          <span class="edit-only" lang-text="FrmSettings.Tab.Tools._EditTool">[Edit external tool]</span>
-        </header>
-        <div class="dialog-body" style="width: 33rem;">
-          <div class="mb-3">
-            <div class="mb-1" lang-text="_._ID">[ID]</div>
-            <input type="text" name="_ToolId" class="w-100" required spellcheck="false" />
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="_._Name">[Name]</div>
-            <input type="text" name="_ToolName" class="w-100" required spellcheck="false" />
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="_._Executable">[Executable]</div>
-            <div class="d-flex align-items-center">
-              <input type="text" name="_Executable" class="me-2 w-100" required spellcheck="false"
-                style="width: calc(100vw - calc(var(--controlHeight) * 1px) - 0.5rem);" />
-              <button id="btnBrowseTool" type="button" class="px-1" lang-title="_._Browse">…</button>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="_._Arguments">[Arguments]</div>
-            <input type="text" name="_Arguments" class="w-100" spellcheck="false" value="<file>" />
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
-            <ul class="hotkey-list mb-1"></ul>
-          </div>
-          <div class="mb-3 mt-4">
-            <label class="ig-checkbox">
-              <input type="checkbox" name="_IsIntegrated" />
-              <div lang-html="FrmSettings.Tab.Tools._IntegratedWith">
-                [Integrated <a href="https://github.com/ImageGlass/ImageGlass.Tools" target="_blank">ImageGlass.Tools</a>]
-              </div>
-            </label>
-          </div>
-          <div class="mt-4">
-            <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>
-            <pre class="command-preview text-code px-2 py-1"><code id="Tool_CommandPreview"></code></pre>
-          </div>
-        </div>
-        <footer class="dialog-footer">
-          <button type="submit" lang-text="_._OK">[OK]</button>
-          <button type="button" lang-text="_._Cancel" onclick="Dialog_AddOrEditTool.close();">[Cancel]</button>
-        </footer>
-      </form>
-    </dialog>
+    <tool-dialog id="Dialog_Tool"></tool-dialog>
   </main>
 
 
