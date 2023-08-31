@@ -64,7 +64,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
         </div>
         <footer class="dialog-footer">
           <button type="submit" lang-text="_._OK">[OK]</button>
-          <button id="BtnCancel" type="button" lang-text="_._Cancel">[Cancel]</button>
+          <button id="BtnCloseToolDialog" type="button" lang-text="_._Cancel">[Cancel]</button>
         </footer>
       </form>`;
   }
@@ -116,7 +116,6 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
 
     // open dialog
     const isSubmitted = await openModalDialogEl(this, 'edit', tool, async () => {
-      query<HTMLInputElement>('[name="_IsIntegrated"]', this).checked = tool.IsIntegrated ?? false;
       this.addDialogEvents();
       this.updateToolCommandPreview();
 
@@ -156,8 +155,8 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     query('#BtnBrowseTool', this).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
     query('#BtnBrowseTool', this).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
 
-    query('#BtnCancel', this).removeEventListener('click', () => this.close(), false);
-    query('#BtnCancel', this).addEventListener('click', () => this.close(), false);
+    query('#BtnCloseToolDialog', this).removeEventListener('click', () => this.close(), false);
+    query('#BtnCloseToolDialog', this).addEventListener('click', () => this.close(), false);
   }
 
 
