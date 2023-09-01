@@ -21,6 +21,7 @@
     grid-area: main;
     padding: 1rem;
     background-color: rgb(var(--AppBg) / 0.75);
+    border-top-left-radius: calc(var(--borderRadius) * 4);
     max-height: fit-content;
     overflow-y: auto;
     overflow-x: hidden;

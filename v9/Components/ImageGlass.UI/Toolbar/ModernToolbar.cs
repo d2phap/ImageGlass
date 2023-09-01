@@ -391,9 +391,6 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Shows item tooltip
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="duration"></param>
-    /// <param name="delay"></param>
     public async void ShowItemTooltip(ToolStripItem? item, int duration = 4000, int delay = 400)
     {
         if (item is null || string.IsNullOrEmpty(item.ToolTipText))
