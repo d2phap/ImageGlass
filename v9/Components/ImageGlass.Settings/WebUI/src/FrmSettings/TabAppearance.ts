@@ -160,7 +160,7 @@ export default class TabAppearance {
     }
 
     ulEl.innerHTML = ulHtml;
-    Language.load();
+    Language.loadForEl(ulEl);
     TabAppearance.loadThemeListStatus();
 
     queryAll<HTMLInputElement>('[name="_DarkThemeOptions"]').forEach(el => {

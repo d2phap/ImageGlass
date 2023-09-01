@@ -109,7 +109,7 @@ export default class TabTools {
     }
 
     tbodyEl.innerHTML = tbodyHtml;
-    Language.load();
+    Language.loadForEl(tbodyEl);
 
     queryAll<HTMLButtonElement>('#Table_ToolList button[data-action]').forEach(el => {
       el.addEventListener('click', async () => {

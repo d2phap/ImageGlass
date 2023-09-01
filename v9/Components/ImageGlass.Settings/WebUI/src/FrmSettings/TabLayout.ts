@@ -102,7 +102,7 @@ export default class TabLayout {
         </button>`;
     }
 
-    Language.load();
+    Language.loadFor('.app-layout');
 
     // add drag/drop events
     queryAll('.app-layout button[draggable="true"]').forEach(btnEl => {

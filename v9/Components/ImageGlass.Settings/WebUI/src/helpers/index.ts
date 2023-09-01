@@ -229,7 +229,7 @@ export const renderHotkeyListEl = async (
   </li>`;
 
   ulEl.innerHTML = ulHtml;
-  Language.load();
+  Language.loadForEl(ulEl);
 
   // add event listerner for 'Delete' hotkey
   queryAll<HTMLButtonElement>('button[data-action]', ulEl).forEach(el => {
