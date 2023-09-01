@@ -225,7 +225,7 @@ export const renderHotkeyListEl = async (
 
   // load 'Add hotkey' button
   ulHtml += `<li>
-    <button type="button" lang-title="_._AddHotkey" data-action="add">[Add hotkey…]</button>
+    <button type="button" lang-text="_._AddHotkey" data-action="add">[Add hotkey…]</button>
   </li>`;
 
   ulEl.innerHTML = ulHtml;

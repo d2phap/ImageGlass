@@ -141,6 +141,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._ID", "ID");
         Add("_._Name", "Name");
         Add("_._Hotkeys", "Hotkeys");
+        Add("_._AddHotkey", "Add hotkey…");
         Add("_._Executable", "Executable");
         Add("_._Arguments", "Arguments");
         Add("_._CommandPreview", "Command preview");
