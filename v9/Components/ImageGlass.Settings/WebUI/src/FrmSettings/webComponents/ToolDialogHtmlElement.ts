@@ -47,7 +47,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
-            <ul class="hotkey-list mb-1"></ul>
+            <ul class="ig-list-horizontal mb-1"></ul>
           </div>
           <div class="mb-3 mt-4">
             <label class="ig-checkbox">
@@ -87,7 +87,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       this.addDialogEvents();
       this.updateToolCommandPreview();
 
-      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this);
+      const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, defaultTool.Hotkeys);
     });
 
@@ -119,7 +119,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       this.addDialogEvents();
       this.updateToolCommandPreview();
 
-      const hotkeyListEl = query<HTMLUListElement>('.hotkey-list', this);
+      const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, tool.Hotkeys);
     });
 
@@ -137,7 +137,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       ToolName: query<HTMLInputElement>('[name="_ToolName"]', this).value.trim(),
       Executable: query<HTMLInputElement>('[name="_Executable"]', this).value.trim(),
       Arguments: query<HTMLInputElement>('[name="_Arguments"]', this).value.trim(),
-      Hotkeys: queryAll('.hotkey-list > .hotkey-item > kbd', this).map(el => el.innerText),
+      Hotkeys: queryAll('.ig-list-horizontal > .hotkey-item > kbd', this).map(el => el.innerText),
       IsIntegrated: query<HTMLInputElement>('[name="_IsIntegrated"]', this).checked,
     };
 

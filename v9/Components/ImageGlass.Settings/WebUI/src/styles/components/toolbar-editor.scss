@@ -1,0 +1,90 @@
+
+.toolbar-editor {
+  width: 25rem;
+
+  .toolbar-actions {
+    margin-bottom: 0.5rem;
+    text-align: right;
+  }
+
+  // edit / delete buttons
+  button[data-action] {
+    border-color: transparent;
+    min-width: 0;
+    max-height: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-left: 0.35rem;
+    background-color: rgb(var(--InvertColor) / 0.05);
+
+    &:hover {
+      background-color: rgb(var(--InvertColor) / 0.125);
+    }
+    &:focus {
+      outline: none;
+      border-color: rgb(var(--Accent));
+    }
+    &:focus-visible {
+      @include focusAnimation();
+    }
+    &:active {
+      background-color: rgb(var(--InvertColor) / 0.2);
+      border-color: rgb(var(--Accent));
+      transition: background ease calc(var(--transitionMs) / 3),
+        border ease calc(var(--transitionMs) / 3);
+    }
+  }
+
+  .toolbar-list {
+    max-height: 30rem;
+    overflow-y: auto;
+
+    &> li {
+      padding: 0.25rem;
+      position: relative;
+
+      &:hover {
+        .item-actions {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .btn-toolbar {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    text-align: left;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+
+    .button-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.5rem;
+    }
+
+    &:focus-visible + .item-actions {
+      opacity: 1;
+    }
+  }
+
+  .item-actions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0.65rem;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+
+    &:focus-within {
+      opacity: 1;
+    }
+  }
+}

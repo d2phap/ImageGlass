@@ -1,0 +1,73 @@
+
+.ig-list-horizontal {
+  list-style: none;
+  margin-bottom: 0;
+  padding: 0.35rem 0.35rem 0 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  border-radius: var(--borderRadius);
+  border: 0.1rem solid var(--ControlBorder);
+  background-color: rgb(var(--ControlBg));
+
+  &> li {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 0.25rem;
+  }
+
+
+  &:hover {
+    border-color: var(--ControlBorderHover);
+  }
+}
+
+
+// hotkey item
+.ig-list-horizontal > li.hotkey-item {
+  margin-right: 0.25rem;
+  min-height: calc(var(--controlHeight) * 1px);
+
+  background-color: rgb(var(--AppBg) / 0.75);
+  border: solid 0.1rem rgb(var(--InvertColor) / 0.15);
+  border-bottom-color: rgb(var(--InvertColor) / 0.15);
+  border-radius: var(--borderRadius);
+  box-shadow: inset 0 -0.1rem 0 rgb(var(--InvertColor) / 0.15);
+
+  kbd {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+    padding: 0.325rem;
+  }
+
+  button {
+    border-color: transparent;
+    min-width: 0;
+    max-height: 0;
+    min-height: calc(var(--controlHeight) * 0.75px);
+    padding: 0.325em 0.25em;
+    margin: 0.125em 0.25em 0.125em 0.125em;
+    background-color: rgb(var(--InvertColor) / 0.05);
+
+    &:hover {
+      background-color: rgb(var(--InvertColor) / 0.125);
+    }
+    &:focus {
+      outline: none;
+      border-color: rgb(var(--Accent));
+    }
+    &:focus-visible {
+      @include focusAnimation();
+    }
+    &:active {
+      background-color: rgb(var(--InvertColor) / 0.2);
+      border-color: rgb(var(--Accent));
+      transition: background ease calc(var(--transitionMs) / 3),
+        border ease calc(var(--transitionMs) / 3);
+    }
+  }
+}
