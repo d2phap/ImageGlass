@@ -698,8 +698,8 @@ public class IgLang : Dictionary<string, string>
         #region TAB Toolbar
         //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
 
-        //// V5.0
-        //Add("FrmSetting._separator", "Separator"); // i.e. 'toolbar separator'
+        
+        Add("FrmSetting._Separator", "Separator"); // i.e. 'toolbar separator'
         //Add("FrmSetting.lblToolbar._Tooltip", "Configure toolbar buttons"); // tooltip
         //Add("FrmSetting.lblUsedBtns", "Current Buttons:");
         //Add("FrmSetting.lblAvailBtns", "Available Buttons:");

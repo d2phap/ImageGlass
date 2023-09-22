@@ -1,10 +1,14 @@
 import { getChangedSettingsFromTab } from '@/helpers';
+import { ToolbarEditorHtmlElement } from './webComponents/ToolbarEditorHtmlElement';
 
 export default class TabToolbar {
+  static #toolbarEditor = query<ToolbarEditorHtmlElement>('toolbar-editor');
+
   /**
    * Loads settings for tab Toolbar.
    */
   static loadSettings() {
+    this.#toolbarEditor.loadItems(_pageSettings.config.ToolbarButtons || []);
   }
 
 
