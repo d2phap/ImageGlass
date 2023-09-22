@@ -8,7 +8,7 @@
   }
 
   // edit / delete buttons
-  button[data-action] {
+  .btn[data-action] {
     border-color: transparent;
     min-width: 0;
     max-height: 0;
@@ -16,6 +16,7 @@
     padding-right: 0.5em;
     margin-left: 0.35rem;
     background-color: rgb(var(--InvertColor) / 0.05);
+    pointer-events: auto;
 
     &:hover {
       background-color: rgb(var(--InvertColor) / 0.125);
@@ -44,47 +45,53 @@
       position: relative;
 
       &:hover {
-        .item-actions {
+        .button-actions {
           opacity: 1;
+          max-width: none;
         }
       }
     }
   }
 
   .btn-toolbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    text-wrap: initial;
     align-items: center;
 
     width: 100%;
     text-align: left;
-    padding-top: 0.65rem;
-    padding-bottom: 0.65rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
 
     .button-icon {
       width: 1.5rem;
       height: 1.5rem;
       margin-right: 0.5rem;
     }
-
-    &:focus-visible + .item-actions {
-      opacity: 1;
+    .button-text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
-  }
+    .button-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      max-width: 0;
+  
+      &:focus-within {
+        opacity: 1;
+      }
+    }
 
-  .item-actions {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0.65rem;
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-
+    &:focus-visible,
     &:focus-within {
-      opacity: 1;
+      .button-actions {
+        opacity: 1;
+        max-width: none;
+      }
     }
   }
 }

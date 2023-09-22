@@ -12,7 +12,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     // private methods
     this.addEvents = this.addEvents.bind(this);
     this.onAddBtnClicked = this.onAddBtnClicked.bind(this);
-    this.onToolBarItemActionClicked = this.onToolBarItemActionClicked.bind(this);
+    this.onToolBarActionButtonClicked = this.onToolBarActionButtonClicked.bind(this);
   }
 
 
@@ -55,18 +55,25 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
       html += `
         <li data-id="${item.Id}" data-type="${item.Type}">
-          <button type="button" class="btn-toolbar" lang-title="${textLang}">
+          <div tabindex="0" class="btn btn-toolbar" lang-title="${textLang}">
             ${imageHtml}
-            <span lang-text="${textLang}"></span>
-          </button>
+            <span class="button-text" lang-text="${textLang}"></span>
 
-          <div class="item-actions">
-            <button type="button" class="btn--icon" lang-title="_._Edit" data-action="edit">
-              ${_pageSettings.icons.Edit}
-            </button>
-            <button type="button" class="btn--icon" lang-title="_._Delete" data-action="delete">
-              ${_pageSettings.icons.Delete}
-            </button>
+            <div class="button-actions">
+              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="moveUp">
+                ${_pageSettings.icons.ArrowUp}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="moveDown">
+                ${_pageSettings.icons.ArrowDown}
+              </button>
+
+              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
+                ${_pageSettings.icons.Edit}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
+                ${_pageSettings.icons.Delete}
+              </button>
+            </div>
           </div>
         </li>`;
     });
@@ -78,7 +85,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   private addEvents() {
     query('#BtnAddToolbarButton', this).addEventListener('click', this.onAddBtnClicked, false);
     queryAll('.toolbar-list [data-action]', this).forEach(el => {
-      el.addEventListener('click', this.onToolBarItemActionClicked, false);
+      el.addEventListener('click', this.onToolBarActionButtonClicked, false);
     });
   }
 
@@ -86,7 +93,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     //
   }
 
-  private onToolBarItemActionClicked(e: Event) {
+  private onToolBarActionButtonClicked(e: Event) {
+    e.stopPropagation();
+    e.preventDefault();
+
     const el = e.target as HTMLButtonElement;
     const action = el.getAttribute('data-action');
 
