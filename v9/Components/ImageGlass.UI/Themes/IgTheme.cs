@@ -390,7 +390,6 @@ public class IgTheme : IDisposable
     /// <param name="iconPropName">
     /// The name of icon property (without extension). E.g. <c>ActualSize</c>.
     /// </param>
-    /// <returns></returns>
     public string GetToolbarIconFilePath(string iconPropName)
     {
         if (JsonModel.ToolbarIcons.TryGetValue(iconPropName, out var iconFileName))
@@ -420,7 +419,7 @@ public class IgTheme : IDisposable
 
         foreach (var item in JsonModel.ToolbarIcons)
         {
-            var iconPath = GetToolbarIconFilePath(item.Value);
+            var iconPath = GetToolbarIconFilePath(item.Key);
             if (string.IsNullOrEmpty(iconPath))
                 continue;
 

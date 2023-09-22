@@ -146,6 +146,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._Arguments", "Arguments");
         Add("_._CommandPreview", "Command preview");
         Add("_._Empty", "(empty)");
+        Add("_._MoveUp", "Move up");
+        Add("_._MoveDown", "Move down");
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0

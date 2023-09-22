@@ -67,4 +67,7 @@ public enum IconName
     Edit,
     Moon,
     Sun,
+
+    ArrowUp,
+    ArrowDown,
 }

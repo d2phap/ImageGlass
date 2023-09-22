@@ -28,6 +28,8 @@ if (!window._pageSettings) {
     icons: {
       Delete: '',
       Edit: '',
+      ArrowDown: '',
+      ArrowUp: '',
       Moon: '',
       Sun: '',
     },

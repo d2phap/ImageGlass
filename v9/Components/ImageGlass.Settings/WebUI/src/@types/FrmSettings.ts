@@ -76,6 +76,8 @@ export type IPageSettings = Record<string, any> & {
   icons: Record<string, string> & {
     Delete: string,
     Edit: string,
+    ArrowUp: string,
+    ArrowDown: string,
     Sun: string,
     Moon: string,
   },
