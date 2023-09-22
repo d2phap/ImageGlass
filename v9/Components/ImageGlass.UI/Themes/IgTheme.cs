@@ -385,6 +385,24 @@ public class IgTheme : IDisposable
 
 
     /// <summary>
+    /// Gets toolbar icon file path from icon property name.
+    /// </summary>
+    /// <param name="iconPropName">
+    /// The name of icon property (without extension). E.g. <c>ActualSize</c>.
+    /// </param>
+    /// <returns></returns>
+    public string GetToolbarIconFilePath(string iconPropName)
+    {
+        if (JsonModel.ToolbarIcons.TryGetValue(iconPropName, out var iconFileName))
+        {
+            return Path.Combine(FolderPath, iconFileName);
+        }
+
+        return string.Empty;
+    }
+
+
+    /// <summary>
     /// Loads theme <see cref="ToolbarIcons"/> from <see cref="JsonModel"/>.
     /// </summary>
     /// <param name="iconHeight">Toolbar icon height.</param>
@@ -402,13 +420,13 @@ public class IgTheme : IDisposable
 
         foreach (var item in JsonModel.ToolbarIcons)
         {
-            var value = (item.Value ?? "")?.ToString()?.Trim();
-            if (string.IsNullOrEmpty(value))
+            var iconPath = GetToolbarIconFilePath(item.Value);
+            if (string.IsNullOrEmpty(iconPath))
                 continue;
 
             try
             {
-                var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
+                var bmp = PhotoCodec.GetThumbnail(iconPath, ToolbarActualIconHeight, ToolbarActualIconHeight);
 
                 ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, bmp);
             }
@@ -440,6 +458,8 @@ public class IgTheme : IDisposable
 
         // get icon from theme pack icon name
         var icon = ToolbarIcons.GetType().GetProperty(name ?? string.Empty)?.GetValue(ToolbarIcons);
+        if (icon != null) return icon as Bitmap;
+
 
         // load icon from custom file
         try

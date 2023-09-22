@@ -90,7 +90,7 @@ public partial class FrmSettings : WebForm
 
 
         // get all settings as json string
-        var configJsonObj = Config.PrepareJsonSettingsObject();
+        var configJsonObj = Config.PrepareJsonSettingsObject(useAbsoluteFileUrl: true);
         var configJson = BHelper.ToJson(configJsonObj) as string;
 
         // setting paths

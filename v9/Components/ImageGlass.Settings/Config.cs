@@ -989,7 +989,7 @@ public static class Config
     /// <summary>
     /// Converts all settings to ExpandoObject for parsing JSON.
     /// </summary>
-    public static dynamic PrepareJsonSettingsObject()
+    public static dynamic PrepareJsonSettingsObject(bool useAbsoluteFileUrl = false)
     {
         var settings = new ExpandoObject();
 
@@ -1135,10 +1135,38 @@ public static class Config
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
-        settings.TryAdd(nameof(ToolbarButtons), ToolbarButtons);
         settings.TryAdd(nameof(Layout), Layout);
         settings.TryAdd(nameof(Tools), Tools);
         settings.TryAdd(nameof(DisabledMenus), DisabledMenus);
+
+        // ToolbarButtons
+        if (useAbsoluteFileUrl)
+        {
+            var items = ToolbarButtons.Select(i =>
+            {
+                if (string.IsNullOrWhiteSpace(i.Image)) return i;
+
+                var filePath = Theme.GetToolbarIconFilePath(i.Image);
+                if (string.IsNullOrWhiteSpace(filePath)) return i;
+
+                var fileUrl = new Uri(filePath).AbsoluteUri;
+                if (!string.IsNullOrWhiteSpace(fileUrl))
+                {
+                    return i with
+                    {
+                        Image = fileUrl,
+                    };
+                }
+
+                return i;
+            }).ToList();
+
+            settings.TryAdd(nameof(ToolbarButtons), items);
+        }
+        else
+        {
+            settings.TryAdd(nameof(ToolbarButtons), ToolbarButtons);
+        }
 
         #endregion
 
