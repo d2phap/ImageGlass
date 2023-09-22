@@ -10,12 +10,12 @@ export type ILanguage = {
 };
 
 export type ITool = {
-  ToolId: string;
-  ToolName: string;
-  Executable: string;
-  Arguments: string;
-  IsIntegrated?: boolean;
-  Hotkeys?: string[];
+  ToolId: string,
+  ToolName: string,
+  Executable: string,
+  Arguments: string,
+  IsIntegrated?: boolean,
+  Hotkeys?: string[],
 };
 
 export type ITheme = {
@@ -33,6 +33,23 @@ export type ITheme = {
     Website: string,
     Description: string,
   },
+};
+
+export type SingleAction = {
+  Executable: string,
+  Arguments: Array<string|number|boolean>,
+  NextAction?: SingleAction,
+};
+
+export type IToolbarButton = {
+  Type: 'Button' | 'Separator',
+  Id: string,
+  Text: string,
+  DisplayStyle: 'Image' | 'ImageAndText',
+  CheckableConfigBinding: string,
+  Alignment: 'Left' | 'Right',
+  Image: string,
+  OnClick: SingleAction,
 };
 
 export type IPageSettings = Record<string, any> & {
