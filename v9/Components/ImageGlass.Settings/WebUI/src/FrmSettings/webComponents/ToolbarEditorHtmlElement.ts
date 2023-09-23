@@ -10,10 +10,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   constructor() {
     super();
 
-    // public methods
-    this.loadItems = this.loadItems.bind(this);
-
     // private methods
+    this.loadItems = this.loadItems.bind(this);
     this.addEvents = this.addEvents.bind(this);
     this.onAddBtnClicked = this.onAddBtnClicked.bind(this);
     this.onToolBarActionButtonClicked = this.onToolBarActionButtonClicked.bind(this);
@@ -26,6 +24,13 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.onToolbarItemDrop = this.onToolbarItemDrop.bind(this);
   }
 
+  get items() {
+    return this.#items;
+  }
+
+  set items(value: IToolbarButton[]) {
+    this.loadItems(value);
+  }
 
   private connectedCallback() {
     this.innerHTML = `
@@ -44,7 +49,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   }
 
 
-  public loadItems(items: IToolbarButton[]) {
+  private loadItems(items: IToolbarButton[]) {
     this.#items = items;
     let html = '';
 
