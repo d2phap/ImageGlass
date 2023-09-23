@@ -58,7 +58,7 @@ ul.ig-sidebar {
         }
 
         &:hover+* {
-          background-color: rgb(var(--InvertColor) / 0.15);
+          background-color: rgb(var(--InvertColor) / 0.1);
         }
 
         &:focus-visible+* {
@@ -66,7 +66,7 @@ ul.ig-sidebar {
         }
 
         &:active+* {
-          background-color: rgb(var(--InvertColor) / 0.1);
+          background-color: rgb(var(--InvertColor) / 0.085);
           transition: background ease calc(var(--transitionMs) / 3),
             border ease calc(var(--transitionMs) / 3),
             color ease calc(var(--transitionMs) / 3);
@@ -76,7 +76,7 @@ ul.ig-sidebar {
         // checked style
         &:checked {
           &+* {
-            background-color: rgb(var(--InvertColor) / 0.1);
+            background-color: rgb(var(--InvertColor) / 0.085);
 
             &::before {
               opacity: 1;

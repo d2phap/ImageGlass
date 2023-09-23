@@ -19,9 +19,13 @@
 
   #app>main {
     grid-area: main;
+    margin-top: 0.25rem;
     padding: 1rem;
     background-color: rgb(var(--AppBg) / 0.75);
+    border: 0.1rem solid rgb(var(--InvertColor) / 0.1);
+    border-right: 0;
     border-top-left-radius: calc(var(--borderRadius) * 4);
+    border-bottom-left-radius: calc(var(--borderRadius) * 4);
     max-height: fit-content;
     overflow-y: auto;
     overflow-x: hidden;
@@ -31,7 +35,7 @@
     grid-area: footer;
     padding: 1rem;
     justify-content: end;
-    background-color: rgb(var(--AppBg) / 0.4);
+    background-color: transparent;
 
     button {
       min-width: calc(6.5rem * var(--fontScale));
@@ -75,7 +79,7 @@
 
       .theme-preview-img {
         background-color: rgb(var(--AppBg) / 0.25);
-        border: 1px solid rgb(var(--AppText) / 0.15);
+        border: 0.1rem solid rgb(var(--AppText) / 0.15);
         border-radius: var(--borderRadius);
         overflow: hidden;
         width: 130px;
@@ -89,7 +93,7 @@
           display: inline-block;
           width: 1rem;
           height: 1rem;
-          border: 1px solid rgb(var(--AppText) / 0.5);
+          border: 0.1rem solid rgb(var(--AppText) / 0.5);
           border-radius: 100%;
           padding: 0.125em 0.25em 0.25em 0.25em;
           background-color: rgb(0 0 0 / 0.5);
