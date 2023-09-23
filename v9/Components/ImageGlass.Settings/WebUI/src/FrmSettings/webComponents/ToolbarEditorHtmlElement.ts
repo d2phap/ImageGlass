@@ -11,10 +11,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     super();
 
     // private methods
-    this.loadItems = this.loadItems.bind(this);
+    this.reloadItems = this.reloadItems.bind(this);
     this.addEvents = this.addEvents.bind(this);
-    this.onAddBtnClicked = this.onAddBtnClicked.bind(this);
-    this.onToolBarActionButtonClicked = this.onToolBarActionButtonClicked.bind(this);
+    this.onBtnAddToolbarButtonClicked = this.onBtnAddToolbarButtonClicked.bind(this);
+    this.onToolbarActionButtonClicked = this.onToolbarActionButtonClicked.bind(this);
 
     this.onBtnToolbarDragStart = this.onBtnToolbarDragStart.bind(this);
     this.onToolbarItemDragEnter = this.onToolbarItemDragEnter.bind(this);
@@ -22,6 +22,9 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.onToolbarItemDragLeave = this.onToolbarItemDragLeave.bind(this);
     this.onToolbarItemDragEnd = this.onToolbarItemDragEnd.bind(this);
     this.onToolbarItemDrop = this.onToolbarItemDrop.bind(this);
+
+    this.moveToolbarButton = this.moveToolbarButton.bind(this);
+    this.deleteToolbarButton = this.deleteToolbarButton.bind(this);
   }
 
   get items() {
@@ -29,7 +32,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   }
 
   set items(value: IToolbarButton[]) {
-    this.loadItems(value);
+    this.#items = value;
+    this.reloadItems();
   }
 
   private connectedCallback() {
@@ -49,8 +53,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   }
 
 
-  private loadItems(items: IToolbarButton[]) {
-    this.#items = items;
+  private reloadItems(focusButtonIndex = -1) {
     let html = '';
 
     this.#items.forEach((item, index) => {
@@ -77,10 +80,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
             <span class="button-text" lang-text="${textLang}"></span>
 
             <div class="button-actions">
-              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="moveUp">
+              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
                 ${_pageSettings.icons.ArrowUp}
               </button>
-              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="moveDown">
+              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
                 ${_pageSettings.icons.ArrowDown}
               </button>
 
@@ -95,7 +98,25 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
         </li>`;
     });
 
+    // render toolbar buttons list
     this.#listEl.innerHTML = html;
+
+    // load language
+    Language.loadForEl(this.#listEl);
+
+    // set focus to the item
+    if (focusButtonIndex >= 0) {
+      const movedItem = query(`.toolbar-item[data-index="${focusButtonIndex}"]`, this.#listEl);
+
+      if (movedItem) {
+        movedItem.classList.add('drag--drop');
+        pause(1000).then(() => {
+          if (movedItem) movedItem.classList.remove('drag--drop');
+        });
+
+        query('.btn-toolbar', movedItem).focus();
+      }
+    }
 
 
     // add drag/drop events
@@ -119,28 +140,19 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
       el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
       el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
     });
+
+    queryAll('.toolbar-list [data-action]', this).forEach(el => {
+      el.addEventListener('click', this.onToolbarActionButtonClicked, false);
+    });
   }
 
 
   private addEvents() {
-    query('#BtnAddToolbarButton', this).addEventListener('click', this.onAddBtnClicked, false);
-    queryAll('.toolbar-list [data-action]', this).forEach(el => {
-      el.addEventListener('click', this.onToolBarActionButtonClicked, false);
-    });
+    query('#BtnAddToolbarButton', this).addEventListener('click', this.onBtnAddToolbarButtonClicked, false);
   }
 
-  private onAddBtnClicked() {
+  private onBtnAddToolbarButtonClicked() {
     //
-  }
-
-  private onToolBarActionButtonClicked(e: Event) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    const el = e.target as HTMLButtonElement;
-    const action = el.getAttribute('data-action');
-
-    console.log(action);
   }
 
 
@@ -203,20 +215,57 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     const fromIndex = this.#dragIndex;
     const toIndex = +toDropEl.getAttribute('data-index');
     this.#dragIndex = -1;
-    if (fromIndex === toIndex) return;
 
     // move item
+    this.moveToolbarButton(fromIndex, toIndex);
+  }
+
+
+  private onToolbarActionButtonClicked(e: Event) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const el = e.target as HTMLButtonElement;
+    const action = el.getAttribute('data-action').toLocaleLowerCase();
+    const toolbarIndex = +el.closest('.toolbar-item').getAttribute('data-index');
+
+    console.log(action, toolbarIndex);
+    if (action === 'move_up') {
+      this.moveToolbarButton(toolbarIndex, toolbarIndex - 1);
+    }
+    else if (action === 'move_down') {
+      this.moveToolbarButton(toolbarIndex, toolbarIndex + 1);
+    }
+    else if (action === 'edit') {
+      //
+    }
+    else if (action === 'delete') {
+      this.deleteToolbarButton(toolbarIndex);
+    }
+  }
+
+  private moveToolbarButton(fromIndex: number, toIndex: number) {
+    if (toIndex < 0 ) toIndex = 0;
+    else if (toIndex > this.#items.length - 1) toIndex = this.#items.length - 1;
+    if (fromIndex === toIndex) return;
+
+    // move button
     arrayMoveMutable(this.#items, fromIndex, toIndex);
 
     // reload buttons list
-    this.loadItems(this.#items);
-    Language.loadForEl(this.#listEl);
+    this.reloadItems(toIndex);
 
-    // set focus to the moved item
-    const droppedItem = query(`.toolbar-item[data-index="${toIndex}"]`);
-    droppedItem.classList.add('drag--drop');
-    pause(1000).then(() => droppedItem.classList.remove('drag--drop'));
-    query('.btn-toolbar', droppedItem).focus();
+    // set focus to the action button
+    const action = fromIndex < toIndex ? 'move_down' : 'move_up';
+    query(`.toolbar-item[data-index="${toIndex}"] [data-action="${action}"]`)?.focus();
+  }
+
+  private deleteToolbarButton(toolbarIndex: number) {
+    // remove button
+    this.#items.splice(toolbarIndex, 1);
+
+    // reload buttons list
+    this.reloadItems(toolbarIndex - 1);
   }
 }
 
