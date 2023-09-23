@@ -63,7 +63,8 @@ export const escapeHtml = (html: string) => {
 
 
 /**
- * Creates tagged template function. Example:
+ * Creates tagged template function.
+ * @example
  * ```ts
  * const imgTemplate = taggedTemplate`<img src="${'src'}" alt="${'alt'}" />`;
  * const html = imgTemplate({
@@ -88,6 +89,32 @@ export const taggedTemplate = <T = Record<string, any>>(strings: TemplateStrings
 
     return result.join('');
   };
+};
+
+
+/**
+ * Moves the item to the new position in the input array.
+ * Useful for huge arrays where absolute performance is needed.
+ * @param array - The array to modify.
+ * @param fromIndex - The index of the item to move. If negative, it will begin that many elements from the end.
+ * @param toIndex - The index of where to move the item. If negative, it will begin that many elements from the end.
+ * @example
+ *  ```ts
+ *  const input = ['a', 'b', 'c'];
+ *  arrayMoveMutable(input, 1, 2);
+ *
+ *  console.log(input); // => ['a', 'c', 'b']
+ *  ```
+ */
+export const arrayMoveMutable = (array: Array<any>, fromIndex: number, toIndex: number) => {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
+
+    const [item] = array.splice(fromIndex, 1);
+    array.splice(endIndex, 0, item);
+  }
 };
 
 
