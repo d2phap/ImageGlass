@@ -63,7 +63,7 @@
 
   <ItemGroup>
     <PackageReference Include="D2Phap.DXControl" Version="2.6.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1938.49" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2045.28" />
   </ItemGroup>
 
   <ItemGroup>
