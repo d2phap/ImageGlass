@@ -2,12 +2,13 @@
 .toolbar-editor {
   width: 25rem;
 
+  // action button wrapper
   .toolbar-actions {
     margin-bottom: 0.5rem;
     text-align: right;
   }
 
-  // edit / delete buttons
+  // action buttons
   .btn[data-action] {
     border-color: transparent;
     min-width: 0;
@@ -33,23 +34,6 @@
       border-color: rgb(var(--Accent));
       transition: background ease calc(var(--transitionMs) / 3),
         border ease calc(var(--transitionMs) / 3);
-    }
-  }
-
-  .toolbar-list {
-    max-height: 30rem;
-    overflow-y: auto;
-
-    &> li {
-      padding: 0.25rem;
-      position: relative;
-
-      &:hover {
-        .button-actions {
-          opacity: 1;
-          max-width: none;
-        }
-      }
     }
   }
 
@@ -93,5 +77,52 @@
         max-width: none;
       }
     }
+  }
+
+  .toolbar-item {
+    padding: 0.25rem;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      border-radius: var(--borderRadius);
+      pointer-events: none;
+      transition: all ease var(--transitionMs);
+    }
+
+    &:hover {
+      .button-actions {
+        opacity: 1;
+        max-width: none;
+      }
+    }
+
+
+    &.drag--enter {
+      &.position--after::after {
+        height: 1rem;
+        margin-top: 0.5rem;
+        background-color: rgb(var(--Accent) / 1);
+      }
+
+      &:not(.position--after)::before {
+        height: 1rem;
+        margin-bottom: 0.5rem;
+        background-color: rgb(var(--Accent) / 1);
+      }
+    }
+
+    &.drag--drop .btn-toolbar {
+      @include focusAnimation();
+      background-color: rgb(var(--Accent) / 0.2);
+    }
+  }
+
+  .toolbar-list {
+    max-height: 30rem;
+    overflow-y: auto;
   }
 }

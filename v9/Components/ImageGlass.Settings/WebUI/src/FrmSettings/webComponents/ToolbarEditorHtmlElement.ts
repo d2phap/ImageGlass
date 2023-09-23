@@ -1,7 +1,11 @@
 import { IToolbarButton } from '@/@types/FrmSettings';
+import Language from '@/common/Language';
+import { arrayMoveMutable, pause } from '@/helpers';
 
 export class ToolbarEditorHtmlElement extends HTMLElement {
+  #items: IToolbarButton[];
   #listEl: HTMLUListElement;
+  #dragIndex = -1;
 
   constructor() {
     super();
@@ -13,6 +17,13 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.addEvents = this.addEvents.bind(this);
     this.onAddBtnClicked = this.onAddBtnClicked.bind(this);
     this.onToolBarActionButtonClicked = this.onToolBarActionButtonClicked.bind(this);
+
+    this.onBtnToolbarDragStart = this.onBtnToolbarDragStart.bind(this);
+    this.onToolbarItemDragEnter = this.onToolbarItemDragEnter.bind(this);
+    this.onToolbarItemDragOver = this.onToolbarItemDragOver.bind(this);
+    this.onToolbarItemDragLeave = this.onToolbarItemDragLeave.bind(this);
+    this.onToolbarItemDragEnd = this.onToolbarItemDragEnd.bind(this);
+    this.onToolbarItemDrop = this.onToolbarItemDrop.bind(this);
   }
 
 
@@ -34,9 +45,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
 
   public loadItems(items: IToolbarButton[]) {
+    this.#items = items;
     let html = '';
 
-    items.forEach(item => {
+    this.#items.forEach((item, index) => {
       let imageHtml = '';
       let textLang = item.Text;
 
@@ -54,8 +66,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
 
       html += `
-        <li data-id="${item.Id}" data-type="${item.Type}">
-          <div tabindex="0" class="btn btn-toolbar" lang-title="${textLang}">
+        <li class="toolbar-item" data-index="${index}">
+          <div class="btn btn-toolbar" tabindex="0" draggable="true" lang-title="${textLang}">
             ${imageHtml}
             <span class="button-text" lang-text="${textLang}"></span>
 
@@ -79,6 +91,29 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     });
 
     this.#listEl.innerHTML = html;
+
+
+    // add drag/drop events
+    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(btnEl => {
+      btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
+      btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
+    });
+
+    queryAll('.toolbar-item', this.#listEl).forEach(el => {
+      el.removeEventListener('dragover', this.onToolbarItemDragOver, false);
+      el.addEventListener('dragover', this.onToolbarItemDragOver, false);
+
+      el.removeEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+      el.addEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+
+      el.removeEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+      el.addEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+      el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
+      el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
+
+      el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+      el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+    });
   }
 
 
@@ -101,6 +136,82 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     const action = el.getAttribute('data-action');
 
     console.log(action);
+  }
+
+
+  private onBtnToolbarDragStart(e: DragEvent) {
+    const btnEl = e.target as HTMLButtonElement;
+    const fromIndex = +btnEl.parentElement.getAttribute('data-index');
+
+    // set drag data
+    this.#dragIndex = fromIndex;
+    e.dataTransfer.effectAllowed = 'move';
+
+    // set custom drag image
+    e.dataTransfer.setDragImage(btnEl, -20, 0);
+
+    // disable child el to receive drag events
+    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(el => {
+      el.style.pointerEvents = 'none';
+    });
+    btnEl.style.pointerEvents = '';
+  }
+
+  private onToolbarItemDragEnter(e: DragEvent, dropEL: HTMLElement) {
+    e.preventDefault();
+    const fromIndex = this.#dragIndex;
+    const toIndex = +dropEL.getAttribute('data-index');
+    if (fromIndex === toIndex) return;
+
+    const cssClass = ['drag--enter'];
+    if (fromIndex < toIndex) {
+      cssClass.push('position--after');
+    }
+
+    dropEL.classList.add(...cssClass);
+  }
+
+  private onToolbarItemDragOver(e: DragEvent) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }
+
+  private onToolbarItemDragLeave(e: DragEvent, dropEL: HTMLElement) {
+    e.preventDefault();
+    dropEL.classList.remove('drag--enter');
+  }
+
+  private onToolbarItemDragEnd(e: DragEvent) {
+    e.preventDefault();
+
+    // re-enable child el to receive drag events
+    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(el => {
+      el.style.pointerEvents = '';
+    });
+  }
+
+  private onToolbarItemDrop(e: DragEvent, toDropEl: HTMLElement) {
+    e.preventDefault();
+    toDropEl.classList.remove('drag--enter');
+    if (this.#dragIndex === -1) return;
+
+    const fromIndex = this.#dragIndex;
+    const toIndex = +toDropEl.getAttribute('data-index');
+    this.#dragIndex = -1;
+    if (fromIndex === toIndex) return;
+
+    // move item
+    arrayMoveMutable(this.#items, fromIndex, toIndex);
+
+    // reload buttons list
+    this.loadItems(this.#items);
+    Language.loadForEl(this.#listEl);
+
+    // set focus to the moved item
+    const droppedItem = query(`.toolbar-item[data-index="${toIndex}"]`);
+    droppedItem.classList.add('drag--drop');
+    pause(1000).then(() => droppedItem.classList.remove('drag--drop'));
+    query('.btn-toolbar', droppedItem).focus();
   }
 }
 
