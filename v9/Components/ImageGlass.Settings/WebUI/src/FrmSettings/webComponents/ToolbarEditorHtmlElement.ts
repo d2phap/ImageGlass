@@ -183,7 +183,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
   private onToolbarItemDragLeave(e: DragEvent, dropEL: HTMLElement) {
     e.preventDefault();
-    dropEL.classList.remove('drag--enter');
+    dropEL.classList.remove('drag--enter', 'position--after');
   }
 
   private onToolbarItemDragEnd(e: DragEvent) {
@@ -197,7 +197,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
   private onToolbarItemDrop(e: DragEvent, toDropEl: HTMLElement) {
     e.preventDefault();
-    toDropEl.classList.remove('drag--enter');
+    toDropEl.classList.remove('drag--enter', 'position--after');
     if (this.#dragIndex === -1) return;
 
     const fromIndex = this.#dragIndex;

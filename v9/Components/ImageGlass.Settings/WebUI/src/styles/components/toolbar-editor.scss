@@ -1,6 +1,6 @@
 
 .toolbar-editor {
-  width: 25rem;
+  width: calc(27rem * var(--fontScale));
 
   // action button wrapper
   .toolbar-actions {
@@ -47,6 +47,7 @@
     text-align: left;
     padding-top: 0.35rem;
     padding-bottom: 0.35rem;
+    border-radius: calc(var(--borderRadius) * 1.5);
 
     .button-icon {
       width: 1.5rem;
@@ -64,6 +65,7 @@
       justify-content: center;
       opacity: 0;
       max-width: 0;
+      margin-right: -0.5rem;
   
       &:focus-within {
         opacity: 1;
@@ -82,12 +84,15 @@
   .toolbar-item {
     padding: 0.25rem;
     position: relative;
+    border-radius: calc(var(--borderRadius) * 2);
 
     &::before,
     &::after {
       content: "";
       display: block;
       width: 100%;
+      height: 100vh;
+      max-height: 0;
       border-radius: var(--borderRadius);
       pointer-events: none;
       transition: all ease var(--transitionMs);
@@ -103,15 +108,19 @@
 
     &.drag--enter {
       &.position--after::after {
-        height: 1rem;
         margin-top: 0.5rem;
-        background-color: rgb(var(--Accent) / 1);
+        max-height: calc(3rem * var(--fontScale));
+        background-color: rgb(var(--Accent) / 0.2);
+        box-shadow: inset 0 0 0 0.1rem rgb(var(--Accent)),
+          0 0 0 0.1rem rgb(var(--Accent));
       }
 
       &:not(.position--after)::before {
-        height: 1rem;
         margin-bottom: 0.5rem;
-        background-color: rgb(var(--Accent) / 1);
+        max-height: calc(3rem * var(--fontScale));
+        background-color: rgb(var(--Accent) / 0.2);
+        box-shadow: inset 0 0 0 0.1rem rgb(var(--Accent)),
+          0 0 0 0.1rem rgb(var(--Accent));
       }
     }
 
