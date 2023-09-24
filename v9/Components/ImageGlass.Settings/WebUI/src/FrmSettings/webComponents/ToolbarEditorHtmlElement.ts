@@ -6,6 +6,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   #items: IToolbarButton[];
   #listEl: HTMLUListElement;
   #dragIndex = -1;
+  #showCheckbox = false;
   #hasChanges = false;
 
   constructor() {
@@ -13,8 +14,6 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     // private methods
     this.reloadItems = this.reloadItems.bind(this);
-    this.addEvents = this.addEvents.bind(this);
-    this.onBtnAddToolbarButtonClicked = this.onBtnAddToolbarButtonClicked.bind(this);
     this.onToolbarActionButtonClicked = this.onToolbarActionButtonClicked.bind(this);
 
     this.onBtnToolbarDragStart = this.onBtnToolbarDragStart.bind(this);
@@ -42,32 +41,74 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.#hasChanges = false;
   }
 
+  get checkedItems(): IToolbarButton[] {
+    return queryAll('.toolbar-item input[type="checkbox"]:checked', this.#listEl)
+      .map(el => {
+        const index = +el.closest('.toolbar-item').getAttribute('data-index');
+        return this.#items[index];
+      })
+      .filter(Boolean);
+  }
+
   private connectedCallback() {
     this.innerHTML = `
-      <div class="toolbar-editor">
-        <div class="toolbar-actions">
-          <button id="BtnAddToolbarButton" type="button" lang-text="_._Add">
-            [Add...]
-          </button>
-        </div>
-        <ul class="ig-list-vertical is--no-separator toolbar-list">
-        </ul>
-      </div>`;
+      <ul class="ig-list-vertical is--no-separator toolbar-list">
+      </ul>`;
 
     this.#listEl = query('.toolbar-list', this);
-    this.addEvents();
+    this.#showCheckbox = this.getAttribute('checkbox') === 'true';
+  }
+
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    const attrName = name.toLocaleLowerCase();
+
+    if (attrName === 'checkbox') {
+      this.#showCheckbox = newValue === 'true';
+      this.reloadItems();
+    }
   }
 
 
   private reloadItems(focusButtonIndex = -1) {
     let html = '';
+    let actionsHtml = '';
+    let checkboxHtml = '';
+
+    if (this.#showCheckbox) {
+      checkboxHtml = `
+        <div class="toolbar-checkbox">
+          <label class="ig-checkbox">
+            <input type="checkbox" />
+            <div></div>
+          </label>
+        </div>`;
+    }
+    else {
+      actionsHtml = `
+        <div class="button-actions">
+          <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
+            ${_pageSettings.icons.ArrowUp}
+          </button>
+          <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
+            ${_pageSettings.icons.ArrowDown}
+          </button>
+
+          <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
+            ${_pageSettings.icons.Edit}
+          </button>
+          <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
+            ${_pageSettings.icons.Delete}
+          </button>
+        </div>`;
+    }
 
     this.#items.forEach((item, index) => {
       let imageHtml = '';
       let textLang = item.Text;
 
       if (item.Type === 'Separator') {
-        textLang = 'FrmSetting._Separator';
+        textLang = '_._Separator';
         imageHtml = '<div class="button-icon"></div>';
       }
       else {
@@ -81,24 +122,18 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
       html += `
         <li class="toolbar-item" data-index="${index}">
-          <div class="btn btn-toolbar" tabindex="0" draggable="true" lang-title="${textLang}">
+          ${checkboxHtml}
+
+          <div class="btn btn-toolbar"
+            ${this.#showCheckbox ? '' : 'draggable="true"'}
+            lang-title="${textLang}"
+            tabindex="0">
+
             ${imageHtml}
             <span class="button-text" lang-text="${textLang}"></span>
 
             <div class="button-actions">
-              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
-                ${_pageSettings.icons.ArrowUp}
-              </button>
-              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
-                ${_pageSettings.icons.ArrowDown}
-              </button>
-
-              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
-                ${_pageSettings.icons.Edit}
-              </button>
-              <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
-                ${_pageSettings.icons.Delete}
-              </button>
+              ${actionsHtml}
             </div>
           </div>
         </li>`;
@@ -125,40 +160,34 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     }
 
 
-    // add drag/drop events
-    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(btnEl => {
-      btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
-      btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
-    });
+    if (!this.#showCheckbox) {
+      // add drag/drop events
+      queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(btnEl => {
+        btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
+        btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
+      });
 
-    queryAll('.toolbar-item', this.#listEl).forEach(el => {
-      el.removeEventListener('dragover', this.onToolbarItemDragOver, false);
-      el.addEventListener('dragover', this.onToolbarItemDragOver, false);
+      queryAll('.toolbar-item', this.#listEl).forEach(el => {
+        el.removeEventListener('dragover', this.onToolbarItemDragOver, false);
+        el.addEventListener('dragover', this.onToolbarItemDragOver, false);
 
-      el.removeEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
-      el.addEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+        el.removeEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+        el.addEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
 
-      el.removeEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
-      el.addEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
-      el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
-      el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
+        el.removeEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+        el.addEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+        el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
+        el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
 
-      el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
-      el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
-    });
+        el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+        el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+      });
 
-    queryAll('.toolbar-list [data-action]', this).forEach(el => {
-      el.addEventListener('click', this.onToolbarActionButtonClicked, false);
-    });
-  }
-
-
-  private addEvents() {
-    query('#BtnAddToolbarButton', this).addEventListener('click', this.onBtnAddToolbarButtonClicked, false);
-  }
-
-  private onBtnAddToolbarButtonClicked() {
-    //
+      // add action events
+      queryAll('.toolbar-list [data-action]', this).forEach(el => {
+        el.addEventListener('click', this.onToolbarActionButtonClicked, false);
+      });
+    }
   }
 
 
