@@ -136,7 +136,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._Install", "Install…");
         Add("_._Refresh", "Refresh");
         Add("_._Delete", "Delete");
-        Add("_._Add", "Add…");
+        Add("_._Add", "Add");
+        Add("_._Add+", "Add…");
         Add("_._Edit", "Edit");
         Add("_._ID", "ID");
         Add("_._Name", "Name");

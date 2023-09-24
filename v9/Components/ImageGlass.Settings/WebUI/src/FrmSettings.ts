@@ -13,6 +13,7 @@ if (!window._pageSettings) {
     langList: [],
     toolList: [],
     themeList: [],
+    builtInToolbarButtons: [],
     enums: {
       ImageOrderBy: [],
       ImageOrderType: [],

@@ -8,7 +8,7 @@ export default class TabToolbar {
    * Loads settings for tab Toolbar.
    */
   static loadSettings() {
-    this.#toolbarEditor.currentButtons = _pageSettings.config.ToolbarButtons || [];
+    this.#toolbarEditor.initialize();
   }
 
 

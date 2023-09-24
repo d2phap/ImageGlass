@@ -3,7 +3,6 @@ import Language from '@/common/Language';
 import { arrayMoveMutable, pause } from '@/helpers';
 
 export class ToolbarEditorHtmlElement extends HTMLElement {
-  #itemsAvailable: IToolbarButton[];
   #listAvailableEl: HTMLUListElement;
 
   #itemsCurrent: IToolbarButton[];
@@ -15,7 +14,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   constructor() {
     super();
 
-    // private methods
+    // methods
+    this.initialize = this.initialize.bind(this);
     this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
     this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
     this.onToolbarActionButtonClicked = this.onToolbarActionButtonClicked.bind(this);
@@ -39,18 +39,29 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     return this.#itemsCurrent;
   }
 
-  set currentButtons(value: IToolbarButton[]) {
-    this.#itemsCurrent = value;
+  get availableButtons() {
+    const availableItems: IToolbarButton[] = [
+      { Type: 'Separator' } as IToolbarButton,
+    ];
 
-    // load icon
-    query('.section-middle', this).innerHTML = _pageSettings.icons.ArrowExchange;
+    const builtInBtns = _pageSettings.builtInToolbarButtons || [];
+    for (let icon = 0; icon < builtInBtns.length; icon++) {
+      const btn = builtInBtns[icon];
+      if (this.#itemsCurrent.some(i => i.Type === 'Button' && i.Id === btn.Id)) {
+        continue;
+      }
 
-    this.reloadCurrentItems();
-    this.#hasChanges = false;
+      availableItems.push(btn);
+    }
+
+    return availableItems.sort((a, b) => {
+      if (a.Text < b.Text) return -1;
+      if (a.Text > b.Text) return 1;
+      return 0;
+    });
   }
 
   private connectedCallback() {
-    console.log('_pageSettings.icons.ArrowExchange=', _pageSettings.icons.ArrowExchange);
     this.innerHTML = `
       <div class="section-available">
         <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._AvailableButtons">[Available buttons:]</div>
@@ -69,10 +80,24 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   }
 
 
+  /**
+   * Initializes and loads data into the toolbar editor.
+   */
+  public initialize() {
+    this.#hasChanges = false;
+    this.#itemsCurrent = _pageSettings.config.ToolbarButtons || [];
+
+    // load icon
+    query('.section-middle', this).innerHTML = _pageSettings.icons.ArrowExchange;
+
+    this.reloadAvailableItems();
+    this.reloadCurrentItems();
+  }
+
   private reloadAvailableItems() {
     let html = '';
 
-    this.#itemsAvailable.forEach((item, index) => {
+    this.availableButtons.forEach((item, index) => {
       let imageHtml = '';
       let textLang = item.Text;
 
@@ -96,18 +121,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
             <span class="button-text" lang-text="${textLang}"></span>
 
             <div class="button-actions">
-              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
-                ${_pageSettings.icons.ArrowUp}
-              </button>
-              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
-                ${_pageSettings.icons.ArrowDown}
-              </button>
-
-              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
-                ${_pageSettings.icons.Edit}
-              </button>
-              <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
-                ${_pageSettings.icons.Delete}
+              <button type="button" class="btn btn--icon" lang-title="_._Add" data-action="add">
+                ${_pageSettings.icons.ArrowRight}
               </button>
             </div>
           </div>
@@ -120,7 +135,6 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     // load language
     Language.loadForEl(this.#listAvailableEl);
   }
-
 
   private reloadCurrentItems(focusButtonIndex = -1) {
     let html = '';
