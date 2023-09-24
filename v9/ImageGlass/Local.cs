@@ -804,6 +804,19 @@ internal class Local
         catch (OperationCanceledException) { }
     }
 
+
+    /// <summary>
+    /// Gets all built-in toolbar buttons as JSON.
+    /// </summary>
+    public static void UpdateToolbarButtonsJson(bool forced = false)
+    {
+        if (!string.IsNullOrEmpty(BuiltInToolbarItemsJson) && !forced) return;
+
+
+        var items = Config.ConvertToolbarButtonsToExpandoObjList(Local.BuiltInToolbarItems);
+        BuiltInToolbarItemsJson = BHelper.ToJson(items);
+    }
+
     #endregion // Public functions
 
 }

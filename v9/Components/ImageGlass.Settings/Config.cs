@@ -1141,7 +1141,7 @@ public static class Config
 
         // ToolbarButtons
         settings.TryAdd(nameof(ToolbarButtons), useAbsoluteFileUrl
-            ? ConvertToolbarButtonsToExpandoObj(ToolbarButtons)
+            ? ConvertToolbarButtonsToExpandoObjList(ToolbarButtons)
             : ToolbarButtons);
 
         #endregion
@@ -1158,7 +1158,7 @@ public static class Config
     /// Converts <c>List{ToolbarItemModel}</c> to <c>List{ExpandoObject}</c>.
     /// Also adds <c>ImageUrl</c> property to the item.
     /// </summary>
-    public static List<ExpandoObject> ConvertToolbarButtonsToExpandoObj(List<ToolbarItemModel> list)
+    public static List<ExpandoObject> ConvertToolbarButtonsToExpandoObjList(List<ToolbarItemModel> list)
     {
         var items = list.Select(i =>
         {

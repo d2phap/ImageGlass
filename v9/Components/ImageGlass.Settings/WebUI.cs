@@ -114,14 +114,14 @@ public static class WebUI
         if (!string.IsNullOrEmpty(SvgIconsJson) && !forced) return;
 
         var iconNames = new Dictionary<IconName, string>(4)
-            {
-                { IconName.Edit, string.Empty },
-                { IconName.Delete, string.Empty },
-                { IconName.ArrowUp, string.Empty },
-                { IconName.ArrowDown, string.Empty },
-                { IconName.Sun, string.Empty },
-                { IconName.Moon, string.Empty },
-            };
+        {
+            { IconName.Edit, string.Empty },
+            { IconName.Delete, string.Empty },
+            { IconName.ArrowUp, string.Empty },
+            { IconName.ArrowDown, string.Empty },
+            { IconName.Sun, string.Empty },
+            { IconName.Moon, string.Empty },
+        };
         await Parallel.ForEachAsync(iconNames,
             new ParallelOptions { MaxDegreeOfParallelism = 3 },
             async (item, _) => iconNames[item.Key] = await IconFile.ReadIconTextAsync(item.Key));
@@ -187,6 +187,22 @@ public static class WebUI
 
                 obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgUri.AbsoluteUri);
             }
+
+
+            // Toolbar buttons icon path
+            var buttons = new ExpandoObject();
+            foreach (var item in th.JsonModel.ToolbarIcons)
+            {
+                var iconFileUrl = th.GetToolbarIconFilePath(item.Key);
+                if (!string.IsNullOrWhiteSpace(iconFileUrl))
+                {
+                    iconFileUrl = new Uri(iconFileUrl).AbsoluteUri;
+                }
+
+                buttons.TryAdd(item.Key, iconFileUrl);
+            }
+            obj.TryAdd(nameof(th.JsonModel.ToolbarIcons), buttons);
+
 
             return obj;
         }));

@@ -87,6 +87,7 @@ public partial class FrmSettings : WebForm
         WebUI.UpdateToolListJson();
         await WebUI.UpdateSvgIconsJsonAsync();
         WebUI.UpdateThemeListJson();
+        Local.UpdateToolbarButtonsJson();
 
 
         // get all settings as json string
@@ -98,7 +99,6 @@ public partial class FrmSettings : WebForm
         var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
         var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
         var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME).Replace("\\", "\\\\");
-
 
         await Web2.ExecuteScriptAsync(@$"
             window._pageSettings = {{
@@ -112,6 +112,7 @@ public partial class FrmSettings : WebForm
                 langList: {WebUI.LangListJson},
                 themeList: {WebUI.ThemeListJson},
                 icons: {WebUI.SvgIconsJson},
+                builtInToolbarButtons: {Local.BuiltInToolbarItemsJson},
                 config: {configJson},
             }};
 
