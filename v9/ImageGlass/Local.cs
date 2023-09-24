@@ -24,6 +24,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO.Pipes;
 using System.Runtime;
 using WicNet;
@@ -37,6 +38,200 @@ internal class Local
 
 
     public static FrmMain? FrmMain;
+
+
+    /// <summary>
+    /// Gets all built-in toolbar buttons as JSON.
+    /// </summary>
+    public static string BuiltInToolbarItemsJson { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets the built-in toolbar buttons.
+    /// </summary>
+    public static List<ToolbarItemModel> BuiltInToolbarItems => new List<ToolbarItemModel>()
+    {
+        new() // MnuActualSize
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuActualSize)}",
+            Alignment = ToolStripItemAlignment.Right,
+            Image = nameof(Config.Theme.ToolbarIcons.ActualSize),
+            OnClick = new(nameof(FrmMain.MnuActualSize)),
+        },
+        new() // MnuAutoZoom
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuAutoZoom)}",
+            Image = nameof(Config.Theme.ToolbarIcons.AutoZoom),
+            OnClick = new(nameof(FrmMain.MnuAutoZoom)),
+        },
+        new() // MnuToggleCheckerboard
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuToggleCheckerboard)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Checkerboard),
+            CheckableConfigBinding = nameof(Config.ShowCheckerboard),
+            OnClick = new(nameof(FrmMain.MnuToggleCheckerboard)),
+        },
+        new() // MnuColorPicker
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuColorPicker)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ColorPicker),
+            OnClick = new(nameof(FrmMain.MnuColorPicker)),
+        },
+        new() // MnuCropTool
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuCropTool)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Crop),
+            OnClick = new(nameof(FrmMain.MnuCropTool)),
+        },
+        new() // MnuMoveToRecycleBin
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Delete),
+            OnClick = new(nameof(FrmMain.MnuMoveToRecycleBin)),
+        },
+        new() // MnuEdit
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuEdit)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Edit),
+            OnClick = new(nameof(FrmMain.MnuEdit)),
+        },
+        new() // MnuExit
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuExit)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Exit),
+            OnClick = new(nameof(FrmMain.MnuExit)),
+        },
+        new() // MnuFlipHorizontal
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuFlipHorizontal)}",
+            Image = nameof(Config.Theme.ToolbarIcons.FlipHorz),
+            OnClick = new(nameof(FrmMain.MnuFlipHorizontal)),
+        },
+        new() // MnuFlipVertical
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuFlipVertical)}",
+            Image = nameof(Config.Theme.ToolbarIcons.FlipVert),
+            OnClick = new(nameof(FrmMain.MnuFlipVertical)),
+        },
+        new() // MnuFullScreen
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuFullScreen)}",
+            Image = nameof(Config.Theme.ToolbarIcons.FullScreen),
+            CheckableConfigBinding = nameof(Config.EnableFullScreen),
+            OnClick = new(nameof(FrmMain.MnuFullScreen)),
+        },
+        new() // MnuToggleGallery
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuToggleGallery)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Gallery),
+            CheckableConfigBinding = nameof(Config.ShowGallery),
+            OnClick = new(nameof(FrmMain.MnuToggleGallery)),
+        },
+        new() // MnuLockZoom
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuLockZoom)}",
+            Image = nameof(Config.Theme.ToolbarIcons.LockZoom),
+            OnClick = new(nameof(FrmMain.MnuLockZoom)),
+        },
+        new() // MnuOpenFile
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuOpenFile)}",
+            Alignment = ToolStripItemAlignment.Right,
+            Image = nameof(Config.Theme.ToolbarIcons.OpenFile),
+            OnClick = new(nameof(FrmMain.MnuOpenFile)),
+        },
+        new() // MnuPrint
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuPrint)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Print),
+            OnClick = new(nameof(FrmMain.MnuPrint)),
+        },
+        new() // MnuRefresh
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuRefresh)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Refresh),
+            OnClick = new(nameof(FrmMain.MnuRefresh)),
+        },
+        new() // MnuRotateLeft
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuRotateLeft)}",
+            Image = nameof(Config.Theme.ToolbarIcons.RotateLeft),
+            OnClick = new(nameof(FrmMain.MnuRotateLeft)),
+        },
+        new() // MnuRotateRight
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuRotateRight)}",
+            Image = nameof(Config.Theme.ToolbarIcons.RotateRight),
+            OnClick = new(nameof(FrmMain.MnuRotateRight)),
+        },
+        new() // MnuSave
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuSave)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Save),
+            OnClick = new(nameof(FrmMain.MnuSave)),
+        },
+        new() // MnuScaleToFill
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuScaleToFill)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ScaleToFill),
+            OnClick = new(nameof(FrmMain.MnuScaleToFill)),
+        },
+        new() // MnuScaleToFit
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuScaleToFit)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ScaleToFit),
+            OnClick = new(nameof(FrmMain.MnuScaleToFit)),
+        },
+        new() // MnuScaleToHeight
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuScaleToHeight)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ScaleToHeight),
+            OnClick = new(nameof(FrmMain.MnuScaleToHeight)),
+        },
+        new() // MnuScaleToWidth
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuScaleToWidth)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ScaleToWidth),
+            OnClick = new(nameof(FrmMain.MnuScaleToWidth)),
+        },
+        new() // MnuSlideshow
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuSlideshow)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Slideshow),
+            CheckableConfigBinding = nameof(Config.EnableSlideshow),
+            OnClick = new(nameof(FrmMain.MnuSlideshow)),
+        },
+        new() // MnuViewNext
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuViewNext)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ViewNextImage),
+            OnClick = new(nameof(FrmMain.MnuViewNext)),
+        },
+        new() // MnuViewPrevious
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuViewPrevious)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ViewPreviousImage),
+            OnClick = new(nameof(FrmMain.MnuViewPrevious)),
+        },
+        new() // MnuWindowFit
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuWindowFit)}",
+            Image = nameof(Config.Theme.ToolbarIcons.WindowFit),
+            OnClick = new(nameof(FrmMain.MnuWindowFit)),
+        },
+        new() // MnuZoomIn
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuZoomIn)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ZoomIn),
+            OnClick = new(nameof(FrmMain.MnuZoomIn)),
+        },
+        new() // MnuZoomOut
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuZoomOut)}",
+            Image = nameof(Config.Theme.ToolbarIcons.ZoomOut),
+            OnClick = new(nameof(FrmMain.MnuZoomOut)),
+        },
+    };
+
 
 
     #region LazyInitializer Properties

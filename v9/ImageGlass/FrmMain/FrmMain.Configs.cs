@@ -500,114 +500,45 @@ public partial class FrmMain
     {
         if (forcedReset)
         {
-            Config.ToolbarButtons = new()
+            var defaultButtons = new List<string>()
             {
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuOpenFile)}",
-                    Alignment = ToolStripItemAlignment.Right,
-                    Image = nameof(Config.Theme.ToolbarIcons.OpenFile),
-                    OnClick = new(nameof(MnuOpenFile)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuViewPrevious)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ViewPreviousImage),
-                    OnClick = new(nameof(MnuViewPrevious)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuViewNext)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ViewNextImage),
-                    OnClick = new(nameof(MnuViewNext)),
-                },
-                new() { Type = ToolbarItemModelType.Separator },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuAutoZoom)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.AutoZoom),
-                    OnClick = new(nameof(MnuAutoZoom)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuLockZoom)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.LockZoom),
-                    OnClick = new(nameof(MnuLockZoom)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuScaleToWidth)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ScaleToWidth),
-                    OnClick = new(nameof(MnuScaleToWidth)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuScaleToHeight)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ScaleToHeight),
-                    OnClick = new(nameof(MnuScaleToHeight)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuScaleToFit)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ScaleToFit),
-                    OnClick = new(nameof(MnuScaleToFit)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuScaleToFill)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.ScaleToFill),
-                    OnClick = new(nameof(MnuScaleToFill)),
-                },
-                new() { Type = ToolbarItemModelType.Separator },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuRefresh)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Refresh),
-                    OnClick = new(nameof(MnuRefresh)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuToggleGallery)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Gallery),
-                    CheckableConfigBinding = nameof(Config.ShowGallery),
-                    OnClick = new(nameof(MnuToggleGallery)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuToggleCheckerboard)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Checkerboard),
-                    CheckableConfigBinding = nameof(Config.ShowCheckerboard),
-                    OnClick = new(nameof(MnuToggleCheckerboard)),
-                },
-                new() { Type = ToolbarItemModelType.Separator },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuFullScreen)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.FullScreen),
-                    CheckableConfigBinding = nameof(Config.EnableFullScreen),
-                    OnClick = new(nameof(MnuFullScreen)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuSlideshow)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Slideshow),
-                    CheckableConfigBinding = nameof(Config.EnableSlideshow),
-                    OnClick = new(nameof(MnuSlideshow)),
-                },
-                new() { Type = ToolbarItemModelType.Separator },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuPrint)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Print),
-                    OnClick = new(nameof(MnuPrint)),
-                },
-                new()
-                {
-                    Id = $"Btn_{nameof(MnuMoveToRecycleBin)}",
-                    Image = nameof(Config.Theme.ToolbarIcons.Delete),
-                    OnClick = new(nameof(MnuMoveToRecycleBin)),
-                }
+                $"Btn_{nameof(MnuOpenFile)}",
+                $"Btn_{nameof(MnuViewPrevious)}",
+                $"Btn_{nameof(MnuViewNext)}",
+                "Separator",
+                $"Btn_{nameof(MnuAutoZoom)}",
+                $"Btn_{nameof(MnuLockZoom)}",
+                $"Btn_{nameof(MnuScaleToWidth)}",
+                $"Btn_{nameof(MnuScaleToHeight)}",
+                $"Btn_{nameof(MnuScaleToFit)}",
+                $"Btn_{nameof(MnuScaleToFill)}",
+                "Separator",
+                $"Btn_{nameof(MnuRefresh)}",
+                $"Btn_{nameof(MnuToggleGallery)}",
+                $"Btn_{nameof(MnuToggleCheckerboard)}",
+                "Separator",
+                $"Btn_{nameof(MnuFullScreen)}",
+                $"Btn_{nameof(MnuSlideshow)}",
+                "Separator",
+                $"Btn_{nameof(MnuPrint)}",
+                $"Btn_{nameof(MnuMoveToRecycleBin)}",
             };
+
+            Config.ToolbarButtons = new();
+            foreach (var buttonName in defaultButtons)
+            {
+                if (buttonName == "Separator")
+                {
+                    Config.ToolbarButtons.Add(new()
+                    {
+                        Type = ToolbarItemModelType.Separator,
+                    });
+                }
+                else if (Local.BuiltInToolbarItems.FirstOrDefault(i => i.Id == buttonName) is ToolbarItemModel btn)
+                {
+                    Config.ToolbarButtons.Add(btn);
+                }
+            }
         }
 
 

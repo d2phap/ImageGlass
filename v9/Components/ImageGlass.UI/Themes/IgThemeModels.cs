@@ -181,24 +181,26 @@ public class IgThemeToolbarIcons : IDisposable
     public Bitmap? Delete { get; set; }
     public Bitmap? Edit { get; set; }
     public Bitmap? Exit { get; set; }
+    public Bitmap? Export { get; set; }
     public Bitmap? FlipHorz { get; set; }
     public Bitmap? FlipVert { get; set; }
     public Bitmap? FullScreen { get; set; }
-    public Bitmap? GoToImage { get; set; }
+    public Bitmap? Gallery { get; set; }
     public Bitmap? LockZoom { get; set; }
     public Bitmap? MainMenu { get; set; }
     public Bitmap? OpenFile { get; set; }
+    public Bitmap? Pause { get; set; }
+    public Bitmap? Play { get; set; }
     public Bitmap? Print { get; set; }
     public Bitmap? Refresh { get; set; }
     public Bitmap? RotateLeft { get; set; }
     public Bitmap? RotateRight { get; set; }
-    public Bitmap? SaveAs { get; set; }
+    public Bitmap? Save { get; set; }
     public Bitmap? ScaleToFill { get; set; }
     public Bitmap? ScaleToFit { get; set; }
     public Bitmap? ScaleToHeight { get; set; }
     public Bitmap? ScaleToWidth { get; set; }
     public Bitmap? Slideshow { get; set; }
-    public Bitmap? Gallery { get; set; }
     public Bitmap? ViewFirstImage { get; set; }
     public Bitmap? ViewLastImage { get; set; }
     public Bitmap? ViewNextImage { get; set; }
@@ -206,9 +208,6 @@ public class IgThemeToolbarIcons : IDisposable
     public Bitmap? WindowFit { get; set; }
     public Bitmap? ZoomIn { get; set; }
     public Bitmap? ZoomOut { get; set; }
-    public Bitmap? Play { get; set; }
-    public Bitmap? Pause { get; set; }
-    public Bitmap? Export { get; set; }
 
 
     #region IDisposable Disposing
@@ -257,9 +256,6 @@ public class IgThemeToolbarIcons : IDisposable
             FullScreen?.Dispose();
             FullScreen = null;
 
-            GoToImage?.Dispose();
-            GoToImage = null;
-
             LockZoom?.Dispose();
             LockZoom = null;
 
@@ -281,8 +277,8 @@ public class IgThemeToolbarIcons : IDisposable
             RotateRight?.Dispose();
             RotateRight = null;
 
-            SaveAs?.Dispose();
-            SaveAs = null;
+            Save?.Dispose();
+            Save = null;
 
             ScaleToFill?.Dispose();
             ScaleToFill = null;

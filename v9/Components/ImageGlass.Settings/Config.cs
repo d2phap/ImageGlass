@@ -1140,33 +1140,9 @@ public static class Config
         settings.TryAdd(nameof(DisabledMenus), DisabledMenus);
 
         // ToolbarButtons
-        if (useAbsoluteFileUrl)
-        {
-            var items = ToolbarButtons.Select(i =>
-            {
-                if (string.IsNullOrWhiteSpace(i.Image)) return i;
-
-                var filePath = Theme.GetToolbarIconFilePath(i.Image);
-                if (string.IsNullOrWhiteSpace(filePath)) return i;
-
-                var fileUrl = new Uri(filePath).AbsoluteUri;
-                if (!string.IsNullOrWhiteSpace(fileUrl))
-                {
-                    return i with
-                    {
-                        Image = fileUrl,
-                    };
-                }
-
-                return i;
-            }).ToList();
-
-            settings.TryAdd(nameof(ToolbarButtons), items);
-        }
-        else
-        {
-            settings.TryAdd(nameof(ToolbarButtons), ToolbarButtons);
-        }
+        settings.TryAdd(nameof(ToolbarButtons), useAbsoluteFileUrl
+            ? ConvertToolbarButtonsToExpandoObj(ToolbarButtons)
+            : ToolbarButtons);
 
         #endregion
 
@@ -1175,6 +1151,35 @@ public static class Config
         settings.TryAdd(nameof(ToolSettings), (object)ToolSettings);
 
         return settings;
+    }
+
+
+    /// <summary>
+    /// Converts <c>List{ToolbarItemModel}</c> to <c>List{ExpandoObject}</c>.
+    /// Also adds <c>ImageUrl</c> property to the item.
+    /// </summary>
+    public static List<ExpandoObject> ConvertToolbarButtonsToExpandoObj(List<ToolbarItemModel> list)
+    {
+        var items = list.Select(i =>
+        {
+            var obj = i.ToExpandoObject();
+
+            if (string.IsNullOrWhiteSpace(i.Image)) return obj;
+
+            var filePath = Theme.GetToolbarIconFilePath(i.Image);
+            if (string.IsNullOrWhiteSpace(filePath)) return obj;
+
+            var fileUrl = new Uri(filePath).AbsoluteUri;
+            if (!string.IsNullOrWhiteSpace(fileUrl))
+            {
+                obj.TryAdd("ImageUrl", fileUrl);
+                return obj;
+            }
+
+            return obj;
+        }).ToList();
+
+        return items;
     }
 
 

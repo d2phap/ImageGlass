@@ -1169,7 +1169,7 @@ public partial class FrmMain : ThemedForm
             Toolbar.AddItem(new()
             {
                 Id = TOOLBAR_BUTTON_SAVE_TRANSFORMATION,
-                Image = nameof(Config.Theme.ToolbarIcons.SaveAs),
+                Image = nameof(Config.Theme.ToolbarIcons.Save),
                 OnClick = new(menuAction),
                 Alignment = ToolStripItemAlignment.Right,
                 Text = menuText,
