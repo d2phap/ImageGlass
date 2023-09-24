@@ -33,6 +33,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.moveToolbarButton = this.moveToolbarButton.bind(this);
     this.deleteToolbarButton = this.deleteToolbarButton.bind(this);
     this.insertButtonFromAvailableList = this.insertButtonFromAvailableList.bind(this);
+    this.editToolbarButton = this.editToolbarButton.bind(this);
   }
 
   get hasChanges() {
@@ -341,7 +342,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
       this.moveToolbarButton(btnIndex, btnIndex + 1);
     }
     else if (action === 'edit') {
-      //
+      this.editToolbarButton(btnIndex);
     }
     else if (action === 'delete') {
       this.deleteToolbarButton(btnIndex);
@@ -390,6 +391,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     // reload buttons list
     this.reloadCurrentItems(toIndex);
     this.reloadAvailableItems();
+  }
+
+  private editToolbarButton(btnIndex: number) {
+    //
   }
 }
 
