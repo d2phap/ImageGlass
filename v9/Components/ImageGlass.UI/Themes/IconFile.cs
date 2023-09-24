@@ -70,4 +70,5 @@ public enum IconName
 
     ArrowUp,
     ArrowDown,
+    ArrowExchange,
 }

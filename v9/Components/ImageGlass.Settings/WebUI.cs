@@ -119,6 +119,7 @@ public static class WebUI
             { IconName.Delete, string.Empty },
             { IconName.ArrowUp, string.Empty },
             { IconName.ArrowDown, string.Empty },
+            { IconName.ArrowExchange, string.Empty },
             { IconName.Sun, string.Empty },
             { IconName.Moon, string.Empty },
         };
