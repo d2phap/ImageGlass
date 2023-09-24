@@ -113,6 +113,10 @@ toolbar-editor {
       transition: all ease var(--transitionMs);
     }
 
+    &[data-alignment="Right" i] .btn-toolbar {
+      justify-content: end;
+    }
+
     &:hover {
       .button-actions {
         opacity: 1;

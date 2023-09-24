@@ -178,7 +178,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
 
       html += `
-        <li class="toolbar-item" data-index="${index}">
+        <li class="toolbar-item" data-index="${index}" data-alignment="${item.Alignment}">
           <div class="btn btn-toolbar" draggable="true" tabindex="0" lang-title="${textLang}">
             ${imageHtml}
             <span class="button-text" lang-text="${textLang}"></span>

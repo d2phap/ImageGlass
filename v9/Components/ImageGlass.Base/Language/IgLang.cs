@@ -702,7 +702,7 @@ public class IgLang : Dictionary<string, string>
         #region TAB Toolbar
         //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
 
-        Add("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons:");
+        Add("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
         Add("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
         Add("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
         Add("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
