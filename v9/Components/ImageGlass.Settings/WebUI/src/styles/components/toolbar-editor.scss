@@ -10,6 +10,8 @@ toolbar-editor {
     svg {
       width: 2rem;
       height: 2rem;
+      stroke: rgb(var(--AppText));
+      fill: rgb(var(--AppText));
     }
   }
   .section-available {
