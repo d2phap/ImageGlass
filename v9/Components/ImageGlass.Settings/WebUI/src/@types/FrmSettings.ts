@@ -80,6 +80,8 @@ export type IPageSettings = Record<string, any> & {
     Edit: string,
     ArrowUp: string,
     ArrowDown: string,
+    ArrowLeft: string,
+    ArrowRight: string,
     ArrowExchange: string,
     Sun: string,
     Moon: string,

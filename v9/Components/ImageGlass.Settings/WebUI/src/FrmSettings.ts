@@ -30,6 +30,8 @@ if (!window._pageSettings) {
       Edit: '',
       ArrowDown: '',
       ArrowUp: '',
+      ArrowLeft: '',
+      ArrowRight: '',
       ArrowExchange: '',
       Moon: '',
       Sun: '',
