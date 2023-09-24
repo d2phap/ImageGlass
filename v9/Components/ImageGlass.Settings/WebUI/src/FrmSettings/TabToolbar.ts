@@ -23,6 +23,15 @@ export default class TabToolbar {
    * Save settings as JSON object.
    */
   static exportSettings() {
-    return getChangedSettingsFromTab('toolbar');
+    const settings = getChangedSettingsFromTab('toolbar');
+
+    if (this.#toolbarEditor.hasChanges) {
+      settings.ToolbarButtons = this.#toolbarEditor.items;
+    }
+    else {
+      delete settings.ToolbarButtons;
+    }
+
+    return settings;
   }
 }

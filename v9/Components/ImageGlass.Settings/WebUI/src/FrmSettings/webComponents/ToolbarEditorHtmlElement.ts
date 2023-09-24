@@ -6,6 +6,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   #items: IToolbarButton[];
   #listEl: HTMLUListElement;
   #dragIndex = -1;
+  #hasChanges = false;
 
   constructor() {
     super();
@@ -27,6 +28,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.deleteToolbarButton = this.deleteToolbarButton.bind(this);
   }
 
+  get hasChanges() {
+    return this.#hasChanges;
+  }
+
   get items() {
     return this.#items;
   }
@@ -34,6 +39,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   set items(value: IToolbarButton[]) {
     this.#items = value;
     this.reloadItems();
+    this.#hasChanges = false;
   }
 
   private connectedCallback() {
@@ -229,7 +235,6 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     const action = el.getAttribute('data-action').toLocaleLowerCase();
     const toolbarIndex = +el.closest('.toolbar-item').getAttribute('data-index');
 
-    console.log(action, toolbarIndex);
     if (action === 'move_up') {
       this.moveToolbarButton(toolbarIndex, toolbarIndex - 1);
     }
@@ -251,6 +256,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     // move button
     arrayMoveMutable(this.#items, fromIndex, toIndex);
+    this.#hasChanges = true;
 
     // reload buttons list
     this.reloadItems(toIndex);
@@ -263,6 +269,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   private deleteToolbarButton(toolbarIndex: number) {
     // remove button
     this.#items.splice(toolbarIndex, 1);
+    this.#hasChanges = true;
 
     // reload buttons list
     this.reloadItems(toolbarIndex - 1);
