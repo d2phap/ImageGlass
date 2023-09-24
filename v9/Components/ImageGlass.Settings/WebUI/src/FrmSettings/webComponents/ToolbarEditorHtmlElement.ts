@@ -8,8 +8,11 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   #itemsCurrent: IToolbarButton[];
   #listCurrentEl: HTMLUListElement;
 
-  #dragIndex = -1;
   #hasChanges = false;
+  #dragData: { fromSource: string, fromIndex: number } = {
+    fromSource: '',
+    fromIndex: -1,
+  };
 
   constructor() {
     super();
@@ -29,6 +32,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     this.moveToolbarButton = this.moveToolbarButton.bind(this);
     this.deleteToolbarButton = this.deleteToolbarButton.bind(this);
+    this.insertButtonFromAvailableList = this.insertButtonFromAvailableList.bind(this);
   }
 
   get hasChanges() {
@@ -65,13 +69,13 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.innerHTML = `
       <div class="section-available">
         <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._AvailableButtons">[Available buttons:]</div>
-        <ul class="ig-list-vertical is--no-separator toolbar-list">
+        <ul class="ig-list-vertical is--no-separator toolbar-list" data-source="available">
         </ul>
       </div>
       <div class="section-middle">[Icon]</div>
       <div class="section-current">
         <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._CurrentButtons">[Current buttons:]</div>
-        <ul class="ig-list-vertical is--no-separator toolbar-list">
+        <ul class="ig-list-vertical is--no-separator toolbar-list" data-source="current">
         </ul>
       </div>`;
 
@@ -134,6 +138,22 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     // load language
     Language.loadForEl(this.#listAvailableEl);
+
+    // add drag/drop events
+    queryAll('.btn-toolbar[draggable="true"]', this.#listAvailableEl).forEach(btnEl => {
+      btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
+      btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
+    });
+
+    queryAll('.toolbar-item', this.#listAvailableEl).forEach(el => {
+      el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
+      el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
+    });
+
+    // add action events
+    queryAll('[data-action]', this.#listAvailableEl).forEach(el => {
+      el.addEventListener('click', this.onToolbarActionButtonClicked, false);
+    });
   }
 
   private reloadCurrentItems(focusButtonIndex = -1) {
@@ -224,7 +244,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     });
 
     // add action events
-    queryAll('.toolbar-list [data-action]', this).forEach(el => {
+    queryAll('[data-action]', this.#listCurrentEl).forEach(el => {
       el.addEventListener('click', this.onToolbarActionButtonClicked, false);
     });
   }
@@ -233,9 +253,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   private onBtnToolbarDragStart(e: DragEvent) {
     const btnEl = e.target as HTMLButtonElement;
     const fromIndex = +btnEl.parentElement.getAttribute('data-index');
+    const source = btnEl.closest('.toolbar-list').getAttribute('data-source');
 
     // set drag data
-    this.#dragIndex = fromIndex;
+    this.#dragData = { fromSource: source, fromIndex };
     e.dataTransfer.effectAllowed = 'move';
 
     // set custom drag image
@@ -246,20 +267,22 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
       el.style.pointerEvents = 'none';
     });
     btnEl.style.pointerEvents = '';
+    btnEl.style.opacity = '0.4';
   }
 
-  private onToolbarItemDragEnter(e: DragEvent, dropEL: HTMLElement) {
+  private onToolbarItemDragEnter(e: DragEvent, dropEl: HTMLElement) {
     e.preventDefault();
-    const fromIndex = this.#dragIndex;
-    const toIndex = +dropEL.getAttribute('data-index');
+    const { fromSource, fromIndex } = this.#dragData;
+    const toIndex = +dropEl.getAttribute('data-index');
+    const toSource = dropEl.closest('.toolbar-list').getAttribute('data-source');
     if (fromIndex === toIndex) return;
 
     const cssClass = ['drag--enter'];
-    if (fromIndex < toIndex) {
+    if (fromIndex < toIndex && fromSource === toSource) {
       cssClass.push('position--after');
     }
 
-    dropEL.classList.add(...cssClass);
+    dropEl.classList.add(...cssClass);
   }
 
   private onToolbarItemDragOver(e: DragEvent) {
@@ -276,22 +299,30 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     e.preventDefault();
 
     // re-enable child el to receive drag events
-    queryAll('.btn-toolbar[draggable="true"]', this.#listCurrentEl).forEach(el => {
+    queryAll('.btn-toolbar[draggable="true"]').forEach(el => {
       el.style.pointerEvents = '';
+      el.style.opacity = '1';
     });
   }
 
   private onToolbarItemDrop(e: DragEvent, toDropEl: HTMLElement) {
     e.preventDefault();
     toDropEl.classList.remove('drag--enter', 'position--after');
-    if (this.#dragIndex === -1) return;
+    if (this.#dragData.fromIndex === -1) return;
 
-    const fromIndex = this.#dragIndex;
+    const { fromSource, fromIndex } = this.#dragData;
     const toIndex = +toDropEl.getAttribute('data-index');
-    this.#dragIndex = -1;
+    const toSource = toDropEl.closest('.toolbar-list').getAttribute('data-source');
+    this.#dragData = { fromSource: '', fromIndex: -1 };
 
     // move item
-    this.moveToolbarButton(fromIndex, toIndex);
+    if (fromSource === toSource) {
+      this.moveToolbarButton(fromIndex, toIndex);
+    }
+    // add item
+    else {
+      this.insertButtonFromAvailableList(fromIndex, toIndex);
+    }
   }
 
 
@@ -301,19 +332,23 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     const el = e.target as HTMLButtonElement;
     const action = el.getAttribute('data-action').toLocaleLowerCase();
-    const toolbarIndex = +el.closest('.toolbar-item').getAttribute('data-index');
+    const btnIndex = +el.closest('.toolbar-item').getAttribute('data-index');
 
     if (action === 'move_up') {
-      this.moveToolbarButton(toolbarIndex, toolbarIndex - 1);
+      this.moveToolbarButton(btnIndex, btnIndex - 1);
     }
     else if (action === 'move_down') {
-      this.moveToolbarButton(toolbarIndex, toolbarIndex + 1);
+      this.moveToolbarButton(btnIndex, btnIndex + 1);
     }
     else if (action === 'edit') {
       //
     }
     else if (action === 'delete') {
-      this.deleteToolbarButton(toolbarIndex);
+      this.deleteToolbarButton(btnIndex);
+    }
+    // add a button from the available buttons list to the current list
+    else if (action === 'add') {
+      this.insertButtonFromAvailableList(btnIndex);
     }
   }
 
@@ -334,13 +369,27 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     query(`.toolbar-item[data-index="${toIndex}"] [data-action="${action}"]`)?.focus();
   }
 
-  private deleteToolbarButton(toolbarIndex: number) {
+  private deleteToolbarButton(btnIndex: number) {
     // remove button
-    this.#itemsCurrent.splice(toolbarIndex, 1);
+    this.#itemsCurrent.splice(btnIndex, 1);
     this.#hasChanges = true;
 
     // reload buttons list
-    this.reloadCurrentItems(toolbarIndex - 1);
+    this.reloadCurrentItems(btnIndex - 1);
+    this.reloadAvailableItems();
+  }
+
+  private insertButtonFromAvailableList(availableBtnIndex: number, toIndex?: number) {
+    const btn = this.availableButtons[availableBtnIndex];
+    if (!btn) return;
+
+    toIndex ??= this.#itemsCurrent.length;
+    this.#itemsCurrent.splice(toIndex, 0, btn);
+    this.#hasChanges = true;
+
+    // reload buttons list
+    this.reloadCurrentItems(toIndex);
+    this.reloadAvailableItems();
   }
 }
 
