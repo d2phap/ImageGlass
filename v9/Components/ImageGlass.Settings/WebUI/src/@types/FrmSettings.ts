@@ -33,6 +33,7 @@ export type ITheme = {
     Website: string,
     Description: string,
   },
+  ToolbarButtons: Record<string, string>,
 };
 
 export type SingleAction = {
@@ -49,6 +50,7 @@ export type IToolbarButton = {
   CheckableConfigBinding: string,
   Alignment: 'Left' | 'Right',
   Image: string,
+  ImageUrl: string,
   OnClick: SingleAction,
 };
 
@@ -78,6 +80,7 @@ export type IPageSettings = Record<string, any> & {
     Edit: string,
     ArrowUp: string,
     ArrowDown: string,
+    ArrowExchange: string,
     Sun: string,
     Moon: string,
   },

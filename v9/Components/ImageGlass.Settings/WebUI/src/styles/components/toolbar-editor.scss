@@ -1,6 +1,25 @@
 
 toolbar-editor {
-  display: block;
+  display: flex;
+
+  .section-middle {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+  .section-available {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+  }
+  .section-current {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+  }
 
   // action buttons
   .btn[data-action] {
@@ -125,36 +144,9 @@ toolbar-editor {
   }
 
   .toolbar-list {
+    width: calc(20rem * var(--fontScale));
     min-height: 20rem;
     max-height: 35rem;
     overflow-y: auto;
-  }
-
-  &[checkbox="true" i] {
-    .toolbar-checkbox {
-      position: absolute;
-      z-index: 1;
-      left: 0.25rem;
-      right: 0.25rem;
-      top: 0.25rem;
-      bottom: 0.25rem;
-      margin: auto;
-
-      .ig-checkbox {
-        width: 100%;
-        height: 100%;
-
-        input[type=checkbox] + * {
-          position: relative;
-          margin-left: 1rem;
-          margin-top: -0.1rem;
-        }
-      }
-    }
-
-    .btn-toolbar {
-      min-height: calc(3rem * var(--fontScale));;
-      padding-left: 3rem;
-    }
   }
 }

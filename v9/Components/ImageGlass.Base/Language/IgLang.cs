@@ -148,6 +148,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Empty", "(empty)");
         Add("_._MoveUp", "Move up");
         Add("_._MoveDown", "Move down");
+        Add("_._Separator", "Separator");
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -700,15 +701,9 @@ public class IgLang : Dictionary<string, string>
         #region TAB Toolbar
         //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
 
-        
-        Add("FrmSetting._Separator", "Separator"); // i.e. 'toolbar separator'
-        //Add("FrmSetting.lblToolbar._Tooltip", "Configure toolbar buttons"); // tooltip
-        //Add("FrmSetting.lblUsedBtns", "Current Buttons:");
-        //Add("FrmSetting.lblAvailBtns", "Available Buttons:");
-        //Add("FrmSetting.btnMoveDown._Tooltip", "Move selected button down"); // tooltip
-        //Add("FrmSetting.btnMoveLeft._Tooltip", "Remove selected button(s) from the toolbar"); // tooltip
-        //Add("FrmSetting.btnMoveRight._Tooltip", "Add selected button(s) to the toolbar"); // tooltip
-        //Add("FrmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
+        Add("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons:");
+        Add("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
+        Add("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
 
         #endregion
 

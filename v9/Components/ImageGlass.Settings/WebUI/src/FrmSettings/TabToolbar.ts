@@ -2,13 +2,13 @@ import { getChangedSettingsFromTab } from '@/helpers';
 import { ToolbarEditorHtmlElement } from './webComponents/ToolbarEditorHtmlElement';
 
 export default class TabToolbar {
-  static #toolbarEditor = query<ToolbarEditorHtmlElement>('toolbar-editor');
+  static #toolbarEditor = query<ToolbarEditorHtmlElement>('#ToolbarEditor');
 
   /**
    * Loads settings for tab Toolbar.
    */
   static loadSettings() {
-    this.#toolbarEditor.items = _pageSettings.config.ToolbarButtons || [];
+    this.#toolbarEditor.currentButtons = _pageSettings.config.ToolbarButtons || [];
   }
 
 
@@ -26,7 +26,7 @@ export default class TabToolbar {
     const settings = getChangedSettingsFromTab('toolbar');
 
     if (this.#toolbarEditor.hasChanges) {
-      settings.ToolbarButtons = this.#toolbarEditor.items;
+      settings.ToolbarButtons = this.#toolbarEditor.currentButtons;
     }
     else {
       delete settings.ToolbarButtons;

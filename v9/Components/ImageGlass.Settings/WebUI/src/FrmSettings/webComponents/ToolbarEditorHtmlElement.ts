@@ -3,17 +3,21 @@ import Language from '@/common/Language';
 import { arrayMoveMutable, pause } from '@/helpers';
 
 export class ToolbarEditorHtmlElement extends HTMLElement {
-  #items: IToolbarButton[];
-  #listEl: HTMLUListElement;
+  #itemsAvailable: IToolbarButton[];
+  #listAvailableEl: HTMLUListElement;
+
+  #itemsCurrent: IToolbarButton[];
+  #listCurrentEl: HTMLUListElement;
+
   #dragIndex = -1;
-  #showCheckbox = false;
   #hasChanges = false;
 
   constructor() {
     super();
 
     // private methods
-    this.reloadItems = this.reloadItems.bind(this);
+    this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
+    this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
     this.onToolbarActionButtonClicked = this.onToolbarActionButtonClicked.bind(this);
 
     this.onBtnToolbarDragStart = this.onBtnToolbarDragStart.bind(this);
@@ -31,79 +35,44 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     return this.#hasChanges;
   }
 
-  get items() {
-    return this.#items;
+  get currentButtons() {
+    return this.#itemsCurrent;
   }
 
-  set items(value: IToolbarButton[]) {
-    this.#items = value;
-    this.reloadItems();
+  set currentButtons(value: IToolbarButton[]) {
+    this.#itemsCurrent = value;
+
+    // load icon
+    query('.section-middle', this).innerHTML = _pageSettings.icons.ArrowExchange;
+
+    this.reloadCurrentItems();
     this.#hasChanges = false;
   }
 
-  get checkedItems(): IToolbarButton[] {
-    return queryAll('.toolbar-item input[type="checkbox"]:checked', this.#listEl)
-      .map(el => {
-        const index = +el.closest('.toolbar-item').getAttribute('data-index');
-        return this.#items[index];
-      })
-      .filter(Boolean);
-  }
-
   private connectedCallback() {
+    console.log('_pageSettings.icons.ArrowExchange=', _pageSettings.icons.ArrowExchange);
     this.innerHTML = `
-      <ul class="ig-list-vertical is--no-separator toolbar-list">
-      </ul>`;
+      <div class="section-available">
+        <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._AvailableButtons">[Available buttons:]</div>
+        <ul class="ig-list-vertical is--no-separator toolbar-list">
+        </ul>
+      </div>
+      <div class="section-middle">[Icon]</div>
+      <div class="section-current">
+        <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._CurrentButtons">[Current buttons:]</div>
+        <ul class="ig-list-vertical is--no-separator toolbar-list">
+        </ul>
+      </div>`;
 
-    this.#listEl = query('.toolbar-list', this);
-    this.#showCheckbox = this.getAttribute('checkbox') === 'true';
+    this.#listAvailableEl = query('.section-available .toolbar-list', this);
+    this.#listCurrentEl = query('.section-current .toolbar-list', this);
   }
 
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    const attrName = name.toLocaleLowerCase();
-
-    if (attrName === 'checkbox') {
-      this.#showCheckbox = newValue === 'true';
-      this.reloadItems();
-    }
-  }
-
-
-  private reloadItems(focusButtonIndex = -1) {
+  private reloadAvailableItems() {
     let html = '';
-    let actionsHtml = '';
-    let checkboxHtml = '';
 
-    if (this.#showCheckbox) {
-      checkboxHtml = `
-        <div class="toolbar-checkbox">
-          <label class="ig-checkbox">
-            <input type="checkbox" />
-            <div></div>
-          </label>
-        </div>`;
-    }
-    else {
-      actionsHtml = `
-        <div class="button-actions">
-          <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
-            ${_pageSettings.icons.ArrowUp}
-          </button>
-          <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
-            ${_pageSettings.icons.ArrowDown}
-          </button>
-
-          <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
-            ${_pageSettings.icons.Edit}
-          </button>
-          <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
-            ${_pageSettings.icons.Delete}
-          </button>
-        </div>`;
-    }
-
-    this.#items.forEach((item, index) => {
+    this.#itemsAvailable.forEach((item, index) => {
       let imageHtml = '';
       let textLang = item.Text;
 
@@ -116,38 +85,97 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
           textLang = `FrmMain.${item.OnClick.Executable}`;
         }
 
-        imageHtml = `<img class="button-icon" src="${item.Image}" onerror="this.style.visibility = 'hidden';" />`;
+        imageHtml = `<img class="button-icon" src="${item.ImageUrl}" onerror="this.style.visibility = 'hidden';" />`;
       }
 
 
       html += `
         <li class="toolbar-item" data-index="${index}">
-          ${checkboxHtml}
-
-          <div class="btn btn-toolbar"
-            ${this.#showCheckbox ? '' : 'draggable="true"'}
-            lang-title="${textLang}"
-            tabindex="0">
-
+          <div class="btn btn-toolbar" draggable="true" tabindex="0" lang-title="${textLang}">
             ${imageHtml}
             <span class="button-text" lang-text="${textLang}"></span>
 
             <div class="button-actions">
-              ${actionsHtml}
+              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
+                ${_pageSettings.icons.ArrowUp}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
+                ${_pageSettings.icons.ArrowDown}
+              </button>
+
+              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
+                ${_pageSettings.icons.Edit}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
+                ${_pageSettings.icons.Delete}
+              </button>
             </div>
           </div>
         </li>`;
     });
 
     // render toolbar buttons list
-    this.#listEl.innerHTML = html;
+    this.#listAvailableEl.innerHTML = html;
 
     // load language
-    Language.loadForEl(this.#listEl);
+    Language.loadForEl(this.#listAvailableEl);
+  }
+
+
+  private reloadCurrentItems(focusButtonIndex = -1) {
+    let html = '';
+
+    this.#itemsCurrent.forEach((item, index) => {
+      let imageHtml = '';
+      let textLang = item.Text;
+
+      if (item.Type === 'Separator') {
+        textLang = '_._Separator';
+        imageHtml = '<div class="button-icon"></div>';
+      }
+      else {
+        if (!textLang) {
+          textLang = `FrmMain.${item.OnClick.Executable}`;
+        }
+
+        imageHtml = `<img class="button-icon" src="${item.ImageUrl}" onerror="this.style.visibility = 'hidden';" />`;
+      }
+
+
+      html += `
+        <li class="toolbar-item" data-index="${index}">
+          <div class="btn btn-toolbar" draggable="true" tabindex="0" lang-title="${textLang}">
+            ${imageHtml}
+            <span class="button-text" lang-text="${textLang}"></span>
+
+            <div class="button-actions">
+              <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
+                ${_pageSettings.icons.ArrowUp}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._MoveDown" data-action="move_down">
+                ${_pageSettings.icons.ArrowDown}
+              </button>
+
+              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
+                ${_pageSettings.icons.Edit}
+              </button>
+              <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
+                ${_pageSettings.icons.Delete}
+              </button>
+            </div>
+          </div>
+        </li>`;
+    });
+
+    // render toolbar buttons list
+    this.#listCurrentEl.innerHTML = html;
+
+    // load language
+    Language.loadForEl(this.#listCurrentEl);
 
     // set focus to the item
     if (focusButtonIndex >= 0) {
-      const movedItem = query(`.toolbar-item[data-index="${focusButtonIndex}"]`, this.#listEl);
+      const movedItem = query(`.toolbar-item[data-index="${focusButtonIndex}"]`, this.#listCurrentEl);
 
       if (movedItem) {
         movedItem.classList.add('drag--drop');
@@ -159,35 +187,32 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
       }
     }
 
+    // add drag/drop events
+    queryAll('.btn-toolbar[draggable="true"]', this.#listCurrentEl).forEach(btnEl => {
+      btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
+      btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
+    });
 
-    if (!this.#showCheckbox) {
-      // add drag/drop events
-      queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(btnEl => {
-        btnEl.removeEventListener('dragstart', this.onBtnToolbarDragStart, false);
-        btnEl.addEventListener('dragstart', this.onBtnToolbarDragStart, false);
-      });
+    queryAll('.toolbar-item', this.#listCurrentEl).forEach(el => {
+      el.removeEventListener('dragover', this.onToolbarItemDragOver, false);
+      el.addEventListener('dragover', this.onToolbarItemDragOver, false);
 
-      queryAll('.toolbar-item', this.#listEl).forEach(el => {
-        el.removeEventListener('dragover', this.onToolbarItemDragOver, false);
-        el.addEventListener('dragover', this.onToolbarItemDragOver, false);
+      el.removeEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+      el.addEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
 
-        el.removeEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
-        el.addEventListener('dragenter', (e) => this.onToolbarItemDragEnter(e, el), false);
+      el.removeEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+      el.addEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
+      el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
+      el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
 
-        el.removeEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
-        el.addEventListener('dragleave', (e) => this.onToolbarItemDragLeave(e, el), false);
-        el.removeEventListener('dragend', this.onToolbarItemDragEnd, false);
-        el.addEventListener('dragend', this.onToolbarItemDragEnd, false);
+      el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+      el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
+    });
 
-        el.removeEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
-        el.addEventListener('drop', (e) => this.onToolbarItemDrop(e, el), false);
-      });
-
-      // add action events
-      queryAll('.toolbar-list [data-action]', this).forEach(el => {
-        el.addEventListener('click', this.onToolbarActionButtonClicked, false);
-      });
-    }
+    // add action events
+    queryAll('.toolbar-list [data-action]', this).forEach(el => {
+      el.addEventListener('click', this.onToolbarActionButtonClicked, false);
+    });
   }
 
 
@@ -203,7 +228,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     e.dataTransfer.setDragImage(btnEl, -20, 0);
 
     // disable child el to receive drag events
-    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(el => {
+    queryAll('.btn-toolbar[draggable="true"]', this.#listCurrentEl).forEach(el => {
       el.style.pointerEvents = 'none';
     });
     btnEl.style.pointerEvents = '';
@@ -237,7 +262,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     e.preventDefault();
 
     // re-enable child el to receive drag events
-    queryAll('.btn-toolbar[draggable="true"]', this.#listEl).forEach(el => {
+    queryAll('.btn-toolbar[draggable="true"]', this.#listCurrentEl).forEach(el => {
       el.style.pointerEvents = '';
     });
   }
@@ -280,15 +305,15 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
   private moveToolbarButton(fromIndex: number, toIndex: number) {
     if (toIndex < 0 ) toIndex = 0;
-    else if (toIndex > this.#items.length - 1) toIndex = this.#items.length - 1;
+    else if (toIndex > this.#itemsCurrent.length - 1) toIndex = this.#itemsCurrent.length - 1;
     if (fromIndex === toIndex) return;
 
     // move button
-    arrayMoveMutable(this.#items, fromIndex, toIndex);
+    arrayMoveMutable(this.#itemsCurrent, fromIndex, toIndex);
     this.#hasChanges = true;
 
     // reload buttons list
-    this.reloadItems(toIndex);
+    this.reloadCurrentItems(toIndex);
 
     // set focus to the action button
     const action = fromIndex < toIndex ? 'move_down' : 'move_up';
@@ -297,11 +322,11 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
   private deleteToolbarButton(toolbarIndex: number) {
     // remove button
-    this.#items.splice(toolbarIndex, 1);
+    this.#itemsCurrent.splice(toolbarIndex, 1);
     this.#hasChanges = true;
 
     // reload buttons list
-    this.reloadItems(toolbarIndex - 1);
+    this.reloadCurrentItems(toolbarIndex - 1);
   }
 }
 
