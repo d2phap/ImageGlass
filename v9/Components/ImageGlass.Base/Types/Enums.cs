@@ -41,11 +41,12 @@ public enum UpdateRequests
 
     ToolbarAlignment    = 1 << 9,
     ToolbarIcons        = 1 << 10,
-    Gallery             = 1 << 11,
-    Layout              = 1 << 12,
+    ToolbarButtons      = 1 << 11,
+    Gallery             = 1 << 12,
+    Layout              = 1 << 13,
 
-    Appearance          = 1 << 13,
-    Theme               = 1 << 14,
+    Appearance          = 1 << 14,
+    Theme               = 1 << 15,
 
     #pragma warning restore format
 }

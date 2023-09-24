@@ -279,6 +279,7 @@ public partial class FrmSettings : WebForm
         var updateSlideshow = false;
         var updateToolbarAlignment = false;
         var updateToolbarIcons = false;
+        var updateToolbarButtons = false;
         var updateGallery = false;
         var updateLanguage = false;
         var updateAppearance = false;
@@ -427,6 +428,7 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.HideToolbarInFullscreen));
         if (Config.SetFromJson(dict, nameof(Config.EnableCenterToolbar)).Done) { updateToolbarAlignment = true; }
         if (Config.SetFromJson(dict, nameof(Config.ToolbarIconHeight)).Done) { updateToolbarIcons = true; }
+        if (Config.SetFromJson(dict, nameof(Config.ToolbarButtons)).Done) { updateToolbarButtons = true; }
 
         #endregion // Tab Toolbar
 
@@ -509,6 +511,7 @@ public partial class FrmSettings : WebForm
         if (updateSlideshow) requests |= UpdateRequests.Slideshow;
         if (updateToolbarAlignment) requests |= UpdateRequests.ToolbarAlignment;
         if (updateToolbarIcons) requests |= UpdateRequests.ToolbarIcons;
+        if (updateToolbarButtons) requests |= UpdateRequests.ToolbarButtons;
         if (updateGallery) requests |= UpdateRequests.Gallery;
         if (updateLanguage) requests |= UpdateRequests.Language;
         if (updateAppearance) requests |= UpdateRequests.Appearance;

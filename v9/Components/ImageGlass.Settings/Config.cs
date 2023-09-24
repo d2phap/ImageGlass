@@ -1350,6 +1350,18 @@ public static class Config
             }
         }
 
+        // ToolbarButtons
+        else if (configName == nameof(Config.ToolbarButtons))
+        {
+            var btnList = BHelper.ParseJson<ToolbarItemModel[]>(newValue);
+            if (btnList != null)
+            {
+                Config.ToolbarButtons.Clear();
+                Config.ToolbarButtons = btnList.ToList();
+            }
+            Done = true;
+        }
+
         // bool
         else if (prop.PropertyType.Equals(typeof(bool)))
         {

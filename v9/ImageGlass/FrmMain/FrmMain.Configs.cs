@@ -399,13 +399,21 @@ public partial class FrmMain
             LoadAppLayout(true);
         }
 
-        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons))
+        if (e.Requests.HasFlag(UpdateRequests.ToolbarButtons))
+        {
+            LoadToolbarButtons();
+            LoadToolbarItemsText(Toolbar);
+        }
+
+        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons)
+            || e.Requests.HasFlag(UpdateRequests.ToolbarButtons))
         {
             Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
             ToolbarContext.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
         }
 
-        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons) || e.Requests.HasFlag(UpdateRequests.ToolbarAlignment))
+        if (e.Requests.HasFlag(UpdateRequests.ToolbarIcons)
+            || e.Requests.HasFlag(UpdateRequests.ToolbarAlignment))
         {
             Toolbar.Alignment = Config.EnableCenterToolbar
                 ? ToolbarAlignment.Center
