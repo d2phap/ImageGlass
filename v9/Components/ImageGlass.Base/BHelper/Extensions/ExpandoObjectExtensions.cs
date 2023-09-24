@@ -94,4 +94,20 @@ public static class ExpandoObjectExtensions
         }
     }
 
+
+    /// <summary>
+    /// Converts <paramref name="obj"/> to <see cref="ExpandoObject"/>.
+    /// </summary>
+    public static ExpandoObject ToExpandoObject<T>(this T obj)
+    {
+        var expObj = new ExpandoObject();
+
+        foreach (var propertyInfo in typeof(T).GetProperties())
+        {
+            var currentValue = propertyInfo.GetValue(obj);
+            expObj.TryAdd(propertyInfo.Name, currentValue);
+        }
+
+        return expObj;
+    }
 }
