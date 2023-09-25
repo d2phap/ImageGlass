@@ -30,7 +30,7 @@ ImageGlass is a lightweight software designed for seamless viewing of images in 
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://raw.githubusercontent.com/ImageGlass/website-content/main/releases/screenshots/v8.8/8.8_1.jpg" alt="ImageGlass 8.8.3.28" width="640">
+<img src="https://raw.githubusercontent.com/ImageGlass/website-content/main/releases/screenshots/v8.8/8.8_1.jpg" alt="ImageGlass 8.10.9.27" width="640">
 </a><br/>
 
 
@@ -46,8 +46,8 @@ v8.x - Critical bugfix only    :crit, active, des1, 2024-01,2024-04
 v8.x - End of support          :crit, milestone, m1, 2024-04, 1d
 
 section v9 Beta & RC
-v9.0 Beta 5              :done, des2, 2023-08,2023-10
-v9.0 RC                  :active, des2, 2023-10,2024-01
+v9.0 Beta 5              :done, des2, 2023-08,2023-11
+v9.0 RC                  :active, des2, 2023-11,2024-01
 
 section v9 Official
 v9.0 Official release    :milestone, m1, 2024-01, 1d
@@ -70,7 +70,7 @@ ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** 
 ## 👨‍💻 Development
 - Windows 11
 - Visual Studio 2022
-- .NET Framework 4.8 for v8.x, .NET 6 for v9.0
+- .NET Framework 4.8 for v8.x, .NET 6/7 for v9.0
 
 The `develop` branch contains the latest commits of version 8.x while the `prod` branch is for the final stable release. For the source code of version 9.0 beta, you can check `v9` branch.
 

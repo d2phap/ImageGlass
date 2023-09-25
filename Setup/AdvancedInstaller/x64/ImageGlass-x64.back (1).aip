@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.0.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="20.7.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
@@ -19,10 +19,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:3"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{0BFE4062-53A4-4394-91E4-64DF159CE4B5} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{B58AC56C-EFD1-4690-91F8-AFD7D5D0D6EC} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.10.9.27" Options="32"/>
+    <ROW Property="ProductVersion" Value="8.9.6.9" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -495,13 +495,6 @@
     <ROW File="Ukrainian.iglang" Component_="ArabicEgypt.iglang" FileName="UKRAIN~1.IGL|Ukrainian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.iglang" SelfReg="false"/>
     <ROW File="Vietnamese.iglang" Component_="ArabicEgypt.iglang" FileName="VIETNA~2.IGL|Vietnamese.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.iglang" SelfReg="false"/>
     <ROW File="LICENSE" Component_="default.jpg" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\LICENSE" SelfReg="false"/>
-    <ROW File="Esperanto.iglang" Component_="ArabicEgypt.iglang" FileName="ESPERA~1.IGL|Esperanto.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Esperanto.iglang" SelfReg="false"/>
-    <ROW File="GreekCyprus.iglang" Component_="ArabicEgypt.iglang" FileName="GREEK_~1.IGL|Greek, Cyprus.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek, Cyprus.iglang" SelfReg="false"/>
-    <ROW File="Icelandic.iglang" Component_="ArabicEgypt.iglang" FileName="ICELAN~1.IGL|Icelandic.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Icelandic.iglang" SelfReg="false"/>
-    <ROW File="Khmer.iglang" Component_="ArabicEgypt.iglang" FileName="KHMER~1.IGL|Khmer.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Khmer.iglang" SelfReg="false"/>
-    <ROW File="Swahili.iglang" Component_="ArabicEgypt.iglang" FileName="SWAHIL~1.IGL|Swahili.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swahili.iglang" SelfReg="false"/>
-    <ROW File="Tamil.iglang" Component_="ArabicEgypt.iglang" FileName="TAMIL~1.IGL|Tamil.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.iglang" SelfReg="false"/>
-    <ROW File="Uzbek.iglang" Component_="ArabicEgypt.iglang" FileName="UZBEK~1.IGL|Uzbek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Uzbek.iglang" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
