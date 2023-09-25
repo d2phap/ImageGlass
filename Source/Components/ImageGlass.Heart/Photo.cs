@@ -98,7 +98,9 @@ namespace ImageGlass.Heart {
                     "32928",
 
                     // Issue https://github.com/d2phap/ImageGlass/issues/1583
-                    "32932",
+                    "32932", // Wang Annotation
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1617
+                    "34031", // TrapIndicator
                 },
                 });
             }
