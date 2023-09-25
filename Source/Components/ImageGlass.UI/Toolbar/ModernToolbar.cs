@@ -42,6 +42,10 @@ using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass.UI {
     public class ModernToolbar: ToolStrip {
+        private const uint WM_MOUSEACTIVATE = 0x21;
+        private const uint MA_ACTIVATE = 1;
+        private const uint MA_ACTIVATEANDEAT = 2;
+
         private ToolStripItem mouseOverItem;
         private Point mouseOverPoint;
         private readonly Timer timer;
@@ -92,6 +96,16 @@ namespace ImageGlass.UI {
 
         #region Protected methods
 
+
+        protected override void WndProc(ref Message m) {
+            base.WndProc(ref m);
+
+            // Enable click-through for inactive toolstrip/menustrip
+            // https://github.com/dotnet/winforms/issues/9288
+            if (m.Msg == WM_MOUSEACTIVATE && m.Result == (IntPtr)MA_ACTIVATEANDEAT) {
+                m.Result = (IntPtr)MA_ACTIVATE;
+            }
+        }
 
         protected override void OnMouseMove(MouseEventArgs mea) {
             base.OnMouseMove(mea);
