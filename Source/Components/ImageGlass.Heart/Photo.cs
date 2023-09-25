@@ -212,25 +212,18 @@ namespace ImageGlass.Heart {
                     // Fetch the embedded thumbnail
                     using var thumbM = profile.CreateThumbnail();
                     if (thumbM != null) {
+                        if (checkRotation) {
+                            thumbM.AutoOrient();
+                        }
+
                         bitmap = thumbM.ToBitmap();
                     }
                 }
 
                 // Revert to source image if an embedded thumbnail with required size was not found.
                 if (bitmap == null) {
-                    if (profile != null && checkRotation) {
-                        // Get Orientation Flag
-                        var exifRotationTag = profile.GetValue(ExifTag.Orientation);
-
-                        if (exifRotationTag != null) {
-                            if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag)) {
-                                var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
-                                if (orientationDegree != 0) {
-                                    //Rotate image accordingly
-                                    imgM.Rotate(orientationDegree);
-                                }
-                            }
-                        }
+                    if (checkRotation) {
+                        imgM.AutoOrient();
                     }
 
                     // if always apply color profile
@@ -300,12 +293,6 @@ namespace ImageGlass.Heart {
                 }
                 else {
                     imgM.Read(filename, settings);
-                }
-
-
-                // Issue #679, #1478
-                if (ext == ".TGA" || ext == ".NEF" || ext == ".DNG") {
-                    imgM.AutoOrient();
                 }
 
 
