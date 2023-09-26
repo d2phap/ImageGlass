@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="Файл(дар) алмашуу буферине {0} кесилген"/>
       <Item key="frmMain._CopyImageData" value="Сүрөт алмашуу буферине көчүрүлдү"/>
       <Item key="frmMain._ClearClipboard" value="Алмашуу буфери тазаланды"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Бул сүрөттү сактоону каалайсызбы?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Чын эле бул сүрөттү алмаштыргыңыз келеби?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass профессионалдуу сүрөт редактору эмес, сүрөттү сактоодо сапаттын, метаберилиштердин, катмарлардын... жоголуп кетиши мүмкүн экенин эске алыңыз."/>
       <Item key="frmMain._SaveImage" value="Файл каталогдо ийгиликтүү сакталды:&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="Сүрөт сакталууда...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Каталогдо файлды сактоодо ката кетти&#10;{0}."/>
@@ -143,7 +143,7 @@
       <Item key="frmMain._SetLockImage_Success" value="Экранды кулпулоо ийгиликтүү орнотулду"/>
       <Item key="frmMain._SetBackground_Error" value="Жумуш үстөлүнүн фонун орнотуу учурунда ката кетти"/>
       <Item key="frmMain._SetBackground_Success" value="Жумуш үстөлүнүн фону ийгиликтүү орнотулду"/>
-      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtracting" value="Сүрөттөн кадрларды чыгарып алуу..."/>
       <Item key="frmMain._PageExtractComplete" value="Кадрды бөлүп алуу аяктады."/>
       <Item key="frmMain._Frameless" value="Терезени жылдыруу үчүн SHIFT басып туруңуз."/>
       <Item key="frmMain._InvalidImageClipboardData" value="Алмашуу буферинде сүрөт жок."/>
@@ -182,12 +182,12 @@
       <Item key="frmSetting.chkUseTouchGesture" value="Тийүү жаңсоолорун колдоону күйгүзүү"/>
       <Item key="frmSetting.lblBackGroundColor" value="Сүрөттүн аймагындагы фондо түсү"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Кайра баштоо"/>
-      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
-      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
-      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadPanning" value="Панорамдоо (сүрөттү жылдыруу ылдамдыгы, ар бир баскычты басуудагы пикселдердин саны боюнча)"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Вертикалдуу кадам"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Горизонталдуу кадам"/>
       <Item key="frmSetting.lblHeadOthers" value="Башка орнотуулар"/>
-      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkStartWithOs" value="Автожүктөөгө кошуу (ImageGlassтын кийинки ишке киргизүү ылдамдыгын жогорулатуу үчүн кирүү учурунда программанын фон процессин баштаңыз)"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Колдонмо жабык болгондо фондо иштей бериңиз"/>
       <Item key="frmSetting.chkAutoUpdate" value="Автоматтык түрдө жаңыртууларды текшериңиз"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Программанын бир нече нускаларына уруксат берүү"/>
       <Item key="frmSetting.chkESCToQuit" value="ESC баскычын басып, программадан чыгууга уруксат бериңиз"/>
@@ -200,7 +200,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Көрсөтүүнү биринчи файлдан аягына чейин кайталаңыз"/>
       <Item key="frmSetting.chkIsCenterImage" value="Сүрөттү көрүүчүнүн борборуна коюңуз"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="RAW файлдары үчүн камтылган эскиздерди (JPEG көрүү) колдонуңуз"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Жаңы сүрөттү автоматтык түрдө папкада көрсөтүү"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Файлды окуу тартиби"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Мүмкүн болсо, жол көрсөткүчкө окшош иреттөө тартибин колдонуңуз"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Сүрөттөрдү папка боюнча топтоо"/>
@@ -212,7 +212,7 @@
       <Item key="frmSetting.lblColorProfile" value="Түс профили:"/>
       <Item key="frmSetting.lnkColorProfileBrowse" value="Сереп салуу…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="Жок"/>
-      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Система сыяктуу"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Түзөтүү…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Чычкан дөңгөлөгүн жылдырып айландыруу аракеттери"/>
       <Item key="frmSetting.lblMouseWheel" value="Чычкан дөңгөлөгү"/>
@@ -302,7 +302,7 @@
       <Item key="frmSetting.lblLanguageText" value="Орнотулган тилдер"/>
       <Item key="frmSetting.lnkRefresh" value="→ Тизмекти жаңылоо"/>
       <Item key="frmSetting.lblLanguageWarning" value="Бул тил топтому {0} версиясына дал келбеши мүмкүн"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Котормочу:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="→ Тил топтомун орнотуу (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="→ Жаңы тил топтомун түзүү…"/>
       <Item key="frmSetting.lnkEdit" value="→ Тандалган тил топтомун түзөтүү…"/>

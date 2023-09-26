@@ -3,13 +3,13 @@
   <Language>
     <Info langCode="ko-KR" langName="한국어" author="VᴇɴᴜꜱGɪʀʟ-비너스걸💗" description="Korean" minVersion="8.8" isRightToLeftLayout="아니오"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="일부 설정은 ImageGlass {0} 버전과 호환되지 않습니다. 계속하기 전에 해당 파일을 업데이트하는 것이 좋습니다.&#10;&#10;- 변경 내용을 보려면 '예'를 누릅니다.&#10;- ImageGlass를 기본 설정으로 시작하려면 '아니오'를 누릅니다."/>
+      <Item key="_IncompatibleConfigs" value="일부 설정은 ImageGlass {0} 과(와) 호환되지 않습니다. 계속하기 전에 해당 파일을 업데이트하는 것이 좋습니다.&#10;&#10;- 변경 내용을 보려면 예를 클릭하십시오.&#10;- ImageGlass를 기본 설정으로 시작하려면 아니오를 클릭하십시오."/>
       <Item key="_.ImageOrderBy._Name" value="이름 (기본값)"/>
       <Item key="_.ImageOrderBy._Length" value="크기"/>
-      <Item key="_.ImageOrderBy._CreationTime" value="만든 시간"/>
-      <Item key="_.ImageOrderBy._LastAccessTime" value="마지막 액세스한 시간"/>
-      <Item key="_.ImageOrderBy._LastWriteTime" value="마지막 작성한 시간"/>
-      <Item key="_.ImageOrderBy._Extension" value="확장명"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="만든 날짜"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="마지막 액세스 시간"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="마지막 작성 시간"/>
+      <Item key="_.ImageOrderBy._Extension" value="확장자"/>
       <Item key="_.ImageOrderBy._Random" value="무작위"/>
       <Item key="_.ImageOrderType._Asc" value="오름차순"/>
       <Item key="_.ImageOrderType._Desc" value="내림차순"/>
@@ -20,9 +20,9 @@
       <Item key="frmMain.mnuMainOpenFile" value="파일 열기…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="클립보드에서 이미지 데이터 열기"/>
       <Item key="frmMain.mnuMainNewWindow" value="새 창 열기"/>
-      <Item key="frmMain.mnuMainNewWindow._Error" value="한 개의 인스턴스(창) 실행만 허용되었으므로 새 창을 열 수 없습니다."/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="한 개의 인스턴스만 허용되었기 때문에 새 창을 열 수 없습니다."/>
       <Item key="frmMain.mnuSaveImage" value="이미지 저장"/>
-      <Item key="frmMain.mnuMainSaveAs" value="이미지 따로 저장..."/>
+      <Item key="frmMain.mnuMainSaveAs" value="이미지를 다른 이름으로 저장…"/>
       <Item key="frmMain.mnuMainRefresh" value="새로 고침"/>
       <Item key="frmMain.mnuMainReloadImage" value="이미지 다시 불러오기"/>
       <Item key="frmMain.mnuMainReloadImageList" value="이미지 목록 다시 불러오기"/>
@@ -67,11 +67,11 @@
       <Item key="frmMain.mnuMainFlipHorz" value="가로 뒤집기"/>
       <Item key="frmMain.mnuMainFlipVert" value="세로 뒤집기"/>
       <Item key="frmMain.mnuMainRename" value="이미지 이름 바꾸기…"/>
-      <Item key="frmMain.mnuMainMoveToRecycleBin" value="휴지통으로 삭제"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="휴지통으로 이동"/>
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="하드 디스크에서 삭제"/>
       <Item key="frmMain.mnuMainExtractPages" value="이미지 페이지 추출 ({0})..."/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="이미지 애니메이션 시작 / 중지"/>
-      <Item key="frmMain.mnuMainSetAsDesktop" value="바탕 화면 배경으로 설정"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="바탕화면 배경으로 설정"/>
       <Item key="frmMain.mnuMainSetAsLockImage" value="잠금 화면 이미지로 설정"/>
       <Item key="frmMain.mnuMainImageLocation" value="이미지 위치 열기"/>
       <Item key="frmMain.mnuMainImageProperties" value="이미지 속성"/>
@@ -86,7 +86,7 @@
       <Item key="frmMain.mnuFrameless" value="제목 표시줄 숨기기"/>
       <Item key="frmMain.mnuMainSlideShow" value="슬라이드쇼"/>
       <Item key="frmMain.mnuMainSlideShowStart" value="슬라이드쇼 시작"/>
-      <Item key="frmMain.mnuMainSlideShowPause" value="슬라이드쇼 정지 / 재시작"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="슬라이드쇼 일시 중지 / 재시작"/>
       <Item key="frmMain.mnuMainSlideShowExit" value="슬라이드쇼 종료"/>
       <Item key="frmMain.mnuMainShare" value="공유…"/>
       <Item key="frmMain.mnuMainLayout" value="레이아웃"/>
@@ -121,7 +121,7 @@
       <Item key="frmMain._DeleteDialogText" value="'{0}' 파일을 삭제하시겠습니까?"/>
       <Item key="frmMain._DeleteDialogTitle" value="확인"/>
       <Item key="frmMain._ExtractPageText" value="이미지 페이지를 추출 중, 출력 폴더를 선택하세요."/>
-      <Item key="frmMain._FullScreenMessage" value="전체 화면 모드를 종료하려면 {0}을(를) 누르세요."/>
+      <Item key="frmMain._FullScreenMessage" value="전체 화면 모드를 종료하려면 {0} 을(를) 누르세요."/>
       <Item key="frmMain._SlideshowMessage" value="슬라이드쇼를 종료하려면 ESC를 누르세요.&#10; 마우스 오른쪽 단추를 누르고 컨텍스트 메뉴를 엽니다."/>
       <Item key="frmMain._SlideshowMessagePause" value="슬라이드쇼가 일시 중지되었습니다."/>
       <Item key="frmMain._SlideshowMessageResume" value="슬라이드쇼가 다시 시작되었습니다."/>
@@ -340,7 +340,7 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="확대 / 축소"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="슬라이드쇼 일시 중지"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="동작 없음"/>
-      <Item key="frmAddNewFormat.lblFileExtension" value="파일 확장명"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="파일 확장자"/>
       <Item key="frmAddNewFormat.btnOK" value="확인"/>
       <Item key="frmAddNewFormat.btnClose" value="닫기"/>
       <Item key="frmEditApp.lblFileExtension" value="파일 확장자"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.0.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="20.7.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
@@ -19,10 +19,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{4651AB33-1A32-4B30-BF5B-F80B935E0E29} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{CA9288C2-0433-469F-99AC-46DF1540A864} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.10.9.27" Options="32"/>
+    <ROW Property="ProductVersion" Value="8.9.6.9" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -83,7 +83,6 @@
     <ROW Component="EULA.txt" ComponentId="{00BEC80B-7849-4E77-B4DD-F4CF6812A766}" Directory_="APPDIR" Attributes="0" KeyPath="ReadMe.rtf" Type="0"/>
     <ROW Component="EXIF.ico" ComponentId="{F7F1BE47-4480-4328-B2E8-0EAACF7C48A1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXIF.ico"/>
     <ROW Component="EXR.ico" ComponentId="{1C5E6712-5FC8-4EC5-A6D6-9D408F79CCA1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXR.ico"/>
-    <ROW Component="ExplorerSortOrder.dll" ComponentId="{9F95A6D1-D11C-44BC-875A-23D6A3BD5673}" Directory_="APPDIR" Attributes="0" KeyPath="ExplorerSortOrder.dll"/>
     <ROW Component="FFF.ico" ComponentId="{5C0A0112-F828-4BFC-991F-88BF4CBA672B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FFF.ico"/>
     <ROW Component="FR.ico" ComponentId="{34E6BE39-CCFB-4975-B578-A6C9954260CE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="QOI.ico" Type="0"/>
     <ROW Component="FR.ico_1" ComponentId="{79FA0D35-FFDE-4805-AC3B-20D108EF2875}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico"/>
@@ -418,7 +417,6 @@
     <ROW File="Swahili.iglang" Component_="ArabicEgypt.iglang" FileName="SWAHIL~1.IGL|Swahili.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swahili.iglang" SelfReg="false"/>
     <ROW File="Tamil.iglang" Component_="ArabicEgypt.iglang" FileName="TAMIL~1.IGL|Tamil.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.iglang" SelfReg="false"/>
     <ROW File="Uzbek.iglang" Component_="ArabicEgypt.iglang" FileName="UZBEK~1.IGL|Uzbek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Uzbek.iglang" SelfReg="false"/>
-    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ExplorerSortOrder.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -632,7 +630,6 @@
     <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ValueTuple.dll"/>
     <ROW Feature_="MainFeature" Component_="ArabicEgypt.iglang"/>
-    <ROW Feature_="MainFeature" Component_="ExplorerSortOrder.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.exe" Index="0"/>
