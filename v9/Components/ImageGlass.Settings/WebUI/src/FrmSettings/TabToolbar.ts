@@ -17,7 +17,7 @@ export default class TabToolbar {
    */
   static addEvents() {
     query('#Btn_AddCustomToolbarButton').addEventListener('click', TabToolbar.onBtnAddCustomToolbarButtonClick, false);
-    query('#Btn_ResetToolbarButtons').addEventListener('click', TabToolbar.onBtnAddCustomToolbarButtonClick, false);
+    query('#Btn_ResetToolbarButtons').addEventListener('click', TabToolbar.onBtnResetToolbarButtonsClick, false);
   }
 
 
@@ -38,11 +38,11 @@ export default class TabToolbar {
   }
 
 
-  private static onBtnAddCustomToolbarButtonClick(e: Event) {
+  private static onBtnAddCustomToolbarButtonClick() {
     //
   }
 
-  private static onBtnResetToolbarButtonsClick(e: Event) {
+  private static onBtnResetToolbarButtonsClick() {
     //
   }
 }

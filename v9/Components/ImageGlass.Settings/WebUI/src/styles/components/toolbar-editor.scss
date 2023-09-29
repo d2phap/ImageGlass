@@ -34,21 +34,30 @@ toolbar-editor {
     background-color: rgb(var(--InvertColor) / 0.05);
     pointer-events: auto;
 
-    &:hover {
-      background-color: rgb(var(--InvertColor) / 0.125);
+    &:not([disabled]) {
+      &:hover {
+        background-color: rgb(var(--InvertColor) / 0.125);
+      }
+      &:focus {
+        outline: none;
+        border-color: rgb(var(--Accent));
+      }
+      &:focus-visible {
+        @include focusAnimation();
+      }
+      &:active {
+        background-color: rgb(var(--InvertColor) / 0.2);
+        border-color: rgb(var(--Accent));
+        transition: background ease calc(var(--transitionMs) / 3),
+          border ease calc(var(--transitionMs) / 3);
+      }
     }
-    &:focus {
-      outline: none;
-      border-color: rgb(var(--Accent));
-    }
-    &:focus-visible {
-      @include focusAnimation();
-    }
-    &:active {
-      background-color: rgb(var(--InvertColor) / 0.2);
-      border-color: rgb(var(--Accent));
-      transition: background ease calc(var(--transitionMs) / 3),
-        border ease calc(var(--transitionMs) / 3);
+    &:disabled {
+      background-color: rgb(var(--InvertColor) / 0.025);
+
+      svg {
+        opacity: 0.35;
+      }
     }
   }
 

@@ -21,6 +21,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.initialize = this.initialize.bind(this);
     this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
     this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
+    this.isBuiltInButton = this.isBuiltInButton.bind(this);
     this.onToolbarActionButtonClicked = this.onToolbarActionButtonClicked.bind(this);
 
     this.onBtnToolbarDragStart = this.onBtnToolbarDragStart.bind(this);
@@ -44,14 +45,17 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     return this.#itemsCurrent;
   }
 
+  get builtInButtons() {
+    return _pageSettings.builtInToolbarButtons || [];
+  }
+
   get availableButtons() {
     const availableItems: IToolbarButton[] = [
       { Type: 'Separator' } as IToolbarButton,
     ];
 
-    const builtInBtns = _pageSettings.builtInToolbarButtons || [];
-    for (let icon = 0; icon < builtInBtns.length; icon++) {
-      const btn = builtInBtns[icon];
+    for (let icon = 0; icon < this.builtInButtons.length; icon++) {
+      const btn = this.builtInButtons[icon];
       if (this.#itemsCurrent.some(i => i.Type === 'Button' && i.Id === btn.Id)) {
         continue;
       }
@@ -163,6 +167,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.#itemsCurrent.forEach((item, index) => {
       let imageHtml = '';
       let textLang = item.Text;
+      const disableEditing = this.isBuiltInButton(item) || item.Type === 'Separator';
 
       if (item.Type === 'Separator') {
         textLang = '_._Separator';
@@ -191,7 +196,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
                 ${_pageSettings.icons.ArrowDown}
               </button>
 
-              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit">
+              <button type="button" class="btn btn--icon" lang-title="_._Edit" data-action="edit"
+                ${disableEditing ? 'disabled' : ''}>
                 ${_pageSettings.icons.Edit}
               </button>
               <button type="button" class="btn btn--icon" lang-title="_._Delete" data-action="delete">
@@ -248,6 +254,10 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     queryAll('[data-action]', this.#listCurrentEl).forEach(el => {
       el.addEventListener('click', this.onToolbarActionButtonClicked, false);
     });
+  }
+
+  private isBuiltInButton(btn: IToolbarButton) {
+    return this.builtInButtons.some(i => i.Id === btn.Id);
   }
 
 
