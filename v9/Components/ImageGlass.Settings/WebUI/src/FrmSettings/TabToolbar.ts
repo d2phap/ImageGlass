@@ -1,8 +1,10 @@
 import { getChangedSettingsFromTab } from '@/helpers';
 import { ToolbarEditorHtmlElement } from './webComponents/ToolbarEditorHtmlElement';
+import { ToolbarButtonEditDialogHtmlElement } from './webComponents/ToolbarButtonEditDialogHtmlElement';
 
 export default class TabToolbar {
   static #toolbarEditor = query<ToolbarEditorHtmlElement>('#ToolbarEditor');
+  static #toolbarBtnDialog = query<ToolbarButtonEditDialogHtmlElement>('[is="edit-toolbar-dialog"]');
 
   /**
    * Loads settings for tab Toolbar.
@@ -38,8 +40,12 @@ export default class TabToolbar {
   }
 
 
-  private static onBtnAddCustomToolbarButtonClick() {
-    //
+  private static async onBtnAddCustomToolbarButtonClick() {
+    const isSubmitted = await TabToolbar.#toolbarBtnDialog.openCreate();
+
+    if (isSubmitted) {
+      const tool = TabToolbar.#toolbarBtnDialog.getDialogData();
+    }
   }
 
   private static async onBtnResetToolbarButtonsClick() {

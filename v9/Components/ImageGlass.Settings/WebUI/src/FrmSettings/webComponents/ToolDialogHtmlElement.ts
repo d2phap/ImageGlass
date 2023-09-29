@@ -8,8 +8,8 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     super();
 
     // private methods
-    this.showCreate = this.showCreate.bind(this);
-    this.showEdit = this.showEdit.bind(this);
+    this.openCreate = this.openCreate.bind(this);
+    this.openEdit = this.openEdit.bind(this);
     this.getDialogData = this.getDialogData.bind(this);
     this.addDialogEvents = this.addDialogEvents.bind(this);
     this.updateToolCommandPreview = this.updateToolCommandPreview.bind(this);
@@ -64,7 +64,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
         </div>
         <footer class="dialog-footer">
           <button type="submit" lang-text="_._OK">[OK]</button>
-          <button id="BtnCloseToolDialog" type="button" lang-text="_._Cancel">[Cancel]</button>
+          <button type="button" data-dialog-action="close" lang-text="_._Cancel">[Cancel]</button>
         </footer>
       </form>`;
   }
@@ -73,7 +73,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
   /**
    * Opens tool dialog for create.
    */
-  public async showCreate() {
+  public async openCreate() {
     const defaultTool = {
       ToolId: '',
       ToolName: '',
@@ -99,7 +99,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
    * Opens tool dialog for edit.
    * @param toolId Tool ID
    */
-  public async showEdit(toolId: string) {
+  public async openEdit(toolId: string) {
     const trEl = query<HTMLTableRowElement>(`#Table_ToolList tr[data-toolId="${toolId}"]`);
 
     const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
@@ -155,8 +155,8 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     query('#BtnBrowseTool', this).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
     query('#BtnBrowseTool', this).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
 
-    query('#BtnCloseToolDialog', this).removeEventListener('click', () => this.close(), false);
-    query('#BtnCloseToolDialog', this).addEventListener('click', () => this.close(), false);
+    query('[data-dialog-action="close"]', this).removeEventListener('click', () => this.close(), false);
+    query('[data-dialog-action="close"]', this).addEventListener('click', () => this.close(), false);
   }
 
 

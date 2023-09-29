@@ -205,6 +205,16 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Language
 
 
+        // Tab Toolbar
+        #region Tab Toolbar
+        else if (e.Name.Equals("Btn_ResetToolbarButtons"))
+        {
+            var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
+            Web2.PostWeb2Message(e.Name, json);
+        }
+        #endregion // Tab Toolbar
+
+
         // Tab Appearance
         #region Tab Appearance
         else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))

@@ -166,16 +166,16 @@ export default class TabTools {
     let isSubmitted = false;
 
     if (toolId) {
-      isSubmitted = await this.#toolDialog.showEdit(toolId);
+      isSubmitted = await TabTools.#toolDialog.openEdit(toolId);
     }
     else {
-      isSubmitted = await this.#toolDialog.showCreate();
+      isSubmitted = await TabTools.#toolDialog.openCreate();
     }
 
     if (isSubmitted) {
       TabTools._areToolsChanged = true;
 
-      const tool = this.#toolDialog.getDialogData();
+      const tool = TabTools.#toolDialog.getDialogData();
       TabTools.setToolItemToList(tool.ToolId, tool);
     }
   }

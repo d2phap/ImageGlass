@@ -586,6 +586,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
         Add("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
         Add("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
+
+        Add("FrmSettings.Tab.Toolbar._AddNewButton", "Add a custom toolbar button");
+        Add("FrmSettings.Tab.Toolbar._EditButton", "Edit toolbar button");
+        Add("FrmSettings.Tab.Toolbar._ButtonJson", "Button JSON");
         #endregion // Tab Toolbar
 
 

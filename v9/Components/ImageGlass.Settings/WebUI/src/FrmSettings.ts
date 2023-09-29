@@ -5,6 +5,7 @@ import Settings from './FrmSettings/Settings';
 import TabAppearance from './FrmSettings/TabAppearance';
 import { defineToolDialogHtmlElement } from './FrmSettings/webComponents/ToolDialogHtmlElement';
 import { defineToolbarEditorHtmlElement } from './FrmSettings/webComponents/ToolbarEditorHtmlElement';
+import { defineToolbarButtonEditDialogHtmlElement } from './FrmSettings/webComponents/ToolbarButtonEditDialogHtmlElement';
 
 
 if (!window._pageSettings) {
@@ -52,6 +53,7 @@ _page.loadBackgroundColorConfig = TabAppearance.loadBackgroundColorConfig;
 // register web components
 defineToolDialogHtmlElement();
 defineToolbarEditorHtmlElement();
+defineToolbarButtonEditDialogHtmlElement();
 
 
 // sidebar
