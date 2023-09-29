@@ -8,7 +8,7 @@ export default class TabToolbar {
    * Loads settings for tab Toolbar.
    */
   static loadSettings() {
-    this.#toolbarEditor.initialize();
+    TabToolbar.#toolbarEditor.initialize();
   }
 
 
@@ -27,8 +27,8 @@ export default class TabToolbar {
   static exportSettings() {
     const settings = getChangedSettingsFromTab('toolbar');
 
-    if (this.#toolbarEditor.hasChanges) {
-      settings.ToolbarButtons = this.#toolbarEditor.currentButtons;
+    if (TabToolbar.#toolbarEditor.hasChanges) {
+      settings.ToolbarButtons = TabToolbar.#toolbarEditor.currentButtons;
     }
     else {
       delete settings.ToolbarButtons;
@@ -42,7 +42,8 @@ export default class TabToolbar {
     //
   }
 
-  private static onBtnResetToolbarButtonsClick() {
-    //
+  private static async onBtnResetToolbarButtonsClick() {
+    const defaultToolbarIds = await postAsync<string[]>('Btn_ResetToolbarButtons');
+    TabToolbar.#toolbarEditor.loadItemsByIds(defaultToolbarIds);
   }
 }

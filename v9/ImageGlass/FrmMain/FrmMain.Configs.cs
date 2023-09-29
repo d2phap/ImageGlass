@@ -508,41 +508,17 @@ public partial class FrmMain
     {
         if (forcedReset)
         {
-            var defaultButtons = new List<string>()
-            {
-                $"Btn_{nameof(MnuOpenFile)}",
-                $"Btn_{nameof(MnuViewPrevious)}",
-                $"Btn_{nameof(MnuViewNext)}",
-                "Separator",
-                $"Btn_{nameof(MnuAutoZoom)}",
-                $"Btn_{nameof(MnuLockZoom)}",
-                $"Btn_{nameof(MnuScaleToWidth)}",
-                $"Btn_{nameof(MnuScaleToHeight)}",
-                $"Btn_{nameof(MnuScaleToFit)}",
-                $"Btn_{nameof(MnuScaleToFill)}",
-                "Separator",
-                $"Btn_{nameof(MnuRefresh)}",
-                $"Btn_{nameof(MnuToggleGallery)}",
-                $"Btn_{nameof(MnuToggleCheckerboard)}",
-                "Separator",
-                $"Btn_{nameof(MnuFullScreen)}",
-                $"Btn_{nameof(MnuSlideshow)}",
-                "Separator",
-                $"Btn_{nameof(MnuPrint)}",
-                $"Btn_{nameof(MnuMoveToRecycleBin)}",
-            };
-
             Config.ToolbarButtons = new();
-            foreach (var buttonName in defaultButtons)
+            foreach (var btnId in Local.DefaultToolbarItemIds)
             {
-                if (buttonName == "Separator")
+                if (btnId == nameof(ToolbarItemModelType.Separator))
                 {
                     Config.ToolbarButtons.Add(new()
                     {
                         Type = ToolbarItemModelType.Separator,
                     });
                 }
-                else if (Local.BuiltInToolbarItems.FirstOrDefault(i => i.Id == buttonName) is ToolbarItemModel btn)
+                else if (Local.BuiltInToolbarItems.FirstOrDefault(i => i.Id == btnId) is ToolbarItemModel btn)
                 {
                     Config.ToolbarButtons.Add(btn);
                 }

@@ -53,7 +53,7 @@ internal class Local
         new() // MnuActualSize
         {
             Id = $"Btn_{nameof(FrmMain.MnuActualSize)}",
-            Alignment = ToolStripItemAlignment.Right,
+            Alignment = ToolStripItemAlignment.Left,
             Image = nameof(Config.Theme.ToolbarIcons.ActualSize),
             OnClick = new(nameof(FrmMain.MnuActualSize)),
         },
@@ -230,6 +230,33 @@ internal class Local
             Image = nameof(Config.Theme.ToolbarIcons.ZoomOut),
             OnClick = new(nameof(FrmMain.MnuZoomOut)),
         },
+    };
+
+    /// <summary>
+    /// Gets the default toolbar button IDs.
+    /// </summary>
+    public static List<string> DefaultToolbarItemIds => new()
+    {
+        $"Btn_{nameof(FrmMain.MnuOpenFile)}",
+        $"Btn_{nameof(FrmMain.MnuViewPrevious)}",
+        $"Btn_{nameof(FrmMain.MnuViewNext)}",
+        nameof(ToolbarItemModelType.Separator),
+        $"Btn_{nameof(FrmMain.MnuAutoZoom)}",
+        $"Btn_{nameof(FrmMain.MnuLockZoom)}",
+        $"Btn_{nameof(FrmMain.MnuScaleToWidth)}",
+        $"Btn_{nameof(FrmMain.MnuScaleToHeight)}",
+        $"Btn_{nameof(FrmMain.MnuScaleToFit)}",
+        $"Btn_{nameof(FrmMain.MnuScaleToFill)}",
+        nameof(ToolbarItemModelType.Separator),
+        $"Btn_{nameof(FrmMain.MnuRefresh)}",
+        $"Btn_{nameof(FrmMain.MnuToggleGallery)}",
+        $"Btn_{nameof(FrmMain.MnuToggleCheckerboard)}",
+        nameof(ToolbarItemModelType.Separator),
+        $"Btn_{nameof(FrmMain.MnuFullScreen)}",
+        $"Btn_{nameof(FrmMain.MnuSlideshow)}",
+        nameof(ToolbarItemModelType.Separator),
+        $"Btn_{nameof(FrmMain.MnuPrint)}",
+        $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
     };
 
 

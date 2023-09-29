@@ -19,6 +19,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     // methods
     this.initialize = this.initialize.bind(this);
+    this.loadItems = this.loadItems.bind(this);
+    this.loadItemsByIds = this.loadItemsByIds.bind(this);
     this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
     this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
     this.isBuiltInButton = this.isBuiltInButton.bind(this);
@@ -94,13 +96,35 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
    */
   public initialize() {
     this.#hasChanges = false;
-    this.#itemsCurrent = _pageSettings.config.ToolbarButtons || [];
+    this.loadItems();
 
     // load icon
     query('.section-middle', this).innerHTML = _pageSettings.icons.ArrowExchange;
+  }
+
+  private loadItems(items?: IToolbarButton[]) {
+    this.#itemsCurrent = items || _pageSettings.config.ToolbarButtons || [];
 
     this.reloadAvailableItems();
     this.reloadCurrentItems();
+  }
+
+  public loadItemsByIds(btnIds: string[]) {
+    if (!Array.isArray(btnIds) || btnIds.length === 0) return;
+
+    const items: IToolbarButton[] = [];
+    btnIds.forEach(id => {
+      if (id === 'Separator') {
+        items.push({ Type: 'Separator' } as IToolbarButton);
+      }
+      else {
+        const btn = this.builtInButtons.find(i => i.Id === id);
+        if (btn) items.push(btn);
+      }
+    });
+
+    this.loadItems(items);
+    this.#hasChanges = true;
   }
 
   private reloadAvailableItems() {
