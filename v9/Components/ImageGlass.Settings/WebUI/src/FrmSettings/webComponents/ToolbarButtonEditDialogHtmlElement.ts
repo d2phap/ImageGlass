@@ -40,14 +40,14 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     const defaultBtn = {
       Id: '',
       Type: 'Button',
+      Text: '',
+      Image: '',
       Alignment: 'Left',
       CheckableConfigBinding: '',
       DisplayStyle: 'Image',
-      Image: '',
-      Text: '',
       OnClick: {
         Executable: '',
-        Arguments: [],
+        Arguments: ['<file>'],
       },
     } as IToolbarButton;
     const json = JSON.stringify(defaultBtn, null, 2);

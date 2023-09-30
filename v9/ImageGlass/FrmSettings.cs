@@ -220,6 +220,25 @@ public partial class FrmSettings : WebForm
             {
                 // try parsing the json
                 var btn = BHelper.ParseJson<ToolbarItemModel>(e.Data);
+
+                if (btn.Type == ToolbarItemModelType.Button)
+                {
+                    var langPath = $"{nameof(FrmSettings)}.Tab.Toolbar._Errors";
+                    if (string.IsNullOrWhiteSpace(btn.Id))
+                    {
+                        throw new ArgumentException(Config.Language[$"{langPath}._ButtonIdRequired"], nameof(btn.Id));
+                    }
+
+                    if (Config.ToolbarButtons.Any(i => i.Id.Equals(btn.Id, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        throw new ArgumentException(string.Format(Config.Language[$"{langPath}._ButtonIdDuplicated"], btn.Id), nameof(btn.Id));
+                    }
+
+                    if (string.IsNullOrEmpty(btn.OnClick.Executable))
+                    {
+                        throw new ArgumentException(Config.Language[$"{langPath}._ButtonExecutableRequired"], nameof(btn.OnClick.Executable));
+                    }
+                }
             }
             catch (Exception ex)
             {

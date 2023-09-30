@@ -710,6 +710,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
         Add("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
         Add("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
+        Add("FrmSettings.Tab.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
+        Add("FrmSettings.Tab.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
+        Add("FrmSettings.Tab.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
+        
 
         #endregion
 
