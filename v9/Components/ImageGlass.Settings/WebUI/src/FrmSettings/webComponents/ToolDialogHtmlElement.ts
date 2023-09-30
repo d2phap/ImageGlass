@@ -86,6 +86,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'create', defaultTool, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
+      query('[name="_ToolId"]', this).toggleAttribute('disabled', false);
 
       const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, defaultTool.Hotkeys);
@@ -118,6 +119,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'edit', tool, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
+      query('[name="_ToolId"]', this).toggleAttribute('disabled', true);
 
       const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, tool.Hotkeys);
