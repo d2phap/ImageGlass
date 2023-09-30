@@ -42,10 +42,9 @@ export default class TabToolbar {
 
   private static async onBtnAddCustomToolbarButtonClick() {
     const isSubmitted = await TabToolbar.#toolbarBtnDialog.openCreate();
+    if (!isSubmitted) return;
 
-    if (isSubmitted) {
-      const tool = TabToolbar.#toolbarBtnDialog.getDialogData();
-    }
+    // todo:
   }
 
   private static async onBtnResetToolbarButtonsClick() {

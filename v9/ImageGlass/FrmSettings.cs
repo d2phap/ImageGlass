@@ -212,6 +212,23 @@ public partial class FrmSettings : WebForm
             var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
             Web2.PostWeb2Message(e.Name, json);
         }
+        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson"))
+        {
+            var isValid = true;
+
+            try
+            {
+                // try parsing the json
+                var btn = BHelper.ParseJson<ToolbarItemModel>(e.Data);
+            }
+            catch (Exception ex)
+            {
+                _ = Config.ShowError(this, title: Config.Language["_._Error"], heading: ex.Message);
+                isValid = false;
+            }
+
+            Web2.PostWeb2Message(e.Name, BHelper.ToJson(isValid));
+        }
         #endregion // Tab Toolbar
 
 
