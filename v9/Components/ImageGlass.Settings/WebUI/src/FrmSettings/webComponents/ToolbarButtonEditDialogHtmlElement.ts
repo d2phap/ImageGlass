@@ -52,9 +52,13 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     } as IToolbarButton;
     const json = JSON.stringify(defaultBtn, null, 2);
 
-    const isSubmitted = await openModalDialogEl(this, 'create', { ButtonJson: json }, async () => {
-      this.addDialogEvents();
-    });
+    const isSubmitted = await openModalDialogEl(this, 'create', { ButtonJson: json },
+      async () => this.addDialogEvents(),
+      async () => {
+        const data = this.getDialogData();
+        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson', data);
+        return isValid;
+      });
 
     return isSubmitted;
   }
@@ -65,21 +69,9 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
    */
   public getDialogData() {
     // get data
-    const btn: IToolbarButton = {
-      Id: '',
-      Type: 'Button',
-      Alignment: 'Left',
-      CheckableConfigBinding: '',
-      DisplayStyle: 'Image',
-      Image: '',
-      Text: '',
-      OnClick: {
-        Executable: '',
-        Arguments: [],
-      },
-    } as IToolbarButton;
+    const json = query<HTMLTextAreaElement>('[name="_ButtonJson"]').value || '';
 
-    return btn;
+    return json.trim();
   }
 
 
