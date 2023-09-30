@@ -21,6 +21,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.initialize = this.initialize.bind(this);
     this.loadItems = this.loadItems.bind(this);
     this.loadItemsByIds = this.loadItemsByIds.bind(this);
+    this.insertItems = this.insertItems.bind(this);
     this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
     this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
     this.isBuiltInButton = this.isBuiltInButton.bind(this);
@@ -127,6 +128,14 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.#hasChanges = true;
   }
 
+  public insertItems(btn: IToolbarButton, toIndex: number) {
+    this.#itemsCurrent.splice(toIndex, 0, btn);
+    this.#hasChanges = true;
+
+    // reload buttons list
+    this.reloadCurrentItems(toIndex);
+  }
+
   private reloadAvailableItems() {
     let html = '';
 
@@ -210,7 +219,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
         <li class="toolbar-item" data-index="${index}" data-alignment="${item.Alignment}">
           <div class="btn btn-toolbar" draggable="true" tabindex="0" lang-title="${textLang}">
             ${imageHtml}
-            <span class="button-text" lang-text="${textLang}"></span>
+            <span class="button-text" lang-text="${textLang}">${textLang}</span>
 
             <div class="button-actions">
               <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">

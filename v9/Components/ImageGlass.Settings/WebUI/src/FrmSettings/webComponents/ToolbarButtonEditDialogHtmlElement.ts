@@ -56,13 +56,13 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
       async () => this.addDialogEvents(),
       async () => {
         const data = this.getDialogData();
-        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson', data);
+        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson', data.ButtonJson);
         return isValid;
       });
 
     return isSubmitted;
   }
-  
+
 
   /**
    * Gets data from the tool dialog.
@@ -71,7 +71,9 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     // get data
     const json = query<HTMLTextAreaElement>('[name="_ButtonJson"]').value || '';
 
-    return json.trim();
+    return {
+      ButtonJson: json.trim(),
+    };
   }
 
 

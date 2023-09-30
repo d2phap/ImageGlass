@@ -33,7 +33,7 @@ export type ITheme = {
     Website: string,
     Description: string,
   },
-  ToolbarButtons: Record<string, string>,
+  ToolbarIcons: Record<string, string>,
 };
 
 export type SingleAction = {

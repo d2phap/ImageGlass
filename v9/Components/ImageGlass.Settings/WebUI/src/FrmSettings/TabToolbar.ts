@@ -1,6 +1,7 @@
 import { getChangedSettingsFromTab } from '@/helpers';
 import { ToolbarEditorHtmlElement } from './webComponents/ToolbarEditorHtmlElement';
 import { ToolbarButtonEditDialogHtmlElement } from './webComponents/ToolbarButtonEditDialogHtmlElement';
+import { IToolbarButton } from '@/@types/FrmSettings';
 
 export default class TabToolbar {
   static #toolbarEditor = query<ToolbarEditorHtmlElement>('#ToolbarEditor');
@@ -44,7 +45,23 @@ export default class TabToolbar {
     const isSubmitted = await TabToolbar.#toolbarBtnDialog.openCreate();
     if (!isSubmitted) return;
 
-    // todo:
+    const data = TabToolbar.#toolbarBtnDialog.getDialogData();
+    const btn = JSON.parse(data.ButtonJson) as IToolbarButton;
+
+    const theme = _pageSettings.themeList.find(i => i.FolderName === _page.theme);
+    const themeBtnIconUrl = theme.ToolbarIcons[btn.Image];
+
+    // image is theme icon
+    if (themeBtnIconUrl) {
+      btn.ImageUrl = themeBtnIconUrl;
+    }
+    else {
+      // image is an external file
+      const imgUrl = new URL(`file:///${btn.Image}`);
+      btn.ImageUrl = imgUrl.toString();
+    }
+
+    TabToolbar.#toolbarEditor.insertItems(btn, 0);
   }
 
   private static async onBtnResetToolbarButtonsClick() {
