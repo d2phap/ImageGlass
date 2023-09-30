@@ -2,6 +2,8 @@ import { IToolbarButton } from '@/@types/FrmSettings';
 import Language from '@/common/Language';
 import { arrayMoveMutable, pause } from '@/helpers';
 
+export type TEditButtonFn = (btn: IToolbarButton) => Promise<IToolbarButton | null>;
+
 export class ToolbarEditorHtmlElement extends HTMLElement {
   #listAvailableEl: HTMLUListElement;
 
@@ -13,6 +15,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     fromSource: '',
     fromIndex: -1,
   };
+
+  #editButtonFn: TEditButtonFn;
 
   constructor() {
     super();
@@ -95,7 +99,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   /**
    * Initializes and loads data into the toolbar editor.
    */
-  public initialize() {
+  public initialize(onEditButton: TEditButtonFn) {
+    this.#editButtonFn = onEditButton.bind(this);
     this.#hasChanges = false;
     this.loadItems();
 
@@ -436,8 +441,19 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.reloadAvailableItems();
   }
 
-  private editToolbarButton(btnIndex: number) {
-    //
+  private async editToolbarButton(btnIndex: number) {
+    const btn = this.#itemsCurrent[btnIndex];
+    if (!btn || !this.#editButtonFn) return;
+
+    const newBtn = await Promise.resolve(this.#editButtonFn({
+      ...btn,
+      ImageUrl: undefined,
+    }));
+    if (!newBtn) return;
+
+    this.#itemsCurrent[btnIndex] = newBtn;
+    this.#hasChanges = true;
+    this.reloadCurrentItems(btnIndex);
   }
 }
 

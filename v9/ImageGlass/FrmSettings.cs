@@ -212,8 +212,10 @@ public partial class FrmSettings : WebForm
             var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
             Web2.PostWeb2Message(e.Name, json);
         }
-        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson"))
+        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create")
+            || e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Edit"))
         {
+            var isCreate = e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create");
             var isValid = true;
 
             try
@@ -229,7 +231,8 @@ public partial class FrmSettings : WebForm
                         throw new ArgumentException(Config.Language[$"{langPath}._ButtonIdRequired"], nameof(btn.Id));
                     }
 
-                    if (Config.ToolbarButtons.Any(i => i.Id.Equals(btn.Id, StringComparison.OrdinalIgnoreCase)))
+                    if (isCreate
+                        && Config.ToolbarButtons.Any(i => i.Id.Equals(btn.Id, StringComparison.OrdinalIgnoreCase)))
                     {
                         throw new ArgumentException(string.Format(Config.Language[$"{langPath}._ButtonIdDuplicated"], btn.Id), nameof(btn.Id));
                     }

@@ -8,7 +8,6 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     // private methods
     this.openCreate = this.openCreate.bind(this);
     this.getDialogData = this.getDialogData.bind(this);
-    this.addDialogEvents = this.addDialogEvents.bind(this);
   }
 
 
@@ -52,11 +51,27 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     } as IToolbarButton;
     const json = JSON.stringify(defaultBtn, null, 2);
 
-    const isSubmitted = await openModalDialogEl(this, 'create', { ButtonJson: json },
-      async () => this.addDialogEvents(),
+    const isSubmitted = await openModalDialogEl(this, 'create', { ButtonJson: json }, null,
       async () => {
         const data = this.getDialogData();
-        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson', data.ButtonJson);
+        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson_Create', data.ButtonJson);
+        return isValid;
+      });
+
+    return isSubmitted;
+  }
+
+
+  /**
+   * Opens tool dialog for edit.
+   */
+  public async openEdit(btn: IToolbarButton) {
+    const json = JSON.stringify(btn, null, 2);
+
+    const isSubmitted = await openModalDialogEl(this, 'edit', { ButtonJson: json }, null,
+      async () => {
+        const data = this.getDialogData();
+        const isValid = await postAsync<boolean>('Btn_AddCustomToolbarButton_ValidateJson_Edit', data.ButtonJson);
         return isValid;
       });
 
@@ -74,12 +89,6 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     return {
       ButtonJson: json.trim(),
     };
-  }
-
-
-  private addDialogEvents() {
-    query('[data-dialog-action="close"]', this).removeEventListener('click', () => this.close(), false);
-    query('[data-dialog-action="close"]', this).addEventListener('click', () => this.close(), false);
   }
 }
 
