@@ -156,9 +156,6 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
 
     query('#BtnBrowseTool', this).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
     query('#BtnBrowseTool', this).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
-
-    query('[data-dialog-action="close"]', this).removeEventListener('click', () => this.close(), false);
-    query('[data-dialog-action="close"]', this).addEventListener('click', () => this.close(), false);
   }
 
 
