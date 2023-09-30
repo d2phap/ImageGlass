@@ -1680,7 +1680,10 @@ public partial class FrmMain : ThemedForm
         else
         {
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var procArgs = $"{ac.Arguments}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
+            var procArgs = string.Join("",
+                ac.Arguments
+                    .Select(i => $"{i}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\""))
+                    .ToArray()) ?? string.Empty;
 
             var result = await BHelper.RunExeCmd(ac.Executable, procArgs, true);
             if (result != IgExitCode.Done)
