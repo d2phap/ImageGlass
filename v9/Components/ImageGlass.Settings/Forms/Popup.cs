@@ -655,6 +655,7 @@ public partial class Popup : DialogForm
         {
             var formIconHandle = sysIcon.GetHicon();
             frm.Icon = Icon.FromHandle(formIconHandle);
+
             FormIconApi.SetTaskbarIcon(frm, formIconHandle);
         }
 

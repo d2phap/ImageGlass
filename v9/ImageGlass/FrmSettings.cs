@@ -352,6 +352,10 @@ public partial class FrmSettings : WebForm
 
         _ = Config.SetFromJson(dict, nameof(Config.AutoUpdate));
         _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
+        if (Config.SetFromJson(dict, nameof(Config.ShowAppIcon)).Done) {
+            Config.UpdateFormIcon(this);
+            Config.UpdateFormIcon(Local.FrmMain);
+        }
         _ = Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
 
         if (Config.SetFromJson(dict, nameof(Config.ImageInfoTags)).Done)

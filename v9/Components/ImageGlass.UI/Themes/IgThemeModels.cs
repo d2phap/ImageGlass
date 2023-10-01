@@ -157,11 +157,6 @@ public record IgThemeSettings : IDisposable
     public Bitmap AppLogo { get; set; } = Properties.Resources.DefaultLogo;
 
     /// <summary>
-    /// Show or hide logo on title bar of window
-    /// </summary>
-    public bool ShowTitlebarLogo { get; set; } = true;
-
-    /// <summary>
     /// The preview image of the theme
     /// </summary>
     public string PreviewImage { get; set; } = string.Empty;

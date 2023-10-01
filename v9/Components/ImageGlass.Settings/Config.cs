@@ -180,6 +180,11 @@ public static class Config
     public static bool ShowToolbar { get; set; } = true;
 
     /// <summary>
+    /// Gets, sets value of visibility of app icon
+    /// </summary>
+    public static bool ShowAppIcon { get; set; } = true;
+
+    /// <summary>
     /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
     /// </summary>
     public static bool EnableLoopBackNavigation { get; set; } = true;
@@ -678,6 +683,7 @@ public static class Config
         ShowGalleryFileName = items.GetValue(nameof(ShowGalleryFileName), ShowGalleryFileName);
         ShowWelcomeImage = items.GetValue(nameof(ShowWelcomeImage), ShowWelcomeImage);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
+        ShowAppIcon = items.GetValue(nameof(ShowAppIcon), ShowAppIcon);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         ShowCheckerboard = items.GetValue(nameof(ShowCheckerboard), ShowCheckerboard);
         ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
@@ -1021,6 +1027,7 @@ public static class Config
         settings.TryAdd(nameof(ShowGalleryFileName), ShowGalleryFileName);
         settings.TryAdd(nameof(ShowWelcomeImage), ShowWelcomeImage);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
+        settings.TryAdd(nameof(ShowAppIcon), ShowAppIcon);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         settings.TryAdd(nameof(ShowCheckerboard), ShowCheckerboard);
         settings.TryAdd(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
@@ -1533,15 +1540,13 @@ public static class Config
     public static void UpdateFormIcon(Form frm)
     {
         // Icon theming
-        if (!Config.Theme.Settings.ShowTitlebarLogo)
+        var hIcon = Config.Theme.Settings.AppLogo.GetHicon();
+        frm.Icon = Icon.FromHandle(hIcon);
+
+        Task.Delay(200).ContinueWith((_) =>
         {
-            frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
-            FormIconApi.SetTaskbarIcon(frm, Config.Theme.Settings.AppLogo.GetHicon());
-        }
-        else
-        {
-            frm.Icon = Icon.FromHandle(Config.Theme.Settings.AppLogo.GetHicon());
-        }
+            frm.ShowIcon = Config.ShowAppIcon;
+        });
     }
 
 
