@@ -42,6 +42,7 @@ if (!window._pageSettings) {
     configDir: '',
     userConfigFilePath: '',
     defaultThemeDir: '',
+    defaultImageInfoTags: [],
     FILE_MACRO: '',
   };
 }

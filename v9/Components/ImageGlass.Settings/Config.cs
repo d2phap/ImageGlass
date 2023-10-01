@@ -848,10 +848,14 @@ public static class Config
 
 
         // info items
-        var infoItems = items.GetSection(nameof(ImageInfoTags))
-            .GetChildren()
-            .Select(i => i.Get<string>());
-        ImageInfoTags = infoItems.Any() ? infoItems.ToList() : DefaultImageInfoTags;
+        var infoTagsHasValue = items.GetValue(nameof(ImageInfoTags)) is not null;
+        if (infoTagsHasValue)
+        {
+            ImageInfoTags = items.GetSection(nameof(ImageInfoTags))
+                .GetChildren()
+                .Select(i => i.Get<string>())
+                .ToList();
+        }
 
 
         // hotkeys for menu
@@ -1360,6 +1364,23 @@ public static class Config
                 Config.ToolbarButtons = btnList.ToList();
             }
             Done = true;
+        }
+
+        // ImageInfoTags
+        else if (configName == nameof(Config.ImageInfoTags))
+        {
+            try
+            {
+                var strArr = BHelper.ParseJson<string[]>(newValue);
+                if (strArr != null)
+                {
+                    Config.ImageInfoTags.Clear();
+                    Config.ImageInfoTags.AddRange(strArr);
+
+                    Done = true;
+                }
+            }
+            catch { }
         }
 
         // bool

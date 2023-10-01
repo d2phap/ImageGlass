@@ -174,9 +174,18 @@
           </label>
         </div>
 
-        <div class="mt-4 mb-2">
+        <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.General._InAppMessageDuration">[InAppMessageDuration]</div>
           <input type="number" name="InAppMessageDuration" required min="0" max="60000" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1">
+            <span class="me-2" lang-text="FrmSettings.Tab.General._ImageInfoTags">[Image information tags]</span>
+            <a id="LnkResetImageInfoTags" class="text-nowrap" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </a>
+          </div>
+          <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
         </div>
       </section>
     </section>
@@ -503,7 +512,7 @@
       <section>
         <header lang-text="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
         <!-- Image interpolation -->
-        <div class="mb-4">
+        <div>
           <div class="mb-2">
             <b lang-text="FrmSettings.Tab.Viewer._ImageInterpolation">[Image interpolation]</b>
           </div>

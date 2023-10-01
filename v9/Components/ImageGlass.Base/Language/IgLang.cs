@@ -497,6 +497,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
         Add("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
         Add("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration (milliseconds)");
+        Add("FrmSettings.Tab.General._ImageInfoTags", "Image information tags");
         #endregion // Tab General
 
 

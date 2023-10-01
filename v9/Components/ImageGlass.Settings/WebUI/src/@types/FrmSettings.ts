@@ -63,6 +63,7 @@ export type IPageSettings = Record<string, any> & {
   configDir: string,
   userConfigFilePath: string,
   defaultThemeDir: string,
+  defaultImageInfoTags: string[],
   builtInToolbarButtons: IToolbarButton[],
   enums: Record<string, string[]> & {
     ImageOrderBy: string[],

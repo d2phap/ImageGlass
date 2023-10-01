@@ -59,6 +59,12 @@ public static class WebUI
 
 
     /// <summary>
+    /// Gets the default image info tags as JSON.
+    /// </summary>
+    public static string DefaultImageInfoTagsJson { get; set; } = string.Empty;
+
+
+    /// <summary>
     /// Gets all enums as JSON
     /// </summary>
     public static string EnumsJson
@@ -220,6 +226,17 @@ public static class WebUI
         if (!string.IsNullOrEmpty(ToolListJson) && !forced) return;
 
         ToolListJson = BHelper.ToJson(Config.Tools);
+    }
+
+
+    /// <summary>
+    /// Updates value of <see cref="DefaultImageInfoTagsJson"/>.
+    /// </summary>
+    public static void UpdateDefaultImageInfoTagsJson(bool forced = false)
+    {
+        if (!string.IsNullOrEmpty(DefaultImageInfoTagsJson) && !forced) return;
+
+        DefaultImageInfoTagsJson = BHelper.ToJson(Config.DefaultImageInfoTags);
     }
 
     #endregion // Public functions

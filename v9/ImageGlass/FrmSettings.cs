@@ -87,6 +87,7 @@ public partial class FrmSettings : WebForm
         WebUI.UpdateToolListJson();
         await WebUI.UpdateSvgIconsJsonAsync();
         WebUI.UpdateThemeListJson();
+        WebUI.UpdateDefaultImageInfoTagsJson();
         Local.UpdateToolbarButtonsJson();
 
 
@@ -108,6 +109,7 @@ public partial class FrmSettings : WebForm
                 FILE_MACRO: '{Constants.FILE_MACRO}',
                 enums: {WebUI.EnumsJson},
                 defaultThemeDir: '{defaultThemeDir}',
+                defaultImageInfoTags: {WebUI.DefaultImageInfoTagsJson},
                 toolList: {WebUI.ToolListJson},
                 langList: {WebUI.LangListJson},
                 themeList: {WebUI.ThemeListJson},
@@ -351,6 +353,11 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.AutoUpdate));
         _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
         _ = Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
+
+        if (Config.SetFromJson(dict, nameof(Config.ImageInfoTags)).Done)
+        {
+            Local.FrmMain.LoadImageInfo();
+        }
 
         #endregion // Tab General
 
