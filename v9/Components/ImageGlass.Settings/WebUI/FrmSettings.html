@@ -38,26 +38,26 @@
         </li>
         <li>
           <label>
+            <input type="radio" name="nav" value="layout" />
+            <span lang-text="FrmSettings.Nav._Layout">[Layout]</span>
+          </label>
+        </li>
+        <li>
+          <label>
             <input type="radio" name="nav" value="viewer" />
-            <span lang-text="FrmSettings.Nav._Viewer">[Viewer]</span>
+            <span lang-text="FrmSettings.Nav._Viewer" data-level="2">[Viewer]</span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="toolbar" />
-            <span lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</span>
+            <span lang-text="FrmSettings.Nav._Toolbar" data-level="2">[Toolbar]</span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="gallery" />
-            <span lang-text="FrmSettings.Nav._Gallery">[Gallery]</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="radio" name="nav" value="layout" />
-            <span lang-text="FrmSettings.Nav._Layout">[Layout]</span>
+            <span lang-text="FrmSettings.Nav._Gallery" data-level="2">[Gallery]</span>
           </label>
         </li>
         <li>
@@ -477,6 +477,102 @@
     </section>
 
 
+    <!-- Tab: Layout -->
+    <section class="tab-page" tab="layout">
+      <!-- Layout > Layout -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Layout">[Layout]</header>
+
+        <div class="d-flex flex-wrap mt-4">
+          <!-- Layout map -->
+          <div class="app-layout d-inline-grid me-4 mb-5">
+            <div class="region-center"></div>
+
+            <div data-position="Top">
+              <div class="region-drop" data-order="0"></div>
+              <div class="region-drop" data-order="1"></div>
+              <div class="region-drop" data-order="2"></div>
+            </div>
+
+            <div data-position="Left">
+              <div class="region-drop" data-order="0"></div>
+            </div>
+
+            <div data-position="Right">
+              <div class="region-drop" data-order="0"></div>
+            </div>
+
+            <div data-position="Bottom">
+              <div class="region-drop" data-order="2"></div>
+              <div class="region-drop" data-order="1"></div>
+              <div class="region-drop" data-order="0"></div>
+            </div>
+          </div>
+
+
+          <!-- Manual fields -->
+          <div class="d-inline-block">
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._ToolbarPosition">[Toolbar Position]</div>
+                <select name="_Layout.Toolbar.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
+                <select name="_Layout.Toolbar.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._ToolbarContextPosition">[Contextual toolbar position]</div>
+                <select name="_Layout.ToolbarContext.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
+                <select name="_Layout.ToolbarContext.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._GalleryPosition">[Gallery position]</div>
+                <select name="_Layout.Gallery.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                  <option value="Left" lang-text="_.Position._Left">[Left]</option>
+                  <option value="Right" lang-text="_.Position._Right">[Right]</option>
+                </select>
+              </div>
+              <div id="Section_LayoutGalleryOrder" class="mb-3 aniFadeIn">
+                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
+                <select name="_Layout.Gallery.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
     <!-- Tab: Viewer -->
     <section class="tab-page" tab="viewer">
       <!-- Viewer > Viewer -->
@@ -623,102 +719,6 @@
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
           <input type="number" name="GalleryColumns" required min="1" max="100" />
-        </div>
-      </section>
-    </section>
-
-
-    <!-- Tab: Layout -->
-    <section class="tab-page" tab="layout">
-      <!-- Layout > Layout -->
-      <section>
-        <header lang-text="FrmSettings.Nav._Layout">[Layout]</header>
-
-        <div class="d-flex flex-wrap mt-4">
-          <!-- Layout map -->
-          <div class="app-layout d-inline-grid me-4 mb-5">
-            <div class="region-center"></div>
-
-            <div data-position="Top">
-              <div class="region-drop" data-order="0"></div>
-              <div class="region-drop" data-order="1"></div>
-              <div class="region-drop" data-order="2"></div>
-            </div>
-
-            <div data-position="Left">
-              <div class="region-drop" data-order="0"></div>
-            </div>
-
-            <div data-position="Right">
-              <div class="region-drop" data-order="0"></div>
-            </div>
-
-            <div data-position="Bottom">
-              <div class="region-drop" data-order="2"></div>
-              <div class="region-drop" data-order="1"></div>
-              <div class="region-drop" data-order="0"></div>
-            </div>
-          </div>
-
-
-          <!-- Manual fields -->
-          <div class="d-inline-block">
-            <div class="d-flex">
-              <div class="mb-3">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._ToolbarPosition">[Toolbar Position]</div>
-                <select name="_Layout.Toolbar.Position" class="me-2">
-                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
-                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <select name="_Layout.Toolbar.Order" class="w-control-compact">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
-            </div>
-    
-            <div class="d-flex">
-              <div class="mb-3">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._ToolbarContextPosition">[Contextual toolbar position]</div>
-                <select name="_Layout.ToolbarContext.Position" class="me-2">
-                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
-                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <select name="_Layout.ToolbarContext.Order" class="w-control-compact">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
-            </div>
-    
-            <div class="d-flex">
-              <div class="mb-3">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._GalleryPosition">[Gallery position]</div>
-                <select name="_Layout.Gallery.Position" class="me-2">
-                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
-                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
-                  <option value="Left" lang-text="_.Position._Left">[Left]</option>
-                  <option value="Right" lang-text="_.Position._Right">[Right]</option>
-                </select>
-              </div>
-              <div id="Section_LayoutGalleryOrder" class="mb-3 aniFadeIn">
-                <div class="mb-1" lang-text="FrmSettings.Tab.Layout._Order">[Order]</div>
-                <select name="_Layout.Gallery.Order" class="w-control-compact">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </section>
