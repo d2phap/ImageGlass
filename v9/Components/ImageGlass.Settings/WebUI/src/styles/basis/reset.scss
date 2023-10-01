@@ -123,6 +123,12 @@ a {
     filter: brightness(0.95);
     transition: background ease calc(var(--transitionMs) / 3);
   }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+    color: var(--AppText);
+  }
 }
 html[color-mode=light] a {
   &:focus-visible,

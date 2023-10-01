@@ -16,6 +16,12 @@ textarea {
   &[readonly] {
     background-color: rgb(var(--ControlBg));
   }
+
+  &[disabled],
+  &:disabled {
+    color: rgb(var(--AppText) / 0.45);
+    background-color: rgb(var(--InvertColor) / 0.1);
+  }
 }
 [color-mode=light] {
   input:not([type]),
