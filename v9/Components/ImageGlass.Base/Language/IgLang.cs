@@ -580,6 +580,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp", "When zoom > 100%");
         Add("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
         Add("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
+        Add("FrmSettings.Tab.Viewer._UseSmoothZooming", "Use smooth zooming");
+        Add("FrmSettings.Tab.Viewer._LoadDefaultZoomLevels", "Load default zoom levels");
         #endregion // Tab Viewer
 
 

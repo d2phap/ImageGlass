@@ -215,7 +215,7 @@
         <div class="mb-3">
           <div class="mb-1">
             <span class="me-2" lang-text="FrmSettings.Tab.General._ImageInfoTags">[Image information tags]</span>
-            <a id="LnkResetImageInfoTags" class="text-nowrap" lang-text="_._ResetToDefault">
+            <a id="LnkResetImageInfoTags" class="text-nowrap" href="#" lang-text="_._ResetToDefault">
               [Reset to default]
             </a>
           </div>
@@ -665,8 +665,19 @@
           <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" />
         </div>
         <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
-          <textarea name="ZoomLevels" rows="3" spellcheck="false"></textarea>
+          <div class="mb-2" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
+          <div class="mb-3">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="_UseSmoothZooming" />
+              <div lang-text="FrmSettings.Tab.Viewer._UseSmoothZooming">[UseSmoothZooming]</div>
+            </label>
+          </div>
+          <textarea name="ZoomLevels" rows="3" required spellcheck="false"></textarea>
+          <div>
+            <a id="LnkLoadDefaultZoomLevels" class="text-nowrap" href="#" lang-text="FrmSettings.Tab.Viewer._LoadDefaultZoomLevels">
+              [Load default zoom levels]
+            </a>
+          </div>
         </div>
       </section>
     </section>
