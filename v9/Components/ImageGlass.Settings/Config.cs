@@ -1925,7 +1925,7 @@ public static class Config
 
         if (result.ExitResult == PopupExitResult.OK)
         {
-            BHelper.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+            BHelper.OpenUrl(url, $"from_{igcmdExeName}_invalid_command");
         }
 
         return (int)IgExitCode.Error;

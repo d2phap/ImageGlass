@@ -216,7 +216,7 @@ public partial class BHelper
     /// Open URL in the default browser
     /// </summary>
     /// <param name="url"></param>
-    public static void OpenUrl(string? url, string campaign = "app_unknown")
+    public static void OpenUrl(string? url, string campaign = "from_unknown")
     {
         if (string.IsNullOrEmpty(url)) return;
 

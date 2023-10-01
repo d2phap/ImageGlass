@@ -352,7 +352,8 @@ public partial class FrmSettings : WebForm
 
         _ = Config.SetFromJson(dict, nameof(Config.AutoUpdate));
         _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
-        if (Config.SetFromJson(dict, nameof(Config.ShowAppIcon)).Done) {
+        if (Config.SetFromJson(dict, nameof(Config.ShowAppIcon)).Done)
+        {
             Config.UpdateFormIcon(this);
             Config.UpdateFormIcon(Local.FrmMain);
         }
@@ -766,6 +767,5 @@ public partial class FrmSettings : WebForm
     }
 
     #endregion // Private methods
-
 
 }

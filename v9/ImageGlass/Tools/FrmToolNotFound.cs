@@ -158,7 +158,7 @@ public partial class FrmToolNotFound : DialogForm
 
     private void LnkGetTools_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        BHelper.OpenUrl("https://imageglass.org/tools", "app_get_tools");
+        BHelper.OpenUrl("https://imageglass.org/tools", "from_get_tools");
     }
 
 
