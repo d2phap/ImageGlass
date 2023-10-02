@@ -20,7 +20,7 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
     this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.Edit.EditAppDialog._AddNewApp">[Add a new app]</span>
+          <span class="create-only" lang-text="FrmSettings.Tab.Edit.EditAppDialog._AddApp">[Add a new app]</span>
           <span class="edit-only" lang-text="FrmSettings.Tab.Edit.EditAppDialog._EditApp">[Edit app]</span>
         </header>
         <div class="dialog-body" style="width: 33rem;">
@@ -30,19 +30,20 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Edit._EditApps._AppName">[App name]</div>
-            <input type="text" name="_AppName" class="w-100" required spellcheck="false" />
+            <input type="text" name="_AppName" class="w-100" required spellcheck="false" placeholder="MS Paint" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
               <input type="text" name="_Executable" class="me-2 w-100" required spellcheck="false"
+                placeholder="mspaint.exe"
                 style="width: calc(100vw - calc(var(--controlHeight) * 1px) - 0.5rem);" />
               <button id="BtnBrowseApp" type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Argument">[Argument]</div>
-            <input type="text" name="_Argument" class="w-100" spellcheck="false" value="<file>" />
+            <input type="text" name="_Argument" class="w-100" spellcheck="false" placeholder="<file>" value="<file>" />
           </div>
           <div class="mt-4">
             <div class="mb-1" lang-text="_._CommandPreview">[Command preview]</div>

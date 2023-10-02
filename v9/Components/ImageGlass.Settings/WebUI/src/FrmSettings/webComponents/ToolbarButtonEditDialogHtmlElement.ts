@@ -21,7 +21,23 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._ButtonJson">[Button JSON]</div>
-            <textarea class="w-100" name="_ButtonJson" required rows="15" spellcheck="false" style="font-family: var(--fontCode);"></textarea>
+            <textarea class="w-100" name="_ButtonJson" required rows="16" spellcheck="false"
+              style="font-family: var(--fontCode);"
+              placeholder='{
+  "Id": "Btn_OpenWithMSPaint",
+  "Type": "Button",
+  "Text": "Open with MS Paint",
+  "Image": "C:\\\\path\\\\to\\\\icon.svg",
+  "Alignment": "Left",
+  "CheckableConfigBinding": "",
+  "DisplayStyle": "Image",
+  "OnClick": {
+    "Executable": "mspaint.exe",
+    "Arguments": ["<file>"],
+    "NextAction": {
+    }
+  }
+}'></textarea>
           </div>
         </div>
         <footer class="dialog-footer">
@@ -40,7 +56,7 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
       Id: '',
       Type: 'Button',
       Text: '',
-      Image: '',
+      Image: 'C:\\path\\to\\icon.svg',
       Alignment: 'Left',
       CheckableConfigBinding: '',
       DisplayStyle: 'Image',

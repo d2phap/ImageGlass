@@ -27,23 +27,24 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
             <div class="mb-1" lang-text="_._ID">[ID]</div>
-            <input type="text" name="_ToolId" class="w-100" required spellcheck="false" />
+            <input type="text" name="_ToolId" class="w-100" required spellcheck="false" placeholder="Tool_" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Name">[Name]</div>
-            <input type="text" name="_ToolName" class="w-100" required spellcheck="false" />
+            <input type="text" name="_ToolName" class="w-100" required spellcheck="false" placeholder="ExifGlass - Metadata viewer" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
               <input type="text" name="_Executable" class="me-2 w-100" required spellcheck="false"
+                placeholder="exifglass.exe"
                 style="width: calc(100vw - calc(var(--controlHeight) * 1px) - 0.5rem);" />
               <button id="BtnBrowseTool" type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Argument">[Argument]</div>
-            <input type="text" name="_Argument" class="w-100" spellcheck="false" value="<file>" />
+            <input type="text" name="_Argument" class="w-100" spellcheck="false" placeholder="<file>" value="<file>" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
