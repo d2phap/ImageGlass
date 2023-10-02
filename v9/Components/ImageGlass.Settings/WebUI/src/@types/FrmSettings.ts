@@ -13,7 +13,7 @@ export type ITool = {
   ToolId: string,
   ToolName: string,
   Executable: string,
-  Arguments: string,
+  Argument: string,
   IsIntegrated?: boolean,
   Hotkeys?: string[],
 };
@@ -53,6 +53,12 @@ export type IToolbarButton = {
   ImageUrl: string,
   OnClick: SingleAction,
 };
+
+export type IEditApp = {
+  AppName: string,
+  Executable: string,
+  Argument: string,
+}
 
 export type IPageSettings = Record<string, any> & {
   config: Record<string, any>,

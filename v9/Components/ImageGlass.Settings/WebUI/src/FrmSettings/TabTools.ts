@@ -62,8 +62,8 @@ export default class TabTools {
 
     for (const item of toolList) {
       let args = '<i lang-text="_._Empty"></i>';
-      if (item.Arguments) {
-        args = `<code>${escapeHtml(item.Arguments)}</code>`;
+      if (item.Argument) {
+        args = `<code>${escapeHtml(item.Argument)}</code>`;
       }
 
       const hotkeysHtml = (item.Hotkeys || [])
@@ -85,7 +85,7 @@ export default class TabTools {
             <code hidden name="_ToolName">${escapeHtml(item.ToolName)}</code>
             <code hidden name="_IsIntegrated">${item.IsIntegrated}</code>
             <code hidden name="_Executable">${escapeHtml(item.Executable)}</code>
-            <code hidden name="_Arguments">${escapeHtml(item.Arguments)}</code>
+            <code hidden name="_Argument">${escapeHtml(item.Argument)}</code>
             <code hidden name="_Hotkeys">${(item.Hotkeys || []).join(TabTools.HOTKEY_SEPARATOR)}</code>
           </td>
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
@@ -140,7 +140,7 @@ export default class TabTools {
       const toolName = query('[name="_ToolName"]', trEl).innerText || '';
       const toolIntegrated = (query('[name="_IsIntegrated"]', trEl).innerText) === 'true';
       const toolExecutable = query('[name="_Executable"]', trEl).innerText || '';
-      const toolArguments = query('[name="_Arguments"]', trEl).innerText || '';
+      const toolArgument = query('[name="_Argument"]', trEl).innerText || '';
 
       const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
       const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
@@ -150,7 +150,7 @@ export default class TabTools {
         ToolName: toolName,
         IsIntegrated: toolIntegrated,
         Executable: toolExecutable,
-        Arguments: toolArguments,
+        Argument: toolArgument,
         Hotkeys: toolHotkeys,
       } as ITool;
     });
