@@ -213,13 +213,13 @@
           <input type="number" name="InAppMessageDuration" required min="0" max="60000" />
         </div>
         <div class="mb-3">
-          <div class="mb-1">
-            <span class="me-2" lang-text="FrmSettings.Tab.General._ImageInfoTags">[Image information tags]</span>
+          <div class="mb-1" lang-text="FrmSettings.Tab.General._ImageInfoTags">[Image information tags]</div>
+          <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
+          <div>
             <a id="LnkResetImageInfoTags" class="text-nowrap" href="#" lang-text="_._ResetToDefault">
               [Reset to default]
             </a>
           </div>
-          <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
         </div>
       </section>
     </section>
@@ -666,7 +666,7 @@
         </div>
         <div class="mb-3">
           <div class="mb-2" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
-          <div class="mb-3">
+          <div class="mb-2">
             <label class="ig-checkbox">
               <input type="checkbox" name="_UseSmoothZooming" />
               <div lang-text="FrmSettings.Tab.Viewer._UseSmoothZooming">[UseSmoothZooming]</div>
