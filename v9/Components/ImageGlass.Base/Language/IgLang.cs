@@ -566,7 +566,7 @@ public class IgLang : Dictionary<string, string>
         // Edit > Image editing apps
         _ = TryAdd("FrmSettings.Tab.Edit._EditApps", "Image editing apps");
         _ = TryAdd("FrmSettings.Tab.Edit._EditApps._AppName", "App name");
-        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._AddNewApp", "Add a new app");
+        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._AddApp", "Add an app for editing");
         _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._EditApp", "Edit app");
 
         #endregion // Tab Edit

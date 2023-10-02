@@ -1178,14 +1178,18 @@ public static class Config
             if (string.IsNullOrWhiteSpace(i.Image)) return obj;
 
             var filePath = Theme.GetToolbarIconFilePath(i.Image);
-            if (string.IsNullOrWhiteSpace(filePath)) return obj;
+            if (string.IsNullOrWhiteSpace(filePath)) filePath = i.Image;
 
-            var fileUrl = new Uri(filePath).AbsoluteUri;
-            if (!string.IsNullOrWhiteSpace(fileUrl))
+            try
             {
-                obj.TryAdd("ImageUrl", fileUrl);
-                return obj;
+                var fileUrl = new Uri(filePath).AbsoluteUri;
+                if (!string.IsNullOrWhiteSpace(fileUrl))
+                {
+                    obj.TryAdd("ImageUrl", fileUrl);
+                    return obj;
+                }
             }
+            catch { }
 
             return obj;
         }).ToList();
