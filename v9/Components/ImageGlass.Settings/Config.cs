@@ -1390,6 +1390,22 @@ public static class Config
             catch { }
         }
 
+        // EditApps
+        else if (configName == nameof(Config.EditApps))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, EditApp>>(newValue);
+            if (dict != null)
+            {
+                Config.EditApps.Clear();
+                foreach (var item in dict)
+                {
+                    _ = Config.EditApps.TryAdd(item.Key, item.Value);
+                }
+
+                Done = true;
+            }
+        }
+
         // bool
         else if (prop.PropertyType.Equals(typeof(bool)))
         {

@@ -436,6 +436,7 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.AfterEditingAction));
         _ = Config.SetFromJson(dict, nameof(Config.EnableCopyMultipleFiles));
         _ = Config.SetFromJson(dict, nameof(Config.EnableCutMultipleFiles));
+        _ = Config.SetFromJson(dict, nameof(Config.EditApps));
 
         #endregion // Tab Edit
 
