@@ -668,7 +668,7 @@ internal class Local
 
         var isIntegrated = tool.IsIntegrated ?? false;
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-        var args = tool.Arguments?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+        var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
 
         // tool is not integrated
         if (!isIntegrated)

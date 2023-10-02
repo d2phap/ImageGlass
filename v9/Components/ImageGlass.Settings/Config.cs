@@ -566,7 +566,7 @@ public static class Config
             ToolId = Constants.IGTOOL_EXIFTOOL,
             ToolName = "ExifGlass - EXIF metadata viewer",
             Executable = "exifglass",
-            Arguments = Constants.FILE_MACRO,
+            Argument = Constants.FILE_MACRO,
             IsIntegrated = true,
             Hotkeys = new List<Hotkey>(1) { new Hotkey(Keys.X) },
         },
@@ -1537,16 +1537,14 @@ public static class Config
     /// <summary>
     /// Updates form icon using theme setting.
     /// </summary>
-    public static void UpdateFormIcon(Form frm)
+    public static async Task UpdateFormIcon(Form frm)
     {
         // Icon theming
         var hIcon = Config.Theme.Settings.AppLogo.GetHicon();
         frm.Icon = Icon.FromHandle(hIcon);
 
-        Task.Delay(200).ContinueWith((_) =>
-        {
-            frm.ShowIcon = Config.ShowAppIcon;
-        });
+        await Task.Delay(200);
+        frm.ShowIcon = Config.ShowAppIcon;
     }
 
 
