@@ -503,7 +503,7 @@
         </div>
       </section>
 
-      <!-- Edit > Associated editing apps -->
+      <!-- Edit > Image editing apps -->
       <section>
         <header lang-text="FrmSettings.Tab.Edit._EditApps">[Image editing apps]</header>
         <div class="mb-3">
@@ -888,17 +888,16 @@
       <!-- Tools > Tools -->
       <section>
         <header lang-text="FrmSettings.Nav._Tools">[Tools]</header>
-        <div class="mb-3 d-flex align-items-center">
-          <a class="text-nowrap me-2" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
-            lang-text="FrmMain.MnuGetMoreTools">
-            [Get more tools...]
-          </a>
-
-          <div class="ms-auto text-nowrap d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
             <button id="Btn_AddTool" type="button" lang-text="_._Add+">
               [Add...]
             </button>
           </div>
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmMain.MnuGetMoreTools">
+            [Get more tools...]
+          </a>
         </div>
         <div class="ig-table mb-2 d-block">
           <table id="Table_ToolList" style="width: 100%;">
@@ -1005,13 +1004,8 @@
         <input type="hidden" name="DarkTheme" />
         <input type="hidden" name="LightTheme" />
 
-        <div class="mb-3 d-flex align-items-center">
-          <a class="text-nowrap me-2" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
-            lang-text="FrmSettings.Tab.Appearance._Theme._GetMoreThemes">
-            [Get more theme packs...]
-          </a>
-
-          <div class="ms-auto text-nowrap d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
             <button id="Btn_InstallTheme" type="button" class="me-2" lang-text="_._Install">
               [Install...]
             </button>
@@ -1022,6 +1016,11 @@
               [Open theme folder...]
             </button>
           </div>
+
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmSettings.Tab.Appearance._Theme._GetMoreThemes">
+            [Get more theme packs...]
+          </a>
         </div>
 
         <ul id="List_ThemeList" class="ig-list-vertical mb-2"></ul>
