@@ -43,7 +43,7 @@ public partial class FrmUpdate : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
         Web2.PageName = "update";
         Text = Config.Language[$"_._CheckForUpdate"];
         CloseFormHotkey = Keys.Escape;

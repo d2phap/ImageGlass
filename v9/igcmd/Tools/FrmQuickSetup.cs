@@ -40,7 +40,7 @@ public partial class FrmQuickSetup : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
         Web2.PageName = "quick-setup";
         Text = Config.Language[$"{nameof(FrmQuickSetup)}._Text"];
         CloseFormHotkey = Keys.Escape;

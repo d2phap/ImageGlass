@@ -2575,7 +2575,7 @@ public partial class FrmMain
                     FormBorderStyle = FormBorderStyle.Sizable;
                 }
 
-                Config.UpdateFormIcon(this);
+                _ = Config.UpdateFormIcon(this);
             }
 
         }

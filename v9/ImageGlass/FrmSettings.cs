@@ -55,7 +55,7 @@ public partial class FrmSettings : WebForm
         base.OnRequestUpdatingTheme(e);
 
         // set app logo on titlebar
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
     }
 
 
@@ -354,8 +354,8 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
         if (Config.SetFromJson(dict, nameof(Config.ShowAppIcon)).Done)
         {
-            Config.UpdateFormIcon(this);
-            Config.UpdateFormIcon(Local.FrmMain);
+            _ = Config.UpdateFormIcon(this);
+            _ = Config.UpdateFormIcon(Local.FrmMain);
         }
         _ = Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
 
