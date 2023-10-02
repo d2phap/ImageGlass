@@ -26,7 +26,7 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
             <div class="mb-1" lang-text="_._FileExtension">[File extension]</div>
-            <input type="text" name="_FileExtension" class="w-100" required spellcheck="false" />
+            <input type="text" name="_FileExtension" class="w-100" required spellcheck="false" placeholder=".jpg;.png;.svg" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="FrmSettings.Tab.Edit._EditApps._AppName">[App name]</div>

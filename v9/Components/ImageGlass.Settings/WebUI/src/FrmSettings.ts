@@ -3,6 +3,7 @@ import './main';
 import Sidebar from './FrmSettings/Sidebar';
 import Settings from './FrmSettings/Settings';
 import TabAppearance from './FrmSettings/TabAppearance';
+import { defineEditAppDialogHtmlElement } from './FrmSettings/webComponents/EditAppDialogHtmlElement';
 import { defineToolDialogHtmlElement } from './FrmSettings/webComponents/ToolDialogHtmlElement';
 import { defineToolbarEditorHtmlElement } from './FrmSettings/webComponents/ToolbarEditorHtmlElement';
 import { defineToolbarButtonEditDialogHtmlElement } from './FrmSettings/webComponents/ToolbarButtonEditDialogHtmlElement';
@@ -52,6 +53,7 @@ _page.loadBackgroundColorConfig = TabAppearance.loadBackgroundColorConfig;
 
 
 // register web components
+defineEditAppDialogHtmlElement();
 defineToolDialogHtmlElement();
 defineToolbarEditorHtmlElement();
 defineToolbarButtonEditDialogHtmlElement();
