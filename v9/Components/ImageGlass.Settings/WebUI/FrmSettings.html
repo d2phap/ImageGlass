@@ -502,6 +502,30 @@
           </label>
         </div>
       </section>
+
+      <!-- Edit > Associated editing apps -->
+      <section>
+        <header lang-text="FrmSettings.Tab.Edit._EditApps">[Image editing apps]</header>
+        <div class="mb-3">
+          <button id="Btn_AddEditApp" type="button" lang-text="_._Add+">
+            [Add...]
+          </button>
+        </div>
+        <div class="ig-table mb-2 d-block">
+          <table id="Table_EditApps" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th width="10" class="cell-sticky" lang-text="_._FileExtension">[File extension]</th>
+                <th width="10" lang-text="FrmSettings.Tab.Edit._EditApps._AppName">[App name]</th>
+                <th lang-text="_._Executable">[Executable]</th>
+                <th width="10" colspan="2" lang-text="_._Argument">[Argument]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
     </section>
 
 
@@ -1005,6 +1029,7 @@
     </section>
 
 
+    <dialog is="edit-app-dialog"></dialog>
     <dialog is="tool-dialog"></dialog>
     <dialog is="edit-toolbar-dialog"></dialog>
   </main>
