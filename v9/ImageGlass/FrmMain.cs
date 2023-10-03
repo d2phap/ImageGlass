@@ -2302,7 +2302,7 @@ public partial class FrmMain : ThemedForm
 
     private void MnuGetMoreTools_Click(object sender, EventArgs e)
     {
-        BHelper.OpenUrl("https://imageglass.org/tools", "from_get_more_tools");
+        BHelper.OpenUrlAsync("https://imageglass.org/tools", "from_get_more_tools");
     }
 
 

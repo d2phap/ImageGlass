@@ -378,7 +378,7 @@ public partial class BHelper
         {
             var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
 
-            BHelper.OpenUrl(url);
+            _ = BHelper.OpenUrlAsync(url);
         }
         catch
         {
@@ -386,7 +386,7 @@ public partial class BHelper
             {
                 var url = $"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}";
 
-                BHelper.OpenUrl(url);
+                _ = BHelper.OpenUrlAsync(url);
             }
             catch { }
         }

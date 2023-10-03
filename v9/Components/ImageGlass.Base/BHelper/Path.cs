@@ -21,6 +21,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
 using System.Web;
+using Windows.System;
 
 namespace ImageGlass.Base;
 
@@ -213,10 +214,9 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Open URL in the default browser
+    /// Open URL in the default browser.
     /// </summary>
-    /// <param name="url"></param>
-    public static void OpenUrl(string? url, string campaign = "from_unknown")
+    public static async Task OpenUrlAsync(string? url, string campaign = "from_unknown")
     {
         if (string.IsNullOrWhiteSpace(url)) return;
 
@@ -230,10 +230,7 @@ public partial class BHelper
 
             ub.Query = queries.ToString();
 
-            Process.Start(new ProcessStartInfo(ub.Uri.AbsoluteUri)
-            {
-                UseShellExecute = true,
-            });
+            _ = await Launcher.LaunchUriAsync(ub.Uri);
         }
         catch { }
     }

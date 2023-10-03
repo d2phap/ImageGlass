@@ -1943,7 +1943,7 @@ public static class Config
 
         if (result.ExitResult == PopupExitResult.OK)
         {
-            BHelper.OpenUrl(url, $"from_{igcmdExeName}_invalid_command");
+            _ = BHelper.OpenUrlAsync(url, $"from_{igcmdExeName}_invalid_command");
         }
 
         return (int)IgExitCode.Error;

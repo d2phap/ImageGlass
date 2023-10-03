@@ -784,7 +784,7 @@ public partial class FrmMain
     /// </summary>
     public static void IG_ReportIssue()
     {
-        BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "from_report_issue");
+        _ = BHelper.OpenUrlAsync("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "from_report_issue");
     }
 
 
