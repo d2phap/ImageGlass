@@ -32,19 +32,19 @@ export default class TabFileAssocs {
 
 
   private static onBtn_OpenExtIconFolderClicked() {
-    //
+    post('Btn_OpenExtIconFolder');
   }
 
   private static onBtn_MakeDefaultViewerClicked() {
-    //
+    post('Btn_MakeDefaultViewer');
   }
 
   private static onBtn_RemoveDefaultViewerClicked() {
-    //
+    post('Btn_RemoveDefaultViewer');
   }
 
   private static onLnk_OpenDefaultAppsSettingClicked() {
-    //
+    post('Lnk_OpenDefaultAppsSetting');
   }
 
   private static onBtn_AddFileFormatClicked() {

@@ -193,20 +193,6 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Image
 
 
-        // Tab Language
-        #region Tab Language
-        else if (e.Name.Equals("Btn_RefreshLanguageList"))
-        {
-            WebUI.UpdateLangListJson(true);
-            Web2.PostWeb2Message(e.Name, WebUI.LangListJson);
-        }
-        else if (e.Name.Equals("Lnk_InstallLanguage"))
-        {
-            _ = InstallLanguagePackAsync();
-        }
-        #endregion // Tab Language
-
-
         // Tab Toolbar
         #region Tab Toolbar
         else if (e.Name.Equals("Btn_ResetToolbarButtons"))
@@ -256,6 +242,30 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Toolbar
 
 
+        // Tab File type associations
+        #region Tab Appearance
+        else if (e.Name.Equals("Btn_OpenExtIconFolder"))
+        {
+            var extIconDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
+            BHelper.OpenFolderPath(extIconDir);
+        }
+        #endregion // Tab File type associations
+
+
+        // Tab Language
+        #region Tab Language
+        else if (e.Name.Equals("Btn_RefreshLanguageList"))
+        {
+            WebUI.UpdateLangListJson(true);
+            Web2.PostWeb2Message(e.Name, WebUI.LangListJson);
+        }
+        else if (e.Name.Equals("Lnk_InstallLanguage"))
+        {
+            _ = InstallLanguagePackAsync();
+        }
+        #endregion // Tab Language
+
+
         // Tab Appearance
         #region Tab Appearance
         else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))
@@ -282,8 +292,8 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("Btn_OpenThemeFolder"))
         {
-            var igDefaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
-            BHelper.OpenFilePath(igDefaultThemeDir);
+            var themeDir = App.ConfigDir(PathType.Dir, Dir.Themes);
+            BHelper.OpenFolderPath(themeDir);
         }
         else if (e.Name.Equals("Delete_Theme_Pack"))
         {

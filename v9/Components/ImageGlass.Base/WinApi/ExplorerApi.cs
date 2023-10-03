@@ -119,7 +119,7 @@ public static class ExplorerApi
     /// Open folder and select an item.
     /// </summary>
     /// <remarks>
-    /// SHParseDisplayName will not always find the correct folder. If the user
+    /// <see cref="SHParseDisplayName"/> will not always find the correct folder. If the user
     /// has a folder open that is rooted in their user folder (e.g. the desktop,
     /// Dropbox/Mega/Nextcloud folder), this won't match the folder reference
     /// returned by <see cref="SHParseDisplayName"/> if given the actual path

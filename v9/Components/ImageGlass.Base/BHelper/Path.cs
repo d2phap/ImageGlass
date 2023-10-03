@@ -218,7 +218,7 @@ public partial class BHelper
     /// <param name="url"></param>
     public static void OpenUrl(string? url, string campaign = "from_unknown")
     {
-        if (string.IsNullOrEmpty(url)) return;
+        if (string.IsNullOrWhiteSpace(url)) return;
 
         try
         {
@@ -244,7 +244,7 @@ public partial class BHelper
     /// </summary>
     public static void OpenFilePath(string? filePath)
     {
-        if (string.IsNullOrEmpty(filePath)) return;
+        if (string.IsNullOrWhiteSpace(filePath)) return;
 
         try
         {
@@ -254,6 +254,27 @@ public partial class BHelper
         {
             using var proc = Process.Start("explorer.exe", $"/select,\"{filePath}\"");
         }
+    }
+
+
+    /// <summary>
+    /// Opens the folder path in Explorer, creates the fodler path if not existed.
+    /// </summary>
+    public static void OpenFolderPath(string? dirPath)
+    {
+        if (string.IsNullOrWhiteSpace(dirPath)) return;
+
+        try
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        catch { }
+
+        try
+        {
+            using var proc = Process.Start("explorer.exe", $"\"{dirPath}\"");
+        }
+        catch { }
     }
 
 
