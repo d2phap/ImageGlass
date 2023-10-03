@@ -1862,7 +1862,7 @@ public partial class FrmMain
     }
 
 
-    public static void IG_UnsetDefaultPhotoViewer()
+    public static void IG_RemoveDefaultPhotoViewer()
     {
         _ = Config.SetDefaultPhotoViewerAsync(false);
     }

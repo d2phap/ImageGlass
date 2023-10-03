@@ -102,7 +102,7 @@ public static class Functions
         {
             var langPath = enable
                 ? "FrmMain.MnuSetDefaultPhotoViewer"
-                : "FrmMain.MnuUnsetDefaultPhotoViewer";
+                : "FrmMain.MnuRemoveDefaultPhotoViewer";
 
             if (error == null)
             {

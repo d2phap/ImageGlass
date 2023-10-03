@@ -414,9 +414,9 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuSetDefaultPhotoViewer._SuccessDescription", "Next, please open Windows Settings > Default apps, and select ImageGlass under the Photo viewer section."); //v9.0
         _ = TryAdd("FrmMain.MnuSetDefaultPhotoViewer._Error", "Could not set ImageGlass as default photo viewer."); //v9.0
 
-        _ = TryAdd("FrmMain.MnuUnsetDefaultPhotoViewer", "Unset default photo viewer"); //v9.0
-        _ = TryAdd("FrmMain.MnuUnsetDefaultPhotoViewer._Success", "ImageGlass is now not the default photo viewer anymore."); //v9.0
-        _ = TryAdd("FrmMain.MnuUnsetDefaultPhotoViewer._Error", "Could not remove ImageGlass from the default photo viewer setting."); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer", "Remove default photo viewer"); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer._Success", "ImageGlass is now not the default photo viewer anymore."); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer._Error", "Could not remove ImageGlass from the default photo viewer setting."); //v9.0
 
         #endregion
 

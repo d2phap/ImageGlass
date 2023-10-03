@@ -249,6 +249,14 @@ public partial class FrmSettings : WebForm
             var extIconDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
             BHelper.OpenFolderPath(extIconDir);
         }
+        else if (e.Name.Equals("Btn_MakeDefaultViewer"))
+        {
+            FrmMain.IG_SetDefaultPhotoViewer();
+        }
+        else if (e.Name.Equals("Btn_RemoveDefaultViewer"))
+        {
+            FrmMain.IG_RemoveDefaultPhotoViewer();
+        }
         else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting"))
         {
             _ = await Launcher.LaunchUriAsync(

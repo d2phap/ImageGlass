@@ -2336,9 +2336,9 @@ public partial class FrmMain : ThemedForm
         IG_SetDefaultPhotoViewer();
     }
 
-    private void MnuUnsetDefaultPhotoViewer_Click(object sender, EventArgs e)
+    private void MnuRemoveDefaultPhotoViewer_Click(object sender, EventArgs e)
     {
-        IG_UnsetDefaultPhotoViewer();
+        IG_RemoveDefaultPhotoViewer();
     }
 
     #endregion // Menu Help
