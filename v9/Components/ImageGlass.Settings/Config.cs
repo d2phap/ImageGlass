@@ -1820,10 +1820,25 @@ public static class Config
 
 
     /// <summary>
+    /// Gets <see cref="EditApp"/> from the given extension.
+    /// </summary>
+    /// <param name="ext">An extension. E.g. <c>.jpg</c></param>
+    public static EditApp? GetEditAppFromExtension(string ext)
+    {
+        var appItem = Config.EditApps.FirstOrDefault(i =>
+        {
+            var exts = i.Key.Split(";", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            return exts.Contains(ext);
+        });
+
+        return appItem.Value;
+    }
+
+
+    /// <summary>
     /// Runs a command from <c>igcmd.exe</c>, supports auto-elevating process privilege
     /// if admin permission is required.
     /// </summary>
-    /// <returns></returns>
     public static async Task<IgExitCode> RunIgcmd(string args, bool waitForExit = true)
     {
         var exePath = App.StartUpDir("igcmd.exe");

@@ -1158,7 +1158,7 @@ public partial class FrmMain
             // Find file format
             var ext = Path.GetExtension(Local.Images.GetFilePath(Local.CurrentIndex)).ToLowerInvariant();
 
-            if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+            if (Config.GetEditAppFromExtension(ext) is EditApp app)
             {
                 appName = $"({app.AppName})";
 

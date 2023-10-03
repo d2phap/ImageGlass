@@ -146,7 +146,7 @@ export default class TabEdit {
       TabEdit._areEditAppsChanged = true;
 
       const data = TabEdit.#editAppDialog.getDialogData();
-      TabEdit.setEditAppToList(data.extKey, data.app);
+      TabEdit.setEditAppToList(data.app, data.extKey, extKey);
     }
   }
 
@@ -155,11 +155,17 @@ export default class TabEdit {
    * Sets the edit app to the list.
    * @param oldExtKey If not found, the app will be inserted into the list.
    */
-  private static setEditAppToList(oldExtKey: string, app: IEditApp) {
+  private static setEditAppToList(app: IEditApp, newExtKey: string, oldExtKey?: string) {
     if (!app.AppName || !app.Executable) return;
     const editApps = TabEdit.getEditAppsFromDom();
 
-    editApps[oldExtKey] = app;
+    // edit
+    if (oldExtKey) {
+      delete editApps[oldExtKey];
+    }
+
+    editApps[newExtKey] = app;
+
     TabEdit.loadEditApps(editApps);
   }
 }

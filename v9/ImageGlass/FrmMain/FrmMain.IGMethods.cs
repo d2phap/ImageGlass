@@ -1714,8 +1714,9 @@ public partial class FrmMain
         // get extension
         var ext = Path.GetExtension(filePath).ToLowerInvariant();
 
+
         // get app from the extension
-        if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+        if (Config.GetEditAppFromExtension(ext) is EditApp app)
         {
             // open configured app for editing
             using var p = new Process();

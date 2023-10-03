@@ -72,7 +72,6 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'create', data, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
-      query('[name="_FileExtension"]', this).toggleAttribute('disabled', false);
     });
 
     return isSubmitted;
@@ -97,7 +96,6 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'edit', data, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
-      query('[name="_FileExtension"]', this).toggleAttribute('disabled', true);
     });
 
     return isSubmitted;
