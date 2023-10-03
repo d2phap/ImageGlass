@@ -59,10 +59,15 @@ public partial class FrmMain
     /// </summary>
     public void OpenFilePicker()
     {
-        var formats = Config.GetImageFormats(Config.AllFormats);
+        var sb = new StringBuilder(Config.AllFormats.Count);
+        foreach (var ext in Config.AllFormats)
+        {
+            sb.Append('*').Append(ext).Append(';');
+        }
+
         using var o = new OpenFileDialog()
         {
-            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + formats,
+            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + sb.ToString(),
             CheckFileExists = true,
             RestoreDirectory = true,
         };

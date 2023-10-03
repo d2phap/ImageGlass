@@ -291,7 +291,7 @@ public static class ExplorerApi
     /// <summary>
     /// Register file type associations and app capabilities to registry
     /// </summary>
-    /// <param name="extensions">Extension string, ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extension string, ex: <c>.png;.svg;</c></param>
     public static Exception? RegisterAppAndExtensions(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -324,7 +324,7 @@ public static class ExplorerApi
                 // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
                 using (var faKey = key?.CreateSubKey("FileAssociations", true))
                 {
-                    var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var ext in exts)
                     {
@@ -405,7 +405,7 @@ public static class ExplorerApi
     /// <summary>
     /// Unregister file type associations and app information from registry
     /// </summary>
-    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>.png;.svg;</c></param>
     public static Exception? UnregisterAppAndExtensions(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -437,13 +437,13 @@ public static class ExplorerApi
 
             // Delete file type associations
             // HKEY_CURRENT_USER\Software\Classes\ImageGlass.AssocFile.<EXT>
-            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in exts)
             {
                 var extNoDot = ext[1..].ToUpperInvariant();
                 var extAssocPath = $@"Software\Classes\{APP_NAME}.AssocFile.{extNoDot}";
 
-                Registry.ClassesRoot.DeleteSubKeyTree(extAssocPath, false);
+                Registry.CurrentUser.DeleteSubKeyTree(extAssocPath, false);
             }
 
 
@@ -469,7 +469,7 @@ public static class ExplorerApi
     /// <summary>
     /// Unregister file type associations and app information from registry for <b>ImageGlass v8</b>.
     /// </summary>
-    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>.png;.svg;</c></param>
     public static Exception? UnregisterAppAndExtensionsLegacy(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -498,7 +498,7 @@ public static class ExplorerApi
 
             // Delete file type associations
             // HKEY_CLASSES_ROOT\ImageGlass.AssocFile.<EXT>
-            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in exts)
             {
                 var extNoDot = ext[1..].ToUpperInvariant();

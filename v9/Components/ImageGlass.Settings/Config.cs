@@ -523,7 +523,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of formats that only load the first page forcefully
     /// </summary>
-    public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;*.jxl" };
+    public static HashSet<string> SinglePageFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
@@ -1812,7 +1812,7 @@ public static class Config
 
         var cmd = enable
             ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
-            : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
+            : IgCommands.REMOVE_DEFAULT_PHOTO_VIEWER;
 
         // run command and show the results
         _ = await Config.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
@@ -2018,33 +2018,26 @@ public static class Config
     /// <summary>
     /// Returns distinc list of image formats.
     /// </summary>
-    /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
-    /// <returns></returns>
+    /// <param name="formats">The format string. E.g: <c>.bpm;.jpg;</c></param>
     public static HashSet<string> GetImageFormats(string formats)
     {
-        var list = new HashSet<string>();
-        var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        char[] wildTrim = { '*' };
+        var formatList = formats
+            .Split(new char[] { ';' },StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToHashSet();
 
-        foreach (var ext in formatList)
-        {
-            list.Add(ext.Trim(wildTrim));
-        }
-
-        return list;
+        return formatList;
     }
 
     /// <summary>
-    /// Returns the image formats string. Example: <c>*.png;*.jpg;</c>
+    /// Returns the image formats string. Example: <c>.png;.jpg;</c>
     /// </summary>
     /// <param name="list">The input HashSet</param>
-    /// <returns></returns>
     public static string GetImageFormats(HashSet<string> list)
     {
         var sb = new StringBuilder(list.Count);
         foreach (var item in list)
         {
-            sb.Append('*').Append(item).Append(';');
+            sb.Append(item).Append(';');
         }
 
         return sb.ToString();

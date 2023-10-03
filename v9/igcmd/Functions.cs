@@ -66,21 +66,20 @@ public static class Functions
     /// Sets or unsets app extensions
     /// </summary>
     /// <param name="enable"></param>
-    /// <param name="ext">Extensions to proceed. Example: <c>*.png;*.jpg;</c></param>
-    public static IgExitCode SetAppExtensions(bool enable, string ext = "", bool showUi = false, bool hideAdminRequiredErrorUi = false)
+    /// <param name="exts">Extensions to proceed. Example: <c>.png;.jpg;</c></param>
+    public static IgExitCode SetAppExtensions(bool enable, string exts = "", bool showUi = false, bool hideAdminRequiredErrorUi = false)
     {
         var exitCode = IgExitCode.Done;
 
-        if (string.IsNullOrEmpty(ext))
+        if (string.IsNullOrEmpty(exts))
         {
-            var allExts = Config.AllFormats;
-            ext = Config.GetImageFormats(allExts);
+            exts = Config.GetImageFormats(Config.AllFormats);
         }
 
 
         var error = enable
-            ? ExplorerApi.RegisterAppAndExtensions(ext)
-            : ExplorerApi.UnregisterAppAndExtensions(ext);
+            ? ExplorerApi.RegisterAppAndExtensions(exts)
+            : ExplorerApi.UnregisterAppAndExtensions(exts);
 
 
         if (error == null)
