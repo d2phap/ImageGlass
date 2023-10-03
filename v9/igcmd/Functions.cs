@@ -106,12 +106,7 @@ public static class Functions
 
             if (error == null)
             {
-                var description = enable
-                    ? Config.Language[$"{langPath}._SuccessDescription"]
-                    : string.Empty;
-
                 _ = Config.ShowInfo(null,
-                    description: description,
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Success"]);
             }

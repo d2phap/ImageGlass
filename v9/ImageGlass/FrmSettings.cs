@@ -20,7 +20,6 @@ using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 using System.Dynamic;
-using Windows.System;
 
 namespace ImageGlass;
 
@@ -259,8 +258,7 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting"))
         {
-            _ = await Launcher.LaunchUriAsync(
-                new Uri("ms-settings:defaultapps?registeredAppUser=ImageGlass"));
+            _ = BHelper.OpenUrlAsync("ms-settings:defaultapps?registeredAppUser=ImageGlass");
         }
         #endregion // Tab File type associations
 
