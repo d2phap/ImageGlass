@@ -340,10 +340,6 @@ public static class ExplorerApi
                         // HKEY_CURRENT_USER\SOFTWARE\Classes\ImageGlass.AssocFile.<EXT>
                         using (var extRootKey = Registry.CurrentUser.CreateSubKey(extAssocPath, true))
                         {
-                            // ImageGlass <EXT> file
-                            extRootKey?.SetValue("", $"{APP_NAME} {extNoDot} file");
-
-
                             // DefaultIcon -------------------------------------------------------
                             // get extension icon
                             var iconPath = App.ConfigDir(PathType.File, Dir.ExtIcons, $"{extNoDot}.ico");
