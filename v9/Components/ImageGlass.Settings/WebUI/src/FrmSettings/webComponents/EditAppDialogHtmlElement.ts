@@ -147,7 +147,7 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
     const filePaths = await openFilePicker() ?? [];
     if (!filePaths.length) return;
 
-    query<HTMLInputElement>('[name="_Executable"]', this).value = `"${filePaths[0]}"`;
+    query<HTMLInputElement>('[name="_Executable"]', this).value = filePaths[0];
     this.updateToolCommandPreview();
   }
 }
