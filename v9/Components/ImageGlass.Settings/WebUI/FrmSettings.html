@@ -92,7 +92,7 @@
             </span>
           </label>
         </li>
-        <li hidden>
+        <li>
           <label>
             <input type="radio" name="nav" value="file_assocs" />
             <span>
@@ -874,10 +874,78 @@
 
     <!-- Tab: File type assosications -->
     <section class="tab-page" tab="file_assocs">
-      <!-- File type assosications > File type assosications -->
+      <!-- File type assosications > File extension icons -->
       <section>
-        <header lang-text="FrmSettings.Nav._FileTypeAssociations">[File type assosications]</header>
+        <header lang-text="FrmSettings.Tab.FileAssocs._FileExtensionIcons">[File extension icons]</header>
         <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-html="FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description">
+            [For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '<b lang-text="FrmSettings.Tab.FileAssocs._MakeDefault">Make default</b>' button. This will also set ImageGlass as default photo viewer.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_OpenExtIconFolder" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder">
+              [Open extension icon folder]
+            </button>
+            <a class="text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+              lang-text="FrmSettings.Tab.FileAssocs._GetExtensionIconPacks">
+              [Get extension icon packs...]
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- File type assosications > Default photo viewer -->
+      <section>
+        <header lang-text="FrmSettings.Tab.FileAssocs._DefaultPhotoViewer">[Default photo viewer]</header>
+        <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-text="FrmSettings.Tab.FileAssocs._DefaultPhotoViewer._Description">
+            [You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_MakeDefaultViewer" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._MakeDefault">
+              [Make default]
+            </button>
+            <button id="Btn_RemoveDefaultViewer" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._RemoveDefault">
+              [Remove default]
+            </button>
+
+            <a id="Lnk_OpenDefaultAppsSetting" class="text-nowrap" href="#" lang-text="FrmSettings.Tab.FileAssocs._OpenDefaultAppsSetting">
+              [Open Default apps setting]
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- File type assosications > File formats -->
+      <section>
+        <header lang-text="FrmSettings.Tab.FileAssocs._FileFormats">[File formats]</header>
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-end me-2">
+            <button id="Btn_AddFileAssoc" class="me-2" type="button" lang-text="_._Add+">
+              [Add...]
+            </button>
+            <button id="Btn_ResetFileAssocs" class="me-2" type="button" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </button>
+          </div>
+          <div class="ms-auto text-nowrap">
+            <span lang-html="FrmSettings.Tab.FileAssocs._SupportedFormats">
+              [Supported formats: <span id="Lbl_SupportedFormats">55</span>]
+            </span>
+          </div>
+        </div>
+        <div class="ig-table mb-2 d-block">
+          <table id="Table_FileFormats" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th width="10" class="cell-sticky" lang-text="_._Icon">[Icon]</th>
+                <th width="10" lang-text="_._FileExtension">[File extension]</th>
+                <th width="10" colspan="2" lang-text="_._Description">[Description]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </section>
     </section>
@@ -1013,7 +1081,7 @@
               [Refresh]
             </button>
             <button id="Btn_OpenThemeFolder" type="button" lang-text="FrmSettings.Tab.Appearance._Theme._OpenThemeFolder">
-              [Open theme folder...]
+              [Open theme folder]
             </button>
           </div>
 

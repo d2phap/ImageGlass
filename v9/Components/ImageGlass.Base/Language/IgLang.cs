@@ -151,6 +151,8 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._MoveUp", "Move up");
         _ = TryAdd("_._MoveDown", "Move down");
         _ = TryAdd("_._Separator", "Separator");
+        _ = TryAdd("_._Icon", "Icon");
+        _ = TryAdd("_._Description", "Description");
 
         _ = TryAdd("_._UnhandledException", "Unhandled exception"); // v9.0
         _ = TryAdd("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -640,7 +642,22 @@ public class IgLang : Dictionary<string, string>
 
 
         #region Tab File type associations
-        // File type associations > File type associations
+        // File type associations > File extension icons
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons", "File extension icons");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the {0} button. This will also set ImageGlass as default photo viewer.");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder", "Open extension icon folder");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._GetExtensionIconPacks", "Get extension icon packs…");
+
+        // File type associations > Default photo viewer
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer", "Default photo viewer");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer._Description", "You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._MakeDefault", "Make default");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._RemoveDefault", "Remove default");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenDefaultAppsSetting", "Open Default apps setting");
+
+        // File type associations > File formats
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileFormats", "File formats");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._SupportedFormats", "Supported formats: {0}");
 
         #endregion // Tab File type associations
 
