@@ -19,8 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using System.Dynamic;
+using Windows.System;
 
 namespace ImageGlass;
 
@@ -243,11 +243,16 @@ public partial class FrmSettings : WebForm
 
 
         // Tab File type associations
-        #region Tab Appearance
+        #region Tab ile type associations
         else if (e.Name.Equals("Btn_OpenExtIconFolder"))
         {
             var extIconDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
             BHelper.OpenFolderPath(extIconDir);
+        }
+        else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting"))
+        {
+            _ = await Launcher.LaunchUriAsync(
+                new Uri("ms-settings:defaultapps?registeredAppUser=ImageGlass"));
         }
         #endregion // Tab File type associations
 
