@@ -644,7 +644,7 @@ public class IgLang : Dictionary<string, string>
         #region Tab File type associations
         // File type associations > File extension icons
         _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons", "File extension icons");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the {0} button. This will also set ImageGlass as default photo viewer.");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '{0}' button. This will also set ImageGlass as default photo viewer.");
         _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder", "Open extension icon folder");
         _ = TryAdd("FrmSettings.Tab.FileAssocs._GetExtensionIconPacks", "Get extension icon packs…");
 
