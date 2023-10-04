@@ -180,7 +180,7 @@ public class DiskCache
 
             _currentCacheSize += bytesWritten;
 
-            if (_currentCacheSize > _cacheSize / 2)
+            if (_currentCacheSize > _cacheSize)
             {
                 PurgeCache();
             }
@@ -274,6 +274,7 @@ public class DiskCache
             var files = new DirectoryInfo(_dirName).GetFiles();
             var indexList = new List<FileInfo>(files);
 
+            // sort creation time ascending
             indexList.Sort((f1, f2) =>
             {
                 var d1 = f1.CreationTime;
@@ -281,14 +282,15 @@ public class DiskCache
                 return (d1 < d2 ? -1 : (d2 > d1 ? 1 : 0));
             });
 
-            while (indexList.Count > 0 && _currentCacheSize > _cacheSize / 2)
+            while (indexList.Count > 0 && _currentCacheSize > _cacheSize)
             {
-                var i = indexList.Count - 1;
-                _currentCacheSize -= indexList[i].Length;
-                var filePath = indexList[i].FullName;
+                if (indexList.FirstOrDefault() is not FileInfo firstFile) continue;
 
-                indexList.RemoveAt(i);
-                File.Delete(filePath);
+                _currentCacheSize -= firstFile.Length;
+                var filePath = firstFile.FullName;
+
+                indexList.RemoveAt(0);
+                firstFile.Delete();
             }
 
             if (_currentCacheSize < 0) _currentCacheSize = 0;
