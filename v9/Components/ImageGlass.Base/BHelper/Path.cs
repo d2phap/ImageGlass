@@ -36,7 +36,6 @@ public partial class BHelper
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
     /// <param name="path">Full path of file or directory</param>
-    /// <returns></returns>
     public static bool CheckPathWritable(PathType type, string path)
     {
         try

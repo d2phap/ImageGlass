@@ -342,7 +342,8 @@ public static class ExplorerApi
                         {
                             // DefaultIcon -------------------------------------------------------
                             // get extension icon
-                            var iconPath = App.ConfigDir(PathType.File, Dir.ExtIcons, $"{extNoDot}.ico");
+                            var extDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
+                            var iconPath = Path.Combine(extDir, $"{extNoDot}.ico");
                             if (!File.Exists(iconPath))
                             {
                                 iconPath = App.StartUpDir(Dir.ExtIcons, $"{extNoDot}.ico");
@@ -352,6 +353,7 @@ public static class ExplorerApi
                                     iconPath = string.Empty;
                                 }
                             }
+
 
                             // set extension icon
                             if (!string.IsNullOrEmpty(iconPath))

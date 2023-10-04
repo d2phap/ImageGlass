@@ -75,7 +75,7 @@ public class App
 
     /// <summary>
     /// Returns the path based on the configuration folder of ImageGlass.
-    /// For portable mode, ConfigDir = Installed Dir, else %LocalAppData%\ImageGlass
+    /// For portable mode, ConfigDir = InstalledDir, else <c>%LocalAppData%\ImageGlass</c>
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
     public static string ConfigDir(PathType type, params string[] paths)
