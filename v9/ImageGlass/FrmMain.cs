@@ -655,10 +655,6 @@ public partial class FrmMain : ThemedForm
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
 
-        var thumbSize = this.ScaleToDpi(Config.ThumbnailSize);
-        Gallery.ThumbnailSize = new Size(thumbSize, thumbSize);
-
-
         foreach (string filename in Local.Images.FileNames)
         {
             Gallery.Items.Add(filename);

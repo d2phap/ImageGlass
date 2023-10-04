@@ -272,12 +272,7 @@ public class DiskCache
             if (_cacheSize == 0) return;
 
             var files = new DirectoryInfo(_dirName).GetFiles();
-            var indexList = new List<FileInfo>();
-
-            foreach (var file in files)
-            {
-                indexList.Add(file);
-            }
+            var indexList = new List<FileInfo>(files);
 
             indexList.Sort((f1, f2) =>
             {
@@ -290,9 +285,10 @@ public class DiskCache
             {
                 var i = indexList.Count - 1;
                 _currentCacheSize -= indexList[i].Length;
+                var filePath = indexList[i].FullName;
 
                 indexList.RemoveAt(i);
-                File.Delete(indexList[i].FullName);
+                File.Delete(filePath);
             }
 
             if (_currentCacheSize < 0) _currentCacheSize = 0;

@@ -673,7 +673,6 @@ public partial class ImageGallery : Control, IComponent
             if (mThumbnailSize != value)
             {
                 mThumbnailSize = value;
-                thumbnailCache.Rebuild();
                 Refresh();
             }
         }
