@@ -58,7 +58,7 @@ public partial class FrmMain
         // MnuNavigation
         { nameof(MnuViewNext),              new() { new (Keys.Right) } },
         { nameof(MnuViewPrevious),          new() { new (Keys.Left) } },
-        { nameof(MnuGoTo),                  new() { new (Keys.G) } },
+        { nameof(MnuGoTo),                  new() { new (Keys.F) } },
         { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
         { nameof(MnuGoToLast),              new() { new (Keys.End) } },
         { nameof(MnuViewNextFrame),         new() { new (Keys.Control | Keys.Right) } },
@@ -118,7 +118,7 @@ public partial class FrmMain
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
-        { nameof(MnuToggleGallery),         new() { new (Keys.H) } },
+        { nameof(MnuToggleGallery),         new() { new (Keys.G) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
 
         // MnuTools
