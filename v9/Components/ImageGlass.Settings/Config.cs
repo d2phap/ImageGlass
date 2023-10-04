@@ -521,7 +521,7 @@ public static class Config
     public static HashSet<string> AllFormats { get; set; } = new();
 
     /// <summary>
-    /// Gets, sets the list of formats that only load the first page forcefully
+    /// Gets, sets the list of formats that only load the first frame forcefully
     /// </summary>
     public static HashSet<string> SinglePageFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
 
@@ -1410,6 +1410,13 @@ public static class Config
             }
         }
 
+        // FileFormats
+        else if (configName == nameof(Config.AllFormats))
+        {
+            AllFormats = GetImageFormats(newValue);
+            Done = true;
+        }
+
         // bool
         else if (prop.PropertyType.Equals(typeof(bool)))
         {
@@ -2022,7 +2029,7 @@ public static class Config
     public static HashSet<string> GetImageFormats(string formats)
     {
         var formatList = formats
-            .Split(new char[] { ';' },StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .ToHashSet();
 
         return formatList;

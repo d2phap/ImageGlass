@@ -33,7 +33,17 @@ export default class TabFileAssocs {
    * Save settings as JSON object.
    */
   static exportSettings() {
-    return getChangedSettingsFromTab('file_assocs');
+    const settings = getChangedSettingsFromTab('file_assocs');
+
+    if (TabFileAssocs._areFileFormatsChanged) {
+      // get new formats settings
+      settings.AllFormats = TabFileAssocs.getFileFormatListFromDom().join(';');
+    }
+    else {
+      delete settings.AllFormats;
+    }
+
+    return settings;
   }
 
   private static onBtn_OpenExtIconFolderClicked() {

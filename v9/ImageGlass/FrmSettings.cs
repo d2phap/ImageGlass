@@ -547,6 +547,8 @@ public partial class FrmSettings : WebForm
         // Tab File type associations
         #region Tab File type associations
 
+        _ = Config.SetFromJson(dict, nameof(Config.AllFormats));
+
         #endregion // Tab File type associations
 
 
