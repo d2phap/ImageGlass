@@ -62,8 +62,12 @@ export default class TabFileAssocs {
     post('Lnk_OpenDefaultAppsSetting');
   }
 
-  private static onBtn_ResetFileFormatsClicked() {
-    //
+  private static async onBtn_ResetFileFormatsClicked() {
+    const extStr = await postAsync<string>('Btn_ResetFileFormats') || '';
+    const exts = extStr.split(';').sort();
+
+    TabFileAssocs._areFileFormatsChanged = true;
+    TabFileAssocs.loadFileFormatList(exts);
   }
 
 

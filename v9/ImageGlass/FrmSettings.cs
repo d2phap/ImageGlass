@@ -260,6 +260,10 @@ public partial class FrmSettings : WebForm
         {
             _ = BHelper.OpenUrlAsync("ms-settings:defaultapps?registeredAppUser=ImageGlass");
         }
+        else if (e.Name.Equals("Btn_ResetFileFormats"))
+        {
+            Web2.PostWeb2Message("Btn_ResetFileFormats", $"\"{Constants.IMAGE_FORMATS}\"");
+        }
         #endregion // Tab File type associations
 
 
