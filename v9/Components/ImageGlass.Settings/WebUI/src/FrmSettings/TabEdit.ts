@@ -1,6 +1,6 @@
 import { IEditApp } from '@/@types/FrmSettings';
 import Language from '@/common/Language';
-import { escapeHtml, getChangedSettingsFromTab } from '@/helpers';
+import { escapeHtml, getChangedSettingsFromTab, pause } from '@/helpers';
 import { EditAppDialogHtmlElement } from './webComponents/EditAppDialogHtmlElement';
 
 
@@ -43,7 +43,7 @@ export default class TabEdit {
 
 
   // Loads edit app list but do not update `_pageSettings.config.EditApps`
-  private static loadEditApps(apps?: Record<string, IEditApp>) {
+  private static loadEditApps(apps?: Record<string, IEditApp>, extKeyHighlight = '') {
     const editApps = apps || _pageSettings.config.EditApps || {};
     const extensions = Object.keys(editApps);
 
@@ -107,6 +107,19 @@ export default class TabEdit {
         }
       }, false);
     });
+
+
+    // scroll to & highlight the extension row
+    if (extKeyHighlight) {
+      const highlightedTrEl = query(`#Table_EditApps tr[data-extkey="${extKeyHighlight}"]`);
+      if (!highlightedTrEl) return;
+
+      highlightedTrEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      highlightedTrEl.classList.add('row--highlight');
+      pause(2000).then(() => {
+        if (highlightedTrEl) highlightedTrEl.classList.remove('row--highlight');
+      });
+    }
   }
 
 
@@ -165,7 +178,6 @@ export default class TabEdit {
     }
 
     editApps[newExtKey] = app;
-
-    TabEdit.loadEditApps(editApps);
+    TabEdit.loadEditApps(editApps, newExtKey);
   }
 }

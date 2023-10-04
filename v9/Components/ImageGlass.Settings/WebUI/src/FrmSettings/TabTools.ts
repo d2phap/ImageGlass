@@ -2,6 +2,7 @@ import { ITool } from '@/@types/FrmSettings';
 import {
   escapeHtml,
   getChangedSettingsFromTab,
+  pause,
 } from '@/helpers';
 import Language from '../common/Language';
 import { ToolDialogHtmlElement } from './webComponents/ToolDialogHtmlElement';
@@ -49,7 +50,7 @@ export default class TabTools {
   /**
    * Loads tool list but do not update `_pageSettings.toolList`.
    */
-  private static loadToolList(list?: ITool[]) {
+  private static loadToolList(list?: ITool[], toolIdHighlight = '') {
     const toolList: ITool[] = list ?? _pageSettings.toolList ?? [];
 
     const tbodyEl = query<HTMLTableElement>('#Table_ToolList > tbody');
@@ -127,6 +128,19 @@ export default class TabTools {
         }
       }, false);
     });
+
+
+    // scroll to & highlight the extension row
+    if (toolIdHighlight) {
+      const highlightedTrEl = query(`#Table_ToolList tr[data-toolId="${toolIdHighlight}"]`);
+      if (!highlightedTrEl) return;
+
+      highlightedTrEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      highlightedTrEl.classList.add('row--highlight');
+      pause(2000).then(() => {
+        if (highlightedTrEl) highlightedTrEl.classList.remove('row--highlight');
+      });
+    }
   }
 
 
@@ -199,6 +213,6 @@ export default class TabTools {
       toolList.push(tool);
     }
 
-    TabTools.loadToolList(toolList);
+    TabTools.loadToolList(toolList, tool.ToolId);
   }
 }
