@@ -629,6 +629,18 @@ public class IgLang : Dictionary<string, string>
         #endregion // Tab Layout
 
 
+        #region TAB Toolbar
+        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
+
+        #endregion // TAB Toolbar
+
+
         #region Tab Mouse
         // Mouse > Mouse wheel action
         _ = TryAdd("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
@@ -656,7 +668,8 @@ public class IgLang : Dictionary<string, string>
 
         // File type associations > File formats
         _ = TryAdd("FrmSettings.Tab.FileAssocs._FileFormats", "File formats");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._SupportedFormats", "Supported formats: {0}");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._TotalSupportedFormats", "Total supported formats: {0}");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._AddNewFileExtension", "Add new file extension");
 
         #endregion // Tab File type associations
 
@@ -703,31 +716,6 @@ public class IgLang : Dictionary<string, string>
 
         #endregion // FrmSettings
 
-
-
-        #region TAB File Associations
-        //_ = TryAdd("FrmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
-        //_ = TryAdd("FrmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
-
-        //_ = TryAdd("FrmSetting.btnAddNewExt", "Add…"); // 4.0
-        //_ = TryAdd("FrmSetting.btnDeleteExt", "Delete"); // 4.0
-        //_ = TryAdd("FrmSetting.btnResetExt", "Reset to default"); // 4.0
-
-        #endregion
-
-        #region TAB Toolbar
-        //_ = TryAdd("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
-
-        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
-        
-
-        #endregion
 
 
 
