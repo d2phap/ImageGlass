@@ -518,12 +518,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of supported image formats
     /// </summary>
-    public static HashSet<string> AllFormats { get; set; } = new();
+    public static HashSet<string> FileFormats { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the list of formats that only load the first frame forcefully
     /// </summary>
-    public static HashSet<string> SinglePageFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
+    public static HashSet<string> SingleFrameFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
@@ -837,11 +837,11 @@ public static class Config
 
         #region ImageFormats
 
-        var formats = items.GetValue(nameof(AllFormats), Constants.IMAGE_FORMATS);
-        AllFormats = GetImageFormats(formats);
+        var formats = items.GetValue(nameof(FileFormats), Constants.IMAGE_FORMATS);
+        FileFormats = GetImageFormats(formats);
 
-        formats = items.GetValue(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
-        SinglePageFormats = GetImageFormats(formats);
+        formats = items.GetValue(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
+        SingleFrameFormats = GetImageFormats(formats);
 
         #endregion
 
@@ -1140,8 +1140,8 @@ public static class Config
 
         settings.TryAdd(nameof(ZoomLevels), ZoomLevels.Select(i => Math.Round(i * 100, 2)));
         settings.TryAdd(nameof(EditApps), EditApps);
-        settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
-        settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
+        settings.TryAdd(nameof(FileFormats), GetImageFormats(FileFormats));
+        settings.TryAdd(nameof(SingleFrameFormats), GetImageFormats(SingleFrameFormats));
         settings.TryAdd(nameof(ImageInfoTags), ImageInfoTags);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
@@ -1411,9 +1411,9 @@ public static class Config
         }
 
         // FileFormats
-        else if (configName == nameof(Config.AllFormats))
+        else if (configName == nameof(Config.FileFormats))
         {
-            AllFormats = GetImageFormats(newValue);
+            FileFormats = GetImageFormats(newValue);
             Done = true;
         }
 
@@ -1815,7 +1815,7 @@ public static class Config
     /// </summary>
     public static async Task SetDefaultPhotoViewerAsync(bool enable)
     {
-        var extensions = Config.GetImageFormats(Config.AllFormats);
+        var extensions = Config.GetImageFormats(Config.FileFormats);
 
         var cmd = enable
             ? IgCommands.SET_DEFAULT_PHOTO_VIEWER

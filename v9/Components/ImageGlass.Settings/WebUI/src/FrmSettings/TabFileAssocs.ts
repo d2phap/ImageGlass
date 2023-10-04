@@ -37,10 +37,10 @@ export default class TabFileAssocs {
 
     if (TabFileAssocs._areFileFormatsChanged) {
       // get new formats settings
-      settings.AllFormats = TabFileAssocs.getFileFormatListFromDom().join(';');
+      settings.FileFormats = TabFileAssocs.getFileFormatListFromDom().join(';');
     }
     else {
-      delete settings.AllFormats;
+      delete settings.FileFormats;
     }
 
     return settings;
@@ -67,10 +67,10 @@ export default class TabFileAssocs {
   }
 
 
-  // Loads formats list but do not update `_pageSettings.config.AllFormats`.
+  // Loads formats list but do not update `_pageSettings.config.FileFormats`.
   private static loadFileFormatList(extensions?: string[], extHighlight = '') {
     let exts = extensions
-      || (_pageSettings.config.AllFormats as string || '').split(';').filter(Boolean)
+      || (_pageSettings.config.FileFormats as string || '').split(';').filter(Boolean)
       || [];
     exts = exts.sort();
 

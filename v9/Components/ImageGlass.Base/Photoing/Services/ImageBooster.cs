@@ -123,7 +123,7 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Gets, sets the list of formats that only load the first page forcefully.
     /// </summary>
-    public HashSet<string> SinglePageFormats { get; set; } = new();
+    public HashSet<string> SingleFrameFormats { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
@@ -196,7 +196,7 @@ public class ImageBooster : IDisposable
                     // start loading image file
                     await img.LoadAsync(ReadOptions with
                     {
-                        FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
+                        FirstFrameOnly = SingleFrameFormats.Contains(img.Extension),
                     }).ConfigureAwait(false);
                 }
             }
@@ -367,7 +367,7 @@ public class ImageBooster : IDisposable
         {
             await ImgList[index].LoadAsync(ReadOptions with
             {
-                FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
+                FirstFrameOnly = SingleFrameFormats.Contains(ImgList[index].Extension),
             }, tokenSrc).ConfigureAwait(false);
         }
 
@@ -381,7 +381,7 @@ public class ImageBooster : IDisposable
             {
                 await ImgList[index].LoadAsync(ReadOptions with
                 {
-                    FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
+                    FirstFrameOnly = SingleFrameFormats.Contains(ImgList[index].Extension),
                 }, tokenSrc).ConfigureAwait(false);
             }
             else

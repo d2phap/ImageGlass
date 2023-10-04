@@ -73,7 +73,7 @@ public static class Functions
 
         if (string.IsNullOrEmpty(exts))
         {
-            exts = Config.GetImageFormats(Config.AllFormats);
+            exts = Config.GetImageFormats(Config.FileFormats);
         }
 
 

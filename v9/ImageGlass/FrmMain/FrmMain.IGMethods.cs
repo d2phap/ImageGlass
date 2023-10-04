@@ -59,8 +59,8 @@ public partial class FrmMain
     /// </summary>
     public void OpenFilePicker()
     {
-        var sb = new StringBuilder(Config.AllFormats.Count);
-        foreach (var ext in Config.AllFormats)
+        var sb = new StringBuilder(Config.FileFormats.Count);
+        foreach (var ext in Config.FileFormats)
         {
             sb.Append('*').Append(ext).Append(';');
         }

@@ -636,7 +636,7 @@ public partial class FrmMain : ThemedForm
                     }
                 }
 
-                return extension.Length > 0 && Config.AllFormats.Contains(extension);
+                return extension.Length > 0 && Config.FileFormats.Contains(extension);
             }));
     }
 
@@ -790,7 +790,7 @@ public partial class FrmMain : ThemedForm
             if (!string.IsNullOrEmpty(filePath))
             {
                 photo = new IgPhoto(filePath);
-                readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
+                readSettings.FirstFrameOnly = Config.SingleFrameFormats.Contains(photo.Extension);
 
                 if (isSkipCache || Local.Metadata == null
                     || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)
@@ -840,7 +840,7 @@ public partial class FrmMain : ThemedForm
             tokenSrc?.Token.ThrowIfCancellationRequested();
 
             // apply image list settings
-            Local.Images.SinglePageFormats = Config.SinglePageFormats;
+            Local.Images.SingleFrameFormats = Config.SingleFrameFormats;
             Local.Images.ReadOptions = readSettings;
 
 
