@@ -21,6 +21,7 @@ export class FileFormatDialogHtmlElement extends HTMLDialogElement {
           <div class="mb-3">
             <div class="mb-1" lang-text="_._FileExtension">[File extension]</div>
             <input class="w-100" name="_Extension" required spellcheck="false"
+              pattern="^\\.[\\w]+"
               placeholder='.jxl'
               style="font-family: var(--fontCode);" />
           </div>

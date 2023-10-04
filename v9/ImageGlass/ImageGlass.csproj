@@ -15,7 +15,7 @@
     <Description>A lightweight, versatile image viewer</Description>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Company>Duong Dieu Phap</Company>
-    <Version>9.0.5.1002</Version>
+    <Version>9.0.5.1004</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.5</VersionPrefix>
     <VersionSuffix>beta-5</VersionSuffix>
