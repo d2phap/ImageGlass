@@ -511,7 +511,7 @@
             [Add...]
           </button>
         </div>
-        <div class="ig-table mb-2 d-block">
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 250;">
           <table id="Table_EditApps" style="width: 100%;">
             <thead>
               <tr>
@@ -929,19 +929,17 @@
             </button>
           </div>
           <div class="ms-auto text-nowrap">
-            <span lang-html="FrmSettings.Tab.FileAssocs._SupportedFormats">
-              [Supported formats: <span id="Lbl_SupportedFormats">55</span>]
+            <span lang-html="FrmSettings.Tab.FileAssocs._TotalSupportedFormats">
+              [Total supported formats: <span id="Lbl_TotalSupportedFormats">...</span>]
             </span>
           </div>
         </div>
-        <div class="ig-table mb-2 d-block">
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 390;">
           <table id="Table_FileFormats" style="width: 100%;">
             <thead>
               <tr>
                 <th width="10"></th>
-                <th width="10" class="cell-sticky" lang-text="_._Icon">[Icon]</th>
-                <th width="10" lang-text="_._FileExtension">[File extension]</th>
-                <th width="10" colspan="2" lang-text="_._Description">[Description]</th>
+                <th colspan="2" lang-text="_._FileExtension">[File extension]</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -967,7 +965,7 @@
             [Get more tools...]
           </a>
         </div>
-        <div class="ig-table mb-2 d-block">
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 640;">
           <table id="Table_ToolList" style="width: 100%;">
             <thead>
               <tr>
@@ -1099,6 +1097,7 @@
     <dialog is="edit-app-dialog"></dialog>
     <dialog is="tool-dialog"></dialog>
     <dialog is="edit-toolbar-dialog"></dialog>
+    <dialog is="file-format-dialog"></dialog>
   </main>
 
 

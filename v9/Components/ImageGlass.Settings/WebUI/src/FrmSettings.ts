@@ -7,6 +7,7 @@ import { defineEditAppDialogHtmlElement } from './FrmSettings/webComponents/Edit
 import { defineToolDialogHtmlElement } from './FrmSettings/webComponents/ToolDialogHtmlElement';
 import { defineToolbarEditorHtmlElement } from './FrmSettings/webComponents/ToolbarEditorHtmlElement';
 import { defineToolbarButtonEditDialogHtmlElement } from './FrmSettings/webComponents/ToolbarButtonEditDialogHtmlElement';
+import { defineFileFormatDialogHtmlElement } from './FrmSettings/webComponents/FileFormatDialogHtmlElement';
 
 
 if (!window._pageSettings) {
@@ -57,6 +58,7 @@ defineEditAppDialogHtmlElement();
 defineToolDialogHtmlElement();
 defineToolbarEditorHtmlElement();
 defineToolbarButtonEditDialogHtmlElement();
+defineFileFormatDialogHtmlElement();
 
 
 // sidebar
