@@ -45,7 +45,7 @@ export default class TabEdit {
   // Loads edit app list but do not update `_pageSettings.config.EditApps`
   private static loadEditApps(apps?: Record<string, IEditApp>, extKeyHighlight = '') {
     const editApps = apps || _pageSettings.config.EditApps || {};
-    const extensions = Object.keys(editApps);
+    const extensions = Object.keys(editApps).sort();
 
     const tbodyEl = query<HTMLTableElement>('#Table_EditApps > tbody');
     let tbodyHtml = '';
