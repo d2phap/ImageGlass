@@ -70,8 +70,7 @@ public static class PhotoCodec
 
             if (filePath.Length > 260)
             {
-                var newFilename = BHelper.PrefixLongPath(filePath);
-                var allBytes = File.ReadAllBytes(newFilename);
+                var allBytes = File.ReadAllBytes(filePath);
 
                 imgC.Ping(allBytes, settings);
             }
@@ -814,21 +813,7 @@ public static class PhotoCodec
     {
         var result = new IgMagickReadData() { Extension = ext };
         var imgColl = new MagickImageCollection();
-
-        // Issue #530: ImageMagick falls over if the file path is longer than the (old)
-        // windows limit of 260 characters. Workaround is to read the file bytes,
-        // but that requires using the "long path name" prefix to succeed.
-        if (filename.Length > 260)
-        {
-            var newFilename = BHelper.PrefixLongPath(filename);
-            var allBytes = File.ReadAllBytes(newFilename);
-
-            imgColl.Ping(allBytes, settings);
-        }
-        else
-        {
-            imgColl.Ping(filename, settings);
-        }
+        imgColl.Ping(filename, settings);
 
         // standardize first frame reading option
         result.FrameCount = imgColl.Count;

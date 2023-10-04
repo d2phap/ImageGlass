@@ -78,33 +78,6 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Fallout from Issue #530. To handle a long path name (i.e. a file path
-    /// longer than MAX_PATH), a magic prefix is sometimes necessary.
-    /// </summary>
-    public static string PrefixLongPath(string path)
-    {
-        if (string.IsNullOrEmpty(path)) return string.Empty;
-
-        if (path.Length > 255 && !path.StartsWith(LONG_PATH_PREFIX))
-            return LONG_PATH_PREFIX + path;
-
-        return path;
-    }
-
-    /// <summary>
-    /// Fallout from Issue #530. Specific functions (currently FileWatch)
-    /// fail if provided a prefixed file path. In this case, strip the prefix
-    /// (see PrefixLongPath above).
-    /// </summary>
-    public static string DePrefixLongPath(string path)
-    {
-        if (path.StartsWith(LONG_PATH_PREFIX))
-            return path[LONG_PATH_PREFIX.Length..];
-        return path;
-    }
-
-
-    /// <summary>
     /// Get distinct directories list from paths list.
     /// </summary>
     public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList)

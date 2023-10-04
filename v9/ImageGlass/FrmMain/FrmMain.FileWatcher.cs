@@ -58,12 +58,8 @@ public partial class FrmMain
 
         if (!Config.EnableRealTimeFileUpdate) return;
 
-
-        // From Issue #530: file watcher currently fails nastily if given a prefixed path
-        var pathToWatch = BHelper.DePrefixLongPath(dirPath);
-
         // Watch all changes of current path
-        _fileWatcher.FolderPath = pathToWatch;
+        _fileWatcher.FolderPath = dirPath;
 
         _fileWatcher.OnCreated += FileWatcher_OnCreated;
         _fileWatcher.OnDeleted += FileWatcher_OnDeleted;
