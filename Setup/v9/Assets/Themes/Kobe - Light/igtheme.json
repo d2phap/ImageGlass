@@ -75,6 +75,7 @@
     "ZoomOut": "ZoomOut.svg",
     "Play": "Play.svg",
     "Pause": "Pause.svg",
-    "Export": "Export.svg"
+    "Export": "Export.svg",
+	  "Exit": "Exit.svg"
   }
 }
