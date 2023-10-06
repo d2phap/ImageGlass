@@ -99,7 +99,8 @@ export default class Settings {
    * Adds event listeners for all settings.
    */
   private static addEventListeners() {
-    Settings.addEventsForFooter();
+    Settings.addGeneralEvents();
+
     TabGeneral.addEvents();
     TabImage.addEvents();
     TabSlideshow.addEvents();
@@ -119,9 +120,11 @@ export default class Settings {
 
 
   /**
-   * Adds events for the footer of setting.
+   * Adds general events for the setting.
    */
-  private static addEventsForFooter() {
+  private static addGeneralEvents() {
+    query('#LnkHelp').addEventListener('click', () => post('LnkHelp'), false);
+
     query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 
     query('#BtnOK').addEventListener('click', () => {

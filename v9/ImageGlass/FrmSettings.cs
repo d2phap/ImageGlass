@@ -128,8 +128,8 @@ public partial class FrmSettings : WebForm
     {
         await base.OnWeb2MessageReceivedAsync(e);
 
-        // Footer
-        #region Footer
+        // General events
+        #region General events
         if (e.Name.Equals("BtnOK"))
         {
             ApplySettings(e.Data);
@@ -143,7 +143,11 @@ public partial class FrmSettings : WebForm
         {
             Close();
         }
-        #endregion // Footer
+        else if (e.Name.Equals("LnkHelp"))
+        {
+            _ = BHelper.OpenUrlAsync("https://imageglass.org/docs", $"from_setting_{Local.LastOpenedSetting}");
+        }
+        #endregion // General events
 
 
         // Sidebar

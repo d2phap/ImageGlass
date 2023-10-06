@@ -153,6 +153,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._Separator", "Separator");
         _ = TryAdd("_._Icon", "Icon");
         _ = TryAdd("_._Description", "Description");
+        _ = TryAdd("_._GetHelp", "Get help");
 
         _ = TryAdd("_._UnhandledException", "Unhandled exception"); // v9.0
         _ = TryAdd("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0

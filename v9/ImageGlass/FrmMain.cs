@@ -1168,7 +1168,7 @@ public partial class FrmMain : ThemedForm
                 Image = nameof(Config.Theme.ToolbarIcons.Save),
                 OnClick = new(menuAction),
                 Alignment = ToolStripItemAlignment.Right,
-                Text = menuText,
+                Text = menuText ?? string.Empty,
                 DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             }, 1);
 

@@ -42,6 +42,38 @@
     }
   }
 
+  #LnkHelp {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--controlHeight) * 1.125px);
+    height: calc(var(--controlHeight) * 1.125px);
+
+    border-radius: 100rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.25rem;
+    cursor: help;
+    box-shadow: 0 4px 15px -10px #000;
+    transition: all ease calc(var(--transitionMs));
+
+    &:hover {
+      color: rgb(var(--AppText));
+      filter: none;
+      transform: scale(1.1);
+      animation: aniFocus 1000ms ease reverse infinite;
+    }
+    &:active {
+      transform: scale(0.95);
+      transition: all ease calc(var(--transitionMs) / 3);
+    }
+  }
+
   section {
     margin-bottom: 2rem;
     padding-left: 1rem;

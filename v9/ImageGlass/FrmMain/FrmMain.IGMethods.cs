@@ -27,7 +27,6 @@ using ImageGlass.Viewer;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using WicNet;
 
@@ -1169,7 +1168,6 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?

@@ -34,10 +34,10 @@
 
 @keyframes aniFocus {
   0% {
-    border-color: rgb(var(--focus-color));
-    box-shadow: 0 0 0 0.1rem rgb(var(--focus-color));
+    border-color: rgb(var(--focus-color, var(--Accent)));
+    box-shadow: 0 0 0 0.1rem rgb(var(--focus-color, var(--Accent)));
   }
   100% {
-    box-shadow: 0 0 0 0 rgb(var(--focus-color));
+    box-shadow: 0 0 0 0 rgb(var(--focus-color, var(--Accent)));
   }
 }
