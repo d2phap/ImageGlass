@@ -58,12 +58,8 @@ public partial class FrmMain
 
         if (!Config.EnableRealTimeFileUpdate) return;
 
-
-        // From Issue #530: file watcher currently fails nastily if given a prefixed path
-        var pathToWatch = BHelper.DePrefixLongPath(dirPath);
-
         // Watch all changes of current path
-        _fileWatcher.FolderPath = pathToWatch;
+        _fileWatcher.FolderPath = dirPath;
 
         _fileWatcher.OnCreated += FileWatcher_OnCreated;
         _fileWatcher.OnDeleted += FileWatcher_OnDeleted;
@@ -124,7 +120,7 @@ public partial class FrmMain
         var newExt = Path.GetExtension(newFilePath).ToLower();
 
         // Only watch the supported file types
-        if (!Config.AllFormats.Contains(oldExt) && !Config.AllFormats.Contains(newExt))
+        if (!Config.FileFormats.Contains(oldExt) && !Config.FileFormats.Contains(newExt))
         {
             return;
         }
@@ -136,7 +132,7 @@ public partial class FrmMain
         if (oldExt.CompareTo(newExt) != 0)
         {
             // [old] && [new]: update filename only
-            if (Config.AllFormats.Contains(oldExt) && Config.AllFormats.Contains(newExt))
+            if (Config.FileFormats.Contains(oldExt) && Config.FileFormats.Contains(newExt))
             {
                 if (imgIndex > -1)
                 {
@@ -146,12 +142,12 @@ public partial class FrmMain
             else
             {
                 // [old] && ![new]: remove from image list
-                if (Config.AllFormats.Contains(oldExt))
+                if (Config.FileFormats.Contains(oldExt))
                 {
                     DoDeleteFiles(oldFilePath);
                 }
                 // ![old] && [new]: add to image list
-                else if (Config.AllFormats.Contains(newExt))
+                else if (Config.FileFormats.Contains(newExt))
                 {
                     FileWatcher_AddNewFileAction(newFilePath);
                 }
@@ -195,7 +191,7 @@ public partial class FrmMain
 
         // Only watch the supported file types
         var ext = Path.GetExtension(e.FullPath).ToLower();
-        if (!Config.AllFormats.Contains(ext)) return;
+        if (!Config.FileFormats.Contains(ext)) return;
 
         // update the viewing image
         var imgIndex = Local.Images.IndexOf(e.FullPath);
@@ -225,7 +221,7 @@ public partial class FrmMain
         // Only watch the supported file types
         var ext = Path.GetExtension(e.FullPath).ToLower();
 
-        if (!Config.AllFormats.Contains(ext))
+        if (!Config.FileFormats.Contains(ext))
         {
             return;
         }
@@ -241,7 +237,7 @@ public partial class FrmMain
     {
         // Only watch the supported file types
         var ext = Path.GetExtension(e.FullPath).ToLower();
-        if (!Config.AllFormats.Contains(ext))
+        if (!Config.FileFormats.Contains(ext))
         {
             return;
         }

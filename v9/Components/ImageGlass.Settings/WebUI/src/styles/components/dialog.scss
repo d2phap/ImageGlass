@@ -1,6 +1,7 @@
 dialog {
   padding: 0;
   overflow: hidden;
+  border-width: 0.1rem;
   border-color: rgb(var(--InvertColor) / 0.275);
   border-radius: calc(var(--borderRadius) * 3.5);
 

@@ -138,7 +138,7 @@ namespace ImageGlass
             MnuQuickSetup = new ToolStripMenuItem();
             toolStripMenuItem22 = new ToolStripSeparator();
             MnuSetDefaultPhotoViewer = new ToolStripMenuItem();
-            MnuUnsetDefaultPhotoViewer = new ToolStripMenuItem();
+            MnuRemoveDefaultPhotoViewer = new ToolStripMenuItem();
             toolStripMenuItem9 = new ToolStripSeparator();
             MnuExit = new ToolStripMenuItem();
             PicMain = new Viewer.DXCanvas();
@@ -900,7 +900,7 @@ namespace ImageGlass
             // 
             // MnuHelp
             // 
-            MnuHelp.DropDownItems.AddRange(new ToolStripItem[] { MnuAbout, MnuCheckForUpdate, MnuReportIssue, MnuQuickSetup, toolStripMenuItem22, MnuSetDefaultPhotoViewer, MnuUnsetDefaultPhotoViewer });
+            MnuHelp.DropDownItems.AddRange(new ToolStripItem[] { MnuAbout, MnuCheckForUpdate, MnuReportIssue, MnuQuickSetup, toolStripMenuItem22, MnuSetDefaultPhotoViewer, MnuRemoveDefaultPhotoViewer });
             MnuHelp.Image = (Image)resources.GetObject("MnuHelp.Image");
             MnuHelp.ImageAlign = ContentAlignment.MiddleLeft;
             MnuHelp.ImageScaling = ToolStripItemImageScaling.None;
@@ -948,12 +948,12 @@ namespace ImageGlass
             MnuSetDefaultPhotoViewer.Text = "[Set as default photo viewer]";
             MnuSetDefaultPhotoViewer.Click += MnuSetDefaultPhotoViewer_Click;
             // 
-            // MnuUnsetDefaultPhotoViewer
+            // MnuRemoveDefaultPhotoViewer
             // 
-            MnuUnsetDefaultPhotoViewer.Name = "MnuUnsetDefaultPhotoViewer";
-            MnuUnsetDefaultPhotoViewer.Size = new Size(595, 54);
-            MnuUnsetDefaultPhotoViewer.Text = "[Unset default photo viewer]";
-            MnuUnsetDefaultPhotoViewer.Click += MnuUnsetDefaultPhotoViewer_Click;
+            MnuRemoveDefaultPhotoViewer.Name = "MnuRemoveDefaultPhotoViewer";
+            MnuRemoveDefaultPhotoViewer.Size = new Size(595, 54);
+            MnuRemoveDefaultPhotoViewer.Text = "[Unset default photo viewer]";
+            MnuRemoveDefaultPhotoViewer.Click += MnuRemoveDefaultPhotoViewer_Click;
             // 
             // toolStripMenuItem9
             // 
@@ -1212,7 +1212,7 @@ namespace ImageGlass
         public ToolStripMenuItem itemToPreserveTheSpaceToolStripMenuItem;
         public ToolStripMenuItem itemToPreserveSpaceToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem22;
-        public ToolStripMenuItem MnuUnsetDefaultPhotoViewer;
+        public ToolStripMenuItem MnuRemoveDefaultPhotoViewer;
         public ToolStripMenuItem MnuSetDefaultPhotoViewer;
         public ToolStripMenuItem MnuShare;
         public ToolStripMenuItem MnuPanning;

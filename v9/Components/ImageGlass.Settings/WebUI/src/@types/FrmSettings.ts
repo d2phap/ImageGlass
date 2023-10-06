@@ -13,7 +13,7 @@ export type ITool = {
   ToolId: string,
   ToolName: string,
   Executable: string,
-  Arguments: string,
+  Argument: string,
   IsIntegrated?: boolean,
   Hotkeys?: string[],
 };
@@ -33,7 +33,7 @@ export type ITheme = {
     Website: string,
     Description: string,
   },
-  ToolbarButtons: Record<string, string>,
+  ToolbarIcons: Record<string, string>,
 };
 
 export type SingleAction = {
@@ -54,6 +54,12 @@ export type IToolbarButton = {
   OnClick: SingleAction,
 };
 
+export type IEditApp = {
+  AppName: string,
+  Executable: string,
+  Argument: string,
+}
+
 export type IPageSettings = Record<string, any> & {
   config: Record<string, any>,
   langList: ILanguage[],
@@ -63,6 +69,7 @@ export type IPageSettings = Record<string, any> & {
   configDir: string,
   userConfigFilePath: string,
   defaultThemeDir: string,
+  defaultImageInfoTags: string[],
   builtInToolbarButtons: IToolbarButton[],
   enums: Record<string, string[]> & {
     ImageOrderBy: string[],

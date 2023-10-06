@@ -70,7 +70,7 @@ public partial class WebForm : ThemedForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 

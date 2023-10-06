@@ -180,6 +180,11 @@ public static class Config
     public static bool ShowToolbar { get; set; } = true;
 
     /// <summary>
+    /// Gets, sets value of visibility of app icon
+    /// </summary>
+    public static bool ShowAppIcon { get; set; } = true;
+
+    /// <summary>
     /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
     /// </summary>
     public static bool EnableLoopBackNavigation { get; set; } = true;
@@ -513,12 +518,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of supported image formats
     /// </summary>
-    public static HashSet<string> AllFormats { get; set; } = new();
+    public static HashSet<string> FileFormats { get; set; } = new();
 
     /// <summary>
-    /// Gets, sets the list of formats that only load the first page forcefully
+    /// Gets, sets the list of formats that only load the first frame forcefully
     /// </summary>
-    public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;*.jxl" };
+    public static HashSet<string> SingleFrameFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
@@ -561,7 +566,7 @@ public static class Config
             ToolId = Constants.IGTOOL_EXIFTOOL,
             ToolName = "ExifGlass - EXIF metadata viewer",
             Executable = "exifglass",
-            Arguments = Constants.FILE_MACRO,
+            Argument = Constants.FILE_MACRO,
             IsIntegrated = true,
             Hotkeys = new List<Hotkey>(1) { new Hotkey(Keys.X) },
         },
@@ -678,6 +683,7 @@ public static class Config
         ShowGalleryFileName = items.GetValue(nameof(ShowGalleryFileName), ShowGalleryFileName);
         ShowWelcomeImage = items.GetValue(nameof(ShowWelcomeImage), ShowWelcomeImage);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
+        ShowAppIcon = items.GetValue(nameof(ShowAppIcon), ShowAppIcon);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         ShowCheckerboard = items.GetValue(nameof(ShowCheckerboard), ShowCheckerboard);
         ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
@@ -831,11 +837,11 @@ public static class Config
 
         #region ImageFormats
 
-        var formats = items.GetValue(nameof(AllFormats), Constants.IMAGE_FORMATS);
-        AllFormats = GetImageFormats(formats);
+        var formats = items.GetValue(nameof(FileFormats), Constants.IMAGE_FORMATS);
+        FileFormats = GetImageFormats(formats);
 
-        formats = items.GetValue(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
-        SinglePageFormats = GetImageFormats(formats);
+        formats = items.GetValue(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
+        SingleFrameFormats = GetImageFormats(formats);
 
         #endregion
 
@@ -848,10 +854,14 @@ public static class Config
 
 
         // info items
-        var infoItems = items.GetSection(nameof(ImageInfoTags))
-            .GetChildren()
-            .Select(i => i.Get<string>());
-        ImageInfoTags = infoItems.Any() ? infoItems.ToList() : DefaultImageInfoTags;
+        var infoTagsHasValue = items.GetValue(nameof(ImageInfoTags)) is not null;
+        if (infoTagsHasValue)
+        {
+            ImageInfoTags = items.GetSection(nameof(ImageInfoTags))
+                .GetChildren()
+                .Select(i => i.Get<string>())
+                .ToList();
+        }
 
 
         // hotkeys for menu
@@ -1017,6 +1027,7 @@ public static class Config
         settings.TryAdd(nameof(ShowGalleryFileName), ShowGalleryFileName);
         settings.TryAdd(nameof(ShowWelcomeImage), ShowWelcomeImage);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
+        settings.TryAdd(nameof(ShowAppIcon), ShowAppIcon);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         settings.TryAdd(nameof(ShowCheckerboard), ShowCheckerboard);
         settings.TryAdd(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
@@ -1129,8 +1140,8 @@ public static class Config
 
         settings.TryAdd(nameof(ZoomLevels), ZoomLevels.Select(i => Math.Round(i * 100, 2)));
         settings.TryAdd(nameof(EditApps), EditApps);
-        settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
-        settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
+        settings.TryAdd(nameof(FileFormats), GetImageFormats(FileFormats));
+        settings.TryAdd(nameof(SingleFrameFormats), GetImageFormats(SingleFrameFormats));
         settings.TryAdd(nameof(ImageInfoTags), ImageInfoTags);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
@@ -1167,14 +1178,18 @@ public static class Config
             if (string.IsNullOrWhiteSpace(i.Image)) return obj;
 
             var filePath = Theme.GetToolbarIconFilePath(i.Image);
-            if (string.IsNullOrWhiteSpace(filePath)) return obj;
+            if (string.IsNullOrWhiteSpace(filePath)) filePath = i.Image;
 
-            var fileUrl = new Uri(filePath).AbsoluteUri;
-            if (!string.IsNullOrWhiteSpace(fileUrl))
+            try
             {
-                obj.TryAdd("ImageUrl", fileUrl);
-                return obj;
+                var fileUrl = new Uri(filePath).AbsoluteUri;
+                if (!string.IsNullOrWhiteSpace(fileUrl))
+                {
+                    obj.TryAdd("ImageUrl", fileUrl);
+                    return obj;
+                }
             }
+            catch { }
 
             return obj;
         }).ToList();
@@ -1362,6 +1377,46 @@ public static class Config
             Done = true;
         }
 
+        // ImageInfoTags
+        else if (configName == nameof(Config.ImageInfoTags))
+        {
+            try
+            {
+                var strArr = BHelper.ParseJson<string[]>(newValue);
+                if (strArr != null)
+                {
+                    Config.ImageInfoTags.Clear();
+                    Config.ImageInfoTags.AddRange(strArr);
+
+                    Done = true;
+                }
+            }
+            catch { }
+        }
+
+        // EditApps
+        else if (configName == nameof(Config.EditApps))
+        {
+            var dict = BHelper.ParseJson<Dictionary<string, EditApp>>(newValue);
+            if (dict != null)
+            {
+                Config.EditApps.Clear();
+                foreach (var item in dict)
+                {
+                    _ = Config.EditApps.TryAdd(item.Key, item.Value);
+                }
+
+                Done = true;
+            }
+        }
+
+        // FileFormats
+        else if (configName == nameof(Config.FileFormats))
+        {
+            FileFormats = GetImageFormats(newValue);
+            Done = true;
+        }
+
         // bool
         else if (prop.PropertyType.Equals(typeof(bool)))
         {
@@ -1509,18 +1564,14 @@ public static class Config
     /// <summary>
     /// Updates form icon using theme setting.
     /// </summary>
-    public static void UpdateFormIcon(Form frm)
+    public static async Task UpdateFormIcon(Form frm)
     {
         // Icon theming
-        if (!Config.Theme.Settings.ShowTitlebarLogo)
-        {
-            frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
-            FormIconApi.SetTaskbarIcon(frm, Config.Theme.Settings.AppLogo.GetHicon());
-        }
-        else
-        {
-            frm.Icon = Icon.FromHandle(Config.Theme.Settings.AppLogo.GetHicon());
-        }
+        var hIcon = Config.Theme.Settings.AppLogo.GetHicon();
+        frm.Icon = Icon.FromHandle(hIcon);
+
+        await Task.Delay(200);
+        frm.ShowIcon = Config.ShowAppIcon;
     }
 
 
@@ -1764,11 +1815,11 @@ public static class Config
     /// </summary>
     public static async Task SetDefaultPhotoViewerAsync(bool enable)
     {
-        var extensions = Config.GetImageFormats(Config.AllFormats);
+        var extensions = Config.GetImageFormats(Config.FileFormats);
 
         var cmd = enable
             ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
-            : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
+            : IgCommands.REMOVE_DEFAULT_PHOTO_VIEWER;
 
         // run command and show the results
         _ = await Config.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
@@ -1776,10 +1827,25 @@ public static class Config
 
 
     /// <summary>
+    /// Gets <see cref="EditApp"/> from the given extension.
+    /// </summary>
+    /// <param name="ext">An extension. E.g. <c>.jpg</c></param>
+    public static EditApp? GetEditAppFromExtension(string ext)
+    {
+        var appItem = Config.EditApps.FirstOrDefault(i =>
+        {
+            var exts = i.Key.Split(";", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            return exts.Contains(ext);
+        });
+
+        return appItem.Value;
+    }
+
+
+    /// <summary>
     /// Runs a command from <c>igcmd.exe</c>, supports auto-elevating process privilege
     /// if admin permission is required.
     /// </summary>
-    /// <returns></returns>
     public static async Task<IgExitCode> RunIgcmd(string args, bool waitForExit = true)
     {
         var exePath = App.StartUpDir("igcmd.exe");
@@ -1899,7 +1965,7 @@ public static class Config
 
         if (result.ExitResult == PopupExitResult.OK)
         {
-            BHelper.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+            _ = BHelper.OpenUrlAsync(url, $"from_{igcmdExeName}_invalid_command");
         }
 
         return (int)IgExitCode.Error;
@@ -1959,33 +2025,26 @@ public static class Config
     /// <summary>
     /// Returns distinc list of image formats.
     /// </summary>
-    /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
-    /// <returns></returns>
+    /// <param name="formats">The format string. E.g: <c>.bpm;.jpg;</c></param>
     public static HashSet<string> GetImageFormats(string formats)
     {
-        var list = new HashSet<string>();
-        var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        char[] wildTrim = { '*' };
+        var formatList = formats
+            .Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToHashSet();
 
-        foreach (var ext in formatList)
-        {
-            list.Add(ext.Trim(wildTrim));
-        }
-
-        return list;
+        return formatList;
     }
 
     /// <summary>
-    /// Returns the image formats string. Example: <c>*.png;*.jpg;</c>
+    /// Returns the image formats string. Example: <c>.png;.jpg;</c>
     /// </summary>
     /// <param name="list">The input HashSet</param>
-    /// <returns></returns>
     public static string GetImageFormats(HashSet<string> list)
     {
         var sb = new StringBuilder(list.Count);
         foreach (var item in list)
         {
-            sb.Append('*').Append(item).Append(';');
+            sb.Append(item).Append(';');
         }
 
         return sb.ToString();

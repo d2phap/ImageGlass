@@ -296,7 +296,7 @@ public partial class ModernForm : Form
     protected override void OnKeyDown(KeyEventArgs e)
     {
         // Issue #555: Prevent the beep sound caused by alt key pressed
-        if (e.Alt) e.SuppressKeyPress = true;
+        if (e.Alt && e.KeyCode != Keys.F4) e.SuppressKeyPress = true;
 
         base.OnKeyDown(e);
 

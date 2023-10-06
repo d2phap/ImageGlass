@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using System.Dynamic;
 
 namespace ImageGlass;
@@ -55,7 +54,7 @@ public partial class FrmSettings : WebForm
         base.OnRequestUpdatingTheme(e);
 
         // set app logo on titlebar
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
     }
 
 
@@ -87,6 +86,7 @@ public partial class FrmSettings : WebForm
         WebUI.UpdateToolListJson();
         await WebUI.UpdateSvgIconsJsonAsync();
         WebUI.UpdateThemeListJson();
+        WebUI.UpdateDefaultImageInfoTagsJson();
         Local.UpdateToolbarButtonsJson();
 
 
@@ -108,6 +108,7 @@ public partial class FrmSettings : WebForm
                 FILE_MACRO: '{Constants.FILE_MACRO}',
                 enums: {WebUI.EnumsJson},
                 defaultThemeDir: '{defaultThemeDir}',
+                defaultImageInfoTags: {WebUI.DefaultImageInfoTagsJson},
                 toolList: {WebUI.ToolListJson},
                 langList: {WebUI.LangListJson},
                 themeList: {WebUI.ThemeListJson},
@@ -191,6 +192,81 @@ public partial class FrmSettings : WebForm
         #endregion // Tab Image
 
 
+        // Tab Toolbar
+        #region Tab Toolbar
+        else if (e.Name.Equals("Btn_ResetToolbarButtons"))
+        {
+            var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
+            Web2.PostWeb2Message(e.Name, json);
+        }
+        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create")
+            || e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Edit"))
+        {
+            var isCreate = e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create");
+            var isValid = true;
+
+            try
+            {
+                // try parsing the json
+                var btn = BHelper.ParseJson<ToolbarItemModel>(e.Data);
+
+                if (btn.Type == ToolbarItemModelType.Button)
+                {
+                    var langPath = $"{nameof(FrmSettings)}.Tab.Toolbar._Errors";
+                    if (string.IsNullOrWhiteSpace(btn.Id))
+                    {
+                        throw new ArgumentException(Config.Language[$"{langPath}._ButtonIdRequired"], nameof(btn.Id));
+                    }
+
+                    if (isCreate
+                        && Config.ToolbarButtons.Any(i => i.Id.Equals(btn.Id, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        throw new ArgumentException(string.Format(Config.Language[$"{langPath}._ButtonIdDuplicated"], btn.Id), nameof(btn.Id));
+                    }
+
+                    if (string.IsNullOrEmpty(btn.OnClick.Executable))
+                    {
+                        throw new ArgumentException(Config.Language[$"{langPath}._ButtonExecutableRequired"], nameof(btn.OnClick.Executable));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _ = Config.ShowError(this, title: Config.Language["_._Error"], heading: ex.Message);
+                isValid = false;
+            }
+
+            Web2.PostWeb2Message(e.Name, BHelper.ToJson(isValid));
+        }
+        #endregion // Tab Toolbar
+
+
+        // Tab File type associations
+        #region Tab ile type associations
+        else if (e.Name.Equals("Btn_OpenExtIconFolder"))
+        {
+            var extIconDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
+            BHelper.OpenFolderPath(extIconDir);
+        }
+        else if (e.Name.Equals("Btn_MakeDefaultViewer"))
+        {
+            FrmMain.IG_SetDefaultPhotoViewer();
+        }
+        else if (e.Name.Equals("Btn_RemoveDefaultViewer"))
+        {
+            FrmMain.IG_RemoveDefaultPhotoViewer();
+        }
+        else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting"))
+        {
+            _ = BHelper.OpenUrlAsync("ms-settings:defaultapps?registeredAppUser=ImageGlass");
+        }
+        else if (e.Name.Equals("Btn_ResetFileFormats"))
+        {
+            Web2.PostWeb2Message("Btn_ResetFileFormats", $"\"{Constants.IMAGE_FORMATS}\"");
+        }
+        #endregion // Tab File type associations
+
+
         // Tab Language
         #region Tab Language
         else if (e.Name.Equals("Btn_RefreshLanguageList"))
@@ -203,16 +279,6 @@ public partial class FrmSettings : WebForm
             _ = InstallLanguagePackAsync();
         }
         #endregion // Tab Language
-
-
-        // Tab Toolbar
-        #region Tab Toolbar
-        else if (e.Name.Equals("Btn_ResetToolbarButtons"))
-        {
-            var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
-            Web2.PostWeb2Message(e.Name, json);
-        }
-        #endregion // Tab Toolbar
 
 
         // Tab Appearance
@@ -241,8 +307,8 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("Btn_OpenThemeFolder"))
         {
-            var igDefaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
-            BHelper.OpenFilePath(igDefaultThemeDir);
+            var themeDir = App.ConfigDir(PathType.Dir, Dir.Themes);
+            BHelper.OpenFolderPath(themeDir);
         }
         else if (e.Name.Equals("Delete_Theme_Pack"))
         {
@@ -311,7 +377,17 @@ public partial class FrmSettings : WebForm
 
         _ = Config.SetFromJson(dict, nameof(Config.AutoUpdate));
         _ = Config.SetFromJson(dict, nameof(Config.EnableMultiInstances));
+        if (Config.SetFromJson(dict, nameof(Config.ShowAppIcon)).Done)
+        {
+            _ = Config.UpdateFormIcon(this);
+            _ = Config.UpdateFormIcon(Local.FrmMain);
+        }
         _ = Config.SetFromJson(dict, nameof(Config.InAppMessageDuration));
+
+        if (Config.SetFromJson(dict, nameof(Config.ImageInfoTags)).Done)
+        {
+            Local.FrmMain.LoadImageInfo();
+        }
 
         #endregion // Tab General
 
@@ -385,6 +461,7 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.AfterEditingAction));
         _ = Config.SetFromJson(dict, nameof(Config.EnableCopyMultipleFiles));
         _ = Config.SetFromJson(dict, nameof(Config.EnableCutMultipleFiles));
+        _ = Config.SetFromJson(dict, nameof(Config.EditApps));
 
         #endregion // Tab Edit
 
@@ -473,6 +550,8 @@ public partial class FrmSettings : WebForm
 
         // Tab File type associations
         #region Tab File type associations
+
+        _ = Config.SetFromJson(dict, nameof(Config.FileFormats));
 
         #endregion // Tab File type associations
 
@@ -716,6 +795,5 @@ public partial class FrmSettings : WebForm
     }
 
     #endregion // Private methods
-
 
 }

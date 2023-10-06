@@ -43,9 +43,9 @@ public class IgTool
 
 
     /// <summary>
-    /// Arguments to pass to the <see cref="Executable"/>.
+    /// Argument to pass to the <see cref="Executable"/>.
     /// </summary>
-    public string? Arguments { get; set; } = string.Empty;
+    public string? Argument { get; set; } = string.Empty;
 
 
     /// <summary>

@@ -109,130 +109,133 @@ public class IgLang : Dictionary<string, string>
     /// </summary>
     public void InitDefaultLanguage()
     {
-        //Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
+        //_ = TryAdd("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
-        Add("_._OK", "OK"); // v9.0
-        Add("_._Cancel", "Cancel"); // v9.0
-        Add("_._Apply", "Apply"); // v9.0
-        Add("_._Close", "Close"); // v9.0
-        Add("_._Yes", "Yes"); // v9.0
-        Add("_._No", "No"); // v9.0
-        Add("_._LearnMore", "Learn more…"); // v9.0
-        Add("_._Continue", "Continue"); // v9.0
-        Add("_._Quit", "Quit"); // v9.0
-        Add("_._Back", "Back"); // v9.0
-        Add("_._Next", "Next"); // v9.0
-        Add("_._Save", "Save"); // v9.0
-        Add("_._Error", "Error"); // v9.0
-        Add("_._Warning", "Warning"); // v9.0
-        Add("_._Copy", "Copy"); //v9.0
-        Add("_._Browse", "Browse…"); //v9.0
-        Add("_._Reset", "Reset"); //v9.0
-        Add("_._ResetToDefault", "Reset to default"); //v9.0
-        Add("_._CheckForUpdate", "Check for update…"); //v5.0
-        Add("_._Update", "Update"); //v9.0
-        Add("_._Website", "Website"); //v9.0
-        Add("_._Email", "Email"); //v9.0
-        Add("_._Install", "Install…");
-        Add("_._Refresh", "Refresh");
-        Add("_._Delete", "Delete");
-        Add("_._Add", "Add");
-        Add("_._Add+", "Add…");
-        Add("_._Edit", "Edit");
-        Add("_._ID", "ID");
-        Add("_._Name", "Name");
-        Add("_._Hotkeys", "Hotkeys");
-        Add("_._AddHotkey", "Add hotkey…");
-        Add("_._Executable", "Executable");
-        Add("_._Arguments", "Arguments");
-        Add("_._CommandPreview", "Command preview");
-        Add("_._Empty", "(empty)");
-        Add("_._MoveUp", "Move up");
-        Add("_._MoveDown", "Move down");
-        Add("_._Separator", "Separator");
+        _ = TryAdd("_._OK", "OK"); // v9.0
+        _ = TryAdd("_._Cancel", "Cancel"); // v9.0
+        _ = TryAdd("_._Apply", "Apply"); // v9.0
+        _ = TryAdd("_._Close", "Close"); // v9.0
+        _ = TryAdd("_._Yes", "Yes"); // v9.0
+        _ = TryAdd("_._No", "No"); // v9.0
+        _ = TryAdd("_._LearnMore", "Learn more…"); // v9.0
+        _ = TryAdd("_._Continue", "Continue"); // v9.0
+        _ = TryAdd("_._Quit", "Quit"); // v9.0
+        _ = TryAdd("_._Back", "Back"); // v9.0
+        _ = TryAdd("_._Next", "Next"); // v9.0
+        _ = TryAdd("_._Save", "Save"); // v9.0
+        _ = TryAdd("_._Error", "Error"); // v9.0
+        _ = TryAdd("_._Warning", "Warning"); // v9.0
+        _ = TryAdd("_._Copy", "Copy"); //v9.0
+        _ = TryAdd("_._Browse", "Browse…"); //v9.0
+        _ = TryAdd("_._Reset", "Reset"); //v9.0
+        _ = TryAdd("_._ResetToDefault", "Reset to default"); //v9.0
+        _ = TryAdd("_._CheckForUpdate", "Check for update…"); //v5.0
+        _ = TryAdd("_._Update", "Update"); //v9.0
+        _ = TryAdd("_._Website", "Website"); //v9.0
+        _ = TryAdd("_._Email", "Email"); //v9.0
+        _ = TryAdd("_._Install", "Install…");
+        _ = TryAdd("_._Refresh", "Refresh");
+        _ = TryAdd("_._Delete", "Delete");
+        _ = TryAdd("_._Add", "Add");
+        _ = TryAdd("_._Add+", "Add…");
+        _ = TryAdd("_._Edit", "Edit");
+        _ = TryAdd("_._ID", "ID");
+        _ = TryAdd("_._Name", "Name");
+        _ = TryAdd("_._Hotkeys", "Hotkeys");
+        _ = TryAdd("_._AddHotkey", "Add hotkey…");
+        _ = TryAdd("_._Executable", "Executable");
+        _ = TryAdd("_._Argument", "Argument");
+        _ = TryAdd("_._CommandPreview", "Command preview");
+        _ = TryAdd("_._FileExtension", "File extension");
+        _ = TryAdd("_._Empty", "(empty)");
+        _ = TryAdd("_._MoveUp", "Move up");
+        _ = TryAdd("_._MoveDown", "Move down");
+        _ = TryAdd("_._Separator", "Separator");
+        _ = TryAdd("_._Icon", "Icon");
+        _ = TryAdd("_._Description", "Description");
 
-        Add("_._UnhandledException", "Unhandled exception"); // v9.0
-        Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
-        Add("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
-        Add($"_._CreatingFile", "Create temporary image file…"); //v9.0
-        Add($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
-        Add($"_._NotSupported", "Unsupported format"); //v9.0
-        Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
+        _ = TryAdd("_._UnhandledException", "Unhandled exception"); // v9.0
+        _ = TryAdd("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
+        _ = TryAdd("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
+        _ = TryAdd($"_._CreatingFile", "Create temporary image file…"); //v9.0
+        _ = TryAdd($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
+        _ = TryAdd($"_._NotSupported", "Unsupported format"); //v9.0
+        _ = TryAdd($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
 
-        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action"); // v9.0
-        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke the action"); // v9.0
-        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported"); // v9.0
-        Add("_._UserAction._Win32ExeError", "Cannot execute command '{0}'. Make sure the name is correct."); // v9.0
+        _ = TryAdd("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action"); // v9.0
+        _ = TryAdd("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke the action"); // v9.0
+        _ = TryAdd("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported"); // v9.0
+        _ = TryAdd("_._UserAction._Win32ExeError", "Cannot execute command '{0}'. Make sure the name is correct."); // v9.0
 
         // Gallery tooltip
-        Add($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FrameCount)}", "Frames"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FrameCount)}", "Frames"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
 
         // image info
-        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
-        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
+        _ = TryAdd($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
+        _ = TryAdd($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
 
         // layout position
-        Add($"_.Position._Left", "Left");
-        Add($"_.Position._Right", "Right");
-        Add($"_.Position._Top", "Top");
-        Add($"_.Position._Bottom", "Bottom");
+        _ = TryAdd($"_.Position._Left", "Left");
+        _ = TryAdd($"_.Position._Right", "Right");
+        _ = TryAdd($"_.Position._Top", "Top");
+        _ = TryAdd($"_.Position._Bottom", "Bottom");
 
 
         #region Enums
 
         // ImageOrderBy
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
 
         // ImageOrderType
-        Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
-        Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Desc)}", "Descending");  //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Desc)}", "Descending");  //v8.0
 
         // AfterEditAppAction
-        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Nothing)}", "Nothing"); //v8.0
-        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Minimize)}", "Minimize"); //v8.0
-        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Close)}", "Close"); //v8.0
+        _ = TryAdd($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Nothing)}", "Nothing"); //v8.0
+        _ = TryAdd($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Minimize)}", "Minimize"); //v8.0
+        _ = TryAdd($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Close)}", "Close"); //v8.0
 
         // ColorProfileOption
-        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.None)}", "None");
-        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.CurrentMonitorProfile)}", "Current monitor profile");
-        Add($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.Custom)}", "Custom…");
+        _ = TryAdd($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.None)}", "None");
+        _ = TryAdd($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.CurrentMonitorProfile)}", "Current monitor profile");
+        _ = TryAdd($"_.{nameof(ColorProfileOption)}._{nameof(ColorProfileOption.Custom)}", "Custom…");
 
         // BackdropStyle
-        Add($"_.{nameof(BackdropStyle)}._{nameof(BackdropStyle.None)}", "None");
+        _ = TryAdd($"_.{nameof(BackdropStyle)}._{nameof(BackdropStyle.None)}", "None");
 
         // MouseWheelEvent
-        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.Scroll)}", "Scroll");
-        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.CtrlAndScroll)}", "Hold Ctrl and scroll");
-        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.ShiftAndScroll)}", "Hold Shift and scroll");
-        Add($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.AltAndScroll)}", "Hold Alt and scroll");
+        _ = TryAdd($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.Scroll)}", "Scroll");
+        _ = TryAdd($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.CtrlAndScroll)}", "Hold Ctrl and scroll");
+        _ = TryAdd($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.ShiftAndScroll)}", "Hold Shift and scroll");
+        _ = TryAdd($"_.{nameof(MouseWheelEvent)}._{nameof(MouseWheelEvent.AltAndScroll)}", "Hold Alt and scroll");
 
         // MouseWheelAction
-        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.DoNothing)}", "Do nothing");
-        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.Zoom)}", "Zoom in / out");
-        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanVertically)}", "Pan up / down");
-        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanHorizontally)}", "Pan left / right");
-        Add($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.BrowseImages)}", "View next / previous Image");
+        _ = TryAdd($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.DoNothing)}", "Do nothing");
+        _ = TryAdd($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.Zoom)}", "Zoom in / out");
+        _ = TryAdd($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanVertically)}", "Pan up / down");
+        _ = TryAdd($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.PanHorizontally)}", "Pan left / right");
+        _ = TryAdd($"_.{nameof(MouseWheelAction)}._{nameof(MouseWheelAction.BrowseImages)}", "View next / previous Image");
 
         // ImageInterpolation
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.NearestNeighbor)}", "Nearest neighbor");
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Linear)}", "Linear");
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Cubic)}", "Cubic");
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.SampleLinear)}", "Sample linear");
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Antisotropic)}", "Antisotropic");
-        Add($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.HighQualityBicubic)}", "High quality bicubic");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.NearestNeighbor)}", "Nearest neighbor");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Linear)}", "Linear");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Cubic)}", "Cubic");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.SampleLinear)}", "Sample linear");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Antisotropic)}", "Antisotropic");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.HighQualityBicubic)}", "High quality bicubic");
 
         #endregion // Enums
 
@@ -242,195 +245,194 @@ public class IgLang : Dictionary<string, string>
         #region Main menu
 
         #region File
-        Add("FrmMain.MnuFile", "File"); //v7.0
-        Add("FrmMain.MnuOpenFile", "Open file…"); //v3.0
-        Add("FrmMain.MnuNewWindow", "Open new window"); //v7.0
-        Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance is allowed"); //v7.0
-        Add("FrmMain.MnuSave", "Save"); //v8.1
-        Add("FrmMain.MnuSave._Confirm", "Are you sure you want to override this image?"); //v9.0
-        Add("FrmMain.MnuSave._ConfirmDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,… when saving your image."); //v9.0
-        Add("FrmMain.MnuSave._Saving", "Saving image…"); //v9.0
-        Add("FrmMain.MnuSave._Success", "Image is saved"); //v9.0
-        Add("FrmMain.MnuSave._Error", "Could not save the image"); //v9.0
-        Add("FrmMain.MnuSaveAs", "Save as…"); //v3.0
-        Add("FrmMain.MnuRefresh", "Refresh"); //v3.0
-        Add("FrmMain.MnuReload", "Reload image"); //v5.5
-        Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
-        Add("FrmMain.MnuUnload", "Unload image"); //v9.0
-        Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
-        Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0,
-        Add("FrmMain.MnuEdit._AppNotFound", "Could not find the associated app for editing. You can assign an app for editing this format in ImageGlass Settings > Edit."); //v9.0
-        Add("FrmMain.MnuPrint", "Print…"); //v3.0
-        Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
-        Add("FrmMain.MnuShare", "Share…"); //v8.6
-        Add("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
+        _ = TryAdd("FrmMain.MnuFile", "File"); //v7.0
+        _ = TryAdd("FrmMain.MnuOpenFile", "Open file…"); //v3.0
+        _ = TryAdd("FrmMain.MnuNewWindow", "Open new window"); //v7.0
+        _ = TryAdd("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance is allowed"); //v7.0
+        _ = TryAdd("FrmMain.MnuSave", "Save"); //v8.1
+        _ = TryAdd("FrmMain.MnuSave._Confirm", "Are you sure you want to override this image?"); //v9.0
+        _ = TryAdd("FrmMain.MnuSave._ConfirmDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,… when saving your image."); //v9.0
+        _ = TryAdd("FrmMain.MnuSave._Saving", "Saving image…"); //v9.0
+        _ = TryAdd("FrmMain.MnuSave._Success", "Image is saved"); //v9.0
+        _ = TryAdd("FrmMain.MnuSave._Error", "Could not save the image"); //v9.0
+        _ = TryAdd("FrmMain.MnuSaveAs", "Save as…"); //v3.0
+        _ = TryAdd("FrmMain.MnuRefresh", "Refresh"); //v3.0
+        _ = TryAdd("FrmMain.MnuReload", "Reload image"); //v5.5
+        _ = TryAdd("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
+        _ = TryAdd("FrmMain.MnuUnload", "Unload image"); //v9.0
+        _ = TryAdd("FrmMain.MnuOpenWith", "Open with…"); //v7.6
+        _ = TryAdd("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0,
+        _ = TryAdd("FrmMain.MnuEdit._AppNotFound", "Could not find the associated app for editing. You can assign an app for editing this format in ImageGlass Settings > Edit."); //v9.0
+        _ = TryAdd("FrmMain.MnuPrint", "Print…"); //v3.0
+        _ = TryAdd("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
+        _ = TryAdd("FrmMain.MnuShare", "Share…"); //v8.6
+        _ = TryAdd("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
         #endregion
 
         #region Navigation
-        Add("FrmMain.MnuNavigation", "Navigation"); //v3.0
-        Add("FrmMain.MnuViewNext", "View next image"); //v3.0
-        Add("FrmMain.MnuViewPrevious", "View previous image"); //v3.0
+        _ = TryAdd("FrmMain.MnuNavigation", "Navigation"); //v3.0
+        _ = TryAdd("FrmMain.MnuViewNext", "View next image"); //v3.0
+        _ = TryAdd("FrmMain.MnuViewPrevious", "View previous image"); //v3.0
 
-        Add("FrmMain.MnuGoTo", "Go to…"); //v3.0
-        Add("FrmMain.MnuGoTo._Description", "Enter the image index to view, and then press ENTER");
-        Add("FrmMain.MnuGoToFirst", "Go to the first image"); //v3.0
-        Add("FrmMain.MnuGoToLast", "Go to the last image"); //v3.0
+        _ = TryAdd("FrmMain.MnuGoTo", "Go to…"); //v3.0
+        _ = TryAdd("FrmMain.MnuGoTo._Description", "Enter the image index to view, and then press ENTER");
+        _ = TryAdd("FrmMain.MnuGoToFirst", "Go to the first image"); //v3.0
+        _ = TryAdd("FrmMain.MnuGoToLast", "Go to the last image"); //v3.0
 
-        Add("FrmMain.MnuViewNextFrame", "View next frame"); //v7.5
-        Add("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
-        Add("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
-        Add("FrmMain.MnuViewLastFrame", "View the last frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewNextFrame", "View next frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewLastFrame", "View the last frame"); //v7.5
         #endregion // Navigation
 
         #region Zoom
-        Add("FrmMain.MnuZoom", "Zoom"); //v7.0
-        Add("FrmMain.MnuZoomIn", "Zoom in"); //v3.0
-        Add("FrmMain.MnuZoomOut", "Zoom out"); //v3.0
-        Add("FrmMain.MnuCustomZoom", "Custom zoom…"); // v8.3
-        Add("FrmMain.MnuCustomZoom._Description", "Enter a new zoom value"); // v8.3
-        Add("FrmMain.MnuScaleToFit", "Scale to fit"); //v3.5
-        Add("FrmMain.MnuScaleToFill", "Scale to fill"); //v7.5
-        Add("FrmMain.MnuActualSize", "Actual size"); //v3.0
-        Add("FrmMain.MnuLockZoom", "Lock zoom ratio"); //v3.0
-        Add("FrmMain.MnuAutoZoom", "Auto zoom"); //v5.5
-        Add("FrmMain.MnuScaleToWidth", "Scale to width"); //v3.0
-        Add("FrmMain.MnuScaleToHeight", "Scale to height"); //v3.0
+        _ = TryAdd("FrmMain.MnuZoom", "Zoom"); //v7.0
+        _ = TryAdd("FrmMain.MnuZoomIn", "Zoom in"); //v3.0
+        _ = TryAdd("FrmMain.MnuZoomOut", "Zoom out"); //v3.0
+        _ = TryAdd("FrmMain.MnuCustomZoom", "Custom zoom…"); // v8.3
+        _ = TryAdd("FrmMain.MnuCustomZoom._Description", "Enter a new zoom value"); // v8.3
+        _ = TryAdd("FrmMain.MnuScaleToFit", "Scale to fit"); //v3.5
+        _ = TryAdd("FrmMain.MnuScaleToFill", "Scale to fill"); //v7.5
+        _ = TryAdd("FrmMain.MnuActualSize", "Actual size"); //v3.0
+        _ = TryAdd("FrmMain.MnuLockZoom", "Lock zoom ratio"); //v3.0
+        _ = TryAdd("FrmMain.MnuAutoZoom", "Auto zoom"); //v5.5
+        _ = TryAdd("FrmMain.MnuScaleToWidth", "Scale to width"); //v3.0
+        _ = TryAdd("FrmMain.MnuScaleToHeight", "Scale to height"); //v3.0
         #endregion
 
         #region Panning
-        Add("FrmMain.MnuPanning", "Panning"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanning", "Panning"); //v9.0
 
-        Add("FrmMain.MnuPanLeft", "Pan image left"); //v9.0
-        Add("FrmMain.MnuPanRight", "Pan image right"); //v9.0
-        Add("FrmMain.MnuPanUp", "Pan image up"); //v9.0
-        Add("FrmMain.MnuPanDown", "Pan image down"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanLeft", "Pan image left"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanRight", "Pan image right"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanUp", "Pan image up"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanDown", "Pan image down"); //v9.0
 
-        Add("FrmMain.MnuPanToLeftSide", "Pan image to the left side"); //v9.0
-        Add("FrmMain.MnuPanToRightSide", "Pan image to the right side"); //v9.0
-        Add("FrmMain.MnuPanToTop", "Pan image to the top"); //v9.0
-        Add("FrmMain.MnuPanToBottom", "Pan image to the bottom"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToLeftSide", "Pan image to the left side"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToRightSide", "Pan image to the right side"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToTop", "Pan image to the top"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToBottom", "Pan image to the bottom"); //v9.0
         #endregion // Panning
 
         #region Image
-        Add("FrmMain.MnuImage", "Image"); //v7.0
+        _ = TryAdd("FrmMain.MnuImage", "Image"); //v7.0
 
-        Add("FrmMain.MnuViewChannels", "View channels"); //v7.0
-        Add("FrmMain.MnuViewChannels._All", "All"); //v7.0
-        Add("FrmMain.MnuViewChannels._Red", "Red"); //v7.0
-        Add("FrmMain.MnuViewChannels._Green", "Green"); //v7.0
-        Add("FrmMain.MnuViewChannels._Blue", "Blue"); //v7.0
-        Add("FrmMain.MnuViewChannels._Black", "Black"); //v7.0
-        Add("FrmMain.MnuViewChannels._Alpha", "Alpha"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels", "View channels"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._All", "All"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._Red", "Red"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._Green", "Green"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._Blue", "Blue"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._Black", "Black"); //v7.0
+        _ = TryAdd("FrmMain.MnuViewChannels._Alpha", "Alpha"); //v7.0
 
-        Add("FrmMain.MnuLoadingOrders", "Loading orders"); //v8.0
+        _ = TryAdd("FrmMain.MnuLoadingOrders", "Loading orders"); //v8.0
 
-        Add("FrmMain.MnuRotateLeft", "Rotate left"); //v7.5
-        Add("FrmMain.MnuRotateRight", "Rotate right"); //v7.5
-        Add("FrmMain.MnuFlipHorizontal", "Flip Horizontal"); // V6.0
-        Add("FrmMain.MnuFlipVertical", "Flip Vertical"); // V6.0
-        Add("FrmMain.MnuRename", "Rename image…"); //v3.0
-        Add("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
-        Add("FrmMain.MnuMoveToRecycleBin", "Move to the Recycle Bin"); //v3.0
-        Add("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle bin?"); //v3.0
-        Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
-        Add("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
-        Add("FrmMain.MnuExportFrames", "Export image frames…"); //v7.5
-        Add("FrmMain.MnuToggleImageAnimation", "Start / stop animating image"); //v3.0
-        Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
-        Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
-        Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
-        Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
-        Add("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
-        Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated"); // v6.0
-        Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
-        Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
+        _ = TryAdd("FrmMain.MnuRotateLeft", "Rotate left"); //v7.5
+        _ = TryAdd("FrmMain.MnuRotateRight", "Rotate right"); //v7.5
+        _ = TryAdd("FrmMain.MnuFlipHorizontal", "Flip Horizontal"); // V6.0
+        _ = TryAdd("FrmMain.MnuFlipVertical", "Flip Vertical"); // V6.0
+        _ = TryAdd("FrmMain.MnuRename", "Rename image…"); //v3.0
+        _ = TryAdd("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
+        _ = TryAdd("FrmMain.MnuMoveToRecycleBin", "Move to the Recycle Bin"); //v3.0
+        _ = TryAdd("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle bin?"); //v3.0
+        _ = TryAdd("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
+        _ = TryAdd("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
+        _ = TryAdd("FrmMain.MnuExportFrames", "Export image frames…"); //v7.5
+        _ = TryAdd("FrmMain.MnuToggleImageAnimation", "Start / stop animating image"); //v3.0
+        _ = TryAdd("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
+        _ = TryAdd("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
+        _ = TryAdd("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
+        _ = TryAdd("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
+        _ = TryAdd("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
+        _ = TryAdd("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated"); // v6.0
+        _ = TryAdd("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
+        _ = TryAdd("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion // Image
 
         #region Clipboard
-        Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
-        Add("FrmMain.MnuCopyFile", "Copy file"); //v3.0
-        Add("FrmMain.MnuCopyFile._Success", "Copied {0} file(s)."); // v2.0 final
-        Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
-        Add("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while…"); // v9.0
-        Add("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
-        Add("FrmMain.MnuCutFile", "Cut file"); //v3.0
-        Add("FrmMain.MnuCutFile._Success", "Cut {0} file(s)."); // v2.0 final
-        Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
-        Add("FrmMain.MnuCopyPath._Success", "Copied the current image path."); // v9.0
-        Add("FrmMain.MnuPasteImage", "Paste image"); //v3.0
-        Add("FrmMain.MnuPasteImage._Error", "Could not find image data in the Clipboard"); // v8.0
-        Add("FrmMain.MnuClearClipboard", "Clear clipboard"); //v3.0
-        Add("FrmMain.MnuClearClipboard._Success", "Cleared clipboard."); // v2.0 final
+        _ = TryAdd("FrmMain.MnuClipboard", "Clipboard"); //v3.0
+        _ = TryAdd("FrmMain.MnuCopyFile", "Copy file"); //v3.0
+        _ = TryAdd("FrmMain.MnuCopyFile._Success", "Copied {0} file(s)."); // v2.0 final
+        _ = TryAdd("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
+        _ = TryAdd("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while…"); // v9.0
+        _ = TryAdd("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
+        _ = TryAdd("FrmMain.MnuCutFile", "Cut file"); //v3.0
+        _ = TryAdd("FrmMain.MnuCutFile._Success", "Cut {0} file(s)."); // v2.0 final
+        _ = TryAdd("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
+        _ = TryAdd("FrmMain.MnuCopyPath._Success", "Copied the current image path."); // v9.0
+        _ = TryAdd("FrmMain.MnuPasteImage", "Paste image"); //v3.0
+        _ = TryAdd("FrmMain.MnuPasteImage._Error", "Could not find image data in the Clipboard"); // v8.0
+        _ = TryAdd("FrmMain.MnuClearClipboard", "Clear clipboard"); //v3.0
+        _ = TryAdd("FrmMain.MnuClearClipboard._Success", "Cleared clipboard."); // v2.0 final
 
         #endregion
 
-        Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
-        Add("FrmMain.MnuWindowFit._Enable", "Window fit is enabled"); // v9.0
-        Add("FrmMain.MnuWindowFit._Disable", "Window fit is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuWindowFit", "Window fit"); //v7.5
+        _ = TryAdd("FrmMain.MnuWindowFit._Enable", "Window fit is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuWindowFit._Disable", "Window fit is disabled"); // v9.0
 
-        Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
-        Add("FrmMain.MnuFullScreen._Enable", "Full screen window is enabled"); // v9.0
-        Add("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
-        Add("FrmMain.MnuFullScreen._Disable", "Full screen window is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFullScreen", "Full screen"); //v3.0
+        _ = TryAdd("FrmMain.MnuFullScreen._Enable", "Full screen window is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
+        _ = TryAdd("FrmMain.MnuFullScreen._Disable", "Full screen window is disabled"); // v9.0
 
-        Add("FrmMain.MnuFrameless", "Frameless"); //v7.5
-        Add("FrmMain.MnuFrameless._Enable", "Frameless window is enabled"); // v9.0
-        Add("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
-        Add("FrmMain.MnuFrameless._Disable", "Frameless window is disabled"); // v9.0
-        Add("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
+        _ = TryAdd("FrmMain.MnuFrameless", "Frameless"); //v7.5
+        _ = TryAdd("FrmMain.MnuFrameless._Enable", "Frameless window is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
+        _ = TryAdd("FrmMain.MnuFrameless._Disable", "Frameless window is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
 
         #region Layout
-        Add("FrmMain.MnuLayout", "Layout"); //v3.0
-        Add("FrmMain.MnuToggleToolbar", "Toolbar"); //v3.0
-        Add("FrmMain.MnuToggleGallery", "Gallery panel"); //v3.0
-        Add("FrmMain.MnuToggleCheckerboard", "Checkerboard background"); //v3.0, updated v5.0
-        Add("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
-        Add("FrmMain.MnuToggleTopMost._Enable", "Enabled window always on top"); // v9.0
-        Add("FrmMain.MnuToggleTopMost._Disable", "Disabled window always on top"); // v9.0
+        _ = TryAdd("FrmMain.MnuLayout", "Layout"); //v3.0
+        _ = TryAdd("FrmMain.MnuToggleToolbar", "Toolbar"); //v3.0
+        _ = TryAdd("FrmMain.MnuToggleGallery", "Gallery panel"); //v3.0
+        _ = TryAdd("FrmMain.MnuToggleCheckerboard", "Checkerboard background"); //v3.0, updated v5.0
+        _ = TryAdd("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
+        _ = TryAdd("FrmMain.MnuToggleTopMost._Enable", "Enabled window always on top"); // v9.0
+        _ = TryAdd("FrmMain.MnuToggleTopMost._Disable", "Disabled window always on top"); // v9.0
         #endregion // Layout
 
         #region Tools
-        Add("FrmMain.MnuTools", "Tools"); //v3.0
-        Add("FrmMain.MnuColorPicker", "Color picker"); //v5.0
-        Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
-        Add("FrmMain.MnuCropTool", "Crop image"); // v7.6
-        Add("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
+        _ = TryAdd("FrmMain.MnuTools", "Tools"); //v3.0
+        _ = TryAdd("FrmMain.MnuColorPicker", "Color picker"); //v5.0
+        _ = TryAdd("FrmMain.MnuPageNav", "Page navigation"); // v7.5
+        _ = TryAdd("FrmMain.MnuCropTool", "Crop image"); // v7.6
+        _ = TryAdd("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
         #endregion
 
-        Add("FrmMain.MnuSettings", "Settings…"); // v3.0
+        _ = TryAdd("FrmMain.MnuSettings", "Settings…"); // v3.0
 
         #region Help
-        Add("FrmMain.MnuHelp", "Help"); //v7.0
-        Add("FrmMain.MnuAbout", "About"); //v3.0
-        Add("FrmMain.MnuQuickSetup", "Open ImageGlass Quick setup"); //v5.0
-        Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
-        Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
+        _ = TryAdd("FrmMain.MnuHelp", "Help"); //v7.0
+        _ = TryAdd("FrmMain.MnuAbout", "About"); //v3.0
+        _ = TryAdd("FrmMain.MnuQuickSetup", "Open ImageGlass Quick setup"); //v5.0
+        _ = TryAdd("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
+        _ = TryAdd("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
 
-        Add("FrmMain.MnuSetDefaultPhotoViewer", "Set as default photo viewer"); //v9.0
-        Add("FrmMain.MnuSetDefaultPhotoViewer._Success", "You have successfully registered ImageGlass as default photo viewer."); //v9.0
-        Add("FrmMain.MnuSetDefaultPhotoViewer._SuccessDescription", "Next, please open Windows Settings > Default apps, and select ImageGlass under the Photo viewer section."); //v9.0
-        Add("FrmMain.MnuSetDefaultPhotoViewer._Error", "Could not set ImageGlass as default photo viewer."); //v9.0
+        _ = TryAdd("FrmMain.MnuSetDefaultPhotoViewer", "Set default photo viewer"); //v9.0
+        _ = TryAdd("FrmMain.MnuSetDefaultPhotoViewer._Success", "You have successfully set ImageGlass as default photo viewer."); //v9.0
+        _ = TryAdd("FrmMain.MnuSetDefaultPhotoViewer._Error", "Could not set ImageGlass as default photo viewer."); //v9.0
 
-        Add("FrmMain.MnuUnsetDefaultPhotoViewer", "Unset default photo viewer"); //v9.0
-        Add("FrmMain.MnuUnsetDefaultPhotoViewer._Success", "ImageGlass is now not the default photo viewer anymore."); //v9.0
-        Add("FrmMain.MnuUnsetDefaultPhotoViewer._Error", "Could not remove ImageGlass from the default photo viewer setting."); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer", "Remove default photo viewer"); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer._Success", "ImageGlass is no longer the default photo viewer."); //v9.0
+        _ = TryAdd("FrmMain.MnuRemoveDefaultPhotoViewer._Error", "Could not remove ImageGlass as the default photo viewer."); //v9.0
 
         #endregion
 
-        Add("FrmMain.MnuExit", "Exit"); //v7.0
+        _ = TryAdd("FrmMain.MnuExit", "Exit"); //v7.0
 
         #endregion
 
         #region Form message texts
-        Add("FrmMain.PicMain._ErrorText", "Could not open this image"); // v2.0 beta, updated 4.0, 9.0
-        Add("FrmMain.MnuMain", "Main menu"); // v3.0
+        _ = TryAdd("FrmMain.PicMain._ErrorText", "Could not open this image"); // v2.0 beta, updated 4.0, 9.0
+        _ = TryAdd("FrmMain.MnuMain", "Main menu"); // v3.0
 
-        Add("FrmMain._OpenFileDialog", "All supported files");
-        Add("FrmMain._Loading", "Loading…"); // v3.0
-        Add("FrmMain._OpenWith", "Open with {0}"); //v9.0
-        Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
-        Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-        Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
+        _ = TryAdd("FrmMain._OpenFileDialog", "All supported files");
+        _ = TryAdd("FrmMain._Loading", "Loading…"); // v3.0
+        _ = TryAdd("FrmMain._OpenWith", "Open with {0}"); //v9.0
+        _ = TryAdd("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
+        _ = TryAdd("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
+        _ = TryAdd("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
 
 
         #endregion
@@ -440,185 +442,208 @@ public class IgLang : Dictionary<string, string>
 
 
         #region FrmAbout
-        Add("FrmAbout._Slogan", "A lightweight, versatile image viewer");
-        Add("FrmAbout._Version", "Version:");
-        Add("FrmAbout._License", "Software license");
-        Add("FrmAbout._Privacy", "Privacy policy");
-        Add("FrmAbout._Thanks", "Special thanks to:");
-        Add("FrmAbout._LogoDesigner", "Logo designer:");
-        Add("FrmAbout._Collaborator", "Collaborator:");
-        Add("FrmAbout._Contact", "Contact");
-        Add("FrmAbout._Homepage", "Homepage:");
-        Add("FrmAbout._Email", "Email:");
-        Add("FrmAbout._Credits", "Credits");
-        Add("FrmAbout._Donate", "Donate");
+        _ = TryAdd("FrmAbout._Slogan", "A lightweight, versatile image viewer");
+        _ = TryAdd("FrmAbout._Version", "Version:");
+        _ = TryAdd("FrmAbout._License", "Software license");
+        _ = TryAdd("FrmAbout._Privacy", "Privacy policy");
+        _ = TryAdd("FrmAbout._Thanks", "Special thanks to:");
+        _ = TryAdd("FrmAbout._LogoDesigner", "Logo designer:");
+        _ = TryAdd("FrmAbout._Collaborator", "Collaborator:");
+        _ = TryAdd("FrmAbout._Contact", "Contact");
+        _ = TryAdd("FrmAbout._Homepage", "Homepage:");
+        _ = TryAdd("FrmAbout._Email", "Email:");
+        _ = TryAdd("FrmAbout._Credits", "Credits");
+        _ = TryAdd("FrmAbout._Donate", "Donate");
         #endregion
 
 
         #region FrmSettings
-        Add("FrmSettings._Text", "Settings");
+        _ = TryAdd("FrmSettings._Text", "Settings");
 
         #region Nav bar
-        Add("FrmSettings.Nav._General", "General");
-        Add("FrmSettings.Nav._Image", "Image");
-        Add("FrmSettings.Nav._Slideshow", "Slideshow");
-        Add("FrmSettings.Nav._Edit", "Edit");
-        Add("FrmSettings.Nav._Viewer", "Viewer");
-        Add("FrmSettings.Nav._Toolbar", "Toolbar");
-        Add("FrmSettings.Nav._Gallery", "Gallery");
-        Add("FrmSettings.Nav._Layout", "Layout");
-        Add("FrmSettings.Nav._Mouse", "Mouse");
-        Add("FrmSettings.Nav._Keyboard", "Keyboard");
-        Add("FrmSettings.Nav._FileTypeAssociations", "File type associations");
-        Add("FrmSettings.Nav._Tools", "Tools");
-        Add("FrmSettings.Nav._Language", "Language");
-        Add("FrmSettings.Nav._Appearance", "Appearance");
+        _ = TryAdd("FrmSettings.Nav._General", "General");
+        _ = TryAdd("FrmSettings.Nav._Image", "Image");
+        _ = TryAdd("FrmSettings.Nav._Slideshow", "Slideshow");
+        _ = TryAdd("FrmSettings.Nav._Edit", "Edit");
+        _ = TryAdd("FrmSettings.Nav._Viewer", "Viewer");
+        _ = TryAdd("FrmSettings.Nav._Toolbar", "Toolbar");
+        _ = TryAdd("FrmSettings.Nav._Gallery", "Gallery");
+        _ = TryAdd("FrmSettings.Nav._Layout", "Layout");
+        _ = TryAdd("FrmSettings.Nav._Mouse", "Mouse");
+        _ = TryAdd("FrmSettings.Nav._Keyboard", "Keyboard");
+        _ = TryAdd("FrmSettings.Nav._FileTypeAssociations", "File type associations");
+        _ = TryAdd("FrmSettings.Nav._Tools", "Tools");
+        _ = TryAdd("FrmSettings.Nav._Language", "Language");
+        _ = TryAdd("FrmSettings.Nav._Appearance", "Appearance");
         #endregion // Nav bar
 
 
         #region Tab General
         // General > General
-        Add("FrmSettings.Tab.General._StartupDir", "Startup location");
-        Add("FrmSettings.Tab.General._ConfigDir", "Configuration location");
-        Add("FrmSettings.Tab.General._UserConfigFile", "User settings file (igconfig.json)");
+        _ = TryAdd("FrmSettings.Tab.General._StartupDir", "Startup location");
+        _ = TryAdd("FrmSettings.Tab.General._ConfigDir", "Configuration location");
+        _ = TryAdd("FrmSettings.Tab.General._UserConfigFile", "User settings file (igconfig.json)");
 
         // General > Startup
-        Add("FrmSettings.Tab.General._Startup", "Startup");
-        Add("FrmSettings.Tab.General._ShowWelcomeImage", "Show welcome image");
-        Add("FrmSettings.Tab.General._ShouldOpenLastSeenImage", "Open the last seen image");
+        _ = TryAdd("FrmSettings.Tab.General._Startup", "Startup");
+        _ = TryAdd("FrmSettings.Tab.General._ShowWelcomeImage", "Show welcome image");
+        _ = TryAdd("FrmSettings.Tab.General._ShouldOpenLastSeenImage", "Open the last seen image");
 
         // General > Real-time update
-        Add("FrmSettings.Tab.General._RealTimeFileUpdate", "Real-time file update");
-        Add("FrmSettings.Tab.General._EnableRealTimeFileUpdate", "Monitor file changes in the viewing folder and update in realtime");
-        Add("FrmSettings.Tab.General._ShouldAutoOpenNewAddedImage", "Open the new added image automatically");
+        _ = TryAdd("FrmSettings.Tab.General._RealTimeFileUpdate", "Real-time file update");
+        _ = TryAdd("FrmSettings.Tab.General._EnableRealTimeFileUpdate", "Monitor file changes in the viewing folder and update in realtime");
+        _ = TryAdd("FrmSettings.Tab.General._ShouldAutoOpenNewAddedImage", "Open the new added image automatically");
 
         // General > Others
-        Add("FrmSettings.Tab.General._Others", "Others");
-        Add("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
-        Add("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
-        Add("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration (milliseconds)");
+        _ = TryAdd("FrmSettings.Tab.General._Others", "Others");
+        _ = TryAdd("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
+        _ = TryAdd("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
+        _ = TryAdd("FrmSettings.Tab.General._ShowAppIcon", "Show app icon on the title bar");
+        _ = TryAdd("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration (milliseconds)");
+        _ = TryAdd("FrmSettings.Tab.General._ImageInfoTags", "Image information tags");
         #endregion // Tab General
 
 
         #region Tab Image
         // Image > Image loading
-        Add("FrmSettings.Tab.Image._ImageLoading", "Image loading");
-        Add("FrmSettings.Tab.Image._ImageLoadingOrder", "Image loading order");
-        Add("FrmSettings.Tab.Image._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
-        Add("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
-        Add("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
-        Add("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Load hidden images");
-        Add("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
-        Add("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded");
-        Add("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect");
-        Add("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
-        Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
-        Add("FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
-        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize", "Minimum size of the embedded thumbnail to be loaded");
-        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width", "Width");
-        Add("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height", "Height");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageLoading", "Image loading");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageLoadingOrder", "Image loading order");
+        _ = TryAdd("FrmSettings.Tab.Image._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
+        _ = TryAdd("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
+        _ = TryAdd("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
+        _ = TryAdd("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Load hidden images");
+        _ = TryAdd("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
+        _ = TryAdd("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded");
+        _ = TryAdd("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect");
+        _ = TryAdd("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
+        _ = TryAdd("FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
+        _ = TryAdd("FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
+        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize", "Minimum size of the embedded thumbnail to be loaded");
+        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width", "Width");
+        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height", "Height");
 
         // Image > Image Booster
-        Add("FrmSettings.Tab.Image._ImageBooster", "Image Booster");
-        Add("FrmSettings.Tab.Image._ImageBoosterCacheCount", "Number of images cached by Image Booster (one direction)");
-        Add("FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension", "Maximum image dimension to be cached (in pixels)");
-        Add("FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb", "Maximum image file size to be cached (in megabytes)");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageBooster", "Image Booster");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheCount", "Number of images cached by Image Booster (one direction)");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension", "Maximum image dimension to be cached (in pixels)");
+        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb", "Maximum image file size to be cached (in megabytes)");
 
         // Image > Color management
-        Add("FrmSettings.Tab.Image._ColorManagement", "Color management");
-        Add("FrmSettings.Tab.Image._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
-        Add("FrmSettings.Tab.Image._ColorProfile", "Color profile");
+        _ = TryAdd("FrmSettings.Tab.Image._ColorManagement", "Color management");
+        _ = TryAdd("FrmSettings.Tab.Image._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
+        _ = TryAdd("FrmSettings.Tab.Image._ColorProfile", "Color profile");
         #endregion // Tab Image
 
 
         #region Tab Slideshow
         // Slideshow > Slideshow
-        Add("FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow", "Automatically hide main window");
-        Add("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
-        Add("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
-        Add("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
-        Add("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
-        Add("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
-        Add("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow", "Automatically hide main window");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
 
         // Slideshow > Slideshow notification
-        Add("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification");
-        Add("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification");
+        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
         #endregion // Tab Slideshow
 
 
         #region Tab Edit
         // Edit > Edit
-        Add("FrmSettings.Tab.Edit._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
-        Add("FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
-        Add("FrmSettings.Tab.Edit._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
-        Add("FrmSettings.Tab.Edit._ImageEditQuality", "Image quality");
-        Add("FrmSettings.Tab.Edit._AfterEditingAction", "After opening editing app");
+        _ = TryAdd("FrmSettings.Tab.Edit._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
+        _ = TryAdd("FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
+        _ = TryAdd("FrmSettings.Tab.Edit._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
+        _ = TryAdd("FrmSettings.Tab.Edit._ImageEditQuality", "Image quality");
+        _ = TryAdd("FrmSettings.Tab.Edit._AfterEditingAction", "After opening editing app");
 
         // Edit > Clipboard
-        Add("FrmSettings.Tab.Edit._Clipboard", "Clipboard");
-        Add("FrmSettings.Tab.Edit._EnableCopyMultipleFiles", "Enable the copying of multiple files at once");
-        Add("FrmSettings.Tab.Edit._EnableCutMultipleFiles", "Enable the cutting of multiple files at once");
+        _ = TryAdd("FrmSettings.Tab.Edit._Clipboard", "Clipboard");
+        _ = TryAdd("FrmSettings.Tab.Edit._EnableCopyMultipleFiles", "Enable the copying of multiple files at once");
+        _ = TryAdd("FrmSettings.Tab.Edit._EnableCutMultipleFiles", "Enable the cutting of multiple files at once");
+
+        // Edit > Image editing apps
+        _ = TryAdd("FrmSettings.Tab.Edit._EditApps", "Image editing apps");
+        _ = TryAdd("FrmSettings.Tab.Edit._EditApps._AppName", "App name");
+        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._AddApp", "Add an app for editing");
+        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._EditApp", "Edit app");
+
         #endregion // Tab Edit
 
 
         #region Tab Viewer
         // Viewer > Viewer
-        Add("FrmSettings.Tab.Viewer._ShowCheckerboard", "Show checkerboard");
-        Add("FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
-        Add("FrmSettings.Tab.Viewer._EnableNavigationButtons", "Show navigation arrow buttons");
-        Add("FrmSettings.Tab.Viewer._CenterWindowFit", "Automatically center the window in Window Fit mode");
-        Add("FrmSettings.Tab.Viewer._UseWebview2ForSvg", "Use Webview2 for viewing SVG format");
-        Add("FrmSettings.Tab.Viewer._PanSpeed", "Panning speed");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ShowCheckerboard", "Show checkerboard");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
+        _ = TryAdd("FrmSettings.Tab.Viewer._EnableNavigationButtons", "Show navigation arrow buttons");
+        _ = TryAdd("FrmSettings.Tab.Viewer._CenterWindowFit", "Automatically center the window in Window Fit mode");
+        _ = TryAdd("FrmSettings.Tab.Viewer._UseWebview2ForSvg", "Use Webview2 for viewing SVG format");
+        _ = TryAdd("FrmSettings.Tab.Viewer._PanSpeed", "Panning speed");
 
         // Viewer > Zooming
-        Add("FrmSettings.Tab.Viewer._Zooming", "Zooming");
-        Add("FrmSettings.Tab.Viewer._ImageInterpolation", "Image interpolation");
-        Add("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
-        Add("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp", "When zoom > 100%");
-        Add("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
-        Add("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
+        _ = TryAdd("FrmSettings.Tab.Viewer._Zooming", "Zooming");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation", "Image interpolation");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp", "When zoom > 100%");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
+        _ = TryAdd("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
+        _ = TryAdd("FrmSettings.Tab.Viewer._UseSmoothZooming", "Use smooth zooming");
+        _ = TryAdd("FrmSettings.Tab.Viewer._LoadDefaultZoomLevels", "Load default zoom levels");
         #endregion // Tab Viewer
 
 
         #region Tab Toolbar
         // Toolbar > Toolbar
-        Add("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
-        Add("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
-        Add("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
 
-        Add("FrmSettings.Tab.Toolbar._AddNewButton", "Add a custom toolbar button");
-        Add("FrmSettings.Tab.Toolbar._EditButton", "Edit toolbar button");
-        Add("FrmSettings.Tab.Toolbar._ButtonJson", "Button JSON");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._AddNewButton", "Add a custom toolbar button");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._EditButton", "Edit toolbar button");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._ButtonJson", "Button JSON");
         #endregion // Tab Toolbar
 
 
         #region Tab Gallery
         // Gallery > Gallery
-        Add("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in full screen mode");
-        Add("FrmSettings.Tab.Gallery._ShowGalleryScrollbars", "Show gallery scrollbars");
-        Add("FrmSettings.Tab.Gallery._ShowGalleryFileName", "Show thumbnail filename");
-        Add("FrmSettings.Tab.Gallery._ThumbnailSize", "Thumbnail size (in pixels)");
-        Add("FrmSettings.Tab.Gallery._GalleryCacheSizeInMb", "Maximum gallery cache size (in megabytes)");
-        Add("FrmSettings.Tab.Gallery._GalleryColumns", "Number of thumbnail columns in vertical gallery layout");
+        _ = TryAdd("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in full screen mode");
+        _ = TryAdd("FrmSettings.Tab.Gallery._ShowGalleryScrollbars", "Show gallery scrollbars");
+        _ = TryAdd("FrmSettings.Tab.Gallery._ShowGalleryFileName", "Show thumbnail filename");
+        _ = TryAdd("FrmSettings.Tab.Gallery._ThumbnailSize", "Thumbnail size (in pixels)");
+        _ = TryAdd("FrmSettings.Tab.Gallery._GalleryCacheSizeInMb", "Maximum gallery cache size (in megabytes)");
+        _ = TryAdd("FrmSettings.Tab.Gallery._GalleryColumns", "Number of thumbnail columns in vertical gallery layout");
         #endregion // Tab Gallery
 
 
         #region Tab Layout
         // Layout > Layout
-        Add("FrmSettings.Tab.Layout._Order", "Order");
-        Add("FrmSettings.Tab.Layout._Toolbar", "Toolbar");
-        Add("FrmSettings.Tab.Layout._ToolbarContext", "Contextual toolbar");
-        Add("FrmSettings.Tab.Layout._Gallery", "Gallery");
-        Add("FrmSettings.Tab.Layout._ToolbarPosition", "Toolbar position");
-        Add("FrmSettings.Tab.Layout._ToolbarContextPosition", "Contextual toolbar position");
-        Add("FrmSettings.Tab.Layout._GalleryPosition", "Gallery position");
+        _ = TryAdd("FrmSettings.Tab.Layout._Order", "Order");
+        _ = TryAdd("FrmSettings.Tab.Layout._Toolbar", "Toolbar");
+        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarContext", "Contextual toolbar");
+        _ = TryAdd("FrmSettings.Tab.Layout._Gallery", "Gallery");
+        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarPosition", "Toolbar position");
+        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarContextPosition", "Contextual toolbar position");
+        _ = TryAdd("FrmSettings.Tab.Layout._GalleryPosition", "Gallery position");
         #endregion // Tab Layout
+
+
+        #region TAB Toolbar
+        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
+        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
+
+        #endregion // TAB Toolbar
 
 
         #region Tab Mouse
         // Mouse > Mouse wheel action
-        Add("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
+        _ = TryAdd("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
         #endregion // Tab Mouse
 
 
@@ -628,48 +653,64 @@ public class IgLang : Dictionary<string, string>
 
 
         #region Tab File type associations
-        // File type associations > File type associations
+        // File type associations > File extension icons
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons", "File extension icons");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '{0}' button. This will also set ImageGlass as default photo viewer.");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder", "Open extension icon folder");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._GetExtensionIconPacks", "Get extension icon packs…");
+
+        // File type associations > Default photo viewer
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer", "Default photo viewer");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer._Description", "You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._MakeDefault", "Make default");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._RemoveDefault", "Remove default");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenDefaultAppsSetting", "Open Default apps setting");
+
+        // File type associations > File formats
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileFormats", "File formats");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._TotalSupportedFormats", "Total supported formats: {0}");
+        _ = TryAdd("FrmSettings.Tab.FileAssocs._AddNewFileExtension", "Add new file extension");
 
         #endregion // Tab File type associations
 
 
         #region Tab Tools
         // Tools > Tools
-        Add("FrmSettings.Tab.Tools._AddNewTool", "Add an external tool");
-        Add("FrmSettings.Tab.Tools._EditTool", "Edit external tool");
-        Add("FrmSettings.Tab.Tools._Integrated", "Integrated");
-        Add("FrmSettings.Tab.Tools._IntegratedWith", "Integrated with {0}");
+        _ = TryAdd("FrmSettings.Tab.Tools._AddNewTool", "Add an external tool");
+        _ = TryAdd("FrmSettings.Tab.Tools._EditTool", "Edit external tool");
+        _ = TryAdd("FrmSettings.Tab.Tools._Integrated", "Integrated");
+        _ = TryAdd("FrmSettings.Tab.Tools._IntegratedWith", "Integrated with {0}");
         #endregion // Tab Tools
 
 
         #region Tab Language
         // Language > Language
-        Add("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
-        Add("FrmSettings.Tab.Language._Refresh", "Refresh");
-        Add("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install new language packs…");
-        Add("FrmSettings.Tab.Language._GetMoreLanguagePacks", "Get more language packs…");
-        Add("FrmSettings.Tab.Language._Contributors", "Contributors");
+        _ = TryAdd("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
+        _ = TryAdd("FrmSettings.Tab.Language._Refresh", "Refresh");
+        _ = TryAdd("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install new language packs…");
+        _ = TryAdd("FrmSettings.Tab.Language._GetMoreLanguagePacks", "Get more language packs…");
+        _ = TryAdd("FrmSettings.Tab.Language._Contributors", "Contributors");
         #endregion // Tab Language
 
 
         #region Tab Appearance
         // Appearance > Appearance
-        Add("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
-        Add("FrmSettings.Tab.Appearance._BackgroundColor", "Viewer background color");
-        Add("FrmSettings.Tab.Appearance._SlideshowBackgroundColor", "Slideshow background color");
+        _ = TryAdd("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
+        _ = TryAdd("FrmSettings.Tab.Appearance._BackgroundColor", "Viewer background color");
+        _ = TryAdd("FrmSettings.Tab.Appearance._SlideshowBackgroundColor", "Slideshow background color");
 
         // Appearance > Theme
-        Add("FrmSettings.Tab.Appearance._Theme", "Theme");
-        Add("FrmSettings.Tab.Appearance._DarkTheme", "Dark");
-        Add("FrmSettings.Tab.Appearance._LightTheme", "Light");
-        Add("FrmSettings.Tab.Appearance._Author", "Author");
-        Add("FrmSettings.Tab.Appearance._Theme._OpenThemeFolder", "Open theme folder");
-        Add("FrmSettings.Tab.Appearance._Theme._GetMoreThemes", "Get more theme packs…");
-        Add("FrmSettings.Tab.Appearance._Theme._InstallTheme", "Install theme packs");
-        Add("FrmSettings.Tab.Appearance._Theme._UninstallTheme", "Uninstall a theme pack");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Theme", "Theme");
+        _ = TryAdd("FrmSettings.Tab.Appearance._DarkTheme", "Dark");
+        _ = TryAdd("FrmSettings.Tab.Appearance._LightTheme", "Light");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Author", "Author");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._OpenThemeFolder", "Open theme folder");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._GetMoreThemes", "Get more theme packs…");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._InstallTheme", "Install theme packs");
+        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._UninstallTheme", "Uninstall a theme pack");
 
-        Add("FrmSettings.Tab.Appearance._UseThemeForDarkMode", "Use this theme for dark mode");
-        Add("FrmSettings.Tab.Appearance._UseThemeForLightMode", "Use this theme for light mode");
+        _ = TryAdd("FrmSettings.Tab.Appearance._UseThemeForDarkMode", "Use this theme for dark mode");
+        _ = TryAdd("FrmSettings.Tab.Appearance._UseThemeForLightMode", "Use this theme for light mode");
         #endregion // Tab Appearance
 
 
@@ -678,191 +719,131 @@ public class IgLang : Dictionary<string, string>
 
 
 
-
-        #region TAB Edit
-        //Add("FrmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
-
-        //Add("FrmSetting.btnEditEditExt", "Edit…"); //v4.0
-        //Add("FrmSetting.btnEditResetExt", "Reset to default"); //v4.0
-        //Add("FrmSetting.btnEditEditAllExt", "Edit all extensions…"); //v4.1
-        //Add("FrmSetting._allExtensions", "all extensions"); //v4.1
-        //Add("FrmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
-        //Add("FrmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
-        //Add("FrmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
-        //Add("FrmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
-
-        #endregion
-
-        #region TAB File Associations
-        //Add("FrmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
-        //Add("FrmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
-
-        //Add("FrmSetting.btnAddNewExt", "Add…"); // 4.0
-        //Add("FrmSetting.btnDeleteExt", "Delete"); // 4.0
-        //Add("FrmSetting.btnResetExt", "Reset to default"); // 4.0
-
-        #endregion
-
-        #region TAB Toolbar
-        //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
-
-        Add("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
-        Add("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
-        Add("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
-        Add("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
-
-        #endregion
-
-
-
-
-        #region FrmAddNewFormat
-        Add("FrmAddNewFormat.lblFileExtension", "File extension"); // 4.0
-        Add("FrmAddNewFormat.btnOK", "OK"); // 4.0
-        Add("FrmAddNewFormat.btnClose", "Close"); // 4.0
-        #endregion
-
-        #region FrmEditApp
-        Add("FrmEditApp.lblFileExtension", "File extension"); // 4.0
-        Add("FrmEditApp.lblAppName", "App name"); // 4.0
-        Add("FrmEditApp.lblAppPath", "App path"); // 4.0
-        Add("FrmEditApp.lblAppArguments", "App arguments"); // 4.0
-        Add("FrmEditApp.btnReset", "Reset"); // 4.0
-        Add("FrmEditApp.btnOK", "OK"); // 4.0
-        Add("FrmEditApp.btnClose", "Close"); // 4.0
-        Add("FrmEditApp.lblPreviewLabel", "Preview"); // 5.0
-        #endregion
-
-
-
-
-
-
         #region FrmCrop
-        Add("FrmCrop.LblAspectRatio", "Aspect ratio:"); //v9.0
-        Add("FrmCrop.LblLocation", "Location:"); //v9.0
-        Add("FrmCrop.LblSize", "Size:"); //v9.0
+        _ = TryAdd("FrmCrop.LblAspectRatio", "Aspect ratio:"); //v9.0
+        _ = TryAdd("FrmCrop.LblLocation", "Location:"); //v9.0
+        _ = TryAdd("FrmCrop.LblSize", "Size:"); //v9.0
 
-        Add("FrmCrop.SelectionAspectRatio._FreeRatio", "Free ratio"); //v9.0
-        Add("FrmCrop.SelectionAspectRatio._Custom", "Custom…"); //v9.0
-        Add("FrmCrop.SelectionAspectRatio._Original", "Original"); //v9.0
+        _ = TryAdd("FrmCrop.SelectionAspectRatio._FreeRatio", "Free ratio"); //v9.0
+        _ = TryAdd("FrmCrop.SelectionAspectRatio._Custom", "Custom…"); //v9.0
+        _ = TryAdd("FrmCrop.SelectionAspectRatio._Original", "Original"); //v9.0
 
-        Add("FrmCrop.BtnQuickSelect._Tooltip", "Quick select…"); //v9.0
-        Add("FrmCrop.BtnReset._Tooltip", "Reset selection"); //v9.0
-        Add("FrmCrop.BtnSettings._Tooltip", "Open Crop tool settings…"); //v9.0
+        _ = TryAdd("FrmCrop.BtnQuickSelect._Tooltip", "Quick select…"); //v9.0
+        _ = TryAdd("FrmCrop.BtnReset._Tooltip", "Reset selection"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSettings._Tooltip", "Open Crop tool settings…"); //v9.0
 
-        Add("FrmCrop.BtnSave", "Save"); //v9.0
-        Add("FrmCrop.BtnSave._Tooltip", "Save image"); //v9.0
-        Add("FrmCrop.BtnSaveAs", "Save as…"); //v9.0
-        Add("FrmCrop.BtnSaveAs._Tooltip", "Save as a copy…"); //v9.0
-        Add("FrmCrop.BtnCrop", "Crop"); //v9.0
-        Add("FrmCrop.BtnCrop._Tooltip", "Crop the image only"); //v9.0
-        Add("FrmCrop.BtnCopy", "Copy"); //v9.0
-        Add("FrmCrop.BtnCopy._Tooltip", "Copy the selection to clipboard"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSave", "Save"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSave._Tooltip", "Save image"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSaveAs", "Save as…"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSaveAs._Tooltip", "Save as a copy…"); //v9.0
+        _ = TryAdd("FrmCrop.BtnCrop", "Crop"); //v9.0
+        _ = TryAdd("FrmCrop.BtnCrop._Tooltip", "Crop the image only"); //v9.0
+        _ = TryAdd("FrmCrop.BtnCopy", "Copy"); //v9.0
+        _ = TryAdd("FrmCrop.BtnCopy._Tooltip", "Copy the selection to clipboard"); //v9.0
 
 
         // Crop settings
-        Add("FrmCropSettings._Title", "Crop settings"); //v9.0
-        Add("FrmCropSettings.ChkCloseToolAfterSaving", "Close Crop tool after saving"); //v9.0
-        Add("FrmCropSettings.LblDefaultSelection", "Default selection settings"); //v9.0
-        Add("FrmCropSettings.ChkAutoCenterSelection", "Auto-center selection"); //v9.0
+        _ = TryAdd("FrmCropSettings._Title", "Crop settings"); //v9.0
+        _ = TryAdd("FrmCropSettings.ChkCloseToolAfterSaving", "Close Crop tool after saving"); //v9.0
+        _ = TryAdd("FrmCropSettings.LblDefaultSelection", "Default selection settings"); //v9.0
+        _ = TryAdd("FrmCropSettings.ChkAutoCenterSelection", "Auto-center selection"); //v9.0
 
-        Add("FrmCropSettings.DefaultSelectionType._UseTheLastSelection", "Use the last selection"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._SelectNone", "Select none"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._SelectX", "Select {0}"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._SelectAll", "Select all"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…"); //v9.0
+        _ = TryAdd("FrmCropSettings.DefaultSelectionType._UseTheLastSelection", "Use the last selection"); //v9.0
+        _ = TryAdd("FrmCropSettings.DefaultSelectionType._SelectNone", "Select none"); //v9.0
+        _ = TryAdd("FrmCropSettings.DefaultSelectionType._SelectX", "Select {0}"); //v9.0
+        _ = TryAdd("FrmCropSettings.DefaultSelectionType._SelectAll", "Select all"); //v9.0
+        _ = TryAdd("FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…"); //v9.0
 
         #endregion
 
 
         #region FrmColorPicker
 
-        Add("FrmColorPicker.BtnSettings._Tooltip", "Open Color picker settings…"); //v9.0
+        _ = TryAdd("FrmColorPicker.BtnSettings._Tooltip", "Open Color picker settings…"); //v9.0
 
         // Color picker settings
-        Add("FrmColorPickerSettings._Title", "Color picker settings"); //v9.0
-        Add("FrmColorPickerSettings.ChkShowRgbA", "Use RGB format with alpha value"); //v5.0
-        Add("FrmColorPickerSettings.ChkShowHexA", "Use HEX format with alpha value"); //v5.0
-        Add("FrmColorPickerSettings.ChkShowHslA", "Use HSL format with alpha value"); //v5.0
-        Add("FrmColorPickerSettings.ChkShowHsvA", "Use HSV format with alpha value"); //v8.0
-        Add("FrmColorPickerSettings.ChkShowCIELabA", "Use CIELAB format with alpha value"); //v9.0
+        _ = TryAdd("FrmColorPickerSettings._Title", "Color picker settings"); //v9.0
+        _ = TryAdd("FrmColorPickerSettings.ChkShowRgbA", "Use RGB format with alpha value"); //v5.0
+        _ = TryAdd("FrmColorPickerSettings.ChkShowHexA", "Use HEX format with alpha value"); //v5.0
+        _ = TryAdd("FrmColorPickerSettings.ChkShowHslA", "Use HSL format with alpha value"); //v5.0
+        _ = TryAdd("FrmColorPickerSettings.ChkShowHsvA", "Use HSV format with alpha value"); //v8.0
+        _ = TryAdd("FrmColorPickerSettings.ChkShowCIELabA", "Use CIELAB format with alpha value"); //v9.0
 
         #endregion
 
 
         #region FrmToolNotFound
-        Add("FrmToolNotFound._Title", "Tool not found"); // v9.0
-        Add("FrmToolNotFound.BtnSelectExecutable", "Select…"); // v9.0
-        Add("FrmToolNotFound.LblHeading", "'{0}' is not found!"); // v9.0
-        Add("FrmToolNotFound.LblDescription", "ImageGlass was unable to locate the path to the '{0}' executable. To resolve this issue, please update the path to the '{0}' as necessary."); // v9.0
-        Add("FrmToolNotFound.LblDownloadToolText", "You can download more tools for ImageGlass at:"); // v9.0
+        _ = TryAdd("FrmToolNotFound._Title", "Tool not found"); // v9.0
+        _ = TryAdd("FrmToolNotFound.BtnSelectExecutable", "Select…"); // v9.0
+        _ = TryAdd("FrmToolNotFound.LblHeading", "'{0}' is not found!"); // v9.0
+        _ = TryAdd("FrmToolNotFound.LblDescription", "ImageGlass was unable to locate the path to the '{0}' executable. To resolve this issue, please update the path to the '{0}' as necessary."); // v9.0
+        _ = TryAdd("FrmToolNotFound.LblDownloadToolText", "You can download more tools for ImageGlass at:"); // v9.0
         #endregion // FrmToolNotFound
 
 
         #region FrmHotkeyPicker
-        Add("FrmHotkeyPicker.LblHotkey", "Press hotkeys"); // v9.0
+        _ = TryAdd("FrmHotkeyPicker.LblHotkey", "Press hotkeys"); // v9.0
         #endregion // FrmHotkeyPicker
 
 
         #region igcmd.exe
 
-        Add("_._IgCommandExe._DefaultError._Heading", "Invalid commands"); //v9.0
-        Add("_._IgCommandExe._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
+        _ = TryAdd("_._IgCommandExe._DefaultError._Heading", "Invalid commands"); //v9.0
+        _ = TryAdd("_._IgCommandExe._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
 
 
         #region FrmSlideshow
 
-        Add("FrmSlideshow._PauseSlideshow", "Slideshow is paused."); // v9.0
-        Add("FrmSlideshow._ResumeSlideshow", "Slideshow is resumed."); // v9.0
+        _ = TryAdd("FrmSlideshow._PauseSlideshow", "Slideshow is paused."); // v9.0
+        _ = TryAdd("FrmSlideshow._ResumeSlideshow", "Slideshow is resumed."); // v9.0
 
         // menu
-        Add("FrmSlideshow.MnuPauseResumeSlideshow", "Pause/resume slideshow"); // v9.0
-        Add("FrmSlideshow.MnuExitSlideshow", "Exit slideshow"); // v9.0
-        Add("FrmSlideshow.MnuChangeBackgroundColor", "Change background color…"); // v9.0
+        _ = TryAdd("FrmSlideshow.MnuPauseResumeSlideshow", "Pause/resume slideshow"); // v9.0
+        _ = TryAdd("FrmSlideshow.MnuExitSlideshow", "Exit slideshow"); // v9.0
+        _ = TryAdd("FrmSlideshow.MnuChangeBackgroundColor", "Change background color…"); // v9.0
 
-        Add("FrmSlideshow.MnuToggleCountdown", "Show slideshow countdown"); // v9.0
-        Add("FrmSlideshow.MnuZoomModes", "Zoom modes"); // v9.0
+        _ = TryAdd("FrmSlideshow.MnuToggleCountdown", "Show slideshow countdown"); // v9.0
+        _ = TryAdd("FrmSlideshow.MnuZoomModes", "Zoom modes"); // v9.0
 
         #endregion
 
 
         #region FrmExportFrames
-        Add("FrmExportFrames._Title", "Export image frames"); //v9.0
-        Add("FrmExportFrames._FileNotExist", "Image file does not exist"); //v7.5
-        Add("FrmExportFrames._FolderPickerTitle", "Select output folder for exporting image frames"); //v9.0
-        Add("FrmExportFrames._Exporting", "Exporting {0}/{1} frames \r\n{2}…"); //v9.0
-        Add("FrmExportFrames._ExportDone", "Exported {0} frames successfully to \r\n{1}"); //v9.0
-        Add("FrmExportFrames._OpenOutputFolder", "Open output folder"); //v9.0
+        _ = TryAdd("FrmExportFrames._Title", "Export image frames"); //v9.0
+        _ = TryAdd("FrmExportFrames._FileNotExist", "Image file does not exist"); //v7.5
+        _ = TryAdd("FrmExportFrames._FolderPickerTitle", "Select output folder for exporting image frames"); //v9.0
+        _ = TryAdd("FrmExportFrames._Exporting", "Exporting {0}/{1} frames \r\n{2}…"); //v9.0
+        _ = TryAdd("FrmExportFrames._ExportDone", "Exported {0} frames successfully to \r\n{1}"); //v9.0
+        _ = TryAdd("FrmExportFrames._OpenOutputFolder", "Open output folder"); //v9.0
         #endregion
 
 
         #region FrmUpdate
-        Add("FrmUpdate._StatusChecking", "Checking for update…"); //v9.0
-        Add("FrmUpdate._StatusUpdated", "You are using the latest version!"); //v9.0
-        Add("FrmUpdate._StatusOutdated", "A new update is available!"); //v9.0
-        Add("FrmUpdate._CurrentVersion", "Current version: {0}"); //v9.0
-        Add("FrmUpdate._LatestVersion", "The latest version: {0}"); //v9.0
-        Add("FrmUpdate._PublishedDate", "Published date: {0}"); //v9.0
+        _ = TryAdd("FrmUpdate._StatusChecking", "Checking for update…"); //v9.0
+        _ = TryAdd("FrmUpdate._StatusUpdated", "You are using the latest version!"); //v9.0
+        _ = TryAdd("FrmUpdate._StatusOutdated", "A new update is available!"); //v9.0
+        _ = TryAdd("FrmUpdate._CurrentVersion", "Current version: {0}"); //v9.0
+        _ = TryAdd("FrmUpdate._LatestVersion", "The latest version: {0}"); //v9.0
+        _ = TryAdd("FrmUpdate._PublishedDate", "Published date: {0}"); //v9.0
         #endregion
 
 
         #region FrmQuickSetup
 
-        Add("FrmQuickSetup._Text", "ImageGlass Quick setup"); //v9.0
-        Add("FrmQuickSetup._StepInfo", "Step {0}"); //v9.0
-        Add("FrmQuickSetup._SkipQuickSetup", "Skip this and launch ImageGlass"); //v9.0
+        _ = TryAdd("FrmQuickSetup._Text", "ImageGlass Quick setup"); //v9.0
+        _ = TryAdd("FrmQuickSetup._StepInfo", "Step {0}"); //v9.0
+        _ = TryAdd("FrmQuickSetup._SkipQuickSetup", "Skip this and launch ImageGlass"); //v9.0
 
-        Add("FrmQuickSetup._SelectProfile", "Select a profile"); //v9.0
-        Add("FrmQuickSetup._StandardUser", "Standard user"); //v9.0
-        Add("FrmQuickSetup._ProfessionalUser", "Professional user"); //v9.0
-        Add("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access the Settings dialog."); // v9.0
+        _ = TryAdd("FrmQuickSetup._SelectProfile", "Select a profile"); //v9.0
+        _ = TryAdd("FrmQuickSetup._StandardUser", "Standard user"); //v9.0
+        _ = TryAdd("FrmQuickSetup._ProfessionalUser", "Professional user"); //v9.0
+        _ = TryAdd("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access the Settings dialog."); // v9.0
 
-        Add("FrmQuickSetup._SettingsWillBeApplied", "Settings will be applied:"); //v9.0
-        Add("FrmQuickSetup._SetDefaultViewer", "Do you want to set ImageGlass as the default photo viewer?"); //v9.0
-        Add("FrmQuickSetup._SetDefaultViewer._Description", "You can reset it in the Settings dialog > File type associations tab."); //v9.0
+        _ = TryAdd("FrmQuickSetup._SettingsWillBeApplied", "Settings will be applied:"); //v9.0
+        _ = TryAdd("FrmQuickSetup._SetDefaultViewer", "Do you want to set ImageGlass as the default photo viewer?"); //v9.0
+        _ = TryAdd("FrmQuickSetup._SetDefaultViewer._Description", "You can reset it in the Settings dialog > File type associations tab."); //v9.0
 
-        Add("FrmQuickSetup._ConfirmCloseProcess", "Before applying the new settings, it's essential to close all ImageGlass processes. Are you ready to proceed?"); //v7.5
+        _ = TryAdd("FrmQuickSetup._ConfirmCloseProcess", "Before applying the new settings, it's essential to close all ImageGlass processes. Are you ready to proceed?"); //v7.5
 
         #endregion
 

@@ -509,7 +509,7 @@ public class Web2 : WebView2
     private void CoreWebView2_NewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
     {
         e.Handled = true;
-        BHelper.OpenUrl(e.Uri, $"app_{PageName}");
+        _ = BHelper.OpenUrlAsync(e.Uri, $"app_{PageName}");
     }
 
 

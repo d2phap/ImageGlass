@@ -57,13 +57,17 @@ public class FileSystemAdaptor : IAdaptor
     {
         if (_isDisposed) return null;
 
-        // Issue #530: thumbnails not built if long file path
-        var filename = BHelper.PrefixLongPath((string)key);
 
-        if (File.Exists(filename))
+        try
+        {
+            var filename = (string)key;
+
             return Extractor.Current.GetThumbnail(filename, size, useEmbeddedThumbnails, useExifOrientation);
-        else
+        }
+        catch (Exception)
+        {
             return null;
+        }
     }
 
     /// <summary>

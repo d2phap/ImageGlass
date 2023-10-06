@@ -260,7 +260,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // set app logo on titlebar
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
 
         // update webview2 styles
         if (PicMain.UseWebview2) PicMain.UpdateWeb2Styles(darkMode);
@@ -1947,7 +1947,7 @@ public partial class FrmSlideshow : ThemedForm
                 FormBorderStyle = FormBorderStyle.Sizable;
             }
 
-            Config.UpdateFormIcon(this);
+            _ = Config.UpdateFormIcon(this);
         }
     }
 

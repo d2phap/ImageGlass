@@ -3,9 +3,11 @@ import './main';
 import Sidebar from './FrmSettings/Sidebar';
 import Settings from './FrmSettings/Settings';
 import TabAppearance from './FrmSettings/TabAppearance';
+import { defineEditAppDialogHtmlElement } from './FrmSettings/webComponents/EditAppDialogHtmlElement';
 import { defineToolDialogHtmlElement } from './FrmSettings/webComponents/ToolDialogHtmlElement';
 import { defineToolbarEditorHtmlElement } from './FrmSettings/webComponents/ToolbarEditorHtmlElement';
 import { defineToolbarButtonEditDialogHtmlElement } from './FrmSettings/webComponents/ToolbarButtonEditDialogHtmlElement';
+import { defineFileFormatDialogHtmlElement } from './FrmSettings/webComponents/FileFormatDialogHtmlElement';
 
 
 if (!window._pageSettings) {
@@ -42,6 +44,7 @@ if (!window._pageSettings) {
     configDir: '',
     userConfigFilePath: '',
     defaultThemeDir: '',
+    defaultImageInfoTags: [],
     FILE_MACRO: '',
   };
 }
@@ -51,9 +54,11 @@ _page.loadBackgroundColorConfig = TabAppearance.loadBackgroundColorConfig;
 
 
 // register web components
+defineEditAppDialogHtmlElement();
 defineToolDialogHtmlElement();
 defineToolbarEditorHtmlElement();
 defineToolbarButtonEditDialogHtmlElement();
+defineFileFormatDialogHtmlElement();
 
 
 // sidebar

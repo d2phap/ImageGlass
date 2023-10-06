@@ -30,7 +30,7 @@ public static class IgCommands
     public static string SET_WALLPAPER => "set-wallpaper";
     public static string SET_LOCK_SCREEN => "set-lock-screen";
     public static string SET_DEFAULT_PHOTO_VIEWER => "set-default-viewer";
-    public static string UNSET_DEFAULT_PHOTO_VIEWER => "unset-default-viewer";
+    public static string REMOVE_DEFAULT_PHOTO_VIEWER => "remove-default-viewer";
     public static string START_SLIDESHOW => "start-slideshow";
     public static string EXPORT_FRAMES => "export-frames";
 

@@ -43,7 +43,7 @@ public partial class FrmUpdate : WebForm
         base.OnLoad(e);
         if (DesignMode) return;
 
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
         Web2.PageName = "update";
         Text = Config.Language[$"_._CheckForUpdate"];
         CloseFormHotkey = Keys.Escape;
@@ -118,7 +118,7 @@ public partial class FrmUpdate : WebForm
         }
         else if (e.Name.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
         {
-            BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"app_{Web2.PageName}");
+            _ = BHelper.OpenUrlAsync(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"from_{Web2.PageName}");
         }
         else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
         {

@@ -15,85 +15,113 @@
         <li>
           <label>
             <input type="radio" name="nav" value="general" />
-            <span lang-text="FrmSettings.Nav._General">[General]</span>
+            <span>
+              ⚙️&nbsp;<span lang-text="FrmSettings.Nav._General">[General]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="image" />
-            <span lang-text="FrmSettings.Nav._Image">[Image]</span>
+            <span>
+              🖼️&nbsp;<span lang-text="FrmSettings.Nav._Image">[Image]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="slideshow" />
-            <span lang-text="FrmSettings.Nav._Slideshow">[Slideshow]</span>
+            <span>
+              🌌&nbsp;<span lang-text="FrmSettings.Nav._Slideshow">[Slideshow]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="edit" />
-            <span lang-text="FrmSettings.Nav._Edit">[Edit]</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="radio" name="nav" value="viewer" />
-            <span lang-text="FrmSettings.Nav._Viewer">[Viewer]</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="radio" name="nav" value="toolbar" />
-            <span lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="radio" name="nav" value="gallery" />
-            <span lang-text="FrmSettings.Nav._Gallery">[Gallery]</span>
+            <span>
+              🖌️&nbsp;<span lang-text="FrmSettings.Nav._Edit">[Edit]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="layout" />
-            <span lang-text="FrmSettings.Nav._Layout">[Layout]</span>
+            <span>
+              🧱&nbsp;<span lang-text="FrmSettings.Nav._Layout">[Layout]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="viewer" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Viewer">[Viewer]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="toolbar" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="gallery" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Gallery">[Gallery]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="mouse" />
-            <span lang-text="FrmSettings.Nav._Mouse">[Mouse]</span>
+            <span>
+              🖱️&nbsp;<span lang-text="FrmSettings.Nav._Mouse">[Mouse]</span>
+            </span>
           </label>
         </li>
         <li hidden>
           <label>
             <input type="radio" name="nav" value="keyboard" />
-            <span lang-text="FrmSettings.Nav._Keyboard">[Keyboard]</span>
+            <span>
+              ⌨️&nbsp;<span lang-text="FrmSettings.Nav._Keyboard">[Keyboard]</span>
+            </span>
           </label>
         </li>
-        <li hidden>
+        <li>
           <label>
             <input type="radio" name="nav" value="file_assocs" />
-            <span lang-text="FrmSettings.Nav._FileTypeAssociations">[File type associations]</span>
+            <span>
+              📑&nbsp;<span lang-text="FrmSettings.Nav._FileTypeAssociations">[File type associations]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="tools" />
-            <span lang-text="FrmSettings.Nav._Tools">[Tools]</span>
+            <span>
+              🧩&nbsp;<span lang-text="FrmSettings.Nav._Tools">[Tools]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="language" />
-            <span lang-text="FrmSettings.Nav._Language">[Language]</span>
+            <span>
+              🌏&nbsp;<span lang-text="FrmSettings.Nav._Language">[Language]</span>
+            </span>
           </label>
         </li>
         <li>
           <label>
             <input type="radio" name="nav" value="appearance" />
-            <span lang-text="FrmSettings.Nav._Appearance">[Appearance]</span>
+            <span>
+              🎨&nbsp;<span lang-text="FrmSettings.Nav._Appearance">[Appearance]</span>
+            </span>
           </label>
         </li>
       </ul>
@@ -173,10 +201,25 @@
             <div lang-text="FrmSettings.Tab.General._EnableMultiInstances">[EnableMultiInstances]</div>
           </label>
         </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowAppIcon" />
+            <div lang-text="FrmSettings.Tab.General._ShowAppIcon">[ShowAppIcon]</div>
+          </label>
+        </div>
 
-        <div class="mt-4 mb-2">
+        <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.General._InAppMessageDuration">[InAppMessageDuration]</div>
-          <input type="number" name="InAppMessageDuration" required min="0" max="60000" />
+          <input type="number" name="InAppMessageDuration" required min="0" max="60000" placeholder="2000" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.General._ImageInfoTags">[Image information tags]</div>
+          <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
+          <div>
+            <a id="LnkResetImageInfoTags" class="text-nowrap" href="#" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </a>
+          </div>
         </div>
       </section>
     </section>
@@ -300,13 +343,13 @@
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension">
             [ImageBoosterCacheMaxDimension]</div>
-          <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="1000000" />
+          <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="1000000" placeholder="8000" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb">
             [ImageBoosterCacheMaxFileSizeInMb]
           </div>
-          <input type="number" name="ImageBoosterCacheMaxFileSizeInMb" required min="0" max="1048" />
+          <input type="number" name="ImageBoosterCacheMaxFileSizeInMb" required min="0" max="1048" placeholder="100" />
         </div>
       </section>
 
@@ -384,11 +427,11 @@
             <div class="d-flex align-items-center">
               <div class="me-3">
                 <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval._From">[From]</div>
-                <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" />
+                <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" placeholder="5" />
               </div>
               <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
                 <div class="mb-1" lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval._To">[To]</div>
-                <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" />
+                <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" placeholder="10" />
               </div>
             </div>
           </div>
@@ -403,7 +446,7 @@
           <div class="mb-1" lang-text="FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound">
             [Number of images to trigger a notification sound]
           </div>
-          <input type="number" name="SlideshowImagesToNotifySound" required min="0" />
+          <input type="number" name="SlideshowImagesToNotifySound" required min="0" placeholder="0" />
         </div>
       </section>
     </section>
@@ -434,7 +477,7 @@
         </div>
         <div class="mb-3 mt-4">
           <div class="mb-1" lang-text="FrmSettings.Tab.Edit._ImageEditQuality">[ImageEditQuality]</div>
-          <input type="number" name="ImageEditQuality" required min="0" max="100" />
+          <input type="number" name="ImageEditQuality" required min="0" max="100" placeholder="80" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings.Tab.Edit._AfterEditingAction">[AfterEditingAction]</div>
@@ -459,155 +502,28 @@
           </label>
         </div>
       </section>
-    </section>
 
-
-    <!-- Tab: Viewer -->
-    <section class="tab-page" tab="viewer">
-      <!-- Viewer > Viewer -->
+      <!-- Edit > Image editing apps -->
       <section>
-        <header lang-text="FrmSettings.Nav._Viewer">[Viewer]</header>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="ShowCheckerboardOnlyImageRegion" />
-            <div lang-text="FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]
-            </div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="EnableNavigationButtons" />
-            <div lang-text="FrmSettings.Tab.Viewer._EnableNavigationButtons">[EnableNavigationButtons]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="CenterWindowFit" />
-            <div lang-text="FrmSettings.Tab.Viewer._CenterWindowFit">[CenterWindowFit]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="UseWebview2ForSvg" />
-            <div lang-text="FrmSettings.Tab.Viewer._UseWebview2ForSvg">[UseWebview2ForSvg]</div>
-          </label>
-        </div>
-        <div class="mt-4 mb-2">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
-          <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" />
-        </div>
-      </section>
-
-
-      <!-- Viewer > Zooming -->
-      <section>
-        <header lang-text="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
-        <!-- Image interpolation -->
-        <div class="mb-4">
-          <div class="mb-2">
-            <b lang-text="FrmSettings.Tab.Viewer._ImageInterpolation">[Image interpolation]</b>
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown">
-              [ImageInterpolationScaleDown]</div>
-            <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
-            </select>
-          </div>
-          <div class="mb-3">
-            <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp">[ImageInterpolationScaleUp]
-            </div>
-            <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
-            </select>
-          </div>
-        </div>
-        
+        <header lang-text="FrmSettings.Tab.Edit._EditApps">[Image editing apps]</header>
         <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
-          <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" />
-        </div>
-        <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
-          <textarea name="ZoomLevels" rows="3" spellcheck="false"></textarea>
-        </div>
-      </section>
-    </section>
-
-
-    <!-- Tab: Toolbar -->
-    <section class="tab-page" tab="toolbar">
-      <!-- Layout > Toolbar -->
-      <section>
-        <header lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</header>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="HideToolbarInFullscreen" />
-            <div lang-text="FrmSettings.Tab.Toolbar._HideToolbarInFullscreen">[HideToolbarInFullscreen]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="EnableCenterToolbar" />
-            <div lang-text="FrmSettings.Tab.Toolbar._EnableCenterToolbar">[EnableCenterToolbar]</div>
-          </label>
-        </div>
-        <div class="mt-4 mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
-          <input type="number" name="ToolbarIconHeight" required min="10" max="1000" />
-        </div>
-      </section>
-
-      <!-- Toolbar > Toolbar buttons -->
-      <section>
-        <header lang-text="FrmSettings.Tab.Toolbar._ToolbarButtons">[Toolbar buttons]</header>
-        <div class="mb-3 d-flex align-items-center">
-          <button id="Btn_AddCustomToolbarButton" type="button" class="me-2"
-            lang-text="FrmSettings.Tab.Toolbar._AddCustomButton">
-            [Add a custom button...]
-          </button>
-          <button id="Btn_ResetToolbarButtons" type="button" lang-text="_._ResetToDefault">
-            [Reset to default]
+          <button id="Btn_AddEditApp" type="button" lang-text="_._Add+">
+            [Add...]
           </button>
         </div>
-        <toolbar-editor id="ToolbarEditor" class="mb-3"></toolbar-editor>
-      </section>
-    </section>
-
-
-    <!-- Tab: Gallery -->
-    <section class="tab-page" tab="gallery">
-      <!-- Layout > Gallery -->
-      <section>
-        <header lang-text="FrmSettings.Nav._Gallery">[Gallery]</header>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="HideGalleryInFullscreen" />
-            <div lang-text="FrmSettings.Tab.Gallery._HideGalleryInFullscreen">[HideGalleryInFullscreen]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="ShowGalleryScrollbars" />
-            <div lang-text="FrmSettings.Tab.Gallery._ShowGalleryScrollbars">[ShowGalleryScrollbars]</div>
-          </label>
-        </div>
-        <div class="mb-2">
-          <label class="ig-checkbox">
-            <input type="checkbox" name="ShowGalleryFileName" />
-            <div lang-text="FrmSettings.Tab.Gallery._ShowGalleryFileName">[ShowGalleryFileName]</div>
-          </label>
-        </div>
-
-        <div class="mt-4 mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._ThumbnailSize">[ThumbnailSize]</div>
-          <input type="number" name="ThumbnailSize" required min="20" max="500" />
-        </div>
-        <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
-          <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" />
-        </div>
-        <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
-          <input type="number" name="GalleryColumns" required min="1" max="100" />
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 250;">
+          <table id="Table_EditApps" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th width="10" class="cell-sticky" lang-text="_._FileExtension">[File extension]</th>
+                <th width="10" lang-text="FrmSettings.Tab.Edit._EditApps._AppName">[App name]</th>
+                <th lang-text="_._Executable">[Executable]</th>
+                <th width="10" colspan="2" lang-text="_._Argument">[Argument]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </section>
     </section>
@@ -709,6 +625,168 @@
     </section>
 
 
+    <!-- Tab: Viewer -->
+    <section class="tab-page" tab="viewer">
+      <!-- Viewer > Viewer -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Viewer">[Viewer]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowCheckerboardOnlyImageRegion" />
+            <div lang-text="FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]
+            </div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableNavigationButtons" />
+            <div lang-text="FrmSettings.Tab.Viewer._EnableNavigationButtons">[EnableNavigationButtons]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="CenterWindowFit" />
+            <div lang-text="FrmSettings.Tab.Viewer._CenterWindowFit">[CenterWindowFit]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="UseWebview2ForSvg" />
+            <div lang-text="FrmSettings.Tab.Viewer._UseWebview2ForSvg">[UseWebview2ForSvg]</div>
+          </label>
+        </div>
+        <div class="mt-4 mb-2">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._PanSpeed">[PanSpeed]</div>
+          <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" placeholder="20" />
+        </div>
+      </section>
+
+
+      <!-- Viewer > Zooming -->
+      <section>
+        <header lang-text="FrmSettings.Tab.Viewer._Zooming">[Zooming]</header>
+        <!-- Image interpolation -->
+        <div>
+          <div class="mb-2">
+            <b lang-text="FrmSettings.Tab.Viewer._ImageInterpolation">[Image interpolation]</b>
+          </div>
+          <div class="mb-3">
+            <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown">
+              [ImageInterpolationScaleDown]</div>
+            <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp">[ImageInterpolationScaleUp]
+            </div>
+            <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
+            </select>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Viewer._ZoomSpeed">[ZoomSpeed]</div>
+          <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" placeholder="0" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-2" lang-text="FrmSettings.Tab.Viewer._ZoomLevels">[ZoomLevels]</div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="_UseSmoothZooming" />
+              <div lang-text="FrmSettings.Tab.Viewer._UseSmoothZooming">[UseSmoothZooming]</div>
+            </label>
+          </div>
+          <textarea name="ZoomLevels" rows="3" required spellcheck="false"></textarea>
+          <div>
+            <a id="LnkLoadDefaultZoomLevels" class="text-nowrap" href="#" lang-text="FrmSettings.Tab.Viewer._LoadDefaultZoomLevels">
+              [Load default zoom levels]
+            </a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Toolbar -->
+    <section class="tab-page" tab="toolbar">
+      <!-- Layout > Toolbar -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="HideToolbarInFullscreen" />
+            <div lang-text="FrmSettings.Tab.Toolbar._HideToolbarInFullscreen">[HideToolbarInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableCenterToolbar" />
+            <div lang-text="FrmSettings.Tab.Toolbar._EnableCenterToolbar">[EnableCenterToolbar]</div>
+          </label>
+        </div>
+        <div class="mt-4 mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
+          <input type="number" name="ToolbarIconHeight" required min="10" max="1000" placeholder="24" />
+        </div>
+      </section>
+
+      <!-- Toolbar > Toolbar buttons -->
+      <section>
+        <header lang-text="FrmSettings.Tab.Toolbar._ToolbarButtons">[Toolbar buttons]</header>
+        <div class="mb-3 d-flex align-items-center">
+          <button id="Btn_AddCustomToolbarButton" type="button" class="me-2"
+            lang-text="FrmSettings.Tab.Toolbar._AddCustomButton">
+            [Add a custom button...]
+          </button>
+          <button id="Btn_ResetToolbarButtons" type="button" lang-text="_._ResetToDefault">
+            [Reset to default]
+          </button>
+        </div>
+        <toolbar-editor id="ToolbarEditor" class="mb-3"></toolbar-editor>
+      </section>
+    </section>
+
+
+    <!-- Tab: Gallery -->
+    <section class="tab-page" tab="gallery">
+      <!-- Layout > Gallery -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Gallery">[Gallery]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="HideGalleryInFullscreen" />
+            <div lang-text="FrmSettings.Tab.Gallery._HideGalleryInFullscreen">[HideGalleryInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowGalleryScrollbars" />
+            <div lang-text="FrmSettings.Tab.Gallery._ShowGalleryScrollbars">[ShowGalleryScrollbars]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowGalleryFileName" />
+            <div lang-text="FrmSettings.Tab.Gallery._ShowGalleryFileName">[ShowGalleryFileName]</div>
+          </label>
+        </div>
+
+        <div class="mt-4 mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._ThumbnailSize">[ThumbnailSize]</div>
+          <input type="number" name="ThumbnailSize" required min="20" max="500" placeholder="50" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
+          <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" placeholder="100" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Tab.Gallery._GalleryColumns">[GalleryColumns]</div>
+          <input type="number" name="GalleryColumns" required min="1" max="100" placeholder="3" />
+        </div>
+      </section>
+    </section>
+
+
     <!-- Tab: Mouse -->
     <section class="tab-page" tab="mouse">
       <!-- Mouse > Mouse wheel action -->
@@ -796,10 +874,76 @@
 
     <!-- Tab: File type assosications -->
     <section class="tab-page" tab="file_assocs">
-      <!-- File type assosications > File type assosications -->
+      <!-- File type assosications > File extension icons -->
       <section>
-        <header lang-text="FrmSettings.Nav._FileTypeAssociations">[File type assosications]</header>
+        <header lang-text="FrmSettings.Tab.FileAssocs._FileExtensionIcons">[File extension icons]</header>
         <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-html="FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description">
+            [For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '<b class="text-nowrap" lang-text="FrmSettings.Tab.FileAssocs._MakeDefault">Make default</b>' button. This will also set ImageGlass as default photo viewer.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_OpenExtIconFolder" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder">
+              [Open extension icon folder]
+            </button>
+            <a class="text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+              lang-text="FrmSettings.Tab.FileAssocs._GetExtensionIconPacks">
+              [Get extension icon packs...]
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- File type assosications > Default photo viewer -->
+      <section>
+        <header lang-text="FrmSettings.Tab.FileAssocs._DefaultPhotoViewer">[Default photo viewer]</header>
+        <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-text="FrmSettings.Tab.FileAssocs._DefaultPhotoViewer._Description">
+            [You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_MakeDefaultViewer" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._MakeDefault">
+              [Make default]
+            </button>
+            <button id="Btn_RemoveDefaultViewer" class="me-2" type="button" lang-text="FrmSettings.Tab.FileAssocs._RemoveDefault">
+              [Remove default]
+            </button>
+
+            <a id="Lnk_OpenDefaultAppsSetting" class="text-nowrap" href="#" lang-text="FrmSettings.Tab.FileAssocs._OpenDefaultAppsSetting">
+              [Open Default apps setting]
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- File type assosications > File formats -->
+      <section>
+        <header lang-text="FrmSettings.Tab.FileAssocs._FileFormats">[File formats]</header>
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-end me-2">
+            <button id="Btn_AddFileFormat" class="me-2" type="button" lang-text="_._Add+">
+              [Add...]
+            </button>
+            <button id="Btn_ResetFileFormats" class="me-2" type="button" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </button>
+          </div>
+          <div class="ms-auto text-nowrap">
+            <span lang-html="FrmSettings.Tab.FileAssocs._TotalSupportedFormats">
+              [Total supported formats: <span id="Lbl_TotalSupportedFormats">...</span>]
+            </span>
+          </div>
+        </div>
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 390;">
+          <table id="Table_FileFormats" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th colspan="2" lang-text="_._FileExtension">[File extension]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </section>
     </section>
@@ -810,19 +954,18 @@
       <!-- Tools > Tools -->
       <section>
         <header lang-text="FrmSettings.Nav._Tools">[Tools]</header>
-        <div class="mb-3 d-flex align-items-center">
-          <a class="text-nowrap me-2" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
-            lang-text="FrmMain.MnuGetMoreTools">
-            [Get more tools...]
-          </a>
-
-          <div class="ms-auto text-nowrap d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
             <button id="Btn_AddTool" type="button" lang-text="_._Add+">
               [Add...]
             </button>
           </div>
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmMain.MnuGetMoreTools">
+            [Get more tools...]
+          </a>
         </div>
-        <div class="ig-table mb-2 d-block">
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 640;">
           <table id="Table_ToolList" style="width: 100%;">
             <thead>
               <tr>
@@ -832,7 +975,7 @@
                 <th width="10" lang-text="FrmSettings.Tab.Tools._Integrated">[Integrated]</th>
                 <th width="10" lang-text="_._Hotkeys">[Hotkeys]</th>
                 <th lang-text="_._Executable">[Executable]</th>
-                <th width="10" colspan="2" lang-text="_._Arguments">[Arguments]</th>
+                <th width="10" colspan="2" lang-text="_._Argument">[Argument]</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -927,13 +1070,8 @@
         <input type="hidden" name="DarkTheme" />
         <input type="hidden" name="LightTheme" />
 
-        <div class="mb-3 d-flex align-items-center">
-          <a class="text-nowrap me-2" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
-            lang-text="FrmSettings.Tab.Appearance._Theme._GetMoreThemes">
-            [Get more theme packs...]
-          </a>
-
-          <div class="ms-auto text-nowrap d-flex align-items-center">
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
             <button id="Btn_InstallTheme" type="button" class="me-2" lang-text="_._Install">
               [Install...]
             </button>
@@ -941,9 +1079,14 @@
               [Refresh]
             </button>
             <button id="Btn_OpenThemeFolder" type="button" lang-text="FrmSettings.Tab.Appearance._Theme._OpenThemeFolder">
-              [Open theme folder...]
+              [Open theme folder]
             </button>
           </div>
+
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmSettings.Tab.Appearance._Theme._GetMoreThemes">
+            [Get more theme packs...]
+          </a>
         </div>
 
         <ul id="List_ThemeList" class="ig-list-vertical mb-2"></ul>
@@ -951,8 +1094,10 @@
     </section>
 
 
+    <dialog is="edit-app-dialog"></dialog>
     <dialog is="tool-dialog"></dialog>
     <dialog is="edit-toolbar-dialog"></dialog>
+    <dialog is="file-format-dialog"></dialog>
   </main>
 
 

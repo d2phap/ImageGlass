@@ -21,6 +21,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
 using System.Web;
+using Windows.System;
 
 namespace ImageGlass.Base;
 
@@ -35,7 +36,6 @@ public partial class BHelper
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
     /// <param name="path">Full path of file or directory</param>
-    /// <returns></returns>
     public static bool CheckPathWritable(PathType type, string path)
     {
         try
@@ -74,33 +74,6 @@ public partial class BHelper
         {
             return false;
         }
-    }
-
-
-    /// <summary>
-    /// Fallout from Issue #530. To handle a long path name (i.e. a file path
-    /// longer than MAX_PATH), a magic prefix is sometimes necessary.
-    /// </summary>
-    public static string PrefixLongPath(string path)
-    {
-        if (string.IsNullOrEmpty(path)) return string.Empty;
-
-        if (path.Length > 255 && !path.StartsWith(LONG_PATH_PREFIX))
-            return LONG_PATH_PREFIX + path;
-
-        return path;
-    }
-
-    /// <summary>
-    /// Fallout from Issue #530. Specific functions (currently FileWatch)
-    /// fail if provided a prefixed file path. In this case, strip the prefix
-    /// (see PrefixLongPath above).
-    /// </summary>
-    public static string DePrefixLongPath(string path)
-    {
-        if (path.StartsWith(LONG_PATH_PREFIX))
-            return path[LONG_PATH_PREFIX.Length..];
-        return path;
     }
 
 
@@ -213,12 +186,11 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Open URL in the default browser
+    /// Open URL in the default browser.
     /// </summary>
-    /// <param name="url"></param>
-    public static void OpenUrl(string? url, string campaign = "app_unknown")
+    public static async Task OpenUrlAsync(string? url, string campaign = "from_unknown")
     {
-        if (string.IsNullOrEmpty(url)) return;
+        if (string.IsNullOrWhiteSpace(url)) return;
 
         try
         {
@@ -230,10 +202,7 @@ public partial class BHelper
 
             ub.Query = queries.ToString();
 
-            Process.Start(new ProcessStartInfo(ub.Uri.AbsoluteUri)
-            {
-                UseShellExecute = true,
-            });
+            _ = await Launcher.LaunchUriAsync(ub.Uri);
         }
         catch { }
     }
@@ -244,7 +213,7 @@ public partial class BHelper
     /// </summary>
     public static void OpenFilePath(string? filePath)
     {
-        if (string.IsNullOrEmpty(filePath)) return;
+        if (string.IsNullOrWhiteSpace(filePath)) return;
 
         try
         {
@@ -254,6 +223,27 @@ public partial class BHelper
         {
             using var proc = Process.Start("explorer.exe", $"/select,\"{filePath}\"");
         }
+    }
+
+
+    /// <summary>
+    /// Opens the folder path in Explorer, creates the fodler path if not existed.
+    /// </summary>
+    public static void OpenFolderPath(string? dirPath)
+    {
+        if (string.IsNullOrWhiteSpace(dirPath)) return;
+
+        try
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        catch { }
+
+        try
+        {
+            using var proc = Process.Start("explorer.exe", $"\"{dirPath}\"");
+        }
+        catch { }
     }
 
 

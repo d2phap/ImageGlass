@@ -68,7 +68,7 @@ public partial class FrmExportFrames : DialogForm
 
         // must be after base.OnLoad()
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-        Config.UpdateFormIcon(this);
+        _ = Config.UpdateFormIcon(this);
 
 
         Activate();

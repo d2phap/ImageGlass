@@ -59,10 +59,15 @@ public partial class FrmMain
     /// </summary>
     public void OpenFilePicker()
     {
-        var formats = Config.GetImageFormats(Config.AllFormats);
+        var sb = new StringBuilder(Config.FileFormats.Count);
+        foreach (var ext in Config.FileFormats)
+        {
+            sb.Append('*').Append(ext).Append(';');
+        }
+
         using var o = new OpenFileDialog()
         {
-            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + formats,
+            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + sb.ToString(),
             CheckFileExists = true,
             RestoreDirectory = true,
         };
@@ -784,7 +789,7 @@ public partial class FrmMain
     /// </summary>
     public static void IG_ReportIssue()
     {
-        BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
+        _ = BHelper.OpenUrlAsync("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "from_report_issue");
     }
 
 
@@ -1714,8 +1719,9 @@ public partial class FrmMain
         // get extension
         var ext = Path.GetExtension(filePath).ToLowerInvariant();
 
+
         // get app from the extension
-        if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+        if (Config.GetEditAppFromExtension(ext) is EditApp app)
         {
             // open configured app for editing
             using var p = new Process();
@@ -1862,7 +1868,7 @@ public partial class FrmMain
     }
 
 
-    public static void IG_UnsetDefaultPhotoViewer()
+    public static void IG_RemoveDefaultPhotoViewer()
     {
         _ = Config.SetDefaultPhotoViewerAsync(false);
     }
@@ -2575,7 +2581,7 @@ public partial class FrmMain
                     FormBorderStyle = FormBorderStyle.Sizable;
                 }
 
-                Config.UpdateFormIcon(this);
+                _ = Config.UpdateFormIcon(this);
             }
 
         }
@@ -2612,7 +2618,7 @@ public partial class FrmMain
             ToolId = Constants.IGTOOL_SLIDESHOW,
             ToolName = "[Slideshow]",
             Executable = "igcmd.exe",
-            Arguments = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
+            Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
             IsIntegrated = true,
         };
 

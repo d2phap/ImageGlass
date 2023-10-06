@@ -1,5 +1,7 @@
 
 .ig-table {
+  --table-max-height: 200;
+
   --header-border-top-color: transparent;
   --header-border-bottom-color: var(--ControlBorder);
   --header-border-left-color: transparent;
@@ -15,7 +17,7 @@
   border: 0.1rem solid var(--ControlBorder);
   border-radius: var(--borderRadius);
   min-height: 4rem;
-  max-height: calc(200 * var(--fontScale) * 1px);
+  max-height: calc(var(--table-max-height) * var(--fontScale) * 1px);
   max-width: 100%;
   display: inline-block;
   counter-reset: row-counter;
@@ -129,6 +131,11 @@
       &:hover > td {
         --cell-border-bottom-color: rgb(var(--Accent) / 0.3);
         --cell-shadow-background: inset 0 0 0 100vw rgb(var(--Accent) / 0.1);
+      }
+
+      &.row--highlight > td {
+        --cell-border-bottom-color: rgb(var(--Accent) / 0.4);
+        --cell-shadow-background: inset 0 0 0 100vw rgb(var(--Accent) / 0.2);
       }
     }
   }

@@ -119,7 +119,7 @@ public static class ExplorerApi
     /// Open folder and select an item.
     /// </summary>
     /// <remarks>
-    /// SHParseDisplayName will not always find the correct folder. If the user
+    /// <see cref="SHParseDisplayName"/> will not always find the correct folder. If the user
     /// has a folder open that is rooted in their user folder (e.g. the desktop,
     /// Dropbox/Mega/Nextcloud folder), this won't match the folder reference
     /// returned by <see cref="SHParseDisplayName"/> if given the actual path
@@ -291,7 +291,7 @@ public static class ExplorerApi
     /// <summary>
     /// Register file type associations and app capabilities to registry
     /// </summary>
-    /// <param name="extensions">Extension string, ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extension string, ex: <c>.png;.svg;</c></param>
     public static Exception? RegisterAppAndExtensions(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -324,7 +324,7 @@ public static class ExplorerApi
                 // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
                 using (var faKey = key?.CreateSubKey("FileAssociations", true))
                 {
-                    var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var ext in exts)
                     {
@@ -340,13 +340,10 @@ public static class ExplorerApi
                         // HKEY_CURRENT_USER\SOFTWARE\Classes\ImageGlass.AssocFile.<EXT>
                         using (var extRootKey = Registry.CurrentUser.CreateSubKey(extAssocPath, true))
                         {
-                            // ImageGlass <EXT> file
-                            extRootKey?.SetValue("", $"{APP_NAME} {extNoDot} file");
-
-
                             // DefaultIcon -------------------------------------------------------
                             // get extension icon
-                            var iconPath = App.ConfigDir(PathType.File, Dir.ExtIcons, $"{extNoDot}.ico");
+                            var extDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
+                            var iconPath = Path.Combine(extDir, $"{extNoDot}.ico");
                             if (!File.Exists(iconPath))
                             {
                                 iconPath = App.StartUpDir(Dir.ExtIcons, $"{extNoDot}.ico");
@@ -356,6 +353,7 @@ public static class ExplorerApi
                                     iconPath = string.Empty;
                                 }
                             }
+
 
                             // set extension icon
                             if (!string.IsNullOrEmpty(iconPath))
@@ -405,7 +403,7 @@ public static class ExplorerApi
     /// <summary>
     /// Unregister file type associations and app information from registry
     /// </summary>
-    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>.png;.svg;</c></param>
     public static Exception? UnregisterAppAndExtensions(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -437,13 +435,13 @@ public static class ExplorerApi
 
             // Delete file type associations
             // HKEY_CURRENT_USER\Software\Classes\ImageGlass.AssocFile.<EXT>
-            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in exts)
             {
                 var extNoDot = ext[1..].ToUpperInvariant();
                 var extAssocPath = $@"Software\Classes\{APP_NAME}.AssocFile.{extNoDot}";
 
-                Registry.ClassesRoot.DeleteSubKeyTree(extAssocPath, false);
+                Registry.CurrentUser.DeleteSubKeyTree(extAssocPath, false);
             }
 
 
@@ -469,7 +467,7 @@ public static class ExplorerApi
     /// <summary>
     /// Unregister file type associations and app information from registry for <b>ImageGlass v8</b>.
     /// </summary>
-    /// <param name="extensions">Extensions string to delete. Ex: <c>*.png;*.svg;</c></param>
+    /// <param name="extensions">Extensions string to delete. Ex: <c>.png;.svg;</c></param>
     public static Exception? UnregisterAppAndExtensionsLegacy(string extensions)
     {
         const string APP_NAME = "ImageGlass";
@@ -498,7 +496,7 @@ public static class ExplorerApi
 
             // Delete file type associations
             // HKEY_CLASSES_ROOT\ImageGlass.AssocFile.<EXT>
-            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in exts)
             {
                 var extNoDot = ext[1..].ToUpperInvariant();

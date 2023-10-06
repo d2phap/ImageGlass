@@ -77,10 +77,12 @@ export default class Settings {
     TabImage.loadSettings();
     TabSlideshow.loadSettings();
     TabEdit.loadSettings();
+
+    TabLayout.loadSettings();
     TabViewer.loadSettings();
     TabToolbar.loadSettings();
     TabGallery.loadSettings();
-    TabLayout.loadSettings();
+
     TabMouse.loadSettings();
     TabKeyboard.loadSettings();
     TabFileAssocs.loadSettings();
@@ -102,10 +104,12 @@ export default class Settings {
     TabImage.addEvents();
     TabSlideshow.addEvents();
     TabEdit.addEvents();
+
+    TabLayout.loadSettings();
     TabViewer.addEvents();
     TabToolbar.addEvents();
     TabGallery.addEvents();
-    TabLayout.addEvents();
+
     TabMouse.addEvents();
     TabFileAssocs.addEvents();
     TabTools.addEvents();
@@ -147,10 +151,12 @@ export default class Settings {
       ...TabImage.exportSettings(),
       ...TabSlideshow.exportSettings(),
       ...TabEdit.exportSettings(),
+
+      ...TabLayout.exportSettings(),
       ...TabViewer.exportSettings(),
       ...TabToolbar.exportSettings(),
       ...TabGallery.exportSettings(),
-      ...TabLayout.exportSettings(),
+
       ...TabMouse.exportSettings(),
       ...TabKeyboard.exportSettings(),
       ...TabFileAssocs.exportSettings(),

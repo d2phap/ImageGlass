@@ -109,30 +109,30 @@ internal static class Program
         #endregion
 
 
-        #region SET_DEFAULT_PHOTO_VIEWER [string ext]
+        #region SET_DEFAULT_PHOTO_VIEWER [string exts]
         if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
-            var ext = "";
+            var exts = "";
             if (CmdArgs.Length > 1)
             {
-                ext = CmdArgs[1];
+                exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, ext, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(true, exts, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 
 
-        #region UNSET_DEFAULT_PHOTO_VIEWER [string ext]
-        if (topCmd == IgCommands.UNSET_DEFAULT_PHOTO_VIEWER)
+        #region REMOVE_DEFAULT_PHOTO_VIEWER [string exts]
+        if (topCmd == IgCommands.REMOVE_DEFAULT_PHOTO_VIEWER)
         {
-            var ext = "";
+            var exts = "";
             if (CmdArgs.Length > 1)
             {
-                ext = CmdArgs[1];
+                exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, ext, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(false, exts, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 

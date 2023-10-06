@@ -27,23 +27,24 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
             <div class="mb-1" lang-text="_._ID">[ID]</div>
-            <input type="text" name="_ToolId" class="w-100" required spellcheck="false" />
+            <input type="text" name="_ToolId" class="w-100" required spellcheck="false" placeholder="Tool_" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Name">[Name]</div>
-            <input type="text" name="_ToolName" class="w-100" required spellcheck="false" />
+            <input type="text" name="_ToolName" class="w-100" required spellcheck="false" placeholder="ExifGlass - Metadata viewer" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Executable">[Executable]</div>
             <div class="d-flex align-items-center">
               <input type="text" name="_Executable" class="me-2 w-100" required spellcheck="false"
+                placeholder="exifglass.exe"
                 style="width: calc(100vw - calc(var(--controlHeight) * 1px) - 0.5rem);" />
               <button id="BtnBrowseTool" type="button" class="px-1" lang-title="_._Browse">…</button>
             </div>
           </div>
           <div class="mb-3">
-            <div class="mb-1" lang-text="_._Arguments">[Arguments]</div>
-            <input type="text" name="_Arguments" class="w-100" spellcheck="false" value="<file>" />
+            <div class="mb-1" lang-text="_._Argument">[Argument]</div>
+            <input type="text" name="_Argument" class="w-100" spellcheck="false" placeholder="<file>" value="<file>" />
           </div>
           <div class="mb-3">
             <div class="mb-1" lang-text="_._Hotkeys">[Hotkeys]</div>
@@ -78,7 +79,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       ToolId: '',
       ToolName: '',
       Executable: '',
-      Arguments: _pageSettings.FILE_MACRO,
+      Argument: _pageSettings.FILE_MACRO,
       Hotkeys: [],
       IsIntegrated: false,
     } as ITool;
@@ -86,6 +87,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'create', defaultTool, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
+      query('[name="_ToolId"]', this).toggleAttribute('disabled', false);
 
       const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, defaultTool.Hotkeys);
@@ -109,7 +111,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       ToolId: toolId,
       ToolName: query('[name="_ToolName"]', trEl).innerText || '',
       Executable: query('[name="_Executable"]', trEl).innerText || '',
-      Arguments: query('[name="_Arguments"]', trEl).innerText || '',
+      Argument: query('[name="_Argument"]', trEl).innerText || '',
       IsIntegrated: query('[name="_IsIntegrated"]', trEl).innerText === 'true',
       Hotkeys: toolHotkeys,
     };
@@ -118,6 +120,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     const isSubmitted = await openModalDialogEl(this, 'edit', tool, async () => {
       this.addDialogEvents();
       this.updateToolCommandPreview();
+      query('[name="_ToolId"]', this).toggleAttribute('disabled', true);
 
       const hotkeyListEl = query<HTMLUListElement>('.ig-list-horizontal', this);
       await renderHotkeyListEl(hotkeyListEl, tool.Hotkeys);
@@ -136,7 +139,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
       ToolId: query<HTMLInputElement>('[name="_ToolId"]', this).value.trim(),
       ToolName: query<HTMLInputElement>('[name="_ToolName"]', this).value.trim(),
       Executable: query<HTMLInputElement>('[name="_Executable"]', this).value.trim(),
-      Arguments: query<HTMLInputElement>('[name="_Arguments"]', this).value.trim(),
+      Argument: query<HTMLInputElement>('[name="_Argument"]', this).value.trim(),
       Hotkeys: queryAll('.ig-list-horizontal > .hotkey-item > kbd', this).map(el => el.innerText),
       IsIntegrated: query<HTMLInputElement>('[name="_IsIntegrated"]', this).checked,
     };
@@ -149,14 +152,11 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     query('[name="_Executable"]', this).removeEventListener('input', this.updateToolCommandPreview, false);
     query('[name="_Executable"]', this).addEventListener('input', this.updateToolCommandPreview, false);
 
-    query('[name="_Arguments"]', this).removeEventListener('input', this.updateToolCommandPreview, false);
-    query('[name="_Arguments"]', this).addEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Argument"]', this).removeEventListener('input', this.updateToolCommandPreview, false);
+    query('[name="_Argument"]', this).addEventListener('input', this.updateToolCommandPreview, false);
 
     query('#BtnBrowseTool', this).removeEventListener('click', this.handleBtnBrowseToolClickEvent, false);
     query('#BtnBrowseTool', this).addEventListener('click', this.handleBtnBrowseToolClickEvent, false);
-
-    query('[data-dialog-action="close"]', this).removeEventListener('click', () => this.close(), false);
-    query('[data-dialog-action="close"]', this).addEventListener('click', () => this.close(), false);
   }
 
 
@@ -164,7 +164,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     let executable = query<HTMLInputElement>('[name="_Executable"]', this).value || '';
     executable = executable.trim();
 
-    let args = query<HTMLInputElement>('[name="_Arguments"]', this).value || '';
+    let args = query<HTMLInputElement>('[name="_Argument"]', this).value || '';
     args = args.trim().replaceAll('<file>', '"C:\\fake dir\\photo.jpg"');
 
     query('#Tool_CommandPreview', this).innerText = [executable, args].filter(Boolean).join(' ');
@@ -175,7 +175,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     const filePaths = await openFilePicker() ?? [];
     if (!filePaths.length) return;
 
-    query<HTMLInputElement>('[name="_Executable"]', this).value = `"${filePaths[0]}"`;
+    query<HTMLInputElement>('[name="_Executable"]', this).value = filePaths[0];
     this.updateToolCommandPreview();
   }
 }

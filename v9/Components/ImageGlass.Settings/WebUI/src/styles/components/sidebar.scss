@@ -55,6 +55,10 @@ ul.ig-sidebar {
             bottom: 0;
             margin: auto;
           }
+
+          &[data-level="2"] {
+            padding-left: 2rem;
+          }
         }
 
         &:hover+* {

@@ -299,6 +299,7 @@ public partial class ImageGallery : Control, IComponent
             var slimit = value;
             mCacheMode = CacheMode.OnDemand;
 
+            // cache by memory
             if ((slimit.EndsWith("MB", StringComparison.OrdinalIgnoreCase)
                 && int.TryParse(slimit[0..^2].Trim(), out int limit))
                 || (slimit.EndsWith("MiB", StringComparison.OrdinalIgnoreCase)
@@ -312,6 +313,7 @@ public partial class ImageGallery : Control, IComponent
                     thumbnailCache.CacheLimitAsMemory = mCacheLimitAsMemory;
                 }
             }
+            // cache my item count
             else if (int.TryParse(slimit, out limit))
             {
                 mCacheLimitAsMemory = 0;
@@ -673,7 +675,6 @@ public partial class ImageGallery : Control, IComponent
             if (mThumbnailSize != value)
             {
                 mThumbnailSize = value;
-                thumbnailCache.Rebuild();
                 Refresh();
             }
         }

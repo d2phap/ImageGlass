@@ -2,6 +2,7 @@ import { ITool } from '@/@types/FrmSettings';
 import {
   escapeHtml,
   getChangedSettingsFromTab,
+  pause,
 } from '@/helpers';
 import Language from '../common/Language';
 import { ToolDialogHtmlElement } from './webComponents/ToolDialogHtmlElement';
@@ -49,7 +50,7 @@ export default class TabTools {
   /**
    * Loads tool list but do not update `_pageSettings.toolList`.
    */
-  private static loadToolList(list?: ITool[]) {
+  private static loadToolList(list?: ITool[], toolIdHighlight = '') {
     const toolList: ITool[] = list ?? _pageSettings.toolList ?? [];
 
     const tbodyEl = query<HTMLTableElement>('#Table_ToolList > tbody');
@@ -62,8 +63,8 @@ export default class TabTools {
 
     for (const item of toolList) {
       let args = '<i lang-text="_._Empty"></i>';
-      if (item.Arguments) {
-        args = `<code>${escapeHtml(item.Arguments)}</code>`;
+      if (item.Argument) {
+        args = `<code>${escapeHtml(item.Argument)}</code>`;
       }
 
       const hotkeysHtml = (item.Hotkeys || [])
@@ -85,7 +86,7 @@ export default class TabTools {
             <code hidden name="_ToolName">${escapeHtml(item.ToolName)}</code>
             <code hidden name="_IsIntegrated">${item.IsIntegrated}</code>
             <code hidden name="_Executable">${escapeHtml(item.Executable)}</code>
-            <code hidden name="_Arguments">${escapeHtml(item.Arguments)}</code>
+            <code hidden name="_Argument">${escapeHtml(item.Argument)}</code>
             <code hidden name="_Hotkeys">${(item.Hotkeys || []).join(TabTools.HOTKEY_SEPARATOR)}</code>
           </td>
           <td class="cell-sticky text-nowrap">${item.ToolId}</td>
@@ -127,6 +128,19 @@ export default class TabTools {
         }
       }, false);
     });
+
+
+    // scroll to & highlight the extension row
+    if (toolIdHighlight) {
+      const highlightedTrEl = query(`#Table_ToolList tr[data-toolId="${toolIdHighlight}"]`);
+      if (!highlightedTrEl) return;
+
+      highlightedTrEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      highlightedTrEl.classList.add('row--highlight');
+      pause(2000).then(() => {
+        if (highlightedTrEl) highlightedTrEl.classList.remove('row--highlight');
+      });
+    }
   }
 
 
@@ -140,7 +154,7 @@ export default class TabTools {
       const toolName = query('[name="_ToolName"]', trEl).innerText || '';
       const toolIntegrated = (query('[name="_IsIntegrated"]', trEl).innerText) === 'true';
       const toolExecutable = query('[name="_Executable"]', trEl).innerText || '';
-      const toolArguments = query('[name="_Arguments"]', trEl).innerText || '';
+      const toolArgument = query('[name="_Argument"]', trEl).innerText || '';
 
       const hotkeysStr = query('[name="_Hotkeys"]', trEl).innerText || '';
       const toolHotkeys = hotkeysStr.split(TabTools.HOTKEY_SEPARATOR).filter(Boolean);
@@ -150,7 +164,7 @@ export default class TabTools {
         ToolName: toolName,
         IsIntegrated: toolIntegrated,
         Executable: toolExecutable,
-        Arguments: toolArguments,
+        Argument: toolArgument,
         Hotkeys: toolHotkeys,
       } as ITool;
     });
@@ -199,6 +213,6 @@ export default class TabTools {
       toolList.push(tool);
     }
 
-    TabTools.loadToolList(toolList);
+    TabTools.loadToolList(toolList, tool.ToolId);
   }
 }

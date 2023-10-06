@@ -238,6 +238,7 @@ export default class TabLayout {
 
 
   private static handleLayoutItemDrop(e: DragEvent, toDropEl: HTMLElement) {
+    e.stopImmediatePropagation();
     e.preventDefault();
     toDropEl.classList.remove('drag--enter');
 

@@ -129,9 +129,8 @@ export const openModalDialogEl = async (
   purpose: 'create' | 'edit',
   data: Record<string, any> = {},
   onOpen?: (el: HTMLDialogElement) => any,
-  onSubmit?: (e: SubmitEvent) => any) => {
-  let isClosed = false;
-  let isSubmitted = false;
+  onSubmit?: (e: SubmitEvent) => boolean | Promise<boolean>) => {
+  dialogEl.returnValue = '';
   dialogEl.classList.remove('dialog--create', 'dialog--edit');
   dialogEl.classList.add(`dialog--${purpose}`);
 
@@ -152,14 +151,28 @@ export const openModalDialogEl = async (
     }
   }, false);
 
-  // on close
-  dialogEl.addEventListener('close', () => isClosed = true, false);
+
+  const cancelDialogFn = () => dialogEl.close('false');
+  const formSubmitFn = async (e: SubmitEvent) => {
+    if (onSubmit) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+
+      const canProceed = await Promise.resolve(onSubmit(e));
+      if (!canProceed) return;
+    }
+
+    // isSubmitted = true;
+    dialogEl.close('true');
+  };
 
   // on submit
-  query<HTMLFormElement>('form', dialogEl).addEventListener('submit', async (e) => {
-    if (onSubmit) await Promise.resolve(onSubmit(e));
-    isSubmitted = true;
-  });
+  query<HTMLFormElement>('form', dialogEl).removeEventListener('submit', formSubmitFn, false);
+  query<HTMLFormElement>('form', dialogEl).addEventListener('submit', formSubmitFn, false);
+
+  // on cancel
+  query('[data-dialog-action="close"]', dialogEl).removeEventListener('click', cancelDialogFn, false);
+  query('[data-dialog-action="close"]', dialogEl).addEventListener('click', cancelDialogFn, false);
 
   Object.keys(data).forEach(key => {
     const inputEl = query<HTMLInputElement>(`[name="_${key}"]`, dialogEl);
@@ -179,11 +192,11 @@ export const openModalDialogEl = async (
   // open modal dialog
   dialogEl.showModal();
 
-  while (!isClosed) {
+  while (!dialogEl.returnValue) {
     await pause(100);
   }
 
-  return isSubmitted;
+  return dialogEl.returnValue === 'true';
 };
 
 
@@ -198,7 +211,7 @@ export const openModalDialog = (
   purpose: 'create' | 'edit',
   data: Record<string, any> = {},
   onOpen?: (el: HTMLDialogElement) => any,
-  onSubmit?: (e: SubmitEvent) => any) => {
+  onSubmit?: (e: SubmitEvent) => boolean | Promise<boolean>) => {
   const dialogEl = query<HTMLDialogElement>(selector);
   return openModalDialogEl(dialogEl, purpose, data, onOpen, onSubmit);
 };

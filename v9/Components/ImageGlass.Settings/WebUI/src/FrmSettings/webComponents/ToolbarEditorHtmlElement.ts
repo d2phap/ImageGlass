@@ -2,6 +2,8 @@ import { IToolbarButton } from '@/@types/FrmSettings';
 import Language from '@/common/Language';
 import { arrayMoveMutable, pause } from '@/helpers';
 
+export type TEditButtonFn = (btn: IToolbarButton) => Promise<IToolbarButton | null>;
+
 export class ToolbarEditorHtmlElement extends HTMLElement {
   #listAvailableEl: HTMLUListElement;
 
@@ -14,6 +16,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     fromIndex: -1,
   };
 
+  #editButtonFn: TEditButtonFn;
+
   constructor() {
     super();
 
@@ -21,6 +25,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.initialize = this.initialize.bind(this);
     this.loadItems = this.loadItems.bind(this);
     this.loadItemsByIds = this.loadItemsByIds.bind(this);
+    this.insertItems = this.insertItems.bind(this);
     this.reloadAvailableItems = this.reloadAvailableItems.bind(this);
     this.reloadCurrentItems = this.reloadCurrentItems.bind(this);
     this.isBuiltInButton = this.isBuiltInButton.bind(this);
@@ -94,7 +99,8 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   /**
    * Initializes and loads data into the toolbar editor.
    */
-  public initialize() {
+  public initialize(onEditButton: TEditButtonFn) {
+    this.#editButtonFn = onEditButton.bind(this);
     this.#hasChanges = false;
     this.loadItems();
 
@@ -125,6 +131,14 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
 
     this.loadItems(items);
     this.#hasChanges = true;
+  }
+
+  public insertItems(btn: IToolbarButton, toIndex: number) {
+    this.#itemsCurrent.splice(toIndex, 0, btn);
+    this.#hasChanges = true;
+
+    // reload buttons list
+    this.reloadCurrentItems(toIndex);
   }
 
   private reloadAvailableItems() {
@@ -210,7 +224,7 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
         <li class="toolbar-item" data-index="${index}" data-alignment="${item.Alignment}">
           <div class="btn btn-toolbar" draggable="true" tabindex="0" lang-title="${textLang}">
             ${imageHtml}
-            <span class="button-text" lang-text="${textLang}"></span>
+            <span class="button-text" lang-text="${textLang}">${textLang}</span>
 
             <div class="button-actions">
               <button type="button" class="btn btn--icon" lang-title="_._MoveUp" data-action="move_up">
@@ -427,8 +441,19 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
     this.reloadAvailableItems();
   }
 
-  private editToolbarButton(btnIndex: number) {
-    //
+  private async editToolbarButton(btnIndex: number) {
+    const btn = this.#itemsCurrent[btnIndex];
+    if (!btn || !this.#editButtonFn) return;
+
+    const newBtn = await Promise.resolve(this.#editButtonFn({
+      ...btn,
+      ImageUrl: undefined,
+    }));
+    if (!newBtn) return;
+
+    this.#itemsCurrent[btnIndex] = newBtn;
+    this.#hasChanges = true;
+    this.reloadCurrentItems(btnIndex);
   }
 }
 

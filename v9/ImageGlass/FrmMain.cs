@@ -636,7 +636,7 @@ public partial class FrmMain : ThemedForm
                     }
                 }
 
-                return extension.Length > 0 && Config.AllFormats.Contains(extension);
+                return extension.Length > 0 && Config.FileFormats.Contains(extension);
             }));
     }
 
@@ -654,10 +654,6 @@ public partial class FrmMain : ThemedForm
 
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
-
-        var thumbSize = this.ScaleToDpi(Config.ThumbnailSize);
-        Gallery.ThumbnailSize = new Size(thumbSize, thumbSize);
-
 
         foreach (string filename in Local.Images.FileNames)
         {
@@ -790,7 +786,7 @@ public partial class FrmMain : ThemedForm
             if (!string.IsNullOrEmpty(filePath))
             {
                 photo = new IgPhoto(filePath);
-                readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
+                readSettings.FirstFrameOnly = Config.SingleFrameFormats.Contains(photo.Extension);
 
                 if (isSkipCache || Local.Metadata == null
                     || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)
@@ -840,7 +836,7 @@ public partial class FrmMain : ThemedForm
             tokenSrc?.Token.ThrowIfCancellationRequested();
 
             // apply image list settings
-            Local.Images.SinglePageFormats = Config.SinglePageFormats;
+            Local.Images.SingleFrameFormats = Config.SingleFrameFormats;
             Local.Images.ReadOptions = readSettings;
 
 
@@ -1680,7 +1676,10 @@ public partial class FrmMain : ThemedForm
         else
         {
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var procArgs = $"{ac.Arguments}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
+            var procArgs = string.Join("",
+                ac.Arguments
+                    .Select(i => $"{i}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\""))
+                    .ToArray()) ?? string.Empty;
 
             var result = await BHelper.RunExeCmd(ac.Executable, procArgs, true);
             if (result != IgExitCode.Done)
@@ -2299,7 +2298,7 @@ public partial class FrmMain : ThemedForm
 
     private void MnuGetMoreTools_Click(object sender, EventArgs e)
     {
-        BHelper.OpenUrl("https://imageglass.org/tools", "app_get_more_tools");
+        _ = BHelper.OpenUrlAsync("https://imageglass.org/tools", "from_get_more_tools");
     }
 
 
@@ -2333,9 +2332,9 @@ public partial class FrmMain : ThemedForm
         IG_SetDefaultPhotoViewer();
     }
 
-    private void MnuUnsetDefaultPhotoViewer_Click(object sender, EventArgs e)
+    private void MnuRemoveDefaultPhotoViewer_Click(object sender, EventArgs e)
     {
-        IG_UnsetDefaultPhotoViewer();
+        IG_RemoveDefaultPhotoViewer();
     }
 
     #endregion // Menu Help

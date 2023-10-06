@@ -58,7 +58,7 @@ public partial class FrmMain
         // MnuNavigation
         { nameof(MnuViewNext),              new() { new (Keys.Right) } },
         { nameof(MnuViewPrevious),          new() { new (Keys.Left) } },
-        { nameof(MnuGoTo),                  new() { new (Keys.G) } },
+        { nameof(MnuGoTo),                  new() { new (Keys.F) } },
         { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
         { nameof(MnuGoToLast),              new() { new (Keys.End) } },
         { nameof(MnuViewNextFrame),         new() { new (Keys.Control | Keys.Right) } },
@@ -118,7 +118,7 @@ public partial class FrmMain
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
-        { nameof(MnuToggleGallery),         new() { new (Keys.H) } },
+        { nameof(MnuToggleGallery),         new() { new (Keys.G) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
 
         // MnuTools
@@ -147,8 +147,8 @@ public partial class FrmMain
 
 
         // Thumbnail bar
-        Gallery.DoNotDeletePersistentCache = true;
         Gallery.PersistentCacheSize = Config.GalleryCacheSizeInMb;
+        Gallery.DoNotDeletePersistentCache = Config.GalleryCacheSizeInMb > 0;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
         Gallery.Padding = this.ScaleToDpi(new Padding(2));
@@ -425,6 +425,13 @@ public partial class FrmMain
             Gallery.ScrollBars = Config.ShowGalleryScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
             Gallery.ShowItemText = Config.ShowGalleryFileName;
             Gallery.PersistentCacheSize = Config.GalleryCacheSizeInMb;
+            Gallery.DoNotDeletePersistentCache = Config.GalleryCacheSizeInMb > 0;
+
+            // disable thumbnail cache
+            if (Config.GalleryCacheSizeInMb == 0)
+            {
+                Gallery.ClearThumbnailCache();
+            }
 
             // update gallery size
             UpdateGallerySize();
@@ -766,7 +773,7 @@ public partial class FrmMain
         MnuReportIssue.Text = lang[$"{Name}.{nameof(MnuReportIssue)}"];
 
         MnuSetDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"];
-        MnuUnsetDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuUnsetDefaultPhotoViewer)}"];
+        MnuRemoveDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuRemoveDefaultPhotoViewer)}"];
         #endregion
 
 
@@ -1158,7 +1165,7 @@ public partial class FrmMain
             // Find file format
             var ext = Path.GetExtension(Local.Images.GetFilePath(Local.CurrentIndex)).ToLowerInvariant();
 
-            if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+            if (Config.GetEditAppFromExtension(ext) is EditApp app)
             {
                 appName = $"({app.AppName})";
 
