@@ -90,7 +90,7 @@ public partial class FrmAbout : WebForm
         }
         else if (e.Name.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
         {
-            BHelper.OpenUrlAsync("https://imageglass.org/support#donation", "from_about_donate");
+            _ = BHelper.OpenUrlAsync("https://imageglass.org/support#donation", "from_about_donate");
         }
         else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
         {

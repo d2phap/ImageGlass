@@ -21,6 +21,7 @@
     <Configurations>Debug;Release;Publish_Release</Configurations>
 
     <LangVersion>latest</LangVersion>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">

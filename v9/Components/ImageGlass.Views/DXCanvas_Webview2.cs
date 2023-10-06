@@ -21,6 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using Microsoft.Web.WebView2.Core;
+using System.ComponentModel;
 using System.Dynamic;
 
 namespace ImageGlass.Viewer;
@@ -61,6 +62,7 @@ public partial class DXCanvas
     /// <summary>
     /// Gets, sets value of dark mode of <see cref="Web2"/>.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool Web2DarkMode
     {
         get => _web2DarkMode;
@@ -78,6 +80,7 @@ public partial class DXCanvas
     /// <summary>
     /// Gets, sets the left navigation image path for <see cref="Web2"/>.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string Web2NavLeftImagePath
     {
         get => _web2NavLeftImagePath;
@@ -92,6 +95,7 @@ public partial class DXCanvas
     /// <summary>
     /// Gets, sets the right navigation image path for <see cref="Web2"/>.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string Web2NavRightImagePath
     {
         get => _web2NavRightImagePath;

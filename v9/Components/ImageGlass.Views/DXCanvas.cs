@@ -149,6 +149,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the left padding.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int PaddingLeft
     {
         get => Padding.Left;
@@ -164,6 +165,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the top padding.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int PaddingTop
     {
         get => Padding.Top;
@@ -179,6 +181,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the right padding.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int PaddingRight
     {
         get => Padding.Right;
@@ -194,6 +197,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the bottom padding.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int PaddingBottom
     {
         get => Padding.Bottom;
@@ -209,6 +213,7 @@ public partial class DXCanvas : DXControl
     /// Gets the drawing area after deducting <see cref="Padding"/>.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RectangleF DrawingArea => new RectangleF(
         Padding.Left,
         Padding.Top,
@@ -219,6 +224,7 @@ public partial class DXCanvas : DXControl
     /// Gets rectangle of the viewport.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RectangleF ImageDestBounds => _destRect;
 
 
@@ -226,6 +232,7 @@ public partial class DXCanvas : DXControl
     /// Gets the rectangle of the source image region being drawn.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RectangleF ImageSourceBounds => _srcRect;
 
 
@@ -233,6 +240,7 @@ public partial class DXCanvas : DXControl
     /// Gets the center point of image viewport.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public PointF ImageViewportCenterPoint => new()
     {
         X = ImageDestBounds.X + ImageDestBounds.Width / 2,
@@ -244,6 +252,7 @@ public partial class DXCanvas : DXControl
     /// Checks if the viewing image size if smaller than the viewport size.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool IsViewingSizeSmallerViewportSize
     {
         get
@@ -267,12 +276,14 @@ public partial class DXCanvas : DXControl
     /// Gets the drawing state of the image source
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public ImageDrawingState ImageDrawingState => _imageDrawingState;
 
-    
+
     /// <summary>
     /// Gets, sets accent color.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Color AccentColor
     {
         get => _accentColor;
@@ -289,6 +300,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the client selection area. This will emit the event <see cref="SelectionChanged"/>.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RectangleF ClientSelection
     {
         get
@@ -312,6 +324,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the source selection area.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RectangleF SourceSelection
     {
         get
@@ -366,6 +379,7 @@ public partial class DXCanvas : DXControl
     /// Gets the resizers of the selection rectangle
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public List<SelectionResizer> SelectionResizers
     {
         get
@@ -478,12 +492,14 @@ public partial class DXCanvas : DXControl
     /// Gets, sets selection aspect ratio.
     /// If Width or Height is <c>less than or equals 0</c>, we will use free aspect ratio.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public SizeF SelectionAspectRatio { get; set; } = new();
 
 
     /// <summary>
     /// Enables or disables the selection.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool EnableSelection
     {
         get => _enableSelection;
@@ -514,24 +530,28 @@ public partial class DXCanvas : DXControl
     /// Checks if the bitmap image has alpha pixels.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool HasAlphaPixels { get; private set; } = false;
 
     /// <summary>
     /// Checks if the bitmap image can animate.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool CanImageAnimate { get; private set; } = false;
 
     /// <summary>
     /// Checks if the image is animating.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool IsImageAnimating { get; protected set; } = false;
 
     /// <summary>
     /// Checks if the input image is null.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public ImageSource Source
     {
         get => _imageSource;
@@ -550,12 +570,14 @@ public partial class DXCanvas : DXControl
     /// Gets the input image's width.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public float SourceWidth { get; private set; } = 0;
 
     /// <summary>
     /// Gets the input image's height.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public float SourceHeight { get; private set; } = 0;
 
 
@@ -661,6 +683,7 @@ public partial class DXCanvas : DXControl
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(ImageInterpolation.Linear)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public ImageInterpolation InterpolationScaleDown
     {
         get => _interpolationScaleDown;
@@ -709,6 +732,8 @@ public partial class DXCanvas : DXControl
 
     [Category("Checkerboard")]
     [DefaultValue(CheckerboardMode.None)]
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public CheckerboardMode CheckerboardMode
     {
         get => _checkerboardMode;
@@ -828,6 +853,7 @@ public partial class DXCanvas : DXControl
     /// </summary>
     [Category("Navigation")]
     [DefaultValue(NavButtonDisplay.None)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public NavButtonDisplay NavDisplay
     {
         get => _navDisplay;
@@ -847,6 +873,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the navigation button size.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public SizeF NavButtonSize { get; set; } = new(60f, 60f);
 
 
@@ -897,6 +924,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the message heading text
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string TextHeading { get; set; } = string.Empty;
 
 
@@ -904,6 +932,7 @@ public partial class DXCanvas : DXControl
     /// Gets, sets border radius of message box
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public float MessageBorderRadius { get; set; } = 6f;
 
 
@@ -918,6 +947,7 @@ public partial class DXCanvas : DXControl
     /// Enables, disables debug mode.
     /// </summary>
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool EnableDebug
     {
         get => _debugMode;
