@@ -51,7 +51,7 @@
         edit="Edit.svg"
         crop="Crop.svg"
         colorpicker="ColorPicker.svg"
-	    exit="Exit.svg"
+	      exit="Exit.svg"
         />
   </Theme>
 </ImageGlass>
