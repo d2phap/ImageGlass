@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>9.0.5.726</Version>
+    <Version>9.0.6.1008</Version>
     <FileVersion>$(Version)</FileVersion>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Platforms>x64;ARM64</Platforms>
