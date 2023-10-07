@@ -125,6 +125,7 @@ public partial class DXCanvas : DXControl
     private IComObject<ID2D1Bitmap1>? _navRightImage = null;
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
+    private Color _navButtonColor = Color.Blue;
 
     // selection
     private bool _enableSelection = false;
@@ -866,6 +867,22 @@ public partial class DXCanvas : DXControl
             }
 
             SetWeb2NavButtonStyles();
+        }
+    }
+
+    
+    /// <summary>
+    /// Gets, sets color for navigation buttons.
+    /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public Color NavButtonColor
+    {
+        get => _navButtonColor;
+        set
+        {
+            _navButtonColor = value;
+
+            if (Web2 != null) SetWeb2NavButtonStyles();
         }
     }
 
@@ -1962,7 +1979,7 @@ public partial class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(AccentColor, 0.35f, leftColor.A), leftColor.Blend(AccentColor, 0.5f, leftColor.A), this.ScaleToDpi(1f));
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(NavButtonColor, 0.35f, leftColor.A), leftColor.Blend(NavButtonColor, 0.5f, leftColor.A), this.ScaleToDpi(1f));
             }
 
             // draw icon
@@ -2029,7 +2046,7 @@ public partial class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(AccentColor, 0.35f, rightColor.A), rightColor.Blend(AccentColor, 0.5f, rightColor.A), this.ScaleToDpi(1f));
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(NavButtonColor, 0.35f, rightColor.A), rightColor.Blend(NavButtonColor, 0.5f, rightColor.A), this.ScaleToDpi(1f));
             }
 
             // draw icon

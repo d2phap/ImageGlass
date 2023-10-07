@@ -35,14 +35,15 @@
       margin: auto;
       width: 100%;
       height: 100%;
-      border: 0.1rem solid rgb(var(--Accent) / 0.25);
+      border: 0.1rem solid rgb(var(--nav-button-color, --Accent) / 0.25);
       border-radius: 100%;
-      background-color: rgb(var(--Accent) / 0.4);
+      background-color: rgb(var(--nav-button-color, --Accent) / 0.5);
     }
 
     img {
       width: 1.8375rem;
       height: 1.8375rem;
+      z-index: 1;
     }
 
     &.is--visible {

@@ -131,6 +131,15 @@ public static class ColorExtensions
 
 
     /// <summary>
+    /// Converts this color <see cref="c"/> to RGBA array.
+    /// </summary>
+    public static byte[] ToRgbaArray(this Color c)
+    {
+        return new[] { c.R, c.G, c.B, c.A };
+    }
+
+
+    /// <summary>
     /// Converts this color <see cref="c"/> to CMYK values.
     /// </summary>
     public static int[] ToCmyk(this Color c)

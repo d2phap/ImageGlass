@@ -640,6 +640,7 @@ public partial class DXCanvas
         _ = obj.TryAdd("Visible", NavDisplay != Base.PhotoBox.NavButtonDisplay.None);
         _ = obj.TryAdd("LeftImageUrl", leftImageUrl);
         _ = obj.TryAdd("RightImageUrl", rightImageUrl);
+        _ = obj.TryAdd(nameof(NavButtonColor), NavButtonColor.ToRgbaArray().ToList());
 
 
         Web2.PostWeb2Message(Web2BackendMsgNames.SET_NAVIGATION, BHelper.ToJson(obj));

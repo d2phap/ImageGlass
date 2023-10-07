@@ -250,12 +250,17 @@ export default class HapplaBoxViewer {
     Visible: boolean,
     LeftImageUrl: string,
     RightImageUrl: string,
+    NavButtonColor: number[],
   }) {
     const navLayerEl = query('#layerNavigation');
     const navLeftImgEl = query<HTMLImageElement>('.nav-left img', navLayerEl);
     const navRightImgEl = query<HTMLImageElement>('.nav-right img', navLayerEl);
 
+    const [r, g, b] = e.NavButtonColor;
+    const rgbaColor = [r, g, b].join(' ');
+
     navLayerEl.hidden = !e.Visible;
+    navLayerEl.style.setProperty('--nav-button-color', rgbaColor);
     navLeftImgEl.src = e.LeftImageUrl;
     navRightImgEl.src = e.RightImageUrl;
   }
