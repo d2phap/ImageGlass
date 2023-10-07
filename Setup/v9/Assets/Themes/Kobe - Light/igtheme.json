@@ -38,7 +38,9 @@
     "MenuBgColor": "#F5F6F7",
     "MenuBgHoverColor": "accent:120",
     "MenuTextColor": "#000",
-    "MenuTextHoverColor": "#000"
+    "MenuTextHoverColor": "#000",
+
+    "NavigationButtonColor": "accent:70"
   },
   "ToolbarIcons": {
     "ActualSize": "ActualSize.svg",

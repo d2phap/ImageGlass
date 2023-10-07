@@ -35,7 +35,7 @@ public record IgThemeMetadata
 
     public string Description { get; set; } = "ImageGlass theme configuration file";
 
-    public string Docs { get; set; } = "Visit https://github.com/ImageGlass/theme to learn ImageGlass theme pack API.";
+    public string Docs { get; set; } = "Visit https://github.com/ImageGlass/theme to learn about ImageGlass theme pack specification";
 }
 
 
@@ -87,6 +87,9 @@ public record IgThemeColors
     public Color MenuTextColor { get; set; } = BHelper.ColorFromHex("#dedede");
     public Color MenuTextHoverColor { get; set; } = BHelper.ColorFromHex("#dedede");
 
+
+    // Viewer
+    public Color NavigationButtonColor { get; set; } = BHelper.ColorFromHex("ff000015");
 }
 
 

@@ -28,7 +28,9 @@
 
     "GalleryItemHoverColor": "accent:170",
     "GalleryItemActiveColor": "accent:100",
-    "GalleryItemSelectedColor": "accent:120"
+    "GalleryItemSelectedColor": "accent:120",
+
+    "NavigationButtonColor": "accent:170"
   },
   "ToolbarIcons": {
     "ActualSize": "ActualSize.svg",

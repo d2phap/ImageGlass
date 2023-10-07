@@ -72,6 +72,7 @@ public partial class FrmMain
         // viewer
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
+        PicMain.NavButtonColor = Config.Theme.Colors.NavigationButtonColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
@@ -102,6 +103,7 @@ public partial class FrmMain
     {
         Config.Theme.LoadThemeColors();
         PicMain.AccentColor = e.AccentColor;
+        PicMain.NavButtonColor = Config.Theme.Colors.NavigationButtonColor;
         PicMain.Invalidate();
 
         Invalidate(true);
