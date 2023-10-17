@@ -278,6 +278,14 @@ public class ModernToolbar : ToolStrip
         WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
     }
 
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        //base.OnPaintBackground(e);
+
+        using var bgBrush = new SolidBrush(BackColor);
+        e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
+    }
+
 
     #region Private functions
     private void MainMenu_Opened(object? sender, EventArgs e)
