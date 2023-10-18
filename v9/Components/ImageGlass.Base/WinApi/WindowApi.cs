@@ -47,10 +47,10 @@ public class WindowApi
     /// </para>
     /// <para>
     /// Best practice is that all applications call the process-wide SetErrorMode
-    /// function with a parameter of SEM_FAILCRITICALERRORS at startup. This is to
+    /// function with a parameter of <c>SEM_FAILCRITICALERRORS</c> at startup. This is to
     /// prevent error mode dialogs from hanging the application.
     /// </para>
-    /// Ref: https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode
+    /// Ref: <see href="https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode"/>
     /// </summary>
     public static void SetAppErrorMode()
     {

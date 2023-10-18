@@ -37,11 +37,15 @@ public class WindowSettings
     /// <summary>
     /// Gets placement value of the given window using WinAPI
     /// </summary>
-    /// <param name="win">A window</param>
-    /// <returns></returns>
     public static WindowPlacement GetPlacementFromWindow(Form win)
     {
         _ = GetWindowPlacement(win.Handle, out WindowPlacement wp);
+
+        if (wp.showCmd == WindowState.Normal
+            && (wp.normalPosition.Left != win.Bounds.Left || wp.normalPosition.Top != win.Bounds.Top))
+        {
+            wp = new WindowPlacement(new WpRect(win.Left, win.Top, win.Right, win.Bottom));
+        }
 
         return wp;
     }
@@ -53,7 +57,6 @@ public class WindowSettings
     /// Note: If window was closed on a monitor that is now disconnected from the computer,
     ///       this function will place the window onto a visible monitor.
     /// </summary>
-    /// <param name="frm">A form window</param>
     public static void SetPlacementToWindow(Form frm, WindowPlacement wp)
     {
         // change window state 'Minimized' to 'Normal'
@@ -167,5 +170,5 @@ public class WindowSettings
         return WindowState.Normal;
     }
 
-    
+
 }
