@@ -282,6 +282,11 @@ public class ModernToolbar : ToolStrip
     {
         //base.OnPaintBackground(e);
 
+        if (!EnableTransparent)
+        {
+            e.Graphics.Clear(TopLevelControl.BackColor);
+        }
+        
         using var bgBrush = new SolidBrush(BackColor);
         e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
     }

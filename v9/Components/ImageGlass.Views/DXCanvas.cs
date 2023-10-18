@@ -938,6 +938,12 @@ public partial class DXCanvas : DXControl
     #region Misc
 
     /// <summary>
+    /// Enable transparent background.
+    /// </summary>
+    public bool EnableTransparent { get; set; } = true;
+
+
+    /// <summary>
     /// Gets, sets the message heading text
     /// </summary>
     [Browsable(false)]
@@ -1488,6 +1494,14 @@ public partial class DXCanvas : DXControl
 
         // check if this is the final draw since the image is set
         var isImageFinalDrawn = _imageOpacity == 1 && isImageDrawn;
+
+
+        // correct the background if no transparency
+        if (!EnableTransparent)
+        {
+            g.ClearBackground(TopLevelControl.BackColor);
+            g.DrawRectangle(ClientRectangle, 0, Color.Transparent, BackColor);
+        }
 
 
         // update drawing regions

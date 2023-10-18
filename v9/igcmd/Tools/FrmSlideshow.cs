@@ -247,7 +247,9 @@ public partial class FrmSlideshow : ThemedForm
         // menu
         MnuContext.Theme = Config.Theme;
 
+
         // viewer
+        PicMain.EnableTransparent = hasTransparency;
         PicMain.BackColor = Config.SlideshowBackgroundColor;
         PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);

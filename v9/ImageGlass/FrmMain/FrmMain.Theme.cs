@@ -40,12 +40,10 @@ public partial class FrmMain
         if (hasTransparency)
         {
             BackdropMargin = new Padding(-1);
-            PicMain.BackColor = Config.BackgroundColor;
         }
         else
         {
             BackColor = Config.Theme.ColorPalatte.AppBg.NoAlpha();
-            PicMain.BackColor = Config.BackgroundColor;
         }
 
         // menu
@@ -56,6 +54,7 @@ public partial class FrmMain
         MnuMain.Theme =
            MnuContext.Theme =
            MnuSubMenu.Theme = Config.Theme;
+
 
         // toolbar
         Toolbar.EnableTransparent = hasTransparency;
@@ -70,6 +69,8 @@ public partial class FrmMain
 
 
         // viewer
+        PicMain.EnableTransparent = hasTransparency;
+        PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
         PicMain.NavButtonColor = Config.Theme.Colors.NavigationButtonColor;
