@@ -241,6 +241,11 @@ public partial class FrmSlideshow : ThemedForm
         if (!hasTransparency)
         {
             BackColor = Config.SlideshowBackgroundColor.NoAlpha();
+            WindowApi.SetTitleBar(Handle, Config.SlideshowBackgroundColor, Config.SlideshowBackgroundColor.InvertBlackOrWhite(220));
+        }
+        else
+        {
+            WindowApi.SetTitleBar(Handle, null, null);
         }
 
 
@@ -1998,6 +2003,17 @@ public partial class FrmSlideshow : ThemedForm
         {
             PicMain.BackColor = Config.SlideshowBackgroundColor = cd.ColorValue;
             PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
+
+
+            if (EnableTransparent && BackdropStyle != BackdropStyle.None)
+            {
+                WindowApi.SetTitleBar(Handle, null, null);
+            }
+            else
+            {
+                BackColor = PicMain.BackColor.NoAlpha(); ;
+                WindowApi.SetTitleBar(Handle, PicMain.BackColor, PicMain.ForeColor);
+            }
 
             _isColorPickerOpen = false;
         }

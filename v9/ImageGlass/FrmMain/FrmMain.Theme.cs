@@ -40,11 +40,14 @@ public partial class FrmMain
         if (hasTransparency)
         {
             BackdropMargin = new Padding(-1);
+            WindowApi.SetTitleBar(Handle, null, null);
         }
         else
         {
             BackColor = Config.Theme.ColorPalatte.AppBg.NoAlpha();
+            WindowApi.SetTitleBar(Handle, Config.Theme.Colors.ToolbarBgColor, Config.Theme.Colors.ToolbarTextColor);
         }
+
 
         // menu
         MnuMain.CurrentDpi =

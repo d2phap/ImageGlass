@@ -159,7 +159,42 @@ public class WindowApi
         return result.Succeeded;
     }
 
-    
+
+
+    /// <summary>
+    /// Sets background and text color for window title bar.
+    /// </summary>
+    /// <param name="wndHandle"></param>
+    /// <param name="bgColor">
+    /// Specifying <c>null</c> will reset the caption background color back to using the system's default value.
+    /// </param>
+    /// <param name="textColor">
+    /// Specifying <c>null</c> will reset the caption text color back to using the system's default value.
+    /// </param>
+    public static void SetTitleBar(IntPtr wndHandle, Color? bgColor, Color? textColor)
+    {
+        // ~< 20H1
+        if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
+
+        const uint DWMWA_COLOR_DEFAULT = 0xFFFFFFFF;
+        var bg = DWMWA_COLOR_DEFAULT;
+        var text = DWMWA_COLOR_DEFAULT;
+
+        if (bgColor != null) bg = bgColor.Value.ToCOLORREF();
+        if (textColor != null) text = textColor.Value.ToCOLORREF();
+
+        unsafe
+        {
+            _ = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                DWMWINDOWATTRIBUTE.DWMWA_CAPTION_COLOR,
+                &bg, sizeof(uint));
+
+            _ = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                DWMWINDOWATTRIBUTE.DWMWA_TEXT_COLOR,
+                &text, sizeof(uint));
+        }
+    }
+
 
 
     /// <summary>

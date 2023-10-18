@@ -131,6 +131,15 @@ public static class ColorExtensions
 
 
     /// <summary>
+    /// Converts this color <see cref="c"/> to COLORREF (Win32).
+    /// </summary>
+    public static uint ToCOLORREF(this Color c)
+    {
+        return (uint)(ColorTranslator.ToWin32(c));
+    }
+
+
+    /// <summary>
     /// Converts this color <see cref="c"/> to RGBA array.
     /// </summary>
     public static byte[] ToRgbaArray(this Color c)
