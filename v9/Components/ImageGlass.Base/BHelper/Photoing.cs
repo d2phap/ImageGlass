@@ -400,31 +400,30 @@ public partial class BHelper
     /// <returns></returns>
     public static string GetCorrectColorProfileName(string name)
     {
-        var profileName = string.Empty;
+        // current mornitor profile
         var currentMonitorProfile = nameof(ColorProfileOption.CurrentMonitorProfile);
-
         if (name.Equals(currentMonitorProfile, StringComparison.InvariantCultureIgnoreCase))
         {
             return currentMonitorProfile;
         }
-        else if (File.Exists(name))
-        {
-            return name;
-        }
-        else
-        {
-            var builtInProfiles = Enum.GetNames(typeof(ColorProfileOption))
-                .Where(i => new string[] {
-                    nameof(ColorProfileOption.None),
-                    nameof(ColorProfileOption.CurrentMonitorProfile),
-                    nameof(ColorProfileOption.Custom),
-                }.Contains(i));
+        
+
+        // custom color profile
+        if (File.Exists(name)) return name;
 
 
-            profileName = builtInProfiles.FirstOrDefault(i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase)) ?? string.Empty;
-        }
+        // built-in color profiles
+        var nonBuiltInProfiles = new string[] {
+            nameof(ColorProfileOption.None),
+            nameof(ColorProfileOption.CurrentMonitorProfile),
+            nameof(ColorProfileOption.Custom),
+        };
+        var builtInProfiles = Enum.GetNames(typeof(ColorProfileOption))
+            .Where(i => !nonBuiltInProfiles.Contains(i));
 
-        if (string.IsNullOrEmpty(profileName))
+        var profileName = builtInProfiles.FirstOrDefault(i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase)) ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(profileName))
         {
             profileName = ColorProfileOption.None.ToString();
         }
