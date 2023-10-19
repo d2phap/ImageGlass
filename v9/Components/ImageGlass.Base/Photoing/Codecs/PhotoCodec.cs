@@ -406,7 +406,7 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file, use Magick.NET.
+    /// Save image file, use WIC if it supports, otherwise use Magick.NET.
     /// </summary>
     /// <param name="srcBitmap">Source bitmap to save</param>
     /// <param name="destFilePath">Destination file path</param>
@@ -421,47 +421,46 @@ public static class PhotoCodec
         {
             token.ThrowIfCancellationRequested();
 
-            // convert to Bitmap
-            using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
-            if (bitmap == null) return;
-
-            // convert to MagickImage
-            using var imgM = new MagickImage();
-            await Task.Run(() =>
-            {
-                imgM.Read(bitmap);
-                imgM.Quality = quality;
-            }, token);
-
-
             // transform image
-            token.ThrowIfCancellationRequested();
-            TransformImage(imgM, transform);
+            TransformImage(srcBitmap, transform);
 
-            // write image data to file
-            token.ThrowIfCancellationRequested();
-            if (format != MagickFormat.Unknown)
+            // get WIC encoder for the dest format 
+            var encoder = WicEncoder.FromFileExtension(Path.GetExtension(destFilePath));
+
+            // if WIC supports this format
+            if (encoder != null)
             {
-                await imgM.WriteAsync(destFilePath, format, token);
+                srcBitmap.Save(destFilePath, encoder.ContainerFormat);
             }
+            // use Magick.NET to save
             else
             {
-                await imgM.WriteAsync(destFilePath, token);
+                // convert to Bitmap
+                using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
+                if (bitmap == null) return;
+
+                // convert to MagickImage
+                using var imgM = new MagickImage();
+                await Task.Run(() =>
+                {
+                    imgM.Read(bitmap);
+                    imgM.Quality = quality;
+                }, token);
+
+
+                // write image data to file
+                token.ThrowIfCancellationRequested();
+                if (format != MagickFormat.Unknown)
+                {
+                    await imgM.WriteAsync(destFilePath, format, token);
+                }
+                else
+                {
+                    await imgM.WriteAsync(destFilePath, token);
+                }
             }
         }
         catch (OperationCanceledException) { }
-    }
-
-
-    /// <summary>
-    /// Perform quick save using WIC.
-    /// </summary>
-    public static void SaveWithWic(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null)
-    {
-        if (srcBitmap == null) return;
-
-        TransformImage(srcBitmap, transform);
-        srcBitmap.Save(destFilePath);
     }
 
 

@@ -601,7 +601,7 @@ internal class Local
         {
             try
             {
-                PhotoCodec.SaveWithWic(ClipboardImage, tempFilePath, Local.ImageTransform);
+                await PhotoCodec.SaveAsync(ClipboardImage, tempFilePath, Local.ImageTransform);
 
                 TempImagePath = tempFilePath;
             }
@@ -620,7 +620,7 @@ internal class Local
         {
             try
             {
-                PhotoCodec.SaveWithWic(img.ImgData.Image, tempFilePath, Local.ImageTransform);
+                await PhotoCodec.SaveAsync(img.ImgData.Image, tempFilePath, Local.ImageTransform);
 
                 TempImagePath = tempFilePath;
             }
