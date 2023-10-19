@@ -178,7 +178,7 @@ public class SystemRenderer : StyleRenderer
         else
             base.DrawFileIcon(g, item, bounds);
     }
-    
+
 
     /// <summary>
     /// [IG_CHANGE] Returns item size for the given view mode.
@@ -283,7 +283,7 @@ public class SystemRenderer : StyleRenderer
             base.DrawItem(g, item, state, bounds);
         }
     }
-    
+
 }
 #endregion
 

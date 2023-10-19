@@ -22,7 +22,6 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
-using ImageGlass.Base;
 using ImageGlass.Base.Cache;
 using ImageGlass.Base.Photoing.Codecs;
 using System.Text;
@@ -117,7 +116,7 @@ public class FileSystemAdaptor : IAdaptor
         if (_isDisposed) return new IgMetadata();
 
         var filePath = (string)key;
-        
+
         return PhotoCodec.LoadMetadata(filePath);
     }
 

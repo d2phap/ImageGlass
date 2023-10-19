@@ -20,7 +20,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageMagick;
 using Microsoft.Win32.SafeHandles;
-using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Reflection;
@@ -406,7 +405,7 @@ public partial class BHelper
         {
             return currentMonitorProfile;
         }
-        
+
 
         // custom color profile
         if (File.Exists(name)) return name;

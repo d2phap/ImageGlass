@@ -182,7 +182,7 @@ public partial class ImageGallery
             if (e.Button.HasFlag(MouseButtons.Right))
                 RightButton = true;
 
-            
+
             lastMouseDownInItemArea = inItemArea;
             lastMouseDownOverItem = HoveredItem != null;
             lastMouseDownOverCheckBox = overCheckBox;
@@ -190,7 +190,7 @@ public partial class ImageGallery
             lastViewOffset = _imageGallery.ViewOffset;
             lastMouseDownLocation = e.Location;
 
-            
+
             if (_imageGallery.Resizer != ResizerType.None)
             {
                 _imageGallery.Refresh();

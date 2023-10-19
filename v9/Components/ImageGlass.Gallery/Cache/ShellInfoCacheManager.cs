@@ -244,9 +244,9 @@ internal class ShellInfoCacheManager : IDisposable
 
         arg.ContinueProcessing = canProcess;
     }
-    
+
     #endregion
-    
+
 
     #region QueuedBackgroundWorker Events
     /// <summary>

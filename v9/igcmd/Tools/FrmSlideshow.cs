@@ -791,7 +791,7 @@ public partial class FrmSlideshow : ThemedForm
             Invoke(LoadImageAsync, filePath, tokenSrc);
             return;
         }
-        
+
         IgPhoto? photo = null;
         var readSettings = new CodecReadOptions()
         {

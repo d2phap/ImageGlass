@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.Properties;
 using ImageGlass.Settings;
-using System.Text;
-using System.Windows.Markup;
-using System.Xml.Linq;
 
 namespace ImageGlass;
 

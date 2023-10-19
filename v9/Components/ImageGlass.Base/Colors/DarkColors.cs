@@ -23,7 +23,6 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 ---------------------
 */
 
-using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.Base;

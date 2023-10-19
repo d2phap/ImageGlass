@@ -103,7 +103,7 @@ public static class Utility
 
         return false;
     }
-    
+
     /// <summary>
     /// Gets the scaled size of an image required to fit
     /// in to the given size keeping the image aspect ratio.

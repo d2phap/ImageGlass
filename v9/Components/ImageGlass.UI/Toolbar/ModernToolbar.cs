@@ -286,7 +286,7 @@ public class ModernToolbar : ToolStrip
         {
             e.Graphics.Clear(TopLevelControl.BackColor);
         }
-        
+
         using var bgBrush = new SolidBrush(BackColor);
         e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
     }
@@ -388,7 +388,7 @@ public class ModernToolbar : ToolStrip
         {
             y = y - MainMenu.Height - Height;
         }
-        
+
         MainMenu.Show(this, x, y);
     }
 

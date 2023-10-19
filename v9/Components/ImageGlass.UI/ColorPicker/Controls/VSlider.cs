@@ -201,7 +201,8 @@ public class VSlider : Control
         base.OnPaint(e);
 
         // draw border
-        using var borderPen = new Pen(Color.FromArgb(50, ThemeColor), DpiScale) {
+        using var borderPen = new Pen(Color.FromArgb(50, ThemeColor), DpiScale)
+        {
             Alignment = PenAlignment.Inset,
         };
         e.Graphics.DrawRectangle(borderPen, ContentRect.X, ContentRect.Y, ContentRect.Width, ContentRect.Height);

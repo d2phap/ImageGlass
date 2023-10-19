@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base.Photoing.Codecs;
-using System;
 
 namespace ImageGlass.Base;
 

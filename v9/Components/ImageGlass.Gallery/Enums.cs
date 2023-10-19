@@ -74,12 +74,12 @@ public enum CacheState
     /// The item is either not cached or it is in the cache queue.
     /// </summary>
     Unknown,
-    
+
     /// <summary>
     /// Item thumbnail is cached.
     /// </summary>
     Cached,
-    
+
     /// <summary>
     /// An error occurred while creating the item thumbnail.
     /// </summary>

@@ -24,7 +24,6 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
 using System.Diagnostics;
-using System.Dynamic;
 using System.IO.Pipes;
 using System.Runtime;
 using WicNet;

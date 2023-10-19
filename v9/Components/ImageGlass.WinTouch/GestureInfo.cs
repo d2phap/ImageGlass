@@ -22,8 +22,6 @@ Url: https://github.com/rprouse/WinTouch.NET
 License: MIT
 ---------------------
 */
-using System.Runtime.InteropServices;
-
 namespace ImageGlass.WinTouch;
 
 

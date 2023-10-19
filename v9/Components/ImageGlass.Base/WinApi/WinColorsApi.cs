@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
-using System.Windows;
 using Windows.UI.ViewManagement;
 
 namespace ImageGlass.Base.WinApi;

@@ -559,7 +559,7 @@ public class StyleRenderer : IDisposable
         var dotSize = ImageGalleryOwner.ScaleToDpi(ImageGalleryOwner.ResizerSize) * 0.6f;
         var dotX = ImageGalleryOwner.ResizerBound.X + ImageGalleryOwner.ResizerBound.Width / 2f - dotSize / 2f;
         var dotY = ImageGalleryOwner.ResizerBound.Y + ImageGalleryOwner.ResizerBound.Height / 2f - dotSize / 2f;
-        
+
         if (ImageGalleryOwner.Resizer == ResizerType.HTBOTTOM && ImageGalleryOwner.HScrollBar.Visible)
         {
             dotY -= ImageGalleryOwner.HScrollBar.Height / 2;

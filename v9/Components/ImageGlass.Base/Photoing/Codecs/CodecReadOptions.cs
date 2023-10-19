@@ -27,7 +27,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets, sets the requested width of the image.
     /// </summary>
-    public int Width { get; set; }  = 0;
+    public int Width { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets the requested height of the image.

@@ -18,9 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using ImageGlass.Viewer;
 
 namespace ImageGlass;
@@ -553,7 +551,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         TableTop.Enabled =
             TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null
                 && !Local.FrmMain.PicMain.CanImageAnimate;
-        
+
         UpdateAspectRatioValues();
 
         // calculate default selection

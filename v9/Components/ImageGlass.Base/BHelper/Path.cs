@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.WinApi;
 using Microsoft.VisualBasic.FileIO;
-using System;
 using System.Diagnostics;
 using System.Web;
 using Windows.System;

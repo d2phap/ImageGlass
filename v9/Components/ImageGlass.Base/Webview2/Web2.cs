@@ -483,7 +483,7 @@ public class Web2 : WebView2
         // disable console.log if not debug mode
         if (!EnableDebug)
         {
-           logTask = this.ExecuteScriptAsync($"""
+            logTask = this.ExecuteScriptAsync($"""
                 console.log = () => undefined;
                 console.info = () => undefined;
             """);

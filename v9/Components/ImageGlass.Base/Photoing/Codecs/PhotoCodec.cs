@@ -277,7 +277,7 @@ public static class PhotoCodec
 
                 // Fetch the embedded thumbnail
                 using var thumbM = exifProfile?.CreateThumbnail();
-                
+
                 if (thumbM != null)
                 {
                     thumbM.AutoOrient();

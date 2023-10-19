@@ -79,7 +79,7 @@ internal class ColorHexagonElement
                 DashCap = DashCap.Round,
                 Alignment = PenAlignment.Inset,
             };
-            
+
             g.DrawPath(pen, path);
 
             pen.Color = Color.FromArgb(opacity, Color.Black);

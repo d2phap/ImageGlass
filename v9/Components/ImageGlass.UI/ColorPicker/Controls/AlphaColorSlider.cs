@@ -58,7 +58,7 @@ public partial class AlphaColorSlider : VSlider
 
     public AlphaColorSlider()
     {
-        
+
     }
 
 

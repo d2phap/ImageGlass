@@ -870,7 +870,7 @@ public partial class DXCanvas : DXControl
         }
     }
 
-    
+
     /// <summary>
     /// Gets, sets color for navigation buttons.
     /// </summary>

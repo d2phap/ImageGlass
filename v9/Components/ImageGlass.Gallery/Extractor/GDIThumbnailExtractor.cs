@@ -140,7 +140,7 @@ public partial class GDIExtractor : IExtractor
         if (size.Width <= 0 || size.Height <= 0) return null;
 
         Image? thumb = null;
-        
+
         // extrack thumbnail from shell
         if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Always)
         {

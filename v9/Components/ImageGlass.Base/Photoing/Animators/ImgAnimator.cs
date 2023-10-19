@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using ImageGlass.Base.WinApi;
 using System.Runtime.InteropServices;
-using System.Windows.Controls;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
