@@ -575,10 +575,9 @@ internal class Local
 
 
     /// <summary>
-    /// Save the viewing image as temporary file
-    /// with the <see cref="Config.ImageEditQuality"/> quality.
+    /// Quickly save the viewing image as temporary file.
     /// </summary>
-    public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png", int? quality = null)
+    public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png")
     {
         // check if we can use the current clipboard image path
         if (File.Exists(TempImagePath))
@@ -594,8 +593,7 @@ internal class Local
         var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
         Directory.CreateDirectory(tempDir);
 
-        var filename = Path.Combine(tempDir, $"temp_{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}{ext}");
-        quality ??= Config.ImageEditQuality;
+        var tempFilePath = Path.Combine(tempDir, $"temp_{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}{ext}");
 
 
         // save clipboard image
@@ -603,9 +601,9 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(ClipboardImage, filename, Local.ImageTransform, quality.Value);
+                PhotoCodec.SaveWithWic(ClipboardImage, tempFilePath, Local.ImageTransform);
 
-                TempImagePath = filename;
+                TempImagePath = tempFilePath;
             }
             catch
             {
@@ -622,9 +620,9 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, Local.ImageTransform, quality.Value);
+                PhotoCodec.SaveWithWic(img.ImgData.Image, tempFilePath, Local.ImageTransform);
 
-                TempImagePath = filename;
+                TempImagePath = tempFilePath;
             }
             catch
             {

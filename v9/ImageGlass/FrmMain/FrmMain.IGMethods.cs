@@ -877,7 +877,7 @@ public partial class FrmMain
         if (Local.ClipboardImage != null || Local.Metadata?.FrameCount == 1)
         {
             // save image to temp file
-            fileToPrint = await Local.SaveImageAsTempFileAsync(quality: 100);
+            fileToPrint = await Local.SaveImageAsTempFileAsync();
         }
 
         // print an image file
@@ -894,7 +894,7 @@ public partial class FrmMain
             && !ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase))
         {
             // save image to temp file
-            fileToPrint = await Local.SaveImageAsTempFileAsync(quality: 100);
+            fileToPrint = await Local.SaveImageAsTempFileAsync();
         }
 
 

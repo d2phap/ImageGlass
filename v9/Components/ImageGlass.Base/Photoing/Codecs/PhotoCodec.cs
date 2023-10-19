@@ -419,8 +419,9 @@ public static class PhotoCodec
 
         try
         {
-            // convert to Bitmap
             token.ThrowIfCancellationRequested();
+
+            // convert to Bitmap
             using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
             if (bitmap == null) return;
 
@@ -449,6 +450,18 @@ public static class PhotoCodec
             }
         }
         catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Perform quick save using WIC.
+    /// </summary>
+    public static void SaveWithWic(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null)
+    {
+        if (srcBitmap == null) return;
+
+        TransformImage(srcBitmap, transform);
+        srcBitmap.Save(destFilePath);
     }
 
 
