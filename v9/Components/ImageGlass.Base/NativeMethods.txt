@@ -12,7 +12,6 @@ DeleteObject
 BitBlt
 CreateDIBSection
 SetErrorMode
-ClientToScreen
 SendInput
 ShowWindow
 ReleaseCapture

@@ -81,9 +81,6 @@ public class WindowApi
         };
         var oldPos = Cursor.Position;
 
-        // get screen coordinates
-        PInvoke.ClientToScreen(new HWND(wndHandle), ref cliPoint);
-
         // set cursor on coords, and press mouse
         Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
 

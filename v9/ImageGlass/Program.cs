@@ -28,7 +28,7 @@ namespace ImageGlass;
 
 internal static class Program
 {
-    public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+    public static string APP_GUID => "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
 
 
     /// <summary>
@@ -171,7 +171,7 @@ internal static class Program
             using var instance = new SingleInstance(guid);
             if (instance.IsFirstInstance)
             {
-                instance.ArgsReceived += Instance_ArgumentsReceived; ;
+                instance.ArgsReceived += Instance_ArgumentsReceived;
                 instance.ListenForArgsFromChildInstances();
 
                 Local.FrmMain?.Dispose();
@@ -212,7 +212,6 @@ internal static class Program
     /// <summary>
     /// Pass arguments and activate the main window
     /// </summary>
-    /// <param name="args"></param>
     private static void ActivateWindow(string[] args)
     {
         if (Local.FrmMain == null) return;
@@ -230,9 +229,8 @@ internal static class Program
         {
             // Hack for issue #620: IG does not activate in normal / maximized window state
             Local.FrmMain.TopMost = true;
-            WindowApi.ClickOnWindow(Local.FrmMain.Handle, new(0, 0));
+            WindowApi.ClickOnWindow(Local.FrmMain.Handle, Local.FrmMain.PointToScreen(new(0, 0)));
             Local.FrmMain.TopMost = Config.EnableWindowTopMost;
         }
     }
-
 }
