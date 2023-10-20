@@ -280,7 +280,7 @@ public class ModernToolbar : ToolStrip
 
     protected override void OnPaintBackground(PaintEventArgs e)
     {
-        //base.OnPaintBackground(e);
+        base.OnPaintBackground(e);
 
         if (!EnableTransparent)
         {
