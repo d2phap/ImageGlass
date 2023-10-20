@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Runtime.InteropServices;
 using WicNet;
 
 namespace ImageGlass.Base.WinApi;
@@ -41,30 +42,45 @@ public static class ClipboardEx
     /// </param>
     public static void SetClipboardImage(WicBitmapSource? img, WicBitmapSource? nonAlphaImg = null, DataObject? data = null)
     {
+        // https://stackoverflow.com/a/17762059/2856887
+        BHelper.RunAsThread(() =>
+        {
+            try
+            {
+                Clipboard.Clear();
+            }
+            // Requested Clipboard operation did not succeed
+            catch (ExternalException) { }
+
+        }, ApartmentState.STA).Join();
+
         var clonedImg = img?.Clone();
         if (clonedImg == null) return;
-
-        // https://stackoverflow.com/a/17762059/2856887
-        BHelper.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
-            .Join();
 
         data ??= new DataObject();
         nonAlphaImg ??= clonedImg;
 
-        using var pngMemStream = new MemoryStream();
-        using var dibMemStream = new MemoryStream();
 
         // As standard bitmap, without transparency support
         data.SetData(DataFormats.Bitmap, true, BHelper.ToGdiPlusBitmap(nonAlphaImg));
 
         // As PNG. Gimp will prefer this over the other two.
+        using var pngMemStream = new MemoryStream();
         clonedImg.Save(pngMemStream, WicCodec.GUID_ContainerFormatPng);
         data.SetData("PNG", false, pngMemStream);
 
         // The 'copy=true' argument means the MemoryStreams can be safely disposed
         // after the operation.
-        BHelper.RunAsThread(() => Clipboard.SetDataObject(data, true), ApartmentState.STA)
-            .Join();
+        BHelper.RunAsThread(() =>
+        {
+            try
+            {
+                Clipboard.SetDataObject(data, true);
+            }
+            // Requested Clipboard operation did not succeed
+            catch (ExternalException) { }
+
+        }, ApartmentState.STA).Join();
     }
 
 

@@ -184,7 +184,7 @@ namespace ImageGlass
             MnuMain.CurrentDpi = 96;
             MnuMain.ImageScalingSize = new Size(40, 40);
             MnuMain.Items.AddRange(new ToolStripItem[] { MnuFile, MnuNavigation, MnuZoom, MnuPanning, MnuImage, MnuClipboard, toolStripMenuItem6, MnuWindowFit, MnuFrameless, MnuFullScreen, MnuSlideshow, toolStripMenuItem7, MnuLayout, MnuTools, toolStripMenuItem8, MnuSettings, MnuHelp, toolStripMenuItem9, MnuExit });
-            MnuMain.Name = "MnuContext";
+            MnuMain.Name = "MnuMain";
             MnuMain.RenderMode = ToolStripRenderMode.System;
             MnuMain.Size = new Size(166, 628);
             MnuMain.Opening += MnuMain_Opening;
@@ -977,6 +977,7 @@ namespace ImageGlass
             PicMain.BaseDpi = 96F;
             PicMain.CheckFPS = false;
             PicMain.Dock = DockStyle.Fill;
+            PicMain.EnableTransparent = true;
             PicMain.Location = new Point(0, 0);
             PicMain.Margin = new Padding(0);
             PicMain.Name = "PicMain";
@@ -1028,7 +1029,7 @@ namespace ImageGlass
             MnuContext.ImageScalingSize = new Size(22, 22);
             MnuContext.Items.AddRange(new ToolStripItem[] { itemToPreserveTheSpaceToolStripMenuItem });
             MnuContext.Name = "MnuContext";
-            MnuContext.Size = new Size(233, 26);
+            MnuContext.Size = new Size(233, 48);
             MnuContext.Opening += MnuContext_Opening;
             // 
             // itemToPreserveTheSpaceToolStripMenuItem
@@ -1063,7 +1064,7 @@ namespace ImageGlass
             MnuSubMenu.CurrentDpi = 96;
             MnuSubMenu.ImageScalingSize = new Size(22, 22);
             MnuSubMenu.Items.AddRange(new ToolStripItem[] { itemToPreserveSpaceToolStripMenuItem });
-            MnuSubMenu.Name = "MnuContext";
+            MnuSubMenu.Name = "MnuSubMenu";
             MnuSubMenu.Size = new Size(211, 26);
             // 
             // itemToPreserveSpaceToolStripMenuItem

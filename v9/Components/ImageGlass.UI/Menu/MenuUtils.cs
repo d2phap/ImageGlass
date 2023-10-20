@@ -23,15 +23,10 @@ namespace ImageGlass.UI;
 
 public static class MenuUtils
 {
-
-    #region Public static methods
-
     /// <summary>
     /// This contains a counter to help make names unique
     /// </summary>
     private static int menuNameCounter = 0;
-
-    #endregion
 
 
     #region Public static methods
@@ -151,8 +146,6 @@ public static class MenuUtils
     /// <summary>
     /// Gets all items excluding <c>ToolStripSeparator</c> items. 
     /// </summary>
-    /// <param name="coll"></param>
-    /// <returns></returns>
     public static IEnumerable<ToolStripItem> GetActualItems(ToolStripItemCollection coll)
     {
         return coll
