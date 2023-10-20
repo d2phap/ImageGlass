@@ -1253,9 +1253,25 @@ public partial class DXCanvas : DXControl
         #endregion
 
 
+        var mouseDownButton = _mouseDownButton;
+        _mouseDownButton = MouseButtons.None;
+        _mouseDownPoint = null;
+        _selectedResizer = null;
+        _lastClickArgs = e;
+
+        var canSelect = EnableSelection && mouseDownButton == MouseButtons.Left;
+        if (canSelect)
+        {
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
+            Invalidate();
+        }
+
+
         // Navigation clickable check
         #region Navigation clickable check
-        if (e.Button == MouseButtons.Left)
+
+        // trigger nav click only if selection is empty
+        if (e.Button == MouseButtons.Left && ClientSelection.IsEmpty)
         {
             if (_isNavRightPressed)
             {
@@ -1279,19 +1295,6 @@ public partial class DXCanvas : DXControl
         _isNavRightPressed = false;
         #endregion
 
-
-        var mouseDownButton = _mouseDownButton;
-        _mouseDownButton = MouseButtons.None;
-        _mouseDownPoint = null;
-        _selectedResizer = null;
-        _lastClickArgs = e;
-
-        var canSelect = EnableSelection && mouseDownButton == MouseButtons.Left;
-        if (canSelect)
-        {
-            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
-            Invalidate();
-        }
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
@@ -1307,8 +1310,14 @@ public partial class DXCanvas : DXControl
 
         // Navigation hoverable check
         #region Navigation hoverable check
-        // no button pressed
-        if (e.Button == MouseButtons.None)
+        // hide nav button when hovering on the selection area
+        if (ClientSelection.Contains(e.Location))
+        {
+            _isNavLeftHovered = false;
+            _isNavRightHovered = false;
+        }
+        // if no button pressed, check if nav is hovered
+        else if (e.Button == MouseButtons.None)
         {
             // calculate whether the point inside the left nav
             _isNavLeftHovered = this.CheckWhichNav(e.Location, NavCheck.LeftOnly) == MouseAndNavLocation.LeftNav;
