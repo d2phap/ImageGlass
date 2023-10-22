@@ -98,7 +98,7 @@ export default class TabLayout {
 
       regionEl.innerHTML = `
         <button draggable="true" tabindex="-1" data-control="${controlName}">
-          <span lang-text="FrmSettings.Tab.Layout._${controlName}">[${controlName}]</span>
+          <span lang-text="FrmSettings.Layout._${controlName}">[${controlName}]</span>
         </button>`;
     }
 

@@ -15,12 +15,12 @@ export class ToolbarButtonEditDialogHtmlElement extends HTMLDialogElement {
     this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.Toolbar._AddNewButton">[Add a custom toolbar button]</span>
-          <span class="edit-only" lang-text="FrmSettings.Tab.Toolbar._EditButton">[Edit toolbar button]</span>
+          <span class="create-only" lang-text="FrmSettings.Toolbar._AddNewButton">[Add a custom toolbar button]</span>
+          <span class="edit-only" lang-text="FrmSettings.Toolbar._EditButton">[Edit toolbar button]</span>
         </header>
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
-            <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._ButtonJson">[Button JSON]</div>
+            <div class="mb-1" lang-text="FrmSettings.Toolbar._ButtonJson">[Button JSON]</div>
             <textarea class="w-100" name="_ButtonJson" required rows="16" spellcheck="false"
               style="font-family: var(--fontCode);"
               placeholder='{

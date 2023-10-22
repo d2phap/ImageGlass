@@ -57,7 +57,7 @@ public static class Functions
         {
             _ = Config.ShowError(null,
                 description: error.Message,
-                title: Config.Language["FrmSettings.Tab.Appearance._Theme._UninstallTheme"]);
+                title: Config.Language["FrmSettings._Theme._UninstallTheme"]);
         });
     }
 
@@ -195,7 +195,7 @@ public static class Functions
         {
             _ = Config.ShowError(null,
                 description: error.Message,
-                title: Config.Language["FrmSettings.Tab.Language._InstallNewLanguagePack"]);
+                title: Config.Language["FrmSettings._InstallNewLanguagePack"]);
         });
     }
 
@@ -219,7 +219,7 @@ public static class Functions
         {
             _ = Config.ShowError(null,
                 description: error.Message,
-                title: Config.Language["FrmSettings.Tab.Appearance._Theme._InstallTheme"]);
+                title: Config.Language["FrmSettings._Theme._InstallTheme"]);
         });
     }
 
@@ -242,7 +242,7 @@ public static class Functions
         {
             _ = Config.ShowError(null,
                 description: error.Message,
-                title: Config.Language["FrmSettings.Tab.Appearance._Theme._UninstallTheme"]);
+                title: Config.Language["FrmSettings._Theme._UninstallTheme"]);
         });
     }
 

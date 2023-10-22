@@ -80,13 +80,13 @@ export class ToolbarEditorHtmlElement extends HTMLElement {
   private connectedCallback() {
     this.innerHTML = `
       <div class="section-available">
-        <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._AvailableButtons">[Available buttons:]</div>
+        <div class="mb-1" lang-text="FrmSettings.Toolbar._AvailableButtons">[Available buttons:]</div>
         <ul class="ig-list-vertical is--no-separator toolbar-list" data-source="available">
         </ul>
       </div>
       <div class="section-middle">[Icon]</div>
       <div class="section-current">
-        <div class="mb-1" lang-text="FrmSettings.Tab.Toolbar._CurrentButtons">[Current buttons:]</div>
+        <div class="mb-1" lang-text="FrmSettings.Toolbar._CurrentButtons">[Current buttons:]</div>
         <ul class="ig-list-vertical is--no-separator toolbar-list" data-source="current">
         </ul>
       </div>`;

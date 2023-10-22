@@ -216,7 +216,7 @@ public partial class FrmSettings : WebForm
 
                 if (btn.Type == ToolbarItemModelType.Button)
                 {
-                    var langPath = $"{nameof(FrmSettings)}.Tab.Toolbar._Errors";
+                    var langPath = $"{nameof(FrmSettings)}.Toolbar._Errors";
                     if (string.IsNullOrWhiteSpace(btn.Id))
                     {
                         throw new ArgumentException(Config.Language[$"{langPath}._ButtonIdRequired"], nameof(btn.Id));

@@ -15,7 +15,7 @@ export class FileFormatDialogHtmlElement extends HTMLDialogElement {
     this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.FileAssocs._AddNewFileExtension">[Add new file extension]</span>
+          <span class="create-only" lang-text="FrmSettings._AddNewFileExtension">[Add new file extension]</span>
         </header>
         <div class="dialog-body" style="width: 22rem;">
           <div class="mb-3">

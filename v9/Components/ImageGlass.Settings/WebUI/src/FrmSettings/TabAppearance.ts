@@ -99,7 +99,7 @@ export default class TabAppearance {
               <div class="theme-preview-img" title="${th.FolderPath}">
                 <img src="${th.PreviewImage}" alt="${th.Info.Name}" onerror="this.hidden = true;" />
                 <span class="theme-mode ${th.IsDarkMode ? 'theme-dark' : 'theme-light'}"
-                  lang-title="FrmSettings.Tab.Appearance.${th.IsDarkMode ? '_DarkTheme' : '_LightTheme'}">
+                  lang-title="FrmSettings.${th.IsDarkMode ? '_DarkTheme' : '_LightTheme'}">
                   ${th.IsDarkMode ? '🌙' : '☀️'}
                 </span>
               </div>
@@ -112,7 +112,7 @@ export default class TabAppearance {
               <div class="theme-description" title="${th.Info.Description}">${th.Info.Description}</div>
               <div class="theme-author">
                 <span class="me-4" title="${th.Info.Author}">
-                  <span lang-text="FrmSettings.Tab.Appearance._Author">[Author]</span>:
+                  <span lang-text="FrmSettings._Author">[Author]</span>:
                   ${th.Info.Author || '?'}
                 </span>
                 <span class="me-4" title="${th.Info.Website}">
@@ -125,18 +125,18 @@ export default class TabAppearance {
                 </span>
               </div>
               <div class="theme-actions">
-                <label lang-title="FrmSettings.Tab.Appearance._UseThemeForDarkMode">
+                <label lang-title="FrmSettings._UseThemeForDarkMode">
                   <input type="radio" name="_DarkThemeOptions" value="${th.FolderName}" />
                   <span>
                     ${_pageSettings.icons.Moon}
-                    <span lang-text="FrmSettings.Tab.Appearance._DarkTheme">[Dark]</span> 
+                    <span lang-text="FrmSettings._DarkTheme">[Dark]</span> 
                   </span>
                 </label>
-                <label lang-title="FrmSettings.Tab.Appearance._UseThemeForLightMode">
+                <label lang-title="FrmSettings._UseThemeForLightMode">
                   <input type="radio" name="_LightThemeOptions" value="${th.FolderName}" />
                   <span>
                     ${_pageSettings.icons.Sun}
-                    <span lang-text="FrmSettings.Tab.Appearance._LightTheme">[Light]</span>
+                    <span lang-text="FrmSettings._LightTheme">[Light]</span>
                   </span>
                 </label>
 

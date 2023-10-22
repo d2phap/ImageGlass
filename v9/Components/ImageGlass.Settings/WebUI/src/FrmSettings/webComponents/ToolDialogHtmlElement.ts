@@ -21,8 +21,8 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
     this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.Tools._AddNewTool">[Add a new external tool]</span>
-          <span class="edit-only" lang-text="FrmSettings.Tab.Tools._EditTool">[Edit external tool]</span>
+          <span class="create-only" lang-text="FrmSettings.Tools._AddNewTool">[Add a new external tool]</span>
+          <span class="edit-only" lang-text="FrmSettings.Tools._EditTool">[Edit external tool]</span>
         </header>
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
@@ -53,7 +53,7 @@ export class ToolDialogHtmlElement extends HTMLDialogElement {
           <div class="mb-3 mt-4">
             <label class="ig-checkbox">
               <input type="checkbox" name="_IsIntegrated" />
-              <div lang-html="FrmSettings.Tab.Tools._IntegratedWith">
+              <div lang-html="FrmSettings.Tools._IntegratedWith">
                 [Integrated <a href="https://github.com/ImageGlass/ImageGlass.Tools" target="_blank">ImageGlass.Tools</a>]
               </div>
             </label>

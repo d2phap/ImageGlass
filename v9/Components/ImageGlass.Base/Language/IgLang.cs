@@ -481,171 +481,169 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab General
         // General > General
-        _ = TryAdd("FrmSettings.Tab.General._StartupDir", "Startup location");
-        _ = TryAdd("FrmSettings.Tab.General._ConfigDir", "Configuration location");
-        _ = TryAdd("FrmSettings.Tab.General._UserConfigFile", "User settings file (igconfig.json)");
+        _ = TryAdd("FrmSettings._StartupDir", "Startup location");
+        _ = TryAdd("FrmSettings._ConfigDir", "Configuration location");
+        _ = TryAdd("FrmSettings._UserConfigFile", "User settings file (igconfig.json)");
 
         // General > Startup
-        _ = TryAdd("FrmSettings.Tab.General._Startup", "Startup");
-        _ = TryAdd("FrmSettings.Tab.General._ShowWelcomeImage", "Show welcome image");
-        _ = TryAdd("FrmSettings.Tab.General._ShouldOpenLastSeenImage", "Open the last seen image");
+        _ = TryAdd("FrmSettings._Startup", "Startup");
+        _ = TryAdd("FrmSettings._ShowWelcomeImage", "Show welcome image");
+        _ = TryAdd("FrmSettings._ShouldOpenLastSeenImage", "Open the last seen image");
 
         // General > Real-time update
-        _ = TryAdd("FrmSettings.Tab.General._RealTimeFileUpdate", "Real-time file update");
-        _ = TryAdd("FrmSettings.Tab.General._EnableRealTimeFileUpdate", "Monitor file changes in the viewing folder and update in realtime");
-        _ = TryAdd("FrmSettings.Tab.General._ShouldAutoOpenNewAddedImage", "Open the new added image automatically");
+        _ = TryAdd("FrmSettings._RealTimeFileUpdate", "Real-time file update");
+        _ = TryAdd("FrmSettings._EnableRealTimeFileUpdate", "Monitor file changes in the viewing folder and update in realtime");
+        _ = TryAdd("FrmSettings._ShouldAutoOpenNewAddedImage", "Open the new added image automatically");
 
         // General > Others
-        _ = TryAdd("FrmSettings.Tab.General._Others", "Others");
-        _ = TryAdd("FrmSettings.Tab.General._AutoUpdate", "Check for update automatically");
-        _ = TryAdd("FrmSettings.Tab.General._EnableMultiInstances", "Allow multiple instances of the program");
-        _ = TryAdd("FrmSettings.Tab.General._ShowAppIcon", "Show app icon on the title bar");
-        _ = TryAdd("FrmSettings.Tab.General._InAppMessageDuration", "In-app message duration (milliseconds)");
-        _ = TryAdd("FrmSettings.Tab.General._ImageInfoTags", "Image information tags");
+        _ = TryAdd("FrmSettings._Others", "Others");
+        _ = TryAdd("FrmSettings._AutoUpdate", "Check for update automatically");
+        _ = TryAdd("FrmSettings._EnableMultiInstances", "Allow multiple instances of the program");
+        _ = TryAdd("FrmSettings._ShowAppIcon", "Show app icon on the title bar");
+        _ = TryAdd("FrmSettings._InAppMessageDuration", "In-app message duration (milliseconds)");
+        _ = TryAdd("FrmSettings._ImageInfoTags", "Image information tags");
         #endregion // Tab General
 
 
         #region Tab Image
         // Image > Image loading
-        _ = TryAdd("FrmSettings.Tab.Image._ImageLoading", "Image loading");
-        _ = TryAdd("FrmSettings.Tab.Image._ImageLoadingOrder", "Image loading order");
-        _ = TryAdd("FrmSettings.Tab.Image._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
-        _ = TryAdd("FrmSettings.Tab.Image._EnableRecursiveLoading", "Load images in subfolders");
-        _ = TryAdd("FrmSettings.Tab.Image._ShouldGroupImagesByDirectory", "Group images by directory");
-        _ = TryAdd("FrmSettings.Tab.Image._ShouldLoadHiddenImages", "Load hidden images");
-        _ = TryAdd("FrmSettings.Tab.Image._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
-        _ = TryAdd("FrmSettings.Tab.Image._ShowImagePreview", "Display image preview while it's being loaded");
-        _ = TryAdd("FrmSettings.Tab.Image._EnableImageTransition", "Enable image transition effect");
-        _ = TryAdd("FrmSettings.Tab.Image._EmbeddedThumbnail", "Embedded thumbnail");
-        _ = TryAdd("FrmSettings.Tab.Image._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
-        _ = TryAdd("FrmSettings.Tab.Image._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
-        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize", "Minimum size of the embedded thumbnail to be loaded");
-        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Width", "Width");
-        _ = TryAdd("FrmSettings.Tab.Image._MinEmbeddedThumbnailSize._Height", "Height");
+        _ = TryAdd("FrmSettings._ImageLoading", "Image loading");
+        _ = TryAdd("FrmSettings._ImageLoadingOrder", "Image loading order");
+        _ = TryAdd("FrmSettings._ShouldUseExplorerSortOrder", "Use Windows File Explorer sort order if possible");
+        _ = TryAdd("FrmSettings._EnableRecursiveLoading", "Load images in subfolders");
+        _ = TryAdd("FrmSettings._ShouldGroupImagesByDirectory", "Group images by directory");
+        _ = TryAdd("FrmSettings._ShouldLoadHiddenImages", "Load hidden images");
+        _ = TryAdd("FrmSettings._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
+        _ = TryAdd("FrmSettings._ShowImagePreview", "Display image preview while it's being loaded");
+        _ = TryAdd("FrmSettings._EnableImageTransition", "Enable image transition effect");
+        _ = TryAdd("FrmSettings._EmbeddedThumbnail", "Embedded thumbnail");
+        _ = TryAdd("FrmSettings._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
+        _ = TryAdd("FrmSettings._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
+        _ = TryAdd("FrmSettings._MinEmbeddedThumbnailSize", "Minimum size of the embedded thumbnail to be loaded");
+        _ = TryAdd("FrmSettings._MinEmbeddedThumbnailSize._Width", "Width");
+        _ = TryAdd("FrmSettings._MinEmbeddedThumbnailSize._Height", "Height");
 
         // Image > Image Booster
-        _ = TryAdd("FrmSettings.Tab.Image._ImageBooster", "Image Booster");
-        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheCount", "Number of images cached by Image Booster (one direction)");
-        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheMaxDimension", "Maximum image dimension to be cached (in pixels)");
-        _ = TryAdd("FrmSettings.Tab.Image._ImageBoosterCacheMaxFileSizeInMb", "Maximum image file size to be cached (in megabytes)");
+        _ = TryAdd("FrmSettings._ImageBooster", "Image Booster");
+        _ = TryAdd("FrmSettings._ImageBoosterCacheCount", "Number of images cached by Image Booster (one direction)");
+        _ = TryAdd("FrmSettings._ImageBoosterCacheMaxDimension", "Maximum image dimension to be cached (in pixels)");
+        _ = TryAdd("FrmSettings._ImageBoosterCacheMaxFileSizeInMb", "Maximum image file size to be cached (in megabytes)");
 
         // Image > Color management
-        _ = TryAdd("FrmSettings.Tab.Image._ColorManagement", "Color management");
-        _ = TryAdd("FrmSettings.Tab.Image._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
-        _ = TryAdd("FrmSettings.Tab.Image._ColorProfile", "Color profile");
+        _ = TryAdd("FrmSettings._ColorManagement", "Color management");
+        _ = TryAdd("FrmSettings._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
+        _ = TryAdd("FrmSettings._ColorProfile", "Color profile");
         #endregion // Tab Image
 
 
         #region Tab Slideshow
         // Slideshow > Slideshow
-        _ = TryAdd("FrmSettings.Tab.Slideshow._HideMainWindowInSlideshow", "Automatically hide main window");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._ShowSlideshowCountdown", "Show slideshow countdown");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._UseRandomIntervalForSlideshow", "Use random interval");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
+        _ = TryAdd("FrmSettings._HideMainWindowInSlideshow", "Automatically hide main window");
+        _ = TryAdd("FrmSettings._ShowSlideshowCountdown", "Show slideshow countdown");
+        _ = TryAdd("FrmSettings._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
+        _ = TryAdd("FrmSettings._UseRandomIntervalForSlideshow", "Use random interval");
+        _ = TryAdd("FrmSettings._SlideshowInterval", "Slideshow interval:");
+        _ = TryAdd("FrmSettings._SlideshowInterval._From", "From");
+        _ = TryAdd("FrmSettings._SlideshowInterval._To", "To");
         _ = TryAdd("FrmSettings._SlideshowBackgroundColor", "Slideshow background color");
 
         // Slideshow > Slideshow notification
-        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification");
-        _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
+        _ = TryAdd("FrmSettings._SlideshowNotification", "Slideshow notification");
+        _ = TryAdd("FrmSettings._SlideshowImagesToNotifySound", "Number of images to trigger a notification sound");
         #endregion // Tab Slideshow
 
 
         #region Tab Edit
         // Edit > Edit
-        _ = TryAdd("FrmSettings.Tab.Edit._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
-        _ = TryAdd("FrmSettings.Tab.Edit._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
-        _ = TryAdd("FrmSettings.Tab.Edit._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
-        _ = TryAdd("FrmSettings.Tab.Edit._ImageEditQuality", "Image quality");
-        _ = TryAdd("FrmSettings.Tab.Edit._AfterEditingAction", "After opening editing app");
+        _ = TryAdd("FrmSettings._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
+        _ = TryAdd("FrmSettings._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
+        _ = TryAdd("FrmSettings._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
+        _ = TryAdd("FrmSettings._ImageEditQuality", "Image quality");
+        _ = TryAdd("FrmSettings._AfterEditingAction", "After opening editing app");
 
         // Edit > Clipboard
-        _ = TryAdd("FrmSettings.Tab.Edit._Clipboard", "Clipboard");
-        _ = TryAdd("FrmSettings.Tab.Edit._EnableCopyMultipleFiles", "Enable the copying of multiple files at once");
-        _ = TryAdd("FrmSettings.Tab.Edit._EnableCutMultipleFiles", "Enable the cutting of multiple files at once");
+        _ = TryAdd("FrmSettings._Clipboard", "Clipboard");
+        _ = TryAdd("FrmSettings._EnableCopyMultipleFiles", "Enable the copying of multiple files at once");
+        _ = TryAdd("FrmSettings._EnableCutMultipleFiles", "Enable the cutting of multiple files at once");
 
         // Edit > Image editing apps
-        _ = TryAdd("FrmSettings.Tab.Edit._EditApps", "Image editing apps");
-        _ = TryAdd("FrmSettings.Tab.Edit._EditApps._AppName", "App name");
-        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._AddApp", "Add an app for editing");
-        _ = TryAdd("FrmSettings.Tab.Edit.EditAppDialog._EditApp", "Edit app");
+        _ = TryAdd("FrmSettings._EditApps", "Image editing apps");
+        _ = TryAdd("FrmSettings._EditApps._AppName", "App name");
+        _ = TryAdd("FrmSettings.EditAppDialog._AddApp", "Add an app for editing");
+        _ = TryAdd("FrmSettings.EditAppDialog._EditApp", "Edit app");
 
         #endregion // Tab Edit
 
 
+        #region Tab Layout
+        // Layout > Layout
+        _ = TryAdd("FrmSettings.Layout._Order", "Order");
+        _ = TryAdd("FrmSettings.Layout._Toolbar", "Toolbar");
+        _ = TryAdd("FrmSettings.Layout._ToolbarContext", "Contextual toolbar");
+        _ = TryAdd("FrmSettings.Layout._Gallery", "Gallery");
+        _ = TryAdd("FrmSettings.Layout._ToolbarPosition", "Toolbar position");
+        _ = TryAdd("FrmSettings.Layout._ToolbarContextPosition", "Contextual toolbar position");
+        _ = TryAdd("FrmSettings.Layout._GalleryPosition", "Gallery position");
+        #endregion // Tab Layout
+
+
         #region Tab Viewer
         // Viewer > Viewer
-        _ = TryAdd("FrmSettings.Tab.Viewer._ShowCheckerboard", "Show checkerboard");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
-        _ = TryAdd("FrmSettings.Tab.Viewer._EnableNavigationButtons", "Show navigation arrow buttons");
-        _ = TryAdd("FrmSettings.Tab.Viewer._CenterWindowFit", "Automatically center the window in Window Fit mode");
-        _ = TryAdd("FrmSettings.Tab.Viewer._UseWebview2ForSvg", "Use Webview2 for viewing SVG format");
-        _ = TryAdd("FrmSettings.Tab.Viewer._PanSpeed", "Panning speed");
+        _ = TryAdd("FrmSettings._ShowCheckerboard", "Show checkerboard");
+        _ = TryAdd("FrmSettings._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
+        _ = TryAdd("FrmSettings._EnableNavigationButtons", "Show navigation arrow buttons");
+        _ = TryAdd("FrmSettings._CenterWindowFit", "Automatically center the window in Window Fit mode");
+        _ = TryAdd("FrmSettings._UseWebview2ForSvg", "Use Webview2 for viewing SVG format");
+        _ = TryAdd("FrmSettings._PanSpeed", "Panning speed");
 
         // Viewer > Zooming
-        _ = TryAdd("FrmSettings.Tab.Viewer._Zooming", "Zooming");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation", "Image interpolation");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ImageInterpolation._ScaleUp", "When zoom > 100%");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ZoomSpeed", "Zoom speed");
-        _ = TryAdd("FrmSettings.Tab.Viewer._ZoomLevels", "Zoom levels");
-        _ = TryAdd("FrmSettings.Tab.Viewer._UseSmoothZooming", "Use smooth zooming");
-        _ = TryAdd("FrmSettings.Tab.Viewer._LoadDefaultZoomLevels", "Load default zoom levels");
+        _ = TryAdd("FrmSettings._Zooming", "Zooming");
+        _ = TryAdd("FrmSettings._ImageInterpolation", "Image interpolation");
+        _ = TryAdd("FrmSettings._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
+        _ = TryAdd("FrmSettings._ImageInterpolation._ScaleUp", "When zoom > 100%");
+        _ = TryAdd("FrmSettings._ZoomSpeed", "Zoom speed");
+        _ = TryAdd("FrmSettings._ZoomLevels", "Zoom levels");
+        _ = TryAdd("FrmSettings._UseSmoothZooming", "Use smooth zooming");
+        _ = TryAdd("FrmSettings._LoadDefaultZoomLevels", "Load default zoom levels");
         #endregion // Tab Viewer
 
 
         #region Tab Toolbar
         // Toolbar > Toolbar
-        _ = TryAdd("FrmSettings.Tab.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarIconHeight", "Toolbar icon size");
+        _ = TryAdd("FrmSettings.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
+        _ = TryAdd("FrmSettings.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
+        _ = TryAdd("FrmSettings.Toolbar._ToolbarIconHeight", "Toolbar icon size");
 
-        _ = TryAdd("FrmSettings.Tab.Toolbar._AddNewButton", "Add a custom toolbar button");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._EditButton", "Edit toolbar button");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._ButtonJson", "Button JSON");
-        #endregion // Tab Toolbar
-
-
-        #region Tab Gallery
-        // Gallery > Gallery
-        _ = TryAdd("FrmSettings.Tab.Gallery._HideGalleryInFullscreen", "Hide gallery in full screen mode");
-        _ = TryAdd("FrmSettings.Tab.Gallery._ShowGalleryScrollbars", "Show gallery scrollbars");
-        _ = TryAdd("FrmSettings.Tab.Gallery._ShowGalleryFileName", "Show thumbnail filename");
-        _ = TryAdd("FrmSettings.Tab.Gallery._ThumbnailSize", "Thumbnail size (in pixels)");
-        _ = TryAdd("FrmSettings.Tab.Gallery._GalleryCacheSizeInMb", "Maximum gallery cache size (in megabytes)");
-        _ = TryAdd("FrmSettings.Tab.Gallery._GalleryColumns", "Number of thumbnail columns in vertical gallery layout");
-        #endregion // Tab Gallery
+        _ = TryAdd("FrmSettings.Toolbar._AddNewButton", "Add a custom toolbar button");
+        _ = TryAdd("FrmSettings.Toolbar._EditButton", "Edit toolbar button");
+        _ = TryAdd("FrmSettings.Toolbar._ButtonJson", "Button JSON");
 
 
-        #region Tab Layout
-        // Layout > Layout
-        _ = TryAdd("FrmSettings.Tab.Layout._Order", "Order");
-        _ = TryAdd("FrmSettings.Tab.Layout._Toolbar", "Toolbar");
-        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarContext", "Contextual toolbar");
-        _ = TryAdd("FrmSettings.Tab.Layout._Gallery", "Gallery");
-        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarPosition", "Toolbar position");
-        _ = TryAdd("FrmSettings.Tab.Layout._ToolbarContextPosition", "Contextual toolbar position");
-        _ = TryAdd("FrmSettings.Tab.Layout._GalleryPosition", "Gallery position");
-        #endregion // Tab Layout
-
-
-        #region TAB Toolbar
-        _ = TryAdd("FrmSettings.Tab.Toolbar._ToolbarButtons", "Toolbar buttons");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._AddCustomButton", "Add a custom button…");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._AvailableButtons", "Available buttons:");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._CurrentButtons", "Current buttons:");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
-        _ = TryAdd("FrmSettings.Tab.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
+        _ = TryAdd("FrmSettings.Toolbar._ToolbarButtons", "Toolbar buttons");
+        _ = TryAdd("FrmSettings.Toolbar._AddCustomButton", "Add a custom button…");
+        _ = TryAdd("FrmSettings.Toolbar._AvailableButtons", "Available buttons:");
+        _ = TryAdd("FrmSettings.Toolbar._CurrentButtons", "Current buttons:");
+        _ = TryAdd("FrmSettings.Toolbar._Errors._ButtonIdRequired", "Button ID required.");
+        _ = TryAdd("FrmSettings.Toolbar._Errors._ButtonIdDuplicated", "A button with the ID '{0}' has already been defined. Please choose a different and unique ID for your button to avoid conflicts.");
+        _ = TryAdd("FrmSettings.Toolbar._Errors._ButtonExecutableRequired", "Button executable required.");
 
         #endregion // TAB Toolbar
 
 
+        #region Tab Gallery
+        // Gallery > Gallery
+        _ = TryAdd("FrmSettings._HideGalleryInFullscreen", "Hide gallery in full screen mode");
+        _ = TryAdd("FrmSettings._ShowGalleryScrollbars", "Show gallery scrollbars");
+        _ = TryAdd("FrmSettings._ShowGalleryFileName", "Show thumbnail filename");
+        _ = TryAdd("FrmSettings._ThumbnailSize", "Thumbnail size (in pixels)");
+        _ = TryAdd("FrmSettings._GalleryCacheSizeInMb", "Maximum gallery cache size (in megabytes)");
+        _ = TryAdd("FrmSettings._GalleryColumns", "Number of thumbnail columns in vertical gallery layout");
+        #endregion // Tab Gallery
+
+
         #region Tab Mouse
         // Mouse > Mouse wheel action
-        _ = TryAdd("FrmSettings.Tab.Mouse._MouseWheelAction", "Mouse wheel action");
+        _ = TryAdd("FrmSettings._MouseWheelAction", "Mouse wheel action");
         #endregion // Tab Mouse
 
 
@@ -656,62 +654,62 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab File type associations
         // File type associations > File extension icons
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons", "File extension icons");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '{0}' button. This will also set ImageGlass as default photo viewer.");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenExtensionIconFolder", "Open extension icon folder");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._GetExtensionIconPacks", "Get extension icon packs…");
+        _ = TryAdd("FrmSettings._FileExtensionIcons", "File extension icons");
+        _ = TryAdd("FrmSettings._FileExtensionIcons._Description", "For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '{0}' button. This will also set ImageGlass as default photo viewer.");
+        _ = TryAdd("FrmSettings._OpenExtensionIconFolder", "Open extension icon folder");
+        _ = TryAdd("FrmSettings._GetExtensionIconPacks", "Get extension icon packs…");
 
         // File type associations > Default photo viewer
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer", "Default photo viewer");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._DefaultPhotoViewer._Description", "You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._MakeDefault", "Make default");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._RemoveDefault", "Remove default");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._OpenDefaultAppsSetting", "Open Default apps setting");
+        _ = TryAdd("FrmSettings._DefaultPhotoViewer", "Default photo viewer");
+        _ = TryAdd("FrmSettings._DefaultPhotoViewer._Description", "You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.");
+        _ = TryAdd("FrmSettings._MakeDefault", "Make default");
+        _ = TryAdd("FrmSettings._RemoveDefault", "Remove default");
+        _ = TryAdd("FrmSettings._OpenDefaultAppsSetting", "Open Default apps setting");
 
         // File type associations > File formats
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._FileFormats", "File formats");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._TotalSupportedFormats", "Total supported formats: {0}");
-        _ = TryAdd("FrmSettings.Tab.FileAssocs._AddNewFileExtension", "Add new file extension");
+        _ = TryAdd("FrmSettings._FileFormats", "File formats");
+        _ = TryAdd("FrmSettings._TotalSupportedFormats", "Total supported formats: {0}");
+        _ = TryAdd("FrmSettings._AddNewFileExtension", "Add new file extension");
 
         #endregion // Tab File type associations
 
 
         #region Tab Tools
         // Tools > Tools
-        _ = TryAdd("FrmSettings.Tab.Tools._AddNewTool", "Add an external tool");
-        _ = TryAdd("FrmSettings.Tab.Tools._EditTool", "Edit external tool");
-        _ = TryAdd("FrmSettings.Tab.Tools._Integrated", "Integrated");
-        _ = TryAdd("FrmSettings.Tab.Tools._IntegratedWith", "Integrated with {0}");
+        _ = TryAdd("FrmSettings.Tools._AddNewTool", "Add an external tool");
+        _ = TryAdd("FrmSettings.Tools._EditTool", "Edit external tool");
+        _ = TryAdd("FrmSettings.Tools._Integrated", "Integrated");
+        _ = TryAdd("FrmSettings.Tools._IntegratedWith", "Integrated with {0}");
         #endregion // Tab Tools
 
 
         #region Tab Language
         // Language > Language
-        _ = TryAdd("FrmSettings.Tab.Language._DisplayLanguage", "Display language");
-        _ = TryAdd("FrmSettings.Tab.Language._Refresh", "Refresh");
-        _ = TryAdd("FrmSettings.Tab.Language._InstallNewLanguagePack", "Install new language packs…");
-        _ = TryAdd("FrmSettings.Tab.Language._GetMoreLanguagePacks", "Get more language packs…");
-        _ = TryAdd("FrmSettings.Tab.Language._Contributors", "Contributors");
+        _ = TryAdd("FrmSettings._DisplayLanguage", "Display language");
+        _ = TryAdd("FrmSettings._Refresh", "Refresh");
+        _ = TryAdd("FrmSettings._InstallNewLanguagePack", "Install new language packs…");
+        _ = TryAdd("FrmSettings._GetMoreLanguagePacks", "Get more language packs…");
+        _ = TryAdd("FrmSettings._Contributors", "Contributors");
         #endregion // Tab Language
 
 
         #region Tab Appearance
         // Appearance > Appearance
-        _ = TryAdd("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
-        _ = TryAdd("FrmSettings.Tab.Appearance._BackgroundColor", "Viewer background color");
+        _ = TryAdd("FrmSettings._WindowBackdrop", "Window backdrop");
+        _ = TryAdd("FrmSettings._BackgroundColor", "Viewer background color");
 
         // Appearance > Theme
-        _ = TryAdd("FrmSettings.Tab.Appearance._Theme", "Theme");
-        _ = TryAdd("FrmSettings.Tab.Appearance._DarkTheme", "Dark");
-        _ = TryAdd("FrmSettings.Tab.Appearance._LightTheme", "Light");
-        _ = TryAdd("FrmSettings.Tab.Appearance._Author", "Author");
-        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._OpenThemeFolder", "Open theme folder");
-        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._GetMoreThemes", "Get more theme packs…");
-        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._InstallTheme", "Install theme packs");
-        _ = TryAdd("FrmSettings.Tab.Appearance._Theme._UninstallTheme", "Uninstall a theme pack");
+        _ = TryAdd("FrmSettings._Theme", "Theme");
+        _ = TryAdd("FrmSettings._DarkTheme", "Dark");
+        _ = TryAdd("FrmSettings._LightTheme", "Light");
+        _ = TryAdd("FrmSettings._Author", "Author");
+        _ = TryAdd("FrmSettings._Theme._OpenThemeFolder", "Open theme folder");
+        _ = TryAdd("FrmSettings._Theme._GetMoreThemes", "Get more theme packs…");
+        _ = TryAdd("FrmSettings._Theme._InstallTheme", "Install theme packs");
+        _ = TryAdd("FrmSettings._Theme._UninstallTheme", "Uninstall a theme pack");
 
-        _ = TryAdd("FrmSettings.Tab.Appearance._UseThemeForDarkMode", "Use this theme for dark mode");
-        _ = TryAdd("FrmSettings.Tab.Appearance._UseThemeForLightMode", "Use this theme for light mode");
+        _ = TryAdd("FrmSettings._UseThemeForDarkMode", "Use this theme for dark mode");
+        _ = TryAdd("FrmSettings._UseThemeForLightMode", "Use this theme for light mode");
         #endregion // Tab Appearance
 
 

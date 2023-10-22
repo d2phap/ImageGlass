@@ -20,8 +20,8 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
     this.innerHTML = `
       <form method="dialog">
         <header class="dialog-header">
-          <span class="create-only" lang-text="FrmSettings.Tab.Edit.EditAppDialog._AddApp">[Add a new app]</span>
-          <span class="edit-only" lang-text="FrmSettings.Tab.Edit.EditAppDialog._EditApp">[Edit app]</span>
+          <span class="create-only" lang-text="FrmSettings.EditAppDialog._AddApp">[Add a new app]</span>
+          <span class="edit-only" lang-text="FrmSettings.EditAppDialog._EditApp">[Edit app]</span>
         </header>
         <div class="dialog-body" style="width: 33rem;">
           <div class="mb-3">
@@ -31,7 +31,7 @@ export class EditAppDialogHtmlElement extends HTMLDialogElement {
               placeholder=".jpg;.png;.svg" />
           </div>
           <div class="mb-3">
-            <div class="mb-1" lang-text="FrmSettings.Tab.Edit._EditApps._AppName">[App name]</div>
+            <div class="mb-1" lang-text="FrmSettings._EditApps._AppName">[App name]</div>
             <input type="text" name="_AppName" class="w-100" required spellcheck="false" placeholder="MS Paint" />
           </div>
           <div class="mb-3">
