@@ -97,7 +97,7 @@ public static class ImageInfo
             {
                 if (count > 0)
                 {
-                    strBuilder.Append("  |  ");
+                    strBuilder.Append("  ︱  ");
                 }
 
                 strBuilder.Append(str);
