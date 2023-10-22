@@ -660,7 +660,7 @@ public partial class ImageGallery : Control, IComponent
     /// <summary>
     /// This property is not relevant for this class.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(""), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public override string Text { get; set; } = string.Empty;
 
     /// <summary>

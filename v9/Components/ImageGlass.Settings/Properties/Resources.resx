@@ -117,20 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Layout.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="MsStoreBadge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MsStoreBadge.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Page_About" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Page_About.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Page_Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Page_Settings.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Page_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Page_Update.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
 </root>
