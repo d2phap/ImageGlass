@@ -2,7 +2,8 @@ details {
   padding-left: 1.35rem;
 
   summary {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     margin-left: -1.35rem;
     margin-bottom: 0.5em;
@@ -19,7 +20,16 @@ details {
     }
     
     &::before {
-      content: "▶️";
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      margin-right: 0.5em;
+      pointer-events: none;
+      border-bottom: 0.125em solid;
+      border-right: 0.125em solid;
+      transition: transform ease var(--transitionMs);
+      transform: rotate(-45deg) translate(-0.1em, 0.1em);
     }
 
     &:hover,
@@ -43,6 +53,6 @@ details {
   }
 
   &[open] summary::before {
-    content: "🔽";
+    transform: rotate(45deg) translate(0, 0);
   }
 }

@@ -34,16 +34,19 @@
             // Web2
             // 
             Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
-            Web2.Size = new Size(1527, 1478);
+            Web2.Margin = new Padding(0);
+            Web2.Size = new Size(594, 584);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmAbout
             // 
-            AutoScaleDimensions = new SizeF(18F, 45F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackdropStyle = Base.BackdropStyle.Mica;
-            ClientSize = new Size(1527, 1478);
+            ClientSize = new Size(594, 584);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(0);
             MinimizeBox = false;
             Name = "FrmAbout";
             ((System.ComponentModel.ISupportInitialize)Web2).EndInit();

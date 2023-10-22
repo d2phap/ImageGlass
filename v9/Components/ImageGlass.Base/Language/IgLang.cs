@@ -130,7 +130,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._Reset", "Reset"); //v9.0
         _ = TryAdd("_._ResetToDefault", "Reset to default"); //v9.0
         _ = TryAdd("_._CheckForUpdate", "Check for update…"); //v5.0
-        _ = TryAdd("_._Update", "Update"); //v9.0
+        _ = TryAdd("_._Download", "Download"); //v9.0
         _ = TryAdd("_._Website", "Website"); //v9.0
         _ = TryAdd("_._Email", "Email"); //v9.0
         _ = TryAdd("_._Install", "Install…");
@@ -406,7 +406,7 @@ public class IgLang : Dictionary<string, string>
         #region Help
         _ = TryAdd("FrmMain.MnuHelp", "Help"); //v7.0
         _ = TryAdd("FrmMain.MnuAbout", "About"); //v3.0
-        _ = TryAdd("FrmMain.MnuQuickSetup", "Open ImageGlass Quick setup"); //v5.0
+        _ = TryAdd("FrmMain.MnuQuickSetup", "Open ImageGlass Quick Setup"); //v9.0
         _ = TryAdd("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         _ = TryAdd("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
 
@@ -716,8 +716,6 @@ public class IgLang : Dictionary<string, string>
         #endregion // FrmSettings
 
 
-
-
         #region FrmCrop
         _ = TryAdd("FrmCrop.LblAspectRatio", "Aspect ratio:"); //v9.0
         _ = TryAdd("FrmCrop.LblLocation", "Location:"); //v9.0
@@ -829,18 +827,19 @@ public class IgLang : Dictionary<string, string>
 
         #region FrmQuickSetup
 
-        _ = TryAdd("FrmQuickSetup._Text", "ImageGlass Quick setup"); //v9.0
+        _ = TryAdd("FrmQuickSetup._Text", "ImageGlass Quick Setup"); //v9.0
         _ = TryAdd("FrmQuickSetup._StepInfo", "Step {0}"); //v9.0
         _ = TryAdd("FrmQuickSetup._SkipQuickSetup", "Skip this and launch ImageGlass"); //v9.0
 
+        _ = TryAdd("FrmQuickSetup._SeeWhatNew", "See what's new in this version…"); // v9.0
         _ = TryAdd("FrmQuickSetup._SelectProfile", "Select a profile"); //v9.0
         _ = TryAdd("FrmQuickSetup._StandardUser", "Standard user"); //v9.0
         _ = TryAdd("FrmQuickSetup._ProfessionalUser", "Professional user"); //v9.0
-        _ = TryAdd("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access the Settings dialog."); // v9.0
+        _ = TryAdd("FrmQuickSetup._SettingProfileDescription", "To modify these settings, simply access app settings."); // v9.0
 
         _ = TryAdd("FrmQuickSetup._SettingsWillBeApplied", "Settings will be applied:"); //v9.0
         _ = TryAdd("FrmQuickSetup._SetDefaultViewer", "Do you want to set ImageGlass as the default photo viewer?"); //v9.0
-        _ = TryAdd("FrmQuickSetup._SetDefaultViewer._Description", "You can reset it in the Settings dialog > File type associations tab."); //v9.0
+        _ = TryAdd("FrmQuickSetup._SetDefaultViewer._Description", "You can reset it in the app settings > File type associations tab."); //v9.0
 
         _ = TryAdd("FrmQuickSetup._ConfirmCloseProcess", "Before applying the new settings, it's essential to close all ImageGlass processes. Are you ready to proceed?"); //v7.5
 
