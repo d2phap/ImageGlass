@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Settings;
+using System.Diagnostics;
 
 namespace ImageGlass;
 
@@ -91,6 +92,19 @@ public partial class FrmAbout : WebForm
         else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
         {
             Close();
+        }
+        else if (e.Name.Equals("ViewLicenseFile", StringComparison.InvariantCultureIgnoreCase))
+        {
+            var filePath = App.StartUpDir(Dir.License, e.Data);
+
+            try
+            {
+                using var proc = Process.Start(new ProcessStartInfo(filePath)
+                {
+                    UseShellExecute = true,
+                });
+            }
+            catch { }
         }
     }
 

@@ -37,6 +37,11 @@ public static class Dir
     public static string ThumbnailsCache { get; } = "ThumbnailsCache";
 
     /// <summary>
+    /// Gets the License folder name
+    /// </summary>
+    public static string License { get; } = "License";
+
+    /// <summary>
     /// Gets the temporary folder name
     /// </summary>
     public static string Temporary { get; } = "Temp";

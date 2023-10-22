@@ -79,11 +79,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="License\Apache License 2.0.txt" />
+    <None Remove="License\CsWin32.txt" />
+    <None Remove="License\d2phap.txt" />
+    <None Remove="License\Google Copyright.txt" />
+    <None Remove="License\libwebp.txt" />
+    <None Remove="License\Microsoft Copyright.txt" />
+    <None Remove="License\MIT License.txt" />
+    <None Remove="License\Webview2.txt" />
+    <None Remove="License\WicNet.txt" />
     <None Remove="styles.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="icon256.ico" />
+    <Content Include="License\Apache License 2.0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\CsWin32.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\d2phap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\libwebp.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\Webview2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\WicNet.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

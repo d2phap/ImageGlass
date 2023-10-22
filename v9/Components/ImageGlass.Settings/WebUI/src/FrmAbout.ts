@@ -13,6 +13,9 @@ query('#BtnImageGlassStore').addEventListener('click', onButtonClicked, false);
 query('#BtnCheckForUpdate').addEventListener('click', onButtonClicked, false);
 query('#BtnDonate').addEventListener('click', onButtonClicked, false);
 query('#BtnClose').addEventListener('click', onButtonClicked, false);
+queryAll('[data-license]').forEach(el => {
+  el.addEventListener('click', () => post('ViewLicenseFile', el.getAttribute('data-license')), false);
+});
 
 query('#BtnCheckForUpdate').focus();
 
