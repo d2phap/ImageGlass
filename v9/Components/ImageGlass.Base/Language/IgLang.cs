@@ -545,6 +545,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval", "Slideshow interval:");
         _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._From", "From");
         _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowInterval._To", "To");
+        _ = TryAdd("FrmSettings._SlideshowBackgroundColor", "Slideshow background color");
 
         // Slideshow > Slideshow notification
         _ = TryAdd("FrmSettings.Tab.Slideshow._SlideshowNotification", "Slideshow notification");
@@ -698,7 +699,6 @@ public class IgLang : Dictionary<string, string>
         // Appearance > Appearance
         _ = TryAdd("FrmSettings.Tab.Appearance._WindowBackdrop", "Window backdrop");
         _ = TryAdd("FrmSettings.Tab.Appearance._BackgroundColor", "Viewer background color");
-        _ = TryAdd("FrmSettings.Tab.Appearance._SlideshowBackgroundColor", "Slideshow background color");
 
         // Appearance > Theme
         _ = TryAdd("FrmSettings.Tab.Appearance._Theme", "Theme");

@@ -418,7 +418,7 @@
         </div>
 
         <!-- Slideshow interval -->
-        <div class="mt-4 mb-2">
+        <div class="my-4">
           <div class="mb-2">
             <b lang-text="FrmSettings.Tab.Slideshow._SlideshowInterval">[Slideshow interval:]</b>
             <b id="Lbl_SlideshowInterval"></b>
@@ -434,6 +434,25 @@
                 <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" placeholder="10" />
               </div>
             </div>
+          </div>
+        </div>
+
+
+        <!-- slideshow background -->
+        <div class="mb-3">
+          <div>
+            <div class="mb-1">
+              <span lang-text="FrmSettings._SlideshowBackgroundColor">[SlideshowBackgroundColor]</span>
+              <span id="Lbl_SlideshowBackgroundColorValue" class="text-code"></span>
+            </div>
+            <span class="d-flex align-items-center">
+              <input type="hidden" name="SlideshowBackgroundColor" />
+              <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2 w-control-compact" type="button">
+                <div class="color-display"></div>
+                <div class="color-checkerboard"></div>
+              </button>
+              <a id="Lnk_ResetSlideshowBackgroundColor" href="#" lang-text="_._Reset">[Reset]</a>
+            </span>
           </div>
         </div>
       </section>
@@ -1043,22 +1062,6 @@
                 <div class="color-checkerboard"></div>
               </button>
               <a id="Lnk_ResetBackgroundColor" href="#" lang-text="_._Reset">[Reset]</a>
-            </span>
-          </div>
-        </div>
-        <div class="mb-3">
-          <div>
-            <div class="mb-1">
-              <span lang-text="FrmSettings.Tab.Appearance._SlideshowBackgroundColor">[SlideshowBackgroundColor]</span>
-              <span id="Lbl_SlideshowBackgroundColorValue" class="text-code"></span>
-            </div>
-            <span class="d-flex align-items-center">
-              <input type="hidden" name="SlideshowBackgroundColor" />
-              <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2 w-control-compact" type="button">
-                <div class="color-display"></div>
-                <div class="color-checkerboard"></div>
-              </button>
-              <a id="Lnk_ResetSlideshowBackgroundColor" href="#" lang-text="_._Reset">[Reset]</a>
             </span>
           </div>
         </div>

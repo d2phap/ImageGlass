@@ -449,6 +449,7 @@ public partial class FrmSettings : WebForm
         if (Config.SetFromJson(dict, nameof(Config.UseRandomIntervalForSlideshow)).Done) { updateSlideshow = true; }
         if (Config.SetFromJson(dict, nameof(Config.SlideshowInterval)).Done) { updateSlideshow = true; }
         if (Config.SetFromJson(dict, nameof(Config.SlideshowIntervalTo)).Done) { updateSlideshow = true; }
+        if (Config.SetFromJson(dict, nameof(Config.SlideshowBackgroundColor)).Done) { updateSlideshow = true; }
 
         if (Config.SetFromJson(dict, nameof(Config.SlideshowImagesToNotifySound)).Done) { updateSlideshow = true; }
 
@@ -592,7 +593,6 @@ public partial class FrmSettings : WebForm
 
         if (Config.SetFromJson(dict, nameof(Config.WindowBackdrop)).Done) { updateAppearance = true; }
         if (Config.SetFromJson(dict, nameof(Config.BackgroundColor)).Done) { updateAppearance = true; }
-        if (Config.SetFromJson(dict, nameof(Config.SlideshowBackgroundColor)).Done) { updateSlideshow = true; }
         if (Config.SetFromJson(dict, nameof(Config.DarkTheme)).Done) { updateTheme = true; }
         if (Config.SetFromJson(dict, nameof(Config.LightTheme)).Done) { updateTheme = true; }
 

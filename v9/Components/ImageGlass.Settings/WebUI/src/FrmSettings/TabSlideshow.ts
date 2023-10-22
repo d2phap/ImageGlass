@@ -7,6 +7,7 @@ export default class TabSlideshow {
   static loadSettings() {
     TabSlideshow.handleUseRandomIntervalForSlideshowChanged();
     TabSlideshow.handleSlideshowIntervalsChanged();
+    TabSlideshow.handleSlideshowBackgroundColorChanged();
   }
 
 
@@ -17,6 +18,8 @@ export default class TabSlideshow {
     query('[name="UseRandomIntervalForSlideshow"]').addEventListener('input', TabSlideshow.handleUseRandomIntervalForSlideshowChanged, false);
     query('[name="SlideshowInterval"]').addEventListener('input', TabSlideshow.handleSlideshowIntervalsChanged, false);
     query('[name="SlideshowIntervalTo"]').addEventListener('input', TabSlideshow.handleSlideshowIntervalsChanged, false);
+    query('#Lnk_ResetSlideshowBackgroundColor').addEventListener('click', TabSlideshow.resetSlideshowBackgroundColor, false);
+    query('#Btn_SlideshowBackgroundColor').addEventListener('click', TabSlideshow.onBtn_SlideshowBackgroundColor, false);
   }
 
 
@@ -65,9 +68,7 @@ export default class TabSlideshow {
   }
 
 
-  /**
-   * Formats total seconds to time format: `mm:ss.fff`.
-   */
+  // Formats total seconds to time format: `mm:ss.fff`.
   private static toTimeString(totalSeconds: number) {
     const dt = new Date(totalSeconds * 1000);
     let minutes = dt.getUTCMinutes().toString();
@@ -78,5 +79,33 @@ export default class TabSlideshow {
     if (seconds.length < 2) seconds = `0${seconds}`;
 
     return `${minutes}:${seconds}.${msSeconds}`;
+  }
+
+
+  // Reset slideshow background color to black
+  private static resetSlideshowBackgroundColor() {
+    query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value = '#000000';
+    TabSlideshow.handleSlideshowBackgroundColorChanged();
+  }
+
+
+  // Handles when `SlideshowBackgroundColor` is changed.
+  private static handleSlideshowBackgroundColorChanged() {
+    const colorHex = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]').value;
+    if (!colorHex) return;
+
+    query<HTMLInputElement>('#Btn_SlideshowBackgroundColor > .color-display').style.setProperty('--color-picker-value', colorHex);
+    query('#Lbl_SlideshowBackgroundColorValue').innerText = colorHex;
+  }
+
+
+  private static async onBtn_SlideshowBackgroundColor() {
+    const colorEL = query<HTMLInputElement>('[name="SlideshowBackgroundColor"]');
+    const colorValue = await postAsync<string>('Btn_SlideshowBackgroundColor', colorEL.value);
+
+    if (colorValue) {
+      colorEL.value = colorValue;
+      TabSlideshow.handleSlideshowBackgroundColorChanged();
+    }
   }
 }
