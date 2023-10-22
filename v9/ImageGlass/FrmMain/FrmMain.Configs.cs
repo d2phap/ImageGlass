@@ -131,7 +131,7 @@ public partial class FrmMain
         { nameof(MnuAbout),                 new() { new (Keys.F1) } },
 
         { nameof(MnuSettings),              new() { new (Keys.Control | Keys.Oemcomma) } }, // Ctrl+,
-        { nameof(MnuExit),                  new() { new (Keys.Escape) } },
+        { nameof(MnuExit),                  new() { new (Keys.Escape), new (Keys.Control | Keys.W) } },
     };
 
 
