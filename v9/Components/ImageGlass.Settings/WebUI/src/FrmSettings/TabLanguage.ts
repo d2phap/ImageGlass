@@ -14,13 +14,10 @@ export default class TabLanguage {
    * Adds events for tab Language.
    */
   static addEvents() {
-    query('#Cmb_LanguageList').removeEventListener('change', TabLanguage.handleLanguageChanged, false);
-    query('#Btn_RefreshLanguageList').removeEventListener('click', TabLanguage.onBtn_RefreshLanguageList, false);
-    query('#Lnk_InstallLanguage').removeEventListener('click', TabLanguage.onLnk_InstallLanguage, false);
-
     query('#Cmb_LanguageList').addEventListener('change', TabLanguage.handleLanguageChanged, false);
     query('#Btn_RefreshLanguageList').addEventListener('click', TabLanguage.onBtn_RefreshLanguageList, false);
     query('#Lnk_InstallLanguage').addEventListener('click', TabLanguage.onLnk_InstallLanguage, false);
+    query('#Lnk_ExportLanguage').addEventListener('click', () => post('Lnk_ExportLanguage', query<HTMLSelectElement>('#Cmb_LanguageList').value), false);
   }
 
 
@@ -51,7 +48,7 @@ export default class TabLanguage {
     const langFileName = query<HTMLSelectElement>('#Cmb_LanguageList').value;
     const lang = _pageSettings.langList.find(i => i.FileName === langFileName);
     if (!lang) return;
-  
+
     query('#Section_LanguageContributors').innerText = lang.Metadata.Author;
   }
 

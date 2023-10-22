@@ -282,6 +282,10 @@ public partial class FrmSettings : WebForm
         {
             _ = InstallLanguagePackAsync();
         }
+        else if (e.Name.Equals("Lnk_ExportLanguage"))
+        {
+            _ = FrmSettings.ExportLanguagePackAsync(e.Data);
+        }
         #endregion // Tab Language
 
 
@@ -656,6 +660,24 @@ public partial class FrmSettings : WebForm
             WebUI.UpdateLangListJson(true);
             Web2.PostWeb2Message("Lnk_InstallLanguage", WebUI.LangListJson);
         }
+    }
+
+
+    private static async Task ExportLanguagePackAsync(string langFileName)
+    {
+        using var o = new SaveFileDialog()
+        {
+            Filter = "ImageGlass language pack (*.iglang.json)|*.iglang.json",
+            AddExtension = true,
+            OverwritePrompt = true,
+            RestoreDirectory = true,
+            FileName = langFileName,
+        };
+
+        if (o.ShowDialog() != DialogResult.OK) return;
+
+        var lang = new IgLang(langFileName, App.StartUpDir(Dir.Language));
+        await lang.SaveAsFileAsync(o.FileName);
     }
 
 

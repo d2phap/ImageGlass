@@ -56,7 +56,7 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Initializes language with filename
     /// </summary>
-    /// <param name="fileName">.iglang.json file</param>
+    /// <param name="fileName">E.g. <c>Vietnamese.iglang.json</c></param>
     /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
     public IgLang(string fileName, string dirPath = "")
     {
@@ -95,7 +95,6 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Saves current language to JSON file
     /// </summary>
-    /// <param name="filePath"></param>
     public async Task SaveAsFileAsync(string filePath)
     {
         var model = new IgLangJsonModel(Metadata, this);
@@ -689,6 +688,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings._Refresh", "Refresh");
         _ = TryAdd("FrmSettings._InstallNewLanguagePack", "Install new language packs…");
         _ = TryAdd("FrmSettings._GetMoreLanguagePacks", "Get more language packs…");
+        _ = TryAdd("FrmSettings._ExportLanguagePack", "Export language pack…");
         _ = TryAdd("FrmSettings._Contributors", "Contributors");
         #endregion // Tab Language
 
