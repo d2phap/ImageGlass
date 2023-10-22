@@ -491,6 +491,11 @@ public static class Config
     public static string LastSeenImagePath { get; set; } = "";
 
     /// <summary>
+    /// Gets, sets the last view of settings window.
+    /// </summary>
+    public static string LastOpenedSetting { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets, sets the theme name for dark mode.
     /// </summary>
     public static string DarkTheme { get; set; } = "";
@@ -801,6 +806,7 @@ public static class Config
 
         AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
+        LastOpenedSetting = items.GetValue(nameof(LastOpenedSetting), LastOpenedSetting);
         DarkTheme = items.GetValue(nameof(DarkTheme), DarkTheme);
         LightTheme = items.GetValue(nameof(LightTheme), LightTheme);
 
@@ -1121,6 +1127,7 @@ public static class Config
         settings.TryAdd(nameof(ColorProfile), ColorProfile);
         settings.TryAdd(nameof(AutoUpdate), AutoUpdate);
         settings.TryAdd(nameof(LastSeenImagePath), LastSeenImagePath);
+        settings.TryAdd(nameof(LastOpenedSetting), LastOpenedSetting);
         settings.TryAdd(nameof(DarkTheme), DarkTheme);
         settings.TryAdd(nameof(LightTheme), LightTheme);
 

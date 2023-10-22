@@ -119,7 +119,7 @@ public partial class FrmSettings : WebForm
 
             window._page.loadSettings();
             window._page.loadLanguage();
-            window._page.setActiveMenu('{Local.LastOpenedSetting}');
+            window._page.setActiveMenu('{Config.LastOpenedSetting}');
         ");
     }
 
@@ -145,7 +145,7 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("LnkHelp"))
         {
-            _ = BHelper.OpenUrlAsync("https://imageglass.org/docs", $"from_setting_{Local.LastOpenedSetting}");
+            _ = BHelper.OpenUrlAsync("https://imageglass.org/docs", $"from_setting_{Config.LastOpenedSetting}");
         }
         #endregion // General events
 
@@ -155,7 +155,7 @@ public partial class FrmSettings : WebForm
         // sidebar tab changed
         else if (e.Name.Equals("Sidebar_Changed"))
         {
-            Local.LastOpenedSetting = e.Data;
+            Config.LastOpenedSetting = e.Data;
         }
         #endregion // Sidebar
 

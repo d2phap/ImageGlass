@@ -449,11 +449,6 @@ internal class Local
     #region Public properties
 
     /// <summary>
-    /// Gets, sets the last view of settings window.
-    /// </summary>
-    public static string LastOpenedSetting { get; set; } = string.Empty;
-
-    /// <summary>
     /// Gets, sets the tools.
     /// </summary>
     public static Dictionary<string, ToolForm?> Tools { get; set; } = new();
