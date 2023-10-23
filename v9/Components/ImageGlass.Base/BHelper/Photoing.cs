@@ -28,6 +28,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using WicNet;
+using Windows.Graphics.Imaging;
+using Windows.Media.Ocr;
 using Windows.Win32;
 using ColorProfile = ImageMagick.ColorProfile;
 
@@ -207,6 +209,35 @@ public partial class BHelper
             return null;
         }
         return src;
+    }
+
+
+    /// <summary>
+    /// Converts <see cref="WicBitmapSource"/> to <see cref="SoftwareBitmap"/>.
+    /// </summary>
+    public static async Task<SoftwareBitmap?> ToSoftwareBitmapAsync(WicBitmapSource? wicSrc, string srcExt)
+    {
+        using var ms = new Windows.Storage.Streams.InMemoryRandomAccessStream();
+        using var stream = ms.AsStream();
+
+        // detect the source format
+        var encoder = WicEncoder.FromFileExtension(srcExt);
+        var conFormat = encoder?.ContainerFormat ?? WicEncoder.GUID_ContainerFormatPng;
+
+        try
+        {
+            // convert to stream
+            wicSrc.Save(stream, encoder.ContainerFormat);
+
+            // create SoftwareBitmap from stream
+            var bmpDecoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(ms);
+            var softwareBmp = await bmpDecoder.GetSoftwareBitmapAsync();
+
+            return softwareBmp;
+        }
+        catch { }
+
+        return null;
     }
 
 
@@ -509,7 +540,6 @@ public partial class BHelper
     /// Returns <paramref name="defaultValue"/> if the format is not supported.
     /// </summary>
     /// <param name="format">Image format</param>
-    /// <returns></returns>
     public static string GetMIMEType(ImageFormat? format = null, string defaultValue = "image/png")
     {
         if (format == null)
@@ -642,6 +672,21 @@ public partial class BHelper
 
         return WicBitmapSource.FromSourceRect(img, x, y, width, height);
     }
+
+
+    /// <summary>
+    /// Gets text from image using Optical character recognition (OCR).
+    /// </summary>
+    public static async Task<OcrResult?> GetTextFromImageAsync(WicBitmapSource? wicSrc, string srcExt)
+    {
+        using var softwareBmp = await BHelper.ToSoftwareBitmapAsync(wicSrc, srcExt);
+
+        var ocrEngine = OcrEngine.TryCreateFromUserProfileLanguages();
+        var ocrResult = await ocrEngine.RecognizeAsync(softwareBmp);
+
+        return ocrResult;
+    }
+
 
 }
 
