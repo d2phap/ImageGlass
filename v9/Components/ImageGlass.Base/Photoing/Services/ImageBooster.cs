@@ -286,8 +286,8 @@ public class ImageBooster : IDisposable
 
                 // check image dimension
                 var notExceedDimension = MaxImageDimensionToCache <= 0
-                    || (metadata.Width <= MaxImageDimensionToCache
-                        && metadata.Height <= MaxImageDimensionToCache);
+                    || (metadata.RenderedWidth <= MaxImageDimensionToCache
+                        && metadata.RenderedHeight <= MaxImageDimensionToCache);
 
                 // check file size
                 var notExceedFileSize = MaxFileSizeInMbToCache <= 0

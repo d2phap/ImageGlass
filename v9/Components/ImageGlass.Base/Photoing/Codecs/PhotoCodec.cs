@@ -141,8 +141,18 @@ public static class PhotoCodec
                     meta.ColorProfile = colorProfile.ColorSpace.ToString();
                 }
 
-                meta.Width = imgM.Width;
-                meta.Height = imgM.Height;
+                if (options?.AutoScaleDownLargeImage == true)
+                {
+                    var newSize = GetMaxImageRenderSize(imgM.BaseWidth, imgM.BaseHeight);
+
+                    meta.RenderedWidth = newSize.Width;
+                    meta.RenderedHeight = newSize.Height;
+                }
+                else
+                {
+                    meta.RenderedWidth = imgM.Width;
+                    meta.RenderedHeight = imgM.Height;
+                }
 
                 meta.OriginalWidth = imgM.BaseWidth;
                 meta.OriginalHeight = imgM.BaseHeight;
@@ -1008,29 +1018,39 @@ public static class PhotoCodec
         // load full image data
         await imgM.ReadAsync(srcFilePath, settings, cancelToken);
 
-        var widthScale = 1f;
-        var heightScale = 1f;
-
-        if (imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION)
-        {
-            widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseWidth;
-        }
-
-        if (imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION)
-        {
-            heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseHeight;
-        }
-
-        var scale = Math.Min(widthScale, heightScale);
-        var newW = (int)(imgM.BaseWidth * scale);
-        var newH = (int)(imgM.BaseHeight * scale);
-
-        imgM.Scale(newW, newH);
+        var newSize = GetMaxImageRenderSize(imgM.BaseWidth, imgM.BaseHeight);
+        imgM.Scale(newSize.Width, newSize.Height);
 
         return imgM;
 
         #endregion // Resize with Magick.NET
 
+    }
+
+
+    /// <summary>
+    /// Gets maximum image dimention.
+    /// </summary>
+    private static Size GetMaxImageRenderSize(int srcWidth, int srcHeight)
+    {
+        var widthScale = 1f;
+        var heightScale = 1f;
+
+        if (srcWidth > Constants.MAX_IMAGE_DIMENSION)
+        {
+            widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / srcWidth;
+        }
+
+        if (srcHeight > Constants.MAX_IMAGE_DIMENSION)
+        {
+            heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / srcHeight;
+        }
+
+        var scale = Math.Min(widthScale, heightScale);
+        var newW = (int)(srcWidth * scale);
+        var newH = (int)(srcHeight * scale);
+
+        return new Size(newW, newH);
     }
 
 

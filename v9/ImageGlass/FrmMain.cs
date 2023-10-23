@@ -298,7 +298,7 @@ public partial class FrmMain : ThemedForm
         }
 
         e.TooltipContent = sb.ToString();
-        e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth} x {e.Item.Details.OriginalHeight})";
+        e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth:n0}×{e.Item.Details.OriginalHeight:n0})";
         e.TooltipSize = (Gallery.Tooltip as ModernTooltip)?.CalculateSize(e.TooltipContent);
     }
 
@@ -1070,8 +1070,8 @@ public partial class FrmMain : ThemedForm
             var enableFadingTrainsition = false;
             if (Config.EnableImageTransition && !e.IsViewingSeparateFrame)
             {
-                var isImageBigForFading = Local.Metadata.Width > 8000
-                    || Local.Metadata.Height > 8000;
+                var isImageBigForFading = Local.Metadata.RenderedWidth > 8000
+                    || Local.Metadata.RenderedHeight > 8000;
                 enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
             }
 
@@ -1209,8 +1209,8 @@ public partial class FrmMain : ThemedForm
         {
             token.ThrowIfCancellationRequested();
 
-            var isImageBigForThumbnail = Local.Metadata.Width >= 4000
-                || Local.Metadata.Height >= 4000;
+            var isImageBigForThumbnail = Local.Metadata.RenderedWidth >= 4000
+                || Local.Metadata.RenderedHeight >= 4000;
 
             // get embedded thumbnail for preview
             wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath,
@@ -1248,13 +1248,13 @@ public partial class FrmMain : ThemedForm
                 // get preview size
                 if (Config.ZoomMode == ZoomMode.LockZoom)
                 {
-                    previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
+                    previewSize = new(Local.Metadata.RenderedWidth, Local.Metadata.RenderedHeight);
                 }
                 else
                 {
-                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height, PicMain.Width, PicMain.Height);
+                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.RenderedWidth, Local.Metadata.RenderedHeight, PicMain.Width, PicMain.Height);
 
-                    previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
+                    previewSize = new((int)(Local.Metadata.RenderedWidth * zoomFactor), (int)(Local.Metadata.RenderedHeight * zoomFactor));
                 }
 
 
@@ -1450,7 +1450,13 @@ public partial class FrmMain : ThemedForm
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                     && Local.Metadata != null)
                 {
-                    ImageInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
+                    ImageInfo.Dimension = $"{Local.Metadata.RenderedWidth:n0}×{Local.Metadata.RenderedHeight:n0}";
+
+                    if (Local.Metadata.RenderedWidth != Local.Metadata.OriginalWidth
+                        || Local.Metadata.RenderedHeight != Local.Metadata.OriginalHeight)
+                    {
+                        ImageInfo.Dimension += $"  ({Local.Metadata.OriginalWidth:n0}×{Local.Metadata.OriginalHeight:n0})";
+                    }
                 }
                 else
                 {

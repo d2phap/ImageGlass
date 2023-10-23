@@ -934,8 +934,8 @@ public partial class FrmSlideshow : ThemedForm
         // use native viewer to display image
         else if (!(photo?.ImgData.IsImageNull ?? true))
         {
-            var isImageBigForFading = photo.Metadata.Width > 8000
-                || photo.Metadata.Height > 8000;
+            var isImageBigForFading = photo.Metadata.RenderedWidth > 8000
+                || photo.Metadata.RenderedHeight > 8000;
             var enableFading = !isImageBigForFading;
 
             // set the main image
@@ -1263,7 +1263,7 @@ public partial class FrmSlideshow : ThemedForm
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                 && _currentMetadata != null)
             {
-                ImageInfo.Dimension = $"{_currentMetadata.Width} x {_currentMetadata.Height} px";
+                ImageInfo.Dimension = $"{_currentMetadata.RenderedWidth} x {_currentMetadata.RenderedHeight} px";
             }
             else
             {

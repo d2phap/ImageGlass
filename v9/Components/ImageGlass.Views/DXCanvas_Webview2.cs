@@ -412,8 +412,8 @@ public partial class DXCanvas
     private void LoadImageDataWeb2(IgMetadata? imgData)
     {
         Source = ImageSource.Webview2;
-        SourceWidth = imgData?.Width ?? 0;
-        SourceHeight = imgData?.Height ?? 0;
+        SourceWidth = imgData?.RenderedWidth ?? 0;
+        SourceHeight = imgData?.RenderedHeight ?? 0;
         CanImageAnimate = false;
         HasAlphaPixels = true;
         UseHardwareAcceleration = true;
