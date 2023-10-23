@@ -747,7 +747,7 @@ public partial class FrmMain : ThemedForm
             if (Local.Images.Length > 0)
             {
                 // Reach end of list
-                if (imageIndex >= Local.Images.Length)
+                if (imageIndex >= Local.Images.Length || (Local.Images.Length == 1 && step > 0))
                 {
                     _uiReporter.Report(new(new ImageEventArgs()
                     {
@@ -755,11 +755,11 @@ public partial class FrmMain : ThemedForm
                         FilePath = oldImgPath,
                     }, nameof(Local.RaiseLastImageReachedEvent)));
 
-                    if (!Config.EnableLoopBackNavigation) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
                 }
 
                 // Reach the first image of list
-                if (imageIndex < 0)
+                if (imageIndex < 0 || (Local.Images.Length == 1 && step < 0))
                 {
                     _uiReporter.Report(new(new ImageEventArgs()
                     {
@@ -768,7 +768,7 @@ public partial class FrmMain : ThemedForm
                     }, nameof(Local.RaiseFirstImageReachedEvent)));
 
 
-                    if (!Config.EnableLoopBackNavigation) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
                 }
             }
 
@@ -1126,7 +1126,7 @@ public partial class FrmMain : ThemedForm
 
     private void HandleImage_FirstReached()
     {
-        if (!Config.EnableLoopBackNavigation)
+        if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._ReachedFirstImage"],
                 Config.InAppMessageDuration);
@@ -1136,7 +1136,7 @@ public partial class FrmMain : ThemedForm
 
     private void HandleImage_LastReached()
     {
-        if (!Config.EnableLoopBackNavigation)
+        if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._ReachedLastLast"],
                 Config.InAppMessageDuration);
