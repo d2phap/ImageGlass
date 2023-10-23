@@ -20,6 +20,7 @@ using DirectN;
 using ImageGlass.WebP;
 using ImageMagick;
 using ImageMagick.Formats;
+using PhotoSauce.MagicScaler;
 using System.Runtime.CompilerServices;
 using System.Text;
 using WicNet;
@@ -818,14 +819,15 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Reads and processes image file with Magick.NET
+    /// Reads and processes image file with Magick.NET.
     /// </summary>
     private static async Task<IgMagickReadData> ReadMagickImageAsync(
-        string filename, string ext, MagickReadSettings settings, CodecReadOptions options, ImgTransform? transform, CancellationToken cancelToken)
+        string filePath, string ext, MagickReadSettings settings, CodecReadOptions options,
+        ImgTransform? transform, CancellationToken cancelToken)
     {
         var result = new IgMagickReadData() { Extension = ext };
         var imgColl = new MagickImageCollection();
-        imgColl.Ping(filename, settings);
+        imgColl.Ping(filePath, settings);
 
         // standardize first frame reading option
         result.FrameCount = imgColl.Count;
@@ -844,7 +846,7 @@ public static class PhotoCodec
         // read all frames
         if (imgColl.Count > 1 && readFirstFrameOnly is false)
         {
-            await imgColl.ReadAsync(filename, settings, cancelToken);
+            await imgColl.ReadAsync(filePath, settings, cancelToken);
 
             var i = 0;
             foreach (var imgFrameM in imgColl)
@@ -868,6 +870,7 @@ public static class PhotoCodec
         // read a single frame only
         var imgM = new MagickImage();
         var hasRequestedThumbnail = false;
+
 
         if (options.UseEmbeddedThumbnailRawFormats is true)
         {
@@ -895,7 +898,9 @@ public static class PhotoCodec
 
         if (!hasRequestedThumbnail)
         {
-            await imgM.ReadAsync(filename, settings, cancelToken);
+            imgM.Dispose();
+            imgM = (MagickImage)await InitializeSingleMagickImageAsync(filePath,
+                imgColl[0].BaseWidth, imgColl[0].BaseHeight, settings, options, cancelToken);
         }
 
 
@@ -922,6 +927,110 @@ public static class PhotoCodec
         imgColl.Dispose();
 
         return result;
+    }
+
+
+    /// <summary>
+    /// Initialize the single-frame <paramref name="imgM"/>,
+    /// quickly resize the image to fit the <see cref="Constants.MAX_IMAGE_DIMENSION"/>
+    /// according to the <see cref="CodecReadOptions.AutoScaleDownLargeImage"/>.
+    /// </summary>
+    public static async Task<IMagickImage> InitializeSingleMagickImageAsync(
+        string srcFilePath, int srcWidth, int srcHeight,
+        MagickReadSettings settings, CodecReadOptions options, CancellationToken cancelToken)
+    {
+        var imgM = new MagickImage();
+
+        // the image is larger than the supported dimension
+        var isSizeTooLarge = srcWidth > Constants.MAX_IMAGE_DIMENSION
+            || srcHeight > Constants.MAX_IMAGE_DIMENSION;
+
+        if (!isSizeTooLarge || !options.AutoScaleDownLargeImage)
+        {
+            await imgM.ReadAsync(srcFilePath, settings, cancelToken);
+            return imgM;
+        }
+
+
+        // try to use MagicScaler for better performance
+        #region Resize with MagicScaler
+
+        FileStream? fs = null;
+        var tempFilePath = Path.Combine(Path.GetTempPath(),
+            $"temp_{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}{Path.GetExtension(srcFilePath)}");
+
+        try
+        {
+            var resizerSettings = new ProcessImageSettings()
+            {
+                ColorProfileMode = ColorProfileMode.Preserve,
+                OrientationMode = OrientationMode.Preserve,
+                ResizeMode = CropScaleMode.Contain,
+                Width = Constants.MAX_IMAGE_DIMENSION,
+                Height = Constants.MAX_IMAGE_DIMENSION,
+                HybridMode = HybridScaleMode.Turbo,
+            };
+
+
+            fs = File.Open(tempFilePath, FileMode.Create);
+
+
+            // perform resizing
+            await Task.Run(() =>
+            {
+                _ = MagicImageProcessor.ProcessImage(srcFilePath, fs, resizerSettings);
+            }, cancelToken);
+
+
+            // reset stream position
+            fs.Position = 0;
+        }
+        catch { }
+
+
+        // successfully resized with MagicScaler
+        if (fs != null)
+        {
+            await imgM.ReadAsync(fs, settings, cancelToken);
+            await fs.DisposeAsync();
+
+            // delete the temp file
+            File.Delete(tempFilePath);
+
+            return imgM;
+        }
+        #endregion // Resize with MagicScaler
+
+
+        // switch to Magick.NET if MagicScaler does not support
+        #region Resize with Magick.NET
+
+        // load full image data
+        await imgM.ReadAsync(srcFilePath, settings, cancelToken);
+
+        var widthScale = 1f;
+        var heightScale = 1f;
+
+        if (imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION)
+        {
+            widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseWidth;
+        }
+
+        if (imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION)
+        {
+            heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseHeight;
+        }
+
+        var scale = Math.Min(widthScale, heightScale);
+        var newW = (int)(imgM.BaseWidth * scale);
+        var newH = (int)(imgM.BaseHeight * scale);
+
+        imgM.Scale(newW, newH);
+
+        return imgM;
+
+        #endregion // Resize with Magick.NET
+
     }
 
 
@@ -1007,7 +1116,6 @@ public static class PhotoCodec
     /// <summary>
     /// Applies color channel setting
     /// </summary>
-    /// <returns></returns>
     private static MagickImage ApplyColorChannel(MagickImage imgM, CodecReadOptions options)
     {
         // apply color channel
@@ -1025,41 +1133,12 @@ public static class PhotoCodec
     /// </summary>
     private static void ApplySizeSettings(IMagickImage imgM, CodecReadOptions options)
     {
-        var isScaled = false;
         if (options.Width > 0 && options.Height > 0)
         {
             if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
             {
                 imgM.Thumbnail(options.Width, options.Height);
-                isScaled = true;
             }
-        }
-
-
-        // the image is larger than the supported dimension
-        var isSizeTooLarge = imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION
-            || imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION;
-
-        if (!isScaled && options.AutoScaleDownLargeImage && isSizeTooLarge)
-        {
-            var widthScale = 1f;
-            var heightScale = 1f;
-
-            if (imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION)
-            {
-                widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseWidth;
-            }
-
-            if (imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION)
-            {
-                heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseHeight;
-            }
-
-            var scale = Math.Min(widthScale, heightScale);
-            var newW = (int)(imgM.BaseWidth * scale);
-            var newH = (int)(imgM.BaseHeight * scale);
-
-            imgM.Scale(newW, newH);
         }
     }
 
@@ -1067,9 +1146,6 @@ public static class PhotoCodec
     /// <summary>
     /// Filter color channel of Magick image
     /// </summary>
-    /// <param name="imgM"></param>
-    /// <param name="channel"></param>
-    /// <returns></returns>
     private static MagickImage FilterColorChannel(MagickImage imgM, ColorChannel channel)
     {
         if (channel == ColorChannel.All) return imgM;

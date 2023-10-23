@@ -94,6 +94,7 @@
       <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
+      <PackageReference Include="PhotoSauce.MagicScaler" Version="0.14.0" />
       <PackageReference Include="WicNet" Version="1.6.5" />
     </ItemGroup>
 
