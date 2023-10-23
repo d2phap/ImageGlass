@@ -29,6 +29,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using WicNet;
 using Windows.Graphics.Imaging;
+using Windows.Media.FaceAnalysis;
 using Windows.Media.Ocr;
 using Windows.Win32;
 using ColorProfile = ImageMagick.ColorProfile;
@@ -687,6 +688,29 @@ public partial class BHelper
         return ocrResult;
     }
 
+
+    /// <summary>
+    /// Detects faces from the image.
+    /// </summary>
+    public static async Task<IList<DetectedFace>> DetectFacesFromImageAsync(WicBitmapSource? wicSrc, string srcExt)
+    {
+        using var softwareBmp = await BHelper.ToSoftwareBitmapAsync(wicSrc, srcExt);
+        using var bmp = FaceDetector.IsBitmapPixelFormatSupported(softwareBmp.BitmapPixelFormat)
+            ? softwareBmp
+            : SoftwareBitmap.Convert(softwareBmp, BitmapPixelFormat.Gray8);
+
+        var fd = await Windows.Media.FaceAnalysis.FaceDetector.CreateAsync();
+
+        try
+        {
+            var result = await fd.DetectFacesAsync(bmp);
+
+            return result ?? Array.Empty<DetectedFace>();
+        }
+        catch { }
+
+        return Array.Empty<DetectedFace>();
+    }
 
 }
 
