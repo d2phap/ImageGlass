@@ -1,17 +1,12 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
- <g>
-  <title>Layer 1</title>
-  <g stroke="null" id="svg_9">
-   <g stroke="null" id="svg_18">
-    <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="0.844433" x2="16.000656" y1="11.254411" x1="5.590678" stroke-width="0.7" fill="none"/>
-    <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="4.080068" x2="19.253745" y1="14.557762" x1="8.776051" stroke-width="0.7" fill="none"/>
-    <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="4.153462" x2="19.716347" y1="0.343045" x1="15.958694" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="14.453751" x2="8.982591" y1="15.316505" x1="4.592893" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="11.091047" x2="5.687141" y1="15.63741" x1="4.344455" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <rect stroke="#000" fill="#000" x="5.149751" y="14.228441" width="0.589173" height="0.214175" id="svg_8"/>
-    <path stroke="#000" id="svg_17" d="m14.63109,16.27518c0.52636,1.34949 -4.4487,5.76775 -8.20463,1.70002c-2.7853,-3.42888 -5.38822,-3.70767 -6.14281,0.49004" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   </g>
-  </g>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_806_1095)">
+<path d="M9 6H3C1.89543 6 1 6.89543 1 8V17C1 18.1046 1.89543 19 3 19H16C17.1046 19 18 18.1046 18 17V9.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.2021 2.18153L16.8192 1.21319C16.3667 0.896417 15.7432 1.00637 15.4264 1.45877L8.34346 11.5743C8.26396 11.6878 8.20893 11.8166 8.18187 11.9526L7.68685 14.4384C7.60953 14.8267 7.99272 15.1465 8.36095 15.001L10.9647 13.9723C11.147 13.9003 11.3041 13.7764 11.4164 13.6159L18.4476 3.57425C18.7644 3.12185 18.6545 2.4983 18.2021 2.18153Z" stroke="black" stroke-linejoin="round"/>
+<path d="M17.5973 4.7887L14.576 2.67322L8.07975 11.9509C7.98833 12.0815 7.92944 12.232 7.908 12.3899L7.61325 14.5606C7.56404 14.923 7.9078 15.2138 8.25704 15.1053L10.6354 14.3665C10.847 14.3007 11.0308 14.1666 11.1579 13.9851L17.5973 4.7887Z" fill="black" fill-opacity="0.15" stroke="black" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_806_1095">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
 </svg>

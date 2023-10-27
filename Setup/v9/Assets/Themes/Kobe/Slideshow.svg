@@ -1,26 +1,7 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
-
- <g>
-  <title>background</title>
-  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
-  <g display="none" id="canvasGrid">
-   <rect id="svg_2" fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
-  </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <g id="svg_6">
-   <g id="svg_30"/>
-   <g stroke="null" id="svg_24">
-    <rect stroke="#dedede" id="svg_1" height="13.529659" width="19.315068" y="1.306419" x="0.342466" stroke-width="0.7" fill="none"/>
-    <path stroke="#dedede" id="svg_19" d="m2.8438,12.628984c-0.47684,-0.86364 1.17041,-7.18674 3.94473,-6.78576c2.68762,0.37013 4.16148,5.24355 4.65999,5.2127c1.01869,-0.61689 1.32213,-1.48053 2.99106,-1.54222c1.58222,0.06169 2.70929,2.59093 2.64427,2.86853" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   </g>
-   <ellipse stroke="#dedede" ry="1.497717" rx="1.497717" id="svg_13" cy="4.77777" cx="15.684931" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   <g id="svg_5">
-    <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_26" y2="18.636744" x2="4.678466" y1="14.802258" x1="7.969769" fill-opacity="null" stroke-opacity="null" fill="none"/>
-    <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_27" y2="18.693582" x2="15.321533" y1="14.874447" x1="12.01243" fill-opacity="null" stroke-opacity="null" fill="none"/>
-   </g>
-  </g>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3 1C1.61929 1 0.5 2.11929 0.5 3.5V13.5C0.5 14.8807 1.61929 16 3 16H7.79289L5.64645 18.1464C5.45118 18.3417 5.45118 18.6583 5.64645 18.8536C5.84171 19.0488 6.15829 19.0488 6.35355 18.8536L9.20711 16H10.7929L13.6464 18.8536C13.8417 19.0488 14.1583 19.0488 14.3536 18.8536C14.5488 18.6583 14.5488 18.3417 14.3536 18.1464L12.2071 16H17C18.3807 16 19.5 14.8807 19.5 13.5V3.5C19.5 2.11929 18.3807 1 17 1H3ZM11.0005 15H17C17.8284 15 18.5 14.3284 18.5 13.5V3.5C18.5 2.67157 17.8284 2 17 2H3C2.17157 2 1.5 2.67157 1.5 3.5V13.5C1.5 14.3284 2.17157 15 3 15H8.99951C8.99984 15 9.00016 15 9.00049 15H10.9995C10.9998 15 11.0002 15 11.0005 15Z" fill="#fff"/>
+<rect x="3" y="3.5" width="14" height="10" rx="1.5" fill="#fff" fill-opacity="0.15"/>
+<path d="M5 11.1667L7.34676 8.45226C7.76772 7.96535 8.53234 7.99715 8.91141 8.51732L10.3563 10.5M11.085 11.5L10.3563 10.5M10.3563 10.5L11.1657 9.43983C11.5165 8.98029 12.1828 8.91313 12.6183 9.29341L14 10.5" stroke="#fff" stroke-opacity="0.75" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="13.3334" cy="6.27186" rx="0.777778" ry="0.769231" fill="#fff" fill-opacity="0.2"/>
+<path d="M13.9362 6.27186C13.9362 6.59822 13.6682 6.86609 13.3334 6.86609C12.9987 6.86609 12.7307 6.59822 12.7307 6.27186C12.7307 5.94549 12.9987 5.67762 13.3334 5.67762C13.6682 5.67762 13.9362 5.94549 13.9362 6.27186Z" stroke="#fff" stroke-opacity="0.75" stroke-width="0.35"/>
 </svg>

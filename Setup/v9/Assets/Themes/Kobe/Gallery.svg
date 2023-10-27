@@ -1,22 +1,17 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
-
- <g>
-  <title>background</title>
-  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
-  <g id="canvasGrid" width="100%" height="100%" x="0" y="0" overflow="visible" display="none">
-   <rect id="svg_2" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"/>
-  </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <g stroke="null" id="svg_3">
-   <rect stroke="#fff" fill="none" stroke-width="0.7" x="0.31964" y="0" width="19.36073" height="12.96468" id="svg_1"/>
-   <ellipse stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" cx="15.02283" cy="3.44576" id="svg_13" rx="1.6895" ry="1.2724"/>
-   <path stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m2.82688,10.97697c-0.47796,-0.82758 1.17318,-6.88663 3.95406,-6.5024c2.69397,0.35467 4.17131,5.02458 4.671,4.99502c1.0211,-0.59112 1.32526,-1.41871 2.99813,-1.47782c1.58597,0.05911 2.7157,2.48274 2.65052,2.74874" id="svg_19"/>
-  </g>
-  <rect id="svg_7" height="3.99993" width="3.99993" y="15.65007" x="0.35" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
-  <rect id="svg_8" height="3.99993" width="3.99993" y="15.65007" x="8.00003" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
-  <rect id="svg_9" height="3.99993" width="3.99993" y="15.65007" x="15.65007" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_806_947)">
+<rect x="14.5" y="15" width="4" height="4" rx="0.75" stroke="#fff" stroke-linejoin="round"/>
+<rect x="8" y="15" width="4" height="4" rx="1" stroke="#fff" stroke-linejoin="round"/>
+<rect x="1.5" y="15" width="4" height="4" rx="0.75" stroke="#fff" stroke-linejoin="round"/>
+<rect x="1" y="1" width="18" height="11.5" rx="1.5" stroke="#fff" stroke-linejoin="round"/>
+<rect x="1" y="1" width="18" height="11.5" rx="1.5" fill="#fff" fill-opacity="0.1"/>
+<path d="M4 9.58333L7.04343 5.98311C7.46474 5.48472 8.24281 5.5169 8.62152 6.04839L10.5466 8.75M11.4372 10L10.5466 8.75M10.5466 8.75L11.6748 7.23857C12.0259 6.76828 12.7046 6.69999 13.1423 7.09091L15 8.75" stroke="#fff" stroke-opacity="0.75" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="15" cy="5" r="1" fill="#fff" fill-opacity="0.2"/>
+<circle cx="15" cy="5" r="0.825" stroke="#fff" stroke-opacity="0.75" stroke-width="0.35"/>
+</g>
+<defs>
+<clipPath id="clip0_806_947">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
 </svg>

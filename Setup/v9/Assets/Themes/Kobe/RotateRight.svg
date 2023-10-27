@@ -1,25 +1,12 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
-
- <g>
-  <title>background</title>
-  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
-  <g id="canvasGrid" display="none">
-   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_2"/>
-  </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <g stroke="null" transform="rotate(-18.647884368896484 10.045961380004872,10.993860244750977) " id="svg_4">
-   <g stroke="null" id="svg_22" transform="matrix(-0.666848088034165,-0.6691295740099439,-0.6759211015529865,0.6601477244170154,23.025749012045335,9.094463138964555) ">
-    <path stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m8.064764,20.220514c9.17458,0 9.18571,-9.18571 9.12783,-9.25057" id="svg_18"/>
-    <path stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m17.213974,11.229654c0,-9.17457 -9.18571,-9.18571 -9.25057,-9.12783" id="svg_20"/>
-    <path stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m-0.926086,11.071304c0,9.17458 9.18571,9.18571 9.25057,9.12783" id="svg_21"/>
-   </g>
-   <g stroke="null" transform="matrix(-0.941285494665065,0.12339636126420357,0.12464880894965683,0.9318276358288837,18.752060126106485,-1.0093617917575222) " id="svg_3">
-    <line stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="2.755373" y1="6.427297" x2="7.13894" y2="6.427297" id="svg_23" stroke-linejoin="null" stroke-linecap="null"/>
-    <line stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="3.094862" y1="6.748917" x2="3.094862" y2="2.365351" id="svg_26" stroke-linejoin="null" stroke-linecap="null"/>
-   </g>
-  </g>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_806_758)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.4597 4.44759C17.1471 4.64998 16.7744 4.76749 16.3743 4.76749H14.4502C14.1741 4.76749 13.9502 4.99135 13.9502 5.26749C13.9502 5.54363 14.1741 5.76749 14.4502 5.76749L18.8742 5.76749C18.927 5.76749 18.978 5.75928 19.0258 5.74407C19.2279 5.67988 19.3743 5.49076 19.3743 5.26746V0.836299C19.3743 0.560157 19.1504 0.336299 18.8743 0.336299C18.5981 0.336299 18.3743 0.560157 18.3743 0.836299L18.3743 2.76749C18.3743 3.10526 18.2905 3.42348 18.1427 3.70252C17.2442 2.61605 16.1127 1.73885 14.8245 1.1343C13.3044 0.420934 11.6175 0.111301 9.92555 0.233459C8.23364 0.355609 6.59258 0.905426 5.15879 1.82962C3.725 2.75382 2.54539 4.02214 1.73302 5.51395C0.920618 7.00583 0.502319 8.67202 0.519651 10.3535C0.536985 12.0352 0.989468 13.6755 1.83474 15.1169C1.97442 15.3551 2.28076 15.435 2.51897 15.2953C2.75718 15.1556 2.83705 14.8493 2.69736 14.6111C1.94098 13.3212 1.53515 11.852 1.5196 10.3432C1.50405 8.83442 1.87939 7.33616 2.61125 5.9922C3.34314 4.64817 4.40675 3.50411 5.70057 2.67014C6.99438 1.83617 8.47408 1.34085 9.99756 1.23086C11.521 1.12088 13.0366 1.39987 14.3997 2.03957C15.5971 2.6015 16.6421 3.42543 17.4597 4.44759Z" fill="#fff"/>
+<circle cx="2" cy="2" r="1.5" transform="matrix(-1 0 0 1 12.3934 8)" fill="#fff" fill-opacity="0.1" stroke="#fff"/>
+<path d="M2.26602 14.864C3.06684 16.2296 4.21254 17.3605 5.59353 18.1483C6.97451 18.9362 8.54459 19.3548 10.1536 19.3639" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/>
+</g>
+<defs>
+<clipPath id="clip0_806_758">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
 </svg>

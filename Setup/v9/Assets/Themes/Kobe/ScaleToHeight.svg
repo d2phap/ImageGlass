@@ -1,13 +1,16 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
- <g>
-  <title>Layer 1</title>
-  <rect transform="rotate(-90 10.000000953674318,10.000001907348633) " fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x="1.875063" y="0.343823" width="16.249876" height="19.312356" id="svg_4" stroke-dasharray="2,2" stroke="#dedede"/>
-  <rect stroke="#dedede" transform="rotate(-90 10.000000000000002,10) " id="svg_1" height="12.351447" width="16.235752" y="3.824277" x="1.882124" stroke-width="0.7" fill="rgba(255,255,255,0.2)"/>
-  <path transform="rotate(-90 12.893791198730474,16.58620071411133) " id="svg_15" d="m12.893791,16.586201" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <g stroke="null" id="svg_6">
-   <ellipse stroke="#dedede" ry="0.99139" rx="1.093218" id="svg_13" cy="7.561718" cx="13.299218" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   <path stroke="#dedede" id="svg_19" d="m5.40762,13.429672c-0.309272,-0.64481 0.759123,-5.36573 2.558547,-5.06635c1.743177,0.27634 2.699117,3.91491 3.022446,3.89188c0.660724,-0.46058 0.857532,-1.10539 1.939993,-1.15145c1.026225,0.04606 1.757234,1.93443 1.715063,2.14169" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  </g>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_806_895)">
+<rect x="1" y="1" width="18" height="18" rx="2" stroke="#fff" stroke-linejoin="round"/>
+<rect x="4.5" y="1" width="11" height="18" fill="#fff" fill-opacity="0.1"/>
+<path d="M5 13L7.41741 9.02656C7.82373 8.3587 8.80481 8.39439 9.16154 9.09L10.6538 12M11.4231 13.5L10.6538 12M10.6538 12L11.4788 10.4645C11.8174 9.83412 12.6893 9.75311 13.1383 10.3103L14.5 12" stroke="#fff" stroke-opacity="0.75" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="14" cy="8" r="1" fill="#fff" fill-opacity="0.2"/>
+<circle cx="14" cy="8" r="0.825" stroke="#fff" stroke-opacity="0.75" stroke-width="0.35"/>
+<path d="M15 19L15 1" stroke="#fff" stroke-linecap="round" stroke-dasharray="2 2"/>
+<path d="M5 1L5 19" stroke="#fff" stroke-linecap="round" stroke-dasharray="2 2"/>
+</g>
+<defs>
+<clipPath id="clip0_806_895">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
 </svg>

@@ -1,14 +1,3 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
- <g>
-  <title>Layer 1</title>
-  <g transform="rotate(-180 10,10) " id="svg_11">
-   <g id="svg_9"/>
-   <g id="svg_8">
-    <line fill="none" x1="4.335806" y1="2.582889" x2="12.055108" y2="10.302191" id="svg_5" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#000" stroke-width="0.9"/>
-    <line fill="none" x1="4.335806" y1="9.647889" x2="12.055108" y2="17.367191" id="svg_6" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#000" transform="rotate(-90 8.195457458496096,13.507539749145508) " stroke-width="0.9"/>
-   </g>
-   <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="17.788619" x2="15.664194" y1="2.21138" x1="15.664194" fill-opacity="null" stroke-opacity="null" stroke-width="0.9" fill="none"/>
-  </g>
- </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3.99996 1.5C3.99996 1.22386 4.22382 1 4.49996 1C4.7761 1 4.99996 1.22386 4.99996 1.5L4.99996 18.6983C4.99996 18.9745 4.77611 19.1983 4.49996 19.1983C4.22382 19.1983 3.99996 18.9745 3.99996 18.6983L3.99996 1.5ZM15.8535 1.94645C15.6583 1.75119 15.3417 1.75119 15.1464 1.94645L7.46244 9.63042C7.38689 9.70596 7.34058 9.79967 7.32349 9.89748C7.29631 10.0526 7.34261 10.218 7.46239 10.3378L15.1589 18.0343C15.3542 18.2295 15.6707 18.2295 15.866 18.0343C16.0613 17.839 16.0613 17.5224 15.866 17.3272L9.93716 11.3983C9.15612 10.6173 9.15612 9.35096 9.93716 8.56991L15.8535 2.65356C16.0488 2.45829 16.0488 2.14171 15.8535 1.94645Z" fill="black"/>
 </svg>
