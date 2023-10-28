@@ -17,10 +17,10 @@
     "NavButtonLeft": "ViewPreviousImage.svg",
     "NavButtonRight": "ViewNextImage.svg",
     "PreviewImage": "preview.jpg",
-    "AppLogo": "logo.svg"
+    "AppLogo": "Logo.svg"
   },
   "Colors": {
-    "BgColor": "#ffffff00",
+    "BgColor": "#000fff00",
     "TextColor": "#000",
 
     "ToolbarBgColor": "#F5F6F700",

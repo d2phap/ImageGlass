@@ -17,7 +17,7 @@
     "NavButtonLeft": "ViewPreviousImage.svg",
     "NavButtonRight": "ViewNextImage.svg",
     "PreviewImage": "preview.jpg",
-    "AppLogo": "logo.svg"
+    "AppLogo": "Logo.svg"
   },
   "Colors": {
     "MenuBgHoverColor": "accent:50",
