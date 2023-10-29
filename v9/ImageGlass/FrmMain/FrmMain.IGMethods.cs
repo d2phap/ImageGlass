@@ -797,7 +797,14 @@ public partial class FrmMain
     /// </summary>
     public static void IG_OpenQuickSetupDialog()
     {
-        _ = Config.RunIgcmd(IgCommands.QUICK_SETUP);
+        // create command-lines for the current settings
+        var lightThemeCmd = Config.BuildConfigCmdLine(nameof(Config.LightTheme), Config.LightTheme);
+        var darkThemeCmd = Config.BuildConfigCmdLine(nameof(Config.DarkTheme), Config.DarkTheme);
+        var langCmd = Config.BuildConfigCmdLine(nameof(Config.Language), Config.Language.FileName);
+
+        var allArgs = $"{IgCommands.QUICK_SETUP} {lightThemeCmd} {darkThemeCmd} {langCmd}";
+
+        _ = Config.RunIgcmd(allArgs);
     }
 
 
