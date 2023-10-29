@@ -28,6 +28,7 @@ if (!window._pageSettings) {
       MouseClickEvent: [],
       BackdropStyle: [],
       ToolbarItemModelType: [],
+      ImageInfoUpdateTypes: [],
     },
     icons: {
       Delete: '',

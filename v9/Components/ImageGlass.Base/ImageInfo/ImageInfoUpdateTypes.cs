@@ -25,23 +25,20 @@ namespace ImageGlass.Base;
 [Flags]
 public enum ImageInfoUpdateTypes
 {
-    None = 0,
+    AppName = 1 << 1,
+    Name = 1 << 2,
+    Path = 1 << 3,
+    FileSize = 1 << 4,
+    Dimension = 1 << 5,
+    ListCount = 1 << 6,
+    Zoom = 1 << 7,
+    FrameCount = 1 << 8,
 
-    All = 1 << 1,
-    AppName = 1 << 2,
-    Name = 1 << 3,
-    Path = 1 << 4,
-    FileSize = 1 << 5,
-    Dimension = 1 << 6,
-    ListCount = 1 << 7,
-    Zoom = 1 << 8,
-    FrameCount = 1 << 9,
+    DateTimeAuto = 1 << 9,
+    ModifiedDateTime = 1 << 10,
+    ExifDateTime = 1 << 11,
+    ExifDateTimeOriginal = 1 << 12,
 
-    DateTimeAuto = 1 << 10,
-    ModifiedDateTime = 1 << 11,
-    ExifDateTime = 1 << 12,
-    ExifDateTimeOriginal = 1 << 13,
-
-    ExifRating = 1 << 14,
-    ColorSpace = 1 << 15,
+    ExifRating = 1 << 13,
+    ColorSpace = 1 << 14,
 }

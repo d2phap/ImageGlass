@@ -1237,7 +1237,7 @@ public partial class FrmMain
         // reset zoom mode
         IG_SetZoomMode(Config.ZoomMode.ToString());
 
-        LoadImageInfo(ImageInfoUpdateTypes.All);
+        LoadImageInfo();
     }
 
 

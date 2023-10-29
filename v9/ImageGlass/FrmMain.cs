@@ -711,7 +711,7 @@ public partial class FrmMain : ThemedForm
             Local.CurrentIndex = -1;
             Local.Metadata = null;
 
-            LoadImageInfo(ImageInfoUpdateTypes.All);
+            LoadImageInfo();
 
             return;
         }
@@ -1009,7 +1009,7 @@ public partial class FrmMain : ThemedForm
             ShowImagePreview(e.FilePath, _loadCancelTokenSrc.Token);
         }
 
-        _ = Task.Run(() => LoadImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
+        _ = Task.Run(() => LoadImageInfo(null, e.FilePath));
     }
 
 
@@ -1291,8 +1291,7 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Loads image info in status bar
     /// </summary>
-    public void LoadImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All,
-        string? filename = null)
+    public void LoadImageInfo(ImageInfoUpdateTypes? types = null, string? filename = null)
     {
         if (InvokeRequired)
         {
@@ -1300,7 +1299,7 @@ public partial class FrmMain : ThemedForm
             return;
         }
 
-        var updateAll = ImageInfo.IsNull || types.HasFlag(ImageInfoUpdateTypes.All);
+        var updateAll = ImageInfo.IsNull || types == null;
         var clipboardImageText = string.Empty;
 
 
@@ -1315,11 +1314,11 @@ public partial class FrmMain : ThemedForm
         }
 
         // Zoom
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Zoom))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
             {
-                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
+                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n0}%";
             }
             else
             {
@@ -1334,7 +1333,7 @@ public partial class FrmMain : ThemedForm
             clipboardImageText = Config.Language[$"{Name}._ClipboardImage"];
 
             // Dimension
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Dimension))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension)))
                 {
@@ -1354,7 +1353,7 @@ public partial class FrmMain : ThemedForm
                 : BHelper.ResolvePath(filename);
 
             // ListCount
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ListCount))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ListCount))
                     && Local.Images.Length > 0)
@@ -1375,7 +1374,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // Name
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Name))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Name))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Name)))
                 {
@@ -1389,7 +1388,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // Path
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Path))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Path))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Path)))
                 {
@@ -1403,7 +1402,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // FileSize
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FileSize))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.FileSize))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FileSize))
                     && Local.Metadata != null)
@@ -1417,7 +1416,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // FrameCount
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.FrameCount))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FrameCount))
                     && Local.Metadata != null
@@ -1445,7 +1444,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // Dimension
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Dimension))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                     && Local.Metadata != null)
@@ -1465,7 +1464,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // ModifiedDateTime
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ModifiedDateTime))
                     && Local.Metadata != null)
@@ -1479,7 +1478,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // ExifRating
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifRating))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifRating))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifRating))
                     && Local.Metadata != null)
@@ -1493,7 +1492,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // ExifDateTime
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTime))
                     && Local.Metadata != null
@@ -1508,7 +1507,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // ExifDateTimeOriginal
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
                     && Local.Metadata != null
@@ -1523,7 +1522,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // DateTimeAuto
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.DateTimeAuto))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.DateTimeAuto))
             {
                 var dtStr = string.Empty;
 
@@ -1548,7 +1547,7 @@ public partial class FrmMain : ThemedForm
             }
 
             // ColorSpace
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
+            if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ColorSpace))
             {
                 if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ColorSpace))
                     && Local.Metadata != null

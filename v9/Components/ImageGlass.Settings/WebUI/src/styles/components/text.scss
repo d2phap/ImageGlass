@@ -17,6 +17,16 @@
   }
 }
 
+.text-select {
+  -webkit-user-select: text;
+  user-select: text;
+
+  * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
 .text-center {
   text-align: center !important;
 }

@@ -19,6 +19,9 @@ export default class TabGeneral {
     // ImageInfoTags is a string array
     const imgTags = _pageSettings.config.ImageInfoTags as number[] || [];
     query<HTMLTextAreaElement>('[name="ImageInfoTags"]').value = imgTags.join('; ');
+
+    // load available image info tags
+    query('#LblAvailableTags').innerHTML = _pageSettings.enums.ImageInfoUpdateTypes.map(tag => `<i class="text-code">${tag}</i>`).join('; ');
   }
 
 

@@ -212,13 +212,21 @@
           <div class="mb-1" lang-text="FrmSettings._InAppMessageDuration">[InAppMessageDuration]</div>
           <input type="number" name="InAppMessageDuration" required min="0" max="60000" placeholder="2000" title="0 ≤ x ≤ 60,000" />
         </div>
-        <div class="mb-3">
-          <div class="mb-1" lang-text="FrmSettings._ImageInfoTags">[Image information tags]</div>
+
+        <!-- Image information tags -->
+        <div class="mt-4 mb-2">
+          <div class="mb-2">
+            <b lang-text="FrmSettings._ImageInfoTags">[Image information tags]</b>
+          </div>
           <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
-          <div>
+          <div class="mb-2">
             <a id="LnkResetImageInfoTags" class="text-nowrap" href="#" lang-text="_._ResetToDefault">
               [Reset to default]
             </a>
+          </div>
+          <div class="ms-3">
+            <div class="mb-1">Available tags:</div>
+            <div id="LblAvailableTags" class="text-select" style="width: calc(410px * var(--fontScale))"></div>
           </div>
         </div>
       </section>

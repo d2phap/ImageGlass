@@ -703,7 +703,7 @@ public partial class FrmSlideshow : ThemedForm
             // Find the index of current image
             _currentIndex = _images.IndexOf(initFilePath);
 
-            LoadImageInfo(ImageInfoUpdateTypes.All);
+            LoadImageInfo();
         });
     }
 
@@ -882,7 +882,7 @@ public partial class FrmSlideshow : ThemedForm
         PicMain.ShowMessage(Config.Language[$"FrmMain._Loading"], null, delayMs: 1500);
 
 
-        LoadImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath);
+        LoadImageInfo(null, _currentMetadata.FilePath);
     }
 
 
@@ -1139,7 +1139,7 @@ public partial class FrmSlideshow : ThemedForm
     /// <summary>
     /// Gets image info in status bar.
     /// </summary>
-    private void LoadImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All, string? filePath = null)
+    private void LoadImageInfo(ImageInfoUpdateTypes? types = null, string? filePath = null)
     {
         if (InvokeRequired)
         {
@@ -1147,7 +1147,7 @@ public partial class FrmSlideshow : ThemedForm
             return;
         }
 
-        var updateAll = ImageInfo.IsNull || types.HasFlag(ImageInfoUpdateTypes.All);
+        var updateAll = ImageInfo.IsNull || types == null;
 
 
         // AppName
@@ -1161,11 +1161,11 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // Zoom
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Zoom))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
             {
-                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
+                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n0}%";
             }
             else
             {
@@ -1180,7 +1180,7 @@ public partial class FrmSlideshow : ThemedForm
                 : BHelper.ResolvePath(filePath);
 
         // ListCount
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ListCount))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ListCount))
                 && _images.Length > 0)
@@ -1201,7 +1201,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // Name
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Name))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Name))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Name)))
             {
@@ -1214,7 +1214,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // Path
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Path))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Path))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Path)))
             {
@@ -1227,7 +1227,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // FileSize
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FileSize))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.FileSize))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FileSize))
                 && _currentMetadata != null)
@@ -1241,7 +1241,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // FrameCount
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.FrameCount))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.FrameCount))
                 && _currentMetadata != null
@@ -1258,7 +1258,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // Dimension
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.Dimension))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Dimension))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Dimension))
                 && _currentMetadata != null)
@@ -1272,7 +1272,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // ModifiedDateTime
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ModifiedDateTime))
                 && _currentMetadata != null)
@@ -1286,7 +1286,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // ExifRating
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifRating))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifRating))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifRating))
                 && _currentMetadata != null)
@@ -1300,7 +1300,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // ExifDateTime
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifDateTime))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTime))
                 && _currentMetadata != null
@@ -1315,7 +1315,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // ExifDateTimeOriginal
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ExifDateTimeOriginal))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ExifDateTimeOriginal))
                 && _currentMetadata != null
@@ -1330,7 +1330,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // DateTimeAuto
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.DateTimeAuto))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.DateTimeAuto))
         {
             var dtStr = string.Empty;
 
@@ -1355,7 +1355,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
         // ColorSpace
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
+        if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.ColorSpace))
         {
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ColorSpace))
                 && _currentMetadata != null

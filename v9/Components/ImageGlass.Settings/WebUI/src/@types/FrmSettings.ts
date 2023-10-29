@@ -82,6 +82,7 @@ export type IPageSettings = Record<string, any> & {
     MouseClickEvent: string[],
     BackdropStyle: string[],
     ToolbarItemModelType: string[],
+    ImageInfoUpdateTypes: string[],
   },
   icons: Record<string, string> & {
     Delete: string,

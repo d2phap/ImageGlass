@@ -83,6 +83,7 @@ public static class WebUI
                 typeof(MouseClickEvent),
                 typeof(Base.BackdropStyle),
                 typeof(ToolbarItemModelType),
+                typeof(ImageInfoUpdateTypes),
             };
 
             foreach (var item in enums)
