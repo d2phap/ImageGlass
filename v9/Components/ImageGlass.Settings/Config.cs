@@ -498,12 +498,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the theme name for dark mode.
     /// </summary>
-    public static string DarkTheme { get; set; } = "";
+    public static string DarkTheme { get; set; } = Constants.DEFAULT_THEME;
 
     /// <summary>
     /// Gets, sets the theme name for light mode.
     /// </summary>
-    public static string LightTheme { get; set; } = "";
+    public static string LightTheme { get; set; } = "Kobe - Light";
 
     #endregion
 
