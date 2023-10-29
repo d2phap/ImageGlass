@@ -16,21 +16,21 @@
     "IsShowTitlebarLogo": true,
     "NavButtonLeft": "ViewPreviousImage.svg",
     "NavButtonRight": "ViewNextImage.svg",
-    "PreviewImage": "preview.jpg",
+    "PreviewImage": "preview.webp",
     "AppLogo": "Logo.svg"
   },
   "Colors": {
     "MenuBgHoverColor": "accent:50",
 
-    "ToolbarItemHoverColor": "accent:170",
-    "ToolbarItemActiveColor": "accent:100",
-    "ToolbarItemSelectedColor": "accent:120",
+    "ToolbarItemHoverColor": "accent:140",
+    "ToolbarItemActiveColor": "accent:80",
+    "ToolbarItemSelectedColor": "accent:100",
 
-    "GalleryItemHoverColor": "accent:170",
-    "GalleryItemActiveColor": "accent:100",
-    "GalleryItemSelectedColor": "accent:120",
+    "GalleryItemHoverColor": "accent:140",
+    "GalleryItemActiveColor": "accent:80",
+    "GalleryItemSelectedColor": "accent:100",
 
-    "NavigationButtonColor": "accent:170"
+    "NavigationButtonColor": "accent:140"
   },
   "ToolbarIcons": {
     "ActualSize": "ActualSize.svg",

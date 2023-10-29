@@ -16,7 +16,7 @@
     "IsShowTitlebarLogo": true,
     "NavButtonLeft": "ViewPreviousImage.svg",
     "NavButtonRight": "ViewNextImage.svg",
-    "PreviewImage": "preview.jpg",
+    "PreviewImage": "preview.webp",
     "AppLogo": "Logo.svg"
   },
   "Colors": {
