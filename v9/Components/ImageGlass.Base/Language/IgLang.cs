@@ -157,7 +157,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._UnhandledException", "Unhandled exception"); // v9.0
         _ = TryAdd("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
         _ = TryAdd("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
-        _ = TryAdd($"_._CreatingFile", "Create temporary image file…"); //v9.0
+        _ = TryAdd($"_._CreatingFile", "Creating a temporary image file…"); //v9.0
         _ = TryAdd($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
         _ = TryAdd($"_._NotSupported", "Unsupported format"); //v9.0
         _ = TryAdd($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
@@ -501,6 +501,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings._ShowAppIcon", "Show app icon on the title bar");
         _ = TryAdd("FrmSettings._InAppMessageDuration", "In-app message duration (milliseconds)");
         _ = TryAdd("FrmSettings._ImageInfoTags", "Image information tags");
+        _ = TryAdd("FrmSettings._AvailableImageInfoTags", "Available tags:");
         #endregion // Tab General
 
 
@@ -588,7 +589,6 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Viewer
         // Viewer > Viewer
-        _ = TryAdd("FrmSettings._ShowCheckerboard", "Show checkerboard");
         _ = TryAdd("FrmSettings._ShowCheckerboardOnlyImageRegion", "Show checkerboard only within the image region");
         _ = TryAdd("FrmSettings._EnableNavigationButtons", "Show navigation arrow buttons");
         _ = TryAdd("FrmSettings._CenterWindowFit", "Automatically center the window in Window Fit mode");
@@ -727,7 +727,7 @@ public class IgLang : Dictionary<string, string>
 
         _ = TryAdd("FrmCrop.BtnQuickSelect._Tooltip", "Quick select…"); //v9.0
         _ = TryAdd("FrmCrop.BtnReset._Tooltip", "Reset selection"); //v9.0
-        _ = TryAdd("FrmCrop.BtnSettings._Tooltip", "Open Crop tool settings…"); //v9.0
+        _ = TryAdd("FrmCrop.BtnSettings._Tooltip", "Open Crop tool settings"); //v9.0
 
         _ = TryAdd("FrmCrop.BtnSave", "Save"); //v9.0
         _ = TryAdd("FrmCrop.BtnSave._Tooltip", "Save image"); //v9.0
