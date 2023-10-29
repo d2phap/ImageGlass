@@ -210,7 +210,7 @@
 
         <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings._InAppMessageDuration">[InAppMessageDuration]</div>
-          <input type="number" name="InAppMessageDuration" required min="0" max="60000" placeholder="2000" />
+          <input type="number" name="InAppMessageDuration" required min="0" max="60000" placeholder="2000" title="0 ≤ x ≤ 60,000" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._ImageInfoTags">[Image information tags]</div>
@@ -309,11 +309,11 @@
             <div class="d-flex align-items-center ms-3 ps-1">
               <div class="me-3">
                 <div class="mb-1" lang-text="FrmSettings._MinEmbeddedThumbnailSize._Width">[Width]</div>
-                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinWidth" required min="0" max="100000" />
+                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinWidth" required min="0" max="100000" title="0 ≤ x ≤ 100,000" />
               </div>
               <div>
                 <div class="mb-1" lang-text="FrmSettings._MinEmbeddedThumbnailSize._Height">[Height]</div>
-                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinHeight" required min="0" max="100000" />
+                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinHeight" required min="0" max="100000" title="0 ≤ x ≤ 100,000" />
               </div>
             </div>
           </div>
@@ -343,13 +343,13 @@
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._ImageBoosterCacheMaxDimension">
             [ImageBoosterCacheMaxDimension]</div>
-          <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="1000000" placeholder="8000" />
+          <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="100000" placeholder="8000" title="0 ≤ x ≤ 100,000" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._ImageBoosterCacheMaxFileSizeInMb">
             [ImageBoosterCacheMaxFileSizeInMb]
           </div>
-          <input type="number" name="ImageBoosterCacheMaxFileSizeInMb" required min="0" max="1048" placeholder="100" />
+          <input type="number" name="ImageBoosterCacheMaxFileSizeInMb" required min="0" max="1048" placeholder="100" title="0 ≤ x ≤ 1,048" />
         </div>
       </section>
 
@@ -427,11 +427,11 @@
             <div class="d-flex align-items-center">
               <div class="me-3">
                 <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" lang-text="FrmSettings._SlideshowInterval._From">[From]</div>
-                <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" placeholder="5" />
+                <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" placeholder="5" title="x ≥ 0.0" />
               </div>
               <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
                 <div class="mb-1" lang-text="FrmSettings._SlideshowInterval._To">[To]</div>
-                <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" placeholder="10" />
+                <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" placeholder="10" title="x ≥ 0.0" />
               </div>
             </div>
           </div>
@@ -465,7 +465,7 @@
           <div class="mb-1" lang-text="FrmSettings._SlideshowImagesToNotifySound">
             [Number of images to trigger a notification sound]
           </div>
-          <input type="number" name="SlideshowImagesToNotifySound" required min="0" placeholder="0" />
+          <input type="number" name="SlideshowImagesToNotifySound" required min="0" placeholder="0" title="x ≥ 0" />
         </div>
       </section>
     </section>
@@ -496,7 +496,7 @@
         </div>
         <div class="mb-3 mt-4">
           <div class="mb-1" lang-text="FrmSettings._ImageEditQuality">[ImageEditQuality]</div>
-          <input type="number" name="ImageEditQuality" required min="0" max="100" placeholder="80" />
+          <input type="number" name="ImageEditQuality" required min="0" max="100" placeholder="80" title="0 ≤ x ≤ 100" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._AfterEditingAction">[AfterEditingAction]</div>
@@ -676,7 +676,7 @@
         </div>
         <div class="mt-4 mb-2">
           <div class="mb-1" lang-text="FrmSettings._PanSpeed">[PanSpeed]</div>
-          <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" placeholder="20" />
+          <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" placeholder="20" title="0 ≤ x ≤ 100" />
         </div>
       </section>
 
@@ -705,7 +705,7 @@
         
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._ZoomSpeed">[ZoomSpeed]</div>
-          <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" placeholder="0" />
+          <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" placeholder="0" title="-500 ≤ x ≤ 500" />
         </div>
         <div class="mb-3">
           <div class="mb-2" lang-text="FrmSettings._ZoomLevels">[ZoomLevels]</div>
@@ -745,7 +745,7 @@
         </div>
         <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
-          <input type="number" name="ToolbarIconHeight" required min="10" max="1000" placeholder="24" />
+          <input type="number" name="ToolbarIconHeight" required min="10" max="1000" placeholder="24" title="10 ≤ x ≤ 1,000" />
         </div>
       </section>
 
@@ -792,15 +792,15 @@
 
         <div class="mt-4 mb-3">
           <div class="mb-1" lang-text="FrmSettings._ThumbnailSize">[ThumbnailSize]</div>
-          <input type="number" name="ThumbnailSize" required min="20" max="500" placeholder="50" />
+          <input type="number" name="ThumbnailSize" required min="20" max="500" placeholder="50" title="20 ≤ x ≤ 500" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
-          <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" placeholder="100" />
+          <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" placeholder="100" title="0 ≤ x ≤ 2,048" />
         </div>
         <div class="mb-3">
           <div class="mb-1" lang-text="FrmSettings._GalleryColumns">[GalleryColumns]</div>
-          <input type="number" name="GalleryColumns" required min="1" max="100" placeholder="3" />
+          <input type="number" name="GalleryColumns" required min="1" max="100" placeholder="3" title="1 ≤ x ≤ 100" />
         </div>
       </section>
     </section>
@@ -833,48 +833,6 @@
         </div>
         <div class="mb-3 mt-4">
           <button id="Btn_ResetMouseWheelAction" type="button" lang-text="_._ResetToDefault">[Reset to default]</button>
-        </div>
-      </section>
-
-      <!-- Mouse > Mouse click action -->
-      <section hidden>
-        <header>[Mouse click action]</header>
-        <div class="ig-table mb-2">
-          <table style="min-width: 40rem;">
-            <thead>
-              <tr>
-                <th width="100">Click event</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-              <tr>
-                <td class="cell-sticky">Cell 1</td>
-                <td>Cell 2</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </section>
     </section>
