@@ -9,12 +9,21 @@
 
   #app>aside {
     grid-area: sidebar;
-    position: sticky;
-    top: 0;
     min-width: 15rem;
     padding: 0.5rem 0.25rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    row-gap: 0.25rem;
+
+    &> nav {
+      overflow-y: auto;
+    }
+
+    .sidebar-bottom {
+      padding: 1rem;
+    }
   }
 
   #app>main {
@@ -43,35 +52,7 @@
   }
 
   #LnkHelp {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    z-index: 10;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(var(--controlHeight) * 1.125px);
-    height: calc(var(--controlHeight) * 1.125px);
-
-    border-radius: 100rem;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.25rem;
     cursor: help;
-    box-shadow: 0 4px 15px -10px #000;
-    transition: all ease calc(var(--transitionMs));
-
-    &:hover {
-      color: rgb(var(--AppText));
-      filter: none;
-      transform: scale(1.1);
-      animation: aniFocus 1000ms ease reverse infinite;
-    }
-    &:active {
-      transform: scale(0.95);
-      transition: all ease calc(var(--transitionMs) / 3);
-    }
   }
 
   section {
