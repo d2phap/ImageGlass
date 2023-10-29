@@ -106,7 +106,7 @@ export default class Settings {
     TabSlideshow.addEvents();
     TabEdit.addEvents();
 
-    TabLayout.loadSettings();
+    TabLayout.addEvents();
     TabViewer.addEvents();
     TabToolbar.addEvents();
     TabGallery.addEvents();
