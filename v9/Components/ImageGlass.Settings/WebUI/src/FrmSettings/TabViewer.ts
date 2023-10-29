@@ -50,10 +50,11 @@ export default class TabViewer {
 
 
   private static onUseSmoothZoomingChanged() {
-    const isEnabled = query<HTMLInputElement>('[name="_UseSmoothZooming"]').checked;
+    const isDisabled = query<HTMLInputElement>('[name="_UseSmoothZooming"]').checked;
 
-    query('[name="ZoomLevels"]').toggleAttribute('disabled', isEnabled);
-    query('#LnkLoadDefaultZoomLevels').toggleAttribute('disabled', isEnabled);
+    query('[name="ZoomLevels"]').toggleAttribute('disabled', isDisabled);
+    query('#LnkLoadDefaultZoomLevels').toggleAttribute('disabled', isDisabled);
+    query('#LnkLoadDefaultZoomLevels').setAttribute('tabindex', isDisabled ? '-1' : '0');
   }
 
 
