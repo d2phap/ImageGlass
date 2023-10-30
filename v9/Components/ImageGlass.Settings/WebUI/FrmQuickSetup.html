@@ -10,31 +10,29 @@
 
 <body id="app">
   <main>
-    <div class="page-header">
-      <img id="Img_AppLogo" src="[AppLogo]" height="96" width="96" alt="Logo"
+    <div class="page-header aniFadeIn">
+      <img id="Img_AppLogo" src="[AppLogo]" height="128" width="128" alt="Logo"
         onerror="this.hidden = true;" />
       <h2 lang-html="FrmQuickSetup._StepInfo">[Step <span id="LblStepInfo">1/3</span>]</h2>
     </div>
 
     <div class="page-content">
       <section class="step aniFadeIn" step="1">
-        <div class="text-center">
-          <div class="mb-3" lang-text="FrmSettings._DisplayLanguage">[Display language]</div>
-          <div class="d-flex align-items-center mb-3">
-            <select id="Cmb_LanguageList" name="Language">
-            </select>
-          </div>
-          <div>
-            <a href="https://imageglass.org/news" target="_blank" rel="noopener noreferrer" lang-text="FrmQuickSetup._SeeWhatNew">
-              [See what's new in this version...]
-            </a>
-          </div>
+        <div class="mb-3" lang-text="FrmSettings._DisplayLanguage">[Display language]</div>
+        <div class="d-flex align-items-center mb-3">
+          <select id="Cmb_LanguageList" name="Language">
+          </select>
+        </div>
+        <div>
+          <a href="https://imageglass.org/news" target="_blank" rel="noopener noreferrer" lang-text="FrmQuickSetup._SeeWhatNew">
+            [See what's new in this version...]
+          </a>
         </div>
       </section>
 
 
       <section class="step aniFadeIn" step="2" hidden>
-        <div class="mb-3 text-center" lang-text="FrmQuickSetup._SelectProfile">[Select a profile]</div>
+        <div class="mb-3" lang-text="FrmQuickSetup._SelectProfile">[Select a profile]</div>
         <div class="mb-4 d-flex">
           <label class="ig-box-option me-2">
             <input type="radio" name="_SettingProfile" value="standard" checked>
@@ -53,15 +51,17 @@
           </label>
         </div>
 
-        <div class="mb-3">
-          <header class="mb-2" lang-text="FrmQuickSetup._SettingsWillBeApplied">[Settings will be applied:]</header>
+        <div class="text-left">
+          <header class="mb-2" lang-text="FrmQuickSetup._SettingsWillBeApplied">
+            [Settings will be applied:]
+          </header>
           <div class="mb-2">
             <label class="ig-checkbox">
               <input id="ChkColorProfile" type="checkbox" disabled />
               <div lang-text="FrmSettings._ColorManagement">[Color management]</div>
             </label>
           </div>
-          <div class="mb-2">
+          <div class="mb-3">
             <label class="ig-checkbox">
               <input id="ChkUseEmbeddedThumbnailRawFormats" type="checkbox" disabled checked />
               <div lang-text="FrmSettings._UseEmbeddedThumbnailRawFormats">
@@ -69,22 +69,26 @@
               </div>
             </label>
           </div>
-        </div>
 
-        <div>
-          <i lang-text="FrmQuickSetup._SettingProfileDescription">[To modify these settings, simply access the Settings dialog]</i>
+          <div>
+            <i lang-text="FrmQuickSetup._SettingProfileDescription">
+              [To modify these settings, simply access the Settings dialog]
+            </i>
+          </div>
         </div>
       </section>
 
 
       <section class="step aniFadeIn" step="3" hidden>
-        <div class="text-center">
-          <div class="mb-3">
-            <div lang-text="FrmQuickSetup._SetDefaultViewer">[Do you want to set ImageGlass as the default photo viewer?]</div>
-            <div lang-text="FrmQuickSetup._SetDefaultViewer._Description">[You can reset it in the Settings dialog > File type associations tab.]</div>
+        <div class="mb-3">
+          <div lang-text="FrmQuickSetup._SetDefaultViewer">
+            [Do you want to set ImageGlass as the default photo viewer?]
           </div>
-          <button id="BtnSetDefaultViewer" type="button" lang-text="FrmSettings._MakeDefault" style="min-width: 8rem;">[Make default]</button>
+          <div lang-text="FrmQuickSetup._SetDefaultViewer._Description">
+            [You can reset it in the Settings dialog > File type associations tab.]
+          </div>
         </div>
+        <button id="BtnSetDefaultViewer" type="button" lang-text="FrmSettings._MakeDefault" style="min-width: 8rem;">[Make default]</button>
       </section>
     </div>
   </main>

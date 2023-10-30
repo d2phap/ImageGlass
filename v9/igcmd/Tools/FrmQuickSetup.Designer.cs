@@ -34,14 +34,17 @@
             // Web2
             // 
             Web2.DefaultBackgroundColor = Color.FromArgb(0, 255, 255, 255);
-            Web2.Size = new Size(1200, 1500);
+            Web2.Margin = new Padding(0);
+            Web2.Size = new Size(467, 637);
+            Web2.Source = new Uri("about:blank", UriKind.Absolute);
             // 
             // FrmQuickSetup
             // 
-            AutoScaleDimensions = new SizeF(18F, 45F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackdropStyle = ImageGlass.Base.BackdropStyle.Mica;
-            ClientSize = new Size(1200, 1500);
+            ClientSize = new Size(467, 637);
+            Margin = new Padding(0);
             Name = "FrmQuickSetup";
             Text = "[ImageGlass Quick setup]";
             ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
