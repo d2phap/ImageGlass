@@ -167,7 +167,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that showing image file name on gallery
     /// </summary>
-    public static bool ShowGalleryFileName { get; set; } = false;
+    public static bool ShowGalleryFileName { get; set; } = true;
 
     /// <summary>
     /// Gets, sets welcome picture value
@@ -352,7 +352,7 @@ public static class Config
     /// <summary>
     /// Gets, sets width of main window
     /// </summary>
-    public static int FrmMainWidth { get; set; } = 1200;
+    public static int FrmMainWidth { get; set; } = 1300;
 
     /// <summary>
     /// Gets, sets height of main window
@@ -372,12 +372,12 @@ public static class Config
     /// <summary>
     /// Gets, sets width of settings window
     /// </summary>
-    public static int FrmSettingsWidth { get; set; } = 1050;
+    public static int FrmSettingsWidth { get; set; } = 1300;
 
     /// <summary>
     /// Gets, sets height of settings window
     /// </summary>
-    public static int FrmSettingsHeight { get; set; } = 750;
+    public static int FrmSettingsHeight { get; set; } = 800;
 
     /// <summary>
     /// Gets, sets the panning speed.

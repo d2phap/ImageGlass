@@ -320,7 +320,6 @@ public partial class FrmMain : ThemedForm
     /// Load images from command line arguments
     /// (<see cref="Environment.GetCommandLineArgs"/>)
     /// </summary>
-    /// <param name="args"></param>
     public void LoadImagesFromCmdArgs(string[] args)
     {
         var pathToLoad = string.Empty;
@@ -345,7 +344,18 @@ public partial class FrmMain : ThemedForm
             pathToLoad = Config.LastSeenImagePath;
         }
 
-        if (string.IsNullOrEmpty(pathToLoad)) return;
+
+        if (string.IsNullOrEmpty(pathToLoad))
+        {
+            if (Config.ShowWelcomeImage)
+            {
+                pathToLoad = App.StartUpDir("default.webp");
+            }
+            else
+            {
+                return;
+            }
+        }
 
 
         // Start loading path
