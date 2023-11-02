@@ -25,7 +25,7 @@ set BUILD_CONFIG=%2
 set PLATFORM=%3
 set OUTPUT_DIR=%CD%\
 set IGCMD_WIN10_DIR=%OUTPUT_DIR:\ImageGlass\bin\=\Ultilities\igcmdWin10\bin\%
-set THEME_DIR=%SOLUTION_DIR%..\Setup\Assets\Themes\
+set THEME_DIR=%SOLUTION_DIR%..\Setup\v8\Assets\Themes\
 
 
 echo 1. Creating variables:

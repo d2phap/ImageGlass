@@ -36,7 +36,7 @@ public static class Constants
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public const string DATE_FORMAT = "yyyy/MM/dd";
     public const string APP_PROTOCOL = "imageglass";
-    public const string APP_CODE = "moon";
+    public const string APP_CODE = "kobe";
     public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
     public const int MAX_IMAGE_DIMENSION = 16_384;
 

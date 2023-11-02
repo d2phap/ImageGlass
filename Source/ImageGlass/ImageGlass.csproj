@@ -10,7 +10,7 @@
     <ApplicationIcon>icon256.ico</ApplicationIcon>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
-    <AssemblyTitle>ImageGlass Moon</AssemblyTitle>
+    <AssemblyTitle>ImageGlass</AssemblyTitle>
     <Description>A lightweight, versatile image viewer</Description>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Company>Duong Dieu Phap</Company>
@@ -215,8 +215,8 @@
     <!-- Copy resources -->
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <ItemGroup>
-            <IG_Themes Include="..\..\Setup\v9\Assets\Themes\**\*.*" />
-            <IG_Langs Include="..\..\Setup\v9\Assets\Language\**\*.*" />
+            <IG_Themes Include="..\..\Setup\Assets\Themes\**\*.*" />
+            <IG_Langs Include="..\..\Setup\Assets\Language\**\*.*" />
             <Web_UI Include="..\Components\ImageGlass.Settings\WebUI\dist\**\*.*" />
         </ItemGroup>
         
