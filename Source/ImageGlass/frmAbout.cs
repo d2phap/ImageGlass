@@ -16,248 +16,98 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Settings;
+using System.Diagnostics;
 
-namespace ImageGlass {
-    public partial class frmAbout: Form {
-        public frmAbout() {
-            InitializeComponent();
+namespace ImageGlass;
 
-            // Apply theme
-            LoadTheme();
+public partial class FrmAbout : WebForm
+{
+    public FrmAbout()
+    {
+        InitializeComponent();
+    }
+
+
+    // Protected / override methods
+    #region Protected / override methods
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        if (DesignMode) return;
+
+        Web2.PageName = "about";
+        Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
+        CloseFormHotkey = Keys.Escape;
+    }
+
+
+    protected override async Task OnWeb2ReadyAsync()
+    {
+        await base.OnWeb2ReadyAsync();
+
+        var htmlFilePath = App.StartUpDir(Dir.WebUI, $"{nameof(FrmAbout)}.html");
+        Web2.Source = new Uri(htmlFilePath);
+    }
+
+
+    protected override async Task OnWeb2NavigationCompleted()
+    {
+        await base.OnWeb2NavigationCompleted();
+
+        // load data
+        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
+        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+
+        await Web2.ExecuteScriptAsync(@$"
+            window._page.loadData({{
+                AppLogo: 'data:image/png;base64,{base64Logo}',
+                AppCode: '{Constants.APP_CODE}',
+                AppVersion: '{App.Version}',
+                AppArchitecture: '{archInfo}',
+                AppRuntime: '{Environment.Version.ToString()}',
+            }});
+        ");
+    }
+
+
+    protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
+    {
+        await base.OnWeb2MessageReceivedAsync(e);
+
+        if (e.Name.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenImageGlassMsStore();
         }
-
-        private void LoadTheme() {
-            // Logo
-            picLogo.Image = Configs.Theme.Logo.Image;
-
-            lblAppName.ForeColor = Configs.Theme.AccentColor;
-            lblCodeName.ForeColor = Configs.Theme.AccentDarkColor;
-
-            // Apply theme
-            Configs.ApplyFormTheme(this, Configs.Theme);
+        else if (e.Name.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            FrmMain.IG_CheckForUpdate(true);
         }
-
-
-        private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 198, 203, 204);
-        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 145, 150, 153);
-        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
-        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
-
-        #region MOUSE ENTER - HOVER - DOWN MENU
-        private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
-            var lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;
+        else if (e.Name.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            _ = BHelper.OpenUrlAsync("https://imageglass.org/support#donation", "from_about_donate");
         }
-
-        private void lblMenu_MouseUp(object sender, MouseEventArgs e) {
-            var lbl = (Label)sender;
-
-            if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_SELECTED;
-            }
-            else {
-                lbl.BackColor = M_COLOR_MENU_HOVER;
-            }
-        }
-
-        private void lblMenu_MouseEnter(object sender, EventArgs e) {
-            var lbl = (Label)sender;
-
-            if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_SELECTED;
-            }
-            else {
-                lbl.BackColor = M_COLOR_MENU_HOVER;
-            }
-        }
-
-        private void lblMenu_MouseLeave(object sender, EventArgs e) {
-            var lbl = (Label)sender;
-            if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_SELECTED;
-            }
-            else {
-                lbl.BackColor = M_COLOR_MENU_NORMAL;
-            }
-        }
-        #endregion
-
-        private void lblMenu_Click(object sender, EventArgs e) {
-            var lbl = (Label)sender;
-
-            if (lbl.Name == "lblInfo") {
-                tab1.SelectedTab = tpInfo;
-            }
-            else if (lbl.Name == "lblComponent") {
-                tab1.SelectedTab = tpComponents;
-            }
-            else if (lbl.Name == "lblReferences") {
-                tab1.SelectedTab = tpReferences;
-            }
-        }
-
-        private void frmAbout_Load(object sender, EventArgs e) {
-            var lang = Configs.Language.Items;
-
-            // this.RightToLeft = Configs.Language.IsRightToLeftLayout;
-            lblAppName.Text = "ImageGlass";
-            var arch = Environment.Is64BitProcess ? "x64" : "x86";
-            lblVersion.Text = string.Format(lang["frmAbout.lblVersion"], App.Version)
-                + $" {arch}" + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
-
-            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\nAll rights reserved.";
-
-            // Load item component
-            txtComponents.Text = "\r\n";
-            foreach (var f in Directory.GetFiles(Application.StartupPath)) {
-                var ext = Path.GetExtension(f).ToLower();
-
-                if (ext == ".dll" || ext == ".exe") {
-                    var fi = FileVersionInfo.GetVersionInfo(f);
-
-                    txtComponents.Text += $"{Path.GetFileName(f)} - {fi.FileVersion}\r\n" +
-                        $"{fi.LegalCopyright}\r\n" +
-                        $"{f}\r\n" +
-                        "-----------------------------------------\r\n\r\n";
-                }
-            }
-            txtComponents.Text += "\r\n";
-
-            // Load language:
-            this.Text = lang["frmAbout._Text"];
-            lblSlogant.Text = lang["frmAbout.lblSlogant"];
-            lblInfo.Text = lang["frmAbout.lblInfo"];
-            lblComponent.Text = lang["frmAbout.lblComponent"];
-            lblReferences.Text = lang["frmAbout.lblReferences"];
-            lblInfoContact.Text = lang["frmAbout.lblInfoContact"];
-            lblSoftwareUpdate.Text = lang["frmAbout.lblSoftwareUpdate"];
-            lnkCheckUpdate.Text = lang["frmAbout.lnkCheckUpdate"];
-        }
-
-        #region IMAGEGLASS INFORMATION PANEL
-        private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start("mailto:phap@imageglass.org");
-            }
-            catch { }
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start("https://twitter.com/duongdieuphap");
-            }
-            catch { }
-        }
-
-        private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                var version = App.Version;
-
-                Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
-            }
-            catch { }
-        }
-
-        private void lnkProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"https://imageglass.org/source?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_source");
-            }
-            catch { }
-        }
-
-        private void lnkLicense_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"https://imageglass.org/license?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_source");
-            }
-            catch { }
-        }
-
-        private void lnkPrivacy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"https://imageglass.org/privacy?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_source");
-            }
-            catch { }
-        }
-
-        private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Program.CheckForUpdate();
-        }
-        #endregion
-
-        private void btnClose_Click(object sender, EventArgs e) {
+        else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        {
             Close();
         }
+        else if (e.Name.Equals("ViewLicenseFile", StringComparison.InvariantCultureIgnoreCase))
+        {
+            var filePath = App.StartUpDir(Dir.License, e.Data);
 
-        private void tab1_SelectedIndexChanged(object sender, EventArgs e) {
-            lblInfo.Tag = 0;
-            lblComponent.Tag = 0;
-            lblReferences.Tag = 0;
-
-            lblInfo.BackColor = M_COLOR_MENU_NORMAL;
-            lblComponent.BackColor = M_COLOR_MENU_NORMAL;
-            lblReferences.BackColor = M_COLOR_MENU_NORMAL;
-
-            if (tab1.SelectedTab == tpInfo) {
-                lblInfo.Tag = 1;
-                lblInfo.BackColor = M_COLOR_MENU_ACTIVE;
-            }
-            else if (tab1.SelectedTab == tpComponents) {
-                lblComponent.Tag = 1;
-                lblComponent.BackColor = M_COLOR_MENU_ACTIVE;
-            }
-            else if (tab1.SelectedTab == tpReferences) {
-                lblReferences.Tag = 1;
-                lblReferences.BackColor = M_COLOR_MENU_ACTIVE;
-            }
-        }
-
-        private void btnDonation_Click(object sender, EventArgs e) {
-            try {
-                Process.Start($"https://imageglass.org/source#donation?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_donation");
+            try
+            {
+                using var proc = Process.Start(new ProcessStartInfo(filePath)
+                {
+                    UseShellExecute = true,
+                });
             }
             catch { }
         }
-
-        private void lnkCollaborator_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start("https://github.com/fire-eggs");
-            }
-            catch { }
-        }
-
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"https://www.patreon.com/d2phap?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_patreon");
-            }
-            catch { }
-        }
-
-        private void picStoreApp_Click(object sender, EventArgs e) {
-            var campaignId = $"IgInAppBadgeV{App.Version}";
-            var source = "AboutWindow";
-
-            try {
-                var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
-
-                Process.Start(url);
-            }
-            catch {
-                try {
-                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}");
-                }
-                catch { }
-            }
-        }
-
-
     }
+
+    #endregion // Protected / override methods
+
 }

@@ -1,53 +1,56 @@
-﻿/*
-ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
-Project homepage: https://imageglass.org
+﻿
+namespace ImageGlass.Base;
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
-
-namespace ImageGlass.Base {
+/// <summary>
+/// Directory name constants
+/// </summary>
+public static class Dir
+{
     /// <summary>
-    /// The directory name constants
+    /// Gets the Themes folder name
     /// </summary>
-    public static class Dir {
-        /// <summary>
-        /// Gets the Themes folder name
-        /// </summary>
-        public static string Themes { get; } = "Themes";
+    public static string Themes { get; } = "Themes";
 
-        /// <summary>
-        /// Gets the Languages folder name
-        /// </summary>
-        public static string Languages { get; } = "Languages";
+    /// <summary>
+    /// Gets the Icons folder name
+    /// </summary>
+    public static string Icons { get; } = "Icons";
 
-        /// <summary>
-        /// Gets the folder name for extension icons
-        /// </summary>
-        public static string ExtIcons { get; } = "Ext-Icons";
+    /// <summary>
+    /// Gets the Ext-Icons folder name
+    /// </summary>
+    public static string ExtIcons { get; } = "Ext-Icons";
 
-        /// <summary>
-        /// Gets the temporary folder name
-        /// </summary>
-        public static string Temporary { get; } = "Temp";
+    /// <summary>
+    /// Gets the Languages folder name
+    /// </summary>
+    public static string Language { get; } = "Language";
+
+    /// <summary>
+    /// Gets the WebUI folder name
+    /// </summary>
+    public static string WebUI { get; } = "WebUI";
+
+    /// <summary>
+    /// Gets the cached thumbnails folder name
+    /// </summary>
+    public static string ThumbnailsCache { get; } = "ThumbnailsCache";
+
+    /// <summary>
+    /// Gets the License folder name
+    /// </summary>
+    public static string License { get; } = "License";
+
+    /// <summary>
+    /// Gets the temporary folder name
+    /// </summary>
+    public static string Temporary { get; } = "Temp";
 
 #if DEBUG
-        /// <summary>
-        /// Logging should not be to the temporary folder, as it is deleted on shutdown
-        /// </summary>
-        public static string Log { get; } = "Log";
+    /// <summary>
+    /// Logging should not be to the temporary folder, as it is deleted on shutdown
+    /// </summary>
+    public static string Log { get; } = "Log";
 #endif
 
-    }
 }

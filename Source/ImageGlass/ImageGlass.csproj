@@ -1,465 +1,231 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props" Condition="Exists('..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props')" />
-  <Import Project="..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props" Condition="Exists('..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{97F81263-4825-4C06-A7B6-2E999765FA28}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageGlass</RootNamespace>
-    <AssemblyName>ImageGlass</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>x64;ARM64</Platforms>
     <ApplicationIcon>icon256.ico</ApplicationIcon>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <PublishUrl>C:\Users\Duong Dieu Phap\Desktop\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Background</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>true</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>http://imageglass.com/</UpdateUrl>
-    <SupportUrl>http://www.imageglass.org/support.php%3ftype=download-and-install</SupportUrl>
-    <ErrorReportUrl>http://www.imageglass.org/support.php%3ftype=fix-and-report-errors</ErrorReportUrl>
-    <ProductName>ImageGlass</ProductName>
-    <PublisherName>Duong Dieu Phap</PublisherName>
-    <MinimumRequiredVersion>1.3.0.7</MinimumRequiredVersion>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>true</UseApplicationTrust>
-    <CreateDesktopShortcut>true</CreateDesktopShortcut>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;ERRORMODE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DebugSymbols>true</DebugSymbols>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>3B6713C9747374F259FA3905490915B25F52E949</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <PropertyGroup>
-  </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;ERRORMODE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>false</DelaySign>
-  </PropertyGroup>
-  <PropertyGroup>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+
+    <AssemblyTitle>ImageGlass Moon</AssemblyTitle>
+    <Description>A lightweight, versatile image viewer</Description>
+    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <Company>Duong Dieu Phap</Company>
+    <Version>9.0.6.1029</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <VersionPrefix>9.0.6</VersionPrefix>
+    <VersionSuffix>rc</VersionSuffix>
+    
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <DebugType>portable</DebugType>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Configurations>Debug;Release;Publish_Release</Configurations>
+
+    <LangVersion>latest</LangVersion>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;ERRORMODE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestTimestampUrl>http://timestamp.sectigo.com</ManifestTimestampUrl>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|x64'">
-    <OutputPath>bin\x64\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="FileWatcherEx, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FileWatcherEx.1.3.0\lib\net45\FileWatcherEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET-Q16-HDRI-OpenMP-x64, Version=13.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
-      <HintPath>..\packages\Magick.NET-Q16-HDRI-OpenMP-x64.13.3.0\lib\netstandard20\Magick.NET-Q16-HDRI-OpenMP-x64.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET.Core, Version=13.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET.Core.13.3.0\lib\netstandard20\Magick.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET.SystemDrawing, Version=7.1.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET.SystemDrawing.7.1.0\lib\net462\Magick.NET.SystemDrawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <None Remove="License\Apache License 2.0.txt" />
+    <None Remove="License\CsWin32.txt" />
+    <None Remove="License\d2phap.txt" />
+    <None Remove="License\Google Copyright.txt" />
+    <None Remove="License\libwebp.txt" />
+    <None Remove="License\MagicScaler.txt" />
+    <None Remove="License\Microsoft Copyright.txt" />
+    <None Remove="License\MIT License.txt" />
+    <None Remove="License\Webview2.txt" />
+    <None Remove="License\WicNet.txt" />
+    <None Remove="styles.css" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="frmAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmAbout.designer.cs">
-      <DependentUpon>frmAbout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmAddNewFormat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmAddNewFormat.Designer.cs">
-      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmExifTool.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmExifTool.Designer.cs">
-      <DependentUpon>FrmExifTool.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ToolForms\frmColorPicker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ToolForms\frmColorPicker.Designer.cs">
-      <DependentUpon>frmColorPicker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmEditApp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmEditApp.Designer.cs">
-      <DependentUpon>frmEditApp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ToolForms\frmCrop.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ToolForms\frmCrop.Designer.cs">
-      <DependentUpon>frmCrop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ToolForms\frmPageNav.cs" />
-    <Compile Include="ToolForms\frmPageNav.Designer.cs">
-      <DependentUpon>frmPageNav.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmSetting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSetting.Designer.cs">
-      <DependentUpon>frmSetting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Local.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmAbout.resx">
-      <DependentUpon>frmAbout.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmAddNewFormat.resx">
-      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmExifTool.resx">
-      <DependentUpon>FrmExifTool.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolForms\frmColorPicker.resx">
-      <DependentUpon>frmColorPicker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmEditApp.resx">
-      <DependentUpon>frmEditApp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolForms\frmCrop.resx">
-      <DependentUpon>frmCrop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolForms\frmPageNav.resx">
-      <DependentUpon>frmPageNav.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Content Include="icon256.ico" />
+    <Content Include="License\Apache License 2.0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\CsWin32.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\d2phap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\libwebp.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\MagicScaler.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\Webview2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\WicNet.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FileWatcherEx" Version="2.5.0" />
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\@imageglass\ImageGlass.Tools\Source\ImageGlass.Tools\ImageGlass.Tools.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Viewer.csproj" />
+    <ProjectReference Include="..\igcmd\igcmd.csproj" Condition="'$(Configuration)'!='Publish_Release'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="FrmMain\FrmMain.PicMainEvents.cs" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="app.manifest" />
-    <None Include="packages.config" />
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Resources\info.png" />
-    <None Include="post_build.bat" />
-    <EmbeddedResource Include="frmSetting.resx">
-      <DependentUpon>frmSetting.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <None Update="Icons\ArrowDown.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ArrowExchange.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ArrowLeft.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ArrowRight.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ArrowUp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Copy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ResetSelection.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Selection.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Setting.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Delete.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Edit.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Moon.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Sun.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj">
-      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
-      <Name>ImageGlass.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Heart\ImageGlass.Heart.csproj">
-      <Project>{51493B09-7A0E-461F-BE18-A6CF629A8FAB}</Project>
-      <Name>ImageGlass.Heart</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
-      <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>
-      <Name>ImageGlass.ImageBox</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj">
-      <Project>{0c295fb8-c6c6-4a40-9f19-05a43f353a04}</Project>
-      <Name>ImageGlass.ImageListView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
-      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
-      <Name>ImageGlass.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
-      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
-      <Name>ImageGlass.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj">
-      <Project>{4bad780f-8071-4034-9020-ecc9f4352422}</Project>
-      <Name>ImageGlass.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj">
-      <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>
-      <Name>ImageGlass.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultilities\igcmdWin10\igcmdWin10.csproj" Condition="'$(Configuration)' == 'Release_MSIX'">
-      <Project>{e1b466b0-8ece-4d5c-807a-600aae97bec7}</Project>
-      <Name>igcmdWin10</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
-      <Project>{cc391e3e-9137-4857-85dc-c4cf6df37584}</Project>
-      <Name>igcmd</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultilities\igtasks\igtasks.csproj">
-      <Project>{63e3171f-d36e-4100-9c55-21d277b8530c}</Project>
-      <Name>igtasks</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="icon256.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CSharp.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build $(ConfigurationName) /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)post_build.bat" "$(SolutionDir)" $(Configuration) $(Platform)</PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+
+
+    <!-- Clean files -->
+    <Target Name="DeleteFiles" AfterTargets="AfterClean">
+        <ItemGroup>
+            <IG_FilesToClean Include="$(OutDir)\**\*.*" Exclude="$(OutDir)\**\igconfig.json" />
+        </ItemGroup>
+
+        <Delete Files="@(IG_FilesToClean)" />
+    </Target>
+
+    
+    <!-- Copy resources -->
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <IG_Themes Include="..\..\Setup\v9\Assets\Themes\**\*.*" />
+            <IG_Langs Include="..\..\Setup\v9\Assets\Language\**\*.*" />
+            <Web_UI Include="..\Components\ImageGlass.Settings\WebUI\dist\**\*.*" />
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(IG_Themes)" DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(IG_Langs)" DestinationFolder="$(OutputPath)\Language\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Web_UI)" DestinationFolder="$(OutputPath)\WebUI\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    </Target>
+
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props'))" />
-    <Error Condition="!Exists('..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets'))" />
-    <Error Condition="!Exists('..\packages\Magick.NET-Q16-HDRI-OpenMP-x64.13.3.0\build\netstandard20\Magick.NET-Q16-HDRI-OpenMP-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Magick.NET-Q16-HDRI-OpenMP-x64.13.3.0\build\netstandard20\Magick.NET-Q16-HDRI-OpenMP-x64.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
-  </Target>
-  <Import Project="..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets" Condition="Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" />
-  <Import Project="..\packages\Magick.NET-Q16-HDRI-OpenMP-x64.13.3.0\build\netstandard20\Magick.NET-Q16-HDRI-OpenMP-x64.targets" Condition="Exists('..\packages\Magick.NET-Q16-HDRI-OpenMP-x64.13.3.0\build\netstandard20\Magick.NET-Q16-HDRI-OpenMP-x64.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

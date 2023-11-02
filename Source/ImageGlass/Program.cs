@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -14,269 +14,222 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Runtime;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using ImageGlass.Base;
+using ImageGlass.Base.InstanceManagement;
 using ImageGlass.Base.Update;
-using ImageGlass.Library.WinAPI;
-using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using System.Diagnostics;
 
-namespace ImageGlass {
-    internal static class Program {
-        public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
-        public static bool IsHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
-        private static frmMain formMain;
+namespace ImageGlass;
+
+internal static class Program
+{
+    public static string APP_GUID => "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
 
 
-        [DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    [STAThread]
+    static void Main()
+    {
+        #region App configs
 
-        // Issue #360: IG periodically searching for dismounted device
-        [DllImport("kernel32.dll")]
-        private static extern ErrorModes SetErrorMode(ErrorModes uMode);
+        // Issue #360: IG periodically searching for dismounted device.
+        WindowApi.SetAppErrorMode();
 
-        [Flags]
-        public enum ErrorModes: uint {
-            SYSTEM_DEFAULT = 0x0,
-            SEM_FAILCRITICALERRORS = 0x0001,
-            SEM_NOGPFAULTERRORBOX = 1 << 1,
-            SEM_NOALIGNMENTFAULTEXCEPT = 1 << 2,
-            SEM_NOOPENFILEERRORBOX = 1 << 15
+        ApplicationConfiguration.Initialize();
+
+
+        // App-level exception handler for non-debugger
+        if (!Debugger.IsAttached)
+        {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) => Config.HandleException((Exception)e.ExceptionObject);
+
+            Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => Config.HandleException(e.Exception);
         }
 
+        #endregion
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main() {
-            // Issue #360: IG periodically searching for dismounted device
-            // This MUST be executed first!
-            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 
-            // Set up Startup Profile to improve launch performance
-            // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
-            ProfileOptimization.SetProfileRoot(App.ConfigDir(PathType.Dir));
-            ProfileOptimization.StartProfile("igstartup.profile");
+        // load application configs
+        Config.Load();
 
-            // Load user configs
-            Configs.Load();
+        // check and run Quick setup
+        if (CheckAndRunQuickSetup()) return;
 
-            SetProcessDPIAware();
+        // check and run auto-update
+        CheckAndRunAutoUpdate();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+        // checks and runs app instance(s)
+        RunAppInstances();
+    }
 
-            // check config file compatibility
-            if (!CheckConfigFileCompatibility()) return;
 
-            // check First-launch Configs
-            if (!CheckFirstLaunchConfigs()) return;
+    /// <summary>
+    /// Checks if the Quick setup dialog should be opened.
+    /// </summary>
+    /// <returns>
+    /// <list type="bullet">
+    ///   <item><c>true</c> if the Quick setup is required.</item>
+    ///   <item><c>false</c> if the Quick setup is not required.</item>
+    /// </list>
+    /// </returns>
+    public static bool CheckAndRunQuickSetup()
+    {
+        var requiredQuickSetup = false;
 
-            // check and run auto-update
-            CheckAndRunAutoUpdate();
+        if (Config.QuickSetupVersion < Constants.QUICK_SETUP_VERSION)
+        {
+            FrmMain.IG_OpenQuickSetupDialog();
 
-            // checks and runs app instance(s)
-            RunAppInstances();
+            requiredQuickSetup = true;
+            Application.Exit();
         }
 
-
-        /// <summary>
-        /// Checks the config file compatibility.
-        /// </summary>
-        /// <returns>
-        /// <list type="bullet">
-        ///   <item><c>true</c> if the config file is compatible.</item>
-        ///   <item><c>false</c> if the config file needs user's attention.</item>
-        /// </list>
-        /// </returns>
-        private static bool CheckConfigFileCompatibility() {
-            var canContinue = true;
-
-            if (!Configs.IsCompatible) {
-                var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
-                var result = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                if (result == DialogResult.Yes) {
-                    try {
-                        Process.Start($"https://imageglass.org/docs/app-configs?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=incompatible_configs");
-                    }
-                    catch { }
-
-                    canContinue = false;
-                }
-            }
-
-            return canContinue;
-        }
+        return requiredQuickSetup;
+    }
 
 
-        /// <summary>
-        /// Checks if the First launch configs dialog should be shown.
-        /// </summary>
-        /// <returns>
-        /// <list type="bullet">
-        ///   <item><c>true</c> if the config file is compatible.</item>
-        ///   <item><c>false</c> if the config file needs user's attention.</item>
-        /// </list>
-        /// </returns>
-        private static bool CheckFirstLaunchConfigs() {
-            var canContinue = true;
 
-            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION && !IsHideWindow) {
-                using var p = new Process();
-                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-
-                // update from <=v8.3 to v8.4
-                if (Configs.FirstLaunchVersion >= 5) {
-                    // show privacy update
-                    p.StartInfo.Arguments = "firstlaunch 2";
-                }
-                else {
-                    p.StartInfo.Arguments = "firstlaunch";
-                }
-
-                try {
-                    p.Start();
-                }
-                catch { }
-
-                Application.Exit();
-                canContinue = false;
-            }
-
-            return canContinue;
-        }
-
-
-        /// <summary>
-        /// Checks and runs auto-update.
-        /// </summary>
-        private static void CheckAndRunAutoUpdate() {
-            if (Configs.AutoUpdate != "0") {
-                if (DateTime.TryParseExact(
-                    Configs.AutoUpdate,
-                    Constants.DATETIME_FORMAT,
-                    CultureInfo.InvariantCulture,
-                    DateTimeStyles.None,
-                    out var lastUpdate)) {
-
-                    // Check for update every 5 days
-                    if (DateTime.UtcNow.Subtract(lastUpdate).TotalDays > 5) {
-                        CheckForUpdate(false);
-                    }
-                }
-                else {
+    /// <summary>
+    /// Checks and runs auto-update.
+    /// </summary>
+    private static void CheckAndRunAutoUpdate()
+    {
+        if (Config.AutoUpdate != "0")
+        {
+            if (DateTime.TryParse(Config.AutoUpdate, out var lastUpdate))
+            {
+                // Check for update every 5 days
+                if (DateTime.UtcNow.Subtract(lastUpdate).TotalDays > 5)
+                {
                     CheckForUpdate(false);
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Check for updatae
-        /// </summary>
-        /// <param name="showIfNewUpdate">
-        /// Set to <c>true</c> if you want to show the Update dialog
-        /// when there is a new version. Default value is <c>false</c>.
-        /// </param>
-        public static void CheckForUpdate(bool? showIfNewUpdate = null) {
-            _ = Task.Run(async () => {
-                showIfNewUpdate ??= false;
-
-                var updater = new UpdateService();
-                await updater.GetUpdatesAsync();
-
-
-                // There is a newer version
-                Configs.IsNewVersionAvailable = updater.HasNewUpdate;
-
-                // save last update
-                Configs.AutoUpdate = DateTime.Now.ToString(Constants.DATETIME_FORMAT);
-
-
-                if (updater.HasNewUpdate || showIfNewUpdate.Value) {
-                    using var p = new Process();
-                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                    p.StartInfo.Arguments = "igupdate";
-                    p.Start();
-                }
-            });
-        }
-
-
-        /// <summary>
-        /// Checks and runs app instance(s)
-        /// </summary>
-        private static void RunAppInstances() {
-            if (Configs.IsAllowMultiInstances) {
-                Application.Run(formMain = new frmMain());
-            }
-            else {
-                var guid = new Guid(APP_GUID);
-
-                // single instance is required
-                using var instance = new SingleInstance(guid);
-                if (instance.IsFirstInstance) {
-                    instance.ArgumentsReceived += Instance_ArgsReceived;
-                    instance.ListenForArgumentsFromSuccessiveInstances();
-
-                    Application.Run(formMain = new frmMain());
-                }
-                else {
-                    _ = instance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
-                }
+            else
+            {
+                CheckForUpdate(false);
             }
         }
+    }
 
 
-        private static void Instance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
-            if (formMain == null) return;
+    /// <summary>
+    /// Check for updatae
+    /// </summary>
+    /// <param name="showIfNewUpdate">
+    /// Set to <c>true</c> if you want to show the Update dialog
+    /// when there is a new version. Default value is <c>false</c>.
+    /// </param>
+    public static void CheckForUpdate(bool? showIfNewUpdate = null)
+    {
+        _ = Task.Run(async () =>
+        {
+            showIfNewUpdate ??= false;
 
-            Action<string[]> UpdateForm = args => {
-                // activate form
-                _ = formMain.ToggleAppVisibilityAsync(true);
-
-                // load image file from arg
-                formMain.LoadFromParams(args);
+            var updater = new UpdateService();
+            await updater.GetUpdatesAsync();
 
 
-                // Hack for issue #620: IG does not activate in normal / maximized window state
-                if (formMain.WindowState != FormWindowState.Minimized) {
-                    formMain.TopMost = true;
-                    CornerApi.ClickOnWindow(formMain.Handle, new(0, 0));
-                    formMain.TopMost = Configs.IsWindowAlwaysOnTop;
-                }
+            // There is a newer version
+            Config.ShowNewVersionIndicator = updater.HasNewUpdate;
 
-            };
+            // save last update
+            Config.AutoUpdate = DateTime.UtcNow.ToISO8601String();
 
-            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
-            // Primary instance will crash if no file provided
-            // (e.g. by double-clicking on .EXE in explorer).
-            var realCount = 0;
-            foreach (var arg in e.Args) {
-                if (arg != null) {
-                    realCount++;
-                }
+
+            if (updater.HasNewUpdate || showIfNewUpdate.Value)
+            {
+                _ = Config.RunIgcmd(IgCommands.CHECK_FOR_UPDATE);
             }
+        });
+    }
 
-            var realArgs = new string[realCount];
-            Array.Copy(e.Args, realArgs, realCount);
 
-            // Execute our delegate on the forms thread!
-            formMain.Invoke(UpdateForm, (object)realArgs);
+    /// <summary>
+    /// Checks and runs app instance(s)
+    /// </summary>
+    private static void RunAppInstances()
+    {
+        if (Config.EnableMultiInstances)
+        {
+            Local.FrmMain?.Dispose();
+            Application.Run(Local.FrmMain = new FrmMain());
+        }
+        else
+        {
+            var guid = new Guid(APP_GUID);
+
+            // single instance is required
+            using var instance = new SingleInstance(guid);
+            if (instance.IsFirstInstance)
+            {
+                instance.ArgsReceived += Instance_ArgumentsReceived;
+                instance.ListenForArgsFromChildInstances();
+
+                Local.FrmMain?.Dispose();
+                Application.Run(Local.FrmMain = new FrmMain());
+            }
+            else
+            {
+                _ = instance.PassArgsToFirstInstanceAsync(Environment.GetCommandLineArgs());
+            }
+        }
+    }
+
+    private static void Instance_ArgumentsReceived(object? sender, ArgsReceivedEventArgs e)
+    {
+        if (Local.FrmMain == null) return;
+
+
+        // Attempt to run a 2nd instance of IG when multi-instance turned off.
+        // The primary instance will crash if no file provided
+        // (e.g. by double-clicking on .EXE in explorer).
+        var realCount = 0;
+        foreach (var arg in e.Arguments)
+        {
+            if (arg != null)
+            {
+                realCount++;
+            }
         }
 
+        var realArgs = new string[realCount];
+        Array.Copy(e.Arguments, realArgs, realCount);
 
+        // Execute our delegate on the forms thread!
+        Local.FrmMain.Invoke(ActivateWindow, (object)realArgs);
+    }
+
+
+    /// <summary>
+    /// Pass arguments and activate the main window
+    /// </summary>
+    private static void ActivateWindow(string[] args)
+    {
+        if (Local.FrmMain == null) return;
+
+        // load image file from arg
+        Local.FrmMain.LoadImagesFromCmdArgs(args);
+
+        // Issues #774, #855: if IG is normal or maximized, do nothing. If IG is minimized,
+        // restore it to previous state.
+        if (Local.FrmMain.WindowState == FormWindowState.Minimized)
+        {
+            WindowApi.ShowAppWindow(Local.FrmMain.Handle, SHOW_WINDOW_CMD.SW_RESTORE);
+        }
+        else
+        {
+            // Hack for issue #620: IG does not activate in normal / maximized window state
+            Local.FrmMain.TopMost = true;
+            WindowApi.ClickOnWindow(Local.FrmMain.Handle, Local.FrmMain.PointToScreen(new(0, 0)));
+            Local.FrmMain.TopMost = Config.EnableWindowTopMost;
+        }
     }
 }

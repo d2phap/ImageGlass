@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,101 +17,84 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System.Globalization;
 
-namespace ImageGlass.Base {
+namespace ImageGlass.Base;
+
+
+/// <summary>
+/// Constants list of the app
+/// </summary>
+public static class Constants
+{
+    public const string UPDATE_CHANNEL = "moon";
+    public const int MENU_ICON_HEIGHT = 24;
+    public const float VIEWER_GRID_SIZE = 9f;
+    public const int TOOLBAR_ICON_HEIGHT = 24;
+    public const int THUMBNAIL_HEIGHT = 70;
+    public const string CONFIG_CMD_PREFIX = "/";
+    public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
+    public const string DATE_FORMAT = "yyyy/MM/dd";
+    public const string APP_PROTOCOL = "imageglass";
+    public const string APP_CODE = "moon";
+    public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
+    public const int MAX_IMAGE_DIMENSION = 16_384;
+
     /// <summary>
-    /// Constants list of the app
+    /// A file macro to replace with the current viewing image file path in double quotes.
+    /// Example: <c>"C:\my\photo.jpg"</c>
     /// </summary>
-    public static class Constants {
-        public const int MENU_ICON_HEIGHT = 21;
-        public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
-        public const int VIEWER_GRID_SIZE = 8;
-        public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
-        public const string CURRENT_MONITOR_PROFILE = "CurrentMonitorProfile";
-        public const string UPDATE_CHANNEL = "kobe";
-        public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
+    public const string FILE_MACRO = "<file>";
 
-        /// <summary>
-        /// First launch version constant.
-        /// If the value read from config file is less than this value,
-        /// the First-Launch Configs screen will be launched.
-        /// </summary>
-        public const float FIRST_LAUNCH_VERSION = 5f;
+    public const string THEME_SYSTEM_ACCENT_COLOR = "accent";
 
-        /// <summary>
-        /// The URI Scheme to register web-to-app linking
-        /// </summary>
-        public const string URI_SCHEME = "imageglass";
+    // predefined built-in tool names
+    public const string IGTOOL_EXIFTOOL = "Tool_ExifGlass";
+    public const string IGTOOL_SLIDESHOW = "Tool_Slideshow";
 
-        /// <summary>
-        /// The default theme pack
-        /// </summary>
-        public const string DEFAULT_THEME = "Kobe";
+    public const string PAGE_NAV_TOOLBAR_FRAME_INFO = "Lbl_PageNav_FrameInfo";
+    public const string PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION = "Btn_PageNav_ToggleFrameAnimation";
 
-        /// <summary>
-        /// Gets built-in image formats
-        /// </summary>
-        public const string IMAGE_FORMATS = "*.avif;*.b64;*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.heif;*.ico;*.jfif;*.jp2;*.jpe;*.jpeg;*.jpg;*.jxl;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;*.exr;*.hdr;*.psd;*.tga;*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cr3;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.qoi;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.x3f;*.fits;*.xv;*.mjpeg;*.viff";
 
-        /// <summary>
-        /// Gets write formats.
-        /// </summary>
-        public const string IMAGE_WRITE_FORMATS = "*.bmp;*.jpg;*.jpeg;*.jpe;*.jxl;*.tif;*.tiff;*.gif;*.png;*.ico;*.b64;*.txt;";
+    /// <summary>
+    /// Gets the aspect ratio value.
+    /// </summary>
+    public static Dictionary<SelectionAspectRatio, int[]> AspectRatioValue => new(9)
+    {
+        { SelectionAspectRatio.Ratio1_1,    new int[] {1, 1} },
+        { SelectionAspectRatio.Ratio1_2,    new int[] {1, 2} },
+        { SelectionAspectRatio.Ratio2_1,    new int[] {2, 1} },
+        { SelectionAspectRatio.Ratio2_3,    new int[] {2, 3} },
+        { SelectionAspectRatio.Ratio3_2,    new int[] {3, 2} },
+        { SelectionAspectRatio.Ratio3_4,    new int[] {3, 4} },
+        { SelectionAspectRatio.Ratio4_3,    new int[] {4, 3} },
+        { SelectionAspectRatio.Ratio9_16,   new int[] {9, 16} },
+        { SelectionAspectRatio.Ratio16_9,   new int[] {16, 9} },
+    };
 
-        /// <summary>
-        /// Number format to use for save/restore ImageGlass settings
-        /// </summary>
-        public static NumberFormatInfo NumberFormat => new() {
-            NegativeSign = "-",
-        };
+    /// <summary>
+    /// Quick setup version constant.
+    /// If the value read from config file is less than this value,
+    /// the Quick setup dialog will be opened.
+    /// </summary>
+    public const int QUICK_SETUP_VERSION = 9;
 
-        /// <summary>
-        /// Gets the default set of keycombo actions
-        /// </summary>
-        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions => new() {
-            { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
-            { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
-            { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
-            { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
-        };
+    /// <summary>
+    /// The default theme pack
+    /// </summary>
+    public const string DEFAULT_THEME = "Kobe";
 
-        /// <summary>
-        /// Gets the default set of toolbar buttons
-        /// </summary>
-        public static List<ToolbarButton> DefaultToolbarButtons => new() {
-            ToolbarButton.btnBack,
-            ToolbarButton.btnNext,
-            ToolbarButton.Separator,
+    /// <summary>
+    /// Gets built-in image formats
+    /// </summary>
+    public const string IMAGE_FORMATS = ".3fr;.apng;.ari;.arw;.avif;.b64;.bay;.bmp;.cap;.cr2;.cr3;.crw;.cur;.cut;.dcr;.dcs;.dds;.dib;.dng;.drf;.eip;.emf;.erf;.exif;.exr;.fff;.fits;.flif;.gif;.gifv;.gpr;.hdr;.heic;.heif;.ico;.iiq;.jp2;.jpe;.jpeg;.jpg;.jxl;.k25;.kdc;.mdc;.mef;.mjpeg;.mos;.mrw;.nef;.nrw;.obm;.orf;.pbm;.pcx;.pef;.pgm;.png;.ppm;.psb;.psd;.ptx;.pxn;.qoi;.r3d;.raf;.raw;.rw2;.rwl;.rwz;.sr2;.srf;.srw;.svg;.tga;.tif;.tiff;.viff;.webp;.wmf;.wpg;.x3f;.xbm;.xpm;.xv";
 
-            ToolbarButton.btnRotateLeft,
-            ToolbarButton.btnRotateRight,
-            ToolbarButton.btnFlipHorz,
-            ToolbarButton.btnFlipVert,
-            ToolbarButton.btnCrop,
-            ToolbarButton.Separator,
+    /// <summary>
+    /// Number format to use for save/restore ImageGlass settings
+    /// </summary>
+    public static NumberFormatInfo NumberFormat => new()
+    {
+        NegativeSign = "-",
+    };
 
-            ToolbarButton.btnAutoZoom,
-            ToolbarButton.btnZoomLock,
-            ToolbarButton.btnScaletoWidth,
-            ToolbarButton.btnScaletoHeight,
-            ToolbarButton.btnScaleToFit,
-            ToolbarButton.btnScaleToFill,
-            ToolbarButton.Separator,
-
-            ToolbarButton.btnOpen,
-            ToolbarButton.btnRefresh,
-            ToolbarButton.Separator,
-
-            ToolbarButton.btnWindowFit,
-            ToolbarButton.btnFullScreen,
-            ToolbarButton.btnSlideShow,
-            ToolbarButton.Separator,
-
-            ToolbarButton.btnThumb,
-            ToolbarButton.btnCheckedBackground,
-            ToolbarButton.btnDelete,
-        };
-    }
 }

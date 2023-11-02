@@ -1,23 +1,6 @@
 ﻿/*
-A custom class to deal with several issues with the behavior of tooltips in the
-standard Toolstrip.
-
-From: Ivan Ičin
-https://www.codeproject.com/Articles/376643/ToolStrip-with-Custom-ToolTip
-Slightly tweaked by Kevin Routley for cleanup and ImageGlass specific requirements.
-This is a much cleaner solution than earlier attempts.
-
-See Github issues #426, 409 for references.
-
-Issues solved:
-1. The tooltip would not vanish when the user clicked the toolstrip button.
-2. The tooltip would "flash" when the user re-visited the button. Namely,
-   the initial delay time for the tooltip was too low.
-
-
-Part of
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -32,232 +15,736 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
+using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
+using System.ComponentModel;
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ImageGlass.Library.WinAPI;
-
-namespace ImageGlass.UI {
-    public class ModernToolbar: ToolStrip {
-        private const uint WM_MOUSEACTIVATE = 0x21;
-        private const uint MA_ACTIVATE = 1;
-        private const uint MA_ACTIVATEANDEAT = 2;
-
-        private ToolStripItem mouseOverItem;
-        private Point mouseOverPoint;
-        private readonly Timer timer;
-        private ToolTip _tooltip;
-        public int ToolTipInterval = 4000;
-        public string ToolTipText;
-
-        /// <summary>
-        /// Gets, sets value indicates that the tooltip direction is top or bottom
-        /// </summary>
-        public bool ToolTipShowUp { get; set; } = false;
+namespace ImageGlass.UI;
 
 
-        /// <summary>
-        /// Gets, sets value indicates that the tooltip is shown
-        /// </summary>
-        public bool HideTooltips { get; set; } = false;
+/// <summary>
+/// Modern toolbar
+/// </summary>
+public class ModernToolbar : ToolStrip
+{
+    private const uint WM_MOUSEACTIVATE = 0x21;
+    private const uint MA_ACTIVATE = 1;
+    private const uint MA_ACTIVATEANDEAT = 2;
 
-        /// <summary>
-        /// Gets, sets value indicates that the toolstrip will autofocus on hover
-        /// </summary>
-        public bool AutoFocus { get; set; } = true;
+    private ToolbarAlignment _alignment = ToolbarAlignment.Center;
+    private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
-        private ToolbarAlignment _alignment;
+    private readonly ModernTooltip _tooltip = new();
+    private CancellationTokenSource _tooltipTokenSrc = new();
+    private ToolStripItem? _hoveredItem = null;
 
-        private ToolTip Tooltip {
-            get {
-                if (_tooltip == null) {
-                    _tooltip = new ToolTip();
-                    Tooltip.AutomaticDelay = 2000;
-                    Tooltip.InitialDelay = 2000;
-                }
-                return _tooltip;
-            }
+    private static Container _mainMenuContainer = new Container();
+    private ModernMenu _mainMenu = new(_mainMenuContainer);
+
+    private ToolStripButton _mainMenuButton => new()
+    {
+        Name = "Btn_MainMenu",
+        DisplayStyle = ToolStripItemDisplayStyle.Image,
+        TextImageRelation = TextImageRelation.ImageBeforeText,
+        Text = "[Main menu]",
+        ToolTipText = "[Main menu (Alf+F)]",
+
+        // save icon name to load later
+        Tag = new ToolbarItemTagModel()
+        {
+            Image = nameof(Theme.ToolbarIcons.MainMenu),
+        },
+
+        Alignment = ToolStripItemAlignment.Right,
+        Overflow = ToolStripItemOverflow.Never,
+    };
+
+
+    #region Public properties
+
+    /// <summary>
+    /// Enable transparent background.
+    /// </summary>
+    public bool EnableTransparent { get; set; } = true;
+
+    /// <summary>
+    /// Show or hide main menu button of toolbar
+    /// </summary>
+    public bool ShowMainMenuButton
+    {
+        get => MainMenuButton.Visible;
+        set => MainMenuButton.Visible = value;
+    }
+
+    /// <summary>
+    /// Gets main menu button
+    /// </summary>
+    public ToolStripButton MainMenuButton => GetItem(_mainMenuButton.Name) ?? _mainMenuButton;
+
+    /// <summary>
+    /// Gets, sets main menu
+    /// </summary>
+    public ModernMenu MainMenu
+    {
+        get => _mainMenu;
+        set
+        {
+            _mainMenu.Opened -= MainMenu_Opened;
+            _mainMenu.Closed -= MainMenu_Closed;
+
+            _mainMenu = value;
+
+            _mainMenu.Opened += MainMenu_Opened;
+            _mainMenu.Closed += MainMenu_Closed;
         }
+    }
 
-        /// <summary>
-        /// Gets, sets items alignment
-        /// </summary>
-        public ToolbarAlignment Alignment {
-            get => _alignment;
-            set {
-                this._alignment = value;
+    /// <summary>
+    /// Gets, sets value indicates that the tooltip is shown
+    /// </summary>
+    public bool HideTooltips { get; set; } = false;
 
-                this.UpdateAlignment();
-            }
+    /// <summary>
+    /// Gets default gap for sizing calculation
+    /// </summary>
+    public int DefaultGap => ImageScalingSize.Height / 4;
+
+    /// <summary>
+    /// Gets, sets items alignment
+    /// </summary>
+    public ToolbarAlignment Alignment
+    {
+        get => _alignment;
+        set
+        {
+            _alignment = value;
+
+            UpdateAlignment();
         }
+    }
 
-        #region Protected methods
+    /// <summary>
+    /// Gets, sets theme
+    /// </summary>
+    public IgTheme? Theme { get; set; }
 
-
-        protected override void WndProc(ref Message m) {
-            base.WndProc(ref m);
-
-            // Enable click-through for inactive toolstrip/menustrip
-            // https://github.com/dotnet/winforms/issues/9288
-            if (m.Msg == WM_MOUSEACTIVATE && m.Result == (IntPtr)MA_ACTIVATEANDEAT) {
-                m.Result = (IntPtr)MA_ACTIVATE;
-            }
+    /// <summary>
+    /// Gets, sets icons height
+    /// </summary>
+    public int IconHeight
+    {
+        get => _iconHeight;
+        set
+        {
+            _iconHeight = value;
+            ImageScalingSize = new(_iconHeight, _iconHeight);
         }
+    }
 
-        protected override void OnMouseMove(MouseEventArgs mea) {
-            base.OnMouseMove(mea);
+    /// <summary>
+    /// Gets, sets value indicates that the toolstrip will autofocus on hover
+    /// </summary>
+    public bool AutoFocusOnHover { get; set; } = true;
 
-            if (HideTooltips) return;
+    #endregion
 
-            var newMouseOverItem = this.GetItemAt(mea.Location);
-            if (mouseOverItem != newMouseOverItem ||
-                (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height))) {
-                mouseOverItem = newMouseOverItem;
-                mouseOverPoint = mea.Location;
-                Tooltip.Hide(this);
-                timer.Stop();
-                timer.Start();
-            }
+
+    #region Protected methods
+
+    protected override void WndProc(ref Message m)
+    {
+        base.WndProc(ref m);
+
+        // Enable click-through for inactive toolstrip/menustrip
+        // https://github.com/dotnet/winforms/issues/9288
+        if (m.Msg == WM_MOUSEACTIVATE && m.Result == (IntPtr)MA_ACTIVATEANDEAT)
+        {
+            m.Result = (IntPtr)MA_ACTIVATE;
         }
+    }
 
-        protected override void OnMouseClick(MouseEventArgs e) {
-            base.OnMouseClick(e);
-            var newMouseOverItem = this.GetItemAt(e.Location);
-            if (newMouseOverItem != null) {
-                Tooltip.Hide(this);
-            }
+    protected override void OnMouseMove(MouseEventArgs e)
+    {
+        base.OnMouseMove(e);
+        if (HideTooltips) return;
+
+        var item = GetItemAt(e.Location);
+
+        if (item == null)
+        {
+            HideItemTooltip();
+            _hoveredItem = null;
         }
-
-
-        protected override void OnMouseUp(MouseEventArgs mea) {
-            base.OnMouseUp(mea);
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
-            var newMouseOverItem = this.GetItemAt(mea.Location);
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        else if (item != _hoveredItem)
+        {
+            _hoveredItem = item;
+            ShowItemTooltip(_hoveredItem);
         }
+    }
 
-        protected override void OnMouseEnter(EventArgs e) {
-            if (AutoFocus && CanFocus && !Focused)
-                Focus();
+    protected override void OnMouseDown(MouseEventArgs e)
+    {
+        base.OnMouseDown(e);
+        HideItemTooltip();
+    }
 
-            base.OnMouseEnter(e);
+    protected override void OnMouseUp(MouseEventArgs e)
+    {
+        base.OnMouseUp(e);
+        HideItemTooltip();
+    }
+
+    //protected override void OnMouseEnter(EventArgs e)
+    //{
+    //    if (AutoFocusOnHover && CanFocus && !Focused)
+    //        Focus();
+
+    //    base.OnMouseEnter(e);
+    //}
+
+    protected override void OnMouseLeave(EventArgs e)
+    {
+        base.OnMouseLeave(e);
+        HideItemTooltip();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (disposing)
+        {
+            OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
+            _tooltip.Dispose();
+            _tooltipTokenSrc.Dispose();
+            _mainMenuContainer.Dispose();
         }
+    }
 
-        protected override void OnMouseLeave(EventArgs e) {
-            base.OnMouseLeave(e);
-            timer.Stop();
-            Tooltip.Hide(this);
+    protected override void OnSizeChanged(EventArgs e)
+    {
+        UpdateAlignment();
+
+        base.OnSizeChanged(e);
+
+        UpdateAlignment();
+    }
+
+    protected override Padding DefaultPadding
+    {
+        get
+        {
+            return new Padding(DefaultGap, 0, DefaultGap, 0);
         }
+    }
 
-        private void timer_Tick(object sender, EventArgs e) {
-            timer.Stop();
-            try {
-                Point currentMouseOverPoint;
-                if (ToolTipShowUp) {
-                    currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y - Cursor.Current.Size.Height + Cursor.Current.HotSpot.Y - this.Height / 2));
-                }
-                else {
-                    currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y + Cursor.Current.Size.Height - Cursor.Current.HotSpot.Y));
-                }
+    protected override void OnRightToLeftChanged(EventArgs e)
+    {
+        base.OnRightToLeftChanged(e);
 
-                if (mouseOverItem == null) {
-                    if (!string.IsNullOrEmpty(ToolTipText)) {
-                        Tooltip.Show(ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
-                    }
-                }
-                // TODO: revisit this; toolbar buttons like to disappear, if changed.
-                else if (((!(mouseOverItem is ToolStripDropDownButton) && !(mouseOverItem is ToolStripSplitButton)) ||
-#pragma warning disable IDE0038 // Use pattern matching
-                    ((mouseOverItem is ToolStripDropDownButton) && !((ToolStripDropDownButton)mouseOverItem).DropDown.Visible) ||
-#pragma warning restore IDE0038 // Use pattern matching
-#pragma warning disable IDE0038 // Use pattern matching
-                    ((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible)) && !string.IsNullOrEmpty(mouseOverItem.ToolTipText) && Tooltip != null) {
-                    Tooltip.Show(mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
-                }
-            }
-            catch { }
-        }
-
-        protected override void Dispose(bool disposing) {
-            base.Dispose(disposing);
-            if (disposing) {
-                timer.Dispose();
-                Tooltip.Dispose();
-            }
-        }
-
-        #endregion
-
-        protected override void OnSizeChanged(EventArgs e) {
-            base.OnSizeChanged(e);
-            this.UpdateAlignment();
-        }
-
-        public ModernToolbar() : base() {
-            ShowItemToolTips = false;
-            timer = new Timer {
-                Enabled = false,
-                Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
-            };
-            timer.Tick += timer_Tick;
-
-            // Apply Windows 11 corner API
-            CornerApi.ApplyCorner(this.OverflowButton.DropDown.Handle);
-        }
-
-
-        /// <summary>
-        /// Update the alignment if toolstrip items
-        /// </summary>
-        public void UpdateAlignment() {
-            if (this.Items.Count == 0) {
-                return;
-            }
-
-            var firstBtn = this.Items[0];
-            var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
-
-            // reset the alignment to left
-            firstBtn.Margin = defaultMargin;
-
-            if (this.Alignment == ToolbarAlignment.CENTER) {
-                // get the correct content width, excluding the sticky right items
-                var toolbarContentWidth = 0;
-                foreach (ToolStripItem item in this.Items) {
-                    if (item.Alignment == ToolStripItemAlignment.Right) {
-                        toolbarContentWidth += item.Width * 2;
-                    }
-                    else {
-                        toolbarContentWidth += item.Width;
-                    }
-
-                    // reset margin
-                    item.Margin = defaultMargin;
-                }
-
-                // if the content cannot fit the toolbar size:
-                // (toolbarContentWidth > toolMain.Size.Width)
-                if (this.OverflowButton.Visible) {
-                    // align left
-                    firstBtn.Margin = defaultMargin;
-                }
-                else {
-                    // the default margin (left alignment)
-                    var margin = defaultMargin;
-
-                    // get the gap of content width and toolbar width
-                    var gap = Math.Abs(this.Width - toolbarContentWidth);
-
-                    // update the left margin value
-                    margin.Left = gap / 2;
-
-                    // align the first item
-                    firstBtn.Margin = margin;
-                }
+        foreach (ToolStripItem item in Items)
+        {
+            if (item.DisplayStyle == ToolStripItemDisplayStyle.ImageAndText
+                && item.TextImageRelation == TextImageRelation.ImageBeforeText)
+            {
+                item.TextAlign = ContentAlignment.MiddleCenter;
+                item.ImageAlign = ContentAlignment.MiddleRight;
             }
         }
     }
+
+    protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
+    {
+        base.OnItemClicked(e);
+
+        // filter out BtnMainMenu
+        if (e.ClickedItem.Name == MainMenuButton.Name)
+        {
+            // on main menu button clicked
+            ShowMainMenu();
+        }
+    }
+
+    #endregion
+
+
+    public ModernToolbar() : base()
+    {
+        ShowItemToolTips = false;
+        Items.Insert(0, _mainMenuButton);
+
+        // Apply Windows 11 corner API
+        WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
+    }
+
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        base.OnPaintBackground(e);
+
+        if (!EnableTransparent)
+        {
+            e.Graphics.Clear(TopLevelControl.BackColor);
+        }
+
+        using var bgBrush = new SolidBrush(BackColor);
+        e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
+    }
+
+
+    #region Private functions
+    private void MainMenu_Opened(object? sender, EventArgs e)
+    {
+        MainMenuButton.Checked = true;
+    }
+    private void MainMenu_Closed(object? sender, ToolStripDropDownClosedEventArgs e)
+    {
+        MainMenuButton.Checked = false;
+    }
+
+
+    /// <summary>
+    /// Updates overflow button and dropdown
+    /// </summary>
+    private void UpdateOverflow()
+    {
+        // overflow size
+        OverflowButton.Margin = new(0, 0, DefaultGap, 0);
+        OverflowButton.Padding = new(DefaultGap);
+
+        // dropdown size
+        OverflowButton.DropDown.AutoSize = false;
+        OverflowButton.DropDown.Padding = new(DefaultGap, 0, DefaultGap, 0);
+
+        // fix the size of overflow dropdown
+        OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
+        OverflowButton.DropDown.Opening += OverflowDropDown_Opening;
+
+        if (Theme is not null)
+        {
+            OverflowButton.DropDown.BackColor = BackColor.WithAlpha(255);
+            OverflowButton.DropDown.ForeColor = ForeColor;
+        }
+    }
+
+
+    private void OverflowDropDown_Opening(object? sender, CancelEventArgs e)
+    {
+        UpdateOverflowDropdownSize();
+    }
+
+
+    /// <summary>
+    /// Update overflow dropdown size
+    /// </summary>
+    private void UpdateOverflowDropdownSize()
+    {
+        var maxItemHeight = 0;
+        var fullDropdownWidth = OverflowButton.DropDown.Padding.Left + OverflowButton.DropDown.Padding.Right;
+
+        foreach (ToolStripItem item in Items)
+        {
+            if (!item.IsOnDropDown) continue;
+
+            fullDropdownWidth += item.Width
+                + item.Margin.Left
+                + item.Margin.Right;
+
+            maxItemHeight = Math.Max(maxItemHeight, item.Height + item.Margin.Top + item.Margin.Bottom);
+        }
+
+        var maxDropdownWidth = Screen.FromControl(this).WorkingArea.Width / 2;
+        var dropdownWidth = Math.Min(fullDropdownWidth, maxDropdownWidth);
+        var dropdownHeight = (int)(Math.Ceiling(fullDropdownWidth * 1f / dropdownWidth)
+            * maxItemHeight
+            + OverflowButton.DropDown.Padding.Top
+            + OverflowButton.DropDown.Padding.Bottom);
+
+        OverflowButton.DropDown.Width = dropdownWidth;
+        OverflowButton.DropDown.Height = dropdownHeight;
+    }
+
+    #endregion
+
+
+    #region Public functions
+
+    /// <summary>
+    /// Shows main menu
+    /// </summary>
+    public void ShowMainMenu()
+    {
+        // update correct height of the menu
+        MainMenu.FixGeneralIssues();
+
+        var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
+        var y = Visible ? Height : 10;
+
+        var workingArea = Screen.FromControl(this).WorkingArea;
+        var screenMenuBottom = PointToScreen(new Point(0, y + MainMenu.Height)).Y;
+
+        // make sure main menu does not cover the toolbar
+        if (screenMenuBottom > workingArea.Bottom)
+        {
+            y = y - MainMenu.Height - Height;
+        }
+
+        MainMenu.Show(this, x, y);
+    }
+
+    /// <summary>
+    /// Hide item's tooltip
+    /// </summary>
+    public void HideItemTooltip()
+    {
+        _tooltipTokenSrc.Cancel();
+        _tooltip.Hide(this);
+    }
+
+    /// <summary>
+    /// Shows item tooltip
+    /// </summary>
+    public async void ShowItemTooltip(ToolStripItem? item, int duration = 4000, int delay = 400)
+    {
+        if (item is null || string.IsNullOrEmpty(item.ToolTipText))
+            return;
+
+        _tooltipTokenSrc?.Cancel();
+        _tooltipTokenSrc = new();
+
+        _tooltip.Hide(this);
+
+        try
+        {
+            var tooltipPosY = 0;
+
+            if (Dock == DockStyle.Bottom)
+            {
+                // tooltip direction is bottom
+                tooltipPosY = item.Bounds.Top
+                    - item.Padding.Top
+                    - (int)DpiApi.Scale(SystemInformation.MenuFont.Size);
+            }
+            else
+            {
+                // tooltip direction is top
+                tooltipPosY = item.Bounds.Bottom + item.Padding.Bottom;
+            }
+
+            // delay
+            await Task.Delay(delay, _tooltipTokenSrc.Token);
+
+            // show tooltip
+            _tooltip.Show(item.ToolTipText, this, item.Bounds.X, tooltipPosY);
+
+            // duration
+            await Task.Delay(duration, _tooltipTokenSrc.Token);
+        }
+        catch { }
+
+        _tooltip.Hide(this);
+    }
+
+    /// <summary>
+    /// Update the alignment if toolstrip items
+    /// </summary>
+    public void UpdateAlignment()
+    {
+        if (Items.Count < 1) return;
+
+        // find the first left-aligned button
+        ToolStripItem? firstBtn = null;
+        foreach (ToolStripItem item in Items)
+        {
+            if (item.Alignment == ToolStripItemAlignment.Left)
+            {
+                firstBtn = item;
+                break;
+            }
+        }
+
+        if (firstBtn == null) return;
+
+
+        var defaultMargin = new Padding(0, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
+
+        // reset the alignment to left
+        firstBtn.Margin = defaultMargin;
+
+        if (Alignment == ToolbarAlignment.Center)
+        {
+            // get the correct content width, excluding the sticky right items
+            var toolbarContentWidth = 0;
+            var rightContentWidth = 0;
+            foreach (ToolStripItem item in Items)
+            {
+                toolbarContentWidth += item.Width;
+
+                if (item.Alignment == ToolStripItemAlignment.Right)
+                {
+                    rightContentWidth += item.Width;
+                }
+
+                // reset margin
+                item.Margin = defaultMargin;
+            }
+
+            if (ShowMainMenuButton)
+            {
+                toolbarContentWidth += MainMenuButton.Width;
+            }
+            else
+            {
+                rightContentWidth -= MainMenuButton.Width;
+                toolbarContentWidth -= MainMenuButton.Width;
+            }
+
+
+            // if the content cannot fit the toolbar size:
+            if (rightContentWidth + toolbarContentWidth >= Width)
+            //if (OverflowButton.Visible)
+            {
+                // align left
+                firstBtn.Margin = defaultMargin;
+            }
+            else
+            {
+                // the default margin (left alignment)
+                var margin = defaultMargin;
+
+                // get the gap of content width and toolbar width
+                var gap = Math.Abs(Width - toolbarContentWidth);
+
+                // update the left margin value
+                margin.Left = gap / 2;
+
+                // align the first item
+                firstBtn.Margin = margin;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Update toolbar theme
+    /// </summary>
+    public void UpdateTheme(int? iconHeight = null)
+    {
+        if (iconHeight is not null)
+        {
+            IconHeight = iconHeight.Value;
+        }
+
+        if (Theme is null) return;
+
+        _tooltip.DarkMode = Theme.Settings.IsDarkMode;
+        SuspendLayout();
+
+        // update toolbar theme
+        BackColor = Theme.Colors.ToolbarBgColor;
+        ForeColor = Theme.Colors.ToolbarTextColor;
+        Renderer = new ModernToolbarRenderer(this);
+
+        // Overflow button and Overflow dropdown
+        UpdateOverflow();
+
+        // Toolbar items
+        foreach (var item in Items)
+        {
+            if (item.GetType() == typeof(ToolStripSeparator))
+            {
+                var tItem = item as ToolStripSeparator;
+                if (tItem is null) continue;
+
+                tItem.AutoSize = false;
+                tItem.Height = IconHeight;
+                tItem.Width = IconHeight / 2;
+            }
+
+            if (item.GetType() == typeof(ToolStripButton))
+            {
+                var tItem = item as ToolStripButton;
+                if (tItem is null) continue;
+
+                // update font and alignment
+                tItem.ForeColor = Theme.Colors.ToolbarTextColor;
+                tItem.Padding = new(DefaultGap);
+                tItem.Margin = new(0, DefaultGap, DefaultGap / 2, DefaultGap);
+
+                // update item from metadata
+                var tagModel = tItem.Tag as ToolbarItemTagModel;
+                tItem.Image = Theme.GetToolbarIcon(tagModel?.Image);
+            }
+        }
+
+        ResumeLayout(false);
+
+        // update items alignment
+        UpdateAlignment();
+    }
+
+
+    /// <summary>
+    /// Gets item by name
+    /// </summary>
+    /// <typeparam name="T">Type of ToolstripItem to convert</typeparam>
+    /// <param name="name">Name of item</param>
+    /// <returns></returns>
+    public T? GetItem<T>(string name)
+    {
+        var item = Items[name];
+
+        if (item is null || item.GetType() != typeof(T))
+        {
+            return default;
+        }
+
+        return (T)Convert.ChangeType(item, typeof(T));
+    }
+
+
+    /// <summary>
+    /// Gets ToolStripButton by name
+    /// </summary>
+    /// <param name="name">Name of item</param>
+    public ToolStripButton? GetItem(string name)
+    {
+        return GetItem<ToolStripButton>(name);
+    }
+
+
+    /// <summary>
+    /// Adds new toolbar item.
+    /// </summary>
+    /// <param name="model">Item model</param>
+    /// <param name="position">The location in the items list at which to insert the toolbar item</param>
+    /// <param name="modifier">Modifier function to modify item properties</param>
+    public ToolbarAddItemResult AddItem(ToolbarItemModel model,
+        int? position = null,
+        Action<ToolStripItem>? modifier = null)
+    {
+        position ??= Items.Count;
+
+        // separator
+        if (model.Type == ToolbarItemModelType.Separator)
+        {
+            var sItem = new ToolStripSeparator();
+            modifier?.Invoke(sItem);
+
+            Items.Insert(position.Value, sItem);
+            return ToolbarAddItemResult.Success;
+        }
+
+
+        if (GetItem<ToolStripItem>(model.Id) is not null)
+            return ToolbarAddItemResult.ItemExists;
+
+
+        ToolStripItem? toolstripItem = null;
+
+        // text label
+        if (model.DisplayStyle == ToolStripItemDisplayStyle.Text)
+        {
+            toolstripItem = new ToolStripLabel()
+            {
+                Name = model.Id,
+                DisplayStyle = model.DisplayStyle,
+                Text = model.Text,
+                Alignment = model.Alignment,
+
+                TextImageRelation = TextImageRelation.TextBeforeImage,
+                TextAlign = ContentAlignment.MiddleCenter,
+
+                // save metadata
+                Tag = new ToolbarItemTagModel()
+                {
+                    OnClick = model.OnClick,
+                },
+            };
+        }
+        // button
+        else
+        {
+            toolstripItem = new ToolStripButton()
+            {
+                Name = model.Id,
+                DisplayStyle = model.DisplayStyle,
+                Text = model.Text,
+                ToolTipText = model.Text,
+                Alignment = model.Alignment,
+
+                TextImageRelation = TextImageRelation.ImageBeforeText,
+                TextAlign = ContentAlignment.MiddleRight,
+
+                // save metadata
+                Tag = new ToolbarItemTagModel()
+                {
+                    Image = model.Image,
+                    CheckableConfigBinding = model.CheckableConfigBinding,
+                    OnClick = model.OnClick,
+                },
+
+                Image = Theme?.GetToolbarIcon(model.Image),
+            };
+        }
+
+        if (toolstripItem == null)
+        {
+            return ToolbarAddItemResult.InvalidModel;
+        }
+
+        modifier?.Invoke(toolstripItem);
+        Items.Insert(position.Value, toolstripItem);
+
+        return ToolbarAddItemResult.Success;
+    }
+
+
+    /// <summary>
+    /// Adds list of toolbar items
+    /// </summary>
+    /// <param name="list">The list of item models</param>
+    /// <param name="modifier">Modifier function to modify item properties</param>
+    public void AddItems(IEnumerable<ToolbarItemModel> list,
+        Action<ToolStripItem>? modifier = null)
+    {
+        foreach (var item in list)
+        {
+            _ = AddItem(item, null, modifier);
+        }
+    }
+
+
+    /// <summary>
+    /// Clears toolbar items, then adds <see cref="MainMenuButton"/>.
+    /// </summary>
+    public void ClearItems()
+    {
+        Items.Clear();
+        Items.Insert(0, _mainMenuButton);
+    }
+
+    #endregion
+
+
 }
+
+
+/// <summary>
+/// Toolbar items alignment.
+/// </summary>
+public enum ToolbarAlignment
+{
+    Left = 0,
+    Center = 1,
+}
+
+/// <summary>
+/// Tooltip direction of toolbar item.
+/// </summary>
+public enum TooltipDirection
+{
+    Top = 0,
+    Bottom = 1,
+}
+
