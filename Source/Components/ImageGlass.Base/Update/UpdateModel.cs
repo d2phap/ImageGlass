@@ -42,8 +42,6 @@ public class ReleaseModel
     [DataType(DataType.DateTime)]
     public DateTime PublishedDate { get; set; }
 
-    public IEnumerable<DownloadModel> Downloads { get; set; }
-
 }
 
 public class DownloadModel

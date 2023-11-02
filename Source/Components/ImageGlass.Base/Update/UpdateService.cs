@@ -47,28 +47,6 @@ public class UpdateService
 
 
     /// <summary>
-    /// Gets the suitable download package information
-    /// </summary>
-    public DownloadModel? DownloadInfo
-    {
-        get
-        {
-            if (CurrentReleaseInfo is null)
-            {
-                return null;
-            }
-
-            var architecture = Environment.Is64BitProcess ? "x64" : "x86";
-            var extension = App.IsPortable ? "zip" : "msi";
-
-            return CurrentReleaseInfo.Downloads.FirstOrDefault(i =>
-                i.Extension.Equals(extension, StringComparison.OrdinalIgnoreCase)
-                && i.Architecture.Equals(architecture, StringComparison.OrdinalIgnoreCase));
-        }
-    }
-
-
-    /// <summary>
     /// Gets the value indicates that the current app has a new update
     /// </summary>
     public bool HasNewUpdate
