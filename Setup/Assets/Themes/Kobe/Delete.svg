@@ -1,15 +1,1 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
- <g>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_86" y2="19.65" x2="17.700828" y1="19.65" x1="2.299171" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_87" y2="3.730915" x2="19.553429" y1="3.730915" x1="0.446571" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_88" y2="0.349999" x2="12.604008" y1="0.349999" x1="7.333493" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_84" y2="19.524479" x2="2.657835" y1="6.151112" x1="2.657835" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_85" y2="19.649999" x2="17.342165" y1="6.151112" x1="17.342165" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_89" y2="16.323737" x2="6.531858" y1="6.151112" x1="6.531858" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_90" y2="16.323737" x2="10" y1="6.151112" x1="10" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_91" y2="16.323737" x2="13.468128" y1="6.151112" x1="13.468128" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#dedede"/>
-  <line fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="7.093753" y1="-0.025" x2="7.093753" y2="1.913801" id="svg_4" stroke-linejoin="null" stroke-linecap="null" stroke="#dedede"/>
-  <line fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="12.860737" y1="-0.025" x2="12.860737" y2="1.913801" id="svg_5" stroke-linejoin="null" stroke-linecap="null" stroke="#dedede"/>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"><path fill="#ddd" fill-rule="evenodd" d="M6.442 2.5a2 2 0 0 1 2-2h3.046a2 2 0 0 1 2 2v.314c0 .036-.003.07-.01.105h4.952a.5.5 0 1 1 0 1h-.764l-1.558 13.507a2.5 2.5 0 0 1-2.484 2.214H6.306a2.5 2.5 0 0 1-2.484-2.214L2.264 3.92H1.5a.5.5 0 0 1 0-1h4.953a.502.502 0 0 1-.011-.105V2.5Zm.989.419h5.068a.501.501 0 0 1-.01-.105V2.5a1 1 0 0 0-1-1H8.441a1 1 0 0 0-1 1v.314c0 .036-.004.07-.011.105Zm-4.16 1L4.815 17.31a1.5 1.5 0 0 0 1.49 1.329h7.318a1.5 1.5 0 0 0 1.49-1.329L16.66 3.92H3.27Zm5.38 3.337a.5.5 0 1 0-1 0v7.256a.5.5 0 0 0 1 0V7.256Zm3.128-.5a.5.5 0 0 1 .5.5v7.256a.5.5 0 0 1-1 0V7.256a.5.5 0 0 1 .5-.5Z" clip-rule="evenodd"/></svg>

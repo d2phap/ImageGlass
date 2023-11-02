@@ -1,0 +1,14 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#dedede" stroke-dasharray="2,2" transform="rotate(90 9.999999046325684,10.000000000000002) " id="svg_5" height="19.312356" width="10.062423" y="0.343822" x="4.968788" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <rect stroke-dasharray="2,2" stroke="#dedede" id="svg_4" height="19.312356" width="12.874901" y="0.343822" x="3.56255" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <g stroke="null" id="svg_3">
+   <rect stroke="#dedede" fill="rgba(255,255,255,0.2)" stroke-width="0.7" x="3.538361" y="4.949271" width="12.923278" height="10.101458" id="svg_1"/>
+   <ellipse stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" cx="13.352736" cy="7.534923" id="svg_13" rx="1.127739" ry="0.99139"/>
+   <path stroke="#dedede" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" opacity="0.5" d="m4.757538,12.893788" id="svg_15"/>
+   <path stroke="#dedede" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m5.211945,13.40288c-0.319038,-0.644812 0.783097,-5.365735 2.639333,-5.066358c1.798224,0.276346 2.784347,3.914912 3.11789,3.891881c0.681584,-0.460576 0.88461,-1.105388 2.00125,-1.151445c1.058634,0.046058 1.812728,1.93443 1.769221,2.141686" id="svg_19"/>
+  </g>
+ </g>
+</svg>

@@ -1,17 +1,1 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
- <g>
-  <title>Layer 1</title>
-  <g stroke="null" id="svg_9">
-   <g stroke="null" id="svg_18">
-    <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="0.844433" x2="16.000656" y1="11.254411" x1="5.590678" stroke-width="0.7" fill="none"/>
-    <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="4.080068" x2="19.253745" y1="14.557762" x1="8.776051" stroke-width="0.7" fill="none"/>
-    <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="4.153462" x2="19.716347" y1="0.343045" x1="15.958694" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="14.453751" x2="8.982591" y1="15.316505" x1="4.592893" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="11.091047" x2="5.687141" y1="15.63741" x1="4.344455" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-    <rect stroke="#dedede" fill="#dedede" x="5.149751" y="14.228441" width="0.589173" height="0.214175" id="svg_8"/>
-    <path stroke="#dedede" id="svg_17" d="m14.63109,16.27518c0.52636,1.34949 -4.4487,5.76775 -8.20463,1.70002c-2.7853,-3.42888 -5.38822,-3.70767 -6.14281,0.49004" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   </g>
-  </g>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"><g stroke="#ddd" stroke-linejoin="round"><path stroke-linecap="round" d="M9 6H3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V9.5"/><path d="m18.202 2.182-1.383-.969a1 1 0 0 0-1.393.246L8.343 11.574a1 1 0 0 0-.161.379l-.495 2.485a.5.5 0 0 0 .674.563l2.604-1.029a1 1 0 0 0 .451-.356l7.032-10.042a1 1 0 0 0-.246-1.392Z"/><path fill="#fff" fill-opacity=".15" d="m17.597 4.789-3.021-2.116-6.496 9.278a1 1 0 0 0-.172.439l-.295 2.17a.5.5 0 0 0 .644.545l2.378-.739a1 1 0 0 0 .523-.38l6.44-9.197Z"/></g></svg>

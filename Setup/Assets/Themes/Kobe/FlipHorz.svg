@@ -1,18 +1,1 @@
-<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
- <!-- ImageGlass icons http://www.imageglass.org -->
-
- <g>
-  <title>background</title>
-  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
-  <g id="canvasGrid" display="none">
-   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_2"/>
-  </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <g id="svg_7">
-   <path stroke="#dedede" id="svg_1" d="m11.732368,18.226338l0,-17.360655l7.667634,17.360655l-7.667634,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   <path stroke="#dedede" id="svg_4" d="m8.339956,18.226338l0,-17.360655l-7.739957,17.360655l7.739957,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  </g>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"><g stroke="#ddd" stroke-linejoin="round"><path fill="#fff" fill-opacity=".1" stroke-dasharray="2 2" stroke-linecap="round" d="M18.262 18.25H12a.5.5 0 0 1-.5-.5V2.096c0-.55.76-.697.964-.185l6.262 15.653a.5.5 0 0 1-.464.686Z"/><path d="M2.23 18.337H8a1 1 0 0 0 1-1V2.502c0-1.107-1.531-1.394-1.932-.363l-5.77 14.835a1 1 0 0 0 .933 1.363Z"/></g></svg>
