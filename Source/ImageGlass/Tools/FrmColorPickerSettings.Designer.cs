@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             TableTop = new TableLayoutPanel();
+            ChkShowCIELabA = new UI.ModernCheckBox();
             ChkShowHsvA = new UI.ModernCheckBox();
             ChkShowRgbA = new UI.ModernCheckBox();
             ChkShowHexA = new UI.ModernCheckBox();
             ChkShowHslA = new UI.ModernCheckBox();
-            ChkShowCIELabA = new UI.ModernCheckBox();
             TableTop.SuspendLayout();
             SuspendLayout();
             // 
@@ -52,25 +52,40 @@
             TableTop.Location = new Point(0, 0);
             TableTop.Margin = new Padding(0);
             TableTop.Name = "TableTop";
-            TableTop.Padding = new Padding(40, 40, 40, 80);
+            TableTop.Padding = new Padding(16, 15, 16, 30);
             TableTop.RowCount = 5;
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
-            TableTop.Size = new Size(718, 445);
+            TableTop.Size = new Size(353, 182);
             TableTop.TabIndex = 3;
+            // 
+            // ChkShowCIELabA
+            // 
+            ChkShowCIELabA.AutoSize = true;
+            ChkShowCIELabA.BackColor = Color.Transparent;
+            ChkShowCIELabA.DarkMode = false;
+            ChkShowCIELabA.Dock = DockStyle.Top;
+            ChkShowCIELabA.Location = new Point(16, 131);
+            ChkShowCIELabA.Margin = new Padding(0);
+            ChkShowCIELabA.Name = "ChkShowCIELabA";
+            ChkShowCIELabA.Size = new Size(321, 21);
+            ChkShowCIELabA.TabIndex = 5;
+            ChkShowCIELabA.Text = "[Use CIELAB format with alpha value]";
+            ChkShowCIELabA.UseVisualStyleBackColor = false;
             // 
             // ChkShowHsvA
             // 
             ChkShowHsvA.AutoSize = true;
             ChkShowHsvA.BackColor = Color.Transparent;
             ChkShowHsvA.DarkMode = false;
-            ChkShowHsvA.Location = new Point(40, 247);
-            ChkShowHsvA.Margin = new Padding(0, 0, 0, 20);
+            ChkShowHsvA.Dock = DockStyle.Top;
+            ChkShowHsvA.Location = new Point(16, 102);
+            ChkShowHsvA.Margin = new Padding(0, 0, 0, 8);
             ChkShowHsvA.Name = "ChkShowHsvA";
-            ChkShowHsvA.Size = new Size(542, 49);
+            ChkShowHsvA.Size = new Size(321, 21);
             ChkShowHsvA.TabIndex = 4;
             ChkShowHsvA.Text = "[Use HSV format with alpha value]";
             ChkShowHsvA.UseVisualStyleBackColor = false;
@@ -80,10 +95,11 @@
             ChkShowRgbA.AutoSize = true;
             ChkShowRgbA.BackColor = Color.Transparent;
             ChkShowRgbA.DarkMode = false;
-            ChkShowRgbA.Location = new Point(40, 40);
-            ChkShowRgbA.Margin = new Padding(0, 0, 0, 20);
+            ChkShowRgbA.Dock = DockStyle.Top;
+            ChkShowRgbA.Location = new Point(16, 15);
+            ChkShowRgbA.Margin = new Padding(0, 0, 0, 8);
             ChkShowRgbA.Name = "ChkShowRgbA";
-            ChkShowRgbA.Size = new Size(541, 49);
+            ChkShowRgbA.Size = new Size(321, 21);
             ChkShowRgbA.TabIndex = 0;
             ChkShowRgbA.Text = "[Use RGB format with alpha value]";
             ChkShowRgbA.UseVisualStyleBackColor = false;
@@ -93,10 +109,11 @@
             ChkShowHexA.AutoSize = true;
             ChkShowHexA.BackColor = Color.Transparent;
             ChkShowHexA.DarkMode = false;
-            ChkShowHexA.Location = new Point(40, 109);
-            ChkShowHexA.Margin = new Padding(0, 0, 0, 20);
+            ChkShowHexA.Dock = DockStyle.Top;
+            ChkShowHexA.Location = new Point(16, 44);
+            ChkShowHexA.Margin = new Padding(0, 0, 0, 8);
             ChkShowHexA.Name = "ChkShowHexA";
-            ChkShowHexA.Size = new Size(540, 49);
+            ChkShowHexA.Size = new Size(321, 21);
             ChkShowHexA.TabIndex = 1;
             ChkShowHexA.Text = "[Use HEX format with alpha value]";
             ChkShowHexA.UseVisualStyleBackColor = false;
@@ -106,35 +123,23 @@
             ChkShowHslA.AutoSize = true;
             ChkShowHslA.BackColor = Color.Transparent;
             ChkShowHslA.DarkMode = false;
-            ChkShowHslA.Location = new Point(40, 178);
-            ChkShowHslA.Margin = new Padding(0, 0, 0, 20);
+            ChkShowHslA.Dock = DockStyle.Top;
+            ChkShowHslA.Location = new Point(16, 73);
+            ChkShowHslA.Margin = new Padding(0, 0, 0, 8);
             ChkShowHslA.Name = "ChkShowHslA";
-            ChkShowHslA.Size = new Size(537, 49);
+            ChkShowHslA.Size = new Size(321, 21);
             ChkShowHslA.TabIndex = 2;
             ChkShowHslA.Text = "[Use HSL format with alpha value]";
             ChkShowHslA.UseVisualStyleBackColor = false;
             // 
-            // ChkShowCIELabA
-            // 
-            ChkShowCIELabA.AutoSize = true;
-            ChkShowCIELabA.BackColor = Color.Transparent;
-            ChkShowCIELabA.DarkMode = false;
-            ChkShowCIELabA.Location = new Point(40, 316);
-            ChkShowCIELabA.Margin = new Padding(0);
-            ChkShowCIELabA.Name = "ChkShowCIELabA";
-            ChkShowCIELabA.Size = new Size(582, 49);
-            ChkShowCIELabA.TabIndex = 5;
-            ChkShowCIELabA.Text = "[Use CIELAB format with alpha value]";
-            ChkShowCIELabA.UseVisualStyleBackColor = false;
-            // 
             // FrmColorPickerSettings
             // 
-            AutoScaleDimensions = new SizeF(18F, 45F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(718, 708);
+            ClientSize = new Size(353, 267);
             ControlBox = false;
             Controls.Add(TableTop);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(1);
             Name = "FrmColorPickerSettings";
             Text = "[Color picker settings]";
             Controls.SetChildIndex(TableTop, 0);

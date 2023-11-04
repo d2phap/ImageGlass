@@ -186,6 +186,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     protected override void OnRequestUpdatingLanguage()
     {
         ApplyLanguage();
+        LoadAspectRatioItems();
     }
 
 

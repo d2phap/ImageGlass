@@ -505,6 +505,7 @@ public partial class FrmMain
     protected override void OnRequestUpdatingLanguage()
     {
         LoadLanguage();
+        LoadImageInfo();
     }
 
 
