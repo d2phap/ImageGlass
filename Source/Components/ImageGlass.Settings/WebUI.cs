@@ -29,45 +29,27 @@ public static class WebUI
     #region Public properties 
 
     /// <summary>
-    /// Gets current language as JSON
+    /// Gets all SVG icons.
     /// </summary>
-    public static string LangJson { get; set; } = string.Empty;
+    public static Dictionary<IconName, string>? SvgIcons { get; internal set; } = null;
 
 
     /// <summary>
-    /// Gets all SVG icons as JSON
+    /// Gets all language packs.
     /// </summary>
-    public static string SvgIconsJson { get; set; } = string.Empty;
+    public static IEnumerable<ExpandoObject>? LangList { get; internal set; } = null;
 
 
     /// <summary>
-    /// Gets all language packs as JSON
+    /// Gets all theme packs.
     /// </summary>
-    public static string LangListJson { get; set; } = string.Empty;
+    public static IEnumerable<ExpandoObject>? ThemeList { get; internal set; } = null;
 
 
     /// <summary>
-    /// Gets all theme packs as JSON
+    /// Gets all enums.
     /// </summary>
-    public static string ThemeListJson { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets all tools as JSON
-    /// </summary>
-    public static string ToolListJson { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets the default image info tags as JSON.
-    /// </summary>
-    public static string DefaultImageInfoTagsJson { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets all enums as JSON
-    /// </summary>
-    public static string EnumsJson
+    public static ExpandoObject Enums
     {
         get
         {
@@ -92,35 +74,22 @@ public static class WebUI
                 enumObj.TryAdd(item.Name, keys);
             }
 
-            return BHelper.ToJson(enumObj);
+            return enumObj;
         }
     }
 
     #endregion // Public properties
 
 
-    // Public functions
-    #region Public functions
 
     /// <summary>
-    /// Updates value of <see cref="LangJson"/>.
+    /// Updates value of <see cref="SvgIcons"/>.
     /// </summary>
-    public static void UpdateLangJson(bool forced = false)
+    public static async Task UpdateSvgIconsAsync(bool forced = false)
     {
-        if (!string.IsNullOrEmpty(LangJson) && !forced) return;
+        if (SvgIcons != null && !forced) return;
 
-        WebUI.LangJson = BHelper.ToJson(Config.Language);
-    }
-
-
-    /// <summary>
-    /// Updates value of <see cref="SvgIconsJson"/>.
-    /// </summary>
-    public static async Task UpdateSvgIconsJsonAsync(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(SvgIconsJson) && !forced) return;
-
-        var iconNames = new Dictionary<IconName, string>(4)
+        var iconNames = new Dictionary<IconName, string>()
         {
             { IconName.Edit, string.Empty },
             { IconName.Delete, string.Empty },
@@ -132,23 +101,24 @@ public static class WebUI
             { IconName.Sun, string.Empty },
             { IconName.Moon, string.Empty },
         };
+
+
         await Parallel.ForEachAsync(iconNames,
             new ParallelOptions { MaxDegreeOfParallelism = 3 },
             async (item, _) => iconNames[item.Key] = await IconFile.ReadIconTextAsync(item.Key));
 
-        WebUI.SvgIconsJson = BHelper.ToJson(iconNames);
+        SvgIcons = iconNames;
     }
 
 
     /// <summary>
-    /// Updates value of <see cref="LangListJson"/>.
+    /// Updates value of <see cref="LangList"/>.
     /// </summary>
     public static void UpdateLangListJson(bool forced = false)
     {
-        if (!string.IsNullOrEmpty(LangListJson) && !forced) return;
+        if (LangList != null && !forced) return;
 
-        var langList = Config.LoadLanguageList();
-        LangListJson = BHelper.ToJson(langList.Select(i =>
+        LangList = Config.LoadLanguageList().Select(i =>
         {
             var obj = new ExpandoObject();
 
@@ -156,19 +126,19 @@ public static class WebUI
             obj.TryAdd(nameof(i.Metadata), i.Metadata);
 
             return obj;
-        }));
+        });
     }
 
 
     /// <summary>
-    /// Updates value of <see cref="ThemeListJson"/>.
+    /// Updates value of <see cref="ThemeList"/>.
     /// </summary>
     public static void UpdateThemeListJson(bool forced = false)
     {
-        if (!string.IsNullOrEmpty(ThemeListJson) && !forced) return;
+        if (ThemeList != null && !forced) return;
 
-        var themeList = Config.LoadThemeList();
-        ThemeListJson = BHelper.ToJson(themeList.Select(th =>
+        var thList = Config.LoadThemeList();
+        ThemeList = thList.Select(th =>
         {
             th.LoadThemeColors();
             var obj = new ExpandoObject();
@@ -213,33 +183,8 @@ public static class WebUI
             }
             obj.TryAdd(nameof(th.JsonModel.ToolbarIcons), buttons);
 
-
             return obj;
-        }));
+        });
     }
-
-
-    /// <summary>
-    /// Updates value of <see cref="ToolListJson"/>.
-    /// </summary>
-    public static void UpdateToolListJson(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(ToolListJson) && !forced) return;
-
-        ToolListJson = BHelper.ToJson(Config.Tools);
-    }
-
-
-    /// <summary>
-    /// Updates value of <see cref="DefaultImageInfoTagsJson"/>.
-    /// </summary>
-    public static void UpdateDefaultImageInfoTagsJson(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(DefaultImageInfoTagsJson) && !forced) return;
-
-        DefaultImageInfoTagsJson = BHelper.ToJson(Config.DefaultImageInfoTags);
-    }
-
-    #endregion // Public functions
 
 }

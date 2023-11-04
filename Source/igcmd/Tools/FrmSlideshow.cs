@@ -632,8 +632,8 @@ public partial class FrmSlideshow : ThemedForm
 
     private void PicMain_Web2NavigationCompleted(object sender, EventArgs e)
     {
-        WebUI.UpdateLangJson();
-        _ = PicMain.LoadWeb2LanguageAsync(WebUI.LangJson);
+        var langJson = BHelper.ToJson(Config.Language);
+        _ = PicMain.LoadWeb2LanguageAsync(langJson);
     }
 
 

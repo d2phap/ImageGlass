@@ -1005,7 +1005,7 @@ public static class Config
     /// <summary>
     /// Converts all settings to ExpandoObject for parsing JSON.
     /// </summary>
-    public static dynamic PrepareJsonSettingsObject(bool useAbsoluteFileUrl = false)
+    public static ExpandoObject PrepareJsonSettingsObject(bool useAbsoluteFileUrl = false)
     {
         var settings = new ExpandoObject();
 

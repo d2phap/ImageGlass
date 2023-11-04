@@ -34,15 +34,9 @@ internal class Local
 {
     private static CancellationTokenSource? _gcTokenSrc;
     private static FrmSettings _frmSetting;
-
-
     public static FrmMain? FrmMain;
 
 
-    /// <summary>
-    /// Gets all built-in toolbar buttons as JSON.
-    /// </summary>
-    public static string BuiltInToolbarItemsJson { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets the built-in toolbar buttons.
@@ -823,18 +817,6 @@ internal class Local
         catch (OperationCanceledException) { }
     }
 
-
-    /// <summary>
-    /// Gets all built-in toolbar buttons as JSON.
-    /// </summary>
-    public static void UpdateToolbarButtonsJson(bool forced = false)
-    {
-        if (!string.IsNullOrEmpty(BuiltInToolbarItemsJson) && !forced) return;
-
-
-        var items = Config.ConvertToolbarButtonsToExpandoObjList(Local.BuiltInToolbarItems);
-        BuiltInToolbarItemsJson = BHelper.ToJson(items);
-    }
 
     #endregion // Public functions
 

@@ -230,10 +230,10 @@ public partial class WebForm : ThemedForm
     public async Task LoadLanguageAsync(bool forced)
     {
         // get language as json string
-        WebUI.UpdateLangJson(forced);
+        var langJson = BHelper.ToJson(Config.Language);
 
         await Web2.ExecuteScriptAsync($"""
-            window._page.lang = {WebUI.LangJson};
+            window._page.lang = {langJson};
             window._page.loadLanguage();
         """);
     }

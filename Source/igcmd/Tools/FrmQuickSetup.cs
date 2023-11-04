@@ -68,11 +68,12 @@ public partial class FrmQuickSetup : WebForm
         // load data
         var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
         WebUI.UpdateLangListJson();
+        var langListJson = BHelper.ToJson(WebUI.LangList);
 
         await Web2.ExecuteScriptAsync(@$"
             window._page.loadData({{
                 appLogo: 'data:image/png;base64,{base64Logo}',
-                langList: {WebUI.LangListJson},
+                langList: {langListJson},
                 currentLangName: '{Config.Language.FileName}',
             }});
         ");
@@ -99,7 +100,6 @@ public partial class FrmQuickSetup : WebForm
         {
             Config.Language = new IgLang(e.Data, App.StartUpDir(Dir.Language));
             Config.TriggerRequestUpdatingLanguage();
-            WebUI.UpdateLangJson(true);
         }
         else if (e.Name.Equals("SET_DEFAULT_VIEWER", StringComparison.InvariantCultureIgnoreCase))
         {

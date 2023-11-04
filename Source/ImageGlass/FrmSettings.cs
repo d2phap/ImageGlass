@@ -82,45 +82,46 @@ public partial class FrmSettings : WebForm
         await base.OnWeb2NavigationCompleted();
 
         // update the setting data
+        await WebUI.UpdateSvgIconsAsync();
         WebUI.UpdateLangListJson();
-        WebUI.UpdateToolListJson();
-        await WebUI.UpdateSvgIconsJsonAsync();
         WebUI.UpdateThemeListJson();
-        WebUI.UpdateDefaultImageInfoTagsJson();
-        Local.UpdateToolbarButtonsJson();
 
 
-        // get all settings as json string
+        // prepare data for app settings UI
         var configJsonObj = Config.PrepareJsonSettingsObject(useAbsoluteFileUrl: true);
-        var configJson = BHelper.ToJson(configJsonObj) as string;
+        var startupDir = App.StartUpDir();
+        var configDir = App.ConfigDir(PathType.Dir);
+        var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename);
+        var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
+        var builtInToolbarBtns = Config.ConvertToolbarButtonsToExpandoObjList(Local.BuiltInToolbarItems);
 
-        // setting paths
-        var startupDir = App.StartUpDir().Replace("\\", "\\\\");
-        var configDir = App.ConfigDir(PathType.Dir).Replace("\\", "\\\\");
-        var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename).Replace("\\", "\\\\");
-        var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME).Replace("\\", "\\\\");
 
-        await Web2.ExecuteScriptAsync(@$"
-            window._pageSettings = {{
-                startUpDir: '{startupDir}',
-                configDir: '{configDir}',
-                userConfigFilePath: '{userConfigFilePath}',
-                FILE_MACRO: '{Constants.FILE_MACRO}',
-                enums: {WebUI.EnumsJson},
-                defaultThemeDir: '{defaultThemeDir}',
-                defaultImageInfoTags: {WebUI.DefaultImageInfoTagsJson},
-                toolList: {WebUI.ToolListJson},
-                langList: {WebUI.LangListJson},
-                themeList: {WebUI.ThemeListJson},
-                icons: {WebUI.SvgIconsJson},
-                builtInToolbarButtons: {Local.BuiltInToolbarItemsJson},
-                config: {configJson},
-            }};
+        var pageSettingObj = new ExpandoObject();
+        pageSettingObj.TryAdd("startUpDir", startupDir);
+        pageSettingObj.TryAdd("configDir", configDir);
+        pageSettingObj.TryAdd("userConfigFilePath", userConfigFilePath);
+        pageSettingObj.TryAdd("FILE_MACRO", Constants.FILE_MACRO);
+        pageSettingObj.TryAdd("enums", WebUI.Enums);
+        pageSettingObj.TryAdd("defaultThemeDir", defaultThemeDir);
+        pageSettingObj.TryAdd("defaultImageInfoTags", Config.DefaultImageInfoTags);
+        pageSettingObj.TryAdd("toolList", Config.Tools);
+        pageSettingObj.TryAdd("langList", WebUI.LangList);
+        pageSettingObj.TryAdd("themeList", WebUI.ThemeList);
+        pageSettingObj.TryAdd("icons", WebUI.SvgIcons);
+        pageSettingObj.TryAdd("builtInToolbarButtons", builtInToolbarBtns);
+        pageSettingObj.TryAdd("config", configJsonObj);
+        var pageSettingStr = BHelper.ToJson(pageSettingObj);
+
+        var script = @$"
+            window._pageSettings = {pageSettingStr};
 
             window._page.loadSettings();
             window._page.loadLanguage();
             window._page.setActiveMenu('{Config.LastOpenedSetting}');
-        ");
+        ";
+
+        await Web2.ExecuteScriptAsync(script);
+
     }
 
 
@@ -276,7 +277,9 @@ public partial class FrmSettings : WebForm
         else if (e.Name.Equals("Btn_RefreshLanguageList"))
         {
             WebUI.UpdateLangListJson(true);
-            Web2.PostWeb2Message(e.Name, WebUI.LangListJson);
+            var langListJson = BHelper.ToJson(WebUI.LangList);
+
+            Web2.PostWeb2Message(e.Name, langListJson);
         }
         else if (e.Name.Equals("Lnk_InstallLanguage"))
         {
@@ -311,7 +314,9 @@ public partial class FrmSettings : WebForm
         else if (e.Name.Equals("Btn_RefreshThemeList"))
         {
             WebUI.UpdateThemeListJson(true);
-            Web2.PostWeb2Message("Btn_RefreshThemeList", WebUI.ThemeListJson);
+            var themeListJson = BHelper.ToJson(WebUI.ThemeList);
+
+            Web2.PostWeb2Message("Btn_RefreshThemeList", themeListJson);
         }
         else if (e.Name.Equals("Btn_OpenThemeFolder"))
         {
@@ -575,7 +580,6 @@ public partial class FrmSettings : WebForm
 
             // update extenal tools menu
             Local.FrmMain.LoadExternalTools();
-            WebUI.UpdateToolListJson(true);
         }
 
         #endregion // Tab Tools
@@ -617,11 +621,6 @@ public partial class FrmSettings : WebForm
 
         Local.UpdateFrmMain(requests, (e) =>
         {
-            if (e.HasFlag(UpdateRequests.Language))
-            {
-                WebUI.UpdateLangJson(true);
-            }
-
             if (e.HasFlag(UpdateRequests.Theme))
             {
                 // load the new value of Background color setting when theme is changed
@@ -658,7 +657,9 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateLangListJson(true);
-            Web2.PostWeb2Message("Lnk_InstallLanguage", WebUI.LangListJson);
+            var langListJson = BHelper.ToJson(WebUI.LangList);
+
+            Web2.PostWeb2Message("Lnk_InstallLanguage", langListJson);
         }
     }
 
@@ -731,7 +732,9 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateThemeListJson(true);
-            Web2.PostWeb2Message("Btn_InstallTheme", WebUI.ThemeListJson);
+            var themeListJson = BHelper.ToJson(WebUI.ThemeList);
+
+            Web2.PostWeb2Message("Btn_InstallTheme", themeListJson);
         }
     }
 
@@ -745,7 +748,9 @@ public partial class FrmSettings : WebForm
         if (result == IgExitCode.Done)
         {
             WebUI.UpdateThemeListJson(true);
-            Web2.PostWeb2Message("Delete_Theme_Pack", WebUI.ThemeListJson);
+            var themeListJson = BHelper.ToJson(WebUI.ThemeList);
+
+            Web2.PostWeb2Message("Delete_Theme_Pack", themeListJson);
         }
     }
 
