@@ -1085,7 +1085,7 @@ public partial class FrmMain : ThemedForm
                 enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
             }
 
-            var resetZoom = (Config.EnableWindowFit && !e.IsViewingSeparateFrame) ? false : e.ResetZoom;
+            var resetZoom = e.IsViewingSeparateFrame ? false : e.ResetZoom;
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData,
@@ -1095,7 +1095,7 @@ public partial class FrmMain : ThemedForm
                 enableFading: enableFadingTrainsition);
 
             // update window fit
-            if (e.ResetZoom && Config.EnableWindowFit)
+            if (resetZoom && Config.EnableWindowFit)
             {
                 FitWindowToImage();
             }
