@@ -163,7 +163,7 @@ public partial class BHelper
             return inputPath ?? "";
 
         var path = inputPath;
-        const string protocol = Constants.APP_PROTOCOL + ":";
+        const string protocol = Const.APP_PROTOCOL + ":";
 
         // If inputPath is URI Scheme
         if (path.StartsWith(protocol))

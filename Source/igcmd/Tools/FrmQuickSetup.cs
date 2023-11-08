@@ -90,7 +90,7 @@ public partial class FrmQuickSetup : WebForm
         }
         else if (e.Name.Equals("SKIP_AND_LAUNCH", StringComparison.InvariantCultureIgnoreCase))
         {
-            Config.QuickSetupVersion = Constants.QUICK_SETUP_VERSION;
+            Config.QuickSetupVersion = Const.QUICK_SETUP_VERSION;
             await Config.WriteAsync();
 
             LaunchImageGlass();
@@ -112,7 +112,7 @@ public partial class FrmQuickSetup : WebForm
 
     private async Task ApplySettingsAsync(string settingJson)
     {
-        Config.QuickSetupVersion = Constants.QUICK_SETUP_VERSION;
+        Config.QuickSetupVersion = Const.QUICK_SETUP_VERSION;
 
 
         // Parse settings JSON

@@ -25,7 +25,7 @@ namespace ImageGlass.Base;
 /// <summary>
 /// Constants list of the app
 /// </summary>
-public static class Constants
+public static class Const
 {
     public const string UPDATE_CHANNEL = "stable"; // stable or beta
     public const int MENU_ICON_HEIGHT = 24;

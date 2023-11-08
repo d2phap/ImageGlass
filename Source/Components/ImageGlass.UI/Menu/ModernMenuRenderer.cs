@@ -235,7 +235,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 ContentMargin.Top,
                 e.Item.Bounds.Width - ContentMargin.Horizontal,
                 e.Item.Bounds.Height - ContentMargin.Vertical);
-            var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
+            var radius = BHelper.GetItemBorderRadius(rect.Height, Const.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Colors.MenuBgHoverColor);
             using var penBorder = new Pen(brush, DpiApi.Scale(1f));
@@ -277,7 +277,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
             var radius = isRadioButton
                 ? rect.Height
-                : BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
+                : BHelper.GetItemBorderRadius((int)rect.Height, Const.MENU_ICON_HEIGHT);
 
             using var checkAreaBrush = new SolidBrush(bgColor);
             using var checkAreaPen = new Pen(checkAreaBrush, DpiApi.Scale(1f))

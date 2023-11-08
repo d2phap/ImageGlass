@@ -942,7 +942,7 @@ public static class PhotoCodec
 
     /// <summary>
     /// Initialize the single-frame <paramref name="imgM"/>,
-    /// quickly resize the image to fit the <see cref="Constants.MAX_IMAGE_DIMENSION"/>
+    /// quickly resize the image to fit the <see cref="Const.MAX_IMAGE_DIMENSION"/>
     /// according to the <see cref="CodecReadOptions.AutoScaleDownLargeImage"/>.
     /// </summary>
     public static async Task<IMagickImage> InitializeSingleMagickImageAsync(
@@ -952,8 +952,8 @@ public static class PhotoCodec
         var imgM = new MagickImage();
 
         // the image is larger than the supported dimension
-        var isSizeTooLarge = srcWidth > Constants.MAX_IMAGE_DIMENSION
-            || srcHeight > Constants.MAX_IMAGE_DIMENSION;
+        var isSizeTooLarge = srcWidth > Const.MAX_IMAGE_DIMENSION
+            || srcHeight > Const.MAX_IMAGE_DIMENSION;
 
         if (!isSizeTooLarge || !options.AutoScaleDownLargeImage)
         {
@@ -976,8 +976,8 @@ public static class PhotoCodec
                 ColorProfileMode = ColorProfileMode.Preserve,
                 OrientationMode = OrientationMode.Preserve,
                 ResizeMode = CropScaleMode.Contain,
-                Width = Constants.MAX_IMAGE_DIMENSION,
-                Height = Constants.MAX_IMAGE_DIMENSION,
+                Width = Const.MAX_IMAGE_DIMENSION,
+                Height = Const.MAX_IMAGE_DIMENSION,
                 HybridMode = HybridScaleMode.Turbo,
             };
 
@@ -1036,14 +1036,14 @@ public static class PhotoCodec
         var widthScale = 1f;
         var heightScale = 1f;
 
-        if (srcWidth > Constants.MAX_IMAGE_DIMENSION)
+        if (srcWidth > Const.MAX_IMAGE_DIMENSION)
         {
-            widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / srcWidth;
+            widthScale = 1f * Const.MAX_IMAGE_DIMENSION / srcWidth;
         }
 
-        if (srcHeight > Constants.MAX_IMAGE_DIMENSION)
+        if (srcHeight > Const.MAX_IMAGE_DIMENSION)
         {
-            heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / srcHeight;
+            heightScale = 1f * Const.MAX_IMAGE_DIMENSION / srcHeight;
         }
 
         var scale = Math.Min(widthScale, heightScale);

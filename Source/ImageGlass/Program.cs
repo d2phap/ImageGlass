@@ -84,7 +84,7 @@ internal static class Program
     {
         var requiredQuickSetup = false;
 
-        if (Config.QuickSetupVersion < Constants.QUICK_SETUP_VERSION)
+        if (Config.QuickSetupVersion < Const.QUICK_SETUP_VERSION)
         {
             FrmMain.IG_OpenQuickSetupDialog();
 

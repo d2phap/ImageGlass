@@ -36,9 +36,9 @@ public class UpdateService
         {
             if (UpdateInfo is null) return null;
 
-            if (UpdateInfo.Releases.ContainsKey(Constants.UPDATE_CHANNEL))
+            if (UpdateInfo.Releases.ContainsKey(Const.UPDATE_CHANNEL))
             {
-                return UpdateInfo.Releases[Constants.UPDATE_CHANNEL];
+                return UpdateInfo.Releases[Const.UPDATE_CHANNEL];
             }
 
             return null;
@@ -72,7 +72,7 @@ public class UpdateService
     /// <returns></returns>
     public async Task GetUpdatesAsync()
     {
-        var url = $"https://imageglass.org/url/update?channel={Constants.UPDATE_CHANNEL}&version={App.Version}";
+        var url = $"https://imageglass.org/url/update?channel={Const.UPDATE_CHANNEL}&version={App.Version}";
 
 
         using var httpClient = new HttpClient();

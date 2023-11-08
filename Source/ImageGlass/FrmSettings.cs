@@ -92,7 +92,7 @@ public partial class FrmSettings : WebForm
         var startupDir = App.StartUpDir();
         var configDir = App.ConfigDir(PathType.Dir);
         var userConfigFilePath = App.ConfigDir(PathType.File, Source.UserFilename);
-        var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
+        var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Const.DEFAULT_THEME);
         var builtInToolbarBtns = Config.ConvertToolbarButtonsToExpandoObjList(Local.BuiltInToolbarItems);
 
 
@@ -100,7 +100,7 @@ public partial class FrmSettings : WebForm
         pageSettingObj.TryAdd("startUpDir", startupDir);
         pageSettingObj.TryAdd("configDir", configDir);
         pageSettingObj.TryAdd("userConfigFilePath", userConfigFilePath);
-        pageSettingObj.TryAdd("FILE_MACRO", Constants.FILE_MACRO);
+        pageSettingObj.TryAdd("FILE_MACRO", Const.FILE_MACRO);
         pageSettingObj.TryAdd("enums", WebUI.Enums);
         pageSettingObj.TryAdd("defaultThemeDir", defaultThemeDir);
         pageSettingObj.TryAdd("defaultImageInfoTags", Config.DefaultImageInfoTags);
@@ -267,7 +267,7 @@ public partial class FrmSettings : WebForm
         }
         else if (e.Name.Equals("Btn_ResetFileFormats"))
         {
-            Web2.PostWeb2Message("Btn_ResetFileFormats", $"\"{Constants.IMAGE_FORMATS}\"");
+            Web2.PostWeb2Message("Btn_ResetFileFormats", $"\"{Const.IMAGE_FORMATS}\"");
         }
         #endregion // Tab File type associations
 

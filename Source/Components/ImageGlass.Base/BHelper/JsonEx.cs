@@ -39,7 +39,7 @@ public partial class BHelper
             // Write enum value as string
             new JsonStringEnumConverter(),
 
-            new CustomDateTimeConverter(Constants.DATETIME_FORMAT),
+            new CustomDateTimeConverter(Const.DATETIME_FORMAT),
         },
 
         // ignoring policy

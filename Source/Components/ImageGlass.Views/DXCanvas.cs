@@ -30,7 +30,6 @@ using System.Dynamic;
 using System.Numerics;
 using WicNet;
 using Cursor = System.Windows.Forms.Cursor;
-using Constants = ImageGlass.Base.Constants;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Viewer;
@@ -3267,8 +3266,8 @@ public partial class DXCanvas : DXControl
         }
 
 
-        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+        var exceedMaxDimention = SourceWidth > Const.MAX_IMAGE_DIMENSION
+            || SourceHeight > Const.MAX_IMAGE_DIMENSION;
 
         UseHardwareAcceleration = !exceedMaxDimention;
     }

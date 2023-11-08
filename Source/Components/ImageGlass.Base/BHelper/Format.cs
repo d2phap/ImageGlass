@@ -65,7 +65,7 @@ public partial class BHelper
     {
         if (dt != null)
         {
-            return dt.Value.ToString(includeTime ? Constants.DATETIME_FORMAT : Constants.DATE_FORMAT);
+            return dt.Value.ToString(includeTime ? Const.DATETIME_FORMAT : Const.DATE_FORMAT);
         }
 
         return string.Empty;

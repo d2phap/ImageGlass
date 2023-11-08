@@ -33,7 +33,7 @@ public class ModernToolbar : ToolStrip
     private const uint MA_ACTIVATEANDEAT = 2;
 
     private ToolbarAlignment _alignment = ToolbarAlignment.Center;
-    private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
+    private int _iconHeight = Const.TOOLBAR_ICON_HEIGHT;
 
     private readonly ModernTooltip _tooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();

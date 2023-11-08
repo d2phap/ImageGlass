@@ -31,7 +31,7 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
-using Constants = ImageGlass.Base.Constants;
+using Const = ImageGlass.Base.Const;
 using SHSTOCKICONID = ImageGlass.Base.WinApi.SHSTOCKICONID;
 
 namespace ImageGlass.Settings;
@@ -448,7 +448,7 @@ public static class Config
     /// <summary>
     /// Gets, sets toolbar icon height
     /// </summary>
-    public static int ToolbarIconHeight { get; set; } = Constants.TOOLBAR_ICON_HEIGHT;
+    public static int ToolbarIconHeight { get; set; } = Const.TOOLBAR_ICON_HEIGHT;
 
     /// <summary>
     /// Gets, sets value of image quality for editting
@@ -500,7 +500,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the theme name for dark mode.
     /// </summary>
-    public static string DarkTheme { get; set; } = Constants.DEFAULT_THEME;
+    public static string DarkTheme { get; set; } = Const.DEFAULT_THEME;
 
     /// <summary>
     /// Gets, sets the theme name for light mode.
@@ -570,10 +570,10 @@ public static class Config
     {
         new IgTool()
         {
-            ToolId = Constants.IGTOOL_EXIFTOOL,
+            ToolId = Const.IGTOOL_EXIFTOOL,
             ToolName = "ExifGlass - EXIF metadata viewer",
             Executable = "exifglass",
-            Argument = Constants.FILE_MACRO,
+            Argument = Const.FILE_MACRO,
             IsIntegrated = true,
             Hotkeys = new List<Hotkey>(1) { new Hotkey(Keys.X) },
         },
@@ -845,7 +845,7 @@ public static class Config
 
         #region ImageFormats
 
-        var formats = items.GetValue(nameof(FileFormats), Constants.IMAGE_FORMATS);
+        var formats = items.GetValue(nameof(FileFormats), Const.IMAGE_FORMATS);
         FileFormats = GetImageFormats(formats);
 
         formats = items.GetValue(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
@@ -1485,7 +1485,7 @@ public static class Config
     /// Determine which theme should be loaded: <see cref="DarkTheme"/> or <see cref="LightTheme"/>.
     /// </param>
     /// <param name="useFallBackTheme">
-    /// If theme pack is invalid, should load the default theme pack <see cref="Constants.DEFAULT_THEME"/>?
+    /// If theme pack is invalid, should load the default theme pack <see cref="Const.DEFAULT_THEME"/>?
     /// </param>
     /// <param name="throwIfThemeInvalid">
     /// If theme pack is invalid, should throw exception?
@@ -1497,7 +1497,7 @@ public static class Config
         var themeFolderName = darkMode ? DarkTheme : LightTheme;
         if (string.IsNullOrEmpty(themeFolderName))
         {
-            themeFolderName = Constants.DEFAULT_THEME;
+            themeFolderName = Const.DEFAULT_THEME;
         }
 
         // theme pack is already updated
@@ -1516,7 +1516,7 @@ public static class Config
                 th = null;
 
                 // load default theme
-                th = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
+                th = new(App.StartUpDir(Dir.Themes, Const.DEFAULT_THEME));
             }
         }
 
@@ -1797,7 +1797,7 @@ public static class Config
 
 
         // get default theme dir
-        var defaultThemePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, IgTheme.CONFIG_FILE);
+        var defaultThemePath = App.StartUpDir(Dir.Themes, Const.DEFAULT_THEME, IgTheme.CONFIG_FILE);
 
         allThemes = allThemes
             .OrderBy(i => i.ConfigFilePath != defaultThemePath)
@@ -1815,7 +1815,7 @@ public static class Config
     {
         if (configValue == null) return string.Empty;
 
-        return $"{Constants.CONFIG_CMD_PREFIX}{configName}=\"{configValue}\"";
+        return $"{Const.CONFIG_CMD_PREFIX}{configName}=\"{configValue}\"";
     }
 
 
@@ -1994,7 +1994,7 @@ public static class Config
         var description = Language[$"{langPath}._Description"];
         var details =
             $"Version: {appInfo}\r\n" +
-            $"Release code: {Constants.APP_CODE}\r\n" +
+            $"Release code: {Const.APP_CODE}\r\n" +
             $"OS: {osInfo}\r\n\r\n" +
 
             $"----------------------------------------------------\r\n" +

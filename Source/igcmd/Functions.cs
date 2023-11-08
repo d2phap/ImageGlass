@@ -231,7 +231,7 @@ public static class Functions
     {
         return Run(() =>
         {
-            var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME);
+            var defaultThemeDir = App.ConfigDir(PathType.Dir, Dir.Themes, Const.DEFAULT_THEME);
             if (themeDirPath.Equals(defaultThemeDir, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Cannot remove the default theme pack.", themeDirPath);

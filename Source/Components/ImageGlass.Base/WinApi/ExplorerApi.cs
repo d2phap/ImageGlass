@@ -522,7 +522,7 @@ public static class ExplorerApi
         try
         {
             // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> --------------------------------
-            const string protocolPath = $@"Software\Classes\{Constants.APP_PROTOCOL}";
+            const string protocolPath = $@"Software\Classes\{Const.APP_PROTOCOL}";
             using (var key = Registry.CurrentUser.CreateSubKey(protocolPath, true))
             {
                 key?.SetValue("", $"URL: {App.AppName} Protocol");
@@ -565,7 +565,7 @@ public static class ExplorerApi
             {
                 // delete tree:
                 // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> ----------------------------
-                key?.DeleteSubKeyTree(Constants.APP_PROTOCOL, false);
+                key?.DeleteSubKeyTree(Const.APP_PROTOCOL, false);
             }
         }
         catch (Exception ex)

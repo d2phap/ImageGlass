@@ -119,7 +119,7 @@ public class ModernGalleryRenderer : StyleRenderer
             penBorder.Color = bgBrush.Color = Theme.Colors.GalleryItemSelectedColor;
         }
 
-        var radius = BHelper.GetItemBorderRadius((int)bounds.Height, Constants.THUMBNAIL_HEIGHT);
+        var radius = BHelper.GetItemBorderRadius((int)bounds.Height, Const.THUMBNAIL_HEIGHT);
 
 
         // draw background

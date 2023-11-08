@@ -64,7 +64,7 @@ public partial class FrmAbout : WebForm
         await Web2.ExecuteScriptAsync(@$"
             window._page.loadData({{
                 AppLogo: 'data:image/png;base64,{base64Logo}',
-                AppCode: '{Constants.APP_CODE}',
+                AppCode: '{Const.APP_CODE}',
                 AppVersion: '{App.Version}',
                 AppArchitecture: '{archInfo}',
                 AppRuntime: '{Environment.Version.ToString()}',

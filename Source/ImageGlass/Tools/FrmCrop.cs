@@ -275,7 +275,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
 
 
             var displayName = string.Empty;
-            if (Constants.AspectRatioValue.TryGetValue(arValue, out var enumValue))
+            if (Const.AspectRatioValue.TryGetValue(arValue, out var enumValue))
             {
                 displayName = string.Join(":", enumValue);
             }
@@ -319,7 +319,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         }
 
         // fill selected item to the text boxes
-        else if (Constants.AspectRatioValue.TryGetValue((SelectionAspectRatio)CmbAspectRatio.SelectedIndex, out var value))
+        else if (Const.AspectRatioValue.TryGetValue((SelectionAspectRatio)CmbAspectRatio.SelectedIndex, out var value))
         {
             ratioFrom = value[0];
             ratioTo = value[1];

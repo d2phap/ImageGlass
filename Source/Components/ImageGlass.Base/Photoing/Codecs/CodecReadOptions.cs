@@ -95,7 +95,7 @@ public record CodecReadOptions
 
     /// <summary>
     /// Gets, sets the value indicates that if the image dimension exceeds the supported value,
-    /// it will be scale down to <see cref="Constants.MAX_IMAGE_DIMENSION"/> value.
+    /// it will be scale down to <see cref="Const.MAX_IMAGE_DIMENSION"/> value.
     /// </summary>
     public bool AutoScaleDownLargeImage { get; set; } = true;
 

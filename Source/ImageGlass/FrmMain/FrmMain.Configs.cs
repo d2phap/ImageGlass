@@ -125,7 +125,7 @@ public partial class FrmMain
         { nameof(MnuColorPicker),           new() { new (Keys.K) } },
         { nameof(MnuCropTool),              new() { new (Keys.C) } },
         { nameof(MnuPageNav),               new() { new (Keys.P) } },
-        { Constants.IGTOOL_EXIFTOOL,        new() { new (Keys.X) } },
+        { Const.IGTOOL_EXIFTOOL,        new() { new (Keys.X) } },
 
         // MnuHelp
         { nameof(MnuAbout),                 new() { new (Keys.F1) } },
@@ -889,7 +889,7 @@ public partial class FrmMain
         // clear items
         MnuViewChannels.DropDown.Items.Clear();
 
-        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = this.ScaleToDpi(Const.MENU_ICON_HEIGHT);
 
         // add new items
         foreach (var channel in Enum.GetValues(typeof(ColorChannel)))
@@ -948,7 +948,7 @@ public partial class FrmMain
         // clear items
         MnuLoadingOrders.DropDown.Items.Clear();
 
-        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = this.ScaleToDpi(Const.MENU_ICON_HEIGHT);
 
         // add ImageOrderBy items
         foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))
@@ -1077,7 +1077,7 @@ public partial class FrmMain
             });
         }
 
-        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = this.ScaleToDpi(Const.MENU_ICON_HEIGHT);
         var i = 0;
 
         // add external tools
@@ -1173,7 +1173,7 @@ public partial class FrmMain
                 {
                     // update menu icon
                     using var ico = Icon.ExtractAssociatedIcon(app.Executable);
-                    var iconWidth = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+                    var iconWidth = this.ScaleToDpi(Const.MENU_ICON_HEIGHT);
 
                     MnuEdit.Image = new Bitmap(ico?.ToBitmap(), iconWidth, iconWidth);
                 }

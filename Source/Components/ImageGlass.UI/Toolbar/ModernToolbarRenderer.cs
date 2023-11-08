@@ -56,7 +56,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Item.Width - 2,
             e.Item.Height - 2 - Toolbar.DefaultGap * 2
         );
-        var radius = BHelper.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT);
+        var radius = BHelper.GetItemBorderRadius(rect.Width, Const.TOOLBAR_ICON_HEIGHT);
 
 
         // on pressed
@@ -125,7 +125,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.Inflate(-btn.Padding.All, -btn.Padding.All);
         rect.Location = new(1, 1);
 
-        var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT);
+        var radius = BHelper.GetItemBorderRadius(rect.Height, Const.TOOLBAR_ICON_HEIGHT);
         using var brush = new SolidBrush(Color.Transparent);
 
 

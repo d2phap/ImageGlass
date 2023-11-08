@@ -40,7 +40,7 @@ public partial class BHelper
         {
             // Issue #677: don't throw exception if we encounter invalid number,
             // e.g. the comma-separated zoom values from pre-V7.5
-            if (!float.TryParse(item, NumberStyles.Float, Constants.NumberFormat, out var num))
+            if (!float.TryParse(item, NumberStyles.Float, Const.NumberFormat, out var num))
                 continue;
 
             if (unsignedOnly && num < 0)
@@ -376,7 +376,7 @@ public partial class BHelper
 
         try
         {
-            var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
+            var url = $"ms-windows-store://pdp/?productid={Const.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
 
             _ = BHelper.OpenUrlAsync(url);
         }
@@ -384,7 +384,7 @@ public partial class BHelper
         {
             try
             {
-                var url = $"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}";
+                var url = $"https://www.microsoft.com/store/productId/{Const.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}";
 
                 _ = BHelper.OpenUrlAsync(url);
             }

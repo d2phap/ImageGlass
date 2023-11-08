@@ -59,7 +59,7 @@ public class IgTheme : IDisposable
     #endregion
 
 
-    private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
+    private int _iconHeight = Const.TOOLBAR_ICON_HEIGHT;
 
 
     /// <summary>
@@ -184,7 +184,7 @@ public class IgTheme : IDisposable
     /// </summary>
     public IgTheme(
         string themeFolderPath = "",
-        int iconHeight = Constants.TOOLBAR_ICON_HEIGHT)
+        int iconHeight = Const.TOOLBAR_ICON_HEIGHT)
     {
         ToolbarActualIconHeight = iconHeight;
 
@@ -356,7 +356,7 @@ public class IgTheme : IDisposable
                 if (prop?.PropertyType == typeof(Color))
                 {
                     Color colorItem;
-                    if (value.StartsWith(Constants.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
+                    if (value.StartsWith(Const.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
                     {
                         // example: accent:180
                         var valueArr = value.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);

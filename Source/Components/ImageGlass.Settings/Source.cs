@@ -76,7 +76,7 @@ public class Source
         // filter the command lines begin with '/'
         // example: ImageGlass.exe /FrmMainWidth=900
         var args = Environment.GetCommandLineArgs()
-            .Where(cmd => cmd.StartsWith(Constants.CONFIG_CMD_PREFIX))
+            .Where(cmd => cmd.StartsWith(Const.CONFIG_CMD_PREFIX))
             .Select(cmd => cmd[1..]) // trim '/' from the command
             .ToArray();
 

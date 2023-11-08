@@ -101,7 +101,7 @@ public partial class FrmMain : ThemedForm
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
-        PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(Const.VIEWER_GRID_SIZE);
 
         // gallery
         UpdateGallerySize();
@@ -329,7 +329,7 @@ public partial class FrmMain : ThemedForm
             // get path from params
             var cmdPath = args
                 .Skip(1)
-                .FirstOrDefault(i => !i.StartsWith(Constants.CONFIG_CMD_PREFIX));
+                .FirstOrDefault(i => !i.StartsWith(Const.CONFIG_CMD_PREFIX));
 
             if (!string.IsNullOrEmpty(cmdPath))
             {
@@ -1053,7 +1053,7 @@ public partial class FrmMain : ThemedForm
             var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
             var appVersion = App.Version + $" ({archInfo}, .NET {Environment.Version})";
 
-            var debugInfo = $"ImageGlass {Constants.APP_CODE.CapitalizeFirst()} v{appVersion}" +
+            var debugInfo = $"ImageGlass {Const.APP_CODE.CapitalizeFirst()} v{appVersion}" +
                 $"\r\n{ImageMagick.MagickNET.Version}" +
                 $"\r\n" +
                 $"\r\nℹ️ Error details:" +
@@ -1693,7 +1693,7 @@ public partial class FrmMain : ThemedForm
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             var procArgs = string.Join("",
                 ac.Arguments
-                    .Select(i => $"{i}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\""))
+                    .Select(i => $"{i}".Replace(Const.FILE_MACRO, $"\"{currentFilePath}\""))
                     .ToArray()) ?? string.Empty;
 
             var result = await BHelper.RunExeCmd(ac.Executable, procArgs, true);

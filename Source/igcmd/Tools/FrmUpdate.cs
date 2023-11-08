@@ -86,7 +86,7 @@ public partial class FrmUpdate : WebForm
         // show result
         var status = _updater.HasNewUpdate ? "outdated" : "updated";
         var newVersion = _updater.CurrentReleaseInfo?.Version ?? "";
-        var releasedDate = _updater.CurrentReleaseInfo?.PublishedDate.ToString(Constants.DATETIME_FORMAT) ?? "";
+        var releasedDate = _updater.CurrentReleaseInfo?.PublishedDate.ToString(Const.DATETIME_FORMAT) ?? "";
         var releaseTitle = _updater.CurrentReleaseInfo?.Title ?? "";
         var releaseLink = _updater.CurrentReleaseInfo?.ChangelogUrl.ToString() ?? "";
         var releaseDetails = _updater.CurrentReleaseInfo?.Description?.Replace("\r\n", "<br/>") ?? "";

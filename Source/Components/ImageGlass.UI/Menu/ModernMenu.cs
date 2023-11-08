@@ -151,11 +151,11 @@ public class ModernMenu : ContextMenuStrip
     /// if it's <c>null</c>, the <paramref name="menu"/> is the current <see cref="ModernMenu"/> instance
     /// </param>
     /// <param name="originalIconSize">
-    /// Original icon size of menu item. Default value is <see cref="Constants.MENU_ICON_HEIGHT"/>
+    /// Original icon size of menu item. Default value is <see cref="Const.MENU_ICON_HEIGHT"/>
     /// </param>
     public void FixGeneralIssues(
         ToolStripDropDown? menu = null,
-        float originalIconSize = Constants.MENU_ICON_HEIGHT)
+        float originalIconSize = Const.MENU_ICON_HEIGHT)
     {
         menu ??= this;
         var dpiScale = CurrentDpi / 96f;
@@ -203,7 +203,7 @@ public class ModernMenu : ContextMenuStrip
                 mnuItem.DropDownOpening += Item_DropDownOpening;
 
                 // fix dropdown items
-                FixGeneralIssues(mnuItem.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f);
+                FixGeneralIssues(mnuItem.DropDown, Const.MENU_ICON_HEIGHT * 0.9f);
             }
         }
 

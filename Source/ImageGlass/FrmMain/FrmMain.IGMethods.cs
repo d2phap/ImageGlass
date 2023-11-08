@@ -1733,7 +1733,7 @@ public partial class FrmMain
             p.StartInfo.FileName = BHelper.ResolvePath(app.Executable);
 
             // build the arguments
-            var args = app.Argument.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+            var args = app.Argument.Replace(Const.FILE_MACRO, $"\"{filePath}\"");
             p.StartInfo.Arguments = $"{args}";
 
             // show error dialog
@@ -2620,10 +2620,10 @@ public partial class FrmMain
     {
         var tool = new IgTool()
         {
-            ToolId = Constants.IGTOOL_SLIDESHOW,
+            ToolId = Const.IGTOOL_SLIDESHOW,
             ToolName = "[Slideshow]",
             Executable = "igcmd.exe",
-            Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
+            Argument = $"{IgCommands.START_SLIDESHOW} {Const.FILE_MACRO}",
             IsIntegrated = true,
         };
 
@@ -3038,7 +3038,7 @@ public partial class FrmMain
             // display frame info
             ToolbarContext.AddItem(new()
             {
-                Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
+                Id = Const.PAGE_NAV_TOOLBAR_FRAME_INFO,
                 DisplayStyle = ToolStripItemDisplayStyle.Text,
             });
 
@@ -3062,7 +3062,7 @@ public partial class FrmMain
             // play/pause frame animation
             ToolbarContext.AddItem(new()
             {
-                Id = Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
+                Id = Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
                 Image = nameof(Config.Theme.ToolbarIcons.Play),
                 OnClick = new(nameof(MnuToggleImageAnimation)),
             });
@@ -3113,7 +3113,7 @@ public partial class FrmMain
         if (!ToolbarContext.Visible) return;
 
         // update frame info
-        if (ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
+        if (ToolbarContext.GetItem<ToolStripLabel>(Const.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
         {
             var frameInfo = new StringBuilder(3);
             if (Local.Metadata != null)
@@ -3129,7 +3129,7 @@ public partial class FrmMain
 
 
         // update state of Toggle animation button
-        if (ToolbarContext.GetItem(Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
+        if (ToolbarContext.GetItem(Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
         {
             btn.Enabled = PicMain.CanImageAnimate;
             if (btn.Tag is ToolbarItemTagModel model)

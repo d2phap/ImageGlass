@@ -315,7 +315,7 @@ public partial class FrmSlideshow : ThemedForm
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
-        PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(Const.VIEWER_GRID_SIZE);
 
         ResumeLayout(false);
     }
@@ -686,7 +686,7 @@ public partial class FrmSlideshow : ThemedForm
             {
                 MaxQueue = 1,
                 MaxFileSizeInMbToCache = 100,
-                MaxImageDimensionToCache = Constants.MAX_IMAGE_DIMENSION,
+                MaxImageDimensionToCache = Const.MAX_IMAGE_DIMENSION,
             };
 
             if (string.IsNullOrEmpty(initFilePath))
@@ -918,7 +918,7 @@ public partial class FrmSlideshow : ThemedForm
             var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
             var appVersion = App.Version + $" ({archInfo}, .NET {Environment.Version})";
 
-            var debugInfo = $"ImageGlass {Constants.APP_CODE.CapitalizeFirst()} v{appVersion}" +
+            var debugInfo = $"ImageGlass {Const.APP_CODE.CapitalizeFirst()} v{appVersion}" +
                 $"\r\n{ImageMagick.MagickNET.Version}" +
                 $"\r\n" +
                 $"\r\nℹ️ Error details:" +
@@ -1518,7 +1518,7 @@ public partial class FrmSlideshow : ThemedForm
         // clear items
         MnuLoadingOrders.DropDown.Items.Clear();
 
-        var newMenuIconHeight = DpiApi.Scale(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = DpiApi.Scale(Const.MENU_ICON_HEIGHT);
 
         // add ImageOrderBy items
         foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))
