@@ -31,6 +31,8 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
+using Constants = ImageGlass.Base.Constants;
+using SHSTOCKICONID = ImageGlass.Base.WinApi.SHSTOCKICONID;
 
 namespace ImageGlass.Settings;
 

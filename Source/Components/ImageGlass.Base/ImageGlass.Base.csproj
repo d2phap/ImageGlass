@@ -86,6 +86,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="DirectNStandard" Version="1.15.0.2" />
       <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="13.4.0" Condition="'$(Platform)' == 'x64'" />
       <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="13.3.0" Condition="'$(Platform)' == 'ARM64'" />
       <PackageReference Include="Magick.NET.SystemDrawing" Version="7.2.0" />
@@ -95,7 +96,7 @@
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="PhotoSauce.MagicScaler" Version="0.14.0" />
-      <PackageReference Include="WicNet" Version="1.6.5" />
+      <PackageReference Include="WicNet" Version="1.7.1" />
     </ItemGroup>
 
     <ItemGroup>

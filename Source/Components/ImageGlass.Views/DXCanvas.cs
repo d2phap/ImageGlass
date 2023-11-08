@@ -29,6 +29,8 @@ using System.Drawing.Drawing2D;
 using System.Dynamic;
 using System.Numerics;
 using WicNet;
+using Cursor = System.Windows.Forms.Cursor;
+using Constants = ImageGlass.Base.Constants;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Viewer;
@@ -3087,7 +3089,7 @@ public partial class DXCanvas : DXControl
 
         // create effect
         using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
-        effect.SetInput(0, _imageD2D);
+        effect.SetInput(_imageD2D, 0);
 
 
         // rotate the image
@@ -3139,7 +3141,7 @@ public partial class DXCanvas : DXControl
 
         // create effect
         using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
-        effect.SetInput(0, _imageD2D);
+        effect.SetInput(_imageD2D, 0);
 
 
         // flip transformation
