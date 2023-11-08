@@ -342,7 +342,7 @@ public class ModernToolbar : ToolStrip
 
         // dropdown size
         OverflowButton.DropDown.AutoSize = false;
-        OverflowButton.DropDown.Padding = new(DefaultGap, 0, DefaultGap, 0);
+        OverflowButton.DropDown.Padding = new(DefaultGap * 2, DefaultGap, DefaultGap * 2, DefaultGap);
 
         // fix the size of overflow dropdown
         OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
