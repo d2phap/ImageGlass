@@ -2276,6 +2276,17 @@ public partial class FrmMain
                 vertGap += Toolbar.Height;
             }
         }
+        if (ToolbarContext.Visible)
+        {
+            if (ToolbarContext.Dock == DockStyle.Left || ToolbarContext.Dock == DockStyle.Right)
+            {
+                horzGap += ToolbarContext.Width;
+            }
+            else
+            {
+                vertGap += ToolbarContext.Height;
+            }
+        }
 
 
         // get current screen
