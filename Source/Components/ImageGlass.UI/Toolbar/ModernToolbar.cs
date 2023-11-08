@@ -150,6 +150,16 @@ public class ModernToolbar : ToolStrip
     #endregion
 
 
+    public ModernToolbar() : base()
+    {
+        ShowItemToolTips = false;
+        Items.Insert(0, _mainMenuButton);
+
+        // Apply Windows 11 corner API
+        WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
+    }
+
+
     #region Protected methods
 
     protected override void WndProc(ref Message m)
@@ -164,24 +174,20 @@ public class ModernToolbar : ToolStrip
         }
     }
 
-    protected override void OnMouseMove(MouseEventArgs e)
+
+    protected override void OnPaintBackground(PaintEventArgs e)
     {
-        base.OnMouseMove(e);
-        if (HideTooltips) return;
+        base.OnPaintBackground(e);
 
-        var item = GetItemAt(e.Location);
+        if (!EnableTransparent)
+        {
+            e.Graphics.Clear(TopLevelControl.BackColor);
+        }
 
-        if (item == null)
-        {
-            HideItemTooltip();
-            _hoveredItem = null;
-        }
-        else if (item != _hoveredItem)
-        {
-            _hoveredItem = item;
-            ShowItemTooltip(_hoveredItem);
-        }
+        using var bgBrush = new SolidBrush(BackColor);
+        e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
     }
+
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
@@ -266,30 +272,21 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+    protected override void OnItemAdded(ToolStripItemEventArgs e)
+    {
+        base.OnItemAdded(e);
+
+        e.Item.MouseEnter += Item_MouseEnter;
+    }
+
+    protected override void OnItemRemoved(ToolStripItemEventArgs e)
+    {
+        base.OnItemRemoved(e);
+
+        e.Item.MouseEnter -= Item_MouseEnter;
+    }
+
     #endregion
-
-
-    public ModernToolbar() : base()
-    {
-        ShowItemToolTips = false;
-        Items.Insert(0, _mainMenuButton);
-
-        // Apply Windows 11 corner API
-        WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
-    }
-
-    protected override void OnPaintBackground(PaintEventArgs e)
-    {
-        base.OnPaintBackground(e);
-
-        if (!EnableTransparent)
-        {
-            e.Graphics.Clear(TopLevelControl.BackColor);
-        }
-
-        using var bgBrush = new SolidBrush(BackColor);
-        e.Graphics.FillRectangle(bgBrush, e.ClipRectangle);
-    }
 
 
     #region Private functions
@@ -301,6 +298,37 @@ public class ModernToolbar : ToolStrip
     {
         MainMenuButton.Checked = false;
     }
+
+
+    private void Item_MouseEnter(object? sender, EventArgs e)
+    {
+        if (HideTooltips) return;
+
+        var item = (ToolStripItem?)sender;
+
+        if (item == null)
+        {
+            HideItemTooltip();
+            _hoveredItem = null;
+        }
+        else if (item != _hoveredItem)
+        {
+            _hoveredItem = item;
+
+            var parent = item.GetCurrentParent();
+            if (parent == OverflowButton.DropDown)
+            {
+                var loc = PointToClient(parent.Location);
+                ShowItemTooltip(_hoveredItem, loc);
+            }
+            else
+            {
+                ShowItemTooltip(_hoveredItem);
+            }
+
+        }
+    }
+
 
 
     /// <summary>
@@ -364,6 +392,7 @@ public class ModernToolbar : ToolStrip
         OverflowButton.DropDown.Height = dropdownHeight;
     }
 
+
     #endregion
 
 
@@ -404,7 +433,8 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Shows item tooltip
     /// </summary>
-    public async void ShowItemTooltip(ToolStripItem? item, int duration = 4000, int delay = 400)
+    public async void ShowItemTooltip(ToolStripItem? item, Point baseLocation = new(),
+        int duration = 4000, int delay = 400)
     {
         if (item is null || string.IsNullOrEmpty(item.ToolTipText))
             return;
@@ -416,6 +446,7 @@ public class ModernToolbar : ToolStrip
 
         try
         {
+            var tooltipPosX = item.Bounds.X;
             var tooltipPosY = 0;
 
             if (Dock == DockStyle.Bottom)
@@ -434,8 +465,12 @@ public class ModernToolbar : ToolStrip
             // delay
             await Task.Delay(delay, _tooltipTokenSrc.Token);
 
+
+            tooltipPosX += baseLocation.X;
+            tooltipPosY += baseLocation.Y;
+
             // show tooltip
-            _tooltip.Show(item.ToolTipText, this, item.Bounds.X, tooltipPosY);
+            _tooltip.Show(item.ToolTipText, this, tooltipPosX, tooltipPosY);
 
             // duration
             await Task.Delay(duration, _tooltipTokenSrc.Token);
@@ -738,13 +773,3 @@ public enum ToolbarAlignment
     Left = 0,
     Center = 1,
 }
-
-/// <summary>
-/// Tooltip direction of toolbar item.
-/// </summary>
-public enum TooltipDirection
-{
-    Top = 0,
-    Bottom = 1,
-}
-
