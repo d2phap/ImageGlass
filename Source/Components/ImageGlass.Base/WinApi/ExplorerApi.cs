@@ -172,7 +172,7 @@ public static class ExplorerApi
                                 {
                                     // Open the folder without the file selected
                                     // if we can't find the file
-                                    fileArray = Array.Empty<IntPtr>();
+                                    fileArray = [];
                                 }
                                 else
                                 {
@@ -224,7 +224,7 @@ public static class ExplorerApi
             if (nativeFile == IntPtr.Zero)
             {
                 // Open the folder without the file selected if we can't find the file
-                fileArray = Array.Empty<IntPtr>();
+                fileArray = [];
             }
             else
             {

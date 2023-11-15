@@ -705,11 +705,11 @@ public partial class BHelper
         {
             var result = await fd.DetectFacesAsync(bmp);
 
-            return result ?? Array.Empty<DetectedFace>();
+            return result ?? [];
         }
         catch { }
 
-        return Array.Empty<DetectedFace>();
+        return [];
     }
 
 }

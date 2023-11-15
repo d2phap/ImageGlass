@@ -43,6 +43,6 @@ public class Web2MessageReceivedEventArgs : EventArgs
     {
         Name = name ?? string.Empty;
         Data = data ?? string.Empty;
-        AdditionalObjects = additionalObjects ?? new ReadOnlyCollection<object>(Array.Empty<object>());
+        AdditionalObjects = additionalObjects ?? [];
     }
 }

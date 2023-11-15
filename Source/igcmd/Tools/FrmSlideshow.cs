@@ -924,7 +924,7 @@ public partial class FrmSlideshow : ThemedForm
                 $"\r\nℹ️ Error details:" +
                 $"\r\n";
 
-            var errorLines = error.StackTrace?.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Take(2) ?? Array.Empty<string>();
+            var errorLines = error.StackTrace?.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Take(2) ?? [];
             var errDetails = error.Message + "\r\n\r\n" + string.Join("\r\n", errorLines);
 
             PicMain.ShowMessage(debugInfo +

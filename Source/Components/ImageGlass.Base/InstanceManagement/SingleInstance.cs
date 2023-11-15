@@ -178,7 +178,7 @@ public class SingleInstance : IDisposable
     {
         ArgsReceived?.Invoke(this, new()
         {
-            Arguments = args ?? Array.Empty<string>(),
+            Arguments = args ?? [],
         });
     }
 

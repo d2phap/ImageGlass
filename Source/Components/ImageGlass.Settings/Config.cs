@@ -515,7 +515,7 @@ public static class Config
     /// <summary>
     /// Gets, sets zoom levels of the viewer
     /// </summary>
-    public static float[] ZoomLevels { get; set; } = Array.Empty<float>();
+    public static float[] ZoomLevels { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the list of apps for edit action.
@@ -914,7 +914,7 @@ public static class Config
                 var tool = i.Get<IgTool>();
                 var hotkeysArr = i.GetChildren()
                     .FirstOrDefault(i => i.Key == "Hotkeys")
-                    ?.Get<string[]>() ?? Array.Empty<string>();
+                    ?.Get<string[]>() ?? [];
 
                 tool.Hotkeys = hotkeysArr.Distinct()
                     .Where(i => !string.IsNullOrEmpty(i))

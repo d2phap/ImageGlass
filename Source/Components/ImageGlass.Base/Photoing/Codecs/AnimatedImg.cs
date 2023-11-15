@@ -34,7 +34,7 @@ public class AnimatedImg : IDisposable
         {
             // Free any other managed objects here.
             FrameCount = 0;
-            Frames = Enumerable.Empty<AnimatedImgFrame>();
+            Frames = [];
         }
 
         // Free any unmanaged objects here.

@@ -48,7 +48,7 @@ public class SingleAction
     /// <summary>
     /// Arguments to pass to the <see cref="Executable"/>.
     /// </summary>
-    public object?[] Arguments { get; set; } = Array.Empty<object?>();
+    public object?[] Arguments { get; set; } = [];
 
 
     /// <summary>
@@ -69,7 +69,7 @@ public class SingleAction
     public SingleAction(string executable = "", object?[]? arguments = null, SingleAction? nextAction = null)
     {
         Executable = executable.Trim();
-        Arguments = arguments ?? Array.Empty<object>();
+        Arguments = arguments ?? [];
         NextAction = nextAction;
     }
 

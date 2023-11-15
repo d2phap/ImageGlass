@@ -32,7 +32,7 @@ public class QueuedWorker : Component
     private bool _isDisposed = false;
     private readonly object _lockObject = new();
 
-    private Thread[] _threads = Array.Empty<Thread>();
+    private Thread[] _threads = [];
     private ProcessingMode _processingMode = ProcessingMode.FIFO;
     private int _threadCount = 5;
     private string _threadName = string.Empty;
@@ -42,8 +42,8 @@ public class QueuedWorker : Component
     private bool _isPaused = false;
 
     private int _priorityQueues = 5;
-    private LinkedList<AsyncOperation>[] _items = Array.Empty<LinkedList<AsyncOperation>>();
-    private AsyncOperation?[] _singleItems = Array.Empty<AsyncOperation?>();
+    private LinkedList<AsyncOperation>[] _items = [];
+    private AsyncOperation?[] _singleItems = [];
     private readonly Dictionary<object, bool> _cancelledItems = new();
 
     private readonly SendOrPostCallback _workCompletedCallback;

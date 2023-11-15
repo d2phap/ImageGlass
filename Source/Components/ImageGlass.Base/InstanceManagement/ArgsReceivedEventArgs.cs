@@ -25,5 +25,5 @@ namespace ImageGlass.Base.InstanceManagement;
 /// </summary>
 public class ArgsReceivedEventArgs : EventArgs
 {
-    public string[] Arguments { get; set; } = Array.Empty<string>();
+    public string[] Arguments { get; set; } = [];
 }

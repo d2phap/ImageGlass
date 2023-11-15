@@ -38,7 +38,7 @@ internal static class Program
             var Args = Environment.GetCommandLineArgs()
                 .Skip(1) // skip the exe itself path
                 .Where(cmd => !cmd.StartsWith(Const.CONFIG_CMD_PREFIX))
-                .ToArray() ?? Array.Empty<string>();
+                .ToArray() ?? [];
 
             return Args;
         }
