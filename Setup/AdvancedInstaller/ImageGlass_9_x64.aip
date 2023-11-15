@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.2.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_APP_FILE" Value="[#ImageGlass.exe]"/>
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER"/>
+    <ROW Property="AI_README_FILE" Value="[#ReadMe.rtf][#ReadMe.rtf]"/>
+    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
+    <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
+    <ROW Property="ARPPRODUCTICON" Value="icon256.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
+    <ROW Property="CTRLS" Value="3"/>
+    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
+    <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
+    <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
+    <ROW Property="ProductCode" Value="1033:{7F2A05C2-0D37-47F0-AA9D-C49FCED53B33} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="ImageGlass"/>
+    <ROW Property="ProductVersion" Value="9.0.7.1125" Options="32"/>
+    <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
+    <ROW Property="VIEWREADME" Value="1" Type="4"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT" MultiBuildValue="DefaultBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT64" MultiBuildValue="DefaultBuild:Windows Vista x64, Windows Server 2008 x64, Windows 7 x64, Windows Server 2008 R2 x64, Windows 8 x64, Windows Server 2012 x64, Windows 8.1 x64, Windows Server 2012 R2 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64, Windows 10 version 1607 x64, Windows 10 version 1703 x64, Windows 10 version 1709 x64, Windows 10 version 1803 x64, Windows 10 version 1809 x64, Windows 10 version 1903 x64, Windows 10 version 1909 x64, Windows Server 2016 x64, Windows Server 2019 x64" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT64Display" MultiBuildValue="DefaultBuild:Windows Vista x64, Windows Server 2008 x64, Windows 7 x64, Windows Server 2008 R2 x64, Windows 8 x64, Windows Server 2012 x64, Windows 8.1 x64, Windows Server 2012 R2 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64, Windows 10 version 1607 x64, Windows 10 version 1703 x64, Windows 10 version 1709 x64, Windows 10 version 1803 x64, Windows 10 version 1809 x64, Windows 10 version 1903 x64, Windows 10 version 1909 x64, Windows Server 2016 x64, Windows Server 2019 x64" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:32-bit Windows versions" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DXCanvas_Webview2_Dir" Directory_Parent="dist_1_Dir" DefaultDir="DXCANV~1|DXCanvas_Webview2"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="ExtIcons_Dir" Directory_Parent="APPDIR" DefaultDir="EXT-IC~1|Ext-Icons"/>
+    <ROW Directory="FrmSettings_Dir" Directory_Parent="dist_1_Dir" DefaultDir="FRMSET~1|FrmSettings"/>
+    <ROW Directory="Icons_Dir" Directory_Parent="APPDIR" DefaultDir="Icons"/>
+    <ROW Directory="KobeLight_Dir" Directory_Parent="Themes_Dir" DefaultDir="KOBE-L~1|Kobe - Light"/>
+    <ROW Directory="Kobe_Dir" Directory_Parent="Themes_Dir" DefaultDir="Kobe"/>
+    <ROW Directory="Language_Dir" Directory_Parent="APPDIR" DefaultDir="Language"/>
+    <ROW Directory="License_Dir" Directory_Parent="APPDIR" DefaultDir="License"/>
+    <ROW Directory="NewFolder_1_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~1|ImageGlass"/>
+    <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="Themes_Dir" Directory_Parent="APPDIR" DefaultDir="Themes"/>
+    <ROW Directory="common_Dir" Directory_Parent="dist_1_Dir" DefaultDir="common"/>
+    <ROW Directory="dist_1_Dir" Directory_Parent="dist_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_Dir" Directory_Parent="APPDIR" DefaultDir="WebUI"/>
+    <ROW Directory="happlajs_Dir" Directory_Parent="webComponents_Dir" DefaultDir="happlajs"/>
+    <ROW Directory="helpers_Dir" Directory_Parent="dist_1_Dir" DefaultDir="helpers"/>
+    <ROW Directory="img_Dir" Directory_Parent="dist_Dir" DefaultDir="img"/>
+    <ROW Directory="native_Dir" Directory_Parent="winx64_Dir" DefaultDir="native"/>
+    <ROW Directory="runtimes_Dir" Directory_Parent="APPDIR" DefaultDir="runtimes"/>
+    <ROW Directory="types_Dir" Directory_Parent="dist_1_Dir" DefaultDir="@types"/>
+    <ROW Directory="webComponents_1_Dir" Directory_Parent="FrmSettings_Dir" DefaultDir="WEBCOM~1|webComponents"/>
+    <ROW Directory="webComponents_Dir" Directory_Parent="DXCanvas_Webview2_Dir" DefaultDir="WEBCOM~1|webComponents"/>
+    <ROW Directory="winx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x64"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_INSTALLPERUSER" ComponentId="{2F55ADFE-956D-41EB-ADFF-322E85E328AA}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
+    <ROW Component="APPDIR" ComponentId="{D4B1D73D-A2A5-4839-B6EB-32B1F5E04493}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="ActualSize.svg" ComponentId="{D470DF7F-2289-4A42-882A-59D794E4FF26}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
+    <ROW Component="ActualSize.svg_1" ComponentId="{95DB3C06-1D5D-4758-A93F-0C896187E386}" Directory_="KobeLight_Dir" Attributes="0" KeyPath="ActualSize.svg_1" Type="0"/>
+    <ROW Component="ApacheLicense2.0.txt" ComponentId="{ADF12378-82F9-4CC3-BF06-28F422208F4A}" Directory_="License_Dir" Attributes="0" KeyPath="ApacheLicense2.0.txt" Type="0"/>
+    <ROW Component="ArrowDown.svg" ComponentId="{1BC59768-B5E2-4478-A408-2B42014DE70C}" Directory_="Icons_Dir" Attributes="0" KeyPath="ArrowDown.svg" Type="0"/>
+    <ROW Component="DOMPadding.d.ts" ComponentId="{27C52649-BEAF-43F0-89FE-FCB1B9547502}" Directory_="happlajs_Dir" Attributes="0" KeyPath="DOMPadding.d.ts" Type="0"/>
+    <ROW Component="DXCanvas_Webview2.d.ts" ComponentId="{3BC80A27-83F4-45E4-B160-9506EDA40516}" Directory_="dist_1_Dir" Attributes="0" KeyPath="DXCanvas_Webview2.d.ts" Type="0"/>
+    <ROW Component="DXCanvas_Webview2.html" ComponentId="{73105404-43F8-41E5-9004-5C399608CF7C}" Directory_="dist_Dir" Attributes="0" KeyPath="DXCanvas_Webview2.html" Type="0"/>
+    <ROW Component="EditAppDialogHtmlElement.d.ts" ComponentId="{7B57155A-8737-47C4-B060-F2393804C62B}" Directory_="webComponents_1_Dir" Attributes="0" KeyPath="EditAppDialogHtmlElement.d.ts" Type="0"/>
+    <ROW Component="ExplorerSortOrder.dll" ComponentId="{56A80003-ACA8-4247-A7E3-F2A7C4E99966}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
+    <ROW Component="FR.ico" ComponentId="{D6A5CA88-A1F6-4284-8FF9-DB058F811FC9}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
+    <ROW Component="FrmSettings.d.ts" ComponentId="{E35B4C09-AE38-42A2-949E-2831403E7AD1}" Directory_="types_Dir" Attributes="0" KeyPath="FrmSettings.d.ts" Type="0"/>
+    <ROW Component="HapplaBoxHTMLElement.d.ts" ComponentId="{B7116C61-7789-4AEA-96E2-3CC1270F87E6}" Directory_="webComponents_Dir" Attributes="0" KeyPath="HapplaBoxHTMLElement.d.ts" Type="0"/>
+    <ROW Component="HapplaBoxViewer.d.ts" ComponentId="{1BC2F5BE-9A25-4D31-B169-51866561C8D8}" Directory_="DXCanvas_Webview2_Dir" Attributes="0" KeyPath="HapplaBoxViewer.d.ts" Type="0"/>
+    <ROW Component="ImageGlass.Base.pdb" ComponentId="{08C56BB3-5E26-4609-AE2D-E6FA6C7E53F3}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Base.pdb" Type="4"/>
+    <ROW Component="ImageGlass.exe" ComponentId="{83A23D6B-8796-4869-B3D3-9BF035F55F5C}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.exe"/>
+    <ROW Component="Language.d.ts" ComponentId="{475214D9-8A7C-40B6-9195-91E4D166A067}" Directory_="common_Dir" Attributes="0" KeyPath="Language.d.ts" Type="0"/>
+    <ROW Component="Magick.NativeQ16HDRIOpenMPx64.dll" ComponentId="{ACFD7051-E58F-4EB1-8D4F-87196F830226}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Component="MsStoreBadge.svg" ComponentId="{CF12EBFD-F28F-412C-B724-E85B3A47FDA6}" Directory_="img_Dir" Attributes="0" KeyPath="MsStoreBadge.svg" Type="0"/>
+    <ROW Component="NewFolder_1" ComponentId="{E5638F55-0D32-42B6-9019-BFBA4761A036}" Directory_="NewFolder_1_Dir" Attributes="0"/>
+    <ROW Component="ProductInformation" ComponentId="{ECF39610-A89A-4552-9ABB-8A45FCEF8EE0}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
+    <ROW Component="Settings.d.ts" ComponentId="{9E7325BB-3BCE-4579-B173-10177F9E26CC}" Directory_="FrmSettings_Dir" Attributes="0" KeyPath="Settings.d.ts" Type="0"/>
+    <ROW Component="Vietnamese.iglang.json" ComponentId="{CADA6F58-3FA6-49C8-95C1-0E71CFFB163F}" Directory_="Language_Dir" Attributes="0" KeyPath="Vietnamese.iglang.json" Type="0"/>
+    <ROW Component="WebView2Loader.dll" ComponentId="{D29095CC-4710-4AC4-9F73-5283F822D661}" Directory_="APPDIR" Attributes="256" KeyPath="WebView2Loader.dll"/>
+    <ROW Component="WebView2Loader.dll_1" ComponentId="{734ED35E-882B-4000-A2C6-ABF3A1951F05}" Directory_="native_Dir" Attributes="256" KeyPath="WebView2Loader.dll_1"/>
+    <ROW Component="globalHelpers.d.ts" ComponentId="{0A7D65D1-BEEC-462C-B629-43455653A2AD}" Directory_="helpers_Dir" Attributes="0" KeyPath="globalHelpers.d.ts" Type="0"/>
+    <ROW Component="igcmd.dll.config" ComponentId="{FD6534D7-4727-44E3-9273-3CF6E1FC0141}" Directory_="APPDIR" Attributes="0" KeyPath="igcmd.dll.config" Type="0"/>
+    <ROW Component="igcmd.exe" ComponentId="{43E6E804-7B7E-426A-BAF0-53B9FA5D4374}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
+    <ROW Component="libsharpyuv.dll" ComponentId="{D97AC876-019A-4A39-B279-9B8D40ED6933}" Directory_="APPDIR" Attributes="256" KeyPath="libsharpyuv.dll"/>
+    <ROW Component="libwebp.dll" ComponentId="{6B26E70F-A672-4BBD-A6F1-E0931CB5502D}" Directory_="APPDIR" Attributes="256" KeyPath="libwebp.dll"/>
+    <ROW Component="libwebpdecoder.dll" ComponentId="{73CF64B7-CC66-4963-AF0E-147B4DAA5508}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdecoder.dll"/>
+    <ROW Component="libwebpdemux.dll" ComponentId="{28381EA3-BBBF-47ED-A128-443F3BA3409A}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdemux.dll"/>
+    <ROW Component="vcomp140.dll" ComponentId="{1C59F65D-1F89-42E3-A470-48EB447008D2}" Directory_="APPDIR" Attributes="256" KeyPath="vcomp140.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeatures" Title="Main Features" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="16"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeatures"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ExplorerSortOrder.dll" SelfReg="false"/>
+    <ROW File="libsharpyuv.dll" Component_="libsharpyuv.dll" FileName="LIBSHA~1.DLL|libsharpyuv.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libsharpyuv.dll" SelfReg="false"/>
+    <ROW File="libwebp.dll" Component_="libwebp.dll" FileName="libwebp.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebp.dll" SelfReg="false"/>
+    <ROW File="libwebpdecoder.dll" Component_="libwebpdecoder.dll" FileName="LIBWEB~1.DLL|libwebpdecoder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdecoder.dll" SelfReg="false"/>
+    <ROW File="libwebpdemux.dll" Component_="libwebpdemux.dll" FileName="LIBWEB~2.DLL|libwebpdemux.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdemux.dll" SelfReg="false"/>
+    <ROW File="Magick.NativeQ16HDRIOpenMPx64.dll" Component_="Magick.NativeQ16HDRIOpenMPx64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-HDRI-OpenMP-x64.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.Native-Q16-HDRI-OpenMP-x64.dll" SelfReg="false"/>
+    <ROW File="vcomp140.dll" Component_="vcomp140.dll" FileName="vcomp140.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\vcomp140.dll" SelfReg="false"/>
+    <ROW File="WebView2Loader.dll" Component_="WebView2Loader.dll" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\WebView2Loader.dll" SelfReg="false"/>
+    <ROW File="igcmd.dll.config" Component_="igcmd.dll.config" FileName="IGCMDD~1.CON|igcmd.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.dll.config" Component_="igcmd.dll.config" FileName="IMAGEG~1.CON|ImageGlass.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.dll.config" SelfReg="false"/>
+    <ROW File="igcmd.pdb" Component_="igcmd.exe" FileName="igcmd.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~1.PDB|ImageGlass.Base.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Base.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Gallery.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~2.PDB|ImageGlass.Gallery.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Gallery.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~3.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~4.PDB|ImageGlass.Settings.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Settings.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Tools.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~5.PDB|ImageGlass.Tools.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Tools.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~6.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.UI.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Viewer.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~7.PDB|ImageGlass.Viewer.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Viewer.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~8.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WebP.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.WinTouch.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~9.PDB|ImageGlass.WinTouch.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WinTouch.pdb" SelfReg="false"/>
+    <ROW File="FR.ico" Component_="FR.ico" FileName="3FR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
+    <ROW File="ARI.ico" Component_="FR.ico" FileName="ARI.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ARI.ico" SelfReg="false"/>
+    <ROW File="ARW.ico" Component_="FR.ico" FileName="ARW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ARW.ico" SelfReg="false"/>
+    <ROW File="AVIF.ico" Component_="FR.ico" FileName="AVIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\AVIF.ico" SelfReg="false"/>
+    <ROW File="B64.ico" Component_="FR.ico" FileName="B64.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\B64.ico" SelfReg="false"/>
+    <ROW File="BAY.ico" Component_="FR.ico" FileName="BAY.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\BAY.ico" SelfReg="false"/>
+    <ROW File="BMP.ico" Component_="FR.ico" FileName="BMP.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\BMP.ico" SelfReg="false"/>
+    <ROW File="CAP.ico" Component_="FR.ico" FileName="CAP.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CAP.ico" SelfReg="false"/>
+    <ROW File="CR2.ico" Component_="FR.ico" FileName="CR2.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CR2.ico" SelfReg="false"/>
+    <ROW File="CR3.ico" Component_="FR.ico" FileName="CR3.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CR3.ico" SelfReg="false"/>
+    <ROW File="CRW.ico" Component_="FR.ico" FileName="CRW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CRW.ico" SelfReg="false"/>
+    <ROW File="CUR.ico" Component_="FR.ico" FileName="CUR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CUR.ico" SelfReg="false"/>
+    <ROW File="CUT.ico" Component_="FR.ico" FileName="CUT.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\CUT.ico" SelfReg="false"/>
+    <ROW File="DATA.ico" Component_="FR.ico" FileName="DATA.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DATA.ico" SelfReg="false"/>
+    <ROW File="DCR.ico" Component_="FR.ico" FileName="DCR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DCR.ico" SelfReg="false"/>
+    <ROW File="DCS.ico" Component_="FR.ico" FileName="DCS.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DCS.ico" SelfReg="false"/>
+    <ROW File="DDS.ico" Component_="FR.ico" FileName="DDS.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DDS.ico" SelfReg="false"/>
+    <ROW File="DIB.ico" Component_="FR.ico" FileName="DIB.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DIB.ico" SelfReg="false"/>
+    <ROW File="DNG.ico" Component_="FR.ico" FileName="DNG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DNG.ico" SelfReg="false"/>
+    <ROW File="DRF.ico" Component_="FR.ico" FileName="DRF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\DRF.ico" SelfReg="false"/>
+    <ROW File="EIP.ico" Component_="FR.ico" FileName="EIP.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\EIP.ico" SelfReg="false"/>
+    <ROW File="EMF.ico" Component_="FR.ico" FileName="EMF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\EMF.ico" SelfReg="false"/>
+    <ROW File="ERF.ico" Component_="FR.ico" FileName="ERF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ERF.ico" SelfReg="false"/>
+    <ROW File="EXIF.ico" Component_="FR.ico" FileName="EXIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\EXIF.ico" SelfReg="false"/>
+    <ROW File="EXR.ico" Component_="FR.ico" FileName="EXR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\EXR.ico" SelfReg="false"/>
+    <ROW File="FFF.ico" Component_="FR.ico" FileName="FFF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\FFF.ico" SelfReg="false"/>
+    <ROW File="GIF.ico" Component_="FR.ico" FileName="GIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\GIF.ico" SelfReg="false"/>
+    <ROW File="GPR.ico" Component_="FR.ico" FileName="GPR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\GPR.ico" SelfReg="false"/>
+    <ROW File="HDR.ico" Component_="FR.ico" FileName="HDR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\HDR.ico" SelfReg="false"/>
+    <ROW File="HEIC.ico" Component_="FR.ico" FileName="HEIC.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\HEIC.ico" SelfReg="false"/>
+    <ROW File="HEIF.ico" Component_="FR.ico" FileName="HEIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\HEIF.ico" SelfReg="false"/>
+    <ROW File="ICO.ico" Component_="FR.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
+    <ROW File="IIQ.ico" Component_="FR.ico" FileName="IIQ.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\IIQ.ico" SelfReg="false"/>
+    <ROW File="JFIF.ico" Component_="FR.ico" FileName="JFIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\JFIF.ico" SelfReg="false"/>
+    <ROW File="JPE.ico" Component_="FR.ico" FileName="JPE.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\JPE.ico" SelfReg="false"/>
+    <ROW File="JPEG.ico" Component_="FR.ico" FileName="JPEG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\JPEG.ico" SelfReg="false"/>
+    <ROW File="JPG.ico" Component_="FR.ico" FileName="JPG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\JPG.ico" SelfReg="false"/>
+    <ROW File="JXL.ico" Component_="FR.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
+    <ROW File="K25.ico" Component_="FR.ico" FileName="K25.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\K25.ico" SelfReg="false"/>
+    <ROW File="KDC.ico" Component_="FR.ico" FileName="KDC.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\KDC.ico" SelfReg="false"/>
+    <ROW File="MDC.ico" Component_="FR.ico" FileName="MDC.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\MDC.ico" SelfReg="false"/>
+    <ROW File="MEF.ico" Component_="FR.ico" FileName="MEF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\MEF.ico" SelfReg="false"/>
+    <ROW File="MOS.ico" Component_="FR.ico" FileName="MOS.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\MOS.ico" SelfReg="false"/>
+    <ROW File="MRW.ico" Component_="FR.ico" FileName="MRW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\MRW.ico" SelfReg="false"/>
+    <ROW File="NEF.ico" Component_="FR.ico" FileName="NEF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\NEF.ico" SelfReg="false"/>
+    <ROW File="NRW.ico" Component_="FR.ico" FileName="NRW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\NRW.ico" SelfReg="false"/>
+    <ROW File="OBM.ico" Component_="FR.ico" FileName="OBM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\OBM.ico" SelfReg="false"/>
+    <ROW File="ORF.ico" Component_="FR.ico" FileName="ORF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ORF.ico" SelfReg="false"/>
+    <ROW File="PBM.ico" Component_="FR.ico" FileName="PBM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PBM.ico" SelfReg="false"/>
+    <ROW File="PCX.ico" Component_="FR.ico" FileName="PCX.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PCX.ico" SelfReg="false"/>
+    <ROW File="PEF.ico" Component_="FR.ico" FileName="PEF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PEF.ico" SelfReg="false"/>
+    <ROW File="PGM.ico" Component_="FR.ico" FileName="PGM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PGM.ico" SelfReg="false"/>
+    <ROW File="PNG.ico" Component_="FR.ico" FileName="PNG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PNG.ico" SelfReg="false"/>
+    <ROW File="PPM.ico" Component_="FR.ico" FileName="PPM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PPM.ico" SelfReg="false"/>
+    <ROW File="PSD.ico" Component_="FR.ico" FileName="PSD.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PSD.ico" SelfReg="false"/>
+    <ROW File="PTX.ico" Component_="FR.ico" FileName="PTX.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PTX.ico" SelfReg="false"/>
+    <ROW File="PXN.ico" Component_="FR.ico" FileName="PXN.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\PXN.ico" SelfReg="false"/>
+    <ROW File="QOI.ico" Component_="FR.ico" FileName="QOI.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\QOI.ico" SelfReg="false"/>
+    <ROW File="R3D.ico" Component_="FR.ico" FileName="R3D.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\R3D.ico" SelfReg="false"/>
+    <ROW File="RAF.ico" Component_="FR.ico" FileName="RAF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\RAF.ico" SelfReg="false"/>
+    <ROW File="RAW.ico" Component_="FR.ico" FileName="RAW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\RAW.ico" SelfReg="false"/>
+    <ROW File="RW2.ico" Component_="FR.ico" FileName="RW2.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\RW2.ico" SelfReg="false"/>
+    <ROW File="RWL.ico" Component_="FR.ico" FileName="RWL.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\RWL.ico" SelfReg="false"/>
+    <ROW File="RWZ.ico" Component_="FR.ico" FileName="RWZ.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\RWZ.ico" SelfReg="false"/>
+    <ROW File="SR2.ico" Component_="FR.ico" FileName="SR2.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\SR2.ico" SelfReg="false"/>
+    <ROW File="SRF.ico" Component_="FR.ico" FileName="SRF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\SRF.ico" SelfReg="false"/>
+    <ROW File="SRW.ico" Component_="FR.ico" FileName="SRW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\SRW.ico" SelfReg="false"/>
+    <ROW File="SVG.ico" Component_="FR.ico" FileName="SVG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\SVG.ico" SelfReg="false"/>
+    <ROW File="TGA.ico" Component_="FR.ico" FileName="TGA.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\TGA.ico" SelfReg="false"/>
+    <ROW File="TIF.ico" Component_="FR.ico" FileName="TIF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\TIF.ico" SelfReg="false"/>
+    <ROW File="TIFF.ico" Component_="FR.ico" FileName="TIFF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\TIFF.ico" SelfReg="false"/>
+    <ROW File="WEBP.ico" Component_="FR.ico" FileName="WEBP.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\WEBP.ico" SelfReg="false"/>
+    <ROW File="WIC.ico" Component_="FR.ico" FileName="WIC.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\WIC.ico" SelfReg="false"/>
+    <ROW File="WMF.ico" Component_="FR.ico" FileName="WMF.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\WMF.ico" SelfReg="false"/>
+    <ROW File="WPG.ico" Component_="FR.ico" FileName="WPG.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\WPG.ico" SelfReg="false"/>
+    <ROW File="X3F.ico" Component_="FR.ico" FileName="X3F.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\X3F.ico" SelfReg="false"/>
+    <ROW File="XBM.ico" Component_="FR.ico" FileName="XBM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\XBM.ico" SelfReg="false"/>
+    <ROW File="XPM.ico" Component_="FR.ico" FileName="XPM.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\XPM.ico" SelfReg="false"/>
+    <ROW File="Vietnamese.iglang.json" Component_="Vietnamese.iglang.json" FileName="VIETNA~1.JSO|Vietnamese.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Vietnamese.iglang.json" SelfReg="false"/>
+    <ROW File="ActualSize.svg" Component_="ActualSize.svg" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ActualSize.svg" SelfReg="false"/>
+    <ROW File="AutoZoom.svg" Component_="ActualSize.svg" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\AutoZoom.svg" SelfReg="false"/>
+    <ROW File="Checkerboard.svg" Component_="ActualSize.svg" FileName="CHECKE~1.SVG|Checkerboard.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Checkerboard.svg" SelfReg="false"/>
+    <ROW File="ColorPicker.svg" Component_="ActualSize.svg" FileName="COLORP~1.SVG|ColorPicker.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ColorPicker.svg" SelfReg="false"/>
+    <ROW File="Crop.svg" Component_="ActualSize.svg" FileName="Crop.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Crop.svg" SelfReg="false"/>
+    <ROW File="Delete.svg" Component_="ActualSize.svg" FileName="Delete.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Delete.svg" SelfReg="false"/>
+    <ROW File="Edit.svg" Component_="ActualSize.svg" FileName="Edit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Edit.svg" SelfReg="false"/>
+    <ROW File="Exit.svg" Component_="ActualSize.svg" FileName="Exit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Exit.svg" SelfReg="false"/>
+    <ROW File="Export.svg" Component_="ActualSize.svg" FileName="Export.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Export.svg" SelfReg="false"/>
+    <ROW File="FlipHorz.svg" Component_="ActualSize.svg" FileName="FlipHorz.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\FlipHorz.svg" SelfReg="false"/>
+    <ROW File="FlipVert.svg" Component_="ActualSize.svg" FileName="FlipVert.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\FlipVert.svg" SelfReg="false"/>
+    <ROW File="FullScreen.svg" Component_="ActualSize.svg" FileName="FULLSC~1.SVG|FullScreen.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\FullScreen.svg" SelfReg="false"/>
+    <ROW File="Gallery.svg" Component_="ActualSize.svg" FileName="Gallery.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Gallery.svg" SelfReg="false"/>
+    <ROW File="igtheme.json" Component_="ActualSize.svg" FileName="IGTHEM~1.JSO|igtheme.json" Attributes="0" SourcePath="..\Assets\Themes\Kobe\igtheme.json" SelfReg="false"/>
+    <ROW File="LockZoom.svg" Component_="ActualSize.svg" FileName="LockZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\LockZoom.svg" SelfReg="false"/>
+    <ROW File="Logo.svg" Component_="ActualSize.svg" FileName="Logo.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Logo.svg" SelfReg="false"/>
+    <ROW File="MainMenu.svg" Component_="ActualSize.svg" FileName="MainMenu.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\MainMenu.svg" SelfReg="false"/>
+    <ROW File="OpenFile.svg" Component_="ActualSize.svg" FileName="OpenFile.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\OpenFile.svg" SelfReg="false"/>
+    <ROW File="Pause.svg" Component_="ActualSize.svg" FileName="Pause.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Pause.svg" SelfReg="false"/>
+    <ROW File="Play.svg" Component_="ActualSize.svg" FileName="Play.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Play.svg" SelfReg="false"/>
+    <ROW File="preview.webp" Component_="ActualSize.svg" FileName="PREVIE~1.WEB|preview.webp" Attributes="0" SourcePath="..\Assets\Themes\Kobe\preview.webp" SelfReg="false"/>
+    <ROW File="Print.svg" Component_="ActualSize.svg" FileName="Print.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Print.svg" SelfReg="false"/>
+    <ROW File="Refresh.svg" Component_="ActualSize.svg" FileName="Refresh.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Refresh.svg" SelfReg="false"/>
+    <ROW File="RotateLeft.svg" Component_="ActualSize.svg" FileName="ROTATE~1.SVG|RotateLeft.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\RotateLeft.svg" SelfReg="false"/>
+    <ROW File="RotateRight.svg" Component_="ActualSize.svg" FileName="ROTATE~2.SVG|RotateRight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\RotateRight.svg" SelfReg="false"/>
+    <ROW File="Save.svg" Component_="ActualSize.svg" FileName="Save.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Save.svg" SelfReg="false"/>
+    <ROW File="ScaleToFill.svg" Component_="ActualSize.svg" FileName="SCALET~1.SVG|ScaleToFill.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ScaleToFill.svg" SelfReg="false"/>
+    <ROW File="ScaleToFit.svg" Component_="ActualSize.svg" FileName="SCALET~2.SVG|ScaleToFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ScaleToFit.svg" SelfReg="false"/>
+    <ROW File="ScaleToHeight.svg" Component_="ActualSize.svg" FileName="SCALET~3.SVG|ScaleToHeight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ScaleToHeight.svg" SelfReg="false"/>
+    <ROW File="ScaleToWidth.svg" Component_="ActualSize.svg" FileName="SCALET~4.SVG|ScaleToWidth.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ScaleToWidth.svg" SelfReg="false"/>
+    <ROW File="Slideshow.svg" Component_="ActualSize.svg" FileName="SLIDES~1.SVG|Slideshow.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\Slideshow.svg" SelfReg="false"/>
+    <ROW File="ViewFirstImage.svg" Component_="ActualSize.svg" FileName="VIEWFI~1.SVG|ViewFirstImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ViewFirstImage.svg" SelfReg="false"/>
+    <ROW File="ViewLastImage.svg" Component_="ActualSize.svg" FileName="VIEWLA~1.SVG|ViewLastImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ViewLastImage.svg" SelfReg="false"/>
+    <ROW File="ViewNextImage.svg" Component_="ActualSize.svg" FileName="VIEWNE~1.SVG|ViewNextImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ViewNextImage.svg" SelfReg="false"/>
+    <ROW File="ViewPreviousImage.svg" Component_="ActualSize.svg" FileName="VIEWPR~1.SVG|ViewPreviousImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ViewPreviousImage.svg" SelfReg="false"/>
+    <ROW File="WindowFit.svg" Component_="ActualSize.svg" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\WindowFit.svg" SelfReg="false"/>
+    <ROW File="ZoomIn.svg" Component_="ActualSize.svg" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ZoomIn.svg" SelfReg="false"/>
+    <ROW File="ZoomOut.svg" Component_="ActualSize.svg" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ZoomOut.svg" SelfReg="false"/>
+    <ROW File="ActualSize.svg_1" Component_="ActualSize.svg_1" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ActualSize.svg" SelfReg="false"/>
+    <ROW File="AutoZoom.svg_1" Component_="ActualSize.svg_1" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\AutoZoom.svg" SelfReg="false"/>
+    <ROW File="Checkerboard.svg_1" Component_="ActualSize.svg_1" FileName="CHECKE~1.SVG|Checkerboard.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Checkerboard.svg" SelfReg="false"/>
+    <ROW File="ColorPicker.svg_1" Component_="ActualSize.svg_1" FileName="COLORP~1.SVG|ColorPicker.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ColorPicker.svg" SelfReg="false"/>
+    <ROW File="Crop.svg_1" Component_="ActualSize.svg_1" FileName="Crop.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Crop.svg" SelfReg="false"/>
+    <ROW File="Delete.svg_1" Component_="ActualSize.svg_1" FileName="Delete.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Delete.svg" SelfReg="false"/>
+    <ROW File="Edit.svg_1" Component_="ActualSize.svg_1" FileName="Edit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Edit.svg" SelfReg="false"/>
+    <ROW File="Exit.svg_1" Component_="ActualSize.svg_1" FileName="Exit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Exit.svg" SelfReg="false"/>
+    <ROW File="Export.svg_1" Component_="ActualSize.svg_1" FileName="Export.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Export.svg" SelfReg="false"/>
+    <ROW File="FlipHorz.svg_1" Component_="ActualSize.svg_1" FileName="FlipHorz.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FlipHorz.svg" SelfReg="false"/>
+    <ROW File="FlipVert.svg_1" Component_="ActualSize.svg_1" FileName="FlipVert.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FlipVert.svg" SelfReg="false"/>
+    <ROW File="FullScreen.svg_1" Component_="ActualSize.svg_1" FileName="FULLSC~1.SVG|FullScreen.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FullScreen.svg" SelfReg="false"/>
+    <ROW File="Gallery.svg_1" Component_="ActualSize.svg_1" FileName="Gallery.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Gallery.svg" SelfReg="false"/>
+    <ROW File="igtheme.json_1" Component_="ActualSize.svg_1" FileName="IGTHEM~1.JSO|igtheme.json" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\igtheme.json" SelfReg="false"/>
+    <ROW File="LockZoom.svg_1" Component_="ActualSize.svg_1" FileName="LockZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\LockZoom.svg" SelfReg="false"/>
+    <ROW File="Logo.svg_1" Component_="ActualSize.svg_1" FileName="Logo.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Logo.svg" SelfReg="false"/>
+    <ROW File="MainMenu.svg_1" Component_="ActualSize.svg_1" FileName="MainMenu.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\MainMenu.svg" SelfReg="false"/>
+    <ROW File="OpenFile.svg_1" Component_="ActualSize.svg_1" FileName="OpenFile.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\OpenFile.svg" SelfReg="false"/>
+    <ROW File="Pause.svg_1" Component_="ActualSize.svg_1" FileName="Pause.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Pause.svg" SelfReg="false"/>
+    <ROW File="Play.svg_1" Component_="ActualSize.svg_1" FileName="Play.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Play.svg" SelfReg="false"/>
+    <ROW File="preview.webp_1" Component_="ActualSize.svg_1" FileName="PREVIE~1.WEB|preview.webp" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\preview.webp" SelfReg="false"/>
+    <ROW File="Print.svg_1" Component_="ActualSize.svg_1" FileName="Print.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Print.svg" SelfReg="false"/>
+    <ROW File="Refresh.svg_1" Component_="ActualSize.svg_1" FileName="Refresh.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Refresh.svg" SelfReg="false"/>
+    <ROW File="RotateLeft.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~1.SVG|RotateLeft.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\RotateLeft.svg" SelfReg="false"/>
+    <ROW File="RotateRight.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~2.SVG|RotateRight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\RotateRight.svg" SelfReg="false"/>
+    <ROW File="Save.svg_1" Component_="ActualSize.svg_1" FileName="Save.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Save.svg" SelfReg="false"/>
+    <ROW File="ScaleToFill.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~1.SVG|ScaleToFill.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToFill.svg" SelfReg="false"/>
+    <ROW File="ScaleToFit.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~2.SVG|ScaleToFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToFit.svg" SelfReg="false"/>
+    <ROW File="ScaleToHeight.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~3.SVG|ScaleToHeight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToHeight.svg" SelfReg="false"/>
+    <ROW File="ScaleToWidth.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~4.SVG|ScaleToWidth.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToWidth.svg" SelfReg="false"/>
+    <ROW File="Slideshow.svg_1" Component_="ActualSize.svg_1" FileName="SLIDES~1.SVG|Slideshow.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Slideshow.svg" SelfReg="false"/>
+    <ROW File="ViewFirstImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWFI~1.SVG|ViewFirstImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewFirstImage.svg" SelfReg="false"/>
+    <ROW File="ViewLastImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWLA~1.SVG|ViewLastImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewLastImage.svg" SelfReg="false"/>
+    <ROW File="ViewNextImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWNE~1.SVG|ViewNextImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewNextImage.svg" SelfReg="false"/>
+    <ROW File="ViewPreviousImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWPR~1.SVG|ViewPreviousImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewPreviousImage.svg" SelfReg="false"/>
+    <ROW File="WindowFit.svg_1" Component_="ActualSize.svg_1" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\WindowFit.svg" SelfReg="false"/>
+    <ROW File="ZoomIn.svg_1" Component_="ActualSize.svg_1" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ZoomIn.svg" SelfReg="false"/>
+    <ROW File="ZoomOut.svg_1" Component_="ActualSize.svg_1" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ZoomOut.svg" SelfReg="false"/>
+    <ROW File="ArrowDown.svg" Component_="ArrowDown.svg" FileName="ARROWD~1.SVG|ArrowDown.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowDown.svg" SelfReg="false"/>
+    <ROW File="ArrowExchange.svg" Component_="ArrowDown.svg" FileName="ARROWE~1.SVG|ArrowExchange.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowExchange.svg" SelfReg="false"/>
+    <ROW File="ArrowLeft.svg" Component_="ArrowDown.svg" FileName="ARROWL~1.SVG|ArrowLeft.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowLeft.svg" SelfReg="false"/>
+    <ROW File="ArrowRight.svg" Component_="ArrowDown.svg" FileName="ARROWR~1.SVG|ArrowRight.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowRight.svg" SelfReg="false"/>
+    <ROW File="ArrowUp.svg" Component_="ArrowDown.svg" FileName="ArrowUp.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowUp.svg" SelfReg="false"/>
+    <ROW File="Copy.svg" Component_="ArrowDown.svg" FileName="Copy.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Copy.svg" SelfReg="false"/>
+    <ROW File="Delete.svg_2" Component_="ArrowDown.svg" FileName="Delete.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Delete.svg" SelfReg="false"/>
+    <ROW File="Edit.svg_2" Component_="ArrowDown.svg" FileName="Edit.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Edit.svg" SelfReg="false"/>
+    <ROW File="Moon.svg" Component_="ArrowDown.svg" FileName="Moon.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Moon.svg" SelfReg="false"/>
+    <ROW File="ResetSelection.svg" Component_="ArrowDown.svg" FileName="RESETS~1.SVG|ResetSelection.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ResetSelection.svg" SelfReg="false"/>
+    <ROW File="Selection.svg" Component_="ArrowDown.svg" FileName="SELECT~1.SVG|Selection.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Selection.svg" SelfReg="false"/>
+    <ROW File="Setting.svg" Component_="ArrowDown.svg" FileName="Setting.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Setting.svg" SelfReg="false"/>
+    <ROW File="Sun.svg" Component_="ArrowDown.svg" FileName="Sun.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\Sun.svg" SelfReg="false"/>
+    <ROW File="ApacheLicense2.0.txt" Component_="ApacheLicense2.0.txt" FileName="APACHE~1.TXT|Apache License 2.0.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\Apache License 2.0.txt" SelfReg="false"/>
+    <ROW File="CsWin32.txt" Component_="ApacheLicense2.0.txt" FileName="CsWin32.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\CsWin32.txt" SelfReg="false"/>
+    <ROW File="d2phap.txt" Component_="ApacheLicense2.0.txt" FileName="d2phap.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\d2phap.txt" SelfReg="false"/>
+    <ROW File="DirectN.txt" Component_="ApacheLicense2.0.txt" FileName="DirectN.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\DirectN.txt" SelfReg="false"/>
+    <ROW File="libwebp.txt" Component_="ApacheLicense2.0.txt" FileName="libwebp.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\libwebp.txt" SelfReg="false"/>
+    <ROW File="MagicScaler.txt" Component_="ApacheLicense2.0.txt" FileName="MAGICS~1.TXT|MagicScaler.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\MagicScaler.txt" SelfReg="false"/>
+    <ROW File="Webview2.txt" Component_="ApacheLicense2.0.txt" FileName="Webview2.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\Webview2.txt" SelfReg="false"/>
+    <ROW File="WicNet.txt" Component_="ApacheLicense2.0.txt" FileName="WicNet.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\WicNet.txt" SelfReg="false"/>
+    <ROW File="WebView2Loader.dll_1" Component_="WebView2Loader.dll_1" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\runtimes\win-x64\native\WebView2Loader.dll" SelfReg="false"/>
+    <ROW File="default.webp" Component_="igcmd.dll.config" FileName="DEFAUL~1.WEB|default.webp" Attributes="0" SourcePath="..\Assets\default.webp" SelfReg="false"/>
+    <ROW File="igconfig.json" Component_="igcmd.dll.config" FileName="IGCONF~1.JSO|igconfig.json" Attributes="0" SourcePath="..\Assets\igconfig.json" SelfReg="false"/>
+    <ROW File="ReadMe.rtf" Component_="igcmd.dll.config" FileName="ReadMe.rtf" Attributes="0" SourcePath="..\Assets\ReadMe.rtf" SelfReg="false"/>
+    <ROW File="FrmSettings.d.ts" Component_="FrmSettings.d.ts" FileName="FRMSET~1.TS|FrmSettings.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\@types\FrmSettings.d.ts" SelfReg="false"/>
+    <ROW File="Language.d.ts" Component_="Language.d.ts" FileName="LANGUA~1.TS|Language.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\common\Language.d.ts" SelfReg="false"/>
+    <ROW File="HapplaBoxViewer.d.ts" Component_="HapplaBoxViewer.d.ts" FileName="HAPPLA~1.TS|HapplaBoxViewer.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2\HapplaBoxViewer.d.ts" SelfReg="false"/>
+    <ROW File="HapplaBoxHTMLElement.d.ts" Component_="HapplaBoxHTMLElement.d.ts" FileName="HAPPLA~1.TS|HapplaBoxHTMLElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2\webComponents\HapplaBoxHTMLElement.d.ts" SelfReg="false"/>
+    <ROW File="DOMPadding.d.ts" Component_="DOMPadding.d.ts" FileName="DOMPAD~1.TS|DOMPadding.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2\webComponents\happlajs\DOMPadding.d.ts" SelfReg="false"/>
+    <ROW File="HapplaBox.d.ts" Component_="DOMPadding.d.ts" FileName="HAPPLA~1.TS|HapplaBox.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2\webComponents\happlajs\HapplaBox.d.ts" SelfReg="false"/>
+    <ROW File="HapplaBoxTypes.d.ts" Component_="DOMPadding.d.ts" FileName="HAPPLA~2.TS|HapplaBoxTypes.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2\webComponents\happlajs\HapplaBoxTypes.d.ts" SelfReg="false"/>
+    <ROW File="DXCanvas_Webview2.d.ts" Component_="DXCanvas_Webview2.d.ts" FileName="DXCANV~1.TS|DXCanvas_Webview2.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2.d.ts" SelfReg="false"/>
+    <ROW File="DXCanvas_Webview2.js" Component_="DXCanvas_Webview2.d.ts" FileName="DXCANV~1.JS|DXCanvas_Webview2.js" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2.js" SelfReg="false"/>
+    <ROW File="DXCanvas_Webview2.js.map" Component_="DXCanvas_Webview2.d.ts" FileName="DXCANV~1.MAP|DXCanvas_Webview2.js.map" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\DXCanvas_Webview2.js.map" SelfReg="false"/>
+    <ROW File="FrmAbout.d.ts" Component_="DXCanvas_Webview2.d.ts" FileName="FRMABO~1.TS|FrmAbout.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmAbout.d.ts" SelfReg="false"/>
+    <ROW File="FrmAbout.js" Component_="DXCanvas_Webview2.d.ts" FileName="FrmAbout.js" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmAbout.js" SelfReg="false"/>
+    <ROW File="FrmAbout.js.map" Component_="DXCanvas_Webview2.d.ts" FileName="FRMABO~1.MAP|FrmAbout.js.map" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmAbout.js.map" SelfReg="false"/>
+    <ROW File="FrmQuickSetup.d.ts" Component_="DXCanvas_Webview2.d.ts" FileName="FRMQUI~1.TS|FrmQuickSetup.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmQuickSetup.d.ts" SelfReg="false"/>
+    <ROW File="FrmQuickSetup.js" Component_="DXCanvas_Webview2.d.ts" FileName="FRMQUI~1.JS|FrmQuickSetup.js" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmQuickSetup.js" SelfReg="false"/>
+    <ROW File="FrmQuickSetup.js.map" Component_="DXCanvas_Webview2.d.ts" FileName="FRMQUI~1.MAP|FrmQuickSetup.js.map" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmQuickSetup.js.map" SelfReg="false"/>
+    <ROW File="Settings.d.ts" Component_="Settings.d.ts" FileName="SETTIN~1.TS|Settings.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\Settings.d.ts" SelfReg="false"/>
+    <ROW File="Sidebar.d.ts" Component_="Settings.d.ts" FileName="SIDEBA~1.TS|Sidebar.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\Sidebar.d.ts" SelfReg="false"/>
+    <ROW File="TabAppearance.d.ts" Component_="Settings.d.ts" FileName="TABAPP~1.TS|TabAppearance.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabAppearance.d.ts" SelfReg="false"/>
+    <ROW File="TabEdit.d.ts" Component_="Settings.d.ts" FileName="TABEDI~1.TS|TabEdit.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabEdit.d.ts" SelfReg="false"/>
+    <ROW File="TabFileAssocs.d.ts" Component_="Settings.d.ts" FileName="TABFIL~1.TS|TabFileAssocs.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabFileAssocs.d.ts" SelfReg="false"/>
+    <ROW File="TabGallery.d.ts" Component_="Settings.d.ts" FileName="TABGAL~1.TS|TabGallery.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabGallery.d.ts" SelfReg="false"/>
+    <ROW File="TabGeneral.d.ts" Component_="Settings.d.ts" FileName="TABGEN~1.TS|TabGeneral.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabGeneral.d.ts" SelfReg="false"/>
+    <ROW File="TabImage.d.ts" Component_="Settings.d.ts" FileName="TABIMA~1.TS|TabImage.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabImage.d.ts" SelfReg="false"/>
+    <ROW File="TabKeyboard.d.ts" Component_="Settings.d.ts" FileName="TABKEY~1.TS|TabKeyboard.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabKeyboard.d.ts" SelfReg="false"/>
+    <ROW File="TabLanguage.d.ts" Component_="Settings.d.ts" FileName="TABLAN~1.TS|TabLanguage.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabLanguage.d.ts" SelfReg="false"/>
+    <ROW File="TabLayout.d.ts" Component_="Settings.d.ts" FileName="TABLAY~1.TS|TabLayout.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabLayout.d.ts" SelfReg="false"/>
+    <ROW File="TabMouse.d.ts" Component_="Settings.d.ts" FileName="TABMOU~1.TS|TabMouse.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabMouse.d.ts" SelfReg="false"/>
+    <ROW File="TabSlideshow.d.ts" Component_="Settings.d.ts" FileName="TABSLI~1.TS|TabSlideshow.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabSlideshow.d.ts" SelfReg="false"/>
+    <ROW File="TabToolbar.d.ts" Component_="Settings.d.ts" FileName="TABTOO~1.TS|TabToolbar.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabToolbar.d.ts" SelfReg="false"/>
+    <ROW File="TabTools.d.ts" Component_="Settings.d.ts" FileName="TABTOO~2.TS|TabTools.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabTools.d.ts" SelfReg="false"/>
+    <ROW File="TabViewer.d.ts" Component_="Settings.d.ts" FileName="TABVIE~1.TS|TabViewer.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\TabViewer.d.ts" SelfReg="false"/>
+    <ROW File="EditAppDialogHtmlElement.d.ts" Component_="EditAppDialogHtmlElement.d.ts" FileName="EDITAP~1.TS|EditAppDialogHtmlElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\webComponents\EditAppDialogHtmlElement.d.ts" SelfReg="false"/>
+    <ROW File="FileFormatDialogHtmlElement.d.ts" Component_="EditAppDialogHtmlElement.d.ts" FileName="FILEFO~1.TS|FileFormatDialogHtmlElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\webComponents\FileFormatDialogHtmlElement.d.ts" SelfReg="false"/>
+    <ROW File="ToolbarButtonEditDialogHtmlElement.d.ts" Component_="EditAppDialogHtmlElement.d.ts" FileName="TOOLBA~1.TS|ToolbarButtonEditDialogHtmlElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\webComponents\ToolbarButtonEditDialogHtmlElement.d.ts" SelfReg="false"/>
+    <ROW File="ToolbarEditorHtmlElement.d.ts" Component_="EditAppDialogHtmlElement.d.ts" FileName="TOOLBA~2.TS|ToolbarEditorHtmlElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\webComponents\ToolbarEditorHtmlElement.d.ts" SelfReg="false"/>
+    <ROW File="ToolDialogHtmlElement.d.ts" Component_="EditAppDialogHtmlElement.d.ts" FileName="TOOLDI~1.TS|ToolDialogHtmlElement.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings\webComponents\ToolDialogHtmlElement.d.ts" SelfReg="false"/>
+    <ROW File="FrmSettings.d.ts_1" Component_="DXCanvas_Webview2.d.ts" FileName="FRMSET~1.TS|FrmSettings.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings.d.ts" SelfReg="false"/>
+    <ROW File="FrmSettings.js" Component_="DXCanvas_Webview2.d.ts" FileName="FRMSET~1.JS|FrmSettings.js" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings.js" SelfReg="false"/>
+    <ROW File="FrmSettings.js.map" Component_="DXCanvas_Webview2.d.ts" FileName="FRMSET~1.MAP|FrmSettings.js.map" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmSettings.js.map" SelfReg="false"/>
+    <ROW File="FrmUpdate.d.ts" Component_="DXCanvas_Webview2.d.ts" FileName="FRMUPD~1.TS|FrmUpdate.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmUpdate.d.ts" SelfReg="false"/>
+    <ROW File="FrmUpdate.js" Component_="DXCanvas_Webview2.d.ts" FileName="FRMUPD~1.JS|FrmUpdate.js" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmUpdate.js" SelfReg="false"/>
+    <ROW File="FrmUpdate.js.map" Component_="DXCanvas_Webview2.d.ts" FileName="FRMUPD~1.MAP|FrmUpdate.js.map" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\FrmUpdate.js.map" SelfReg="false"/>
+    <ROW File="globalHelpers.d.ts" Component_="globalHelpers.d.ts" FileName="GLOBAL~1.TS|globalHelpers.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\helpers\globalHelpers.d.ts" SelfReg="false"/>
+    <ROW File="index.d.ts" Component_="globalHelpers.d.ts" FileName="INDEXD~1.TS|index.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\helpers\index.d.ts" SelfReg="false"/>
+    <ROW File="webview.d.ts" Component_="globalHelpers.d.ts" FileName="WEBVIE~1.TS|webview.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\helpers\webview.d.ts" SelfReg="false"/>
+    <ROW File="main.d.ts" Component_="DXCanvas_Webview2.d.ts" FileName="MAIND~1.TS|main.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\main.d.ts" SelfReg="false"/>
+    <ROW File="styles.css" Component_="DXCanvas_Webview2.d.ts" FileName="styles.css" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\styles.css" SelfReg="false"/>
+    <ROW File="DXCanvas_Webview2.html" Component_="DXCanvas_Webview2.html" FileName="DXCANV~1.HTM|DXCanvas_Webview2.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\DXCanvas_Webview2.html" SelfReg="false"/>
+    <ROW File="FrmAbout.html" Component_="DXCanvas_Webview2.html" FileName="FRMABO~1.HTM|FrmAbout.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmAbout.html" SelfReg="false"/>
+    <ROW File="FrmQuickSetup.html" Component_="DXCanvas_Webview2.html" FileName="FRMQUI~1.HTM|FrmQuickSetup.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmQuickSetup.html" SelfReg="false"/>
+    <ROW File="FrmSettings.html" Component_="DXCanvas_Webview2.html" FileName="FRMSET~1.HTM|FrmSettings.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmSettings.html" SelfReg="false"/>
+    <ROW File="FrmUpdate.html" Component_="DXCanvas_Webview2.html" FileName="FRMUPD~1.HTM|FrmUpdate.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmUpdate.html" SelfReg="false"/>
+    <ROW File="MsStoreBadge.svg" Component_="MsStoreBadge.svg" FileName="MSSTOR~1.SVG|MsStoreBadge.svg" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\img\MsStoreBadge.svg" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
+    <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
+    <ROW Action="AI_DetectSoftware" Sequence="151"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_[|ProductVersion]_x64" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Store="User\MY"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="InstallTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\InstallTypeDlg.aip"/>
+    <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\LicenseAgreementDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="SetupTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SetupTypeDlg.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_1"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_2"/>
+    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="20" Y="60" Width="330" Height="120" Attributes="7" Text="..\Assets\ReadMe.rtf" Order="400" TextLocId="Control.Text.LicenseAgreementDlg#AgreementText" MsiKey="LicenseAgreementDlg#AgreementText"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="204"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="205"/>
+    <ROW Dialog_="SetupTypeDlg" Control_="TypicalButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="SetupTypeDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="102"/>
+    <ROW Dialog_="SetupTypeDlg" Control_="CompleteButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="201"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="102"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="202"/>
+    <ROW Dialog_="SetupTypeDlg" Control_="CustomButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="203"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+    <ROW Directory_="NewFolder_1_Dir" Component_="NewFolder_1" ManualDelete="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="LaunchApp"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#ReadMe.rtf]"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="ViewReadMe"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[LocalAppDataFolder]\Programs\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="DefaultBuild:[LocalAppDataFolder]\Programs\[ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeatures" Component_="APPDIR"/>
+    <ROW Feature_="MainFeatures" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeatures" Component_="igcmd.exe"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.exe"/>
+    <ROW Feature_="MainFeatures" Component_="ExplorerSortOrder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libsharpyuv.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebp.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebpdecoder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebpdemux.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Feature_="MainFeatures" Component_="vcomp140.dll"/>
+    <ROW Feature_="MainFeatures" Component_="WebView2Loader.dll"/>
+    <ROW Feature_="MainFeatures" Component_="igcmd.dll.config"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Base.pdb"/>
+    <ROW Feature_="MainFeatures" Component_="FR.ico"/>
+    <ROW Feature_="MainFeatures" Component_="Vietnamese.iglang.json"/>
+    <ROW Feature_="MainFeatures" Component_="ActualSize.svg"/>
+    <ROW Feature_="MainFeatures" Component_="ActualSize.svg_1"/>
+    <ROW Feature_="MainFeatures" Component_="ArrowDown.svg"/>
+    <ROW Feature_="MainFeatures" Component_="ApacheLicense2.0.txt"/>
+    <ROW Feature_="MainFeatures" Component_="WebView2Loader.dll_1"/>
+    <ROW Feature_="MainFeatures" Component_="FrmSettings.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="Language.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="HapplaBoxViewer.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="HapplaBoxHTMLElement.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="DOMPadding.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="DXCanvas_Webview2.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="Settings.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="EditAppDialogHtmlElement.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="globalHelpers.d.ts"/>
+    <ROW Feature_="MainFeatures" Component_="DXCanvas_Webview2.html"/>
+    <ROW Feature_="MainFeatures" Component_="MsStoreBadge.svg"/>
+    <ROW Feature_="MainFeatures" Component_="NewFolder_1"/>
+    <ROW Feature_="MainFeatures" Component_="AI_INSTALLPERUSER"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
+    <ROW Name="icon256.exe" SourcePath="..\..\Assets\Logo\2023\icon256.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 603) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 603) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 10240)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 10586)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 14393)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 15063)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 16299)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 17134)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 17763)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 18362)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 18363)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType = 1) OR (WindowsBuild &lt;&gt; 14393)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType = 1) OR (WindowsBuild &lt;&gt; 17763)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="( Version9X OR VersionNT64 )" Description="[ProductName] cannot be installed on [WindowsTypeNTDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="[ProductName] cannot be installed on [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_INSTALLPERUSER" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
+    <ROW Signature_="AI_INSTALLPERUSER_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
+    <ROW Signature_="AI_INSTALLPERUSER_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
+    <ROW Signature_="AI_INSTALLPERUSER_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_INSTALLPERUSER" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Value="[AI_INSTALLPERUSER]" Component_="AI_INSTALLPERUSER"/>
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="UpgradeCode" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="ImageGlass" Directory_="DesktopFolder" Name="IMAGEG~2|[|ProductName] 9" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ProductName9" Directory_="NewFolder_1_Dir" Name="IMAGEG~1|[|ProductName] 9" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="NewFolder_1_Dir" Name="UNINST~1.112|Uninstall [|ProductName] [|ProductVersion]" Component_="vcomp140.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+</DOCUMENT>

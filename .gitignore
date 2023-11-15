@@ -162,8 +162,7 @@ $RECYCLE.BIN/
 *.sqlite
 .DS_Store
 Setup/*.zip
-Setup/AdvancedInstaller/x86/ImageGlass-x86-cache
-Setup/AdvancedInstaller/x64/ImageGlass-x64-cache
+**/ImageGlass_9_x64-cache
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 **/Properties/launchSettings.json
 
