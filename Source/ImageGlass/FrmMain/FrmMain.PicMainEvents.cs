@@ -309,9 +309,9 @@ public partial class FrmMain
         #region Get mouse wheel action
 
         // get user-defined mouse wheel action
-        if (Config.MouseWheelActions.ContainsKey(eventType))
+        if (Config.MouseWheelActions.TryGetValue(eventType, out MouseWheelAction value))
         {
-            action = Config.MouseWheelActions[eventType];
+            action = value;
         }
         // if not found, use the defaut mouse wheel action
         else

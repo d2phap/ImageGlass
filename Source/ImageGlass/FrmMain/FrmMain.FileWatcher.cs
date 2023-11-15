@@ -129,7 +129,7 @@ public partial class FrmMain
         var imgIndex = Local.Images.IndexOf(oldFilePath);
 
         // if user changed file extension
-        if (oldExt.CompareTo(newExt) != 0)
+        if (!string.Equals(oldExt, newExt, StringComparison.OrdinalIgnoreCase))
         {
             // [old] && [new]: update filename only
             if (Config.FileFormats.Contains(oldExt) && Config.FileFormats.Contains(newExt))

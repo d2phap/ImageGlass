@@ -334,9 +334,8 @@ public class QueuedWorker : Component
     {
         lock (_lockObject)
         {
-            if (!_cancelledItems.ContainsKey(argument))
+            if (_cancelledItems.TryAdd(argument, false))
             {
-                _cancelledItems.Add(argument, false);
                 Monitor.Pulse(_lockObject);
             }
         }

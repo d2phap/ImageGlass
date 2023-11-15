@@ -1607,10 +1607,10 @@ public static class Config
             }
 
 
-            if (result.ContainsKey(item.Key))
+            if (result.TryGetValue(item.Key, out List<Hotkey>? value))
             {
-                result[item.Key].Clear();
-                result[item.Key].AddRange(keyList);
+                value.Clear();
+                value.AddRange(keyList);
             }
             else
             {
@@ -2038,7 +2038,7 @@ public static class Config
     public static HashSet<string> GetImageFormats(string formats)
     {
         var formatList = formats
-            .Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .ToHashSet();
 
         return formatList;

@@ -25,6 +25,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
@@ -35,21 +36,23 @@ namespace ImageGlass;
 public partial class FrmMain : ThemedForm
 {
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP002:Dispose member", Justification = "<Pending>")]
+#pragma warning disable CA1051 // Do not declare visible instance fields
     public readonly ModernToolbar ToolbarContext = new ModernToolbar();
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
     // cancellation tokens of synchronious task
     private CancellationTokenSource? _loadCancelTokenSrc = new();
     private IProgress<ProgressReporterEventArgs> _uiReporter;
     private MovableForm _movableForm;
-    private bool _isShowingImagePreview = false;
+    private bool _isShowingImagePreview;
 
 
     // variable to back up / restore window layout when changing window mode
-    private bool _isFramelessBeforeFullscreen = false;
-    private bool _isWindowFitBeforeFullscreen = false;
+    private bool _isFramelessBeforeFullscreen;
+    private bool _isWindowFitBeforeFullscreen;
     private bool _showToolbar = true;
     private bool _showThumbnails = true;
-    private Rectangle _windowBound = new();
+    private Rectangle _windowBound;
     private FormWindowState _windowState = FormWindowState.Normal;
 
     public FrmMain() : base()
@@ -465,7 +468,7 @@ public partial class FrmMain : ThemedForm
                 {
                     // Issue #415: If the folder name ends in ALT+255 (alternate space),
                     // DirectoryInfo strips it.
-                    if (!aPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                    if (!aPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         dirPath = aPath + Path.DirectorySeparatorChar;
                     }
@@ -473,7 +476,7 @@ public partial class FrmMain : ThemedForm
                 // path is file
                 else
                 {
-                    if (string.Equals(Path.GetExtension(aPath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
+                    if (string.Equals(Path.GetExtension(aPath), ".lnk", StringComparison.OrdinalIgnoreCase))
                     {
                         dirPath = FileShortcutApi.GetTargetPathFromShortcut(aPath);
                     }
@@ -497,10 +500,8 @@ public partial class FrmMain : ThemedForm
                 // KBR 20181004 Fix observed bug: dropping multiple files from the same path
                 // would load ALL files in said path multiple times! Prevent loading the same
                 // path more than once.
-                if (!pathsLoaded.Contains(dirPath))
+                if (pathsLoaded.Add(dirPath))
                 {
-                    pathsLoaded.Add(dirPath);
-
                     var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
                     allFilesToLoad.UnionWith(imageFilenameList);
                 }
@@ -618,7 +619,7 @@ public partial class FrmMain : ThemedForm
     /// Sort and find all supported image from directory
     /// </summary>
     /// <param name="path">Image folder path</param>
-    private static IEnumerable<string> LoadImageFilesFromDirectory(string path)
+    private static ConcurrentBag<string> LoadImageFilesFromDirectory(string path)
     {
         // Get files from dir
         return DirectoryFinder.FindFiles(path,
@@ -946,7 +947,7 @@ public partial class FrmMain : ThemedForm
     private void ReportToUIThread(ProgressReporterEventArgs e)
     {
         // Image is being loaded
-        if (e.Type.Equals(nameof(Local.RaiseImageLoadingEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseImageLoadingEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageLoadingEventArgs e1)
         {
             Local.RaiseImageLoadingEvent(e1);
@@ -955,7 +956,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // Image is loaded
-        if (e.Type.Equals(nameof(Local.RaiseImageLoadedEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseImageLoadedEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageLoadedEventArgs e2)
         {
             Local.RaiseImageLoadedEvent(e2);
@@ -964,7 +965,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // Image is unloaded
-        if (e.Type.Equals(nameof(Local.RaiseImageUnloadedEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseImageUnloadedEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageEventArgs e3)
         {
             Local.RaiseImageUnloadedEvent(e3);
@@ -972,7 +973,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // Image list is loaded
-        if (e.Type.Equals(nameof(Local.RaiseImageListLoadedEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseImageListLoadedEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageListLoadedEventArgs e4)
         {
             Local.RaiseImageListLoadedEvent(e4);
@@ -981,7 +982,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // the first image is reached
-        if (e.Type.Equals(nameof(Local.RaiseFirstImageReachedEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseFirstImageReachedEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageEventArgs e5)
         {
             Local.RaiseFirstImageReachedEvent(e5);
@@ -990,7 +991,7 @@ public partial class FrmMain : ThemedForm
         }
 
         // the last image is reached
-        if (e.Type.Equals(nameof(Local.RaiseLastImageReachedEvent), StringComparison.InvariantCultureIgnoreCase)
+        if (e.Type.Equals(nameof(Local.RaiseLastImageReachedEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageEventArgs e6)
         {
             Local.RaiseLastImageReachedEvent(e6);
@@ -1592,6 +1593,7 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Executes user action
     /// </summary>
+    [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "<Pending>")]
     public async Task ExecuteUserActionAsync(SingleAction? ac)
     {
         if (ac == null) return;

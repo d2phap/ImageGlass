@@ -231,5 +231,6 @@
 
     <PropertyGroup>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+        <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
 </Project>

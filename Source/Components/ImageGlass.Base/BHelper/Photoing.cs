@@ -386,6 +386,11 @@ public partial class BHelper
     }
 
 
+#if NET7_0_OR_GREATER
+    [GeneratedRegex(@"(^data\:(?<type>image\/[a-z\+\-]*);base64,)?(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled, "en-US")]
+    private static partial Regex Base64DataUriRegex();
+#endif
+
     /// <summary>
     /// Converts base64 string to byte array, returns MIME type and raw data in byte array.
     /// </summary>
@@ -400,8 +405,11 @@ public partial class BHelper
 
         // data:image/svg-xml;base64,xxxxxxxx
         // type is optional
+#if NET7_0_OR_GREATER
+        var base64DataUri = Base64DataUriRegex();
+#else
         var base64DataUri = new Regex(@"(^data\:(?<type>image\/[a-z\+\-]*);base64,)?(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
-
+#endif
 
         var match = base64DataUri.Match(content);
         if (!match.Success)
@@ -711,6 +719,7 @@ public partial class BHelper
 
         return [];
     }
+
 
 }
 

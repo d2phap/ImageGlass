@@ -125,26 +125,27 @@ public partial class FrmSettings : WebForm
     }
 
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "<Pending>")]
     protected override async Task OnWeb2MessageReceivedAsync(Web2MessageReceivedEventArgs e)
     {
         await base.OnWeb2MessageReceivedAsync(e);
 
         // General events
         #region General events
-        if (e.Name.Equals("BtnOK"))
+        if (e.Name.Equals("BtnOK", StringComparison.Ordinal))
         {
             ApplySettings(e.Data);
             Close();
         }
-        else if (e.Name.Equals("BtnApply"))
+        else if (e.Name.Equals("BtnApply", StringComparison.Ordinal))
         {
             ApplySettings(e.Data);
         }
-        else if (e.Name.Equals("BtnCancel"))
+        else if (e.Name.Equals("BtnCancel", StringComparison.Ordinal))
         {
             Close();
         }
-        else if (e.Name.Equals("LnkHelp"))
+        else if (e.Name.Equals("LnkHelp", StringComparison.Ordinal))
         {
             _ = BHelper.OpenUrlAsync("https://imageglass.org/docs", $"from_setting_{Config.LastOpenedSetting}");
         }
@@ -154,7 +155,7 @@ public partial class FrmSettings : WebForm
         // Sidebar
         #region Sidebar
         // sidebar tab changed
-        else if (e.Name.Equals("Sidebar_Changed"))
+        else if (e.Name.Equals("Sidebar_Changed", StringComparison.Ordinal))
         {
             Config.LastOpenedSetting = e.Data;
         }
@@ -163,15 +164,15 @@ public partial class FrmSettings : WebForm
 
         // Tab General
         #region Tab General
-        else if (e.Name.Equals("Lnk_StartupDir"))
+        else if (e.Name.Equals("Lnk_StartupDir", StringComparison.Ordinal))
         {
             BHelper.OpenFilePath(e.Data);
         }
-        else if (e.Name.Equals("Lnk_ConfigDir"))
+        else if (e.Name.Equals("Lnk_ConfigDir", StringComparison.Ordinal))
         {
             BHelper.OpenFilePath(e.Data);
         }
-        else if (e.Name.Equals("Lnk_UserConfigFile"))
+        else if (e.Name.Equals("Lnk_UserConfigFile", StringComparison.Ordinal))
         {
             _ = OpenUserConfigFileAsync(e.Data);
         }
@@ -180,7 +181,7 @@ public partial class FrmSettings : WebForm
 
         // Tab Image
         #region Tab Image
-        else if (e.Name.Equals("Btn_BrowseColorProfile"))
+        else if (e.Name.Equals("Btn_BrowseColorProfile", StringComparison.Ordinal))
         {
             var profileFilePath = SelectColorProfileFile();
             profileFilePath = profileFilePath.Replace("\\", "\\\\");
@@ -190,7 +191,7 @@ public partial class FrmSettings : WebForm
                 Web2.PostWeb2Message(e.Name, $"\"{profileFilePath}\"");
             }
         }
-        else if (e.Name.Equals("Lnk_CustomColorProfile"))
+        else if (e.Name.Equals("Lnk_CustomColorProfile", StringComparison.Ordinal))
         {
             BHelper.OpenFilePath(e.Data);
         }
@@ -199,15 +200,15 @@ public partial class FrmSettings : WebForm
 
         // Tab Toolbar
         #region Tab Toolbar
-        else if (e.Name.Equals("Btn_ResetToolbarButtons"))
+        else if (e.Name.Equals("Btn_ResetToolbarButtons", StringComparison.Ordinal))
         {
             var json = BHelper.ToJson(Local.DefaultToolbarItemIds);
             Web2.PostWeb2Message(e.Name, json);
         }
-        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create")
-            || e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Edit"))
+        else if (e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create", StringComparison.Ordinal)
+            || e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Edit", StringComparison.Ordinal))
         {
-            var isCreate = e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create");
+            var isCreate = e.Name.Equals("Btn_AddCustomToolbarButton_ValidateJson_Create", StringComparison.Ordinal);
             var isValid = true;
 
             try

@@ -143,7 +143,7 @@ public partial class FrmMain
         Toolbar.Alignment = Config.EnableCenterToolbar
             ? ToolbarAlignment.Center
             : ToolbarAlignment.Left;
-        LoadToolbarButtons(!Config.ToolbarButtons.Any());
+        LoadToolbarButtons(Config.ToolbarButtons.Count == 0);
 
 
         // Thumbnail bar
@@ -867,9 +867,9 @@ public partial class FrmMain
                     hotkey = Config.GetHotkeyString(CurrentMenuHotkeys, tagModel.OnClick.Executable);
                 }
 
-                if (Config.Language.ContainsKey(langKey))
+                if (Config.Language.TryGetValue(langKey, out string? value))
                 {
-                    tItem.Text = tItem.ToolTipText = Config.Language[langKey];
+                    tItem.Text = tItem.ToolTipText = value;
 
                     if (!string.IsNullOrEmpty(hotkey))
                     {
@@ -1300,7 +1300,7 @@ public partial class FrmMain
     /// </summary>
     public void LoadDefaultMouseClickActions(bool forced = false)
     {
-        if (forced || !Config.MouseClickActions.Any())
+        if (forced || Config.MouseClickActions.Count == 0)
         {
             Config.MouseClickActions.Add(MouseClickEvent.LeftDoubleClick,
                 new ToggleAction(new(nameof(IG_AutoSetActualSize))));
@@ -1322,7 +1322,7 @@ public partial class FrmMain
     /// </summary>
     public static void LoadDefaultMouseWheelActions(bool forced = false)
     {
-        if (forced || !Config.MouseWheelActions.Any())
+        if (forced || Config.MouseWheelActions.Count == 0)
         {
             Config.MouseWheelActions.Add(MouseWheelEvent.Scroll, MouseWheelAction.Zoom);
             Config.MouseWheelActions.Add(MouseWheelEvent.CtrlAndScroll, MouseWheelAction.PanVertically);

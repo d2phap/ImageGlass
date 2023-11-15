@@ -77,23 +77,23 @@ public partial class FrmAbout : WebForm
     {
         await base.OnWeb2MessageReceivedAsync(e);
 
-        if (e.Name.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        if (e.Name.Equals("BtnImageGlassStore", StringComparison.OrdinalIgnoreCase))
         {
             BHelper.OpenImageGlassMsStore();
         }
-        else if (e.Name.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("BtnCheckForUpdate", StringComparison.OrdinalIgnoreCase))
         {
             FrmMain.IG_CheckForUpdate(true);
         }
-        else if (e.Name.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("BtnDonate", StringComparison.OrdinalIgnoreCase))
         {
             _ = BHelper.OpenUrlAsync("https://imageglass.org/support#donation", "from_about_donate");
         }
-        else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("BtnClose", StringComparison.OrdinalIgnoreCase))
         {
             Close();
         }
-        else if (e.Name.Equals("ViewLicenseFile", StringComparison.InvariantCultureIgnoreCase))
+        else if (e.Name.Equals("ViewLicenseFile", StringComparison.OrdinalIgnoreCase))
         {
             var filePath = App.StartUpDir(Dir.License, e.Data);
 
