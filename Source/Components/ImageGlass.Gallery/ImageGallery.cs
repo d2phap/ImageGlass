@@ -661,7 +661,9 @@ public partial class ImageGallery : Control, IComponent
     /// This property is not relevant for this class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(""), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#pragma warning disable CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
     public override string Text { get; set; } = string.Empty;
+#pragma warning restore CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
 
     /// <summary>
     /// Gets or sets the size of image thumbnails.

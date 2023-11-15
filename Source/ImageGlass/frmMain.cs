@@ -332,7 +332,7 @@ public partial class FrmMain : ThemedForm
             // get path from params
             var cmdPath = args
                 .Skip(1)
-                .FirstOrDefault(i => !i.StartsWith(Const.CONFIG_CMD_PREFIX));
+                .FirstOrDefault(i => !i.StartsWith(Const.CONFIG_CMD_PREFIX, StringComparison.Ordinal));
 
             if (!string.IsNullOrEmpty(cmdPath))
             {
@@ -634,7 +634,7 @@ public partial class FrmMain : ThemedForm
                 if (fi.FullName == null)
                     return false;
 
-                var extension = fi.Extension.ToLower();
+                var extension = fi.Extension.ToLowerInvariant();
 
                 // checks if image is hidden and ignores it if so
                 if (!Config.ShouldLoadHiddenImages)
@@ -800,7 +800,7 @@ public partial class FrmMain : ThemedForm
                 readSettings.FirstFrameOnly = Config.SingleFrameFormats.Contains(photo.Extension);
 
                 if (isSkipCache || Local.Metadata == null
-                    || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)
+                    || !Local.Metadata.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)
                     || Local.Metadata.FrameIndex != frameIndex)
                 {
                     Local.Metadata = PhotoCodec.LoadMetadata(filePath, readSettings);
@@ -1237,7 +1237,7 @@ public partial class FrmMain : ThemedForm
                     var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
 
                     if (thumb != null
-                        && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                        && thumbnailPath.Equals(filePath, StringComparison.OrdinalIgnoreCase))
                     {
                         wicSrc?.Dispose();
                         wicSrc = BHelper.ToWicBitmapSource(thumb);
@@ -1568,7 +1568,7 @@ public partial class FrmMain : ThemedForm
                         ? Local.Metadata.ColorProfile
                         : "-";
 
-                    if (Local.Metadata.ColorSpace.Equals(colorProfile, StringComparison.InvariantCultureIgnoreCase))
+                    if (Local.Metadata.ColorSpace.Equals(colorProfile, StringComparison.OrdinalIgnoreCase))
                     {
                         ImageInfo.ColorSpace = Local.Metadata.ColorSpace;
                     }
@@ -1594,6 +1594,7 @@ public partial class FrmMain : ThemedForm
     /// Executes user action
     /// </summary>
     [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "<Pending>")]
+    [SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "<Pending>")]
     public async Task ExecuteUserActionAsync(SingleAction? ac)
     {
         if (ac == null) return;
@@ -1608,7 +1609,7 @@ public partial class FrmMain : ThemedForm
         var mnu = MnuMain.FindMenuItem(ac.Executable);
 
         if (mnu != null) mnu.PerformClick();
-        else if (ac.Executable.StartsWith("Mnu"))
+        else if (ac.Executable.StartsWith("Mnu", StringComparison.Ordinal))
         {
             error = new MissingFieldException(string.Format(Config.Language[$"{langPath}._MenuNotFound"], ac.Executable));
         }
@@ -1617,7 +1618,7 @@ public partial class FrmMain : ThemedForm
 
         // Executable is a predefined function in FrmMain.IGMethods
         #region IGMethods executable
-        else if (ac.Executable.StartsWith("IG_"))
+        else if (ac.Executable.StartsWith("IG_", StringComparison.Ordinal))
         {
             // Find the private method in FrmMain
             if (GetType().GetMethod(ac.Executable) is MethodInfo method)

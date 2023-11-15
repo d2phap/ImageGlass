@@ -238,7 +238,7 @@ public class DiskCache
         using var md5 = MD5.Create();
         var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(key));
 
-        return BitConverter.ToString(hash).Replace("-", "").ToLower();
+        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
     }
 
     /// <summary>

@@ -790,9 +790,9 @@ public partial class ImageGallery
                 {
                     if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop))
                     {
-                        var filenames = (string[])e.Data.GetData(DataFormats.FileDrop);
+                        var filenames = (string[]?)e.Data.GetData(DataFormats.FileDrop);
 
-                        _imageGallery.OnDropFiles(new DropFileEventArgs(index, filenames));
+                        _imageGallery.OnDropFiles(new DropFileEventArgs(index, filenames ?? []));
                     }
                 }
             }
@@ -1050,7 +1050,7 @@ public partial class ImageGallery
         /// </summary>
         private void ScrollTimer_Tick(object? sender, EventArgs e)
         {
-            var delta = (int)scrollTimer.Tag;
+            var delta = (int?)scrollTimer.Tag ?? SystemInformation.MouseWheelScrollDelta;
             var location = _imageGallery.PointToClient(MousePosition);
 
             _imageGallery.OnMouseMove(new(MouseButtons, 0, location.X, location.Y, 0));

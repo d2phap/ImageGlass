@@ -24,8 +24,8 @@ namespace ImageGlass;
 
 public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 {
-    private Color? _pickedColor = null;
-    private Point _pickedLocation = Point.Empty;
+    private Color? _pickedColor;
+    private Point _pickedLocation;
 
 
     public string ToolId => "ColorPicker";

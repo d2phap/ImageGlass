@@ -420,7 +420,7 @@ public partial class BHelper
 
         var base64Data = match.Groups["data"].Value;
         var byteData = Convert.FromBase64String(base64Data);
-        var mimeType = match.Groups["type"].Value.ToLower();
+        var mimeType = match.Groups["type"].Value.ToLowerInvariant();
 
         if (mimeType.Length == 0)
         {

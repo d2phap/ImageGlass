@@ -10,6 +10,7 @@
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Platforms>x64;ARM64</Platforms>
     <Configurations>Debug;Release;Publish_Release</Configurations>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">

@@ -93,7 +93,7 @@ internal static class Program
             return Config.ShowDefaultIgCommandError(nameof(igcmd));
         }
 
-        var topCmd = CmdArgs[0].ToLower().Trim();
+        var topCmd = CmdArgs[0].ToLowerInvariant().Trim();
 
 
         #region SET_WALLPAPER <string imgPath> [int style]

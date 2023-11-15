@@ -249,24 +249,24 @@ public partial class FrmSettings : WebForm
 
         // Tab File type associations
         #region Tab ile type associations
-        else if (e.Name.Equals("Btn_OpenExtIconFolder"))
+        else if (e.Name.Equals("Btn_OpenExtIconFolder", StringComparison.Ordinal))
         {
             var extIconDir = App.ConfigDir(PathType.Dir, Dir.ExtIcons);
             BHelper.OpenFolderPath(extIconDir);
         }
-        else if (e.Name.Equals("Btn_MakeDefaultViewer"))
+        else if (e.Name.Equals("Btn_MakeDefaultViewer", StringComparison.Ordinal))
         {
             FrmMain.IG_SetDefaultPhotoViewer();
         }
-        else if (e.Name.Equals("Btn_RemoveDefaultViewer"))
+        else if (e.Name.Equals("Btn_RemoveDefaultViewer", StringComparison.Ordinal))
         {
             FrmMain.IG_RemoveDefaultPhotoViewer();
         }
-        else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting"))
+        else if (e.Name.Equals("Lnk_OpenDefaultAppsSetting", StringComparison.Ordinal))
         {
             _ = BHelper.OpenUrlAsync("ms-settings:defaultapps?registeredAppUser=ImageGlass");
         }
-        else if (e.Name.Equals("Btn_ResetFileFormats"))
+        else if (e.Name.Equals("Btn_ResetFileFormats", StringComparison.Ordinal))
         {
             Web2.PostWeb2Message("Btn_ResetFileFormats", $"\"{Const.IMAGE_FORMATS}\"");
         }
@@ -275,18 +275,18 @@ public partial class FrmSettings : WebForm
 
         // Tab Language
         #region Tab Language
-        else if (e.Name.Equals("Btn_RefreshLanguageList"))
+        else if (e.Name.Equals("Btn_RefreshLanguageList", StringComparison.Ordinal))
         {
             WebUI.UpdateLangListJson(true);
             var langListJson = BHelper.ToJson(WebUI.LangList);
 
             Web2.PostWeb2Message(e.Name, langListJson);
         }
-        else if (e.Name.Equals("Lnk_InstallLanguage"))
+        else if (e.Name.Equals("Lnk_InstallLanguage", StringComparison.Ordinal))
         {
             _ = InstallLanguagePackAsync();
         }
-        else if (e.Name.Equals("Lnk_ExportLanguage"))
+        else if (e.Name.Equals("Lnk_ExportLanguage", StringComparison.Ordinal))
         {
             _ = FrmSettings.ExportLanguagePackAsync(e.Data);
         }
@@ -295,7 +295,8 @@ public partial class FrmSettings : WebForm
 
         // Tab Appearance
         #region Tab Appearance
-        else if (e.Name.Equals("Btn_BackgroundColor") || e.Name.Equals("Btn_SlideshowBackgroundColor"))
+        else if (e.Name.Equals("Btn_BackgroundColor", StringComparison.Ordinal)
+            || e.Name.Equals("Btn_SlideshowBackgroundColor", StringComparison.Ordinal))
         {
             var currentColor = BHelper.ColorFromHex(e.Data);
             var newColor = OpenColorPicker(currentColor);
@@ -308,23 +309,23 @@ public partial class FrmSettings : WebForm
 
             Web2.PostWeb2Message(e.Name, $"\"{hexColor}\"");
         }
-        else if (e.Name.Equals("Btn_InstallTheme"))
+        else if (e.Name.Equals("Btn_InstallTheme", StringComparison.Ordinal))
         {
             _ = InstallThemeAsync();
         }
-        else if (e.Name.Equals("Btn_RefreshThemeList"))
+        else if (e.Name.Equals("Btn_RefreshThemeList", StringComparison.Ordinal))
         {
             WebUI.UpdateThemeListJson(true);
             var themeListJson = BHelper.ToJson(WebUI.ThemeList);
 
             Web2.PostWeb2Message("Btn_RefreshThemeList", themeListJson);
         }
-        else if (e.Name.Equals("Btn_OpenThemeFolder"))
+        else if (e.Name.Equals("Btn_OpenThemeFolder", StringComparison.Ordinal))
         {
             var themeDir = App.ConfigDir(PathType.Dir, Dir.Themes);
             BHelper.OpenFolderPath(themeDir);
         }
-        else if (e.Name.Equals("Delete_Theme_Pack"))
+        else if (e.Name.Equals("Delete_Theme_Pack", StringComparison.Ordinal))
         {
             _ = UninstallThemeAsync(e.Data);
         }
@@ -334,14 +335,14 @@ public partial class FrmSettings : WebForm
         // Global
         #region Global
         // open file picker
-        else if (e.Name.Equals("OpenFilePicker"))
+        else if (e.Name.Equals("OpenFilePicker", StringComparison.Ordinal))
         {
             var filePaths = OpenFilePickerJson(e.Data);
             Web2.PostWeb2Message("OpenFilePicker", filePaths);
         }
 
         // open hotkey picker
-        else if (e.Name.Equals("OpenHotkeyPicker"))
+        else if (e.Name.Equals("OpenHotkeyPicker", StringComparison.Ordinal))
         {
             var hotkey = OpenHotkeyPickerJson();
             Web2.PostWeb2Message("OpenHotkeyPicker", $"\"{hotkey}\"");

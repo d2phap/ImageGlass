@@ -25,9 +25,9 @@ namespace ImageGlass;
 
 public partial class FrmToolNotFound : DialogForm
 {
-    private string _toolId = string.Empty;
+    private string _toolId;
 
-    private IgTool? Tool => Config.Tools.SingleOrDefault(i => i.ToolId.Equals(_toolId));
+    private IgTool? Tool => Config.Tools.SingleOrDefault(i => i.ToolId.Equals(_toolId, StringComparison.Ordinal));
 
 
     /// <summary>

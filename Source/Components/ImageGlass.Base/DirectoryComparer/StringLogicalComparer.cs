@@ -84,7 +84,7 @@ public static class StringLogicalComparer
                 {
                     if (letter1 && letter2)
                     {
-                        r = char.ToLower(s1[i1]).CompareTo(char.ToLower(s2[i2]));
+                        r = char.ToLowerInvariant(s1[i1]).CompareTo(char.ToLowerInvariant(s2[i2]));
                     }
                     else
                     {

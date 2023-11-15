@@ -30,10 +30,11 @@ using WicNet;
 
 namespace ImageGlass;
 
-internal class Local
+public class Local
 {
     private static CancellationTokenSource? _gcTokenSrc;
     private static FrmSettings _frmSetting;
+
     public static FrmMain? FrmMain;
 
 
@@ -460,7 +461,7 @@ internal class Local
     /// <summary>
     /// Gets, sets app state
     /// </summary>
-    public static bool IsBusy { get; set; } = false;
+    public static bool IsBusy { get; set; }
 
     /// <summary>
     /// Gets, sets images list
@@ -475,7 +476,7 @@ internal class Local
     /// <summary>
     /// Gets, sets the current frame index of the viewing image
     /// </summary>
-    public static uint CurrentFrameIndex { get; set; } = 0;
+    public static uint CurrentFrameIndex { get; set; }
 
     /// <summary>
     /// Gets, sets the changes of the current viewing image.
@@ -485,7 +486,7 @@ internal class Local
     /// <summary>
     /// Gets, sets the value if the current image is error
     /// </summary>
-    public static bool IsImageError { get; set; } = false;
+    public static bool IsImageError { get; set; }
 
     /// <summary>
     /// <para>The current "initial" path (file or dir) we're viewing. Used when the user changes the sort settings: we need to rebuild the image list, but otherwise we don't know what image/folder we started with.</para>
@@ -572,7 +573,7 @@ internal class Local
         {
             var extension = Path.GetExtension(TempImagePath);
 
-            if (extension.Equals(ext, StringComparison.InvariantCultureIgnoreCase))
+            if (extension.Equals(ext, StringComparison.OrdinalIgnoreCase))
             {
                 return TempImagePath;
             }
@@ -735,7 +736,7 @@ internal class Local
 
         // get tool info
         var item = Local.ToolPipeServers.FirstOrDefault(i => i.Value.PipeName
-            .Equals(e.PipeName, StringComparison.InvariantCultureIgnoreCase));
+            .Equals(e.PipeName, StringComparison.OrdinalIgnoreCase));
 
         if (item.Key is not string toolId) return;
         var toolServer = item.Value;

@@ -116,8 +116,8 @@ public partial class FrmMain
         var newFilePath = e.FullPath;
         var oldFilePath = e.OldFullPath;
 
-        var oldExt = Path.GetExtension(oldFilePath).ToLower();
-        var newExt = Path.GetExtension(newFilePath).ToLower();
+        var oldExt = Path.GetExtension(oldFilePath).ToLowerInvariant();
+        var newExt = Path.GetExtension(newFilePath).ToLowerInvariant();
 
         // Only watch the supported file types
         if (!Config.FileFormats.Contains(oldExt) && !Config.FileFormats.Contains(newExt))
@@ -190,7 +190,7 @@ public partial class FrmMain
         if (Local.IsBusy) return;
 
         // Only watch the supported file types
-        var ext = Path.GetExtension(e.FullPath).ToLower();
+        var ext = Path.GetExtension(e.FullPath).ToLowerInvariant();
         if (!Config.FileFormats.Contains(ext)) return;
 
         // update the viewing image
@@ -219,7 +219,7 @@ public partial class FrmMain
     private void FileWatcher_OnCreated(object? sender, FileChangedEvent e)
     {
         // Only watch the supported file types
-        var ext = Path.GetExtension(e.FullPath).ToLower();
+        var ext = Path.GetExtension(e.FullPath).ToLowerInvariant();
 
         if (!Config.FileFormats.Contains(ext))
         {
@@ -236,7 +236,7 @@ public partial class FrmMain
     private void FileWatcher_OnDeleted(object? sender, FileChangedEvent e)
     {
         // Only watch the supported file types
-        var ext = Path.GetExtension(e.FullPath).ToLower();
+        var ext = Path.GetExtension(e.FullPath).ToLowerInvariant();
         if (!Config.FileFormats.Contains(ext))
         {
             return;

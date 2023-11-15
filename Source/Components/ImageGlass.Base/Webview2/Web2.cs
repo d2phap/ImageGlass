@@ -359,7 +359,7 @@ public class Web2 : WebView2
         if (!this.IsWeb2Ready) return;
 
         await this.ExecuteScriptAsync($"""
-            document.documentElement.setAttribute('window-focus', '{focus.ToString().ToLower()}');
+            document.documentElement.setAttribute('window-focus', '{focus.ToString().ToLowerInvariant()}');
             """);
     }
 

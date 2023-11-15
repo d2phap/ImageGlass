@@ -1515,7 +1515,7 @@ public partial class FrmMain
 
 
         // file was overriden
-        if (destFilePath.Equals(srcFilePath, StringComparison.InvariantCultureIgnoreCase))
+        if (destFilePath.Equals(srcFilePath, StringComparison.OrdinalIgnoreCase))
         {
             // update cache of the modified item
             Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
@@ -1917,7 +1917,7 @@ public partial class FrmMain
         try
         {
             // Issue 73: Windows ignores case-only changes
-            if (string.Equals(oldFilePath, newFilePath, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(oldFilePath, newFilePath, StringComparison.OrdinalIgnoreCase))
             {
                 // user changing only the case of the filename. Need to perform a trick.
                 File.Move(oldFilePath, oldFilePath + "_temp");

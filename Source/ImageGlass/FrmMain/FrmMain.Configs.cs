@@ -560,7 +560,7 @@ public partial class FrmMain
 
                 // load check state:
                 // Executable is menu item
-                if (tagModel.OnClick.Executable.StartsWith("Mnu"))
+                if (tagModel.OnClick.Executable.StartsWith("Mnu", StringComparison.Ordinal))
                 {
                     var field = GetType().GetField(tagModel.OnClick.Executable);
                     var mnu = field?.GetValue(this) as ToolStripMenuItem;
@@ -831,7 +831,7 @@ public partial class FrmMain
 
             mnu.Enabled = false;
 
-            if (!mnu.Text.EndsWith("🔒"))
+            if (!mnu.Text.EndsWith("🔒", StringComparison.OrdinalIgnoreCase))
             {
                 mnu.Text += " 🔒";
             }
@@ -1113,7 +1113,7 @@ public partial class FrmMain
 
     private async Task OpenExternalToolAsync(ToolStripMenuItem mnu)
     {
-        if (Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name)) is not IgTool tool) return;
+        if (Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name, StringComparison.Ordinal)) is not IgTool tool) return;
 
 
         var visible = !mnu.Checked;

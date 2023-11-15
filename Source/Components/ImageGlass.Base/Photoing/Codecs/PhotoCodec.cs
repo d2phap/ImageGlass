@@ -221,7 +221,7 @@ public static class PhotoCodec
             ApplyColorProfileForAll = false,
         };
         var settings = ParseSettings(options, false, filePath);
-        var ext = Path.GetExtension(filePath).ToLower();
+        var ext = Path.GetExtension(filePath).ToLowerInvariant();
 
 
         var imgData = BHelper.RunSync(() => ReadMagickImageAsync(filePath, ext, settings, options, null, new()));

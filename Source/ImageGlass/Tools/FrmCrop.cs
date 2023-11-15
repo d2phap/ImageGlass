@@ -26,9 +26,9 @@ namespace ImageGlass;
 public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
 {
     private Keys _squareRatioSelectionKey = Keys.Shift | Keys.ShiftKey;
-    private bool _isSquareRatioSelectionKeyPressed = false;
-    private bool _isDefaultSelectionLoaded = false;
-    private Rectangle _lastSelectionArea = Rectangle.Empty;
+    private bool _isSquareRatioSelectionKeyPressed;
+    private bool _isDefaultSelectionLoaded;
+    private Rectangle _lastSelectionArea;
 
 
     public string ToolId => "CropTool";

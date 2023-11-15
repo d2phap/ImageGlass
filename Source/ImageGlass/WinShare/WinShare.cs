@@ -29,7 +29,7 @@ public class WinShare
     private static DataPackage? _dp;
     private static readonly List<string> _filenames = new();
 
-    public static bool IsShareShown { get; set; } = false;
+    public static bool IsShareShown { get; set; }
 
 
     /// <summary>
