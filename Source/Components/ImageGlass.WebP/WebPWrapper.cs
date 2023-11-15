@@ -417,7 +417,7 @@ public sealed class WebPWrapper : IDisposable
         if (bmp.PixelFormat != PixelFormat.Format24bppRgb && bmp.PixelFormat != PixelFormat.Format32bppArgb)
             throw new NotSupportedException("Only support Format24bppRgb and Format32bppArgb pixelFormat.");
 
-        BitmapData bmpData = null;
+        BitmapData? bmpData = null;
         IntPtr unmanagedData = IntPtr.Zero;
 
         try
@@ -506,7 +506,7 @@ public sealed class WebPWrapper : IDisposable
         if (bmp.PixelFormat != PixelFormat.Format24bppRgb && bmp.PixelFormat != PixelFormat.Format32bppArgb)
             throw new NotSupportedException("Only support Format24bppRgb and Format32bppArgb pixelFormat.");
 
-        BitmapData bmpData = null;
+        BitmapData? bmpData = null;
         IntPtr unmanagedData = IntPtr.Zero;
         try
         {
@@ -642,8 +642,8 @@ public sealed class WebPWrapper : IDisposable
     {
         GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
 
-        Bitmap bitmap = null;
-        BitmapData bmpData = null;
+        Bitmap? bitmap = null;
+        BitmapData? bmpData = null;
         try
         {
             WebPAnimDecoderOptions dec_options = new WebPAnimDecoderOptions();
@@ -771,8 +771,8 @@ public sealed class WebPWrapper : IDisposable
     {
         WebPPicture wpicSource = new WebPPicture();
         WebPPicture wpicReference = new WebPPicture();
-        BitmapData sourceBmpData = null;
-        BitmapData referenceBmpData = null;
+        BitmapData? sourceBmpData = null;
+        BitmapData? referenceBmpData = null;
         float[] result = new float[5];
         GCHandle pinnedResult = GCHandle.Alloc(result, GCHandleType.Pinned);
 
@@ -868,10 +868,10 @@ public sealed class WebPWrapper : IDisposable
     /// <returns>Compressed data</returns>
     private byte[] AdvancedEncode(Bitmap bmp, WebPConfig config, bool info)
     {
-        byte[] rawWebP = null;
-        byte[] dataWebp = null;
+        byte[]? rawWebP = null;
+        byte[]? dataWebp = null;
         WebPPicture wpic = new WebPPicture();
-        BitmapData bmpData = null;
+        BitmapData? bmpData = null;
         WebPAuxStats stats = new WebPAuxStats();
         IntPtr ptrStats = IntPtr.Zero;
         GCHandle pinnedArrayHandle = new GCHandle();
@@ -1226,7 +1226,7 @@ internal sealed partial class UnsafeNativeMethods
     /// <returns></returns>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int WebPMemoryWrite([In()] IntPtr data, UIntPtr data_size, ref WebPPicture wpic);
-    internal static WebPMemoryWrite OnCallback;
+    internal static WebPMemoryWrite? OnCallback;
 
     /// <summary>Compress to WebP format</summary>
     /// <param name="config">The configuration structure for compression parameters</param>
@@ -1318,9 +1318,9 @@ internal sealed partial class UnsafeNativeMethods
         }
     }
     [DllImport("libwebp_x86.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeBGRInto")]
-    private static extern IntPtr WebPDecodeBGRInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeBGRInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
     [DllImport("libwebp.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeBGRInto")]
-    private static extern IntPtr WebPDecodeBGRInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeBGRInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
 
     /// <summary>Decode WEBP image pointed to by *data and returns BGRA samples into a preallocated buffer</summary>
     /// <param name="data">Pointer to WebP image data</param>
@@ -1345,9 +1345,9 @@ internal sealed partial class UnsafeNativeMethods
         }
     }
     [DllImport("libwebp_x86.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeBGRAInto")]
-    private static extern IntPtr WebPDecodeBGRAInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeBGRAInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
     [DllImport("libwebp.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeBGRAInto")]
-    private static extern IntPtr WebPDecodeBGRAInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeBGRAInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
 
     /// <summary>Decode WEBP image pointed to by *data and returns ARGB samples into a preallocated buffer</summary>
     /// <param name="data">Pointer to WebP image data</param>
@@ -1372,9 +1372,9 @@ internal sealed partial class UnsafeNativeMethods
         }
     }
     [DllImport("libwebp_x86.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeARGBInto")]
-    private static extern IntPtr WebPDecodeARGBInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeARGBInto_x86([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
     [DllImport("libwebp.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPDecodeARGBInto")]
-    private static extern IntPtr WebPDecodeARGBInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
+    private static extern IntPtr? WebPDecodeARGBInto_x64([InAttribute()] IntPtr data, UIntPtr data_size, IntPtr output_buffer, int output_buffer_size, int output_stride);
 
     /// <summary>Initialize the configuration as empty. This function must always be called first, unless WebPGetFeatures() is to be called</summary>
     /// <param name="webPDecoderConfig">Configuration structure</param>
