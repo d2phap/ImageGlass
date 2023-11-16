@@ -41,7 +41,7 @@ public partial class FrmSettings : WebForm
         if (DesignMode) return;
 
         Web2.PageName = "settings";
-        Text = Config.Language[$"{nameof(FrmSettings)}._Text"];
+        Text = Config.Language[$"{nameof(FrmMain)}.{nameof(FrmMain.MnuSettings)}"];
         CloseFormHotkey = Keys.Escape;
 
         // load window placement from settings

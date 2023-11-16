@@ -308,10 +308,10 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuPanUp", "Pan image up"); //v9.0
         _ = TryAdd("FrmMain.MnuPanDown", "Pan image down"); //v9.0
 
-        _ = TryAdd("FrmMain.MnuPanToLeftSide", "Pan image to the left side"); //v9.0
-        _ = TryAdd("FrmMain.MnuPanToRightSide", "Pan image to the right side"); //v9.0
-        _ = TryAdd("FrmMain.MnuPanToTop", "Pan image to the top"); //v9.0
-        _ = TryAdd("FrmMain.MnuPanToBottom", "Pan image to the bottom"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToLeftSide", "Pan image to left edge"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToRightSide", "Pan image to right edge"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToTop", "Pan image to top"); //v9.0
+        _ = TryAdd("FrmMain.MnuPanToBottom", "Pan image to bottom"); //v9.0
         #endregion // Panning
 
         #region Image
@@ -367,19 +367,19 @@ public class IgLang : Dictionary<string, string>
 
         #endregion
 
-        _ = TryAdd("FrmMain.MnuWindowFit", "Window fit"); //v7.5
-        _ = TryAdd("FrmMain.MnuWindowFit._Enable", "Window fit is enabled"); // v9.0
-        _ = TryAdd("FrmMain.MnuWindowFit._Disable", "Window fit is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuWindowFit", "Window Fit"); //v7.5
+        _ = TryAdd("FrmMain.MnuWindowFit._Enable", "Window Fit mode is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuWindowFit._Disable", "Window Fit mode is disabled"); // v9.0
 
-        _ = TryAdd("FrmMain.MnuFullScreen", "Full screen"); //v3.0
-        _ = TryAdd("FrmMain.MnuFullScreen._Enable", "Full screen window is enabled"); // v9.0
-        _ = TryAdd("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
-        _ = TryAdd("FrmMain.MnuFullScreen._Disable", "Full screen window is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFullScreen", "Full Screen"); //v3.0
+        _ = TryAdd("FrmMain.MnuFullScreen._Enable", "Full Screen mode is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit Full Screen mode."); // v2.0
+        _ = TryAdd("FrmMain.MnuFullScreen._Disable", "Full Screen mode is disabled"); // v9.0
 
         _ = TryAdd("FrmMain.MnuFrameless", "Frameless"); //v7.5
-        _ = TryAdd("FrmMain.MnuFrameless._Enable", "Frameless window is enabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFrameless._Enable", "Frameless mode is enabled"); // v9.0
         _ = TryAdd("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
-        _ = TryAdd("FrmMain.MnuFrameless._Disable", "Frameless window is disabled"); // v9.0
+        _ = TryAdd("FrmMain.MnuFrameless._Disable", "Frameless mode is disabled"); // v9.0
         _ = TryAdd("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
 
         #region Layout
@@ -400,7 +400,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
         #endregion
 
-        _ = TryAdd("FrmMain.MnuSettings", "Settings…"); // v3.0
+        _ = TryAdd("FrmMain.MnuSettings", "Settings"); // v3.0
 
         #region Help
         _ = TryAdd("FrmMain.MnuHelp", "Help"); //v7.0
@@ -458,7 +458,6 @@ public class IgLang : Dictionary<string, string>
 
 
         #region FrmSettings
-        _ = TryAdd("FrmSettings._Text", "Settings");
 
         #region Nav bar
         _ = TryAdd("FrmSettings.Nav._General", "General");
@@ -540,7 +539,7 @@ public class IgLang : Dictionary<string, string>
         // Slideshow > Slideshow
         _ = TryAdd("FrmSettings._HideMainWindowInSlideshow", "Automatically hide main window");
         _ = TryAdd("FrmSettings._ShowSlideshowCountdown", "Show slideshow countdown");
-        _ = TryAdd("FrmSettings._EnableFullscreenSlideshow", "Start slideshow in full screen mode");
+        _ = TryAdd("FrmSettings._EnableFullscreenSlideshow", "Start slideshow in Full Screen mode");
         _ = TryAdd("FrmSettings._UseRandomIntervalForSlideshow", "Use random interval");
         _ = TryAdd("FrmSettings._SlideshowInterval", "Slideshow interval:");
         _ = TryAdd("FrmSettings._SlideshowInterval._From", "From");
@@ -609,7 +608,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Toolbar
         // Toolbar > Toolbar
-        _ = TryAdd("FrmSettings.Toolbar._HideToolbarInFullscreen", "Hide toolbar in full screen mode");
+        _ = TryAdd("FrmSettings.Toolbar._HideToolbarInFullscreen", "Hide toolbar in Full Screen mode");
         _ = TryAdd("FrmSettings.Toolbar._EnableCenterToolbar", "Use center alignment for toolbar");
         _ = TryAdd("FrmSettings.Toolbar._ToolbarIconHeight", "Toolbar icon size");
 
@@ -631,7 +630,7 @@ public class IgLang : Dictionary<string, string>
 
         #region Tab Gallery
         // Gallery > Gallery
-        _ = TryAdd("FrmSettings._HideGalleryInFullscreen", "Hide gallery in full screen mode");
+        _ = TryAdd("FrmSettings._HideGalleryInFullscreen", "Hide gallery in Full Screen mode");
         _ = TryAdd("FrmSettings._ShowGalleryScrollbars", "Show gallery scrollbars");
         _ = TryAdd("FrmSettings._ShowGalleryFileName", "Show thumbnail filename");
         _ = TryAdd("FrmSettings._ThumbnailSize", "Thumbnail size (in pixels)");
