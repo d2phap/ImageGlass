@@ -49,7 +49,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\@imageglass\ImageGlass.Tools\Source\ImageGlass.Tools\ImageGlass.Tools.csproj" />
+    <PackageReference Include="ImageGlass.Tools" Version="1.9070.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />

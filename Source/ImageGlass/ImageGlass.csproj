@@ -131,6 +131,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="ImageGlass.Tools" Version="1.9070.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -138,7 +139,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\@imageglass\ImageGlass.Tools\Source\ImageGlass.Tools\ImageGlass.Tools.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
