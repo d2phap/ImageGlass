@@ -1,209 +1,214 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64;ARM64</Platforms>
-    <ApplicationIcon>icon256.ico</ApplicationIcon>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Platforms>x64;ARM64</Platforms>
+        <ApplicationIcon>icon256.ico</ApplicationIcon>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
-    <AssemblyTitle>ImageGlass</AssemblyTitle>
-    <Description>A lightweight, versatile image viewer</Description>
-    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
-    <Company>Duong Dieu Phap</Company>
-    <Version>9.0.6.1108</Version>
-    <FileVersion>$(Version)</FileVersion>
-    <VersionPrefix>9.0.6</VersionPrefix>
-    <VersionSuffix>rc</VersionSuffix>
-    
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-    <DebugType>portable</DebugType>
-    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
-    <Configurations>Debug;Release;Publish_Release</Configurations>
+        <AssemblyTitle>ImageGlass</AssemblyTitle>
+        <Description>A lightweight, versatile image viewer</Description>
+        <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
+        <Company>Duong Dieu Phap</Company>
+        <Version>9.0.6.1117</Version>
+        <FileVersion>$(Version)</FileVersion>
 
-    <LangVersion>latest</LangVersion>
-    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-  </PropertyGroup>
-    
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+        <DebugType>portable</DebugType>
+        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+        <Configurations>Debug;Release;Publish_Release</Configurations>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+        <LangVersion>latest</LangVersion>
+        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <NeutralLanguage>en</NeutralLanguage>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="License\Apache License 2.0.txt" />
-    <None Remove="License\CsWin32.txt" />
-    <None Remove="License\d2phap.txt" />
-    <None Remove="License\DirectN.txt" />
-    <None Remove="License\Google Copyright.txt" />
-    <None Remove="License\libwebp.txt" />
-    <None Remove="License\MagicScaler.txt" />
-    <None Remove="License\Microsoft Copyright.txt" />
-    <None Remove="License\MIT License.txt" />
-    <None Remove="License\Webview2.txt" />
-    <None Remove="License\WicNet.txt" />
-    <None Remove="styles.css" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="icon256.ico" />
-    <Content Include="License\Apache License 2.0.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\CsWin32.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\d2phap.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\DirectN.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\libwebp.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\MagicScaler.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\Webview2.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="License\WicNet.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FileWatcherEx" Version="2.5.0" />
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="ImageGlass.Tools" Version="1.9070.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
-    <ProjectReference Include="..\Components\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
-    <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
-    <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
-    <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Viewer.csproj" />
-    <ProjectReference Include="..\igcmd\igcmd.csproj" Condition="'$(Configuration)'!='Publish_Release'" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="License\Apache License 2.0.txt" />
+        <None Remove="License\CsWin32.txt" />
+        <None Remove="License\d2phap.txt" />
+        <None Remove="License\DirectN.txt" />
+        <None Remove="License\Google Copyright.txt" />
+        <None Remove="License\libwebp.txt" />
+        <None Remove="License\MagicScaler.txt" />
+        <None Remove="License\Microsoft Copyright.txt" />
+        <None Remove="License\MIT License.txt" />
+        <None Remove="License\Webview2.txt" />
+        <None Remove="License\WicNet.txt" />
+        <None Remove="styles.css" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="FrmMain\FrmMain.PicMainEvents.cs" />
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include="icon256.ico" />
+        <Content Include="License\Apache License 2.0.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\CsWin32.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\d2phap.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\DirectN.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\libwebp.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\MagicScaler.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\Webview2.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="License\WicNet.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Icons\ArrowDown.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\ArrowExchange.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\ArrowLeft.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\ArrowRight.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\ArrowUp.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Copy.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\ResetSelection.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Selection.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Setting.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Delete.svg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Edit.svg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Moon.svg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Sun.svg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="FileWatcherEx" Version="2.6.0" />
+        <PackageReference Include="IDisposableAnalyzers" Version="4.0.7">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="ImageGlass.Tools" Version="1.9070.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
+        <ProjectReference Include="..\Components\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
+        <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
+        <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
+        <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Viewer.csproj" />
+        <ProjectReference Include="..\igcmd\igcmd.csproj" Condition="'$(Configuration)'!='Publish_Release'" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="FrmMain\FrmMain.PicMainEvents.cs" />
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Icons\ArrowDown.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\ArrowExchange.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\ArrowLeft.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\ArrowRight.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\ArrowUp.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Copy.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\ResetSelection.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Selection.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Setting.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Delete.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Edit.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Moon.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Icons\Sun.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
 
     <!-- Clean files -->
@@ -215,7 +220,7 @@
         <Delete Files="@(IG_FilesToClean)" />
     </Target>
 
-    
+
     <!-- Copy resources -->
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <ItemGroup>
@@ -223,15 +228,10 @@
             <IG_Langs Include="..\..\Setup\Assets\Language\**\*.*" />
             <Web_UI Include="..\Components\ImageGlass.Settings\WebUI\dist\**\*.*" />
         </ItemGroup>
-        
+
         <Copy SourceFiles="@(IG_Themes)" DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(IG_Langs)" DestinationFolder="$(OutputPath)\Language\%(RecursiveDir)" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(Web_UI)" DestinationFolder="$(OutputPath)\WebUI\%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
 
-    <PropertyGroup>
-        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-        <AnalysisLevel>latest-recommended</AnalysisLevel>
-        <NeutralLanguage>en</NeutralLanguage>
-    </PropertyGroup>
 </Project>

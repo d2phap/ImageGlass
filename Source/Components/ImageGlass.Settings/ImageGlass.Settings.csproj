@@ -6,9 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64;ARM64</Platforms>
-    <Version>9.0.6.1008</Version>
+    <Version>9.0.7.1125</Version>
     <FileVersion>$(Version)</FileVersion>
-    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
     <Configurations>Debug;Release;Publish_Release</Configurations>
     <LangVersion>latest</LangVersion>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>

@@ -9,7 +9,7 @@
     <Platforms>x64;ARM64</Platforms>
     <Version>1.3.2</Version>
     <FileVersion>$(Version)</FileVersion>
-    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
       
   </PropertyGroup>
 
