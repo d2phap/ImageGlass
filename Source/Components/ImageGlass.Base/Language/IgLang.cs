@@ -276,13 +276,13 @@ public class IgLang : Dictionary<string, string>
 
         _ = TryAdd("FrmMain.MnuGoTo", "Go to…"); //v3.0
         _ = TryAdd("FrmMain.MnuGoTo._Description", "Enter the image index to view, and then press ENTER");
-        _ = TryAdd("FrmMain.MnuGoToFirst", "Go to the first image"); //v3.0
-        _ = TryAdd("FrmMain.MnuGoToLast", "Go to the last image"); //v3.0
+        _ = TryAdd("FrmMain.MnuGoToFirst", "Go to first image"); //v3.0
+        _ = TryAdd("FrmMain.MnuGoToLast", "Go to last image"); //v3.0
 
         _ = TryAdd("FrmMain.MnuViewNextFrame", "View next frame"); //v7.5
         _ = TryAdd("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
-        _ = TryAdd("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
-        _ = TryAdd("FrmMain.MnuViewLastFrame", "View the last frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewFirstFrame", "View first frame"); //v7.5
+        _ = TryAdd("FrmMain.MnuViewLastFrame", "View last frame"); //v7.5
         #endregion // Navigation
 
         #region Zoom
