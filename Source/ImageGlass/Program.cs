@@ -57,8 +57,22 @@ internal static class Program
         #endregion
 
 
-        // load application configs
-        Config.Load();
+        try
+        {
+            // load application configs
+            Config.Load();
+        }
+        catch (Exception ex)
+        {
+            Config.Language = new IgLang();
+
+            Config.ShowError(null, title: Config.Language["_._Error"],
+                heading: "Could not load user settings",
+                description: $"The user configuration file:\r\n{App.ConfigDir(PathType.File, Source.UserFilename)}\r\n\r\nappears to be corrupted or contains an invalid value. Please review the details below to address the issue before proceeding.",
+                details: ex.ToString(), buttons: PopupButton.Close);
+
+            return;
+        }
 
         // check and run Quick setup
         if (CheckAndRunQuickSetup()) return;

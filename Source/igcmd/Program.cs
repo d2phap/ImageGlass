@@ -84,9 +84,17 @@ internal static class Program
         #endregion
 
 
-        // load application configs
-        Config.Load();
+        try
+        {
+            // load application configs
+            Config.Load();
+        }
+        catch (Exception)
+        {
+            Config.Language = new IgLang();
+        }
         Config.Theme.LoadTheme();
+
 
         if (CmdArgs.Length == 0)
         {
