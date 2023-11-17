@@ -1717,7 +1717,7 @@ public static class Config
         var keyDataList = GetHotkey(dict, action)
             .Select(k => k.KeyData).ToList();
 
-        return keyDataList ?? new List<Keys>(1) { defaultValue };
+        return keyDataList ?? [defaultValue];
     }
 
 

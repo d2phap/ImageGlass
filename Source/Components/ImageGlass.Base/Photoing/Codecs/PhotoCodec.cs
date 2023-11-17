@@ -1250,7 +1250,7 @@ public static class PhotoCodec
         {
             settings.SetDefines(new TiffReadDefines
             {
-                IgnoreTags = new[] {
+                IgnoreTags = [
                     // Issue https://github.com/d2phap/ImageGlass/issues/1454
                     "34022", // ColorTable
                     "34025", // ImageColorValue
@@ -1263,7 +1263,7 @@ public static class PhotoCodec
                     "32932", // Wang Annotation
                     // Issue https://github.com/d2phap/ImageGlass/issues/1617
                     "34031", // TrapIndicator
-                },
+                ],
             });
         }
         else if (ext.Equals(".APNG", StringComparison.OrdinalIgnoreCase))

@@ -11,6 +11,8 @@
     <FileVersion>$(Version)</FileVersion>
     <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
     <Configurations>Debug;Release;Publish_Release</Configurations>
+    <LangVersion>latest</LangVersion>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">

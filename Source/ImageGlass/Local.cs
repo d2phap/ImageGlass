@@ -42,8 +42,7 @@ public class Local
     /// <summary>
     /// Gets the built-in toolbar buttons.
     /// </summary>
-    public static List<ToolbarItemModel> BuiltInToolbarItems => new List<ToolbarItemModel>()
-    {
+    public static List<ToolbarItemModel> BuiltInToolbarItems => [
         new() // MnuActualSize
         {
             Id = $"Btn_{nameof(FrmMain.MnuActualSize)}",
@@ -224,13 +223,12 @@ public class Local
             Image = nameof(Config.Theme.ToolbarIcons.ZoomOut),
             OnClick = new(nameof(FrmMain.MnuZoomOut)),
         },
-    };
+    ];
 
     /// <summary>
     /// Gets the default toolbar button IDs.
     /// </summary>
-    public static List<string> DefaultToolbarItemIds => new()
-    {
+    public static List<string> DefaultToolbarItemIds => [
         $"Btn_{nameof(FrmMain.MnuOpenFile)}",
         $"Btn_{nameof(FrmMain.MnuViewPrevious)}",
         $"Btn_{nameof(FrmMain.MnuViewNext)}",
@@ -251,7 +249,7 @@ public class Local
         nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuPrint)}",
         $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
-    };
+    ];
 
 
 

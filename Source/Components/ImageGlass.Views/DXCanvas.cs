@@ -386,7 +386,7 @@ public partial class DXCanvas : DXControl
     {
         get
         {
-            if (ClientSelection.IsEmpty) return new List<SelectionResizer>();
+            if (ClientSelection.IsEmpty) return [];
 
 
             var resizerSize = DpiApi.Scale(Font.Size * 1.3f);
@@ -474,8 +474,7 @@ public partial class DXCanvas : DXControl
                     hitSize, hitSize);
 
             // 8 resizers
-            return new List<SelectionResizer>(8)
-            {
+            return [
                 new(SelectionResizerType.TopLeft, topLeft, topLeftHit),
                 new(SelectionResizerType.BottomLeft, bottomLeft, bottomLeftHit),
                 new(SelectionResizerType.TopRight, topRight, topRightHit),
@@ -485,7 +484,7 @@ public partial class DXCanvas : DXControl
                 new(SelectionResizerType.Top, top, topHit),
                 new(SelectionResizerType.Right, right, rightHit),
                 new(SelectionResizerType.Bottom, bottom, bottomHit),
-            };
+            ];
         }
     }
 

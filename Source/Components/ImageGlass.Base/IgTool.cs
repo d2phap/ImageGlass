@@ -57,7 +57,7 @@ public class IgTool
     /// Gets, sets tool hotkeys.
     /// </summary>
     [JsonConverter(typeof(HotkeyListJsonConverter))]
-    public List<Hotkey> Hotkeys { get; set; } = new List<Hotkey>();
+    public List<Hotkey> Hotkeys { get; set; } = [];
 
 
     /// <summary>

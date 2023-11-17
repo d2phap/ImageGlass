@@ -213,7 +213,7 @@ public class ImageBooster : IDisposable
     private List<int> GetQueueList(int index)
     {
         // check valid index
-        if (index < 0 || index >= ImgList.Count) return new List<int>(0);
+        if (index < 0 || index >= ImgList.Count) return [];
 
         var list = new HashSet<int> { index };
 

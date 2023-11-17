@@ -144,7 +144,7 @@ public static class ColorExtensions
     /// </summary>
     public static byte[] ToRgbaArray(this Color c)
     {
-        return new[] { c.R, c.G, c.B, c.A };
+        return [c.R, c.G, c.B, c.A];
     }
 
 
@@ -155,7 +155,7 @@ public static class ColorExtensions
     {
         if (c.R == 0 && c.G == 0 && c.B == 0)
         {
-            return new[] { 0, 0, 0, 1 };
+            return [0, 0, 0, 1];
         }
 
         var black = Math.Min(1.0 - (c.R / 255.0), Math.Min(1.0 - (c.G / 255.0), 1.0 - (c.B / 255.0)));
@@ -163,12 +163,12 @@ public static class ColorExtensions
         var magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
         var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
 
-        return new[] {
+        return [
             (int)Math.Round(cyan * 100),
             (int)Math.Round(magenta * 100),
             (int)Math.Round(yellow * 100),
             (int)Math.Round(black * 100)
-        };
+        ];
     }
 
 
@@ -182,7 +182,7 @@ public static class ColorExtensions
         var l = (float)Math.Round(c.GetBrightness() * 100);
         var a = (float)Math.Round(c.A / 255.0, 3);
 
-        return new[] { h, s, l, a };
+        return [h, s, l, a];
     }
 
 
@@ -199,7 +199,7 @@ public static class ColorExtensions
         var value = (float)Math.Round(max * 100f / 255);
         var alpha = (float)Math.Round(c.A / 255.0, 3);
 
-        return new[] { hue, saturation, value, alpha };
+        return [hue, saturation, value, alpha];
     }
 
 

@@ -443,7 +443,7 @@ public partial class ModernForm : Form
     {
         DisableFormFreeMoving(c);
 
-        if (CanControlMoveForm(c))
+        if (ModernForm.CanControlMoveForm(c))
         {
             c.MouseDown += Form_MouseDown;
             c.MouseUp += Form_MouseUp;
@@ -462,7 +462,7 @@ public partial class ModernForm : Form
     /// </summary>
     protected virtual void DisableFormFreeMoving(Control c)
     {
-        if (CanControlMoveForm(c))
+        if (ModernForm.CanControlMoveForm(c))
         {
             c.MouseDown -= Form_MouseDown;
             c.MouseUp -= Form_MouseUp;
@@ -477,7 +477,7 @@ public partial class ModernForm : Form
     }
 
 
-    private bool CanControlMoveForm(Control c)
+    private static bool CanControlMoveForm(Control c)
     {
         return c is Form
             || (c is Label && c is not LinkLabel)

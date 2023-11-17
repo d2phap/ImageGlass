@@ -83,7 +83,7 @@ public partial class BHelper
     {
         if (!pathList.Any())
         {
-            return new List<string>();
+            return [];
         }
 
         var hashedDirsList = new HashSet<string>();

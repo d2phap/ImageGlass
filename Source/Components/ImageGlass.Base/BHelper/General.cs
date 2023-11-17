@@ -32,8 +32,7 @@ public partial class BHelper
     /// <param name="distinct">whether repitition of values is allowed</param>
     public static IEnumerable<float> StringToFloatArray(string str, bool unsignedOnly = false, bool distinct = false)
     {
-        var numberStrings = str.Split(new[] { ';' },
-            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var numberStrings = str.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var numbers = new List<float>();
 
         foreach (var item in numberStrings)

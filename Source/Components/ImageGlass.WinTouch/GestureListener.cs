@@ -52,7 +52,7 @@ public sealed class GestureListener : NativeWindow
     /// Initializes a new instance of the <see cref="GestureListener"/> class to receive all gestures.
     /// </summary>
     /// <param name="parent">The parent.</param>
-    public GestureListener(Control parent) : this(parent, new[] {
+    public GestureListener(Control parent) : this(parent, [
         new GestureConfig(GestureConfigId.GID_PAN,
             GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_VERTICALLY
             | GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY
@@ -63,7 +63,7 @@ public sealed class GestureListener : NativeWindow
             GestureConfigFlags.GC_PAN_WITH_GUTTER),
 
         new GestureConfig(GestureConfigId.GID_ZOOM, GestureConfigFlags.GC_ZOOM, GestureConfigFlags.None),
-    })
+    ])
     { }
 
 

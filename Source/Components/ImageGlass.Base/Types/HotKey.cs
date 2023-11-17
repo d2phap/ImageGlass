@@ -36,7 +36,7 @@ public class Hotkey
             var str = KeyCode == Keys.None ? string.Empty : KeyCode.ToString();
 
             if (str.StartsWith("Oem")
-                || (str.StartsWith("D") && str.Length == 2) // D0 -> D9
+                || (str.StartsWith('D') && str.Length == 2) // D0 -> D9
                 )
             {
                 var unicode = KeyboardApi.KeyCodeToChar(KeyCode, false).ToString();
