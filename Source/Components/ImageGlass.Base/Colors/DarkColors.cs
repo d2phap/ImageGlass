@@ -28,9 +28,9 @@ using ImageGlass.Base.WinApi;
 namespace ImageGlass.Base;
 
 
-public class DarkColors : IColors
+public class DarkColors(bool designMode = false) : IColors
 {
-    private bool _designMode = false;
+    private bool _designMode = designMode;
 
 
     public Color AppBg => Color.FromArgb(20, 25, 28);
@@ -59,9 +59,4 @@ public class DarkColors : IColors
     public Color BgWarning => Color.FromArgb(59, 40, 10);
     public Color BgDanger => Color.FromArgb(59, 20, 19);
 
-
-    public DarkColors(bool designMode = false)
-    {
-        _designMode = designMode;
-    }
 }

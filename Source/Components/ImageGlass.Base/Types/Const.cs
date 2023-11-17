@@ -61,15 +61,15 @@ public static class Const
     /// </summary>
     public static Dictionary<SelectionAspectRatio, int[]> AspectRatioValue => new(9)
     {
-        { SelectionAspectRatio.Ratio1_1,    new int[] {1, 1} },
-        { SelectionAspectRatio.Ratio1_2,    new int[] {1, 2} },
-        { SelectionAspectRatio.Ratio2_1,    new int[] {2, 1} },
-        { SelectionAspectRatio.Ratio2_3,    new int[] {2, 3} },
-        { SelectionAspectRatio.Ratio3_2,    new int[] {3, 2} },
-        { SelectionAspectRatio.Ratio3_4,    new int[] {3, 4} },
-        { SelectionAspectRatio.Ratio4_3,    new int[] {4, 3} },
-        { SelectionAspectRatio.Ratio9_16,   new int[] {9, 16} },
-        { SelectionAspectRatio.Ratio16_9,   new int[] {16, 9} },
+        { SelectionAspectRatio.Ratio1_1,    [1, 1] },
+        { SelectionAspectRatio.Ratio1_2,    [1, 2] },
+        { SelectionAspectRatio.Ratio2_1,    [2, 1] },
+        { SelectionAspectRatio.Ratio2_3,    [2, 3] },
+        { SelectionAspectRatio.Ratio3_2,    [3, 2] },
+        { SelectionAspectRatio.Ratio3_4,    [3, 4] },
+        { SelectionAspectRatio.Ratio4_3,    [4, 3] },
+        { SelectionAspectRatio.Ratio9_16,   [9, 16] },
+        { SelectionAspectRatio.Ratio16_9,   [16, 9] },
     };
 
     /// <summary>

@@ -24,49 +24,34 @@ namespace ImageGlass.Settings;
 /// <summary>
 ///  Provides data for the <see cref='ToolForm.OnToolFormClosing'/> event.
 /// </summary>
-public class ToolFormClosingEventArgs : CancelEventArgs
+public class ToolFormClosingEventArgs(string name, CloseReason closeReason, bool cancel) : CancelEventArgs(cancel)
 {
     /// <summary>
     /// Gets the name of the tool form.
     /// </summary>
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     ///  Provides the reason for the Form Close.
     /// </summary>
-    public CloseReason CloseReason { get; }
-
-
-    public ToolFormClosingEventArgs(string name, CloseReason closeReason, bool cancel) : base(cancel)
-    {
-        Name = name;
-        CloseReason = closeReason;
-    }
-
+    public CloseReason CloseReason { get; } = closeReason;
 }
 
 
 /// <summary>
 /// Provides data for the <see cref='ToolForm.OnToolFormClosed'/> event.
 /// </summary>
-public class ToolFormClosedEventArgs : EventArgs
+public class ToolFormClosedEventArgs(string name, CloseReason closeReason) : EventArgs
 {
     /// <summary>
     /// Gets the name of the tool form.
     /// </summary>
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     ///  Provides the reason for the Form Close.
     /// </summary>
-    public CloseReason CloseReason { get; }
-
-
-    public ToolFormClosedEventArgs(string name, CloseReason closeReason)
-    {
-        Name = name;
-        CloseReason = closeReason;
-    }
+    public CloseReason CloseReason { get; } = closeReason;
 
 }
 

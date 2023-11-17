@@ -22,26 +22,16 @@ using ImageGlass.UI;
 
 namespace ImageGlass.Settings;
 
-public class RequestUpdatingThemeEventArgs
+public class RequestUpdatingThemeEventArgs(IgTheme theme, bool handled = false)
 {
     /// <summary>
     /// Gets the theme pack.
     /// </summary>
-    public IgTheme Theme { get; init; }
+    public IgTheme Theme { get; } = theme;
 
 
     /// <summary>
     /// Gets, sets value indicates that the event is already handled.
     /// </summary>
-    public bool Handled { get; set; } = false;
-
-
-    /// <summary>
-    /// Initialize new instance of <see cref="RequestUpdatingThemeEventArgs"/>.
-    /// </summary>
-    public RequestUpdatingThemeEventArgs(IgTheme theme, bool handled = false)
-    {
-        Theme = theme;
-        Handled = handled;
-    }
+    public bool Handled { get; set; } = handled;
 }

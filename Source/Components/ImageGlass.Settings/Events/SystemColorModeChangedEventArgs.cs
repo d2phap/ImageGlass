@@ -20,26 +20,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Settings;
 
-public class SystemColorModeChangedEventArgs
+public class SystemColorModeChangedEventArgs(bool isDarkMode, bool handled = false)
 {
     /// <summary>
     /// Checks if the app color mode is dark.
     /// </summary>
-    public bool IsDarkMode { get; init; }
+    public bool IsDarkMode { get; } = isDarkMode;
 
 
     /// <summary>
     /// Gets, sets value indicates that the event is already handled.
     /// </summary>
-    public bool Handled { get; set; } = false;
+    public bool Handled { get; set; } = handled;
 
-
-    /// <summary>
-    /// Initialize new instance of <see cref="SystemColorModeChangedEventArgs"/>.
-    /// </summary>
-    public SystemColorModeChangedEventArgs(bool isDarkMode, bool handled = false)
-    {
-        IsDarkMode = isDarkMode;
-        Handled = handled;
-    }
 }

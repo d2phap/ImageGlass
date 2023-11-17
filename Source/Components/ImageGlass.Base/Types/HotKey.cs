@@ -79,7 +79,7 @@ public class Hotkey
         try
         {
 
-            var keyStrings = s.ToLowerInvariant().Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var keyStrings = s.ToLowerInvariant().Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             foreach (var str in keyStrings)
             {

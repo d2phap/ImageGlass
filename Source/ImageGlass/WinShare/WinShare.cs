@@ -23,7 +23,7 @@ using Windows.Storage;
 
 namespace ImageGlass;
 
-public class WinShare
+public static class WinShare
 {
     // declare datapackage
     private static DataPackage? _dp;

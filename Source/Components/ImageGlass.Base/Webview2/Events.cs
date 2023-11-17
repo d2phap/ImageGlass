@@ -21,28 +21,20 @@ using System.Collections.ObjectModel;
 
 namespace ImageGlass.Base;
 
-public class Web2MessageReceivedEventArgs : EventArgs
+public class Web2MessageReceivedEventArgs(string? name, string? data, IReadOnlyList<object>? additionalObjects) : EventArgs
 {
     /// <summary>
     /// Gets the name of the message.
     /// </summary>
-    public string Name { get; init; }
+    public string Name { get; init; } = name ?? string.Empty;
 
     /// <summary>
     /// Gets the data of the message.
     /// </summary>
-    public string Data { get; init; }
+    public string Data { get; init; } = data ?? string.Empty;
 
     /// <summary>
     /// Gets the additional received WebMessage objects.
     /// </summary>
-    public IReadOnlyList<object> AdditionalObjects { get; init; }
-
-
-    public Web2MessageReceivedEventArgs(string? name, string? data, IReadOnlyList<object>? additionalObjects)
-    {
-        Name = name ?? string.Empty;
-        Data = data ?? string.Empty;
-        AdditionalObjects = additionalObjects ?? [];
-    }
+    public IReadOnlyList<object> AdditionalObjects { get; init; } = additionalObjects ?? [];
 }

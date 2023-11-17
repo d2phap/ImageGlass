@@ -24,7 +24,7 @@ namespace ImageGlass.Base.Actions;
 /// <summary>
 /// Defines user toggling action
 /// </summary>
-public class ToggleAction
+public class ToggleAction(SingleAction? toggleOn = null)
 {
     /// <summary>
     /// Gets the ToggleAction manager to check whether the <see cref="ToggleAction"/>
@@ -37,35 +37,19 @@ public class ToggleAction
     /// Gets the id of the action for toggling.
     /// </summary>
     [JsonIgnore]
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
 
 
     /// <summary>
     /// Action to run when toggling on.
     /// </summary>
-    public SingleAction? ToggleOn { get; set; } = null;
+    public SingleAction? ToggleOn { get; set; } = toggleOn;
 
 
     /// <summary>
     /// Action to run when toggling off.
     /// </summary>
     public SingleAction? ToggleOff { get; set; } = null;
-
-
-    /// <summary>
-    /// Initialize the empty <see cref="ToggleAction"/> instance.
-    /// </summary>
-    public ToggleAction()
-    {
-        Id = Guid.NewGuid();
-    }
-
-
-    public ToggleAction(SingleAction? toggleOn = null)
-    {
-        Id = Guid.NewGuid();
-        ToggleOn = toggleOn;
-    }
 
 
     /// <summary>
@@ -87,13 +71,9 @@ public class ToggleAction
     /// </summary>
     public static void SetToggleValue(Guid actionId, bool isToggled)
     {
-        if (_manager.ContainsKey(actionId))
+        if (!_manager.TryAdd(actionId, isToggled))
         {
             _manager[actionId] = isToggled;
-        }
-        else
-        {
-            _manager.Add(actionId, isToggled);
         }
     }
 

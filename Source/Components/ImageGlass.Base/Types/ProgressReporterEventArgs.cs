@@ -18,29 +18,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base;
 
-public class ProgressReporterEventArgs<T> : EventArgs
+public class ProgressReporterEventArgs<T>(T data, string type = "") : EventArgs
 {
     /// <summary>
     /// The type of the event.
     /// </summary>
-    public string Type { get; init; }
+    public string Type { get; init; } = type;
 
     /// <summary>
     /// Event data.
     /// </summary>
-    public T Data { get; init; }
-
-    public ProgressReporterEventArgs(T data, string type = "")
-    {
-        Data = data;
-        Type = type;
-    }
+    public T Data { get; init; } = data;
 }
 
 
-public class ProgressReporterEventArgs : ProgressReporterEventArgs<EventArgs>
-{
-    public ProgressReporterEventArgs(EventArgs data, string type = "") : base(data, type)
-    {
-    }
-}
+public class ProgressReporterEventArgs(EventArgs data, string type = "") : ProgressReporterEventArgs<EventArgs>(data, type) { }

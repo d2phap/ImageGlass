@@ -97,29 +97,17 @@ public class ImageListLoadedEventArgs : EventArgs
 }
 
 
-public class SlideshowWindowClosedEventArgs : EventArgs
+public class SlideshowWindowClosedEventArgs(int slideshowIndex) : EventArgs
 {
-    public int SlideshowIndex { get; init; }
-
-    public SlideshowWindowClosedEventArgs(int slideshowIndex)
-    {
-        SlideshowIndex = slideshowIndex;
-    }
+    public int SlideshowIndex { get; init; } = slideshowIndex;
 }
 
 
-public class ImageSaveEventArgs : EventArgs
+public class ImageSaveEventArgs(string srcFilePath, string destFilePath, ImageSaveSource saveSource) : EventArgs
 {
-    public string SrcFilePath { get; init; }
-    public string DestFilePath { get; init; }
-    public ImageSaveSource SaveSource { get; init; }
-
-    public ImageSaveEventArgs(string srcFilePath, string destFilePath, ImageSaveSource saveSource)
-    {
-        SrcFilePath = srcFilePath;
-        DestFilePath = destFilePath;
-        SaveSource = saveSource;
-    }
+    public string SrcFilePath { get; init; } = srcFilePath;
+    public string DestFilePath { get; init; } = destFilePath;
+    public ImageSaveSource SaveSource { get; init; } = saveSource;
 }
 
 

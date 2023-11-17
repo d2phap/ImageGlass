@@ -25,8 +25,7 @@ public static class SavingExts
     /// <summary>
     /// Gets the supported extensions for saving in a pair of (.extension, description)
     /// </summary>
-    public static List<SavingExt> SupportedExts => new()
-    {
+    public static List<SavingExt> SupportedExts => [
         // the order here matters
         new SavingExt { Ext = ".png", Description = "PNG" },
         new SavingExt { Ext = ".jpg", Description = "JPG" },
@@ -42,7 +41,7 @@ public static class SavingExts
         new SavingExt { Ext = ".wmf", Description = "WMF" },
         new SavingExt { Ext = ".b64", Description = "Base64" },
         new SavingExt { Ext = ".txt", Description = "Base64 text" },
-    };
+    ];
 
 
     /// <summary>

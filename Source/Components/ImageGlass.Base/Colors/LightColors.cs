@@ -27,9 +27,9 @@ using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.Base;
 
-public class LightColors : IColors
+public class LightColors(bool designMode = false) : IColors
 {
-    private bool _designMode = false;
+    private bool _designMode = designMode;
 
     public Color AppBg => Color.White;
     public Color AppText => Color.FromArgb(30, 30, 30); // Normal Text
@@ -57,9 +57,4 @@ public class LightColors : IColors
     public Color BgWarning => Color.FromArgb(255, 239, 219);
     public Color BgDanger => Color.FromArgb(255, 222, 222);
 
-
-    public LightColors(bool designMode = false)
-    {
-        _designMode = designMode;
-    }
 }

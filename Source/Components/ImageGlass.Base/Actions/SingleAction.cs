@@ -23,7 +23,7 @@ namespace ImageGlass.Base.Actions;
 /// <summary>
 /// Defines user single action
 /// </summary>
-public class SingleAction
+public class SingleAction(string executable = "", object?[]? arguments = null, SingleAction? nextAction = null)
 {
     /// <summary>
     /// Executable action, its value can be:
@@ -42,35 +42,18 @@ public class SingleAction
     ///   </item>
     /// </list>
     /// </summary>
-    public string Executable { get; set; } = string.Empty;
+    public string Executable { get; set; } = executable.Trim();
 
 
     /// <summary>
     /// Arguments to pass to the <see cref="Executable"/>.
     /// </summary>
-    public object?[] Arguments { get; set; } = [];
+    public object?[] Arguments { get; set; } = arguments ?? [];
 
 
     /// <summary>
     /// Next action to execute after running <see cref="Executable"/>.
     /// </summary>
-    public SingleAction? NextAction { get; set; } = null;
-
-
-    /// <summary>
-    /// Initialize the empty <see cref="SingleAction"/> instance.
-    /// </summary>
-    public SingleAction() { }
-
-
-    /// <summary>
-    /// Initialize the <see cref="SingleAction"/> instance.
-    /// </summary>
-    public SingleAction(string executable = "", object?[]? arguments = null, SingleAction? nextAction = null)
-    {
-        Executable = executable.Trim();
-        Arguments = arguments ?? [];
-        NextAction = nextAction;
-    }
+    public SingleAction? NextAction { get; set; } = nextAction;
 
 }
