@@ -505,7 +505,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the theme name for light mode.
     /// </summary>
-    public static string LightTheme { get; set; } = "Kobe - Light";
+    public static string LightTheme { get; set; } = "Kobe-Light";
 
     #endregion
 

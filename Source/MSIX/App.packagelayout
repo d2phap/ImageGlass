@@ -11,6 +11,7 @@
             <GeneratedResources />
 
             <Files>
+                <!-- Theme, icons, language packs -->
                 <File SourcePath="..\..\Setup\Assets\**"
                       DestinationPath="ImageGlass\**" />
                 
@@ -18,13 +19,17 @@
                 <File SourcePath="..\..\Setup\Settings\LogoStar.svg"
                       DestinationPath="ImageGlass\Themes\Kobe\Logo.svg" />
 
-                <File ExcludePath="..\..\Setup\Assets\Themes\Kobe - Light\Logo.svg" />
+                <File ExcludePath="..\..\Setup\Assets\Themes\Kobe-Light\Logo.svg" />
                 <File SourcePath="..\..\Setup\Settings\LogoStar.svg"
-                      DestinationPath="ImageGlass\Themes\Kobe - Light\Logo.svg" />
+                      DestinationPath="ImageGlass\Themes\Kobe-Light\Logo.svg" />
 
-                <File SourcePath="..\..\LICENSE"
-                      DestinationPath="ImageGlass\LICENSE" />
 
+                <!-- Web UI -->
+                <File SourcePath="..\Components\ImageGlass.Settings\WebUI\dist\**"
+                      DestinationPath="ImageGlass\WebUI\**" />
+                
+                
+                <!-- Default settings -->
                 <File SourcePath="..\..\Setup\Settings\igconfig.admin.json"
                       DestinationPath="ImageGlass\igconfig.admin.json" />
 

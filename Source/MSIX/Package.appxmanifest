@@ -45,6 +45,7 @@
                 </uap:DefaultTile >
                 <uap:SplashScreen Image="Images\SplashScreen.png" />
             </uap:VisualElements>
+            
             <Extensions>
                 <uap:Extension Category="windows.fileTypeAssociation" EntryPoint="Windows.FullTrustApplication" Executable="ImageGlass\ImageGlass.exe">
                     <uap:FileTypeAssociation Name="imageglass.assocfiles">
