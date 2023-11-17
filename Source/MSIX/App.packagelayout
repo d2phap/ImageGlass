@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackagingLayoutTemplate xmlns="http://schemas.microsoft.com/appx/makeappx/2017">
+
+    <GeneratedPackageFamily ID="pf-{BundleArchitectures}" FileName="{PackageId}_{Version}_{BundleArchitectures}.{PackageExtPrefix}bundle" FlatBundle="true" ManifestPath="{AppxManifestPath}" ResourceManager="false" Encrypt="false">
+
+        <GeneratedPackage ID="{PackageArchitecture}"
+          FileName="{PackageId}_{Version}_{PackageArchitecture}.{PackageExtPrefix}"
+          ProcessorArchitecture="{PackageArchitecture}" ManifestPath="{AppxManifestPath}"
+          Encrypt="false" Compress="true">
+            <GeneratedFiles />
+            <GeneratedResources />
+
+            <Files>
+                <File SourcePath="..\..\Setup\Assets\**"
+                      DestinationPath="ImageGlass\**" />
+                
+                <File ExcludePath="..\..\Setup\Assets\Themes\Kobe\Logo.svg" />
+                <File SourcePath="..\..\Setup\Settings\LogoStar.svg"
+                      DestinationPath="ImageGlass\Themes\Kobe\Logo.svg" />
+
+                <File ExcludePath="..\..\Setup\Assets\Themes\Kobe - Light\Logo.svg" />
+                <File SourcePath="..\..\Setup\Settings\LogoStar.svg"
+                      DestinationPath="ImageGlass\Themes\Kobe - Light\Logo.svg" />
+
+                <File SourcePath="..\..\LICENSE"
+                      DestinationPath="ImageGlass\LICENSE" />
+
+                <File SourcePath="..\..\Setup\Settings\igconfig.admin.json"
+                      DestinationPath="ImageGlass\igconfig.admin.json" />
+
+            </Files>
+        </GeneratedPackage>
+
+
+    </GeneratedPackageFamily>
+
+</PackagingLayoutTemplate>

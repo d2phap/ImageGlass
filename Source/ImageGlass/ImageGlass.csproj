@@ -3,6 +3,7 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -17,6 +18,7 @@
         <Version>9.0.6.1117</Version>
         <FileVersion>$(Version)</FileVersion>
 
+        <EntryPointExe>$(AssemblyName).exe</EntryPointExe>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
         <DebugType>portable</DebugType>
