@@ -89,7 +89,7 @@ public partial class DXCanvas : DXControl
     private float _minZoom = 0.01f; // 1%
     private float _maxZoom = 100f; // 10_000%
     private float[] _zoomLevels = [];
-    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.SampleLinear;
+    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.MultiSampleLinear;
     private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
 
     // checkerboard

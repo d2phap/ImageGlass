@@ -233,7 +233,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.NearestNeighbor)}", "Nearest neighbor");
         _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Linear)}", "Linear");
         _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Cubic)}", "Cubic");
-        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.SampleLinear)}", "Sample linear");
+        _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.MultiSampleLinear)}", "Multi-sample linear");
         _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.Antisotropic)}", "Antisotropic");
         _ = TryAdd($"_.{nameof(ImageInterpolation)}._{nameof(ImageInterpolation.HighQualityBicubic)}", "High quality bicubic");
 

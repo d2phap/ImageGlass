@@ -58,7 +58,7 @@ public enum ImageInterpolation : int
     /// <summary>
     /// Smooth scaling down (the best), smooth scaling up (normal quality).
     /// </summary>
-    SampleLinear = 3,
+    MultiSampleLinear = 3,
 
     /// <summary>
     /// Smooth scaling down (normal quality) and up (normal quality).
