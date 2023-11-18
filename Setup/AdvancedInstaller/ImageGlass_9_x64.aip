@@ -47,7 +47,7 @@
     <ROW Directory="ExtIcons_Dir" Directory_Parent="APPDIR" DefaultDir="EXT-IC~1|Ext-Icons"/>
     <ROW Directory="FrmSettings_Dir" Directory_Parent="dist_1_Dir" DefaultDir="FRMSET~1|FrmSettings"/>
     <ROW Directory="Icons_Dir" Directory_Parent="APPDIR" DefaultDir="Icons"/>
-    <ROW Directory="KobeLight_Dir" Directory_Parent="Themes_Dir" DefaultDir="KOBE-L~1|Kobe - Light"/>
+    <ROW Directory="KobeLight_Dir" Directory_Parent="Themes_Dir" DefaultDir="KOBE-L~1|Kobe-Light"/>
     <ROW Directory="Kobe_Dir" Directory_Parent="Themes_Dir" DefaultDir="Kobe"/>
     <ROW Directory="Language_Dir" Directory_Parent="APPDIR" DefaultDir="Language"/>
     <ROW Directory="License_Dir" Directory_Parent="APPDIR" DefaultDir="License"/>
@@ -72,7 +72,7 @@
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{2F55ADFE-956D-41EB-ADFF-322E85E328AA}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{D4B1D73D-A2A5-4839-B6EB-32B1F5E04493}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ActualSize.svg" ComponentId="{D470DF7F-2289-4A42-882A-59D794E4FF26}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
-    <ROW Component="ActualSize.svg_1" ComponentId="{95DB3C06-1D5D-4758-A93F-0C896187E386}" Directory_="KobeLight_Dir" Attributes="0" KeyPath="ActualSize.svg_1" Type="0"/>
+    <ROW Component="ActualSize.svg_1" ComponentId="{FE0A53A6-72A3-4E1F-B439-55E8C13FA1DE}" Directory_="KobeLight_Dir" Attributes="0" KeyPath="ActualSize.svg_1" Type="0"/>
     <ROW Component="ApacheLicense2.0.txt" ComponentId="{ADF12378-82F9-4CC3-BF06-28F422208F4A}" Directory_="License_Dir" Attributes="0" KeyPath="ApacheLicense2.0.txt" Type="0"/>
     <ROW Component="ArrowDown.svg" ComponentId="{1BC59768-B5E2-4478-A408-2B42014DE70C}" Directory_="Icons_Dir" Attributes="0" KeyPath="ArrowDown.svg" Type="0"/>
     <ROW Component="DOMPadding.d.ts" ComponentId="{27C52649-BEAF-43F0-89FE-FCB1B9547502}" Directory_="happlajs_Dir" Attributes="0" KeyPath="DOMPadding.d.ts" Type="0"/>
@@ -126,7 +126,6 @@
     <ROW File="ImageGlass.Gallery.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~2.PDB|ImageGlass.Gallery.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Gallery.pdb" SelfReg="false"/>
     <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~3.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.pdb" SelfReg="false"/>
     <ROW File="ImageGlass.Settings.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~4.PDB|ImageGlass.Settings.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Settings.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.Tools.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~5.PDB|ImageGlass.Tools.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Tools.pdb" SelfReg="false"/>
     <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~6.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.UI.pdb" SelfReg="false"/>
     <ROW File="ImageGlass.Viewer.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~7.PDB|ImageGlass.Viewer.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Viewer.pdb" SelfReg="false"/>
     <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~8.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WebP.pdb" SelfReg="false"/>
@@ -248,44 +247,6 @@
     <ROW File="WindowFit.svg" Component_="ActualSize.svg" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\WindowFit.svg" SelfReg="false"/>
     <ROW File="ZoomIn.svg" Component_="ActualSize.svg" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ZoomIn.svg" SelfReg="false"/>
     <ROW File="ZoomOut.svg" Component_="ActualSize.svg" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe\ZoomOut.svg" SelfReg="false"/>
-    <ROW File="ActualSize.svg_1" Component_="ActualSize.svg_1" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ActualSize.svg" SelfReg="false"/>
-    <ROW File="AutoZoom.svg_1" Component_="ActualSize.svg_1" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\AutoZoom.svg" SelfReg="false"/>
-    <ROW File="Checkerboard.svg_1" Component_="ActualSize.svg_1" FileName="CHECKE~1.SVG|Checkerboard.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Checkerboard.svg" SelfReg="false"/>
-    <ROW File="ColorPicker.svg_1" Component_="ActualSize.svg_1" FileName="COLORP~1.SVG|ColorPicker.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ColorPicker.svg" SelfReg="false"/>
-    <ROW File="Crop.svg_1" Component_="ActualSize.svg_1" FileName="Crop.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Crop.svg" SelfReg="false"/>
-    <ROW File="Delete.svg_1" Component_="ActualSize.svg_1" FileName="Delete.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Delete.svg" SelfReg="false"/>
-    <ROW File="Edit.svg_1" Component_="ActualSize.svg_1" FileName="Edit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Edit.svg" SelfReg="false"/>
-    <ROW File="Exit.svg_1" Component_="ActualSize.svg_1" FileName="Exit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Exit.svg" SelfReg="false"/>
-    <ROW File="Export.svg_1" Component_="ActualSize.svg_1" FileName="Export.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Export.svg" SelfReg="false"/>
-    <ROW File="FlipHorz.svg_1" Component_="ActualSize.svg_1" FileName="FlipHorz.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FlipHorz.svg" SelfReg="false"/>
-    <ROW File="FlipVert.svg_1" Component_="ActualSize.svg_1" FileName="FlipVert.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FlipVert.svg" SelfReg="false"/>
-    <ROW File="FullScreen.svg_1" Component_="ActualSize.svg_1" FileName="FULLSC~1.SVG|FullScreen.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\FullScreen.svg" SelfReg="false"/>
-    <ROW File="Gallery.svg_1" Component_="ActualSize.svg_1" FileName="Gallery.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Gallery.svg" SelfReg="false"/>
-    <ROW File="igtheme.json_1" Component_="ActualSize.svg_1" FileName="IGTHEM~1.JSO|igtheme.json" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\igtheme.json" SelfReg="false"/>
-    <ROW File="LockZoom.svg_1" Component_="ActualSize.svg_1" FileName="LockZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\LockZoom.svg" SelfReg="false"/>
-    <ROW File="Logo.svg_1" Component_="ActualSize.svg_1" FileName="Logo.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Logo.svg" SelfReg="false"/>
-    <ROW File="MainMenu.svg_1" Component_="ActualSize.svg_1" FileName="MainMenu.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\MainMenu.svg" SelfReg="false"/>
-    <ROW File="OpenFile.svg_1" Component_="ActualSize.svg_1" FileName="OpenFile.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\OpenFile.svg" SelfReg="false"/>
-    <ROW File="Pause.svg_1" Component_="ActualSize.svg_1" FileName="Pause.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Pause.svg" SelfReg="false"/>
-    <ROW File="Play.svg_1" Component_="ActualSize.svg_1" FileName="Play.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Play.svg" SelfReg="false"/>
-    <ROW File="preview.webp_1" Component_="ActualSize.svg_1" FileName="PREVIE~1.WEB|preview.webp" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\preview.webp" SelfReg="false"/>
-    <ROW File="Print.svg_1" Component_="ActualSize.svg_1" FileName="Print.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Print.svg" SelfReg="false"/>
-    <ROW File="Refresh.svg_1" Component_="ActualSize.svg_1" FileName="Refresh.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Refresh.svg" SelfReg="false"/>
-    <ROW File="RotateLeft.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~1.SVG|RotateLeft.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\RotateLeft.svg" SelfReg="false"/>
-    <ROW File="RotateRight.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~2.SVG|RotateRight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\RotateRight.svg" SelfReg="false"/>
-    <ROW File="Save.svg_1" Component_="ActualSize.svg_1" FileName="Save.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Save.svg" SelfReg="false"/>
-    <ROW File="ScaleToFill.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~1.SVG|ScaleToFill.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToFill.svg" SelfReg="false"/>
-    <ROW File="ScaleToFit.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~2.SVG|ScaleToFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToFit.svg" SelfReg="false"/>
-    <ROW File="ScaleToHeight.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~3.SVG|ScaleToHeight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToHeight.svg" SelfReg="false"/>
-    <ROW File="ScaleToWidth.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~4.SVG|ScaleToWidth.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ScaleToWidth.svg" SelfReg="false"/>
-    <ROW File="Slideshow.svg_1" Component_="ActualSize.svg_1" FileName="SLIDES~1.SVG|Slideshow.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\Slideshow.svg" SelfReg="false"/>
-    <ROW File="ViewFirstImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWFI~1.SVG|ViewFirstImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewFirstImage.svg" SelfReg="false"/>
-    <ROW File="ViewLastImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWLA~1.SVG|ViewLastImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewLastImage.svg" SelfReg="false"/>
-    <ROW File="ViewNextImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWNE~1.SVG|ViewNextImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewNextImage.svg" SelfReg="false"/>
-    <ROW File="ViewPreviousImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWPR~1.SVG|ViewPreviousImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ViewPreviousImage.svg" SelfReg="false"/>
-    <ROW File="WindowFit.svg_1" Component_="ActualSize.svg_1" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\WindowFit.svg" SelfReg="false"/>
-    <ROW File="ZoomIn.svg_1" Component_="ActualSize.svg_1" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ZoomIn.svg" SelfReg="false"/>
-    <ROW File="ZoomOut.svg_1" Component_="ActualSize.svg_1" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe - Light\ZoomOut.svg" SelfReg="false"/>
     <ROW File="ArrowDown.svg" Component_="ArrowDown.svg" FileName="ARROWD~1.SVG|ArrowDown.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowDown.svg" SelfReg="false"/>
     <ROW File="ArrowExchange.svg" Component_="ArrowDown.svg" FileName="ARROWE~1.SVG|ArrowExchange.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowExchange.svg" SelfReg="false"/>
     <ROW File="ArrowLeft.svg" Component_="ArrowDown.svg" FileName="ARROWL~1.SVG|ArrowLeft.svg" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons\ArrowLeft.svg" SelfReg="false"/>
@@ -365,6 +326,44 @@
     <ROW File="FrmSettings.html" Component_="DXCanvas_Webview2.html" FileName="FRMSET~1.HTM|FrmSettings.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmSettings.html" SelfReg="false"/>
     <ROW File="FrmUpdate.html" Component_="DXCanvas_Webview2.html" FileName="FRMUPD~1.HTM|FrmUpdate.html" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\FrmUpdate.html" SelfReg="false"/>
     <ROW File="MsStoreBadge.svg" Component_="MsStoreBadge.svg" FileName="MSSTOR~1.SVG|MsStoreBadge.svg" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\img\MsStoreBadge.svg" SelfReg="false"/>
+    <ROW File="ActualSize.svg_1" Component_="ActualSize.svg_1" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ActualSize.svg" SelfReg="false"/>
+    <ROW File="AutoZoom.svg_1" Component_="ActualSize.svg_1" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\AutoZoom.svg" SelfReg="false"/>
+    <ROW File="Checkerboard.svg_1" Component_="ActualSize.svg_1" FileName="CHECKE~1.SVG|Checkerboard.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Checkerboard.svg" SelfReg="false"/>
+    <ROW File="ColorPicker.svg_1" Component_="ActualSize.svg_1" FileName="COLORP~1.SVG|ColorPicker.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ColorPicker.svg" SelfReg="false"/>
+    <ROW File="Crop.svg_1" Component_="ActualSize.svg_1" FileName="Crop.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Crop.svg" SelfReg="false"/>
+    <ROW File="Delete.svg_1" Component_="ActualSize.svg_1" FileName="Delete.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Delete.svg" SelfReg="false"/>
+    <ROW File="Edit.svg_1" Component_="ActualSize.svg_1" FileName="Edit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Edit.svg" SelfReg="false"/>
+    <ROW File="Exit.svg_1" Component_="ActualSize.svg_1" FileName="Exit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Exit.svg" SelfReg="false"/>
+    <ROW File="Export.svg_1" Component_="ActualSize.svg_1" FileName="Export.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Export.svg" SelfReg="false"/>
+    <ROW File="FlipHorz.svg_1" Component_="ActualSize.svg_1" FileName="FlipHorz.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\FlipHorz.svg" SelfReg="false"/>
+    <ROW File="FlipVert.svg_1" Component_="ActualSize.svg_1" FileName="FlipVert.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\FlipVert.svg" SelfReg="false"/>
+    <ROW File="FullScreen.svg_1" Component_="ActualSize.svg_1" FileName="FULLSC~1.SVG|FullScreen.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\FullScreen.svg" SelfReg="false"/>
+    <ROW File="Gallery.svg_1" Component_="ActualSize.svg_1" FileName="Gallery.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Gallery.svg" SelfReg="false"/>
+    <ROW File="igtheme.json_1" Component_="ActualSize.svg_1" FileName="IGTHEM~1.JSO|igtheme.json" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\igtheme.json" SelfReg="false"/>
+    <ROW File="LockZoom.svg_1" Component_="ActualSize.svg_1" FileName="LockZoom.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\LockZoom.svg" SelfReg="false"/>
+    <ROW File="Logo.svg_1" Component_="ActualSize.svg_1" FileName="Logo.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Logo.svg" SelfReg="false"/>
+    <ROW File="MainMenu.svg_1" Component_="ActualSize.svg_1" FileName="MainMenu.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\MainMenu.svg" SelfReg="false"/>
+    <ROW File="OpenFile.svg_1" Component_="ActualSize.svg_1" FileName="OpenFile.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\OpenFile.svg" SelfReg="false"/>
+    <ROW File="Pause.svg_1" Component_="ActualSize.svg_1" FileName="Pause.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Pause.svg" SelfReg="false"/>
+    <ROW File="Play.svg_1" Component_="ActualSize.svg_1" FileName="Play.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Play.svg" SelfReg="false"/>
+    <ROW File="preview.webp_1" Component_="ActualSize.svg_1" FileName="PREVIE~1.WEB|preview.webp" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\preview.webp" SelfReg="false"/>
+    <ROW File="Print.svg_1" Component_="ActualSize.svg_1" FileName="Print.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Print.svg" SelfReg="false"/>
+    <ROW File="Refresh.svg_1" Component_="ActualSize.svg_1" FileName="Refresh.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Refresh.svg" SelfReg="false"/>
+    <ROW File="RotateLeft.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~1.SVG|RotateLeft.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\RotateLeft.svg" SelfReg="false"/>
+    <ROW File="RotateRight.svg_1" Component_="ActualSize.svg_1" FileName="ROTATE~2.SVG|RotateRight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\RotateRight.svg" SelfReg="false"/>
+    <ROW File="Save.svg_1" Component_="ActualSize.svg_1" FileName="Save.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Save.svg" SelfReg="false"/>
+    <ROW File="ScaleToFill.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~1.SVG|ScaleToFill.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ScaleToFill.svg" SelfReg="false"/>
+    <ROW File="ScaleToFit.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~2.SVG|ScaleToFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ScaleToFit.svg" SelfReg="false"/>
+    <ROW File="ScaleToHeight.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~3.SVG|ScaleToHeight.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ScaleToHeight.svg" SelfReg="false"/>
+    <ROW File="ScaleToWidth.svg_1" Component_="ActualSize.svg_1" FileName="SCALET~4.SVG|ScaleToWidth.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ScaleToWidth.svg" SelfReg="false"/>
+    <ROW File="Slideshow.svg_1" Component_="ActualSize.svg_1" FileName="SLIDES~1.SVG|Slideshow.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\Slideshow.svg" SelfReg="false"/>
+    <ROW File="ViewFirstImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWFI~1.SVG|ViewFirstImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ViewFirstImage.svg" SelfReg="false"/>
+    <ROW File="ViewLastImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWLA~1.SVG|ViewLastImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ViewLastImage.svg" SelfReg="false"/>
+    <ROW File="ViewNextImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWNE~1.SVG|ViewNextImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ViewNextImage.svg" SelfReg="false"/>
+    <ROW File="ViewPreviousImage.svg_1" Component_="ActualSize.svg_1" FileName="VIEWPR~1.SVG|ViewPreviousImage.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ViewPreviousImage.svg" SelfReg="false"/>
+    <ROW File="WindowFit.svg_1" Component_="ActualSize.svg_1" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\WindowFit.svg" SelfReg="false"/>
+    <ROW File="ZoomIn.svg_1" Component_="ActualSize.svg_1" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ZoomIn.svg" SelfReg="false"/>
+    <ROW File="ZoomOut.svg_1" Component_="ActualSize.svg_1" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ZoomOut.svg" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
@@ -383,7 +382,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Store="User\MY"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, S=Tây Ninh, C=VN" Store="User\MY"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -489,7 +488,6 @@
     <ROW Feature_="MainFeatures" Component_="FR.ico"/>
     <ROW Feature_="MainFeatures" Component_="Vietnamese.iglang.json"/>
     <ROW Feature_="MainFeatures" Component_="ActualSize.svg"/>
-    <ROW Feature_="MainFeatures" Component_="ActualSize.svg_1"/>
     <ROW Feature_="MainFeatures" Component_="ArrowDown.svg"/>
     <ROW Feature_="MainFeatures" Component_="ApacheLicense2.0.txt"/>
     <ROW Feature_="MainFeatures" Component_="WebView2Loader.dll_1"/>
@@ -506,6 +504,7 @@
     <ROW Feature_="MainFeatures" Component_="MsStoreBadge.svg"/>
     <ROW Feature_="MainFeatures" Component_="NewFolder_1"/>
     <ROW Feature_="MainFeatures" Component_="AI_INSTALLPERUSER"/>
+    <ROW Feature_="MainFeatures" Component_="ActualSize.svg_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
