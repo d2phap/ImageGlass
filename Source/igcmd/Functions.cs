@@ -187,9 +187,12 @@ public static class Functions
     {
         return Run(() =>
         {
+            var langDir = App.StartUpDir(Dir.Language);
+            Directory.CreateDirectory(langDir);
+
             foreach (var f in paths)
             {
-                File.Copy(f, App.StartUpDir(Dir.Language, Path.GetFileName(f)), true);
+                File.Copy(f, Path.Combine(langDir, Path.GetFileName(f)), true);
             }
         }, (error) =>
         {
