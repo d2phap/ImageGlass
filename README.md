@@ -30,7 +30,7 @@ ImageGlass is a lightweight software designed for seamless viewing of images in 
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://raw.githubusercontent.com/ImageGlass/website-content/main/releases/screenshots/v8.8/8.8_1.jpg" alt="ImageGlass 8.10.9.27" width="640">
+<img src="https://raw.githubusercontent.com/ImageGlass/releases/main/screenshots/v9.0/9.0_b1.webp" alt="ImageGlass 9.0.11.25" width="640">
 </a><br/>
 
 
@@ -54,16 +54,17 @@ v9.0 Official release    :milestone, m1, 2023-12, 1d
 v9 Official              :active, des2, 2023-12,2025-01
 ```
 
-### 🔴 ImageGlass 9 minimum requirements:
-- [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-- [Webview2 runtime 64-bit](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)
-- Windows 10 version 2004 (20H1) - 64-bit
+
+## 🪁 System Requirements
+- Windows 10/11 64-bit, version 2004 or later
+- [.NET Desktop Runtime 8 (64-bit)](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [WebView2 Runtime 64-bit](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)
 
 
 ## 👨‍💻 Development
 - Windows 11
 - Visual Studio 2022
-- .NET Framework 4.8 for v8.x, .NET 6/7 for v9.0
+- .NET Framework 4.8 for v8.x, .NET 8 for v9.0
 
 The `develop` branch contains the latest commits of version 9 while the `prod` branch is for the final stable release. For the source code of version 8.0, you can refer to `v8` branch.
 
