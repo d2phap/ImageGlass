@@ -96,6 +96,10 @@ For more information about ImageGlass, go to [ImageGlass Docs](https://imageglas
 - [Google forum](https://groups.google.com/forum/#!forum/imageglass)
 
 
+## Localization
+You can contribute to the localization of the extension at [Crowdin](https://crowdin.com/project/imageglass) (But first you'll need a permission from @d2phap)
+
+
 ## 💖 This project needs your help!
 ImageGlass is an open source, free, and ad-free photo viewer, but developing and maintaining it is not. By providing financial support, you can help me stay motivated and continue to deliver even better versions in the future.
 
@@ -119,7 +123,6 @@ Thanks for your support!
 <a href="https://donorbox.org/imageglass" target="_blank" title="Wire transfer">
 <img src="https://img.shields.io/badge/DonorBox-@imageglass%20-005384.svg?maxAge=3600&logo=donorbox" height="30" alt="Wire transfer">
 </a>
-
 
 ## 👑 Hall of fame (v8.x)
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
