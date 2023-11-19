@@ -97,7 +97,7 @@ For more information about ImageGlass, go to [ImageGlass Docs](https://imageglas
 
 
 ## Localization
-You can contribute to the localization of the extension at [Crowdin](https://crowdin.com/project/imageglass) (But first you'll need a permission from @d2phap)
+You can contribute to the localization at [Crowdin](https://crowdin.com/project/imageglass) (But first you'll need a permission from @d2phap)
 
 
 ## 💖 This project needs your help!
