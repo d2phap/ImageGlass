@@ -1351,13 +1351,6 @@ public partial class FrmMain
         };
 
 
-        // add custom places to the SaveFileDialog
-        var dirPath = string.IsNullOrEmpty(srcFilePath)
-            ? srcFilePath
-            : Path.GetDirectoryName(srcFilePath);
-        saveDialog.CustomPlaces.Add(dirPath);
-
-
         // Use the last-selected file extension, if available.
         var extIndex = !string.IsNullOrEmpty(Local.SaveAsFilterExt)
             ? SavingExts.IndexOf(Local.SaveAsFilterExt)
