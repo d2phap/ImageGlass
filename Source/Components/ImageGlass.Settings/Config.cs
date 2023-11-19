@@ -1500,17 +1500,24 @@ public static class Config
             themeFolderName = Const.DEFAULT_THEME;
         }
 
+
         // theme pack is already updated
         if (themeFolderName.Equals(Theme.FolderName, StringComparison.InvariantCultureIgnoreCase))
         {
             return;
         }
 
+        // look for theme pack in the Config dir
         var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
-
         if (!th.IsValid)
         {
-            if (useFallBackTheme)
+            // look for theme pack in the Startup dir
+            th.Dispose();
+            th = null;
+            th = new(App.StartUpDir(Dir.Themes, themeFolderName));
+
+            // cannot find theme, use fall back theme
+            if (!th.IsValid && useFallBackTheme)
             {
                 th.Dispose();
                 th = null;
@@ -1520,13 +1527,14 @@ public static class Config
             }
         }
 
+
         if (!th.IsValid && throwIfThemeInvalid)
         {
             th.Dispose();
             th = null;
 
             throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
-                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
+                $"Please make sure '{Path.Combine(th.FolderName, IgTheme.CONFIG_FILE)}' file is valid.");
         }
 
         // update the name of dark/light theme
