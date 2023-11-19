@@ -1,106 +1,106 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Platforms>x64;ARM64</Platforms>
-    <Version>9.0.7.1125</Version>
-    <FileVersion>$(Version)</FileVersion>
-    <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
-    <Configurations>Debug;Release;Publish_Release</Configurations>
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Platforms>x64;ARM64</Platforms>
+        <Version>9.0.7.1125</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
+        <Configurations>Debug;Release;Publish_Release</Configurations>
 
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <COMReference Include="IWshRuntimeLibrary">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>1</VersionMajor>
-      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
+    <ItemGroup>
+        <COMReference Include="IWshRuntimeLibrary">
+            <WrapperTool>tlbimp</WrapperTool>
+            <VersionMinor>0</VersionMinor>
+            <VersionMajor>1</VersionMajor>
+            <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+            <Lcid>0</Lcid>
+            <Isolated>false</Isolated>
+            <EmbedInteropTypes>true</EmbedInteropTypes>
+        </COMReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="HybridGraphics\HybridControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="HybridGraphics\HybridControl.cs">
+            <SubType>Component</SubType>
+        </Compile>
+    </ItemGroup>
 
     <ItemGroup>
         <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="DirectNStandard" Version="1.15.0.2" />
-      <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="13.4.0" Condition="'$(Platform)' == 'x64'" />
-      <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="13.3.0" Condition="'$(Platform)' == 'ARM64'" />
-      <PackageReference Include="Magick.NET.SystemDrawing" Version="7.2.0" />
-      <PackageReference Include="Magick.NET.SystemWindowsMedia" Version="7.2.0" />
-      <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
-      <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
-        <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
-      <PackageReference Include="PhotoSauce.MagicScaler" Version="0.14.0" />
-      <PackageReference Include="WicNet" Version="1.7.1" />
+        <PackageReference Include="DirectNStandard" Version="1.15.0.2" />
+        <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="13.4.0" Condition="'$(Platform)' == 'x64'" />
+        <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="13.3.0" Condition="'$(Platform)' == 'ARM64'" />
+        <PackageReference Include="Magick.NET.SystemDrawing" Version="7.2.0" />
+        <PackageReference Include="Magick.NET.SystemWindowsMedia" Version="7.2.0" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="PhotoSauce.MagicScaler" Version="0.14.0" />
+        <PackageReference Include="WicNet" Version="1.7.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ImageGlass.Webp\ImageGlass.WebP.csproj" />
+        <ProjectReference Include="..\ImageGlass.Webp\ImageGlass.WebP.csproj" />
     </ItemGroup>
 
 </Project>

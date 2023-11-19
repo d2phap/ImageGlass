@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0;net8.0-windows10.0.19041.0</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Configurations>Debug;Release;Publish_Release</Configurations>
-    <Platforms>x64;ARM64</Platforms>
-    <Version>1.3.2</Version>
-    <FileVersion>$(Version)</FileVersion>
-    <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
-      
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Configurations>Debug;Release;Publish_Release</Configurations>
+        <Platforms>x64;ARM64</Platforms>
+        <Version>1.3.2</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
+
+    </PropertyGroup>
 
     <ItemGroup>
         <ContentWithTargetPath Include="..\..\Libs\libwebp\x64\libwebp.dll">
@@ -38,7 +38,7 @@
             <TargetPath>libwebpdemux.dll</TargetPath>
         </ContentWithTargetPath>
         <None Include="..\..\Libs\libwebp\x64\libwebpdemux.dll" />
-        
+
     </ItemGroup>
 
 </Project>
