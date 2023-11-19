@@ -2633,7 +2633,7 @@ public partial class FrmMain
         {
             ToolId = Const.IGTOOL_SLIDESHOW,
             ToolName = "[Slideshow]",
-            Executable = "igcmd.exe",
+            Executable = App.StartUpDir("igcmd.exe"),
             Argument = $"{IgCommands.START_SLIDESHOW} {Const.FILE_MACRO}",
             IsIntegrated = true,
         };
