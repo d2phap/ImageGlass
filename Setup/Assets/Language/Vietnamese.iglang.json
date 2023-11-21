@@ -102,7 +102,6 @@
     "_.ImageInterpolation._NearestNeighbor": "Thuật toán Nearest neighbor",
     "_.ImageInterpolation._Linear": "Thuật toán Linear",
     "_.ImageInterpolation._Cubic": "Thuật toán Cubic",
-    "_.ImageInterpolation._SampleLinear": "Thuật toán Sample linear",
     "_.ImageInterpolation._Antisotropic": "Thuật toán Antisotropic",
     "_.ImageInterpolation._HighQualityBicubic": "Thuật toán High quality bicubic",
     "FrmMain.MnuFile": "Tập tin",
@@ -226,7 +225,7 @@
     "FrmMain.MnuPageNav": "Điều hướng trang",
     "FrmMain.MnuCropTool": "Cắt ảnh",
     "FrmMain.MnuGetMoreTools": "Tải thêm công cụ…",
-    "FrmMain.MnuSettings": "Cài đặt…",
+    "FrmMain.MnuSettings": "Cài đặt",
     "FrmMain.MnuHelp": "Trợ giúp",
     "FrmMain.MnuAbout": "Thông tin phần mềm",
     "FrmMain.MnuQuickSetup": "Mở Cài đặt nhanh ImageGlass",
@@ -259,7 +258,6 @@
     "FrmAbout._Email": "Email:",
     "FrmAbout._Credits": "Đóng góp",
     "FrmAbout._Donate": "Ủng hộ",
-    "FrmSettings._Text": "Cài đặt",
     "FrmSettings.Nav._General": "Cài đặt chung",
     "FrmSettings.Nav._Image": "Hình ảnh",
     "FrmSettings.Nav._Slideshow": "Trình chiếu ảnh",
@@ -479,6 +477,7 @@
     "FrmQuickSetup._SetDefaultViewer": "Bạn có muốn đặt ImageGlass làm trình xem ảnh mặc định?",
     "FrmQuickSetup._SetDefaultViewer._Description": "Bạn có thể thiết lập lại trong Cài đặt của ứng dụng, thẻ Liên kết phần mở rộng.",
     "FrmQuickSetup._ConfirmCloseProcess": "Trước khi áp dụng các cài đặt mới, tất cả các cửa sổ đang chạy khác của ImageGlass cần phải đóng. Bạn có sẵn sàng để tiến hành?",
-    "FrmSettings._AvailableImageInfoTags": "Thẻ có sẵn:"
+    "FrmSettings._AvailableImageInfoTags": "Thẻ có sẵn:",
+    "_.ImageInterpolation._MultiSampleLinear": "Thuật toán Multi-sample linear"
   }
 }
