@@ -19,6 +19,8 @@
 
     &> nav {
       overflow-y: auto;
+      width: max-content;
+      min-width: 100%;
     }
 
     .sidebar-bottom {

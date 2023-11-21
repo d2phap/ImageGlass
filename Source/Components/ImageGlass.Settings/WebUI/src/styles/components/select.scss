@@ -12,5 +12,10 @@ select {
       background-color: rgb(var(--ControlBg));
     }
   }
+
+
+  &::-webkit-scrollbar {
+    width: 2rem;
+  }
 }
 
