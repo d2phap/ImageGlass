@@ -8,7 +8,7 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER"/>
     <ROW Property="AI_README_FILE" Value="[#ReadMe.rtf][#ReadMe.rtf]"/>
-    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:"/>
+    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
     <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
@@ -270,7 +270,6 @@
     <ROW File="WicNet.txt" Component_="ApacheLicense2.0.txt" FileName="WicNet.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\WicNet.txt" SelfReg="false"/>
     <ROW File="WebView2Loader.dll_1" Component_="WebView2Loader.dll_1" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\runtimes\win-x64\native\WebView2Loader.dll" SelfReg="false"/>
     <ROW File="default.webp" Component_="igcmd.dll.config" FileName="DEFAUL~1.WEB|default.webp" Attributes="0" SourcePath="..\Assets\default.webp" SelfReg="false"/>
-    <ROW File="igconfig.json" Component_="igcmd.dll.config" FileName="IGCONF~1.JSO|igconfig.json" Attributes="0" SourcePath="..\Assets\igconfig.json" SelfReg="false"/>
     <ROW File="ReadMe.rtf" Component_="igcmd.dll.config" FileName="ReadMe.rtf" Attributes="0" SourcePath="..\Assets\ReadMe.rtf" SelfReg="false"/>
     <ROW File="FrmSettings.d.ts" Component_="FrmSettings.d.ts" FileName="FRMSET~1.TS|FrmSettings.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\@types\FrmSettings.d.ts" SelfReg="false"/>
     <ROW File="Language.d.ts" Component_="Language.d.ts" FileName="LANGUA~1.TS|Language.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\common\Language.d.ts" SelfReg="false"/>
@@ -364,6 +363,32 @@
     <ROW File="WindowFit.svg_1" Component_="ActualSize.svg_1" FileName="WINDOW~1.SVG|WindowFit.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\WindowFit.svg" SelfReg="false"/>
     <ROW File="ZoomIn.svg_1" Component_="ActualSize.svg_1" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ZoomIn.svg" SelfReg="false"/>
     <ROW File="ZoomOut.svg_1" Component_="ActualSize.svg_1" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\Assets\Themes\Kobe-Light\ZoomOut.svg" SelfReg="false"/>
+    <ROW File="Armenian.iglang.json" Component_="Vietnamese.iglang.json" FileName="ARMENI~1.JSO|Armenian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Armenian.iglang.json" SelfReg="false"/>
+    <ROW File="ChineseSimplified.iglang.json" Component_="Vietnamese.iglang.json" FileName="CHINES~1.JSO|Chinese Simplified.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Chinese Simplified.iglang.json" SelfReg="false"/>
+    <ROW File="ChineseTraditional.iglang.json" Component_="Vietnamese.iglang.json" FileName="CHINES~2.JSO|Chinese Traditional.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Chinese Traditional.iglang.json" SelfReg="false"/>
+    <ROW File="Croatian.iglang.json" Component_="Vietnamese.iglang.json" FileName="CROATI~1.JSO|Croatian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Croatian.iglang.json" SelfReg="false"/>
+    <ROW File="Czech.iglang.json" Component_="Vietnamese.iglang.json" FileName="CZECHI~1.JSO|Czech.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Czech.iglang.json" SelfReg="false"/>
+    <ROW File="Dutch.iglang.json" Component_="Vietnamese.iglang.json" FileName="DUTCHI~1.JSO|Dutch.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Dutch.iglang.json" SelfReg="false"/>
+    <ROW File="French.iglang.json" Component_="Vietnamese.iglang.json" FileName="FRENCH~1.JSO|French.iglang.json" Attributes="0" SourcePath="..\Assets\Language\French.iglang.json" SelfReg="false"/>
+    <ROW File="German.iglang.json" Component_="Vietnamese.iglang.json" FileName="GERMAN~1.JSO|German.iglang.json" Attributes="0" SourcePath="..\Assets\Language\German.iglang.json" SelfReg="false"/>
+    <ROW File="Greek.iglang.json" Component_="Vietnamese.iglang.json" FileName="GREEKI~1.JSO|Greek.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Greek.iglang.json" SelfReg="false"/>
+    <ROW File="Italian.iglang.json" Component_="Vietnamese.iglang.json" FileName="ITALIA~1.JSO|Italian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Italian.iglang.json" SelfReg="false"/>
+    <ROW File="Korean.iglang.json" Component_="Vietnamese.iglang.json" FileName="KOREAN~1.JSO|Korean.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Korean.iglang.json" SelfReg="false"/>
+    <ROW File="KurmanjiKurdish.iglang.json" Component_="Vietnamese.iglang.json" FileName="KURMAN~1.JSO|Kurmanji (Kurdish).iglang.json" Attributes="0" SourcePath="..\Assets\Language\Kurmanji (Kurdish).iglang.json" SelfReg="false"/>
+    <ROW File="Lithuanian.iglang.json" Component_="Vietnamese.iglang.json" FileName="LITHUA~1.JSO|Lithuanian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Lithuanian.iglang.json" SelfReg="false"/>
+    <ROW File="Malay.iglang.json" Component_="Vietnamese.iglang.json" FileName="MALAYI~1.JSO|Malay.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Malay.iglang.json" SelfReg="false"/>
+    <ROW File="Polish.iglang.json" Component_="Vietnamese.iglang.json" FileName="POLISH~1.JSO|Polish.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Polish.iglang.json" SelfReg="false"/>
+    <ROW File="PortugueseBrazilian.iglang.json" Component_="Vietnamese.iglang.json" FileName="PORTUG~1.JSO|Portuguese, Brazilian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Portuguese, Brazilian.iglang.json" SelfReg="false"/>
+    <ROW File="Portuguese.iglang.json" Component_="Vietnamese.iglang.json" FileName="PORTUG~2.JSO|Portuguese.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Portuguese.iglang.json" SelfReg="false"/>
+    <ROW File="Romanian.iglang.json" Component_="Vietnamese.iglang.json" FileName="ROMANI~1.JSO|Romanian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Romanian.iglang.json" SelfReg="false"/>
+    <ROW File="Russian.iglang.json" Component_="Vietnamese.iglang.json" FileName="RUSSIA~1.JSO|Russian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Russian.iglang.json" SelfReg="false"/>
+    <ROW File="SerbianCyrillic.iglang.json" Component_="Vietnamese.iglang.json" FileName="SERBIA~1.JSO|Serbian (Cyrillic).iglang.json" Attributes="0" SourcePath="..\Assets\Language\Serbian (Cyrillic).iglang.json" SelfReg="false"/>
+    <ROW File="Slovak.iglang.json" Component_="Vietnamese.iglang.json" FileName="SLOVAK~1.JSO|Slovak.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Slovak.iglang.json" SelfReg="false"/>
+    <ROW File="Slovenian.iglang.json" Component_="Vietnamese.iglang.json" FileName="SLOVEN~1.JSO|Slovenian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Slovenian.iglang.json" SelfReg="false"/>
+    <ROW File="Spanish.iglang.json" Component_="Vietnamese.iglang.json" FileName="SPANIS~1.JSO|Spanish.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Spanish.iglang.json" SelfReg="false"/>
+    <ROW File="Swedish.iglang.json" Component_="Vietnamese.iglang.json" FileName="SWEDIS~1.JSO|Swedish.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Swedish.iglang.json" SelfReg="false"/>
+    <ROW File="Thai.iglang.json" Component_="Vietnamese.iglang.json" FileName="THAIIG~1.JSO|Thai.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Thai.iglang.json" SelfReg="false"/>
+    <ROW File="Turkish.iglang.json" Component_="Vietnamese.iglang.json" FileName="TURKIS~1.JSO|Turkish.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Turkish.iglang.json" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
@@ -452,6 +477,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
@@ -460,6 +486,7 @@
     <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="LaunchApp"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
     <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
@@ -514,7 +541,7 @@
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
-    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
@@ -526,7 +553,9 @@
     <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
-    <ROW Action="AI_DetectSoftware" Sequence="101"/>
+    <ROW Action="AI_DetectSoftware" Sequence="102"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 603) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 603) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 10240)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 10586)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 14393)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 15063)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 16299)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 17134)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 17763)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 18362)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType &lt;&gt; 1) OR (WindowsBuild &lt;&gt; 18363)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType = 1) OR (WindowsBuild &lt;&gt; 14393)) AND ((VersionNT64 &lt;&gt; 1000) OR (MsiNTProductType = 1) OR (WindowsBuild &lt;&gt; 17763)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="DefaultBuild"/>
@@ -562,5 +591,14 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="ExtIcons_Dir" SourcePath="..\Assets\Ext-Icons" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="Language_Dir" SourcePath="..\Assets\Language" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="License_Dir" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="Icons_Dir" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Icons" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="Themes_Dir" SourcePath="..\Assets\Themes" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="runtimes_Dir" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\runtimes" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="dist_Dir" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
   </COMPONENT>
 </DOCUMENT>
