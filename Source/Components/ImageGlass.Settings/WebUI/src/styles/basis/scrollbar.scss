@@ -1,0 +1,40 @@
+
+::-webkit-scrollbar {
+  width: var(--scrollbarSizePx);
+  height: var(--scrollbarSizePx);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--scrollbarSizePx);
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgb(var(--InvertColor) / 0.05);
+    background-color: rgb(var(--AppText) / 0.1);
+  }
+  &:active {
+    background-color: rgb(var(--AppText) / 0.125);
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--AppText) / 0.35);
+  border-radius: var(--scrollbarSizePx);
+  border-color: transparent;
+  border-style: solid;
+  border-width: calc((var(--scrollbarSizePx) / 2.2) - 1px);
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: calc((var(--scrollbarSizePx) / 3) - 1px);
+  background-color: rgb(var(--AppText) / 0.45);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: rgb(var(--AppText) / 0.55);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}

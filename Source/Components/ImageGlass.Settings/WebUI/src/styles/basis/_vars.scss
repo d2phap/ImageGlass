@@ -1,0 +1,67 @@
+
+// theme colors (dark is default)
+:root,
+::backdrop {
+  --InvertColor: 255 255 255;
+  --AppBg: 20 25 28;
+  --AppText: 210 210 210;
+  --AppTextDisabled: 140 140 140;
+  --Accent: 173 96 69;
+  --ControlBg: 60 63 64;
+  --ControlBgHover: 87 91 92;
+  --ControlBgPressed: 43 43 43;
+  --ControlBgPressed2: 49 51 53;
+  --ControlBgDisabled: 78 78 78;
+
+  --ControlCtaBg: rgb(var(--Accent) / 0.2);
+  --ControlCtaBgHover: rgb(var(--Accent) / 0.3);
+  --ControlBorder: rgb(var(--InvertColor) / 0.2);
+  --ControlBorderHover: rgb(var(--InvertColor) / 0.3);
+  --ControlBorderDisabled: rgb(var(--InvertColor) / 0.02);
+  --ControlCtaBorder: rgb(var(--InvertColor) / 0.2);
+  --ControlCtaBorderHover: rgb(var(--InvertColor) / 0.4);
+
+  --BgNeutral: 32 38 43;
+  --BgInfo: 0 134 214;
+  --BgSuccess: 0 210 80;
+  --BgWarning: 255 139 0;
+  --BgDanger: 255 0 83;
+
+  --controlWidth: calc(200 * var(--fontScale));
+  --controlHeight: calc(28 * var(--fontScale));
+  --baseBorderRadius: 0.2rem;
+  --borderRadius: calc(var(--baseBorderRadius) * var(--fontScale));
+  --shadow: 0 0.1rem 0.8rem -0.4rem rgb(0 0 0 / 50%);
+  --scrollbarSizePx: calc(0.875rem * var(--fontScale));
+  --transitionMs: 0ms; // disable from the begining
+
+  --fontSize: 12.5;
+  --designFontSize: 12.5;
+  --fontScale: var(--fontSize) / var(--designFontSize);
+  --fontBase: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variant", "Segoe UI";
+  --fontCode: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+// light mode
+html[color-mode=light],
+html[color-mode=light] ::backdrop {
+  --InvertColor: 0 0 0;
+  --AppBg: 255 255 255;
+  --AppText: 30 30 30;
+  --AppTextDisabled: 113 113 113;
+  --ControlBg: 245 245 250;
+  --ControlBgHover: 235 235 240;
+  --ControlBgPressed: 220 220 220;
+  --ControlBgPressed2: 230 231 234;
+  --ControlBgDisabled: 220 220 220;
+
+  --ControlCtaBg: rgb(var(--Accent) / 0.15);
+  --ControlCtaBgHover: rgb(var(--Accent) / 0.25);
+  --ControlBorder: rgb(var(--InvertColor) / 0.2);
+  --ControlBorderHover: rgb(var(--InvertColor) / 0.3);
+  --ControlCtaBorder: rgb(var(--InvertColor) / 0.2);
+  --ControlCtaBorderHover: rgb(var(--InvertColor) / 0.3);
+
+  --BgNeutral: 242 242 242;
+}
+

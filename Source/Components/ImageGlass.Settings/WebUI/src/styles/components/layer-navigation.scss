@@ -1,0 +1,68 @@
+#layerNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  padding: 0 0.6rem;
+  pointer-events: none;
+
+  .nav-left,
+  .nav-right {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    background-color: rgb(var(--AppBg) / 0.78);
+    border-radius: 100%;
+    width: 3.675rem;
+    height: 3.675rem;
+    visibility: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border: 0.1rem solid rgb(var(--nav-button-color, --Accent) / 0.25);
+      border-radius: 100%;
+      background-color: rgb(var(--nav-button-color, --Accent) / 0.5);
+    }
+
+    img {
+      width: 1.8375rem;
+      height: 1.8375rem;
+      z-index: 1;
+    }
+
+    &.is--visible {
+      visibility: visible !important;
+    }
+
+    &:active,
+    &.is--active {
+      background-color: rgb(var(--AppBg) / 0.94);
+
+      img {
+        opacity: 0.6;
+        transform: translateY(0.05rem);
+      }
+    }
+  }
+
+  .nav-right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}

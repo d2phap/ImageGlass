@@ -1,0 +1,18 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect id="svg_2" fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <ellipse stroke="#dedede" ry="7.899555" rx="7.899555" id="svg_9" cy="8.249556" cx="8.249555" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <line stroke="#dedede" stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="19.699652" x2="19.722484" y1="13.835621" x1="13.858454" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_13" y2="8.310499" x2="11.897815" y1="8.310499" x1="4.540535" fill-opacity="null" stroke-width="0.7" stroke="#dedede" fill="none"/>
+  <line transform="rotate(90 8.219175338745117,8.310499191284181) " stroke-linecap="null" stroke-linejoin="null" id="svg_14" y2="8.310499" x2="11.897815" y1="8.310499" x1="4.540535" fill-opacity="null" stroke-width="0.7" stroke="#dedede" fill="none"/>
+ </g>
+</svg>

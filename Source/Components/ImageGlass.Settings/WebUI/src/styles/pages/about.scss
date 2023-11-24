@@ -1,0 +1,53 @@
+[page="about"] {
+  #app {
+    display: grid;
+    grid-template-areas: "main" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+  }
+
+  #top {
+    grid-area: main;
+    display: flex;
+    padding: 1rem;
+    background-color: rgb(var(--AppBg) / 0.75);
+    max-height: fit-content;
+    overflow: auto;
+  }
+
+  #top>aside {
+    position: sticky;
+    top: 0;
+  }
+
+  #app>footer {
+    grid-area: footer;
+    padding: 1rem;
+    justify-content: end;
+
+    button {
+      min-width: calc(6.5rem * var(--fontScale));
+    }
+  }
+
+  #BtnImageGlassStore {
+    display: flex;
+    padding: 0;
+  }
+
+  #BtnImageGlassStore img {
+    height: 4.2rem;
+  }
+
+  #BtnImageGlassStore:hover {
+    box-shadow: 0 4px 15px -10px #000;
+  }
+
+  #BtnImageGlassStore:active {
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  .app-code {
+    text-transform: capitalize;
+  }
+}

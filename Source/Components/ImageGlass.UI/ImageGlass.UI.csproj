@@ -1,237 +1,93 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{76486F88-AA16-4D7D-BBF6-0F1C604D5853}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageGlass.UI</RootNamespace>
-    <AssemblyName>ImageGlass.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|AnyCPU'">
-    <OutputPath>bin\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|x64'">
-    <OutputPath>bin\x64\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_MSIX|x86'">
-    <OutputPath>bin\x86\Release_MSIX\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>9.0</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET.Core, Version=13.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET.Core.13.3.0\lib\netstandard20\Magick.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET.SystemDrawing, Version=7.1.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET.SystemDrawing.7.1.0\lib\net462\Magick.NET.SystemDrawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DPIScaling.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="InputBox\frmDialogBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InputBox\frmDialogBox.Designer.cs">
-      <DependentUpon>frmDialogBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NakedTabControl\NakedTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="NavigationRegion.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Renderers\ModernThumbnailRenderer.cs" />
-    <Compile Include="Theme\ThemeImage.cs" />
-    <Compile Include="Theme\ThemeIconCollection.cs" />
-    <Compile Include="InputBox\InputBox.cs" />
-    <Compile Include="Renderers\ModernMenuRenderer.cs" />
-    <Compile Include="Renderers\SystemRenderer.cs" />
-    <Compile Include="Theme\Theme.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolForms\ToolForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ToolForms\ToolFormManager.cs" />
-    <Compile Include="Renderers\ModernToolStripRenderer.cs" />
-    <Compile Include="ToolStrip\Menu.cs" />
-    <Compile Include="ToolStrip\ToolStripRadioButtonMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Toolbar\ModernToolbar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">
-      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
-      <Name>ImageGlass.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
-      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
-      <Name>ImageGlass.Heart</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj">
-      <Project>{0C295FB8-C6C6-4A40-9F19-05A43F353A04}</Project>
-      <Name>ImageGlass.ImageListView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
-      <Project>{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81}</Project>
-      <Name>ImageGlass.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
-      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
-      <Name>ImageGlass.Services</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="InputBox\frmDialogBox.resx">
-      <DependentUpon>frmDialogBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolForms\ToolForm.resx">
-      <DependentUpon>ToolForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DefaultLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CSharp.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <Platforms>x64;ARM64</Platforms>
+        <Version>9.0.7.1125</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
+        <Configurations>Debug;Release;Publish_Release</Configurations>
+        <LangVersion>latest</LangVersion>
+        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.7.30\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|ARM64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows10.0.19041.0|x64'">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
+        <ProjectReference Include="..\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Labels\ModernLinkLabel.cs" />
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

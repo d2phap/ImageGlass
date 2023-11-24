@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -14,269 +14,196 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using System;
 
-namespace ImageGlass.Base {
-    /// <summary>
-    /// The loading order list.
-    /// **If we need to rename, we MUST update the language string too.
-    /// Because the name is also language keyword!
-    /// </summary>
-    public enum ImageOrderBy {
-        Name = 0,
-        Length = 1,
-        CreationTime = 2,
-        Extension = 3,
-        LastAccessTime = 4,
-        LastWriteTime = 5,
-        Random = 6
-    }
+namespace ImageGlass.Base;
 
-    /// <summary>
-    /// The loading order types list
-    /// **If we need to rename, we MUST update the language string too.
-    /// Because the name is also language keyword!
-    /// </summary>
-    public enum ImageOrderType {
-        Asc = 0,
-        Desc = 1
-    }
 
-    /// <summary>
-    /// The list of Zoom Optimization.
-    /// **If we need to rename, have to update the language string too.
-    /// Because the name is also language keyword!
-    /// </summary>
-    public enum ZoomOptimizationMethods {
-        /// <summary>
-        /// Combination of NearestNeighbor
-        /// </summary>
-        Auto = 0,
-        /// <summary>
-        /// Specifies low quality interpolation.
-        /// </summary>
-        Low = 1,
-        /// <summary>
-        /// Specifies high quality interpolation.
-        /// </summary>
-        High = 2,
-        /// <summary>
-        /// Specifies bilinear interpolation. No prefiltering is done. This mode is not suitable
-        /// for shrinking an image below 50 percent of its original size.
-        /// </summary>
-        Bilinear = 3,
-        /// <summary>
-        /// Specifies bicubic interpolation. No prefiltering is done. This mode is not suitable
-        /// for shrinking an image below 25 percent of its original size.
-        /// </summary>
-        Bicubic = 4,
-        /// <summary>
-        /// Specifies nearest-neighbor interpolation.
-        /// </summary>
-        NearestNeighbor = 5,
-        /// <summary>
-        /// Specifies high-quality, bilinear interpolation. Prefiltering is performed to
-        /// ensure high-quality shrinking.
-        /// </summary>
-        HighQualityBilinear = 6,
-        /// <summary>
-        /// Specifies high-quality, bicubic interpolation. Prefiltering is performed to ensure
-        /// high-quality shrinking. This mode produces the highest quality transformed images.
-        /// </summary>
-        HighQualityBicubic = 7,
-    }
+/// <summary>
+/// Define the flags to tell FrmMain update the UI
+/// </summary>
+[Flags]
+public enum UpdateRequests
+{
+    #pragma warning disable format
 
-    /// <summary>
-    /// The list of mousewheel actions.
-    /// **If we need to rename, have to update the language string too.
-    /// Because the name is also language keyword!
-    /// </summary>
-    public enum MouseWheelActions {
-        DoNothing = 0,
-        Zoom = 1,
-        ScrollVertically = 2,
-        ScrollHorizontally = 3,
-        BrowseImages = 4
-    }
+    None                = 0,
+    Language            = 1 << 1,
 
+    MouseActions        = 1 << 3,
+    RealTimeFileUpdate  = 1 << 4,
+    MenuHotkeys         = 1 << 5,
+
+    ReloadImage         = 1 << 6,
+    ReloadImageList     = 1 << 7,
+    Slideshow           = 1 << 8,
+
+    ToolbarAlignment    = 1 << 9,
+    ToolbarIcons        = 1 << 10,
+    ToolbarButtons      = 1 << 11,
+    Gallery             = 1 << 12,
+    Layout              = 1 << 13,
+
+    Appearance          = 1 << 14,
+    Theme               = 1 << 15,
+
+    #pragma warning restore format
+}
+
+
+/// <summary>
+/// Color channels of image, the value should be same as MagickImage.Channels enum
+/// </summary>
+public enum ColorChannel
+{
+    All = -1, // not applicable
+
+    Red = 1,
+    Green = 2,
+    Blue = 4,
+    Black = 8,
+    Alpha = 16,
+}
+
+
+/// <summary>
+/// Color profile options.
+/// </summary>
+public enum ColorProfileOption
+{
+    None,
+    Custom,
+    CurrentMonitorProfile,
+
+    // ImageMagick's profiles
+    AdobeRGB1998,
+    AppleRGB,
+    CoatedFOGRA39,
+    ColorMatchRGB,
+    sRGB,
+    USWebCoatedSWOP,
+}
+
+
+/// <summary>
+/// Types of path
+/// </summary>
+public enum PathType
+{
+    File,
+    Dir,
+    Unknown,
+}
+
+
+/// <summary>
+/// Determines Windows OS requirement
+/// </summary>
+public enum WindowsOS
+{
     /// <summary>
-    /// Define the flags to tell frmMain update the UI
+    /// Build 22621
     /// </summary>
-    [Flags]
-    public enum ForceUpdateActions {
-        NONE = 0,
-        OTHER_SETTINGS = 1,
-        THEME = 2,
-        LANGUAGE = 4,
-        THUMBNAIL_BAR = 8,
-        THUMBNAIL_ITEMS = 16,
-        TOOLBAR = 32,
-        TOOLBAR_POSITION = 64,
-        TOOLBAR_ICON_HEIGHT = 128,
-        IMAGE_LIST = 256,
-        IMAGE_LIST_NO_RECURSIVE = 512,
-        COLOR_PICKER_MENU = 1024,
-        PAGE_NAV_MENU = 2048
-    }
+    Win11_22H2_OrLater,
 
     /// <summary>
-    /// <para>
-    /// All the supported toolbar buttons. NOTE: the names here MUST match the field
-    /// name in frmMain! Reflection is used to fetch the image and string from the
-    /// frmMain field.
-    /// </para>
-    /// <para>The integer value of the enum is used for storing the config info.</para>
+    /// Build 22000
     /// </summary>
-    public enum ToolbarButton {
-        Separator = -1,
-        btnBack = 0,
-        btnNext = 1,
-        btnRotateLeft = 2,
-        btnRotateRight = 3,
-        btnZoomIn = 4,
-        btnZoomOut = 5,
-        btnScaleToFit = 6,
-        btnActualSize = 7,
-        btnZoomLock = 8,
-        btnScaletoWidth = 9,
-        btnScaletoHeight = 10,
-        btnWindowFit = 11,
-        btnOpen = 12,
-        btnRefresh = 13,
-        btnGoto = 14,
-        btnThumb = 15,
-        btnCheckedBackground = 16,
-        btnFullScreen = 17,
-        btnSlideShow = 18,
-        btnConvert = 19,
-        btnPrintImage = 20,
-        btnDelete = 21,
-        btnAutoZoom = 22,
-        btnFlipHorz = 23,
-        btnFlipVert = 24,
-        btnScaleToFill = 25,
-        btnEdit = 26,
-        btnCrop = 27,
-        btnColorPicker = 28,
+    Win11OrLater,
+    Win10,
+    Win10OrLater,
+}
 
-        MAX // DO NOT ADD ANYTHING AFTER THIS
-    }
+
+/// <summary>
+/// Exit codes of ImageGlass ultilities
+/// </summary>
+public enum IgExitCode : int
+{
+    Done = 0,
+    AdminRequired = 1,
+    Error = 2,
+    Error_FileNotFound = 3,
+}
+
+
+/// <summary>
+/// Flip options.
+/// </summary>
+[Flags]
+public enum FlipOptions
+{
+    None = 0,
+    Horizontal = 1 << 1,
+    Vertical = 1 << 2,
+}
+
+
+/// <summary>
+/// Rotate option.
+/// </summary>
+public enum RotateOption
+{
+    Left = 0,
+    Right = 1,
+}
+
+
+/// <summary>
+/// Selection aspect ratio.
+/// </summary>
+public enum SelectionAspectRatio
+{
+    FreeRatio = 0,
+    Custom = 1,
+    Original = 2,
+    Ratio1_1 = 3,
+    Ratio1_2 = 4,
+    Ratio2_1 = 5,
+    Ratio2_3 = 6,
+    Ratio3_2 = 7,
+    Ratio3_4 = 8,
+    Ratio4_3 = 9,
+    Ratio9_16 = 10,
+    Ratio16_9 = 11,
+}
+
+
+/// <summary>
+/// Window backdrop effect.
+/// </summary>
+public enum BackdropStyle
+{
+    /// <summary>
+    /// Use default setting of Windows.
+    /// </summary>
+    None = 0,
 
     /// <summary>
-    /// Zooming modes.
+    /// Mica effect.
     /// </summary>
-    [Flags]
-    public enum ZoomMode {
-        AutoZoom = 0,
-        ScaleToFit = 1,
-        ScaleToWidth = 2,
-        ScaleToHeight = 4,
-        LockZoomRatio = 8,
-        ScaleToFill = 16,
-    }
+    Mica = 2,
 
     /// <summary>
-    /// Toolbar position
+    /// Acrylic effect.
     /// </summary>
-    public enum ToolbarPosition {
-        Top = 0,
-        Bottom = 1
-    }
+    Acrylic = 3,
 
     /// <summary>
-    /// Color channels of image, the value should be same as MagickImage.Channels enum
+    /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
     /// </summary>
-    public enum ColorChannels {
-        All = -1, // not applicable
+    MicaAlt = 4,
+}
 
-        Red = 1,
-        Green = 2,
-        Blue = 4,
-        Black = 8,
-        Alpha = 16,
-    }
 
-    /// <summary>
-    /// Actions the user can assign to keys
-    /// </summary>
-    public enum AssignableActions {
-        DoNothing = -1,    // error case
-        PrevNextImage = 0, // previous/next image in list
-        PanLeftRight,      // pan current image left/right
-        PanUpDown,         // pan current image up/down
-        ZoomInOut,         // zoom current image in/out
-        PauseSlideshow,    // placeholder for V6 space key behavior
-
-    }
-
-    /// <summary>
-    /// User customizable key pairs
-    /// </summary>
-    public enum KeyCombos {
-        LeftRight = 0, // left/right arrow keys
-        UpDown,      // up/down arrow keys
-        PageUpDown,  // pageup/pagedown keys
-        SpaceBack,   // space, backspace keys
-    }
-
-    /// <summary>
-    /// Supported actions which can be assigned to mouse click
-    /// </summary>
-    public enum MouseAction {
-        ToggleZoomFit = 0, // switch between 100% and fit-to-window
-        ZoomIn,            // zoom in by zoom step
-        ZoomOut,           // zoom out by zoom step
-        NextImage,         // next image in list
-        PrevImage,         // previous image in list
-        ToggleFullScreen,  // toggle full-screen mode
-        PopupMenu,         // bring up the popup menu
-        ColorPick,         // select color under mouse cursor
-        ZoomInToMouse,     // zoom in by zoom step, centered on mouse position
-        ZoomOutToAuto,     // zoom out to Auto-zoom level
-    }
-
-    /// <summary>
-    /// Supported customizable mouse click
-    /// </summary>
-    public enum MouseClick {
-        Button1,    // Left single
-        Button1Dbl,
-        Button2,    // Right single
-        Button2Dbl,
-        Button3,    // Middle
-        Button3Dbl,
-        Button4,    // X1
-        Button4Dbl,
-        Button5,    // X2
-        Button5Dbl,
-    }
-
-    /// <summary>
-    /// Types of path
-    /// </summary>
-    public enum PathType {
-        File,
-        Dir,
-    }
-
-    /// <summary>
-    /// Actions after opening editing app
-    /// </summary>
-    public enum AfterOpeningEditAppAction {
-        Nothing = 0,
-        Minimize = 1,
-        Close = 2,
-    }
-
-    /// <summary>
-    /// Determines Windows OS requirement
-    /// </summary>
-    public enum WindowsOS {
-        Win11,
-        Win10,
-        Win10OrLater,
-        Win7,
-    }
+/// <summary>
+/// Options indicate what source of image is saved.
+/// </summary>
+public enum ImageSaveSource
+{
+    Undefined,
+    SelectedArea,
+    Clipboard,
+    CurrentFile,
 }

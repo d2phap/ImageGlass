@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="dark" page="about">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About ImageGlass</title>
+  <link rel="stylesheet" href="./dist/styles.css">
+</head>
+
+<body id="app">
+  <div id="top">
+    <aside style="padding-right: 2rem; min-width: calc(2rem + 64px);">
+      <img id="Img_AppLogo" src="[AppLogo]" height="64" width="64" alt="Logo"
+        onerror="this.hidden = true;" />
+    </aside>
+
+    <main>
+      <h1 class="mt-0 mb-0 text-accent">
+        ImageGlass <sup id="Lbl_AppCode" class="app-code">[AppCode]</sup>
+      </h1>
+      <p lang-text="FrmAbout._Slogan">[Slogan]</p><br />
+
+      <h3 class="mb-0 mt-0">
+        <span lang-text="FrmAbout._Version">[Version]</span>
+        <span id="Lbl_AppVersion">[9.0.0.0]</span> (<span id="Lbl_AppArchitecture">[64-bit]</span>)<br />
+        .NET Runtime: <span id="Lbl_AppRuntime">[.NET 7]</span>
+      </h3>
+      <p>
+        Copyright © <span id="Lbl_CopyrightsYear">[2010-2023]</span> by Dương Diệu Pháp.<br />
+        All rights reserved.
+      </p>
+
+      <p class="d-flex align-items-center">
+        <a class="me-3" target="_blank"
+          href="https://imageglass.org/support#donate?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._Donate">
+          [Donate]
+        </a>
+
+        <a class="me-3" target="_blank"
+          href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._License">
+          [License]
+        </a>
+
+        <a class="me-3" target="_blank"
+          href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about"
+          lang-text="FrmAbout._Privacy">
+          [Privacy]
+        </a>
+      </p>
+
+      <p>
+        <button id="BtnImageGlassStore">
+          <img src="./img/MsStoreBadge.svg" />
+        </button>
+      </p>
+
+      <h4 class="mb-0" lang-text="FrmAbout._Thanks">
+        [Thanks]
+      </h4>
+      <ul>
+        <li>
+          <span lang-text="FrmAbout._LogoDesigner">[Logo designer:]</span>
+          Nguyễn Quốc Tuấn
+        </li>
+        <li>
+          <span lang-text="FrmAbout._Collaborator">[Collaborator:]</span>
+          Kevin Routley (<a target="_blank" href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)
+        </li>
+      </ul>
+
+      <h4 class="mb-0" lang-text="FrmAbout._Contact">[Contact:]</h4>
+      <ul>
+        <li>
+          <span lang-text="FrmAbout._Homepage">[Homepage:]</span>
+          <a target="_blank"
+            href="https://imageglass.org?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">https://imageglass.org</a>
+        </li>
+        <li>
+          GitHub: <a target="_blank"
+            href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a>
+        </li>
+        <li>
+          <span lang-text="FrmAbout._Email">[Email:]</span>
+          <a href="mailto:phap@imageglass.org">phap@imageglass.org</a>
+        </li>
+      </ul><br />
+
+
+      <details>
+        <summary>
+          <h3 class="my-0" lang-text="FrmAbout._Credits">[Credits]</h3>
+        </summary>
+
+        <div>
+          <h4 class="mb-0">D2Phap.DXControl</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="d2phap.txt">MIT license</a>.</li>
+            <li>Copyright © 2022-2023 Dương Diệu Pháp</li>
+          </ul>
+
+          <h4 class="mb-0">D2Phap.FileWatcher</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="d2phap.txt">MIT license</a>.</li>
+            <li>Copyright © 2018-2023 Dương Diệu Pháp</li>
+          </ul>
+
+          <h4 class="mb-0">Magick.NET</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="Apache License 2.0.txt">Apache License 2.0</a>.</li>
+            <li>Copyright © 2013-2023 Dirk Lemstra.</li>
+          </ul>
+
+          <h4 class="mb-0">PhotoSauce.MagicScaler</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="MagicScaler.txt">MIT license</a>.</li>
+            <li>Copyright © 2015-2023 Clinton Ingram and Contributors.</li>
+          </ul>
+
+          <h4 class="mt-0 mb-0">WicNet</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="WicNet.txt">MIT license</a>.</li>
+            <li>Copyright © 2023 Simon Mourier</li>
+          </ul>
+
+          <h4 class="mt-0 mb-0">DirectN</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="DirectN.txt">MIT license</a>.</li>
+            <li>Copyright © 2023 Simon Mourier</li>
+          </ul>
+
+          <h4 class="mb-0">ExplorerSortOrder</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="Apache License 2.0.txt">Apache License 2.0</a>.</li>
+            <li>Copyright © 2019 Kevin Routley.</li>
+          </ul>
+
+          <h4 class="mb-0">ImageGlass.Gallery</h4>
+          <ul>
+            <li>This software uses code of ImageListView licensed under the
+              <a data-license="Apache License 2.0.txt">Apache License 2.0</a>.</li>
+            <li>Copyright © 2013 Özgür Özçıtak.</li>
+          </ul>
+
+          <h4 class="mb-0">libwebp</h4>
+          <ul>
+            <li><a data-license="libwebp.txt">Copyright (c) 2010, Google Inc</a>. All rights reserved.</li>
+          </ul>
+
+          <h4 class="mb-0">Microsoft.Web.Webview2</h4>
+          <ul>
+            <li><a data-license="Webview2.txt">Copyright © Microsoft Corporation</a>. All rights reserved.</li>
+          </ul>
+
+          <h4 class="mb-0">Microsoft.Windows.CsWin32</h4>
+          <ul>
+            <li>Distributed under the terms of the
+              <a data-license="CsWin32.txt">MIT license</a>.</li>
+            <li>Copyright © Microsoft Corporation</li>
+          </ul>
+        </div>
+      </details>
+      <br />
+    </main>
+  </div>
+
+
+  <footer class="panel">
+    <button id="BtnCheckForUpdate" type="submit" lang-text="_._CheckForUpdate">[Check for update]</button>
+    <button id="BtnDonate" lang-text="FrmAbout._Donate">[Donate]</button>
+    <button id="BtnClose" lang-text="_._Close">[Close]</button>
+  </footer>
+
+
+  <svg hidden>
+    <defs>
+      <filter id="effectWaving">
+        <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="3" seed="10" result="turbulence">
+          <animate attributeName="baseFrequency" values="0.01;0.005;0.01;" dur="2.5s" begin="0" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="10" xChannelSelector="R" yChannelSelector="B"
+          result="displacement" />
+      </filter>
+    </defs>
+  </svg>
+
+  <script src="./dist/FrmAbout.js"></script>
+</body>
+</html>

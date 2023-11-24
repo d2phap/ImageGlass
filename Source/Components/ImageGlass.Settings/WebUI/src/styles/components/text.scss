@@ -1,0 +1,58 @@
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-code {
+  padding: 0.125em 0.25em;
+  font-family: var(--fontCode);
+  background-color: rgb(var(--Accent) / 0.15);
+  border-radius: var(--borderRadius);
+
+  -webkit-user-select: text;
+  user-select: text;
+
+  * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+.text-select {
+  -webkit-user-select: text;
+  user-select: text;
+
+  * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-left {
+  text-align: left !important;
+}
+
+.text-accent {
+  color: rgb(var(--Accent) / 1);
+}
+
+.text-danger {
+  color: rgb(219, 19, 24);
+}
+
+.text-warning {
+  color: rgb(205, 98, 0);
+}
+
+.text-success {
+  color: rgb(31, 146, 84);
+}
+
+.text-info {
+  color: rgb(0, 102, 212);
+}

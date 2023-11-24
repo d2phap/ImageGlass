@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>x64;x86;ARM32;ARM64</Platforms>
+    <ApplicationIcon>icon256.ico</ApplicationIcon>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Product>ImageGlass</Product>
+    <Description>A lightweight, versatile image viewer</Description>
+    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
+    <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>9.0.3.1221</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <VersionPrefix>9.0.3</VersionPrefix>
+    <VersionSuffix>beta-3</VersionSuffix>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <DebugType>portable</DebugType>
+    <Product>$(AssemblyName)</Product>
+    <AssemblyVersion></AssemblyVersion>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon256.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Views.csproj" />
+    <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="FrmMain\FrmMain.PicMainEvents.cs" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Icons\Copy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\ResetSelection.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Selection.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\Setting.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="post-build.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call $(ProjectDir)post-build.bat $(SolutionDir) $(TargetDir) $(ConfigurationName) $(Platform)" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
+  </Target>
+
+</Project>

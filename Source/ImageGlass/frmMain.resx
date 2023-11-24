@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+  <!--
     Microsoft ResX Schema 
-    
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,40 +117,110 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="mnuContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>150, 17</value>
+  <metadata name="Toolbar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>23, 17</value>
   </metadata>
-  <metadata name="timSlideShow.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>586, 17</value>
-  </metadata>
-  <metadata name="mnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="thumbnailBar.Colors" xml:space="preserve">
-    <value>ControlBackColor = 0; BorderColor = 406d6d6d; UnFocusedColor1 = 106d6d6d; UnFocusedColor2 = 406d6d6d; UnFocusedBorderColor = 806d6d6d; HoverColor1 = 80078d7; HoverColor2 = 400078d7; HoverBorderColor = 400078d7; SelectedColor1 = 100078d7; SelectedColor2 = 800078d7; SelectedBorderColor = 800078d7; DisabledColor1 = 6d6d6d; DisabledColor2 = 206d6d6d; DisabledBorderColor = 206d6d6d; DisabledForeColor = ff808080; ColumnHeaderBackColor1 = 20f0f0f0; ColumnHeaderBackColor2 = c4f0f0f0; ColumnHeaderHoverColor1 = 100078d7; ColumnHeaderHoverColor2 = 400078d7; ColumnSelectColor = 106d6d6d; ColumnSeparatorColor = 206d6d6d; PaneBackColor = 106d6d6d; PaneSeparatorColor = 806d6d6d; SelectionRectangleColor1 = 800078d7; SelectionRectangleColor2 = 800078d7</value>
-  </data>
-  <metadata name="toolMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>463, 17</value>
-  </metadata>
-  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>758, 15</value>
-  </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>851, 15</value>
-  </metadata>
-  <metadata name="mnuShortcut.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>304, 17</value>
-  </metadata>
-  <metadata name="mnuTray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>974, 15</value>
-  </metadata>
-  <metadata name="tray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1101, 15</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>65</value>
+  <metadata name="MnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>196, 18</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="MnuNavigation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuZoom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuPanning.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuFrameless.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuFullScreen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuSlideshow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuLayout.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuTools.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuHelp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="MnuExit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <metadata name="MnuContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>398, 19</value>
+  </metadata>
+  <metadata name="MnuSubMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>637, 21</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAQAEBAAAAEAIABoBAAARgAAABgYAAABACAAiAkAAK4EAAAgIAAAAQAgAKgQAAA2DgAAMDAAAAEA
