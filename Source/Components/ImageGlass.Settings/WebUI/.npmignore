@@ -1,0 +1,4 @@
+# Exclude files/folders for publishing package
+
+demo/
+src/

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light" page="settings">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageGlass settings</title>
+  <link rel="stylesheet" href="./dist/styles.css">
+</head>
+
+<body id="app">
+  <aside>
+    <nav>
+      <ul class="ig-sidebar">
+        <li>
+          <label>
+            <input type="radio" name="nav" value="general" />
+            <span>
+              ⚙️&nbsp;<span lang-text="FrmSettings.Nav._General">[General]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="image" />
+            <span>
+              🖼️&nbsp;<span lang-text="FrmSettings.Nav._Image">[Image]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="slideshow" />
+            <span>
+              🌌&nbsp;<span lang-text="FrmSettings.Nav._Slideshow">[Slideshow]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="edit" />
+            <span>
+              🖌️&nbsp;<span lang-text="FrmSettings.Nav._Edit">[Edit]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="layout" />
+            <span>
+              🧱&nbsp;<span lang-text="FrmSettings.Nav._Layout">[Layout]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="viewer" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Viewer">[Viewer]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="toolbar" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="gallery" />
+            <span data-level="2">
+              ◽&nbsp;<span lang-text="FrmSettings.Nav._Gallery">[Gallery]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="mouse" />
+            <span>
+              🖱️&nbsp;<span lang-text="FrmSettings.Nav._Mouse">[Mouse]</span>
+            </span>
+          </label>
+        </li>
+        <li hidden>
+          <label>
+            <input type="radio" name="nav" value="keyboard" />
+            <span>
+              ⌨️&nbsp;<span lang-text="FrmSettings.Nav._Keyboard">[Keyboard]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="file_assocs" />
+            <span>
+              📑&nbsp;<span lang-text="FrmSettings.Nav._FileTypeAssociations">[File type associations]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="tools" />
+            <span>
+              🧩&nbsp;<span lang-text="FrmSettings.Nav._Tools">[Tools]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="language" />
+            <span>
+              🌏&nbsp;<span lang-text="FrmSettings.Nav._Language">[Language]</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="nav" value="appearance" />
+            <span>
+              🎨&nbsp;<span lang-text="FrmSettings.Nav._Appearance">[Appearance]</span>
+            </span>
+          </label>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a id="LnkHelp" href="#" lang-title="_._GetHelp" lang-text="_._GetHelp">[Get help]</a>
+    </div>
+  </aside>
+
+
+  <main>
+    <!-- Tab: General -->
+    <section class="tab-page" tab="general">
+      <!-- General > General -->
+      <section>
+        <header lang-text="FrmSettings.Nav._General">[General]</header>
+        <div class="mb-2">
+          <a id="Lnk_StartupDir" class="text-nowrap" href="#" lang-text="FrmSettings._StartupDir">
+            [Startup location]
+          </a>
+        </div>
+        <div class="mb-2">
+          <a id="Lnk_ConfigDir" class="text-nowrap" href="#" lang-text="FrmSettings._ConfigDir">
+            [Configuration location]
+          </a>
+        </div>
+        <div class="mb-2">
+          <a id="Lnk_UserConfigFile" class="text-nowrap" href="#" lang-text="FrmSettings._UserConfigFile">
+            [User settings file]
+          </a>
+        </div>
+      </section>
+
+      <!-- General > Start up -->
+      <section>
+        <header lang-text="FrmSettings._Startup">[Start up]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowWelcomeImage" />
+            <div lang-text="FrmSettings._ShowWelcomeImage">[ShowWelcomeImage]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldOpenLastSeenImage" />
+            <div lang-text="FrmSettings._ShouldOpenLastSeenImage">[ShouldOpenLastSeenImage]</div>
+          </label>
+        </div>
+      </section>
+
+      <!-- General > Real-time file update -->
+      <section>
+        <header lang-text="FrmSettings._RealTimeFileUpdate">[Real-time file update]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableRealTimeFileUpdate" />
+            <div lang-text="FrmSettings._EnableRealTimeFileUpdate">[EnableRealTimeFileUpdate]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldAutoOpenNewAddedImage" />
+            <div lang-text="FrmSettings._ShouldAutoOpenNewAddedImage">[ShouldAutoOpenNewAddedImage]</div>
+          </label>
+        </div>
+      </section>
+
+      <!-- General > Others -->
+      <section>
+        <header lang-text="FrmSettings._Others">[Others]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="AutoUpdate" />
+            <div lang-text="FrmSettings._AutoUpdate">[AutoUpdate]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableMultiInstances" />
+            <div lang-text="FrmSettings._EnableMultiInstances">[EnableMultiInstances]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowAppIcon" />
+            <div lang-text="FrmSettings._ShowAppIcon">[ShowAppIcon]</div>
+          </label>
+        </div>
+
+        <div class="mt-4 mb-3">
+          <div class="mb-1" lang-text="FrmSettings._InAppMessageDuration">[InAppMessageDuration]</div>
+          <input type="number" name="InAppMessageDuration" required min="0" max="60000" placeholder="2000" title="0 ≤ x ≤ 60,000" />
+        </div>
+
+        <!-- Image information tags -->
+        <div class="mt-4 mb-2">
+          <div class="mb-2">
+            <b lang-text="FrmSettings._ImageInfoTags">[Image information tags]</b>
+          </div>
+          <textarea name="ImageInfoTags" rows="3" spellcheck="false"></textarea>
+          <div class="mb-2">
+            <a id="LnkResetImageInfoTags" class="text-nowrap" href="#" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </a>
+          </div>
+          <div class="ms-3">
+            <div class="mb-1" lang-text="FrmSettings._AvailableImageInfoTags">[Available tags:]</div>
+            <div id="LblAvailableTags" class="text-select" style="width: calc(410px * var(--fontScale))"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Image -->
+    <section class="tab-page" tab="image">
+      <!-- Image > Image loading -->
+      <section>
+        <header lang-text="FrmSettings._ImageLoading">[Image loading]</header>
+        <div class="d-flex align-items-end">
+          <div class="me-2 mb-3">
+            <div class="mb-1" lang-text="FrmSettings._ImageLoadingOrder">[ImageLoadingOrder]</div>
+            <select name="ImageLoadingOrder" required data-enum="ImageOrderBy">
+            </select>
+          </div>
+          <div class="mb-3">
+            <select name="ImageLoadingOrderType" required data-enum="ImageOrderType">
+            </select>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldUseExplorerSortOrder" />
+            <div lang-text="FrmSettings._ShouldUseExplorerSortOrder">[ShouldUseExplorerSortOrder]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableRecursiveLoading" />
+            <div lang-text="FrmSettings._EnableRecursiveLoading">[EnableRecursiveLoading]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldGroupImagesByDirectory" />
+            <div lang-text="FrmSettings._ShouldGroupImagesByDirectory">[ShouldGroupImagesByDirectory]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldLoadHiddenImages" />
+            <div lang-text="FrmSettings._ShouldLoadHiddenImages">[ShouldLoadHiddenImages]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableLoopBackNavigation" />
+            <div lang-text="FrmSettings._EnableLoopBackNavigation">[EnableLoopBackNavigation]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowImagePreview" />
+            <div lang-text="FrmSettings._ShowImagePreview">[ShowImagePreview]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableImageTransition" />
+            <div lang-text="FrmSettings._EnableImageTransition">[EnableImageTransition]</div>
+          </label>
+        </div>
+
+        <!-- Embedded thumbnail -->
+        <div class="mt-4 mb-2">
+          <div class="mb-2">
+            <b lang-text="FrmSettings._EmbeddedThumbnail">[Embedded thumbnail]</b>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="UseEmbeddedThumbnailRawFormats" />
+              <div lang-text="FrmSettings._UseEmbeddedThumbnailRawFormats">[UseEmbeddedThumbnailRawFormats]
+              </div>
+            </label>
+          </div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="UseEmbeddedThumbnailOtherFormats" />
+              <div lang-text="FrmSettings._UseEmbeddedThumbnailOtherFormats">
+                [UseEmbeddedThumbnailOtherFormats]</div>
+            </label>
+          </div>
+          <div id="Section_EmbeddedThumbnailSize" class="aniFadeIn">
+            <div class="mb-2" lang-text="FrmSettings._MinEmbeddedThumbnailSize">[Minimum size of embedded
+              thumbnail]</div>
+            <div class="d-flex align-items-center ms-3 ps-1">
+              <div class="me-3">
+                <div class="mb-1" lang-text="FrmSettings._MinEmbeddedThumbnailSize._Width">[Width]</div>
+                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinWidth" required min="0" max="100000" title="0 ≤ x ≤ 100,000" />
+              </div>
+              <div>
+                <div class="mb-1" lang-text="FrmSettings._MinEmbeddedThumbnailSize._Height">[Height]</div>
+                <input class="w-control-compact" type="number" name="EmbeddedThumbnailMinHeight" required min="0" max="100000" title="0 ≤ x ≤ 100,000" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Image > Image booster -->
+      <section>
+        <header lang-text="FrmSettings._ImageBooster">[Image booster]</header>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._ImageBoosterCacheCount">[ImageBoosterCacheCount]</div>
+          <select name="ImageBoosterCacheCount" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._ImageBoosterCacheMaxDimension">
+            [ImageBoosterCacheMaxDimension]</div>
+          <input type="number" name="ImageBoosterCacheMaxDimension" required min="0" max="100000" placeholder="8000" title="0 ≤ x ≤ 100,000" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._ImageBoosterCacheMaxFileSizeInMb">
+            [ImageBoosterCacheMaxFileSizeInMb]
+          </div>
+          <input type="number" name="ImageBoosterCacheMaxFileSizeInMb" required min="0" max="1048" placeholder="100" title="0 ≤ x ≤ 1,048" />
+        </div>
+      </section>
+
+
+      <!-- Image > Color management -->
+      <section>
+        <header lang-text="FrmSettings._ColorManagement">[Color management]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldUseColorProfileForAll" />
+            <div lang-text="FrmSettings._ShouldUseColorProfileForAll">[ShouldUseColorProfileForAll]</div>
+          </label>
+        </div>
+        <div class="mt-4 mb-2">
+          <div class="mb-3 d-flex align-items-end">
+            <div class="me-2">
+              <div class="mb-1" lang-text="FrmSettings._ColorProfile">[ColorProfile]</div>
+              <select name="ColorProfile" required data-enum="ColorProfileOption">
+              </select>
+            </div>
+            <button id="Btn_BrowseColorProfile" type="button" class="aniFadeIn" lang-text="_._Browse">[Browse...]</button>
+          </div>
+          <div id="Section_CustomColorProfile" class="aniFadeIn">
+            <a id="Lnk_CustomColorProfile" class="text-nowrap" href="#"></a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Slideshow -->
+    <section class="tab-page" tab="slideshow">
+      <!-- Slideshow > Slideshow -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Slideshow">[Slideshow]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="HideMainWindowInSlideshow" />
+            <div lang-text="FrmSettings._HideMainWindowInSlideshow">[HideMainWindowInSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowSlideshowCountdown" />
+            <div lang-text="FrmSettings._ShowSlideshowCountdown">[ShowSlideshowCountdown]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableLoopSlideshow" />
+            <div lang-text="FrmSettings._EnableLoopBackNavigation">[EnableLoopSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableFullscreenSlideshow" />
+            <div lang-text="FrmSettings._EnableFullscreenSlideshow">[EnableFullscreenSlideshow]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="UseRandomIntervalForSlideshow" />
+            <div lang-text="FrmSettings._UseRandomIntervalForSlideshow">[UseRandomIntervalForSlideshow]
+            </div>
+          </label>
+        </div>
+
+        <!-- Slideshow interval -->
+        <div class="my-4">
+          <div class="mb-2">
+            <b lang-text="FrmSettings._SlideshowInterval">[Slideshow interval:]</b>
+            <b id="Lbl_SlideshowInterval"></b>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <div id="Lbl_SlideshowIntervalFrom" class="mb-1 aniFadeIn" lang-text="FrmSettings._SlideshowInterval._From">[From]</div>
+                <input class="w-control-compact" type="number" name="SlideshowInterval" required step="0.1" min="0" placeholder="5" title="x ≥ 0.0" />
+              </div>
+              <div id="Section_SlideshowIntervalTo" class="aniFadeIn">
+                <div class="mb-1" lang-text="FrmSettings._SlideshowInterval._To">[To]</div>
+                <input class="w-control-compact" type="number" name="SlideshowIntervalTo" required step="0.1" min="0" placeholder="10" title="x ≥ 0.0" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- slideshow background -->
+        <div class="mb-3">
+          <div>
+            <div class="mb-1">
+              <span lang-text="FrmSettings._SlideshowBackgroundColor">[SlideshowBackgroundColor]</span>
+              <span id="Lbl_SlideshowBackgroundColorValue" class="text-code"></span>
+            </div>
+            <span class="d-flex align-items-center">
+              <input type="hidden" name="SlideshowBackgroundColor" />
+              <button id="Btn_SlideshowBackgroundColor" class="color-picker me-2 w-control-compact" type="button">
+                <div class="color-display"></div>
+                <div class="color-checkerboard"></div>
+              </button>
+              <a id="Lnk_ResetSlideshowBackgroundColor" href="#" lang-text="_._Reset">[Reset]</a>
+            </span>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Slideshow > Slideshow notification -->
+      <section>
+        <header lang-text="FrmSettings._SlideshowNotification">[Slideshow notification]</header>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._SlideshowImagesToNotifySound">
+            [Number of images to trigger a notification sound]
+          </div>
+          <input type="number" name="SlideshowImagesToNotifySound" required min="0" placeholder="0" title="x ≥ 0" />
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Edit -->
+    <section class="tab-page" tab="edit">
+      <!-- Edit > Edit -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Edit">[Edit]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowDeleteConfirmation" />
+            <div lang-text="FrmSettings._ShowDeleteConfirmation">[ShowDeleteConfirmation]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowSaveOverrideConfirmation" />
+            <div lang-text="FrmSettings._ShowSaveOverrideConfirmation">[ShowSaveOverrideConfirmation]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShouldPreserveModifiedDate" />
+            <div lang-text="FrmSettings._ShouldPreserveModifiedDate">[ShouldPreserveModifiedDate]</div>
+          </label>
+        </div>
+        <div class="mb-3 mt-4">
+          <div class="mb-1" lang-text="FrmSettings._ImageEditQuality">[ImageEditQuality]</div>
+          <input type="number" name="ImageEditQuality" required min="0" max="100" placeholder="80" title="0 ≤ x ≤ 100" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._AfterEditingAction">[AfterEditingAction]</div>
+          <select name="AfterEditingAction" required data-enum="AfterEditAppAction">
+          </select>
+        </div>
+      </section>
+
+      <!-- Edit > Clipboard -->
+      <section>
+        <header lang-text="FrmSettings._Clipboard">[Clipboard]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableCopyMultipleFiles" />
+            <div lang-text="FrmSettings._EnableCopyMultipleFiles">[EnableCopyMultipleFiles]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableCutMultipleFiles" />
+            <div lang-text="FrmSettings._EnableCutMultipleFiles">[EnableCutMultipleFiles]</div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Edit > Image editing apps -->
+      <section>
+        <header lang-text="FrmSettings._EditApps">[Image editing apps]</header>
+        <div class="mb-3">
+          <button id="Btn_AddEditApp" type="button" lang-text="_._Add+">
+            [Add...]
+          </button>
+        </div>
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 250;">
+          <table id="Table_EditApps" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th width="10" class="cell-sticky" lang-text="_._FileExtension">[File extension]</th>
+                <th width="10" lang-text="FrmSettings._EditApps._AppName">[App name]</th>
+                <th lang-text="_._Executable">[Executable]</th>
+                <th width="10" colspan="2" lang-text="_._Argument">[Argument]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Layout -->
+    <section class="tab-page" tab="layout">
+      <!-- Layout > Layout -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Layout">[Layout]</header>
+
+        <div class="d-flex flex-wrap mt-4">
+          <!-- Layout map -->
+          <div class="app-layout d-inline-grid me-4 mb-5">
+            <div class="region-center"></div>
+
+            <div data-position="Top">
+              <div class="region-drop" data-order="0"></div>
+              <div class="region-drop" data-order="1"></div>
+              <div class="region-drop" data-order="2"></div>
+            </div>
+
+            <div data-position="Left">
+              <div class="region-drop" data-order="0"></div>
+            </div>
+
+            <div data-position="Right">
+              <div class="region-drop" data-order="0"></div>
+            </div>
+
+            <div data-position="Bottom">
+              <div class="region-drop" data-order="2"></div>
+              <div class="region-drop" data-order="1"></div>
+              <div class="region-drop" data-order="0"></div>
+            </div>
+          </div>
+
+
+          <!-- Manual fields -->
+          <div class="d-inline-block">
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Layout._ToolbarPosition">[Toolbar Position]</div>
+                <select name="_Layout.Toolbar.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Layout._Order">[Order]</div>
+                <select name="_Layout.Toolbar.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Layout._ToolbarContextPosition">[Contextual toolbar position]</div>
+                <select name="_Layout.ToolbarContext.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Layout._Order">[Order]</div>
+                <select name="_Layout.ToolbarContext.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="d-flex">
+              <div class="mb-3">
+                <div class="mb-1" lang-text="FrmSettings.Layout._GalleryPosition">[Gallery position]</div>
+                <select name="_Layout.Gallery.Position" class="me-2">
+                  <option value="Top" lang-text="_.Position._Top">[Top]</option>
+                  <option value="Bottom" lang-text="_.Position._Bottom">[Bottom]</option>
+                  <option value="Left" lang-text="_.Position._Left">[Left]</option>
+                  <option value="Right" lang-text="_.Position._Right">[Right]</option>
+                </select>
+              </div>
+              <div id="Section_LayoutGalleryOrder" class="mb-3 aniFadeIn">
+                <div class="mb-1" lang-text="FrmSettings.Layout._Order">[Order]</div>
+                <select name="_Layout.Gallery.Order" class="w-control-compact">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Viewer -->
+    <section class="tab-page" tab="viewer">
+      <!-- Viewer > Viewer -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Viewer">[Viewer]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowCheckerboardOnlyImageRegion" />
+            <div lang-text="FrmSettings._ShowCheckerboardOnlyImageRegion">[ShowCheckerboardOnlyImageRegion]
+            </div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableNavigationButtons" />
+            <div lang-text="FrmSettings._EnableNavigationButtons">[EnableNavigationButtons]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="CenterWindowFit" />
+            <div lang-text="FrmSettings._CenterWindowFit">[CenterWindowFit]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="UseWebview2ForSvg" />
+            <div lang-text="FrmSettings._UseWebview2ForSvg">[UseWebview2ForSvg]</div>
+          </label>
+        </div>
+        <div class="mt-4 mb-2">
+          <div class="mb-1" lang-text="FrmSettings._PanSpeed">[PanSpeed]</div>
+          <input type="number" name="PanSpeed" required step="0.1" min="0" max="100" placeholder="20" title="0 ≤ x ≤ 100" />
+        </div>
+      </section>
+
+
+      <!-- Viewer > Zooming -->
+      <section>
+        <header lang-text="FrmSettings._Zooming">[Zooming]</header>
+        <!-- Image interpolation -->
+        <div>
+          <div class="mb-2">
+            <b lang-text="FrmSettings._ImageInterpolation">[Image interpolation]</b>
+          </div>
+          <div class="mb-3">
+            <div class="mb-1" lang-text="FrmSettings._ImageInterpolation._ScaleDown">
+              [ImageInterpolationScaleDown]</div>
+            <select name="ImageInterpolationScaleDown" required data-enum="ImageInterpolation">
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="mb-1" lang-text="FrmSettings._ImageInterpolation._ScaleUp">[ImageInterpolationScaleUp]
+            </div>
+            <select name="ImageInterpolationScaleUp" required data-enum="ImageInterpolation">
+            </select>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._ZoomSpeed">[ZoomSpeed]</div>
+          <input type="number" name="ZoomSpeed" required step="0" min="-500" max="500" placeholder="0" title="-500 ≤ x ≤ 500" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-2" lang-text="FrmSettings._ZoomLevels">[ZoomLevels]</div>
+          <div class="mb-2">
+            <label class="ig-checkbox">
+              <input type="checkbox" name="_UseSmoothZooming" />
+              <div lang-text="FrmSettings._UseSmoothZooming">[UseSmoothZooming]</div>
+            </label>
+          </div>
+          <textarea name="ZoomLevels" rows="3" required spellcheck="false"></textarea>
+          <div>
+            <a id="LnkLoadDefaultZoomLevels" class="text-nowrap" href="#" lang-text="FrmSettings._LoadDefaultZoomLevels">
+              [Load default zoom levels]
+            </a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Toolbar -->
+    <section class="tab-page" tab="toolbar">
+      <!-- Layout > Toolbar -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Toolbar">[Toolbar]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="HideToolbarInFullscreen" />
+            <div lang-text="FrmSettings.Toolbar._HideToolbarInFullscreen">[HideToolbarInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="EnableCenterToolbar" />
+            <div lang-text="FrmSettings.Toolbar._EnableCenterToolbar">[EnableCenterToolbar]</div>
+          </label>
+        </div>
+        <div class="mt-4 mb-3">
+          <div class="mb-1" lang-text="FrmSettings.Toolbar._ToolbarIconHeight">[ToolbarIconHeight]</div>
+          <input type="number" name="ToolbarIconHeight" required min="10" max="1000" placeholder="24" title="10 ≤ x ≤ 1,000" />
+        </div>
+      </section>
+
+      <!-- Toolbar > Toolbar buttons -->
+      <section>
+        <header lang-text="FrmSettings.Toolbar._ToolbarButtons">[Toolbar buttons]</header>
+        <div class="mb-3 d-flex align-items-center">
+          <button id="Btn_AddCustomToolbarButton" type="button" class="me-2"
+            lang-text="FrmSettings.Toolbar._AddCustomButton">
+            [Add a custom button...]
+          </button>
+          <button id="Btn_ResetToolbarButtons" type="button" lang-text="_._ResetToDefault">
+            [Reset to default]
+          </button>
+        </div>
+        <toolbar-editor id="ToolbarEditor" class="mb-3"></toolbar-editor>
+      </section>
+    </section>
+
+
+    <!-- Tab: Gallery -->
+    <section class="tab-page" tab="gallery">
+      <!-- Layout > Gallery -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Gallery">[Gallery]</header>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="HideGalleryInFullscreen" />
+            <div lang-text="FrmSettings._HideGalleryInFullscreen">[HideGalleryInFullscreen]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowGalleryScrollbars" />
+            <div lang-text="FrmSettings._ShowGalleryScrollbars">[ShowGalleryScrollbars]</div>
+          </label>
+        </div>
+        <div class="mb-2">
+          <label class="ig-checkbox">
+            <input type="checkbox" name="ShowGalleryFileName" />
+            <div lang-text="FrmSettings._ShowGalleryFileName">[ShowGalleryFileName]</div>
+          </label>
+        </div>
+
+        <div class="mt-4 mb-3">
+          <div class="mb-1" lang-text="FrmSettings._ThumbnailSize">[ThumbnailSize]</div>
+          <input type="number" name="ThumbnailSize" required min="20" max="500" placeholder="50" title="20 ≤ x ≤ 500" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._GalleryCacheSizeInMb">[GalleryCacheSizeInMb]</div>
+          <input type="number" name="GalleryCacheSizeInMb" required min="0" max="2048" placeholder="100" title="0 ≤ x ≤ 2,048" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._GalleryColumns">[GalleryColumns]</div>
+          <input type="number" name="GalleryColumns" required min="1" max="100" placeholder="3" title="1 ≤ x ≤ 100" />
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Mouse -->
+    <section class="tab-page" tab="mouse">
+      <!-- Mouse > Mouse wheel action -->
+      <section>
+        <header lang-text="FrmSettings._MouseWheelAction">[Mouse wheel action]</header>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="_.MouseWheelEvent._Scroll">[Scroll]</div>
+          <select id="Cmb_MouseWheel_Scroll" required data-enum="MouseWheelAction">
+          </select>
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="_.MouseWheelEvent._CtrlAndScroll">[CtrlAndScroll]</div>
+          <select id="Cmb_MouseWheel_CtrlAndScroll" required data-enum="MouseWheelAction">
+          </select>
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="_.MouseWheelEvent._ShiftAndScroll">[ShiftAndScroll]</div>
+          <select id="Cmb_MouseWheel_ShiftAndScroll" required data-enum="MouseWheelAction">
+          </select>
+        </div>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="_.MouseWheelEvent._AltAndScroll">[AltAndScroll]</div>
+          <select id="Cmb_MouseWheel_AltAndScroll" required data-enum="MouseWheelAction">
+          </select>
+        </div>
+        <div class="mb-3 mt-4">
+          <button id="Btn_ResetMouseWheelAction" type="button" lang-text="_._ResetToDefault">[Reset to default]</button>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Keyboard -->
+    <section class="tab-page" tab="keyboard">
+      <!-- Keyboard > Keyboard -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Keyboard">[Keyboard]</header>
+        <div class="mb-2">
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: File type assosications -->
+    <section class="tab-page" tab="file_assocs">
+      <!-- File type assosications > File extension icons -->
+      <section>
+        <header lang-text="FrmSettings._FileExtensionIcons">[File extension icons]</header>
+        <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-html="FrmSettings._FileExtensionIcons._Description">
+            [For customizing file extension icons, download an icon pack, place all .ICO files in the extension icon folder, and click the '<b class="text-nowrap" lang-text="FrmSettings._MakeDefault">Make default</b>' button. This will also set ImageGlass as default photo viewer.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_OpenExtIconFolder" class="me-2" type="button" lang-text="FrmSettings._OpenExtensionIconFolder">
+              [Open extension icon folder]
+            </button>
+            <a class="text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+              lang-text="FrmSettings._GetExtensionIconPacks">
+              [Get extension icon packs...]
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- File type assosications > Default photo viewer -->
+      <section>
+        <header lang-text="FrmSettings._DefaultPhotoViewer">[Default photo viewer]</header>
+        <div class="mb-2">
+          <div class="mb-3" style="max-width: 60rem;" lang-text="FrmSettings._DefaultPhotoViewer._Description">
+            [You can set ImageGlass as your default photo viewer using the buttons below. Remember to manually reset it if you uninstall ImageGlass, as the installer does not handle this task automatically.]
+          </div>
+          <div class="d-flex align-items-center">
+            <button id="Btn_MakeDefaultViewer" class="me-2" type="button" lang-text="FrmSettings._MakeDefault">
+              [Make default]
+            </button>
+            <button id="Btn_RemoveDefaultViewer" class="me-2" type="button" lang-text="FrmSettings._RemoveDefault">
+              [Remove default]
+            </button>
+
+            <a id="Lnk_OpenDefaultAppsSetting" class="text-nowrap" href="#" lang-text="FrmSettings._OpenDefaultAppsSetting">
+              [Open Default apps setting]
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- File type assosications > File formats -->
+      <section>
+        <header lang-text="FrmSettings._FileFormats">[File formats]</header>
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-end me-2">
+            <button id="Btn_AddFileFormat" class="me-2" type="button" lang-text="_._Add+">
+              [Add...]
+            </button>
+            <button id="Btn_ResetFileFormats" class="me-2" type="button" lang-text="_._ResetToDefault">
+              [Reset to default]
+            </button>
+          </div>
+          <div class="ms-auto text-nowrap">
+            <span lang-html="FrmSettings._TotalSupportedFormats">
+              [Total supported formats: <span id="Lbl_TotalSupportedFormats">...</span>]
+            </span>
+          </div>
+        </div>
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 390;">
+          <table id="Table_FileFormats" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th colspan="2" lang-text="_._FileExtension">[File extension]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Tools -->
+    <section class="tab-page" tab="tools">
+      <!-- Tools > Tools -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Tools">[Tools]</header>
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
+            <button id="Btn_AddTool" type="button" lang-text="_._Add+">
+              [Add...]
+            </button>
+          </div>
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/tools" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmMain.MnuGetMoreTools">
+            [Get more tools...]
+          </a>
+        </div>
+        <div class="ig-table mb-2 d-block" style="--table-max-height: 640;">
+          <table id="Table_ToolList" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="10"></th>
+                <th width="10" class="cell-sticky" lang-text="_._ID">[ID]</th>
+                <th width="10" lang-text="_._Name">[Name]</th>
+                <th width="10" lang-text="FrmSettings.Tools._Integrated">[Integrated]</th>
+                <th width="10" lang-text="_._Hotkeys">[Hotkeys]</th>
+                <th lang-text="_._Executable">[Executable]</th>
+                <th width="10" colspan="2" lang-text="_._Argument">[Argument]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Language -->
+    <section class="tab-page" tab="language">
+      <!-- Language > Language -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Language">[Language]</header>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._DisplayLanguage">[Display language]</div>
+          <div class="d-flex align-items-center">
+            <select id="Cmb_LanguageList" name="Language" class="me-2">
+            </select>
+            <button id="Btn_RefreshLanguageList" type="button" lang-text="FrmSettings._Refresh">[Refresh]</button>
+          </div>
+        </div>
+        <div class="mb-2 mt-3">
+          <a id="Lnk_InstallLanguage" href="#" lang-text="FrmSettings._InstallNewLanguagePack">
+            [Install a new language pack...]
+          </a>
+        </div>
+        <div class="mb-2">
+          <a href="https://imageglass.org/languages" target="_blank" lang-text="FrmSettings._GetMoreLanguagePacks">
+            [Get more language packs...]
+          </a>
+        </div>
+        <div class="mb-2">
+          <a id="Lnk_ExportLanguage" href="#" lang-text="FrmSettings._ExportLanguagePack">
+            [Export language pack...]
+          </a>
+        </div>
+      </section>
+
+      <!-- Language > Contributors -->
+      <section>
+        <header lang-text="FrmSettings._Contributors">[Contributors]</header>
+        <div id="Section_LanguageContributors" class="mb-2">
+          [Duong Dieu Phap]
+        </div>
+      </section>
+    </section>
+
+
+    <!-- Tab: Appearance -->
+    <section class="tab-page" tab="appearance">
+      <!-- Appearance > Appearance -->
+      <section>
+        <header lang-text="FrmSettings.Nav._Appearance">[Appearance]</header>
+        <div class="mb-3">
+          <div class="mb-1" lang-text="FrmSettings._WindowBackdrop">[WindowBackdrop]</div>
+          <select name="WindowBackdrop" required data-enum="BackdropStyle">
+          </select>
+        </div>
+        <div class="mb-3">
+          <div>
+            <div class="mb-1">
+              <span lang-text="FrmSettings._BackgroundColor">[BackgroundColor]</span>
+              <span id="Lbl_BackgroundColorValue" class="text-code"></span>
+            </div>
+            <span class="d-flex align-items-center">
+              <input type="hidden" name="BackgroundColor" />
+              <button id="Btn_BackgroundColor" class="color-picker me-2 w-control-compact" type="button">
+                <div class="color-display"></div>
+                <div class="color-checkerboard"></div>
+              </button>
+              <a id="Lnk_ResetBackgroundColor" href="#" lang-text="_._Reset">[Reset]</a>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Appearance > Theme -->
+      <section>
+        <header lang-text="FrmSettings._Theme">[Theme]</header>
+        <input type="hidden" name="DarkTheme" />
+        <input type="hidden" name="LightTheme" />
+
+        <div class="mb-3 d-flex align-items-end">
+          <div class="text-nowrap d-flex align-items-center me-2">
+            <button id="Btn_InstallTheme" type="button" class="me-2" lang-text="_._Install">
+              [Install...]
+            </button>
+            <button id="Btn_RefreshThemeList" type="button" class="me-2" lang-text="_._Refresh">
+              [Refresh]
+            </button>
+            <button id="Btn_OpenThemeFolder" type="button" lang-text="FrmSettings._Theme._OpenThemeFolder">
+              [Open theme folder]
+            </button>
+          </div>
+
+          <a class="ms-auto text-nowrap" href="https://imageglass.org/themes" target="_blank" rel="noopener noreferrer"
+            lang-text="FrmSettings._Theme._GetMoreThemes">
+            [Get more theme packs...]
+          </a>
+        </div>
+
+        <ul id="List_ThemeList" class="ig-list-vertical mb-2"></ul>
+      </section>
+    </section>
+
+
+    <dialog is="edit-app-dialog"></dialog>
+    <dialog is="tool-dialog"></dialog>
+    <dialog is="edit-toolbar-dialog"></dialog>
+    <dialog is="file-format-dialog"></dialog>
+  </main>
+
+
+  <footer class="panel">
+    <button id="BtnOK" type="submit" lang-text="_._OK">[OK]</button>
+    <button id="BtnCancel" type="button" lang-text="_._Cancel">[Cancel]</button>
+    <button id="BtnApply" type="button" lang-text="_._Apply">[Apply]</button>
+  </footer>
+
+
+  <script src="./dist/FrmSettings.js"></script>
+</body>
+
+</html>

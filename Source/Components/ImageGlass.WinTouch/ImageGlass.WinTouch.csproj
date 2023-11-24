@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Platforms>x64;ARM64</Platforms>
+        <Version>9.0.7.1125</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
+        <Configurations>Debug;Release;Publish_Release</Configurations>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="NativeMethods.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="NativeMethods.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

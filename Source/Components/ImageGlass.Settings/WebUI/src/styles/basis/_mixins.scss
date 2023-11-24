@@ -1,0 +1,60 @@
+
+
+@mixin focusAnimation() {
+  animation: aniFocus 1000ms ease forwards;
+}
+
+
+@mixin baseControl() {
+  --focus-color: var(--Accent);
+
+  min-width: calc(var(--controlHeight) * 1px);
+  width: calc(var(--controlWidth) * 1px);
+  min-height: calc(var(--controlHeight) * 1px);
+  padding: 0.325rem;
+  font-size: inherit;
+  font-family: var(--fontBase);
+  color: rgb(var(--AppText));
+  background-color: rgb(var(--ControlBg));
+  border-radius: var(--borderRadius);
+  border: 0.1rem solid var(--ControlBorder);
+  transition: background ease var(--transitionMs),
+    border ease var(--transitionMs),
+    box-shadow ease var(--transitionMs);
+
+  &::selection {
+    background-color: rgb(var(--Accent) / 0.55);
+  }
+
+  &:hover {
+    background-color: rgb(var(--ControlBgHover));
+    border-color: var(--ControlBorderHover);
+  }
+  &:focus {
+    outline: none;
+    border-color: rgb(var(--Accent));
+  }
+  &:focus-visible {
+    @include focusAnimation();
+  }
+  &:active {
+    background-color: rgb(var(--ControlBgPressed));
+    border-color: rgb(var(--Accent));
+    transition: background ease 80ms, border ease 80ms, shadow ease 80ms;
+  }
+  &:invalid {
+    border-color: rgb(var(--BgDanger));
+
+    &:focus-visible {
+      --focus-color: var(--BgDanger);
+      @include focusAnimation();
+    }
+  }
+
+  &[disabled],
+  &:disabled {
+    color: rgb(var(--AppText) / 0.45);
+    border-color: var(--ControlBorderDisabled);
+    background-color: rgb(var(--ControlBgDisabled));
+  }
+}

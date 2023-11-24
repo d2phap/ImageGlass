@@ -5,7 +5,7 @@ set FILE=%1
 
 echo:
 echo *********************************************************************
-echo * ImageGlass Code Signing tool v8.4
+echo * ImageGlass Code Signing tool v8
 echo * https://imageglass.org
 echo *
 echo * https://www.ssl.com/how-to/using-your-code-signing-certificate

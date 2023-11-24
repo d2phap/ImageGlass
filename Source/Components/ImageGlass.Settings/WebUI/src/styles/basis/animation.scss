@@ -1,0 +1,43 @@
+.aniFadeIn {
+  animation: animationFadeIn ease 500ms forwards;
+}
+
+@keyframes animationFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+.ani-shaking {
+  animation: animationShaking 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  perspective-origin: center;
+}
+
+@keyframes animationShaking {
+  10%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 80% {
+    transform: translateX(1px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-1px);
+  }
+  40%, 60% {
+    transform: translateX(2px);
+  }
+}
+
+
+@keyframes aniFocus {
+  0% {
+    border-color: rgb(var(--focus-color, var(--Accent)));
+    box-shadow: 0 0 0 0.1rem rgb(var(--focus-color, var(--Accent)));
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--focus-color, var(--Accent)));
+  }
+}

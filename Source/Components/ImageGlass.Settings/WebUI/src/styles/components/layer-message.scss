@@ -1,0 +1,39 @@
+#layerMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem;
+  pointer-events: none;
+
+  .layer-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0.5rem;
+    background-color: rgb(0 0 0 / 0.8);
+    border-radius: var(--borderRadius);
+  }
+
+  .message-heading {
+    font-size: 130%;
+    color: rgb(var(--Accent));
+
+    &:not([hidden]) + * {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .message-text {
+    color: rgb(var(--AppText));
+  }
+}
+
+html[color-mode=light] #layerMessage .layer-wrapper {
+  background-color: rgb(255 255 255 / 0.8);
+}

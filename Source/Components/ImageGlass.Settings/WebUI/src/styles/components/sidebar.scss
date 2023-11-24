@@ -1,0 +1,93 @@
+ul.ig-sidebar {
+  list-style: none;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  margin-bottom: 0;
+
+  &>li {
+    &>label {
+      --focus-color: var(--Accent);
+      width: 100%;
+      position: relative;
+      align-items: center;
+      white-space: nowrap;
+
+      &>input[type="radio"] {
+        opacity: 0 !important;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        right: 0;
+        pointer-events: none;
+
+        // normal style
+        &+* {
+          display: flex;
+          align-items: center;
+          position: relative;
+          width: 100%;
+          min-height: var(--controlHeight);
+          padding: 0.5rem 0.75rem;
+          margin-bottom: 0.125rem;
+          border-radius: calc(var(--borderRadius) * 1.25);
+          transition: background ease calc(var(--transitionMs) / 1.5),
+            border ease calc(var(--transitionMs) / 1.5),
+            color ease calc(var(--transitionMs) / 1.5);
+
+          // active indicator
+          &::before {
+            content: "";
+            display: block;
+            width: 0.27rem;
+            height: 50%;
+            background-color: rgb(var(--Accent));
+            border-radius: 2rem;
+            opacity: 0;
+            transition: background ease var(--transitionMs),
+              border ease 300ms,
+              color ease 300ms;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+          }
+
+          &[data-level="2"] {
+            padding-left: 2rem;
+          }
+        }
+
+        &:hover+* {
+          background-color: rgb(var(--InvertColor) / 0.1);
+        }
+
+        &:focus-visible+* {
+          @include focusAnimation();
+        }
+
+        &:active+* {
+          background-color: rgb(var(--InvertColor) / 0.085);
+          transition: background ease calc(var(--transitionMs) / 3),
+            border ease calc(var(--transitionMs) / 3),
+            color ease calc(var(--transitionMs) / 3);
+        }
+
+
+        // checked style
+        &:checked {
+          &+* {
+            background-color: rgb(var(--InvertColor) / 0.085);
+
+            &::before {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

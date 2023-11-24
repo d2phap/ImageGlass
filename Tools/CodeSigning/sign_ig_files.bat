@@ -10,7 +10,7 @@ set CONFIG_MODE=%2
 
 echo:
 echo *********************************************************************
-echo * ImageGlass Code Signing tool v8.4
+echo * ImageGlass Code Signing tool v8
 echo * https://imageglass.org
 echo *
 echo * PLATFORM: %PLATFORM%
@@ -22,7 +22,7 @@ echo:
 echo:
 
 
-set PATH=..\..\Source\ImageGlass\bin\%PLATFORM%\%CONFIG_MODE%
+set PATH=..\..\v8\ImageGlass\bin\%PLATFORM%\%CONFIG_MODE%
 
 :: Executable files
 set FILES[0]=ImageGlass.exe

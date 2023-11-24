@@ -1,0 +1,90 @@
+@mixin controlBoxOptions() {
+  opacity: 0 !important;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  // normal style
+  &+ * {
+    --focus-color: var(--Accent);
+
+    display: flex;
+    flex-direction: column;
+    width: var(--box-option-width);
+    height: var(--box-option-height);
+    overflow: hidden;
+    padding: 1rem;
+    background-color: rgb(var(--ControlBg));
+    border: 0.1rem solid var(--ControlBorder);
+    border-radius: calc(var(--borderRadius) * 1.5);
+    transition: all ease var(--transitionMs);
+  }
+
+  &:hover + * {
+    background-color: rgb(var(--ControlBgHover));
+    border-color: var(--ControlBorderHover);
+  }
+  &:focus-visible + * {
+    border-color: rgb(var(--Accent));
+    background-color: rgb(var(--Accent) / 0.15);
+    @include focusAnimation();
+  }
+
+  &:active + * {
+    background-color: rgb(var(--ControlBgPressed));
+    border-color: rgb(var(--Accent));
+    transition: all ease calc(var(--transitionMs) / 3);
+  }
+
+  &:disabled + *,
+  &[disabled] + * {
+    color: rgb(var(--AppText) / 0.6);
+    background-color: rgb(var(--ControlBgDisabled));
+    border-color: var(--ControlBorderDisabled);
+  }
+
+  // checked style
+  &:checked {
+    &+ * {
+      border-color: rgb(var(--Accent));
+      background-color: rgb(var(--ControlBgPressed));
+    }
+
+    &:hover + * {
+      background-color: rgb(var(--Accent) / 0.1);
+    }
+    &:focus-visible + * {
+      border-color: rgb(var(--Accent));
+      background-color: rgb(var(--Accent) / 0.15);
+    }
+
+    &:active + * {
+      background-color: rgb(var(--ControlBgPressed));
+    }
+
+    &:disabled + *,
+    &[disabled] + * {
+      background-color: rgb(var(--ControlBgDisabled));
+      border-color: var(--ControlBorderDisabled);
+      opacity: 0.6;
+      border-color: rgb(var(--InvertColor) / 1);
+    }
+  }
+}
+
+
+label.ig-box-option {
+  --box-option-width: 12rem;
+  // --box-option-height: 10rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+
+  input[type=radio] {
+    @include controlBoxOptions();
+  }
+}

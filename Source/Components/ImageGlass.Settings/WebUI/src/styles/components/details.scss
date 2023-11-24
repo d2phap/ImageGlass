@@ -1,0 +1,58 @@
+details {
+  padding-left: 1.35rem;
+
+  summary {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: -1.35rem;
+    margin-bottom: 0.5em;
+    border-radius: 0.125em;
+    padding: 0 0.125em 0.1em 0.125em;
+    transition: background ease var(--transitionMs), color ease var(--transitionMs);
+
+    & > * {
+      display: inline;
+    }
+    
+    &::marker {
+      content: none;
+    }
+    
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      margin-right: 0.5em;
+      pointer-events: none;
+      border-bottom: 0.125em solid;
+      border-right: 0.125em solid;
+      transition: transform ease var(--transitionMs);
+      transform: rotate(-45deg) translate(-0.1em, 0.1em);
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: rgb(var(--Accent));
+      background-color: rgb(var(--InvertColor) / 0.1);
+      filter: brightness(1.3);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgb(var(--Accent) / 0.1);
+    }
+
+    &:active {
+      background-color: rgb(var(--InvertColor) / 0.05);
+      filter: brightness(0.95);
+      transition: background ease calc(var(--transitionMs) / 3),
+        color ease calc(var(--transitionMs) / 3);
+    }
+  }
+
+  &[open] summary::before {
+    transform: rotate(45deg) translate(0, 0);
+  }
+}

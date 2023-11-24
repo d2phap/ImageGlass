@@ -1,0 +1,53 @@
+
+input:not([type]),
+input[type=text],
+input[type=number],
+input[type=search],
+input[type=color],
+textarea {
+  @include baseControl();
+
+  font-size: 95%;
+  padding: 0.325rem;
+
+  &:focus {
+    background-color: rgb(var(--ControlBgPressed));
+  }
+  &[readonly] {
+    background-color: rgb(var(--ControlBg));
+  }
+
+  &[disabled],
+  &:disabled {
+    color: rgb(var(--AppText) / 0.45);
+    background-color: rgb(var(--InvertColor) / 0.1);
+  }
+}
+[color-mode=light] {
+  input:not([type]),
+  input[type=text],
+  input[type=number],
+  input[type=search],
+  input[type=color],
+  textarea {
+    &:focus {
+      background-color: rgb(var(--ControlBgHover));
+    }
+  }
+}
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+textarea {
+  --controlWidth: calc(410 * var(--fontScale));
+
+  resize: none;
+  min-height: 4em;
+}

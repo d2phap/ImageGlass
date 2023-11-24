@@ -1,0 +1,10 @@
+.panel {
+  padding: 1rem;
+  background-color: rgb(var(--AppBg) / 0.2);
+  display: flex;
+  align-items: center;
+
+  &> button {
+    margin-left: 0.5rem;
+  }
+}

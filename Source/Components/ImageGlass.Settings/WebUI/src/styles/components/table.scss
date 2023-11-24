@@ -1,0 +1,142 @@
+
+.ig-table {
+  --table-max-height: 200;
+
+  --header-border-top-color: transparent;
+  --header-border-bottom-color: var(--ControlBorder);
+  --header-border-left-color: transparent;
+  --header-border-right-color: var(--ControlBorder);
+
+  --cell-border-top-color: transparent;
+  --cell-border-bottom-color: var(--ControlBorder);
+  --cell-border-left-color: transparent;
+  --cell-border-right-color: var(--ControlBorder);
+  --cell-shadow-background: inset 0 0 0 0 transparent;
+
+  overflow: auto;
+  border: 0.1rem solid var(--ControlBorder);
+  border-radius: var(--borderRadius);
+  min-height: 4rem;
+  max-height: calc(var(--table-max-height) * var(--fontScale) * 1px);
+  max-width: 100%;
+  display: inline-block;
+  counter-reset: row-counter;
+
+  .cell-counter::before {
+    counter-increment: row-counter;
+    content: counter(row-counter);
+  }
+
+  &> table {
+    border: 0;
+    border-spacing: 0;
+
+    &> thead > tr > th,
+    &> tbody > tr > td {
+      // text alignment
+      &.col-align--center {
+        text-align: center;
+      }
+      &.col-align--end {
+        text-align: right;
+      }
+      &.col-align--start {
+        text-align: left;
+      }
+
+      // vertical alignment
+      &.col-valign--center {
+        vertical-align: middle;
+      }
+      &.col-valign--end {
+        vertical-align: bottom;
+      }
+      &.col-valign--start {
+        vertical-align: top;
+      }
+    }
+
+    &> thead {
+      position: sticky;
+      top: 0;
+      z-index: 6;
+
+      &> tr {
+        &> th {
+          font-size: 95%;
+          padding: 0.372rem 0.5rem;
+          white-space: nowrap;
+          vertical-align: top;
+          background-color: rgb(var(--ControlBg));
+  
+          position: sticky;
+          top: 0;
+
+          box-shadow:
+            inset 0 0.1rem 0 0 var(--header-border-top-color),
+            inset 0 -0.1rem 0 0 var(--header-border-bottom-color),
+            inset 0.1rem 0 0 0 var(--header-border-left-color),
+            inset -0.1rem 0 0 0 var(--header-border-right-color);
+  
+          // for sticky header column
+          &.cell-sticky {
+            z-index: 6;
+            left: 0;
+          }
+
+          &:last-child {
+            --header-border-right-color: transparent;
+          }
+        }
+      }
+    }
+
+    &> tbody > tr {
+      position: relative;
+
+      &> td {
+        padding: 0.34rem 0.5rem;
+        background-color: rgb(var(--AppBg));
+        box-shadow: var(--cell-shadow-background),
+          inset 0 0.1rem 0 0 var(--cell-border-top-color),
+          inset 0 -0.1rem 0 0 var(--cell-border-bottom-color),
+          inset 0.1rem 0 0 0 var(--cell-border-left-color),
+          inset -0.1rem 0 0 0 var(--cell-border-right-color);
+        transition: background ease calc(var(--transitionMs) / 2), box-shadow ease calc(var(--transitionMs) / 2);
+
+        // for sticky row column
+        &.cell-sticky {
+          position: sticky;
+          z-index: 5;
+          left: 0;
+        }
+        &.cell-sticky-right {
+          --cell-border-left-color: var(--ControlBorder);
+          position: sticky;
+          z-index: 5;
+          right: 0;
+        }
+
+        &:last-child {
+          --cell-border-right-color: transparent;
+        }
+      }
+
+      &:last-child {
+        &> td {
+          --cell-border-bottom-color: rgb(var(--InvertColor) / 0.1);
+        }
+      }
+
+      &:hover > td {
+        --cell-border-bottom-color: rgb(var(--Accent) / 0.3);
+        --cell-shadow-background: inset 0 0 0 100vw rgb(var(--Accent) / 0.1);
+      }
+
+      &.row--highlight > td {
+        --cell-border-bottom-color: rgb(var(--Accent) / 0.4);
+        --cell-shadow-background: inset 0 0 0 100vw rgb(var(--Accent) / 0.2);
+      }
+    }
+  }
+}

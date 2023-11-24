@@ -1,0 +1,20 @@
+
+.w-100 {
+  width: 100% !important;
+}
+.w-75 {
+  width: 75% !important;
+}
+.w-50 {
+  width: 50% !important;
+}
+.w-25 {
+  width: 25% !important;
+}
+.w-0 {
+  width: 0% !important;
+}
+
+.w-control-compact {
+  width: calc(5rem * var(--fontScale)) !important;
+}

@@ -1,0 +1,4 @@
+﻿
+DwmIsCompositionEnabled
+DwmSetWindowAttribute
+DwmExtendFrameIntoClientArea

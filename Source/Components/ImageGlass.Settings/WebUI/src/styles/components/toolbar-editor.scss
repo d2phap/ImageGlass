@@ -1,0 +1,167 @@
+
+toolbar-editor {
+  display: flex;
+
+  .section-middle {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+      stroke: rgb(var(--AppText));
+      fill: rgb(var(--AppText));
+    }
+  }
+  .section-available {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+  }
+  .section-current {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+  }
+
+  // action buttons
+  .btn[data-action] {
+    border-color: transparent;
+    min-width: 0;
+    max-height: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-left: 0.35rem;
+    background-color: rgb(var(--InvertColor) / 0.05);
+    pointer-events: auto;
+
+    &:not([disabled]) {
+      &:hover {
+        background-color: rgb(var(--InvertColor) / 0.125);
+      }
+      &:focus {
+        outline: none;
+        border-color: rgb(var(--Accent));
+      }
+      &:focus-visible {
+        @include focusAnimation();
+      }
+      &:active {
+        background-color: rgb(var(--InvertColor) / 0.2);
+        border-color: rgb(var(--Accent));
+        transition: background ease calc(var(--transitionMs) / 3),
+          border ease calc(var(--transitionMs) / 3);
+      }
+    }
+    &:disabled {
+      background-color: rgb(var(--InvertColor) / 0.025);
+
+      svg {
+        opacity: 0.35;
+      }
+    }
+  }
+
+  .btn-toolbar {
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    text-wrap: initial;
+    align-items: center;
+
+    width: 100%;
+    text-align: left;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    border-radius: calc(var(--borderRadius) * 1.5);
+
+    .button-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    .button-text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .button-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      max-width: 0;
+      margin-right: -0.5rem;
+  
+      &:focus-within {
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible,
+    &:focus-within {
+      .button-actions {
+        opacity: 1;
+        max-width: none;
+      }
+    }
+  }
+
+  .toolbar-item {
+    padding: 0.25rem;
+    position: relative;
+    border-radius: calc(var(--borderRadius) * 2);
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100vh;
+      max-height: 0;
+      border-radius: var(--borderRadius);
+      pointer-events: none;
+      transition: all ease var(--transitionMs);
+    }
+
+    &[data-alignment="Right" i] .btn-toolbar {
+      justify-content: end;
+    }
+
+    &:hover {
+      .button-actions {
+        opacity: 1;
+        max-width: none;
+      }
+    }
+
+
+    &.drag--enter {
+      &.position--after::after {
+        margin-top: 0.5rem;
+        max-height: calc(3rem * var(--fontScale));
+        background-color: rgb(var(--Accent) / 0.2);
+        box-shadow: inset 0 0 0 0.1rem rgb(var(--Accent)),
+          0 0 0 0.1rem rgb(var(--Accent));
+      }
+
+      &:not(.position--after)::before {
+        margin-bottom: 0.5rem;
+        max-height: calc(3rem * var(--fontScale));
+        background-color: rgb(var(--Accent) / 0.2);
+        box-shadow: inset 0 0 0 0.1rem rgb(var(--Accent)),
+          0 0 0 0.1rem rgb(var(--Accent));
+      }
+    }
+
+    &.drag--drop .btn-toolbar {
+      @include focusAnimation();
+      background-color: rgb(var(--Accent) / 0.2);
+    }
+  }
+
+  .toolbar-list {
+    width: calc(20rem * var(--fontScale));
+    min-height: 20rem;
+    max-height: 35rem;
+    overflow-y: auto;
+  }
+}

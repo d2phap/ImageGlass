@@ -1,0 +1,40 @@
+
+.ig-list-vertical {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  padding: 0.5rem;
+  border: 0.1rem solid var(--ControlBorder);
+  border-radius: var(--borderRadius);
+  background-color: rgb(var(--ControlBg) / 0.5);
+
+  &> li {
+    padding: 0.5rem;
+    border-radius: var(--borderRadius);
+    transition: background ease calc(var(--transitionMs) / 3),
+      border ease calc(var(--transitionMs) / 3),
+      color ease calc(var(--transitionMs) / 3);
+
+    &:hover {
+      background-color: rgb(var(--InvertColor) / 0.1);
+    }
+  }
+
+  &:hover {
+    border-color: var(--ControlBorderHover);
+  }
+
+  // item separator
+  &:not(.is--no-separator) > li:not(:last-child) {
+    margin-bottom: 0.5rem;
+
+    &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background-color: rgb(var(--InvertColor) / 0.1);
+      position: relative;
+      bottom: calc(-1 * (0.5rem + (0.5rem / 2)));
+    }
+  }
+}

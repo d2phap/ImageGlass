@@ -1,0 +1,90 @@
+dialog {
+  padding: 0;
+  overflow: hidden;
+  border-width: 0.1rem;
+  border-color: rgb(var(--InvertColor) / 0.275);
+  border-radius: calc(var(--borderRadius) * 3.5);
+
+  color: rgb(var(--AppText) / 1);
+  background-color: rgb(var(--AppBg) / 1);
+  box-shadow: 0 1rem 3rem -0.5rem rgba(0, 0, 0, 0.4);
+  transition: background ease calc(var(--transitionMs) / 3),
+    border ease calc(var(--transitionMs) / 3),
+    color ease calc(var(--transitionMs) / 3),
+    box-shadow ease calc(var(--transitionMs) / 3);
+
+  &::backdrop {
+    position: fixed;
+    inset: 0px;
+    background-color: rgb(var(--AppBg) / 0.65);
+  }
+
+  &> form {
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+    width: 100%;
+  }
+
+  .dialog-header {
+    padding: 0.5rem 1rem;
+    background-color: rgb(var(--Accent) / 0.075);
+    transition: background ease calc(var(--transitionMs) / 1.3);
+  }
+
+  .dialog-footer {
+    padding: 1rem;
+    background-color: rgb(var(--Accent) / 0.075);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    transition: background ease calc(var(--transitionMs) / 1.3);
+
+    &> button {
+      min-width: calc(6.5rem * var(--fontScale));
+      margin-left: 0.5rem;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .dialog-body {
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
+  &[open] {
+    display: flex;
+  }
+
+  .create-only,
+  .edit-only {
+    display: none;
+  }
+  &.dialog--create {
+    .create-only { display: initial; }
+  }
+  &.dialog--edit {
+    .edit-only { display: initial; }
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+
+[window-focus="false"] dialog {
+  box-shadow: 0 1rem 3rem -1rem rgba(0, 0, 0, 0.35);
+
+  .dialog-header {
+    background-color: rgb(var(--InvertColor) / 0.01);
+  }
+
+  .dialog-footer {
+    background-color: rgb(var(--InvertColor) / 0.02);
+  }
+}

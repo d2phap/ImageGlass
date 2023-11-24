@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "outDir": "./dist/dist",
+    "noImplicitAny": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["node_modules"]
+}
+
