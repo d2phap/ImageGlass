@@ -271,8 +271,19 @@ public class Web2 : WebView2
 
         try
         {
+            // use AppData dir
+            // %LocalAppData%\ImageGlass\9.0.7.1125\Webview2_Data
+            var appDataDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                App.AppName,
+                App.Version,
+                "Webview2_Data");
+
+            // create the directory if not exists
+            Directory.CreateDirectory(appDataDir);
+
             var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
+                userDataFolder: appDataDir,
                 options: options);
 
             await this.EnsureCoreWebView2Async(env).ConfigureAwait(true);

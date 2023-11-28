@@ -36,13 +36,6 @@ public class App
 
 
     /// <summary>
-    /// Gets the application name after removing all space characters.
-    /// Example: ImageGlass Kobe => ImageGlassKobe
-    /// </summary>
-    public static string AppNameCode => FileVersionInfo.GetVersionInfo(IGExePath).ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
-
-
-    /// <summary>
     /// Gets the product version
     /// </summary>
     public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? "";
@@ -89,7 +82,7 @@ public class App
         }
 
         // else, use AppData dir
-        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppNameCode);
+        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
 
         // create the directory if not exists
         Directory.CreateDirectory(appDataDir);
