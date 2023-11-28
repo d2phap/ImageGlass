@@ -119,7 +119,7 @@
         <Content Include="License\MagicScaler.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="License\Webview2.txt">
+        <Content Include="License\WebView2.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="License\WicNet.txt">
