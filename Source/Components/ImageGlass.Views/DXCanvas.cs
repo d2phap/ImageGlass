@@ -1055,7 +1055,10 @@ public partial class DXCanvas : DXControl
 
     public DXCanvas()
     {
-        SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.SupportsTransparentBackColor
+            | ControlStyles.UserPaint
+            | ControlStyles.Selectable
+            | ControlStyles.UserMouse, true);
         _clickTimer.Tick += ClickTimer_Tick;
 
         // touch gesture support

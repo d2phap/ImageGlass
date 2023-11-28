@@ -222,6 +222,8 @@ public partial class FrmSlideshow : ThemedForm
         // start slideshow
         SetSlideshowState(true);
 
+        // focus on PicMain
+        PicMain.Focus();
     }
 
 

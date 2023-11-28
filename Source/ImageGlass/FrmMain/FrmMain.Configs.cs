@@ -299,6 +299,10 @@ public partial class FrmMain
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
 
 
+        // focus on PicMain
+        PicMain.Focus();
+
+
         // update tag data for zoom mode menus
         MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
@@ -1291,7 +1295,11 @@ public partial class FrmMain
         ResumeLayout(false);
 
         // perform layout update
-        if (forcedUpdateLayout) PerformLayout();
+        if (forcedUpdateLayout)
+        {
+            PerformLayout();
+            PicMain.Focus();
+        }
     }
 
 
