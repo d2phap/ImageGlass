@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2023 DUONG DIEU PHAP
+Copyright (C) 2010 - 2024 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -166,6 +166,8 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke the action"); // v9.0
         _ = TryAdd("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported"); // v9.0
         _ = TryAdd("_._UserAction._Win32ExeError", "Cannot execute command '{0}'. Make sure the name is correct."); // v9.0
+
+        _ = TryAdd("_._Webview2._NotFound", "ImageGlass could not detect WebView2 Runtime 64-bit on your machine."); // 9.1
 
         // Gallery tooltip
         _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2023 DUONG DIEU PHAP
+Copyright (C) 2010 - 2024 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,11 @@ namespace ImageGlass;
 
 public partial class WebForm : ThemedForm
 {
+    /// <summary>
+    /// Checks if WebView2 runtime is installed.
+    /// </summary>
+    public static bool IsWebView2Installed => Web2.CheckWebview2Installed();
+
     // Public events
     #region Public events
 
@@ -58,7 +63,10 @@ public partial class WebForm : ThemedForm
         Web2.Visible = false;
         Web2.EnableDebug = Config.EnableDebug;
 
-        _ = Web2.EnsureWeb2Async();
+        if (IsWebView2Installed)
+        {
+            _ = Web2.EnsureWeb2Async();
+        }
     }
 
 
@@ -69,6 +77,22 @@ public partial class WebForm : ThemedForm
     {
         base.OnLoad(e);
         if (DesignMode) return;
+
+
+        // show message if WebView2 runtime is not found
+        if (!IsWebView2Installed)
+        {
+            var label = new ModernLabel()
+            {
+                Text = Config.Language["_._Webview2._NotFound"],
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                TextAlign = ContentAlignment.TopCenter,
+                Padding = new Padding(20),
+            };
+
+            Controls.Add(label);
+        }
 
         _ = Config.UpdateFormIcon(this);
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
