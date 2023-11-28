@@ -617,12 +617,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>less than or equals 100%</c>.
     /// </summary>
-    public static ImageInterpolation ImageInterpolationScaleDown { get; set; } = ImageInterpolation.MultiSampleLinear;
+    public static ImageInterpolation ImageInterpolationScaleDown { get; set; } = ImageInterpolation.Linear;
 
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
     /// </summary>
-    public static ImageInterpolation ImageInterpolationScaleUp { get; set; } = ImageInterpolation.NearestNeighbor;
+    public static ImageInterpolation ImageInterpolationScaleUp { get; set; } = ImageInterpolation.HighQualityBicubic;
 
     /// <summary>
     /// Gets, sets value indicates what happens after clicking Edit menu
