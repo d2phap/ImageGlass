@@ -2456,11 +2456,9 @@ public partial class FrmMain
             if (_isFramelessBeforeFullscreen) IG_ToggleFrameless(true, false);
             if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true, false);
         }
-        else
-        {
-            // update toolbar items state
-            UpdateToolbarItemsState();
-        }
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
 
 
         if (showInAppMessage)
