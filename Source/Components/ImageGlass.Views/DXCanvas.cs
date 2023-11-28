@@ -90,7 +90,7 @@ public partial class DXCanvas : DXControl
     private float _maxZoom = 100f; // 10_000%
     private float[] _zoomLevels = [];
     private ImageInterpolation _interpolationScaleDown = ImageInterpolation.MultiSampleLinear;
-    private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
+    private ImageInterpolation _interpolationScaleUp = ImageInterpolation.NearestNeighbor;
 
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
@@ -706,12 +706,12 @@ public partial class DXCanvas : DXControl
     [DefaultValue(ImageInterpolation.NearestNeighbor)]
     public ImageInterpolation InterpolationScaleUp
     {
-        get => _interpolationScaledUp;
+        get => _interpolationScaleUp;
         set
         {
-            if (_interpolationScaledUp != value)
+            if (_interpolationScaleUp != value)
             {
-                _interpolationScaledUp = value;
+                _interpolationScaleUp = value;
                 Invalidate();
             }
         }
@@ -722,7 +722,16 @@ public partial class DXCanvas : DXControl
     /// Gets the current <see cref="ImageInterpolation"/> mode.
     /// </summary>
     [Browsable(false)]
-    public ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
+    public ImageInterpolation CurrentInterpolation
+    {
+        get
+        {
+            if (ZoomFactor < 1f) return _interpolationScaleDown;
+            if (ZoomFactor > 1f) return _interpolationScaleUp;
+
+            return ImageInterpolation.NearestNeighbor;
+        }
+    }
 
 
     #endregion

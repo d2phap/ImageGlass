@@ -599,7 +599,7 @@ public class IgLang : Dictionary<string, string>
         // Viewer > Zooming
         _ = TryAdd("FrmSettings._Zooming", "Zooming");
         _ = TryAdd("FrmSettings._ImageInterpolation", "Image interpolation");
-        _ = TryAdd("FrmSettings._ImageInterpolation._ScaleDown", "When zoom ≤ 100%");
+        _ = TryAdd("FrmSettings._ImageInterpolation._ScaleDown", "When zoom < 100%");
         _ = TryAdd("FrmSettings._ImageInterpolation._ScaleUp", "When zoom > 100%");
         _ = TryAdd("FrmSettings._ZoomSpeed", "Zoom speed");
         _ = TryAdd("FrmSettings._ZoomLevels", "Zoom levels");
