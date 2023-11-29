@@ -163,10 +163,7 @@ public static class Functions
             ShowNewFolderButton = true,
             UseDescriptionForTitle = true,
             AutoUpgradeEnabled = true,
-
-#if NET7_0_OR_GREATER
             ShowPinnedPlaces = true,
-#endif
         };
         var result = fb.ShowDialog();
 
