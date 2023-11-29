@@ -370,18 +370,11 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         _ = TryAdd("FrmMain.MnuWindowFit", "Window Fit"); //v7.5
-        _ = TryAdd("FrmMain.MnuWindowFit._Enable", "Window Fit mode is enabled"); // v9.0
-        _ = TryAdd("FrmMain.MnuWindowFit._Disable", "Window Fit mode is disabled"); // v9.0
-
         _ = TryAdd("FrmMain.MnuFullScreen", "Full Screen"); //v3.0
-        _ = TryAdd("FrmMain.MnuFullScreen._Enable", "Full Screen mode is enabled"); // v9.0
-        _ = TryAdd("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit Full Screen mode."); // v2.0
-        _ = TryAdd("FrmMain.MnuFullScreen._Disable", "Full Screen mode is disabled"); // v9.0
 
         _ = TryAdd("FrmMain.MnuFrameless", "Frameless"); //v7.5
-        _ = TryAdd("FrmMain.MnuFrameless._Enable", "Frameless mode is enabled"); // v9.0
         _ = TryAdd("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
-        _ = TryAdd("FrmMain.MnuFrameless._Disable", "Frameless mode is disabled"); // v9.0
+
         _ = TryAdd("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
 
         #region Layout

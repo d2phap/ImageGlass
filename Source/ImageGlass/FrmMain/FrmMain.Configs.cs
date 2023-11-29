@@ -265,7 +265,7 @@ public partial class FrmMain
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
 
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
@@ -275,7 +275,7 @@ public partial class FrmMain
             // it can be restore correctly
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
-            IG_ToggleFullScreen(true, showInAppMessage: false);
+            IG_ToggleFullScreen(true);
         }
         else
         {
@@ -286,7 +286,7 @@ public partial class FrmMain
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
         }
 
         // start slideshow

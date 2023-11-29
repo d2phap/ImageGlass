@@ -2196,7 +2196,7 @@ public partial class FrmMain
     /// <summary>
     /// Toggles Window fit.
     /// </summary>
-    public bool IG_ToggleWindowFit(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleWindowFit(bool? enable = null)
     {
         enable ??= !Config.EnableWindowFit;
         Config.EnableWindowFit = enable.Value;
@@ -2206,7 +2206,7 @@ public partial class FrmMain
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -2221,16 +2221,6 @@ public partial class FrmMain
 
         // update toolbar items state
         UpdateToolbarItemsState();
-
-        if (showInAppMessage)
-        {
-            var langPath = $"{Name}.{nameof(MnuWindowFit)}";
-            var message = Config.EnableWindowFit
-                ? Config.Language[$"{langPath}._Enable"]
-                : Config.Language[$"{langPath}._Disable"];
-
-            PicMain.ShowMessage("", message, Config.InAppMessageDuration);
-        }
 
         return Config.EnableWindowFit;
     }
@@ -2373,7 +2363,7 @@ public partial class FrmMain
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -2398,13 +2388,6 @@ public partial class FrmMain
             {
                 PicMain.ShowMessage(
                     string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
                     Config.InAppMessageDuration);
             }
         }
@@ -2416,7 +2399,7 @@ public partial class FrmMain
     /// <summary>
     /// Toggles full screen mode.
     /// </summary>
-    public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleFullScreen(bool? enable = null)
     {
         enable ??= !Config.EnableFullScreen;
         Config.EnableFullScreen = enable.Value;
@@ -2427,7 +2410,7 @@ public partial class FrmMain
             if (Config.EnableWindowFit)
             {
                 _isWindowFitBeforeFullscreen = true;
-                IG_ToggleWindowFit(false, false);
+                IG_ToggleWindowFit(false);
             }
 
             // exit frameless
@@ -2454,31 +2437,12 @@ public partial class FrmMain
         if (!Config.EnableFullScreen)
         {
             if (_isFramelessBeforeFullscreen) IG_ToggleFrameless(true, false);
-            if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true, false);
+            if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true);
         }
 
         // update toolbar items state
         UpdateToolbarItemsState();
 
-
-        if (showInAppMessage)
-        {
-            var langPath = $"{Name}.{nameof(MnuFullScreen)}";
-
-            if (Config.EnableFullScreen)
-            {
-                PicMain.ShowMessage(
-                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
-                    Config.InAppMessageDuration);
-            }
-        }
 
         return Config.EnableFullScreen;
     }
