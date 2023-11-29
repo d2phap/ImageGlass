@@ -51,8 +51,7 @@ public static class Config
     /// <summary>
     /// The default image info tags
     /// </summary>
-    public static List<string> DefaultImageInfoTags => new()
-    {
+    public static List<string> DefaultImageInfoTags => [
         nameof(ImageInfo.Name),
         nameof(ImageInfo.ListCount),
         nameof(ImageInfo.FrameCount),
@@ -63,7 +62,7 @@ public static class Config
         nameof(ImageInfo.ExifRating),
         nameof(ImageInfo.DateTimeAuto),
         nameof(ImageInfo.AppName),
-    };
+    ];
 
 
     /// <summary>
@@ -101,7 +100,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the config section of tool settings.
     /// </summary>
-    public static ExpandoObject ToolSettings { get; set; } = new ExpandoObject();
+    public static ExpandoObject ToolSettings { get; set; } = new();
 
 
     #region Boolean items
@@ -520,22 +519,22 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of apps for edit action.
     /// </summary>
-    public static Dictionary<string, EditApp?> EditApps { get; set; } = new();
+    public static Dictionary<string, EditApp?> EditApps { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the list of supported image formats
     /// </summary>
-    public static HashSet<string> FileFormats { get; set; } = new();
+    public static HashSet<string> FileFormats { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the list of formats that only load the first frame forcefully
     /// </summary>
-    public static HashSet<string> SingleFrameFormats { get; set; } = new() { ".avif;.heic;.heif;.psd;.jxl" };
+    public static HashSet<string> SingleFrameFormats { get; set; } = [".avif", ".heic", ".heif", ".psd", ".jxl"];
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
-    public static List<ToolbarItemModel> ToolbarButtons { get; set; } = new();
+    public static List<ToolbarItemModel> ToolbarButtons { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the tags for displaying image info
@@ -545,29 +544,28 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, List<Hotkey>> MenuHotkeys { get; set; } = new();
+    public static Dictionary<string, List<Hotkey>> MenuHotkeys { get; set; } = [];
 
     /// <summary>
     /// Gets, sets mouse click actions
     /// </summary>
-    public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions { get; set; } = new();
+    public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions { get; set; } = [];
 
     /// <summary>
     /// Gets, sets mouse wheel actions
     /// </summary>
-    public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions { get; set; } = new();
+    public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions { get; set; } = [];
 
     /// <summary>
     /// Gets, sets layout for FrmMain. Syntax:
     /// <c>Dictionary["ControlName", "DockStyle;order"]</c>
     /// </summary>
-    public static Dictionary<string, string?> Layout { get; set; } = new();
+    public static Dictionary<string, string?> Layout { get; set; } = [];
 
     /// <summary>
     /// Gets, sets tools.
     /// </summary>
-    public static List<IgTool?> Tools { get; set; } = new()
-    {
+    public static List<IgTool?> Tools { get; set; } = [
         new IgTool()
         {
             ToolId = Const.IGTOOL_EXIFTOOL,
@@ -575,14 +573,14 @@ public static class Config
             Executable = "exifglass",
             Argument = Const.FILE_MACRO,
             IsIntegrated = true,
-            Hotkeys = new List<Hotkey>(1) { new Hotkey(Keys.X) },
+            Hotkeys = [new Hotkey(Keys.X)],
         },
-    };
+    ];
 
     /// <summary>
     /// Gets, sets the list of disabled menus
     /// </summary>
-    public static List<string> DisabledMenus { get; set; } = new();
+    public static List<string> DisabledMenus { get; set; } = [];
 
     #endregion // Array items
 
