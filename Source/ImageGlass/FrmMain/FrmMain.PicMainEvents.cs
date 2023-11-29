@@ -393,7 +393,10 @@ public partial class FrmMain
     private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
         // Handle window fit after zoom change
-        if (Config.EnableWindowFit && !e.IsPreviewingImage && (e.IsManualZoom || e.IsZoomModeChange))
+        if (Config.EnableWindowFit
+            && !e.IsPreviewingImage
+            && e.ChangeSource != ZoomChangeSource.SizeChanged
+            && (e.IsManualZoom || e.IsZoomModeChange))
         {
             FitWindowToImage(e.ChangeSource == ZoomChangeSource.ZoomMode);
         }

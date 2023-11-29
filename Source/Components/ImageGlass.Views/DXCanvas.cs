@@ -1445,7 +1445,7 @@ public partial class DXCanvas : DXControl
         // redraw the control on resizing if it's not manual zoom
         if (IsReady && Source != ImageSource.Null && !_isManualZoom)
         {
-            Refresh();
+            Refresh(true, false, true);
         }
 
         base.OnResize(e);
@@ -2220,7 +2220,7 @@ public partial class DXCanvas : DXControl
     /// <summary>
     /// Updates zoom mode logic. This <u><c>does not</c></u> redraw the viewing image.
     /// </summary>
-    public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false)
+    public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false, bool zoomedByResizing = false)
     {
         // get zoom factor after applying the zoom mode
         var zoomMode = mode ?? _zoomMode;
@@ -2250,7 +2250,7 @@ public partial class DXCanvas : DXControl
             IsManualZoom = _isManualZoom,
             IsZoomModeChange = mode != _zoomMode,
             IsPreviewingImage = _isPreviewing,
-            ChangeSource = ZoomChangeSource.ZoomMode,
+            ChangeSource = zoomedByResizing ? ZoomChangeSource.SizeChanged : ZoomChangeSource.ZoomMode,
         });
 
         // emit selecting event
@@ -2273,11 +2273,11 @@ public partial class DXCanvas : DXControl
     /// <summary>
     /// Forces the control to invalidate itself.
     /// </summary>
-    public void Refresh(bool resetZoom = true, bool isManualZoom = false)
+    public void Refresh(bool resetZoom = true, bool isManualZoom = false, bool zoomedByResizing = false)
     {
         if (resetZoom)
         {
-            SetZoomMode(null, isManualZoom);
+            SetZoomMode(null, isManualZoom, zoomedByResizing);
         }
 
         Invalidate();

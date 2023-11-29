@@ -107,7 +107,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_Refresh()
     {
-        PicMain.Refresh();
+        PicMain.Refresh(true, false, Config.EnableWindowFit);
     }
 
 
