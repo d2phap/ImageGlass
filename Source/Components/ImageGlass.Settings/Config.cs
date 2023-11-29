@@ -530,7 +530,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of formats that only load the first frame forcefully
     /// </summary>
-    public static HashSet<string> SingleFrameFormats { get; set; } = new() { ".heic;.heif;.psd;.jxl" };
+    public static HashSet<string> SingleFrameFormats { get; set; } = new() { ".avif;.heic;.heif;.psd;.jxl" };
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
