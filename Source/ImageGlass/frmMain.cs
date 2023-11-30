@@ -1156,43 +1156,7 @@ public partial class FrmMain : ThemedForm
 
     private void ImageTransform_Changed(object? sender, EventArgs e)
     {
-        const string TOOLBAR_BUTTON_SAVE_TRANSFORMATION = "Btn_SaveImageTransformation";
-        using var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
-
-        // has changes, show Save button
-        if (Local.ImageTransform.HasChanges && btnItem == null)
-        {
-            var menuAction = nameof(MnuSave);
-            var menuText = MnuSave.Text;
-
-            // use Save as button
-            if (Local.Metadata?.SupportsWriting == false)
-            {
-                menuAction = nameof(MnuSaveAs);
-                menuText = MnuSaveAs.Text;
-            }
-
-            Toolbar.AddItem(new()
-            {
-                Id = TOOLBAR_BUTTON_SAVE_TRANSFORMATION,
-                Image = nameof(Config.Theme.ToolbarIcons.Save),
-                OnClick = new(menuAction),
-                Alignment = ToolStripItemAlignment.Right,
-                Text = menuText ?? string.Empty,
-                DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
-            }, 1);
-
-            Toolbar.UpdateAlignment();
-            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
-        }
-        // no change, hide button
-        else if (!Local.ImageTransform.HasChanges && btnItem != null)
-        {
-            Toolbar.Items.RemoveByKey(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
-
-            Toolbar.UpdateAlignment();
-            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
-        }
+        LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
     }
 
 
