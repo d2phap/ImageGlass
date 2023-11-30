@@ -14,7 +14,7 @@
         <Description>A lightweight, versatile image viewer</Description>
         <Copyright>Copyright © 2010 - 2024 Duong Dieu Phap</Copyright>
         <Company>Duong Dieu Phap</Company>
-        <Version>9.0.7.1125</Version>
+        <Version>9.0.7.1130</Version>
         <FileVersion>$(Version)</FileVersion>
 
         <EntryPointExe>$(AssemblyName).exe</EntryPointExe>
