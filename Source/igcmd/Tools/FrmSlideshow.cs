@@ -1662,8 +1662,6 @@ public partial class FrmSlideshow : ThemedForm
         // update menu item state
         MnuWindowFit.Checked = Config.EnableWindowFit;
 
-        // disable maximize button
-        MaximizeBox = !Config.EnableWindowFit;
 
         return Config.EnableWindowFit;
     }
