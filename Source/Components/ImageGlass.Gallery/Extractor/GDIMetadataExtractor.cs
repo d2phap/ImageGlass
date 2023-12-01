@@ -71,7 +71,7 @@ public partial class GDIExtractor : IExtractor
         if (value == null || value.Length == 0)
             return string.Empty;
 
-        var str = Encoding.ASCII.GetString(value).Trim(new char[] { '\0' });
+        var str = Encoding.ASCII.GetString(value).Trim('\0');
 
         return str;
     }
