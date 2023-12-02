@@ -235,10 +235,9 @@ public class DiskCache
     /// <returns>Item key.</returns>
     private static string MakeKey(string key)
     {
-        using var md5 = MD5.Create();
-        var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(key));
+        var hash = MD5.HashData(Encoding.ASCII.GetBytes(key));
 
-        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        return Convert.ToHexString(hash).ToLowerInvariant();
     }
 
     /// <summary>

@@ -76,17 +76,17 @@ public partial class BHelper
             if (hex.Length == 8)
             {
                 // #RRGGBBAA
-                red = byte.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
-                green = byte.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-                blue = byte.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
-                alpha = byte.Parse(hex.Substring(6, 2), NumberStyles.AllowHexSpecifier);
+                red = byte.Parse(hex.AsSpan(0, 2), NumberStyles.AllowHexSpecifier);
+                green = byte.Parse(hex.AsSpan(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse(hex.AsSpan(4, 2), NumberStyles.AllowHexSpecifier);
+                alpha = byte.Parse(hex.AsSpan(6, 2), NumberStyles.AllowHexSpecifier);
             }
             else if (hex.Length == 6)
             {
                 // #RRGGBB
-                red = byte.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
-                green = byte.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-                blue = byte.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+                red = byte.Parse(hex.AsSpan(0, 2), NumberStyles.AllowHexSpecifier);
+                green = byte.Parse(hex.AsSpan(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = byte.Parse(hex.AsSpan(4, 2), NumberStyles.AllowHexSpecifier);
             }
             else if (hex.Length == 4)
             {

@@ -1129,8 +1129,7 @@ public partial class FrmSlideshow : ThemedForm
     {
         var intervalTo = Config.UseRandomIntervalForSlideshow ? Config.SlideshowIntervalTo : Config.SlideshowInterval;
 
-        var ran = new Random();
-        var interval = (float)(ran.NextDouble() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
+        var interval = (Random.Shared.NextSingle() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
 
         return interval;
     }
