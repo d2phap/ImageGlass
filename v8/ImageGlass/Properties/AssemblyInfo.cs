@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass")]
-[assembly: AssemblyCopyright("Copyright © 2010-2023 Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2010-2024 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("8.10.9.27")]
-[assembly: AssemblyFileVersion("8.10.9.27")]
+[assembly: AssemblyVersion("8.11.12.6")]
+[assembly: AssemblyFileVersion("8.11.12.6")]

@@ -116,7 +116,7 @@ namespace igcmd {
                 sb.Append("<hr/>");
                 sb.Append($"<div class=\"box {(canUpdate ? "box-success" : "box-danger")}\">");
                 if (canUpdate) {
-                    sb.Append($"<div>😊 Your system meet all the requirements!</div>");
+                    sb.Append($"<div>😊 Your system meets all the requirements!</div>");
                 }
                 else {
                     sb.Append($"<div>Your system <b><u>does not meet</u></b> the new version's requirements!</div>");

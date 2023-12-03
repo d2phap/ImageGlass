@@ -11,7 +11,7 @@
   <Identity
     Name="9662DuongDieuPhap.ImageGlass"
     Publisher="CN=29F1B9EC-D220-4DC3-BEDB-01A9CCA51904"
-    Version="8.10.9.0" />
+    Version="8.11.12.5" />
 
   <Properties>
     <DisplayName>ImageGlass</DisplayName>
@@ -36,7 +36,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="ImageGlass 8.10"
+        DisplayName="ImageGlass 8.11"
         Description="A lightweight, versatile image viewer"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
