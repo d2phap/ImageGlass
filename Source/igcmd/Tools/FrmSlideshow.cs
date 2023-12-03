@@ -938,7 +938,7 @@ public partial class FrmSlideshow : ThemedForm
         {
             var isImageBigForFading = photo.Metadata.RenderedWidth > 8000
                 || photo.Metadata.RenderedHeight > 8000;
-            var enableFading = !isImageBigForFading;
+            var enableFading = !isImageBigForFading && Config.EnableImageTransition;
 
             // set the main image
             PicMain.SetImage(photo.ImgData,
