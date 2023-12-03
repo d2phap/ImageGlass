@@ -888,7 +888,7 @@ public partial class FrmMain
         }
 
         // print an image file
-        // rename ext FAX -> TIFF to multipage printing
+        // rename ext FAX -> TIFF to multi-frame printing
         else if (ext.Equals(".FAX", StringComparison.OrdinalIgnoreCase))
         {
             fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
@@ -1541,8 +1541,8 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
 
-            // only save the current frame if Page Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+            // only save the current frame if Frame Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
                 ? (int)Local.CurrentFrameIndex
                 : -1;
 
@@ -1586,8 +1586,8 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
 
-            // only save the current frame if Page Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+            // only save the current frame if Frame Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
                 ? (int)Local.CurrentFrameIndex
                 : -1;
 
@@ -2019,7 +2019,7 @@ public partial class FrmMain
             PicMain.StopCurrentAnimator();
         }
 
-        UpdatePageNavToolbarButtonState();
+        UpdateFrameNavToolbarButtonState();
     }
 
 
@@ -2972,14 +2972,14 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Toggles Page naviagtion tool.
+    /// Toggles Frame navigation tool.
     /// </summary>
-    public bool IG_TogglePageNavTool(bool? visible = null)
+    public bool IG_ToggleFrameNavTool(bool? visible = null)
     {
-        visible ??= MnuPageNav.Checked;
+        visible ??= MnuFrameNav.Checked;
 
         // update menu item state
-        MnuPageNav.Checked = visible.Value;
+        MnuFrameNav.Checked = visible.Value;
 
         // update toolbar items state
         UpdateToolbarItemsState();
@@ -3002,7 +3002,7 @@ public partial class FrmMain
             // display frame info
             ToolbarContext.AddItem(new()
             {
-                Id = Const.PAGE_NAV_TOOLBAR_FRAME_INFO,
+                Id = Const.FRAME_NAV_TOOLBAR_FRAME_INFO,
                 DisplayStyle = ToolStripItemDisplayStyle.Text,
             });
 
@@ -3026,7 +3026,7 @@ public partial class FrmMain
             // play/pause frame animation
             ToolbarContext.AddItem(new()
             {
-                Id = Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
+                Id = Const.FRAME_NAV_TOOLBAR_TOGGLE_ANIMATION,
                 Image = nameof(Config.Theme.ToolbarIcons.Play),
                 OnClick = new(nameof(MnuToggleImageAnimation)),
             });
@@ -3064,20 +3064,20 @@ public partial class FrmMain
         ToolbarContext.ResumeLayout(true);
 
 
-        // update frame info on PageNav toolbar
-        UpdatePageNavToolbarButtonState();
+        // update frame info on Frame nav toolbar
+        UpdateFrameNavToolbarButtonState();
     }
 
 
     /// <summary>
-    /// Updates PageNav toolbar buttons state
+    /// Updates Frame nav toolbar buttons state
     /// </summary>
-    private void UpdatePageNavToolbarButtonState()
+    private void UpdateFrameNavToolbarButtonState()
     {
         if (!ToolbarContext.Visible) return;
 
         // update frame info
-        if (ToolbarContext.GetItem<ToolStripLabel>(Const.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
+        if (ToolbarContext.GetItem<ToolStripLabel>(Const.FRAME_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
         {
             var frameInfo = new StringBuilder(3);
             if (Local.Metadata != null)
@@ -3093,7 +3093,7 @@ public partial class FrmMain
 
 
         // update state of Toggle animation button
-        if (ToolbarContext.GetItem(Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
+        if (ToolbarContext.GetItem(Const.FRAME_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
         {
             btn.Enabled = PicMain.CanImageAnimate;
             if (btn.Tag is ToolbarItemTagModel model)

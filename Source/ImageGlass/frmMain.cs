@@ -100,7 +100,7 @@ public partial class FrmMain : ThemedForm
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
         ToolbarContext.UpdateTheme(newIconHeight);
-        UpdatePageNavToolbarButtonState();
+        UpdateFrameNavToolbarButtonState();
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
@@ -1414,7 +1414,7 @@ public partial class FrmMain : ThemedForm
                 }
 
                 // update frame info on PageNav toolbar
-                UpdatePageNavToolbarButtonState();
+                UpdateFrameNavToolbarButtonState();
             }
 
             // Dimension
@@ -2272,9 +2272,9 @@ public partial class FrmMain : ThemedForm
         IG_ToggleCropTool();
     }
 
-    private void MnuPageNav_Click(object sender, EventArgs e)
+    private void MnuFrameNav_Click(object sender, EventArgs e)
     {
-        IG_TogglePageNavTool();
+        IG_ToggleFrameNavTool();
     }
 
     private void MnuGetMoreTools_Click(object sender, EventArgs e)
