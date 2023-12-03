@@ -1072,8 +1072,7 @@ public partial class FrmMain : ThemedForm
         else if (!(e.Data?.ImgData.IsImageNull ?? true))
         {
             // delete clipboard image
-            Local.ClipboardImage?.Dispose();
-            Local.ClipboardImage = null;
+            ClearClipboardImage();
             Local.TempImagePath = null;
 
 

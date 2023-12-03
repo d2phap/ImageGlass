@@ -465,7 +465,7 @@ public class Local
     public static IgMetadata? Metadata { get; set; }
 
     /// <summary>
-    /// Gets, sets app state
+    /// Gets, sets app state.
     /// </summary>
     public static bool IsBusy { get; set; }
 

@@ -1227,7 +1227,7 @@ public partial class FrmMain
         // cancel the current loading image
         _loadCancelTokenSrc?.Cancel();
 
-        Local.ClipboardImage?.Dispose();
+        ClearClipboardImage();
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
 
@@ -1247,6 +1247,12 @@ public partial class FrmMain
         LoadImageInfo();
     }
 
+
+    public static void ClearClipboardImage()
+    {
+        Local.ClipboardImage?.Dispose();
+        Local.ClipboardImage = null;
+    }
 
     #endregion // Clipboard functions
 
@@ -1421,8 +1427,6 @@ public partial class FrmMain
         Exception? error = null;
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
-        _fileWatcher.Stop();
-
 
         // save the selection
         var hasSelection = PicMain.EnableSelection && !PicMain.SourceSelection.IsEmpty;
@@ -1494,7 +1498,7 @@ public partial class FrmMain
         else if (saveSource == ImageSaveSource.Clipboard)
         {
             // clear the clipboard image
-            LoadClipboardImage(null);
+            ClearClipboardImage();
 
             // manually update the change if FileWatcher is not enabled
             if (!Config.EnableRealTimeFileUpdate)
@@ -1516,15 +1520,6 @@ public partial class FrmMain
         }
 
 
-        // reload image
-        IG_Reload();
-        Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
-        if (Config.EnableRealTimeFileUpdate)
-        {
-            _fileWatcher.Start();
-        }
-
-
         // emits ImageSaved event
         Local.RaiseImageSavedEvent(new ImageSaveEventArgs(srcFilePath, destFilePath, saveSource));
 
@@ -1537,6 +1532,9 @@ public partial class FrmMain
     /// </summary>
     private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
     {
+        Exception? error = null;
+        Local.IsBusy = true;
+
         try
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
@@ -1570,10 +1568,12 @@ public partial class FrmMain
         }
         catch (Exception ex)
         {
-            return ex;
+            error = ex;
         }
 
-        return null;
+
+        Local.IsBusy = false;
+        return error;
     }
 
 
