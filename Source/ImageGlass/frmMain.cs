@@ -1005,7 +1005,7 @@ public partial class FrmMain : ThemedForm
     {
         Local.IsImageError = false;
 
-        PicMain.ClearMessage();
+        PicMain.ClearMessage(false);
         if (e.Index >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], null, delayMs: 1500);
