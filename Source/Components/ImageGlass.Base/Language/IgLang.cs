@@ -99,6 +99,13 @@ public class IgLang : Dictionary<string, string>
     {
         var model = new IgLangJsonModel(Metadata, this);
 
+        if (Metadata.EnglishName.Equals("English", StringComparison.OrdinalIgnoreCase))
+        {
+            model._Metadata.EnglishName = "<Your language name in English>";
+            model._Metadata.LocalName = "<Local name of your language>";
+            model._Metadata.Author = "<Your name here>";
+        }
+
         await BHelper.WriteJsonAsync(filePath, model);
     }
 
@@ -337,7 +344,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
         _ = TryAdd("FrmMain.MnuMoveToRecycleBin", "Move to the Recycle Bin"); //v3.0
         _ = TryAdd("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle bin?"); //v3.0
-        _ = TryAdd("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
+        _ = TryAdd("FrmMain.MnuDeleteFromHardDisk", "Delete permanently"); //v3.0
         _ = TryAdd("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
         _ = TryAdd("FrmMain.MnuExportFrames", "Export image frames…"); //v7.5
         _ = TryAdd("FrmMain.MnuToggleImageAnimation", "Start / stop animating image"); //v3.0
@@ -390,7 +397,7 @@ public class IgLang : Dictionary<string, string>
         #region Tools
         _ = TryAdd("FrmMain.MnuTools", "Tools"); //v3.0
         _ = TryAdd("FrmMain.MnuColorPicker", "Color picker"); //v5.0
-        _ = TryAdd("FrmMain.MnuPageNav", "Page navigation"); // v7.5
+        _ = TryAdd("FrmMain.MnuFrameNav", "Frame navigation"); // v7.5
         _ = TryAdd("FrmMain.MnuCropTool", "Crop image"); // v7.6
         _ = TryAdd("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
         #endregion
@@ -527,6 +534,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings._ColorManagement", "Color management");
         _ = TryAdd("FrmSettings._ShouldUseColorProfileForAll", "Apply also for images without embedded color profile");
         _ = TryAdd("FrmSettings._ColorProfile", "Color profile");
+        _ = TryAdd("FrmSettings._CurrentMonitorProfile._Description", "ImageGlass does not auto-update the color when moving its window between monitors");
         #endregion // Tab Image
 
 
@@ -736,7 +744,7 @@ public class IgLang : Dictionary<string, string>
         // Crop settings
         _ = TryAdd("FrmCropSettings._Title", "Crop settings"); //v9.0
         _ = TryAdd("FrmCropSettings.ChkCloseToolAfterSaving", "Close Crop tool after saving"); //v9.0
-        _ = TryAdd("FrmCropSettings.LblDefaultSelection", "Default selection settings"); //v9.0
+        _ = TryAdd("FrmCropSettings.LblDefaultSelection", "Default selection"); //v9.0
         _ = TryAdd("FrmCropSettings.ChkAutoCenterSelection", "Auto-center selection"); //v9.0
 
         _ = TryAdd("FrmCropSettings.DefaultSelectionType._UseTheLastSelection", "Use the last selection"); //v9.0
