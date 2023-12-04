@@ -18,7 +18,7 @@
     <PublisherDisplayName>Duong Dieu Phap</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
     <Description>A lightweight, versatile image viewer</Description>
-      
+
     <FileSystemWriteVirtualization xmlns="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6">enabled</FileSystemWriteVirtualization>
   </Properties>
 
