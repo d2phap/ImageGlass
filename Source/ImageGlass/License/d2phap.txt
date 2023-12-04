@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 - 2023 Duong Dieu Phap
+Copyright (c) 2022 - 2024 Duong Dieu Phap
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
