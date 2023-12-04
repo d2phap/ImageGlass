@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-PT" langName="Português" author="Sérgio Marques" description="Portuguese" minVersion="8.8" isRightToLeftLayout="No"/>
+    <Info langCode="pt-PT" langName="Português" author="Sérgio Marques" description="Portuguese" minVersion="8.8" isRightToLeftLayout="Não"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algumas definições não são compatíveis com ImageGlass {0}. Recomendamos a atualização para poder continuar.&#10;&#10;- Clique Sim para saber mais sobre as alterações.&#10;- Clique Não para iniciar ImageGlass com as definições padrão."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (padrão)"/>
@@ -20,7 +20,7 @@
       <Item key="frmMain.mnuMainOpenFile" value="Abrir ficheiro…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Abrir a partir da área de transferência"/>
       <Item key="frmMain.mnuMainNewWindow" value="Abrir nova janela"/>
-      <Item key="frmMain.mnuMainNewWindow._Error" value="Não é possível abrir uma nova janela porque apenas é permitida uma instância"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Não é possível abrir nova janela porque apenas é permitida uma instância"/>
       <Item key="frmMain.mnuSaveImage" value="Guardar imagem"/>
       <Item key="frmMain.mnuMainSaveAs" value="Guardar imagem como…"/>
       <Item key="frmMain.mnuMainRefresh" value="Recarregar"/>

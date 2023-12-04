@@ -297,8 +297,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Mantener visible herramienta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Seleccionar fichero herramienta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="La herramienta Exif no exist o no es válida: &#10;{0}"/>
-      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentos del comando:"/>
-      <Item key="frmSetting.lblExifToolCommandPreview" value="Previsualización del comando:"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentos de la orden:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Previsualización de la orden:"/>
       <Item key="frmSetting.lblLanguageText" value="Idiomas instalados"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Refrescar"/>
       <Item key="frmSetting.lblLanguageWarning" value="Este paquete de idioma puede no ser compatible con {0}"/>

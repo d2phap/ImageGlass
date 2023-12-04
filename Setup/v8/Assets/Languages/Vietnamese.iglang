@@ -215,10 +215,10 @@
       <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Sử dụng color profile của màn hình"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Tuỳ chọn…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Các hành động cho Bánh xe chuột"/>
-      <Item key="frmSetting.lblMouseWheel" value="Bánh xe chuột"/>
-      <Item key="frmSetting.lblMouseWheelAlt" value="Bánh xe chuột + phím Alt"/>
-      <Item key="frmSetting.lblMouseWheelCtrl" value="Bánh xe chuột + phím Ctrl"/>
-      <Item key="frmSetting.lblMouseWheelShift" value="Bánh xe chuột + phím Shift"/>
+      <Item key="frmSetting.lblMouseWheel" value="Con lăn chuột"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Con lăn chuột + phím Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Con lăn chuột + phím Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Con lăn chuột + phím Shift"/>
       <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Không làm gì cả"/>
       <Item key="frmSetting.cmbMouseWheel._Zoom" value="Phóng to / Thu nhỏ"/>
       <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Cuộn theo chiều dọc"/>

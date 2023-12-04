@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="Geknipt {0} bestand(en)"/>
       <Item key="frmMain._CopyImageData" value="Afbeelding gekopieerd naar klembord"/>
       <Item key="frmMain._ClearClipboard" value="Klembord gewist"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Wilt u deze afbeelding opslaan?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Weet u zeker dat u deze afbeelding wilt overschrijven?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass is geen professionele fotobewerker, wees ervan bewust dat u de kwaliteit, metadata, lagen,... verliest wanneer u uw afbeelding opslaat."/>
       <Item key="frmMain._SaveImage" value="Afbeelding is opgeslagen in {0}"/>
       <Item key="frmMain._SavingImage" value="Afbeelding opslaan...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Kan afbeelding niet opslaan&#10;{0}."/>

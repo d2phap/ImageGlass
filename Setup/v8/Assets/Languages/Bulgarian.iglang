@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="bg-BG" langName="Български" author="Alexander Sirakov" description="Bulgarian" minVersion="8.8" isRightToLeftLayout="No"/>
+    <Info langCode="bg-BG" langName="Български" author="Общност на ImageGlass" description="Bulgarian" minVersion="8.8" isRightToLeftLayout="Не"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="Някои настройки не са съвместими с ImageGlass {0}. Препоръчително е да ги обновите, преди да продължите.&#10;&#10;- Изберете Да, за да научите за промените.&#10;- Изберете Не, за да пуснете ImageGlass с настройките по подразбиране."/>
+      <Item key="_IncompatibleConfigs" value="Някои настройки не са съвместими с ImageGlass {0}. Препоръчително е да ги обновите, преди да продължите.&#10;&#10;- Изберете Да, за да научите за промените.&#10;- Изберете Не, за да отворите ImageGlass с настройките по подразбиране."/>
       <Item key="_.ImageOrderBy._Name" value="Име (по подразбиране)"/>
       <Item key="_.ImageOrderBy._Length" value="Дължина"/>
       <Item key="_.ImageOrderBy._CreationTime" value="Време на създаване"/>
       <Item key="_.ImageOrderBy._LastAccessTime" value="Последно време на достъп"/>
       <Item key="_.ImageOrderBy._LastWriteTime" value="Последно време на записване"/>
       <Item key="_.ImageOrderBy._Extension" value="Разширение"/>
-      <Item key="_.ImageOrderBy._Random" value="Случаен"/>
-      <Item key="_.ImageOrderType._Asc" value="Възходящ"/>
-      <Item key="_.ImageOrderType._Desc" value="Низходящ"/>
+      <Item key="_.ImageOrderBy._Random" value="Случайно"/>
+      <Item key="_.ImageOrderType._Asc" value="Възходящо"/>
+      <Item key="_.ImageOrderType._Desc" value="Низходящо"/>
       <Item key="_.AfterOpeningEditAppAction._Nothing" value="Нищо"/>
       <Item key="_.AfterOpeningEditAppAction._Minimize" value="Намаляване"/>
       <Item key="_.AfterOpeningEditAppAction._Close" value="Затваряне"/>
       <Item key="frmMain.mnuMainFile" value="Файл"/>
       <Item key="frmMain.mnuMainOpenFile" value="Отваряне на файл…"/>
-      <Item key="frmMain.mnuMainOpenImageData" value="Отвори данните за изображението от буфера"/>
-      <Item key="frmMain.mnuMainNewWindow" value="Отвори в нов прозорец"/>
-      <Item key="frmMain.mnuMainNewWindow._Error" value="Не може да се отвори нов прозорец, защото е разрешен само едно копие"/>
-      <Item key="frmMain.mnuSaveImage" value="Съхрани изображението"/>
-      <Item key="frmMain.mnuMainSaveAs" value="Съхрани изображението като…"/>
-      <Item key="frmMain.mnuMainRefresh" value="Опресни"/>
-      <Item key="frmMain.mnuMainReloadImage" value="Презареди изображението"/>
-      <Item key="frmMain.mnuMainReloadImageList" value="Презареди списъка с изображения"/>
-      <Item key="frmMain.mnuOpenWith" value="Отвори с…"/>
-      <Item key="frmMain.mnuMainEditImage" value="Редактирай изображението {0}…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Отваряне на данните за изображението от паметта за обмен"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Отваряне в нов прозорец"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Нов прозорец не може да бъде отворен, защото е разрешен само един екземпляр"/>
+      <Item key="frmMain.mnuSaveImage" value="Запазване на изображение"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Запазване на изображение като…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Презареждане"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Презареждане на изображение"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Презареждане на списъка с изображения"/>
+      <Item key="frmMain.mnuOpenWith" value="Отваряне с/ъс…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Редактиране на изображението {0}…"/>
       <Item key="frmMain.mnuMainPrint" value="Разпечатване…"/>
-      <Item key="frmMain.mnuMainNavigation" value="Навигация"/>
-      <Item key="frmMain.mnuMainViewNext" value="Виж следващото изображение"/>
-      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Дясна Стрелка / PageDown"/>
-      <Item key="frmMain.mnuMainViewPrevious" value="Виж предишното изображение"/>
-      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Лява стрелка  / PageUp"/>
-      <Item key="frmMain.mnuMainGoto" value="Отиди на…"/>
-      <Item key="frmMain.mnuMainGotoFirst" value="Отиди на първото изображение"/>
-      <Item key="frmMain.mnuMainGotoLast" value="Отиди на последното изображение"/>
+      <Item key="frmMain.mnuMainNavigation" value="Придвижване"/>
+      <Item key="frmMain.mnuMainViewNext" value="Преглед на следващото изображение"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Стрелка наясно / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Преглед на предишното изображение"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Стрелка наляво/ PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Към…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Към първото изображение"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Към последното изображение"/>
       <Item key="frmMain.mnuMainNextPage" value="Виж следващата страница"/>
       <Item key="frmMain.mnuMainPrevPage" value="Виж предишната страница"/>
       <Item key="frmMain.mnuMainFirstPage" value="Виж първата страница"/>
@@ -75,12 +75,12 @@
       <Item key="frmMain.mnuMainSetAsLockImage" value="Задай като изображение на заключващия екран"/>
       <Item key="frmMain.mnuMainImageLocation" value="Отвори местоположението на изображението"/>
       <Item key="frmMain.mnuMainImageProperties" value="Свойства на изображението"/>
-      <Item key="frmMain.mnuMainClipboard" value="Буфер"/>
+      <Item key="frmMain.mnuMainClipboard" value="Памет за обмен"/>
       <Item key="frmMain.mnuMainCopy" value="Копирай"/>
       <Item key="frmMain.mnuMainCopyImageData" value="Копирай данните на изображението"/>
       <Item key="frmMain.mnuMainCut" value="Изрежи"/>
       <Item key="frmMain.mnuMainCopyImagePath" value="Копирай пътя до изображението"/>
-      <Item key="frmMain.mnuMainClearClipboard" value="Изчисти буфера"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Изчистване"/>
       <Item key="frmMain.mnuWindowFit" value="Да пасне на Прозореца"/>
       <Item key="frmMain.mnuMainFullScreen" value="Цял екран"/>
       <Item key="frmMain.mnuFrameless" value="Без рамка"/>
@@ -127,17 +127,17 @@
       <Item key="frmMain._SlideshowMessageResume" value="Презентацията е възобновена"/>
       <Item key="frmMain._CopyFileText" value="Копиран(и) {0} файл(а)"/>
       <Item key="frmMain._CutFileText" value="Изрязан(и) {0} файл(а)"/>
-      <Item key="frmMain._CopyImageData" value="Изображението беше копирано в буфера"/>
-      <Item key="frmMain._ClearClipboard" value="Буферът беше почистен"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
-      <Item key="frmMain._SaveImage" value="Изображението беше съхранено в&#13;&#10;{0}"/>
-      <Item key="frmMain._SavingImage" value="Съхраняване на изображение...&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveImageError" value="Изображението не може да бъде съхранено&#13;&#10;{0}."/>
-      <Item key="frmMain._Loading" value="Зареждане..."/>
-      <Item key="frmMain._FirstItemOfList" value="Стигни до първото изображение"/>
-      <Item key="frmMain._LastItemOfList" value="Стигни до последното изображение"/>
+      <Item key="frmMain._CopyImageData" value="Изображението е копирано в паметта за обмен"/>
+      <Item key="frmMain._ClearClipboard" value="Паметта за обмен е изчистена"/>
+      <Item key="frmMain._SaveConfirm" value="Желаете ли изображението да бъде запазено?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Сигурни ли сте, че желаете изображението да бъде презаписано?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="Имайте предвид, че ImageGlass не е професионално приложение за редактиране на снимки и следователно при запазване на изображението може да загубите качество, описателни данни, слоеве и други."/>
+      <Item key="frmMain._SaveImage" value="Изображението е запазено в&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Запазване на изображение…&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Изображението не може да бъде запазено&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Зареждане…"/>
+      <Item key="frmMain._FirstItemOfList" value="Първото изображение е достигнато"/>
+      <Item key="frmMain._LastItemOfList" value="Последното изображение е достигнато"/>
       <Item key="frmMain._CannotRotateAnimatedFile" value="Изменението за анимиран формат не се поддържа"/>
       <Item key="frmMain._SetLockImage_Error" value="Възникна грешка при задаването на изображение на заключаващия екран"/>
       <Item key="frmMain._SetLockImage_Success" value="Изображението за заключващ екран беше зададено успешно"/>
@@ -146,7 +146,7 @@
       <Item key="frmMain._PageExtracting" value="Извличане на страници с изображения..."/>
       <Item key="frmMain._PageExtractComplete" value="Извличането на страница завърши."/>
       <Item key="frmMain._Frameless" value="Задръжте SHIFT, за да местите прозореца."/>
-      <Item key="frmMain._InvalidImageClipboardData" value="Буферът не съдържа данни за изображения."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Паметта за обмен не съдържа данни за изображения."/>
       <Item key="frmAbout.lblSlogant" value="Лека, многофункционална програма за преглед на изображения"/>
       <Item key="frmAbout.lblInfo" value="Информация"/>
       <Item key="frmAbout.lblComponent" value="Компоненти"/>
@@ -359,7 +359,7 @@
       <Item key="frmFirstLaunch.lnkSkip" value="Пропусни това и Пусни ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Избор на език"/>
       <Item key="frmFirstLaunch.lblTheme" value="Избор на тема"/>
-      <Item key="frmFirstLaunch.lblDefaultApp" value="Задаване на ImageGlass като програма за преглед на снимки по подразбиране?"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Задаване на ImageGlass като приложение за преглед на снимки по подразбиране?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Да"/>
       <Item key="frmCrop.lblWidth" value="Ширина:"/>
       <Item key="frmCrop.lblHeight" value="Височина:"/>

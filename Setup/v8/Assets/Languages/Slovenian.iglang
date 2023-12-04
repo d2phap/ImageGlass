@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="Izreži {0} datotek"/>
       <Item key="frmMain._CopyImageData" value="Slika je bila kopirana v odložišče"/>
       <Item key="frmMain._ClearClipboard" value="Odložišče počiščeno"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Želite shraniti sliko?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Ali ste prepričani, da želite prepisati to shranjeno sliko?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass ni profesionalni urejevalnik fotografij, zato bodite pozorni na izgubo kakovosti, metapodatkov, slojev... pri shranjevanju vaše slike."/>
       <Item key="frmMain._SaveImage" value="Slika je bila shranjena v&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="Shranjevanje slike...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Ni mogoče shraniti slike&#10;{0}."/>

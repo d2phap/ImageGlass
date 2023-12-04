@@ -61,7 +61,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Biru"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Hitam"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
-      <Item key="frmMain.mnuLoadingOrder" value="Memuatkan tertib"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Memuatkan urutan"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Putar kiri"/>
       <Item key="frmMain.mnuMainRotateRight" value="Putar kanan"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Kalih Mengufuk"/>
@@ -91,7 +91,7 @@
       <Item key="frmMain.mnuMainShare" value="Kongsi…"/>
       <Item key="frmMain.mnuMainLayout" value="Bentangan"/>
       <Item key="frmMain.mnuMainToolbar" value="Palang Alat"/>
-      <Item key="frmMain.mnuMainThumbnailBar" value="Panel lakaran kenit"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panel imej kenit"/>
       <Item key="frmMain.mnuMainCheckBackground" value="Latar belakang papan dam"/>
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Kekal tetingkap sentiasa di atas"/>
       <Item key="frmMain.mnuMainTools" value="Alatan"/>
@@ -122,10 +122,10 @@
       <Item key="frmMain._DeleteDialogTitle" value="Sahkan"/>
       <Item key="frmMain._ExtractPageText" value="Mengekstrak halaman imej. Sila pilih folder output."/>
       <Item key="frmMain._FullScreenMessage" value="Tekan {0} untuk keluar dari mod skrin penuh."/>
-      <Item key="frmMain._SlideshowMessage" value="Tekan ESC untuk keluar dari tayang slaid."/>
+      <Item key="frmMain._SlideshowMessage" value="Tekan ESC untuk keluar dari tayangan slaid.&#10; Klik kanan unruk membuka menu konteks."/>
       <Item key="frmMain._SlideshowMessagePause" value="Tayangan slaid dijeda"/>
       <Item key="frmMain._SlideshowMessageResume" value="Tayangan slaid disambung semula"/>
-      <Item key="frmMain._CopyFileText" value="Salin {0} fail(s)"/>
+      <Item key="frmMain._CopyFileText" value="{0} fail(s) disalin"/>
       <Item key="frmMain._CutFileText" value="Potong {0} fail(s)"/>
       <Item key="frmMain._CopyImageData" value="Imej telah disalin ke dalam papan keratan"/>
       <Item key="frmMain._ClearClipboard" value="Paparan keratan dikosongkan"/>
@@ -236,10 +236,10 @@
       <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Kualiti tinggi, dwikuib"/>
       <Item key="frmSetting.lblZoomLevels" value="Aras zum"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Terdapat ralat ketika mengemas kini aras Zum. Mesej ralat:&#10;&#10;{0}"/>
-      <Item key="frmSetting.lblHeadThumbnailBar" value="Palang lakaran kenit"/>
-      <Item key="frmSetting.chkThumbnailVertical" value="Tunjuk lakaran kenit di sebelah sisi kanan"/>
-      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Tunjuk palang tatal lakaran kenit"/>
-      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimensi lakaran kenit (piksel)"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Palang imej kenit"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Tunjuk imej kenit di sebelah sisi kanan"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Tunjuk palang tatal imej kenit"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimensi imej kenit (piksel)"/>
       <Item key="frmSetting.lblHeadSlideshow" value="Tayangan Slaid"/>
       <Item key="frmSetting.chkLoopSlideshow" value="Ulang balik tayangan slaid ke imej pertama sekiranya berada di penghujung senarai"/>
       <Item key="frmSetting.chkShowSlideshowCountdown" value="Tunjuk kiraan mengundur tayangan slaid"/>
@@ -248,7 +248,7 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="hingga"/>
       <Item key="frmSetting.lblHeadFullScreen" value="Skrin penuh"/>
       <Item key="frmSetting.chkHideToolbarInFullScreen" value="Sembunyi palang alat"/>
-      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Sembunyi palang lakaran kenit"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Sembunyi palang imej kenit"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Simpan imej yang dilihat selepas diputarkan"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Pilih aplikasi untuk penyuntingan imej"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Selepas membuka apl penyuntingan:"/>

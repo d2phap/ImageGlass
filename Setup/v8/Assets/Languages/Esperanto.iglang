@@ -4,24 +4,24 @@
     <Info langCode="eo" langName="Esperanto" author="Wiccio" description="Esperanto" minVersion="8.8" isRightToLeftLayout="Ne"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Iuj agordoj ne kongruas kun via ImageGlass {0}. Oni rekomendas ĝisdatigi ilin antaŭ ol daŭrigi.&#10;&#10;- Alklaku Jes por lerni pri la ŝanĝoj.&#10;- Alklaku Ne por lanĉi ImageGlass kun defaŭltaj agordoj."/>
-      <Item key="_.ImageOrderBy._Name" value="Name (default)"/>
-      <Item key="_.ImageOrderBy._Length" value="Length"/>
-      <Item key="_.ImageOrderBy._CreationTime" value="Creation time"/>
-      <Item key="_.ImageOrderBy._LastAccessTime" value="Last access time"/>
-      <Item key="_.ImageOrderBy._LastWriteTime" value="Last write time"/>
-      <Item key="_.ImageOrderBy._Extension" value="Extension"/>
-      <Item key="_.ImageOrderBy._Random" value="Random"/>
-      <Item key="_.ImageOrderType._Asc" value="Ascending"/>
-      <Item key="_.ImageOrderType._Desc" value="Descending"/>
-      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nothing"/>
-      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimize"/>
-      <Item key="_.AfterOpeningEditAppAction._Close" value="Close"/>
+      <Item key="_.ImageOrderBy._Name" value="Nomo (defaŭlta)·"/>
+      <Item key="_.ImageOrderBy._Length" value="Longeco"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Tempo de kreado"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Lasta tempo de aliro"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Lasta tempo de skribo"/>
+      <Item key="_.ImageOrderBy._Extension" value="Etendo"/>
+      <Item key="_.ImageOrderBy._Random" value="Hazarda"/>
+      <Item key="_.ImageOrderType._Asc" value="Kreska ordo"/>
+      <Item key="_.ImageOrderType._Desc" value="Malkreska ordo"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nenio"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimunigi"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Fermi"/>
       <Item key="frmMain.mnuMainFile" value="Dosiero"/>
       <Item key="frmMain.mnuMainOpenFile" value="Malfermi dosieron…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Malfermu bildodatumon el tondujo"/>
       <Item key="frmMain.mnuMainNewWindow" value="Malfermu novan fenestron"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Ne povas malfermi novan fenestron ĉar nur unu ekzemplo estas permesita"/>
-      <Item key="frmMain.mnuSaveImage" value="Save image"/>
+      <Item key="frmMain.mnuSaveImage" value="Konservu bildon"/>
       <Item key="frmMain.mnuMainSaveAs" value="Konservi bildon kiel…"/>
       <Item key="frmMain.mnuMainRefresh" value="Aktualigu"/>
       <Item key="frmMain.mnuMainReloadImage" value="Reŝargu bildon"/>

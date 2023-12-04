@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="{0} dosyayı kes"/>
       <Item key="frmMain._CopyImageData" value="Görüntü panoya kopyalandı"/>
       <Item key="frmMain._ClearClipboard" value="Pano temizlendi."/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveConfirm" value="Bu resmi kaydetmek istiyor musunuz?&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Bu resmi geçersiz kılmak istediğinizden emin misiniz?&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass profesyonel bir fotoğraf editörü değildir; lütfen resminizi kaydederken kaliteyi, meta verileri, katmanları vb. kaybedebileceğinizin farkında olun."/>
       <Item key="frmMain._SaveImage" value="Resim şuraya kaydedildi&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="Resim kaydediliyor...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Resim kaydedilemedi&#10;{0}."/>
