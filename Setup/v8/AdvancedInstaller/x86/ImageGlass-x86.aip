@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.0.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.2.2" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
@@ -12,17 +12,17 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
     <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
-    <ROW Property="ARPPRODUCTICON" Value="ImageGlass_1.exe" Type="8"/>
+    <ROW Property="ARPPRODUCTICON" Value="ImageGlass.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
     <ROW Property="CTRLS" Value="3"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{4651AB33-1A32-4B30-BF5B-F80B935E0E29} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{C4F92911-65E2-4365-A3E5-B6D2AFA64007} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.10.9.27" Options="32"/>
+    <ROW Property="ProductVersion" Value="8.11.12.6" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -83,7 +83,6 @@
     <ROW Component="EULA.txt" ComponentId="{00BEC80B-7849-4E77-B4DD-F4CF6812A766}" Directory_="APPDIR" Attributes="0" KeyPath="ReadMe.rtf" Type="0"/>
     <ROW Component="EXIF.ico" ComponentId="{F7F1BE47-4480-4328-B2E8-0EAACF7C48A1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXIF.ico"/>
     <ROW Component="EXR.ico" ComponentId="{1C5E6712-5FC8-4EC5-A6D6-9D408F79CCA1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXR.ico"/>
-    <ROW Component="ExplorerSortOrder.dll" ComponentId="{9F95A6D1-D11C-44BC-875A-23D6A3BD5673}" Directory_="APPDIR" Attributes="0" KeyPath="ExplorerSortOrder.dll"/>
     <ROW Component="FFF.ico" ComponentId="{5C0A0112-F828-4BFC-991F-88BF4CBA672B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FFF.ico"/>
     <ROW Component="FR.ico" ComponentId="{34E6BE39-CCFB-4975-B578-A6C9954260CE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="QOI.ico" Type="0"/>
     <ROW Component="FR.ico_1" ComponentId="{79FA0D35-FFDE-4805-AC3B-20D108EF2875}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico"/>
@@ -183,7 +182,7 @@
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.exe" SelfReg="false"/>
+    <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.exe" SelfReg="false"/>
     <ROW File="LightGray.DuongDieuPhap.igtheme" Component_="LightGray.DuongDieuPhap.igtheme" FileName="2017-L~1.IGT|2017-Light-Gray.Duong-Dieu-Phap.igtheme" Attributes="0" SourcePath="..\..\Assets\Themes\2017-Light-Gray.Duong-Dieu-Phap.igtheme" SelfReg="false"/>
     <ROW File="ActualSize.svg" Component_="ActualSize.svg" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ActualSize.svg" SelfReg="false"/>
     <ROW File="AdjustWindowSize.svg" Component_="ActualSize.svg" FileName="ADJUST~1.SVG|AdjustWindowSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\AdjustWindowSize.svg" SelfReg="false"/>
@@ -197,9 +196,7 @@
     <ROW File="FlipHorz.svg" Component_="ActualSize.svg" FileName="FlipHorz.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\FlipHorz.svg" SelfReg="false"/>
     <ROW File="FlipVert.svg" Component_="ActualSize.svg" FileName="FlipVert.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\FlipVert.svg" SelfReg="false"/>
     <ROW File="FullScreen.svg" Component_="ActualSize.svg" FileName="FULLSC~1.SVG|FullScreen.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\FullScreen.svg" SelfReg="false"/>
-    <ROW File="GoToFirst.svg" Component_="ActualSize.svg" FileName="GOTOFI~1.SVG|GoToFirst.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\GoToFirst.svg" SelfReg="false"/>
     <ROW File="GoToImage.svg" Component_="ActualSize.svg" FileName="GOTOIM~1.SVG|GoToImage.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\GoToImage.svg" SelfReg="false"/>
-    <ROW File="GotoLast.svg" Component_="ActualSize.svg" FileName="GotoLast.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\GotoLast.svg" SelfReg="false"/>
     <ROW File="igtheme.xml" Component_="ActualSize.svg" FileName="igtheme.xml" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\igtheme.xml" SelfReg="false"/>
     <ROW File="LockRatio.svg" Component_="ActualSize.svg" FileName="LOCKRA~1.SVG|LockRatio.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\LockRatio.svg" SelfReg="false"/>
     <ROW File="logo.svg" Component_="ActualSize.svg" FileName="logo.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\logo.svg" SelfReg="false"/>
@@ -343,73 +340,72 @@
     <ROW File="Turkish.iglang" Component_="ArabicEgypt.iglang" FileName="TURKIS~1.IGL|Turkish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.iglang" SelfReg="false"/>
     <ROW File="Ukrainian.iglang" Component_="ArabicEgypt.iglang" FileName="UKRAIN~1.IGL|Ukrainian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.iglang" SelfReg="false"/>
     <ROW File="Vietnamese.iglang" Component_="ArabicEgypt.iglang" FileName="VIETNA~2.IGL|Vietnamese.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.iglang" SelfReg="false"/>
-    <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmd.exe" SelfReg="false"/>
-    <ROW File="igcmdWin10.exe" Component_="igcmdWin10.exe" FileName="IGCMDW~1.EXE|igcmdWin10.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmdWin10.exe" SelfReg="false"/>
-    <ROW File="igtasks.exe" Component_="igtasks.exe" FileName="igtasks.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igtasks.exe" SelfReg="false"/>
-    <ROW File="CliWrap.dll" Component_="CliWrap.dll" FileName="CliWrap.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\CliWrap.dll" SelfReg="false"/>
-    <ROW File="DotNetZip.dll" Component_="DotNetZip.dll" FileName="DOTNET~1.DLL|DotNetZip.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\DotNetZip.dll" SelfReg="false"/>
-    <ROW File="FileWatcherEx.dll" Component_="FileWatcherEx.dll" FileName="FILEWA~1.DLL|FileWatcherEx.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\FileWatcherEx.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.Base.dll" Component_="ImageGlass.Base.dll" FileName="IMAGEG~1.DLL|ImageGlass.Base.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Base.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.Heart.dll" Component_="ImageGlass.Heart.dll" FileName="IMAGEG~2.DLL|ImageGlass.Heart.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Heart.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.ImageBox.dll" Component_="ImageGlass.ImageBox.dll" FileName="IMAGEG~3.DLL|ImageGlass.ImageBox.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.ImageBox.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.ImageListView.dll" Component_="ImageGlass.ImageListView.dll" FileName="IMAGEG~4.DLL|ImageGlass.ImageListView.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.Library.dll" Component_="ImageGlass.Library.dll" FileName="IMAGEG~5.DLL|ImageGlass.Library.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Library.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.Services.dll" Component_="ImageGlass.Services.dll" FileName="IMAGEG~6.DLL|ImageGlass.Services.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Services.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.Settings.dll" Component_="ImageGlass.Settings.dll" FileName="IMAGEG~7.DLL|ImageGlass.Settings.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Settings.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.UI.dll" Component_="ImageGlass.UI.dll" FileName="IMAGEG~8.DLL|ImageGlass.UI.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.UI.dll" SelfReg="false"/>
-    <ROW File="ImageGlass.WebP.dll" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~9.DLL|ImageGlass.WebP.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.WebP.dll" SelfReg="false"/>
-    <ROW File="libsharpyuv.dll" Component_="libsharpyuv.dll" FileName="LIBSHA~1.DLL|libsharpyuv.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\libsharpyuv.dll" SelfReg="false"/>
-    <ROW File="libwebp.dll" Component_="libwebp.dll" FileName="libwebp.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\libwebp.dll" SelfReg="false"/>
-    <ROW File="libwebpdecoder.dll" Component_="libwebpdecoder.dll" FileName="LIBWEB~1.DLL|libwebpdecoder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\libwebpdecoder.dll" SelfReg="false"/>
-    <ROW File="libwebpdemux.dll" Component_="libwebpdemux.dll" FileName="LIBWEB~2.DLL|libwebpdemux.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\libwebpdemux.dll" SelfReg="false"/>
-    <ROW File="Magick.NativeQ8x86.dll" Component_="Magick.NativeQ8x86.dll" FileName="MAGICK~1.DLL|Magick.Native-Q8-x86.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.Native-Q8-x86.dll" SelfReg="false"/>
-    <ROW File="Magick.NET.Core.dll" Component_="Magick.NET.Core.dll" FileName="MAGICK~2.DLL|Magick.NET.Core.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET.Core.dll" SelfReg="false"/>
-    <ROW File="Magick.NET.SystemDrawing.dll" Component_="Magick.NET.SystemDrawing.dll" FileName="MAGICK~3.DLL|Magick.NET.SystemDrawing.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET.SystemDrawing.dll" SelfReg="false"/>
-    <ROW File="Magick.NETQ8x86.dll" Component_="Magick.NETQ8x86.dll" FileName="MAGICK~4.DLL|Magick.NET-Q8-x86.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET-Q8-x86.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
-    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Buffers.dll" SelfReg="false"/>
-    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~2.DLL|System.Memory.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Memory.dll" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~3.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Numerics.Vectors.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~4.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.WindowsRuntime.dll" Component_="System.Runtime.WindowsRuntime.dll" FileName="SYSTEM~5.DLL|System.Runtime.WindowsRuntime.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Runtime.WindowsRuntime.dll" SelfReg="false"/>
-    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~6.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Text.Encodings.Web.dll" SelfReg="false"/>
-    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~7.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Text.Json.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTEM~8.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
-    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTEM~9.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.ValueTuple.dll" SelfReg="false"/>
-    <ROW File="igcmd.exe.config" Component_="EULA.txt" FileName="IGCMDE~1.CON|igcmd.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmd.exe.config" SelfReg="false"/>
-    <ROW File="igcmdWin10.exe.config" Component_="EULA.txt" FileName="IGCMDW~1.CON|igcmdWin10.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmdWin10.exe.config" SelfReg="false"/>
-    <ROW File="igtasks.exe.config" Component_="EULA.txt" FileName="IGTASK~1.CON|igtasks.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igtasks.exe.config" SelfReg="false"/>
-    <ROW File="ImageGlass.Base.dll.config" Component_="EULA.txt" FileName="IMAGEG~1.CON|ImageGlass.Base.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Base.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.exe.config" Component_="EULA.txt" FileName="IMAGEG~2.CON|ImageGlass.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.exe.config" SelfReg="false"/>
-    <ROW File="ImageGlass.Heart.dll.config" Component_="EULA.txt" FileName="IMAGEG~3.CON|ImageGlass.Heart.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Heart.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.ImageListView.dll.config" Component_="EULA.txt" FileName="IMAGEG~4.CON|ImageGlass.ImageListView.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.Library.dll.config" Component_="EULA.txt" FileName="IMAGEG~5.CON|ImageGlass.Library.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Library.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.Services.dll.config" Component_="EULA.txt" FileName="IMAGEG~6.CON|ImageGlass.Services.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Services.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.Settings.dll.config" Component_="EULA.txt" FileName="IMAGEG~7.CON|ImageGlass.Settings.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.Settings.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.UI.dll.config" Component_="EULA.txt" FileName="IMAGEG~8.CON|ImageGlass.UI.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.UI.dll.config" SelfReg="false"/>
-    <ROW File="igstartup.profile" Component_="EULA.txt" FileName="IGSTAR~1.PRO|igstartup.profile" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igstartup.profile" SelfReg="false"/>
-    <ROW File="DotNetZip.pdb" Component_="DotNetZip.dll" FileName="DOTNET~1.PDB|DotNetZip.pdb" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\DotNetZip.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~1.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.UI.dll" FileName="IMAGEG~2.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.UI.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~3.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.WebP.pdb" SelfReg="false"/>
-    <ROW File="Windows.winmd" Component_="EULA.txt" FileName="WINDOW~1.WIN|Windows.winmd" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Windows.winmd" SelfReg="false"/>
-    <ROW File="CliWrap.xml" Component_="EULA.txt" FileName="CliWrap.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\CliWrap.xml" SelfReg="false"/>
-    <ROW File="DotNetZip.xml" Component_="EULA.txt" FileName="DOTNET~1.XML|DotNetZip.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\DotNetZip.xml" SelfReg="false"/>
-    <ROW File="ImageGlass.ImageBox.xml" Component_="EULA.txt" FileName="IMAGEG~1.XML|ImageGlass.ImageBox.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.ImageBox.xml" SelfReg="false"/>
-    <ROW File="ImageGlass.ImageListView.xml" Component_="EULA.txt" FileName="IMAGEG~2.XML|ImageGlass.ImageListView.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.xml" SelfReg="false"/>
-    <ROW File="Magick.NET.Core.xml" Component_="EULA.txt" FileName="MAGICK~1.XML|Magick.NET.Core.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET.Core.xml" SelfReg="false"/>
-    <ROW File="Magick.NET.SystemDrawing.xml" Component_="EULA.txt" FileName="MAGICK~2.XML|Magick.NET.SystemDrawing.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET.SystemDrawing.xml" SelfReg="false"/>
-    <ROW File="Magick.NETQ8x86.xml" Component_="EULA.txt" FileName="MAGICK~3.XML|Magick.NET-Q8-x86.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Magick.NET-Q8-x86.xml" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.AsyncInterfaces.xml" Component_="EULA.txt" FileName="MICROS~1.XML|Microsoft.Bcl.AsyncInterfaces.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\Microsoft.Bcl.AsyncInterfaces.xml" SelfReg="false"/>
-    <ROW File="System.Buffers.xml" Component_="EULA.txt" FileName="SYSTEM~1.XML|System.Buffers.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Buffers.xml" SelfReg="false"/>
-    <ROW File="System.Memory.xml" Component_="EULA.txt" FileName="SYSTEM~2.XML|System.Memory.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Memory.xml" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.xml" Component_="EULA.txt" FileName="SYSTEM~3.XML|System.Numerics.Vectors.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Numerics.Vectors.xml" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.xml" Component_="EULA.txt" FileName="SYSTEM~4.XML|System.Runtime.CompilerServices.Unsafe.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Runtime.CompilerServices.Unsafe.xml" SelfReg="false"/>
-    <ROW File="System.Text.Encodings.Web.xml" Component_="EULA.txt" FileName="SYSTEM~5.XML|System.Text.Encodings.Web.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Text.Encodings.Web.xml" SelfReg="false"/>
-    <ROW File="System.Text.Json.xml" Component_="EULA.txt" FileName="SYSTEM~6.XML|System.Text.Json.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Text.Json.xml" SelfReg="false"/>
-    <ROW File="System.Threading.Tasks.Extensions.xml" Component_="EULA.txt" FileName="SYSTEM~7.XML|System.Threading.Tasks.Extensions.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.Threading.Tasks.Extensions.xml" SelfReg="false"/>
-    <ROW File="System.ValueTuple.xml" Component_="EULA.txt" FileName="SYSTEM~8.XML|System.ValueTuple.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\System.ValueTuple.xml" SelfReg="false"/>
-    <ROW File="LICENSE" Component_="EULA.txt" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\LICENSE" SelfReg="false"/>
+    <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igcmd.exe" SelfReg="false"/>
+    <ROW File="igcmdWin10.exe" Component_="igcmdWin10.exe" FileName="IGCMDW~1.EXE|igcmdWin10.exe" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igcmdWin10.exe" SelfReg="false"/>
+    <ROW File="igtasks.exe" Component_="igtasks.exe" FileName="igtasks.exe" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igtasks.exe" SelfReg="false"/>
+    <ROW File="CliWrap.dll" Component_="CliWrap.dll" FileName="CliWrap.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\CliWrap.dll" SelfReg="false"/>
+    <ROW File="DotNetZip.dll" Component_="DotNetZip.dll" FileName="DOTNET~1.DLL|DotNetZip.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\DotNetZip.dll" SelfReg="false"/>
+    <ROW File="FileWatcherEx.dll" Component_="FileWatcherEx.dll" FileName="FILEWA~1.DLL|FileWatcherEx.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\FileWatcherEx.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.dll" Component_="ImageGlass.Base.dll" FileName="IMAGEG~1.DLL|ImageGlass.Base.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Base.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Heart.dll" Component_="ImageGlass.Heart.dll" FileName="IMAGEG~2.DLL|ImageGlass.Heart.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Heart.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageBox.dll" Component_="ImageGlass.ImageBox.dll" FileName="IMAGEG~3.DLL|ImageGlass.ImageBox.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.ImageBox.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageListView.dll" Component_="ImageGlass.ImageListView.dll" FileName="IMAGEG~4.DLL|ImageGlass.ImageListView.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Library.dll" Component_="ImageGlass.Library.dll" FileName="IMAGEG~5.DLL|ImageGlass.Library.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Library.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Services.dll" Component_="ImageGlass.Services.dll" FileName="IMAGEG~6.DLL|ImageGlass.Services.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Services.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.dll" Component_="ImageGlass.Settings.dll" FileName="IMAGEG~7.DLL|ImageGlass.Settings.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Settings.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.dll" Component_="ImageGlass.UI.dll" FileName="IMAGEG~8.DLL|ImageGlass.UI.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.UI.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.WebP.dll" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~9.DLL|ImageGlass.WebP.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.WebP.dll" SelfReg="false"/>
+    <ROW File="libsharpyuv.dll" Component_="libsharpyuv.dll" FileName="LIBSHA~1.DLL|libsharpyuv.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\libsharpyuv.dll" SelfReg="false"/>
+    <ROW File="libwebp.dll" Component_="libwebp.dll" FileName="libwebp.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\libwebp.dll" SelfReg="false"/>
+    <ROW File="libwebpdecoder.dll" Component_="libwebpdecoder.dll" FileName="LIBWEB~1.DLL|libwebpdecoder.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\libwebpdecoder.dll" SelfReg="false"/>
+    <ROW File="libwebpdemux.dll" Component_="libwebpdemux.dll" FileName="LIBWEB~2.DLL|libwebpdemux.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\libwebpdemux.dll" SelfReg="false"/>
+    <ROW File="Magick.NativeQ8x86.dll" Component_="Magick.NativeQ8x86.dll" FileName="MAGICK~1.DLL|Magick.Native-Q8-x86.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.Native-Q8-x86.dll" SelfReg="false"/>
+    <ROW File="Magick.NET.Core.dll" Component_="Magick.NET.Core.dll" FileName="MAGICK~2.DLL|Magick.NET.Core.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET.Core.dll" SelfReg="false"/>
+    <ROW File="Magick.NET.SystemDrawing.dll" Component_="Magick.NET.SystemDrawing.dll" FileName="MAGICK~3.DLL|Magick.NET.SystemDrawing.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET.SystemDrawing.dll" SelfReg="false"/>
+    <ROW File="Magick.NETQ8x86.dll" Component_="Magick.NETQ8x86.dll" FileName="MAGICK~4.DLL|Magick.NET-Q8-x86.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET-Q8-x86.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Buffers.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~2.DLL|System.Memory.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~3.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~4.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.WindowsRuntime.dll" Component_="System.Runtime.WindowsRuntime.dll" FileName="SYSTEM~5.DLL|System.Runtime.WindowsRuntime.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Runtime.WindowsRuntime.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~6.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~7.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTEM~8.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTEM~9.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.ValueTuple.dll" SelfReg="false"/>
+    <ROW File="igcmd.exe.config" Component_="EULA.txt" FileName="IGCMDE~1.CON|igcmd.exe.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igcmd.exe.config" SelfReg="false"/>
+    <ROW File="igcmdWin10.exe.config" Component_="EULA.txt" FileName="IGCMDW~1.CON|igcmdWin10.exe.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igcmdWin10.exe.config" SelfReg="false"/>
+    <ROW File="igtasks.exe.config" Component_="EULA.txt" FileName="IGTASK~1.CON|igtasks.exe.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igtasks.exe.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.dll.config" Component_="EULA.txt" FileName="IMAGEG~1.CON|ImageGlass.Base.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Base.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.exe.config" Component_="EULA.txt" FileName="IMAGEG~2.CON|ImageGlass.exe.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.exe.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Heart.dll.config" Component_="EULA.txt" FileName="IMAGEG~3.CON|ImageGlass.Heart.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Heart.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageListView.dll.config" Component_="EULA.txt" FileName="IMAGEG~4.CON|ImageGlass.ImageListView.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Library.dll.config" Component_="EULA.txt" FileName="IMAGEG~5.CON|ImageGlass.Library.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Library.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Services.dll.config" Component_="EULA.txt" FileName="IMAGEG~6.CON|ImageGlass.Services.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Services.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.dll.config" Component_="EULA.txt" FileName="IMAGEG~7.CON|ImageGlass.Settings.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.Settings.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.dll.config" Component_="EULA.txt" FileName="IMAGEG~8.CON|ImageGlass.UI.dll.config" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.UI.dll.config" SelfReg="false"/>
+    <ROW File="igstartup.profile" Component_="EULA.txt" FileName="IGSTAR~1.PRO|igstartup.profile" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\igstartup.profile" SelfReg="false"/>
+    <ROW File="DotNetZip.pdb" Component_="DotNetZip.dll" FileName="DOTNET~1.PDB|DotNetZip.pdb" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\DotNetZip.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~1.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.UI.dll" FileName="IMAGEG~2.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.UI.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~3.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.WebP.pdb" SelfReg="false"/>
+    <ROW File="Windows.winmd" Component_="EULA.txt" FileName="WINDOW~1.WIN|Windows.winmd" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Windows.winmd" SelfReg="false"/>
+    <ROW File="CliWrap.xml" Component_="EULA.txt" FileName="CliWrap.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\CliWrap.xml" SelfReg="false"/>
+    <ROW File="DotNetZip.xml" Component_="EULA.txt" FileName="DOTNET~1.XML|DotNetZip.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\DotNetZip.xml" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageBox.xml" Component_="EULA.txt" FileName="IMAGEG~1.XML|ImageGlass.ImageBox.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.ImageBox.xml" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageListView.xml" Component_="EULA.txt" FileName="IMAGEG~2.XML|ImageGlass.ImageListView.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.ImageListView.xml" SelfReg="false"/>
+    <ROW File="Magick.NET.Core.xml" Component_="EULA.txt" FileName="MAGICK~1.XML|Magick.NET.Core.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET.Core.xml" SelfReg="false"/>
+    <ROW File="Magick.NET.SystemDrawing.xml" Component_="EULA.txt" FileName="MAGICK~2.XML|Magick.NET.SystemDrawing.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET.SystemDrawing.xml" SelfReg="false"/>
+    <ROW File="Magick.NETQ8x86.xml" Component_="EULA.txt" FileName="MAGICK~3.XML|Magick.NET-Q8-x86.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Magick.NET-Q8-x86.xml" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.xml" Component_="EULA.txt" FileName="MICROS~1.XML|Microsoft.Bcl.AsyncInterfaces.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\Microsoft.Bcl.AsyncInterfaces.xml" SelfReg="false"/>
+    <ROW File="System.Buffers.xml" Component_="EULA.txt" FileName="SYSTEM~1.XML|System.Buffers.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Buffers.xml" SelfReg="false"/>
+    <ROW File="System.Memory.xml" Component_="EULA.txt" FileName="SYSTEM~2.XML|System.Memory.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Memory.xml" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.xml" Component_="EULA.txt" FileName="SYSTEM~3.XML|System.Numerics.Vectors.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Numerics.Vectors.xml" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.xml" Component_="EULA.txt" FileName="SYSTEM~4.XML|System.Runtime.CompilerServices.Unsafe.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Runtime.CompilerServices.Unsafe.xml" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.xml" Component_="EULA.txt" FileName="SYSTEM~5.XML|System.Text.Encodings.Web.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Text.Encodings.Web.xml" SelfReg="false"/>
+    <ROW File="System.Text.Json.xml" Component_="EULA.txt" FileName="SYSTEM~6.XML|System.Text.Json.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Text.Json.xml" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.xml" Component_="EULA.txt" FileName="SYSTEM~7.XML|System.Threading.Tasks.Extensions.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.Threading.Tasks.Extensions.xml" SelfReg="false"/>
+    <ROW File="System.ValueTuple.xml" Component_="EULA.txt" FileName="SYSTEM~8.XML|System.ValueTuple.xml" Attributes="0" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\System.ValueTuple.xml" SelfReg="false"/>
     <ROW File="default.jpg" Component_="EULA.txt" FileName="default.jpg" Attributes="0" SourcePath="..\..\Assets\default.jpg" SelfReg="false"/>
     <ROW File="Esperanto.iglang" Component_="ArabicEgypt.iglang" FileName="ESPERA~1.IGL|Esperanto.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Esperanto.iglang" SelfReg="false"/>
     <ROW File="GreekCyprus.iglang" Component_="ArabicEgypt.iglang" FileName="GREEK_~1.IGL|Greek, Cyprus.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek, Cyprus.iglang" SelfReg="false"/>
@@ -418,13 +414,19 @@
     <ROW File="Swahili.iglang" Component_="ArabicEgypt.iglang" FileName="SWAHIL~1.IGL|Swahili.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swahili.iglang" SelfReg="false"/>
     <ROW File="Tamil.iglang" Component_="ArabicEgypt.iglang" FileName="TAMIL~1.IGL|Tamil.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.iglang" SelfReg="false"/>
     <ROW File="Uzbek.iglang" Component_="ArabicEgypt.iglang" FileName="UZBEK~1.IGL|Uzbek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Uzbek.iglang" SelfReg="false"/>
-    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ExplorerSortOrder.dll" SelfReg="false"/>
+    <ROW File="Asturian.iglang" Component_="ArabicEgypt.iglang" FileName="ASTURI~1.IGL|Asturian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Asturian.iglang" SelfReg="false"/>
+    <ROW File="Azerbaijani.iglang" Component_="ArabicEgypt.iglang" FileName="AZERBA~1.IGL|Azerbaijani.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Azerbaijani.iglang" SelfReg="false"/>
+    <ROW File="Belarusian.iglang" Component_="ArabicEgypt.iglang" FileName="BELARU~1.IGL|Belarusian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Belarusian.iglang" SelfReg="false"/>
+    <ROW File="Mongolian.iglang" Component_="ArabicEgypt.iglang" FileName="MONGOL~1.IGL|Mongolian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Mongolian.iglang" SelfReg="false"/>
+    <ROW File="Exit.svg" Component_="ActualSize.svg" FileName="Exit.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\Exit.svg" SelfReg="false"/>
+    <ROW File="ViewFirstImage.svg" Component_="ActualSize.svg" FileName="VIEWFI~1.SVG|ViewFirstImage.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ViewFirstImage.svg" SelfReg="false"/>
+    <ROW File="ViewLastImage.svg" Component_="ActualSize.svg" FileName="VIEWLA~1.SVG|ViewLastImage.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ViewLastImage.svg" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_Kobe_[|ProductVersion]_x86" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_[|ProductVersion]_x86" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -435,12 +437,12 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
     <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\LicenseAgreementDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
-    <ROW Fragment="SetupTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SetupTypeDlg.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
     <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
@@ -461,7 +463,7 @@
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="204"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
@@ -476,16 +478,10 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="205"/>
-    <ROW Dialog_="SetupTypeDlg" Control_="TypicalButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
-    <ROW Dialog_="SetupTypeDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="102"/>
-    <ROW Dialog_="SetupTypeDlg" Control_="CompleteButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="201"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="102"/>
-    <ROW Dialog_="SetupTypeDlg" Control_="CustomButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="101"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="2"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="202"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="203"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -632,10 +628,9 @@
     <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ValueTuple.dll"/>
     <ROW Feature_="MainFeature" Component_="ArabicEgypt.iglang"/>
-    <ROW Feature_="MainFeature" Component_="ExplorerSortOrder.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\ImageGlass.exe" Index="0"/>
+    <ROW Name="ImageGlass.exe" SourcePath="..\..\..\..\v8\ImageGlass\bin\x86\Release\ImageGlass.exe" Index="0"/>
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIniFileComponent">
