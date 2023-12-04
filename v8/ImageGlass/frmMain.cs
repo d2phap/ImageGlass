@@ -4702,7 +4702,6 @@ namespace ImageGlass {
 
             // trigger "Save image as"
             if (Local.IsTempMemoryData
-                || !picMain.SelectionRegion.IsEmpty
                 || string.IsNullOrEmpty(currentFile)
                 || !isWritableFormat) {
                 await OpenSaveImageAsAsync();
@@ -4725,6 +4724,8 @@ namespace ImageGlass {
             if (confirmSave == DialogResult.Yes) {
                 Local.ImageModifiedPath = currentFile;
                 await SaveImageChangeAsync(true);
+
+                await NextPicAsync(0, true, true);
             }
         }
 

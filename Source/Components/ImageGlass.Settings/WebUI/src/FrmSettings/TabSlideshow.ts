@@ -37,16 +37,20 @@ export default class TabSlideshow {
   private static handleSlideshowIntervalsChanged() {
     const fromEl = query<HTMLInputElement>('[name="SlideshowInterval"]');
     const toEl = query<HTMLInputElement>('[name="SlideshowIntervalTo"]');
+    const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
 
-    fromEl.max = toEl.value;
-    toEl.min = fromEl.value;
+    if (useRandomInterval) {
+      fromEl.max = toEl.value;
+      toEl.min = fromEl.value;
+    }
+    else {
+      fromEl.max = '';
+    }    
 
     const intervalFrom = +fromEl.value || 5;
     const intervalTo = +toEl.value || 5;
     const intervalFromText = TabSlideshow.toTimeString(intervalFrom);
     const intervalToText = TabSlideshow.toTimeString(intervalTo);
-
-    const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
 
     if (useRandomInterval) {
       query('#Lbl_SlideshowInterval').innerText = `${intervalFromText} - ${intervalToText}`;
@@ -61,10 +65,19 @@ export default class TabSlideshow {
    * handle when `UseRandomIntervalForSlideshow` is changed.
    */
   private static handleUseRandomIntervalForSlideshowChanged() {
+    const fromEl = query<HTMLInputElement>('[name="SlideshowInterval"]');
+    const toEl = query<HTMLInputElement>('[name="SlideshowIntervalTo"]');
     const useRandomInterval = query<HTMLInputElement>('[name="UseRandomIntervalForSlideshow"]').checked;
   
     query('#Lbl_SlideshowIntervalFrom').hidden = !useRandomInterval;
     query('#Section_SlideshowIntervalTo').hidden = !useRandomInterval;
+
+    const intervalFrom = +fromEl.value || 5;
+    const intervalTo = +toEl.value || 5;
+    if (useRandomInterval && intervalFrom > intervalTo) {
+      toEl.min = intervalFrom.toString();
+      toEl.value = intervalFrom.toString();
+    }
   }
 
 

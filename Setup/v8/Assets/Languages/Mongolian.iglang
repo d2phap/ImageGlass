@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="mn-MN" langName="Монгол хэл" author="Velox729" description="Mongolian" minVersion="8.8" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Зарим тохиргоо нь ImageGlass-ийн уг {0} хувилбарт таарахгүй байна. Тиймээс шинэ хувилбар суулгахыг зөвлөж байна.&#10;&#10;- &quot;За&quot; дарвал өөрчлөлттэй танилцаж болно.&#10;- &quot;Үгүй&quot; дарж ImageGlass-ийг ердийн тохиргоотой эхлүүлж болно."/>
+      <Item key="_.ImageOrderBy._Name" value="Нэр (үндсэн)"/>
+      <Item key="_.ImageOrderBy._Length" value="Урт"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Үүсгэсэн цаг"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Хамгийн сүүлд нээсэн хугацаа"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Хамгийн сүүлд өөрчилсөн цаг"/>
+      <Item key="_.ImageOrderBy._Extension" value="Өргөтгөл"/>
+      <Item key="_.ImageOrderBy._Random" value="Санамсаргүй"/>
+      <Item key="_.ImageOrderType._Asc" value="Өсөх"/>
+      <Item key="_.ImageOrderType._Desc" value="Буурах"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Юу ч байхгүй"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Хураах"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Хаах"/>
+      <Item key="frmMain.mnuMainFile" value="Файл"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Файл нээх…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Түр санах ойд хуулсан зураг нээх"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Шинэ цонх нээх"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Зөвхөн нэг цонх л нээх боломжтой тул шинийг нээх боломжгүй"/>
+      <Item key="frmMain.mnuSaveImage" value="Зургийг хадгалах"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Зургийг өөрөөр хадгалах…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Сэргээх"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Зургийг дахин ачааллах"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Зургийн жагсаалтыг дахин ачааллах"/>
+      <Item key="frmMain.mnuOpenWith" value="Файл нээх…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Зураг засах {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Хэвлэх…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Чиглүүлэг"/>
+      <Item key="frmMain.mnuMainViewNext" value="Дараагийн зургийг харах"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Баруун сум / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Өмнөх зургийг харах"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Зүүн сум / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="…-руу очих"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Эхний зурагруу очих"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Сүүлийн зурагруу очих"/>
+      <Item key="frmMain.mnuMainNextPage" value="Дараагийн хуудсыг харах"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Өмнөх хуудсыг харах"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Эхний хуудсыг харах"/>
+      <Item key="frmMain.mnuMainLastPage" value="Сүүлийн хуудсыг харах"/>
+      <Item key="frmMain.mnuMainZoom" value="Томруулах/жижигсгэх"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Томруулах"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Жижигсгэх"/>
+      <Item key="frmMain.mnuCustomZoom" value="Өөрөөр томруулах…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Томруулах хэмжээг оруулна уу"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Цонхонд тааруулж томруулах"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Цонх дүүргэж томруулах"/>
+      <Item key="frmMain.mnuMainActualSize" value="Жинхэнэ хэмжээ"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Томруулах харьцааг хадгалах"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Автоматаар томруулах"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Өргөнд тааруулж томруулах"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Өндөрт тааруулах томруулах"/>
+      <Item key="frmMain.mnuMainImage" value="Зураг"/>
+      <Item key="frmMain.mnuMainChannels" value="Сувгуудыг харах"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Бүгд"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Улаан"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Ногоон"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Цэнхэр"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Хар"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Альфа"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Ачааллах дараалал"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Зүүн эргүүлэх"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Баруун эргүүлэх"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Хөндлөнгөөр бүтэн эргүүлэх"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Босоогоор бүтэн эргүүлэх"/>
+      <Item key="frmMain.mnuMainRename" value="Зургийн нэр өөрчлөх…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Хогийн сав руу хийх"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Дискэн дээрээс устгах"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extract image pages ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Зураг хөдөлгөж эхлүүлэх / зогсоох"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Дэлгэцийн нүүр зураг болгох"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Түгжээтэй дэлгэцний зураг болгох"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Зургийн байрлал нээх"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Зургийн мэдээлэл"/>
+      <Item key="frmMain.mnuMainClipboard" value="Түр санах ой"/>
+      <Item key="frmMain.mnuMainCopy" value="Хуулах"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Зургийн датаг хуулах"/>
+      <Item key="frmMain.mnuMainCut" value="Хайчлах"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Зургийн байрлалыг хуулах"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Түр санах ойг цэвэрлэх"/>
+      <Item key="frmMain.mnuWindowFit" value="Дэлгэцэнд тааруулах"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Дэлгэц дүүргэх"/>
+      <Item key="frmMain.mnuFrameless" value="Хүрээгүй"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Слайдшоу"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Слайдшоуг эхлүүлэх"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Слайдшоуг зогсоох / үргэлжлүүлэх"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Слайдшоунаас гарах"/>
+      <Item key="frmMain.mnuMainShare" value="Хуваалцах…"/>
+      <Item key="frmMain.mnuMainLayout" value="Байгуулалт"/>
+      <Item key="frmMain.mnuMainToolbar" value="Хэрэглүүр"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Thumbnail panel"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Checkerboard background"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Keep window always on top"/>
+      <Item key="frmMain.mnuMainTools" value="Хэрэглүүр"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Өнгө сонгогч"/>
+      <Item key="frmMain.mnuMainPageNav" value="Хуудас чиглүүлэгч"/>
+      <Item key="frmMain.mnuMainCrop" value="Тайрах"/>
+      <Item key="frmMain.mnuExifTool" value="EXIF хэрэглүүр"/>
+      <Item key="frmMain.mnuMainSettings" value="Тохиргоо…"/>
+      <Item key="frmMain.mnuMainHelp" value="Тусламж"/>
+      <Item key="frmMain.mnuMainAbout" value="Тухай"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="First-launch configurations…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Check for update…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="A new version is available!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Report an issue…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Гарах"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Show"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."/>
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist."/>
+      <Item key="frmMain.btnMenu" value="Үндсэн цэс"/>
+      <Item key="frmMain._OpenFileDialog" value="All supported files"/>
+      <Item key="frmMain._Files" value="file(s)"/>
+      <Item key="frmMain._Pages" value="pages"/>
+      <Item key="frmMain._ImageData" value="Image data"/>
+      <Item key="frmMain._RenameDialogText" value="Нэр өөрчлөх"/>
+      <Item key="frmMain._RenameDialog" value="Enter new filename"/>
+      <Item key="frmMain._GotoDialogText" value="Enter the image index to view it. Press ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Delete file '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Confirm"/>
+      <Item key="frmMain._ExtractPageText" value="Extracting image pages. Please select output folder."/>
+      <Item key="frmMain._FullScreenMessage" value="Press {0} to exit full screen mode."/>
+      <Item key="frmMain._SlideshowMessage" value="Press ESC to exit slideshow.&#10; Right click to open context menu."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Slideshow is paused"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Slideshow is resumed"/>
+      <Item key="frmMain._CopyFileText" value="Copied {0} file(s)"/>
+      <Item key="frmMain._CutFileText" value="Cut {0} file(s)"/>
+      <Item key="frmMain._CopyImageData" value="Image was copied to clipboard"/>
+      <Item key="frmMain._ClearClipboard" value="Clipboard was cleared"/>
+      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveImage" value="Image was saved to&#13;&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Saving image...&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Unable to save image&#13;&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Loading..."/>
+      <Item key="frmMain._FirstItemOfList" value="Reached the first image"/>
+      <Item key="frmMain._LastItemOfList" value="Reached the last image"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Modification for animated format is not supported"/>
+      <Item key="frmMain._SetLockImage_Error" value="There was an error while setting lock screen image"/>
+      <Item key="frmMain._SetLockImage_Success" value="Lock screen image was set successfully"/>
+      <Item key="frmMain._SetBackground_Error" value="There was an error while setting desktop background"/>
+      <Item key="frmMain._SetBackground_Success" value="Desktop background was set successfully"/>
+      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtractComplete" value="Page extraction completed."/>
+      <Item key="frmMain._Frameless" value="Hold SHIFT to move the window."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Clipboard does not contain image data."/>
+      <Item key="frmAbout.lblSlogant" value="A lightweight, versatile image viewer"/>
+      <Item key="frmAbout.lblInfo" value="Мэдээлэл"/>
+      <Item key="frmAbout.lblComponent" value="Components"/>
+      <Item key="frmAbout.lblReferences" value="References"/>
+      <Item key="frmAbout.lblVersion" value="Хувилбар: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Холбоо барих"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Шинэчлэл"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Шинэчлэл шалгах…"/>
+      <Item key="frmAbout._Text" value="Тухай"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Тохиргоо"/>
+      <Item key="frmSetting.btnSave" value="Хадгалах"/>
+      <Item key="frmSetting.btnCancel" value="Цуцлах"/>
+      <Item key="frmSetting.btnApply" value="Apply"/>
+      <Item key="frmSetting.lblGeneral" value="General"/>
+      <Item key="frmSetting.lblImage" value="Image"/>
+      <Item key="frmSetting.lblEdit" value="Edit"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="File Type Associations"/>
+      <Item key="frmSetting.lblToolbar" value="Toolbar"/>
+      <Item key="frmSetting.lblLanguage" value="Хэл"/>
+      <Item key="frmSetting.lblTheme" value="Theme"/>
+      <Item key="frmSetting.lblKeyboard" value="Keyboard"/>
+      <Item key="frmSetting.lblHeadStartup" value="Start up"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Show welcome picture"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Open last seen image"/>
+      <Item key="frmSetting.chkShowToolBar" value="Show toolbar when starting up"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Configuration directory"/>
+      <Item key="frmSetting.lblHeadViewer" value="Viewer"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Display navigation arrow buttons"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Display basename of the viewing image on title bar"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Display checkerboard only in the image region"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Enable touch gesture support"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Background color"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Reset"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadOthers" value="Others"/>
+      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Check for update automatically"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Allow multiple instances of the program"/>
+      <Item key="frmSetting.chkESCToQuit" value="Allow to press ESC to quit application"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Display Delete confirmation dialog"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Auto-center the window in Window Fit mode"/>
+      <Item key="frmSetting.chkShowToast" value="Show toast message"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Image loading"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Find images in child folder"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images"/>
+      <Item key="frmSetting.chkLoopViewer" value="Loop back viewer to the first image when reaching the end of the list"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Center image on viewer"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Use embedded thumbnail for RAW formats"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Image loading order"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Use Windows File Explorer sort order if possible"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Group images by directory"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Number of images cached by ImageBooster (one direction)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Play sound when image changes"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Number of images to notify"/>
+      <Item key="frmSetting.lblColorManagement" value="Color management"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Apply also for images without embedded color profile"/>
+      <Item key="frmSetting.lblColorProfile" value="Color profile:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Browse…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="None"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Custom…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Mouse wheel actions"/>
+      <Item key="frmSetting.lblMouseWheel" value="Mouse wheel"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Mouse wheel + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Mouse wheel + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Mouse wheel + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Do nothing"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Zoom"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Scroll vertically"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Scroll horizontally"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Previous/next image"/>
+      <Item key="frmSetting.lblHeadZooming" value="Zooming"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoom optimization"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Low quality/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Low quality"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="High quality"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubic"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="High-quality, bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="High-quality, bicubic"/>
+      <Item key="frmSetting.lblZoomLevels" value="Zoom levels"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="There was error updating Zoom levels. Error message:&#13;&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Thumbnail bar"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Show thumbnails on right side"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Thumbnail dimension (pixel)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Slideshow"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Loop back slideshow to the first image when reaching the end of the list"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Show slideshow countdown"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Use random interval"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Slideshow interval: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="to"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Дэлгэц дүүргэх"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Hide toolbar"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Hide thumbnail bar"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="After opening editing app:"/>
+      <Item key="frmSetting.lblImageQuality" value="Image quality:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Edit…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Reset to default"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions…"/>
+      <Item key="frmSetting._allExtensions" value="all extensions"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="File extension"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="App name"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="App path"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="App arguments"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's modified date on save"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Supported formats: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Open File Type Associations"/>
+      <Item key="frmSetting.btnAddNewExt" value="Add…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Set as Default photo viewer…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Unregister extensions"/>
+      <Item key="frmSetting.btnDeleteExt" value="Delete"/>
+      <Item key="frmSetting.btnResetExt" value="Reset to default"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Unable to register Web-to-App linking"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Unable to register file extensions for ImageGlass app"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="All file extensions are registered successfully! To set ImageGlass as Default photo viewer, please open Windows Settings &gt; Default Apps, and manually select ImageGlass app under Photo Viewer section."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Unable to delete registered file extensions of ImageGlass app"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="All file extensions are unregistered successfully!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom"/>
+      <Item key="frmSetting._separator" value="Separator"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Configure toolbar buttons"/>
+      <Item key="frmSetting.lblUsedBtns" value="Current Buttons:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Available Buttons:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Move selected button down"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Remove selected button(s) from the toolbar"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Add selected button(s) to the toolbar"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Move selected button up"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Center toolbar buttons horizontally in window"/>
+      <Item key="frmSetting.chkHideTooltips" value="Hide toolbar tooltips"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Use RGB format with Alpha value"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Use HEX format with Alpha value"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Use HSL format with Alpha value"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Use HSV format with Alpha value"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Default color code format when copying"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Auto-show Page navigation tool for multi-page image"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Keep Exif tool always on top"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Select Exif tool file"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="The Exif tool does not exist or invalid: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Command arguments:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Command preview:"/>
+      <Item key="frmSetting.lblLanguageText" value="Installed languages"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Refresh"/>
+      <Item key="frmSetting.lblLanguageWarning" value="This language pack may be not compatible with {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Орчуулагч:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Install new language pack (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Create new language pack…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Edit selected language pack…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Get more language packs…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Installed themes: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Download themes…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Refresh"/>
+      <Item key="frmSetting.btnThemeInstall" value="Суулгах…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Устгах…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Save as…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Open theme folder"/>
+      <Item key="frmSetting.btnThemeApply" value="Apply theme"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Нэр"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Хувилбар"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Author"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="И-мэйл"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Веб хуудас"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Таарамж"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Тайлбар"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Your theme was installed successfully!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Unable to install your theme."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Unable to uninstall the selected theme."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Your selected theme has been saved in {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Unable to save your selected theme."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="The selected theme was applied successfully!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Unable to apply the selected theme."/>
+      <Item key="frmSetting.btnKeyReset" value="Reset to default"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Up / Down arrows"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Left / Right arrows"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Previous / Next Image"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Pan Left / Right"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Pan Up / Down"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Томруулах / Жижигсгэх"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pause slideshow"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Do nothing"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Файлын өргөтгөл"/>
+      <Item key="frmAddNewFormat.btnOK" value="За"/>
+      <Item key="frmAddNewFormat.btnClose" value="Хаах"/>
+      <Item key="frmEditApp.lblFileExtension" value="Файлын өргөтгөл"/>
+      <Item key="frmEditApp.lblAppName" value="App name"/>
+      <Item key="frmEditApp.lblAppPath" value="App path"/>
+      <Item key="frmEditApp.lblAppArguments" value="App arguments"/>
+      <Item key="frmEditApp.btnReset" value="Reset"/>
+      <Item key="frmEditApp.btnOK" value="За"/>
+      <Item key="frmEditApp.btnClose" value="Хаах"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Preview"/>
+      <Item key="frmFirstLaunch._Text" value="First-Launch Configurations"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Step {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Next"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Done!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Skip this and Launch ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Select Language"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Select Theme"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Set ImageGlass as Default Photo Viewer?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="За"/>
+      <Item key="frmCrop.lblWidth" value="Өргөн:"/>
+      <Item key="frmCrop.lblHeight" value="Өндөр:"/>
+      <Item key="frmCrop.btnSave" value="Хадгалах"/>
+      <Item key="frmCrop.btnSaveAs" value="Өөрөөр хадгалах…"/>
+      <Item key="frmCrop.btnCopy" value="Хуулах"/>
+      <Item key="frmCrop.btnReset" value="Reset"/>
+      <Item key="FrmExifTool.clnProperty" value="Property"/>
+      <Item key="FrmExifTool.clnValue" value="Value"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Copy value"/>
+      <Item key="FrmExifTool.btnExport" value="Export…"/>
+      <Item key="FrmExifTool.btnClose" value="Хаах"/>
+    </Content>
+  </Language>
+</ImageGlass>

@@ -72,6 +72,7 @@ export default class TabImage {
   
     query('#Btn_BrowseColorProfile').hidden = !useCustomProfile;
     query('#Section_CustomColorProfile').hidden = !useCustomProfile;
+    query('#Section_CurrentMonitorProfile').hidden = selectEl.value !== 'CurrentMonitorProfile';
   }
 
 

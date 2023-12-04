@@ -90,7 +90,7 @@ public partial class DXCanvas : DXControl
     private float _maxZoom = 100f; // 10_000%
     private float[] _zoomLevels = [];
     private ImageInterpolation _interpolationScaleDown = ImageInterpolation.MultiSampleLinear;
-    private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
+    private ImageInterpolation _interpolationScaleUp = ImageInterpolation.NearestNeighbor;
 
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
@@ -706,12 +706,12 @@ public partial class DXCanvas : DXControl
     [DefaultValue(ImageInterpolation.NearestNeighbor)]
     public ImageInterpolation InterpolationScaleUp
     {
-        get => _interpolationScaledUp;
+        get => _interpolationScaleUp;
         set
         {
-            if (_interpolationScaledUp != value)
+            if (_interpolationScaleUp != value)
             {
-                _interpolationScaledUp = value;
+                _interpolationScaleUp = value;
                 Invalidate();
             }
         }
@@ -722,7 +722,16 @@ public partial class DXCanvas : DXControl
     /// Gets the current <see cref="ImageInterpolation"/> mode.
     /// </summary>
     [Browsable(false)]
-    public ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
+    public ImageInterpolation CurrentInterpolation
+    {
+        get
+        {
+            if (ZoomFactor < 1f) return _interpolationScaleDown;
+            if (ZoomFactor > 1f) return _interpolationScaleUp;
+
+            return ImageInterpolation.NearestNeighbor;
+        }
+    }
 
 
     #endregion
@@ -1055,7 +1064,10 @@ public partial class DXCanvas : DXControl
 
     public DXCanvas()
     {
-        SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.SupportsTransparentBackColor
+            | ControlStyles.UserPaint
+            | ControlStyles.Selectable
+            | ControlStyles.UserMouse, true);
         _clickTimer.Tick += ClickTimer_Tick;
 
         // touch gesture support
@@ -1433,7 +1445,7 @@ public partial class DXCanvas : DXControl
         // redraw the control on resizing if it's not manual zoom
         if (IsReady && Source != ImageSource.Null && !_isManualZoom)
         {
-            Refresh();
+            Refresh(true, false, true);
         }
 
         base.OnResize(e);
@@ -2208,7 +2220,7 @@ public partial class DXCanvas : DXControl
     /// <summary>
     /// Updates zoom mode logic. This <u><c>does not</c></u> redraw the viewing image.
     /// </summary>
-    public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false)
+    public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false, bool zoomedByResizing = false)
     {
         // get zoom factor after applying the zoom mode
         var zoomMode = mode ?? _zoomMode;
@@ -2238,7 +2250,7 @@ public partial class DXCanvas : DXControl
             IsManualZoom = _isManualZoom,
             IsZoomModeChange = mode != _zoomMode,
             IsPreviewingImage = _isPreviewing,
-            ChangeSource = ZoomChangeSource.ZoomMode,
+            ChangeSource = zoomedByResizing ? ZoomChangeSource.SizeChanged : ZoomChangeSource.ZoomMode,
         });
 
         // emit selecting event
@@ -2261,11 +2273,11 @@ public partial class DXCanvas : DXControl
     /// <summary>
     /// Forces the control to invalidate itself.
     /// </summary>
-    public void Refresh(bool resetZoom = true, bool isManualZoom = false)
+    public void Refresh(bool resetZoom = true, bool isManualZoom = false, bool zoomedByResizing = false)
     {
         if (resetZoom)
         {
-            SetZoomMode(null, isManualZoom);
+            SetZoomMode(null, isManualZoom, zoomedByResizing);
         }
 
         Invalidate();

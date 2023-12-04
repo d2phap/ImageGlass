@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2023 DUONG DIEU PHAP
+Copyright (C) 2010 - 2024 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -38,100 +38,100 @@ public partial class FrmMain
     public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys { get; set; } = new()
     {
 	    // Open main menu
-	    { nameof(MnuMain),                  new() { new(Keys.Alt | Keys.F) } },
+	    { nameof(MnuMain),                  [new(Keys.Alt | Keys.F)] },
 
 	    // MnuFile
-	    { nameof(MnuOpenFile),              new() { new (Keys.Control | Keys.O) } },
-        { nameof(MnuPasteImage),            new() { new (Keys.Control | Keys.V) } },
-        { nameof(MnuNewWindow),             new() { new (Keys.Control | Keys.N) } },
-        { nameof(MnuSave),                  new() { new (Keys.Control | Keys.S) } },
-        { nameof(MnuSaveAs),                new() { new (Keys.Control | Keys.Shift | Keys.S) } },
-        { nameof(MnuOpenWith),              new() { new (Keys.D) } },
-        { nameof(MnuEdit),                  new() { new (Keys.E) } },
-        { nameof(MnuPrint),                 new() { new (Keys.Control | Keys.P) } },
-        { nameof(MnuShare),                 new() { new (Keys.S) } },
-        { nameof(MnuRefresh),               new() { new (Keys.R) } },
-        { nameof(MnuReload),                new() { new (Keys.Control | Keys.R) } },
-        { nameof(MnuReloadImageList),       new() { new (Keys.Control | Keys.Shift | Keys.R) } },
-        { nameof(MnuUnload),                new() { new (Keys.U) } },
+	    { nameof(MnuOpenFile),              [new(Keys.Control | Keys.O)] },
+        { nameof(MnuPasteImage),            [new(Keys.Control | Keys.V)] },
+        { nameof(MnuNewWindow),             [new(Keys.Control | Keys.N)] },
+        { nameof(MnuSave),                  [new(Keys.Control | Keys.S)] },
+        { nameof(MnuSaveAs),                [new(Keys.Control | Keys.Shift | Keys.S)] },
+        { nameof(MnuOpenWith),              [new(Keys.D)] },
+        { nameof(MnuEdit),                  [new(Keys.E)] },
+        { nameof(MnuPrint),                 [new(Keys.Control | Keys.P)] },
+        { nameof(MnuShare),                 [new(Keys.S)] },
+        { nameof(MnuRefresh),               [new(Keys.R)] },
+        { nameof(MnuReload),                [new(Keys.Control | Keys.R)] },
+        { nameof(MnuReloadImageList),       [new(Keys.Control | Keys.Shift | Keys.R)] },
+        { nameof(MnuUnload),                [new(Keys.U)] },
 
         // MnuNavigation
-        { nameof(MnuViewNext),              new() { new (Keys.Right) } },
-        { nameof(MnuViewPrevious),          new() { new (Keys.Left) } },
-        { nameof(MnuGoTo),                  new() { new (Keys.F) } },
-        { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
-        { nameof(MnuGoToLast),              new() { new (Keys.End) } },
-        { nameof(MnuViewNextFrame),         new() { new (Keys.Control | Keys.Right) } },
-        { nameof(MnuViewPreviousFrame),     new() { new (Keys.Control | Keys.Left) } },
-        { nameof(MnuViewFirstFrame),        new() { new (Keys.Control | Keys.Home) } },
-        { nameof(MnuViewLastFrame),         new() { new (Keys.Control | Keys.End) } },
+        { nameof(MnuViewNext),              [new(Keys.Right)] },
+        { nameof(MnuViewPrevious),          [new(Keys.Left)] },
+        { nameof(MnuGoTo),                  [new(Keys.F)] },
+        { nameof(MnuGoToFirst),             [new(Keys.Home)] },
+        { nameof(MnuGoToLast),              [new(Keys.End)] },
+        { nameof(MnuViewNextFrame),         [new(Keys.Control | Keys.Right)] },
+        { nameof(MnuViewPreviousFrame),     [new(Keys.Control | Keys.Left)] },
+        { nameof(MnuViewFirstFrame),        [new(Keys.Control | Keys.Home)] },
+        { nameof(MnuViewLastFrame),         [new(Keys.Control | Keys.End)] },
 
         // MnuPanning
-        { nameof(MnuPanLeft),               new() { new (Keys.Alt | Keys.Left) } },
-        { nameof(MnuPanRight),              new() { new (Keys.Alt | Keys.Right) } },
-        { nameof(MnuPanUp),                 new() { new (Keys.Alt | Keys.Up) } },
-        { nameof(MnuPanDown),               new() { new (Keys.Alt | Keys.Down) } },
+        { nameof(MnuPanLeft),               [new(Keys.Alt | Keys.Left)] },
+        { nameof(MnuPanRight),              [new(Keys.Alt | Keys.Right)] },
+        { nameof(MnuPanUp),                 [new(Keys.Alt | Keys.Up)] },
+        { nameof(MnuPanDown),               [new(Keys.Alt | Keys.Down)] },
 
-        { nameof(MnuPanToLeftSide),         new() { new (Keys.Control | Keys.Alt | Keys.Left) } },
-        { nameof(MnuPanToRightSide),        new() { new (Keys.Control | Keys.Alt | Keys.Right) } },
-        { nameof(MnuPanToTop),              new() { new (Keys.Control | Keys.Alt | Keys.Up) } },
-        { nameof(MnuPanToBottom),           new() { new (Keys.Control | Keys.Alt | Keys.Down) } },
+        { nameof(MnuPanToLeftSide),         [new(Keys.Control | Keys.Alt | Keys.Left)] },
+        { nameof(MnuPanToRightSide),        [new(Keys.Control | Keys.Alt | Keys.Right)] },
+        { nameof(MnuPanToTop),              [new(Keys.Control | Keys.Alt | Keys.Up)] },
+        { nameof(MnuPanToBottom),           [new(Keys.Control | Keys.Alt | Keys.Down)] },
 
         // MnuZoom
-        { nameof(MnuZoomIn),                new() { new (Keys.Oemplus) } }, // =
-        { nameof(MnuZoomOut),               new() { new (Keys.OemMinus) } }, // -
-        { nameof(MnuCustomZoom),            new() { new (Keys.Z) } },
-        { nameof(MnuActualSize),            new() { new (Keys.D0), new(Keys.NumPad0) } },
-        { nameof(MnuAutoZoom),              new() { new (Keys.D1), new(Keys.NumPad1) } },
-        { nameof(MnuLockZoom),              new() { new (Keys.D2), new (Keys.NumPad2) } },
-        { nameof(MnuScaleToWidth),          new() { new (Keys.D3), new (Keys.NumPad3) } },
-        { nameof(MnuScaleToHeight),         new() { new (Keys.D4), new (Keys.NumPad4) } },
-        { nameof(MnuScaleToFit),            new() { new (Keys.D5), new (Keys.NumPad5) } },
-        { nameof(MnuScaleToFill),           new() { new (Keys.D6), new (Keys.NumPad6) } },
+        { nameof(MnuZoomIn),                [new(Keys.Oemplus), new(Keys.Add)] }, // =
+        { nameof(MnuZoomOut),               [new(Keys.OemMinus), new(Keys.Subtract)] }, // -
+        { nameof(MnuCustomZoom),            [new(Keys.Z)] },
+        { nameof(MnuActualSize),            [new(Keys.D0), new(Keys.NumPad0)] },
+        { nameof(MnuAutoZoom),              [new(Keys.D1), new(Keys.NumPad1)] },
+        { nameof(MnuLockZoom),              [new(Keys.D2), new(Keys.NumPad2)] },
+        { nameof(MnuScaleToWidth),          [new(Keys.D3), new(Keys.NumPad3)] },
+        { nameof(MnuScaleToHeight),         [new(Keys.D4), new(Keys.NumPad4)] },
+        { nameof(MnuScaleToFit),            [new(Keys.D5), new(Keys.NumPad5)] },
+        { nameof(MnuScaleToFill),           [new(Keys.D6), new(Keys.NumPad6)] },
 
         // MnuImage
-        { nameof(MnuViewChannels),          new() { new (Keys.Shift | Keys.C) } },
-        { nameof(MnuLoadingOrders),         new() { new (Keys.Shift | Keys.O) } },
-        { nameof(MnuRotateLeft),            new() { new (Keys.Control | Keys.OemPeriod) } }, // Ctrl+.
-        { nameof(MnuRotateRight),           new() { new (Keys.Control | Keys.OemQuestion) } }, // Ctrl+/
-        { nameof(MnuFlipHorizontal),        new() { new (Keys.Control | Keys.Oem1) } }, // Ctrl+;
-        { nameof(MnuFlipVertical),          new() { new (Keys.Control | Keys.Oem7) } }, // Ctrl+'
-        { nameof(MnuRename),                new() { new (Keys.F2) } },
-        { nameof(MnuMoveToRecycleBin),      new() { new (Keys.Delete) } },
-        { nameof(MnuDeleteFromHardDisk),    new() { new (Keys.Shift | Keys.Delete) } },
-        { nameof(MnuToggleImageAnimation),  new() { new (Keys.Control | Keys.Space) } },
-        { nameof(MnuExportFrames),          new() { new (Keys.Control | Keys.J) } },
-        { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
-        { nameof(MnuImageProperties),       new() { new (Keys.Control | Keys.I) } },
+        { nameof(MnuViewChannels),          [new(Keys.Shift | Keys.C)] },
+        { nameof(MnuLoadingOrders),         [new(Keys.Shift | Keys.O)] },
+        { nameof(MnuRotateLeft),            [new(Keys.Control | Keys.OemPeriod)] }, // Ctrl+.
+        { nameof(MnuRotateRight),           [new(Keys.Control | Keys.OemQuestion)] }, // Ctrl+/
+        { nameof(MnuFlipHorizontal),        [new(Keys.Control | Keys.Oem1)] }, // Ctrl+;
+        { nameof(MnuFlipVertical),          [new(Keys.Control | Keys.Oem7)] }, // Ctrl+'
+        { nameof(MnuRename),                [new(Keys.F2)] },
+        { nameof(MnuMoveToRecycleBin),      [new(Keys.Delete)] },
+        { nameof(MnuDeleteFromHardDisk),    [new(Keys.Shift | Keys.Delete)] },
+        { nameof(MnuToggleImageAnimation),  [new(Keys.Control | Keys.Space)] },
+        { nameof(MnuExportFrames),          [new(Keys.Control | Keys.J)] },
+        { nameof(MnuOpenLocation),          [new(Keys.L)] },
+        { nameof(MnuImageProperties),       [new(Keys.Control | Keys.I)] },
 
         // MnuClipboard
-        { nameof(MnuCopyImageData),         new() { new (Keys.Control | Keys.C) } },
-        { nameof(MnuCopyFile),              new() { new (Keys.Control | Keys.Shift | Keys.C) } },
-        { nameof(MnuCutFile),               new() { new (Keys.Control | Keys.X) } },
-        { nameof(MnuCopyPath),              new() { new (Keys.Control | Keys.L) } },
-        { nameof(MnuClearClipboard),        new() { new (Keys.Control | Keys.Oemtilde) } }, // Ctrl+`
+        { nameof(MnuCopyImageData),         [new(Keys.Control | Keys.C)] },
+        { nameof(MnuCopyFile),              [new(Keys.Control | Keys.Shift | Keys.C)] },
+        { nameof(MnuCutFile),               [new(Keys.Control | Keys.X)] },
+        { nameof(MnuCopyPath),              [new(Keys.Control | Keys.L)] },
+        { nameof(MnuClearClipboard),        [new(Keys.Control | Keys.Oemtilde)] }, // Ctrl+`
 
-        { nameof(MnuWindowFit),             new() { new (Keys.F9) } },
-        { nameof(MnuFrameless),             new() { new (Keys.F10) } },
-        { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
-        { nameof(MnuSlideshow),             new() { new (Keys.F12) } },
+        { nameof(MnuWindowFit),             [new(Keys.F9)] },
+        { nameof(MnuFrameless),             [new(Keys.F10)] },
+        { nameof(MnuFullScreen),            [new(Keys.F11)] },
+        { nameof(MnuSlideshow),             [new(Keys.F12)] },
 
         // MnuLayout
-        { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
-        { nameof(MnuToggleGallery),         new() { new (Keys.G) } },
-        { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
+        { nameof(MnuToggleToolbar),         [new(Keys.T)] },
+        { nameof(MnuToggleGallery),         [new(Keys.G)] },
+        { nameof(MnuToggleCheckerboard),    [new(Keys.B)] },
 
         // MnuTools
-        { nameof(MnuColorPicker),           new() { new (Keys.K) } },
-        { nameof(MnuCropTool),              new() { new (Keys.C) } },
-        { nameof(MnuPageNav),               new() { new (Keys.P) } },
-        { Const.IGTOOL_EXIFTOOL,        new() { new (Keys.X) } },
+        { nameof(MnuColorPicker),           [new(Keys.K)] },
+        { nameof(MnuCropTool),              [new(Keys.C)] },
+        { nameof(MnuFrameNav),               [new(Keys.P)] },
+        { Const.IGTOOL_EXIFTOOL,            [new(Keys.X)] },
 
         // MnuHelp
-        { nameof(MnuAbout),                 new() { new (Keys.F1) } },
+        { nameof(MnuAbout),                 [new(Keys.F1)] },
 
-        { nameof(MnuSettings),              new() { new (Keys.Control | Keys.Oemcomma) } }, // Ctrl+,
-        { nameof(MnuExit),                  new() { new (Keys.Escape), new (Keys.Control | Keys.W) } },
+        { nameof(MnuSettings),              [new(Keys.Control | Keys.Oemcomma)] }, // Ctrl+,
+        { nameof(MnuExit),                  [new(Keys.Escape), new (Keys.Control | Keys.W)] },
     };
 
 
@@ -265,7 +265,7 @@ public partial class FrmMain
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
 
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
@@ -275,7 +275,7 @@ public partial class FrmMain
             // it can be restore correctly
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
-            IG_ToggleFullScreen(true, showInAppMessage: false);
+            IG_ToggleFullScreen(true);
         }
         else
         {
@@ -286,7 +286,7 @@ public partial class FrmMain
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
         }
 
         // start slideshow
@@ -297,6 +297,10 @@ public partial class FrmMain
 
         // load context menu config
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
+
+
+        // focus on PicMain
+        PicMain.Focus();
 
 
         // update tag data for zoom mode menus
@@ -747,7 +751,7 @@ public partial class FrmMain
         MnuTools.Text = lang[$"{Name}.{nameof(MnuTools)}"];
 
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
-        MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
+        MnuFrameNav.Text = lang[$"{Name}.{nameof(MnuFrameNav)}"];
         MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
         MnuGetMoreTools.Text = lang[$"{Name}.{nameof(MnuGetMoreTools)}"];
 
@@ -1047,7 +1051,7 @@ public partial class FrmMain
         {
             nameof(MnuColorPicker),
             nameof(MnuCropTool),
-            nameof(MnuPageNav),
+            nameof(MnuFrameNav),
             nameof(MnuExternalToolsSeparator),
             nameof(MnuGetMoreTools),
         };
@@ -1291,7 +1295,11 @@ public partial class FrmMain
         ResumeLayout(false);
 
         // perform layout update
-        if (forcedUpdateLayout) PerformLayout();
+        if (forcedUpdateLayout)
+        {
+            PerformLayout();
+            PicMain.Focus();
+        }
     }
 
 

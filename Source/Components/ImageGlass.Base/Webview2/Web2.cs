@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2023 DUONG DIEU PHAP
+Copyright (C) 2010 - 2024 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -73,6 +73,27 @@ public class Web2 : WebView2
     /// Gets value indicates that <see cref="Web2"/> is ready to use.
     /// </summary>
     public bool IsWeb2Ready => this.CoreWebView2 != null;
+
+
+    /// <summary>
+    /// Gets version of <see cref="WebView2"/> runtime,
+    /// returns <c>null</c> if <see cref="WebView2"/> runtime is not installed.
+    /// </summary>
+    public static Version? Webview2Version
+    {
+        get
+        {
+            try
+            {
+                var version = CoreWebView2Environment.GetAvailableBrowserVersionString();
+                return new Version(version);
+            }
+            catch (WebView2RuntimeNotFoundException) { }
+
+            return null;
+        }
+    }
+
 
     #endregion // Properties
 
@@ -264,6 +285,15 @@ public class Web2 : WebView2
     /// </summary>
     public async Task EnsureWeb2Async()
     {
+        // if WebView2 runtime is not installed
+        if (!Web2.CheckWebview2Installed())
+        {
+            MessageBox.Show($"{nameof(Web2)}: WebView2 Runtime 64-bit is not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            return;
+        }
+
+
         var options = new CoreWebView2EnvironmentOptions
         {
             AdditionalBrowserArguments = "--disable-web-security --allow-file-access-from-files --allow-file-access",
@@ -271,8 +301,19 @@ public class Web2 : WebView2
 
         try
         {
+            // use AppData dir
+            // %LocalAppData%\ImageGlass\9.0.7.1125\Webview2_Data
+            var appDataDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                App.AppName,
+                App.Version,
+                "Webview2_Data");
+
+            // create the directory if not exists
+            Directory.CreateDirectory(appDataDir);
+
             var env = await CoreWebView2Environment.CreateAsync(
-                userDataFolder: App.ConfigDir(PathType.Dir, "WebUIData"),
+                userDataFolder: appDataDir,
                 options: options);
 
             await this.EnsureCoreWebView2Async(env).ConfigureAwait(true);
@@ -302,7 +343,7 @@ public class Web2 : WebView2
             // Operation aborted (0x80004004 (E_ABORT))
             if (ex.HResult == -2147467260)
             {
-
+                // ignore
             }
             else
             {
@@ -311,6 +352,15 @@ public class Web2 : WebView2
                     $"at {nameof(EnsureWeb2Async)}() method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Checks if <see cref="WebView2"/> runtime is installed.
+    /// </summary>
+    public static bool CheckWebview2Installed()
+    {
+        return Web2.Webview2Version != null;
     }
 
 

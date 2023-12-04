@@ -127,7 +127,7 @@ namespace ImageGlass
             MnuTools = new ToolStripMenuItem();
             MnuColorPicker = new ToolStripMenuItem();
             MnuCropTool = new ToolStripMenuItem();
-            MnuPageNav = new ToolStripMenuItem();
+            MnuFrameNav = new ToolStripMenuItem();
             MnuExternalToolsSeparator = new ToolStripSeparator();
             MnuGetMoreTools = new ToolStripMenuItem();
             toolStripMenuItem8 = new ToolStripSeparator();
@@ -838,7 +838,7 @@ namespace ImageGlass
             // 
             // MnuTools
             // 
-            MnuTools.DropDownItems.AddRange(new ToolStripItem[] { MnuColorPicker, MnuCropTool, MnuPageNav, MnuExternalToolsSeparator, MnuGetMoreTools });
+            MnuTools.DropDownItems.AddRange(new ToolStripItem[] { MnuColorPicker, MnuCropTool, MnuFrameNav, MnuExternalToolsSeparator, MnuGetMoreTools });
             MnuTools.Image = (Image)resources.GetObject("MnuTools.Image");
             MnuTools.ImageAlign = ContentAlignment.MiddleLeft;
             MnuTools.ImageScaling = ToolStripItemImageScaling.None;
@@ -862,13 +862,13 @@ namespace ImageGlass
             MnuCropTool.Text = "[Cropping]";
             MnuCropTool.Click += MnuCropTool_Click;
             // 
-            // MnuPageNav
+            // MnuFrameNav
             // 
-            MnuPageNav.CheckOnClick = true;
-            MnuPageNav.Name = "MnuPageNav";
-            MnuPageNav.Size = new Size(177, 22);
-            MnuPageNav.Text = "[Page navigation]";
-            MnuPageNav.Click += MnuPageNav_Click;
+            MnuFrameNav.CheckOnClick = true;
+            MnuFrameNav.Name = "MnuFrameNav";
+            MnuFrameNav.Size = new Size(177, 22);
+            MnuFrameNav.Text = "[Frame navigation]";
+            MnuFrameNav.Click += MnuFrameNav_Click;
             // 
             // MnuExternalToolsSeparator
             // 
@@ -1192,7 +1192,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuToggleTopMost;
         public ToolStripMenuItem MnuColorPicker;
         public ToolStripMenuItem MnuCropTool;
-        public ToolStripMenuItem MnuPageNav;
+        public ToolStripMenuItem MnuFrameNav;
         public ToolStripMenuItem MnuAbout;
         public ToolStripMenuItem MnuCheckForUpdate;
         public ToolStripMenuItem MnuReportIssue;

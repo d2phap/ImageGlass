@@ -13,6 +13,7 @@
         <Configurations>Debug;Release;Publish_Release</Configurations>
 
         <LangVersion>latest</LangVersion>
+        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|ARM64'">
@@ -88,7 +89,7 @@
     <ItemGroup>
         <PackageReference Include="DirectNStandard" Version="1.15.0.2" />
         <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="13.4.0" Condition="'$(Platform)' == 'x64'" />
-        <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="13.3.0" Condition="'$(Platform)' == 'ARM64'" />
+        <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="13.4.0" Condition="'$(Platform)' == 'ARM64'" />
         <PackageReference Include="Magick.NET.SystemDrawing" Version="7.2.0" />
         <PackageReference Include="Magick.NET.SystemWindowsMedia" Version="7.2.0" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />

@@ -232,6 +232,14 @@ public class Local
         $"Btn_{nameof(FrmMain.MnuOpenFile)}",
         $"Btn_{nameof(FrmMain.MnuViewPrevious)}",
         $"Btn_{nameof(FrmMain.MnuViewNext)}",
+
+        nameof(ToolbarItemModelType.Separator),
+        $"Btn_{nameof(FrmMain.MnuRotateLeft)}",
+        $"Btn_{nameof(FrmMain.MnuRotateRight)}",
+        $"Btn_{nameof(FrmMain.MnuFlipHorizontal)}",
+        $"Btn_{nameof(FrmMain.MnuFlipVertical)}",
+        $"Btn_{nameof(FrmMain.MnuCropTool)}",
+
         nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuAutoZoom)}",
         $"Btn_{nameof(FrmMain.MnuLockZoom)}",
@@ -239,15 +247,15 @@ public class Local
         $"Btn_{nameof(FrmMain.MnuScaleToHeight)}",
         $"Btn_{nameof(FrmMain.MnuScaleToFit)}",
         $"Btn_{nameof(FrmMain.MnuScaleToFill)}",
+
         nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuRefresh)}",
         $"Btn_{nameof(FrmMain.MnuToggleGallery)}",
         $"Btn_{nameof(FrmMain.MnuToggleCheckerboard)}",
-        nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuFullScreen)}",
         $"Btn_{nameof(FrmMain.MnuSlideshow)}",
+
         nameof(ToolbarItemModelType.Separator),
-        $"Btn_{nameof(FrmMain.MnuPrint)}",
         $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
     ];
 
@@ -457,7 +465,7 @@ public class Local
     public static IgMetadata? Metadata { get; set; }
 
     /// <summary>
-    /// Gets, sets app state
+    /// Gets, sets app state.
     /// </summary>
     public static bool IsBusy { get; set; }
 

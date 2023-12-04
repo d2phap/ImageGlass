@@ -52,8 +52,8 @@ public static class Const
     public const string IGTOOL_EXIFTOOL = "Tool_ExifGlass";
     public const string IGTOOL_SLIDESHOW = "Tool_Slideshow";
 
-    public const string PAGE_NAV_TOOLBAR_FRAME_INFO = "Lbl_PageNav_FrameInfo";
-    public const string PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION = "Btn_PageNav_ToggleFrameAnimation";
+    public const string FRAME_NAV_TOOLBAR_FRAME_INFO = "Lbl_FrameNav_FrameInfo";
+    public const string FRAME_NAV_TOOLBAR_TOGGLE_ANIMATION = "Btn_FrameNav_ToggleFrameAnimation";
 
 
     /// <summary>

@@ -44,8 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Zoomaa"/>
       <Item key="frmMain.mnuMainZoomIn" value="Lähennä"/>
       <Item key="frmMain.mnuMainZoomOut" value="Loitonna"/>
-      <Item key="frmMain.mnuCustomZoom" value="Custom zoom…"/>
-      <Item key="frmMain.mnuCustomZoom._Text" value="Enter a new zoom value"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zoomaa arvolla…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Syötä uusi zoomausarvo"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Skaalaa näyttöön sopivaksi"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Täytä"/>
       <Item key="frmMain.mnuMainActualSize" value="Alkuperäinen koko"/>
@@ -106,11 +106,11 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Tarkista päivitykset…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Uusi versio saatavilla!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Ilmoita ongelmasta…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Exit"/>
-      <Item key="frmMain.mnuTrayShowWindow" value="Show"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Poistu"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Näytä"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass ei voi aukaista tätä kuvaa, koska tiedosto on mahdollisesti vahingoittunut, vioittunut tai ei ole tuettu."/>
       <Item key="frmMain._ImageNotExist" value="Kuvaa ei ole olemassa."/>
-      <Item key="frmMain.btnMenu" value="Main menu"/>
+      <Item key="frmMain.btnMenu" value="Päävalikko"/>
       <Item key="frmMain._OpenFileDialog" value="Kaikki tuetut tiedostot"/>
       <Item key="frmMain._Files" value="tiedosto(a)"/>
       <Item key="frmMain._Pages" value="sivua"/>
@@ -129,9 +129,9 @@
       <Item key="frmMain._CutFileText" value="Leikkaa {0} tiedosto(a)"/>
       <Item key="frmMain._CopyImageData" value="Kuva kopioitu leikepöydälle"/>
       <Item key="frmMain._ClearClipboard" value="Leikepöytä tyhjennetty"/>
-      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveConfirm" value="Haluatko tallentaa tämän kuvan?&#10;{0}"/>
       <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
-      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass ei ole ammattimainen valokuvaeditori, ole hyvä ja ole tietoinen laadun, metatietojen, kerroksien menettämisestä tallennettaessa kuvaa."/>
       <Item key="frmMain._SaveImage" value="Kuva tallennettu {0}"/>
       <Item key="frmMain._SavingImage" value="Tallennetaan kuvaa...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Kuvan tallennus ei onnistu&#10;{0}."/>
@@ -143,7 +143,7 @@
       <Item key="frmMain._SetLockImage_Success" value="Lukitusnäytön kuva asetettu onnistuneesti"/>
       <Item key="frmMain._SetBackground_Error" value="Virhe havaittu työpöydän taustakuvaa asettaessa"/>
       <Item key="frmMain._SetBackground_Success" value="Työpöydän taustakuva asetettu onnistuneesti"/>
-      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtracting" value="Kuvasivuja puretaan..."/>
       <Item key="frmMain._PageExtractComplete" value="Sivun purku valmistui."/>
       <Item key="frmMain._Frameless" value="Pidä SHIFT pohjassa, jotta voit siirtää ikkunaa."/>
       <Item key="frmMain._InvalidImageClipboardData" value="Leikepöydällä ei ole kuvaa."/>
@@ -187,7 +187,7 @@
       <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
       <Item key="frmSetting.lblHeadOthers" value="Muut"/>
       <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Jatka sovelluksen pyörittämistä taustalla, kun sovellus on suljettu"/>
       <Item key="frmSetting.chkAutoUpdate" value="Tarkista päivitykset automaattisesti"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Salli monia käynnistyksiä sovelluksesta samanaikaisesti"/>
       <Item key="frmSetting.chkESCToQuit" value="Salli poistua sovelluksesta painamalla ESC"/>
@@ -200,19 +200,19 @@
       <Item key="frmSetting.chkLoopViewer" value="Palaa takaisin ensimmäiseen kuvaan, kun viimeinen kuva on katsottu"/>
       <Item key="frmSetting.chkIsCenterImage" value="Keskitä kuva katselimessa"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Use embedded thumbnail for RAW formats"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Näytä uusi kuva kansiossa automaattisesti"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Kuvien latausjärjestys"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Käytä Windowsin Resurssienhallinnan järjestystä, jos vain mahdollista"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Ryhmitä kuvat kansion mukaan"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBoosterin välimuistiin tallennettujen kuvien määrä (yksi suunta)"/>
-      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Play sound when image changes"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Toista ääni, kun kuva muuttuu"/>
       <Item key="frmSetting.lblNumberImagesNotify" value="Number of images to notify"/>
       <Item key="frmSetting.lblColorManagement" value="Värihallinta"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Hyväksy myös kuviin ilman upotettua väriprofiilia"/>
       <Item key="frmSetting.lblColorProfile" value="Väriprofiili:"/>
       <Item key="frmSetting.lnkColorProfileBrowse" value="Selaa…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="Ei mitään"/>
-      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Käytä nykyistä näytön profiilia"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Muokattu…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Hiiren rullan toiminnot"/>
       <Item key="frmSetting.lblMouseWheel" value="Hiiren rulla"/>
@@ -247,7 +247,7 @@
       <Item key="frmSetting.lblSlideshowInterval" value="Vaihtoviive: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value=" "/>
       <Item key="frmSetting.lblHeadFullScreen" value="Kokoruutu"/>
-      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Hide toolbar"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Piilota työkalupalkki"/>
       <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Hide thumbnail bar"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Tallenna katsottu kuva kääntämisen jälkeen"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Valitsen kuvien muokkausohjelma"/>

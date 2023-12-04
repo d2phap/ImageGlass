@@ -35,7 +35,7 @@
       <Item key="frmMain.mnuMainViewPrevious" value="이전 이미지 보기"/>
       <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="← / PageUp"/>
       <Item key="frmMain.mnuMainGoto" value="이동…"/>
-      <Item key="frmMain.mnuMainGotoFirst" value="처음 이미지로 이동"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Go to the first image"/>
       <Item key="frmMain.mnuMainGotoLast" value="마지막 이미지로 이동"/>
       <Item key="frmMain.mnuMainNextPage" value="다음 이미지 보기"/>
       <Item key="frmMain.mnuMainPrevPage" value="이전 이미지 보기"/>
@@ -44,7 +44,7 @@
       <Item key="frmMain.mnuMainZoom" value="확대/축소"/>
       <Item key="frmMain.mnuMainZoomIn" value="확대"/>
       <Item key="frmMain.mnuMainZoomOut" value="축소"/>
-      <Item key="frmMain.mnuCustomZoom" value="사용자 지정 확대/축소..."/>
+      <Item key="frmMain.mnuCustomZoom" value="Custom zoom…"/>
       <Item key="frmMain.mnuCustomZoom._Text" value="새 확대/축소 값 입력"/>
       <Item key="frmMain.mnuMainScaleToFit" value="비율 맞춤"/>
       <Item key="frmMain.mnuMainScaleToFill" value="비율 채움"/>
@@ -182,7 +182,7 @@
       <Item key="frmSetting.chkUseTouchGesture" value="터치 제스처 지원 허용"/>
       <Item key="frmSetting.lblBackGroundColor" value="배경 색상"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="재설정"/>
-      <Item key="frmSetting.lblHeadPanning" value="패닝"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
       <Item key="frmSetting.lblVertPanningSpeed" value="수직 패닝 속도"/>
       <Item key="frmSetting.lblHorzPanningSpeed" value="수평 패닝 속도"/>
       <Item key="frmSetting.lblHeadOthers" value="기타"/>

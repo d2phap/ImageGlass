@@ -100,7 +100,7 @@ public partial class FrmMain : ThemedForm
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
         ToolbarContext.UpdateTheme(newIconHeight);
-        UpdatePageNavToolbarButtonState();
+        UpdateFrameNavToolbarButtonState();
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
@@ -1005,7 +1005,7 @@ public partial class FrmMain : ThemedForm
     {
         Local.IsImageError = false;
 
-        PicMain.ClearMessage();
+        PicMain.ClearMessage(false);
         if (e.Index >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], null, delayMs: 1500);
@@ -1072,8 +1072,7 @@ public partial class FrmMain : ThemedForm
         else if (!(e.Data?.ImgData.IsImageNull ?? true))
         {
             // delete clipboard image
-            Local.ClipboardImage?.Dispose();
-            Local.ClipboardImage = null;
+            ClearClipboardImage();
             Local.TempImagePath = null;
 
 
@@ -1086,17 +1085,16 @@ public partial class FrmMain : ThemedForm
                 enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
             }
 
-            var resetZoom = e.IsViewingSeparateFrame ? false : e.ResetZoom;
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData,
                 autoAnimate: !e.IsViewingSeparateFrame,
                 frameIndex: e.FrameIndex,
-                resetZoom: resetZoom,
+                resetZoom: e.ResetZoom,
                 enableFading: enableFadingTrainsition);
 
             // update window fit
-            if (resetZoom && Config.EnableWindowFit)
+            if (e.ResetZoom && Config.EnableWindowFit)
             {
                 FitWindowToImage();
             }
@@ -1157,43 +1155,7 @@ public partial class FrmMain : ThemedForm
 
     private void ImageTransform_Changed(object? sender, EventArgs e)
     {
-        const string TOOLBAR_BUTTON_SAVE_TRANSFORMATION = "Btn_SaveImageTransformation";
-        using var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
-
-        // has changes, show Save button
-        if (Local.ImageTransform.HasChanges && btnItem == null)
-        {
-            var menuAction = nameof(MnuSave);
-            var menuText = MnuSave.Text;
-
-            // use Save as button
-            if (Local.Metadata?.SupportsWriting == false)
-            {
-                menuAction = nameof(MnuSaveAs);
-                menuText = MnuSaveAs.Text;
-            }
-
-            Toolbar.AddItem(new()
-            {
-                Id = TOOLBAR_BUTTON_SAVE_TRANSFORMATION,
-                Image = nameof(Config.Theme.ToolbarIcons.Save),
-                OnClick = new(menuAction),
-                Alignment = ToolStripItemAlignment.Right,
-                Text = menuText ?? string.Empty,
-                DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
-            }, 1);
-
-            Toolbar.UpdateAlignment();
-            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
-        }
-        // no change, hide button
-        else if (!Local.ImageTransform.HasChanges && btnItem != null)
-        {
-            Toolbar.Items.RemoveByKey(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
-
-            Toolbar.UpdateAlignment();
-            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
-        }
+        LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
     }
 
 
@@ -1451,7 +1413,7 @@ public partial class FrmMain : ThemedForm
                 }
 
                 // update frame info on PageNav toolbar
-                UpdatePageNavToolbarButtonState();
+                UpdateFrameNavToolbarButtonState();
             }
 
             // Dimension
@@ -2309,9 +2271,9 @@ public partial class FrmMain : ThemedForm
         IG_ToggleCropTool();
     }
 
-    private void MnuPageNav_Click(object sender, EventArgs e)
+    private void MnuFrameNav_Click(object sender, EventArgs e)
     {
-        IG_TogglePageNavTool();
+        IG_ToggleFrameNavTool();
     }
 
     private void MnuGetMoreTools_Click(object sender, EventArgs e)

@@ -18,29 +18,29 @@
       <Item key="_.AfterOpeningEditAppAction._Close" value="Κλείσιμο"/>
       <Item key="frmMain.mnuMainFile" value="Αρχείο"/>
       <Item key="frmMain.mnuMainOpenFile" value="Άνοιγμα αρχείου…"/>
-      <Item key="frmMain.mnuMainOpenImageData" value="Άνοιγμα εικόνας από το πρόχειρο"/>
-      <Item key="frmMain.mnuMainNewWindow" value="Άνοιγμα σε νέο παράθυρο"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Άνοιγμα δεδομένων εικόνας από το πρόχειρο"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Άνοιγμα νέου παραθύρου"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Δεν είναι δυνατό το άνοιγμα νέου παραθύρου επειδή επιτρέπεται μόνο μία εμφάνιση"/>
       <Item key="frmMain.mnuSaveImage" value="Αποθήκευση εικόνας"/>
       <Item key="frmMain.mnuMainSaveAs" value="Αποθήκευση εικόνας ως…"/>
       <Item key="frmMain.mnuMainRefresh" value="Ανανέωση"/>
-      <Item key="frmMain.mnuMainReloadImage" value="Νέα φόρτωση εικόνας"/>
-      <Item key="frmMain.mnuMainReloadImageList" value="Νέα φόρτωση λίστας εικόνων"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Επαναφόρτωση εικόνας"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Επαναφόρτωση λίστας εικόνων"/>
       <Item key="frmMain.mnuOpenWith" value="Άνοιγμα με…"/>
       <Item key="frmMain.mnuMainEditImage" value="Επεξεργασία εικόνας {0}…"/>
       <Item key="frmMain.mnuMainPrint" value="Εκτύπωση…"/>
       <Item key="frmMain.mnuMainNavigation" value="Πλοήγηση"/>
-      <Item key="frmMain.mnuMainViewNext" value="Επόμενη εικόνα"/>
-      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Δεξί Βέλος / PageDown"/>
-      <Item key="frmMain.mnuMainViewPrevious" value="Προηγούμενη εικόνα"/>
-      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Αριστερό Βέλος / PageUp"/>
+      <Item key="frmMain.mnuMainViewNext" value="Προβολή επόμενης εικόνας"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Δεξί βέλος / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Προβολή προηγούμενης εικόνας"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Αριστερό βέλος / PageUp"/>
       <Item key="frmMain.mnuMainGoto" value="Μετάβαση σε…"/>
       <Item key="frmMain.mnuMainGotoFirst" value="Μετάβαση στην πρώτη εικόνα"/>
       <Item key="frmMain.mnuMainGotoLast" value="Μετάβαση στην τελευταία εικόνα"/>
-      <Item key="frmMain.mnuMainNextPage" value="Επόμενη σελίδα"/>
-      <Item key="frmMain.mnuMainPrevPage" value="Προηγούμενη σελίδα"/>
-      <Item key="frmMain.mnuMainFirstPage" value="Πρώτη σελίδα"/>
-      <Item key="frmMain.mnuMainLastPage" value="Τελευταία σελίδα"/>
+      <Item key="frmMain.mnuMainNextPage" value="Προβολή επόμενης σελίδας"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Προβολή προηγούμενης σελίδας"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Προβολή της πρώτης σελίδας"/>
+      <Item key="frmMain.mnuMainLastPage" value="Προβολή της τελευταίας σελίδας"/>
       <Item key="frmMain.mnuMainZoom" value="Ζουμ"/>
       <Item key="frmMain.mnuMainZoomIn" value="Μεγέθυνση"/>
       <Item key="frmMain.mnuMainZoomOut" value="Σμίκρυνση"/>
@@ -60,7 +60,7 @@
       <Item key="frmMain.mnuMainChannels._Green" value="Πράσινο"/>
       <Item key="frmMain.mnuMainChannels._Blue" value="Μπλε"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Μαύρο"/>
-      <Item key="frmMain.mnuMainChannels._Alpha" value="Άλφα"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Διαφάνεια"/>
       <Item key="frmMain.mnuLoadingOrder" value="Σειρά φόρτωσης"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Περιστροφή αριστερά"/>
       <Item key="frmMain.mnuMainRotateRight" value="Περιστροφή δεξιά"/>
@@ -69,7 +69,7 @@
       <Item key="frmMain.mnuMainRename" value="Μετονομασία εικόνας…"/>
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="Μετακίνηση στον κάδο ανακύκλωσης"/>
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Διαγραφή από το σκληρό δίσκο"/>
-      <Item key="frmMain.mnuMainExtractPages" value="Εξαγωγή σελίδων εικόνας ({0})…"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Εξαγωγή σελίδων εικόνων ({0})…"/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="Έναρξη / Διακοπή κινούμενης εικόνας"/>
       <Item key="frmMain.mnuMainSetAsDesktop" value="Ορισμός ως φόντο επιφάνειας εργασίας"/>
       <Item key="frmMain.mnuMainSetAsLockImage" value="Ορισμός ως εικόνα οθόνης κλειδώματος"/>
@@ -120,7 +120,7 @@
       <Item key="frmMain._GotoDialogText" value="Εισάγετε τον δείκτη της εικόνας για να την δείτε. Πατήστε ENTER"/>
       <Item key="frmMain._DeleteDialogText" value="Διαγραφή του αρχείου '{0}' ;"/>
       <Item key="frmMain._DeleteDialogTitle" value="Επιβεβαίωση"/>
-      <Item key="frmMain._ExtractPageText" value="Εξαγωγή σελίδων εικόνας. Παρακαλώ επιλέξτε φάκελο εξόδου."/>
+      <Item key="frmMain._ExtractPageText" value="Εξαγωγή σελίδων εικόνων. Παρακαλώ επιλέξτε φάκελο εξόδου."/>
       <Item key="frmMain._FullScreenMessage" value="Πατήστε {0} για έξοδο από τη λειτουργία πλήρους οθόνης."/>
       <Item key="frmMain._SlideshowMessage" value="Πατήστε ESC για έξοδο από την προβολή παρουσίασης.&#10; Κάντε δεξί κλικ για άνοιγμα του μενού περιβάλλοντος."/>
       <Item key="frmMain._SlideshowMessagePause" value="Η προβολή παρουσίασης είναι σε παύση"/>
@@ -153,7 +153,7 @@
       <Item key="frmAbout.lblReferences" value="Αναφορές"/>
       <Item key="frmAbout.lblVersion" value="Έκδοση: {0}"/>
       <Item key="frmAbout.lblInfoContact" value="Επικοινωνία"/>
-      <Item key="frmAbout.lblSoftwareUpdate" value="Ενημέρωση προγράμματος"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Ενημερώσεις λογισμικού"/>
       <Item key="frmAbout.lnkCheckUpdate" value="» Έλεγχος για ενημέρωση…"/>
       <Item key="frmAbout._Text" value="Σχετικά"/>
       <Item key="frmAbout._PortableText" value="[Φορητή έκδοση]"/>
@@ -322,11 +322,11 @@
       <Item key="frmSetting.txtThemeInfo._Website" value="Ιστοσελίδα"/>
       <Item key="frmSetting.txtThemeInfo._Compatibility" value="Συμβατότητα"/>
       <Item key="frmSetting.txtThemeInfo._Description" value="Περιγραφή"/>
-      <Item key="frmSetting.btnThemeInstall._Success" value="Το θέμα εγκαταστάθηκε με επιτυχία!"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Το θέμα σας εγκαταστάθηκε με επιτυχία!"/>
       <Item key="frmSetting.btnThemeInstall._Error" value="Δεν είναι δυνατή η εγκατάσταση του θέματος."/>
       <Item key="frmSetting.btnThemeUninstall._Error" value="Δεν είναι δυνατή η απεγκατάσταση του επιλεγμένου θέματος."/>
-      <Item key="frmSetting.btnThemeSaveAs._Success" value="Το επιλεγμένο θέμα έχει αποθηκευτεί στο {0}"/>
-      <Item key="frmSetting.btnThemeSaveAs._Error" value="Δεν είναι δυνατή η αποθήκευση του επιλεγμένου θέματος."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Το επιλεγμένο σας θέμα έχει αποθηκευτεί στο {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Δεν είναι δυνατή η αποθήκευση του επιλεγμένου σας θέματος."/>
       <Item key="frmSetting.btnThemeApply._Success" value="Το επιλεγμένο θέμα εφαρμόστηκε με επιτυχία!"/>
       <Item key="frmSetting.btnThemeApply._Error" value="Δεν είναι δυνατή η εφαρμογή του επιλεγμένου θέματος."/>
       <Item key="frmSetting.btnKeyReset" value="Επαναφορά προεπιλογών"/>

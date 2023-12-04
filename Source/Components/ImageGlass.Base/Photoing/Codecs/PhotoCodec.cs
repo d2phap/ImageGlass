@@ -542,7 +542,7 @@ public static class PhotoCodec
             // write base64 file
             using var sw = new StreamWriter(destFilePath);
             await sw.WriteAsync(header + base64).ConfigureAwait(false);
-            await sw.FlushAsync().ConfigureAwait(false);
+            await sw.FlushAsync(token).ConfigureAwait(false);
             sw.Close();
         }
         catch (OperationCanceledException) { }
@@ -603,7 +603,7 @@ public static class PhotoCodec
                 // write base64 file
                 using var sw = new StreamWriter(destFilePath);
                 await sw.WriteAsync(header + base64);
-                await sw.FlushAsync().ConfigureAwait(false);
+                await sw.FlushAsync(token).ConfigureAwait(false);
                 sw.Close();
 
                 return;

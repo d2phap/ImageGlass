@@ -107,7 +107,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_Refresh()
     {
-        PicMain.Refresh();
+        PicMain.Refresh(true, false, Config.EnableWindowFit);
     }
 
 
@@ -888,7 +888,7 @@ public partial class FrmMain
         }
 
         // print an image file
-        // rename ext FAX -> TIFF to multipage printing
+        // rename ext FAX -> TIFF to multi-frame printing
         else if (ext.Equals(".FAX", StringComparison.OrdinalIgnoreCase))
         {
             fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
@@ -1227,7 +1227,7 @@ public partial class FrmMain
         // cancel the current loading image
         _loadCancelTokenSrc?.Cancel();
 
-        Local.ClipboardImage?.Dispose();
+        ClearClipboardImage();
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
 
@@ -1247,6 +1247,12 @@ public partial class FrmMain
         LoadImageInfo();
     }
 
+
+    public static void ClearClipboardImage()
+    {
+        Local.ClipboardImage?.Dispose();
+        Local.ClipboardImage = null;
+    }
 
     #endregion // Clipboard functions
 
@@ -1421,8 +1427,6 @@ public partial class FrmMain
         Exception? error = null;
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
-        _fileWatcher.Stop();
-
 
         // save the selection
         var hasSelection = PicMain.EnableSelection && !PicMain.SourceSelection.IsEmpty;
@@ -1494,7 +1498,7 @@ public partial class FrmMain
         else if (saveSource == ImageSaveSource.Clipboard)
         {
             // clear the clipboard image
-            LoadClipboardImage(null);
+            ClearClipboardImage();
 
             // manually update the change if FileWatcher is not enabled
             if (!Config.EnableRealTimeFileUpdate)
@@ -1516,15 +1520,6 @@ public partial class FrmMain
         }
 
 
-        // reload image
-        IG_Reload();
-        Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
-        if (Config.EnableRealTimeFileUpdate)
-        {
-            _fileWatcher.Start();
-        }
-
-
         // emits ImageSaved event
         Local.RaiseImageSavedEvent(new ImageSaveEventArgs(srcFilePath, destFilePath, saveSource));
 
@@ -1537,12 +1532,15 @@ public partial class FrmMain
     /// </summary>
     private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
     {
+        Exception? error = null;
+        Local.IsBusy = true;
+
         try
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
 
-            // only save the current frame if Page Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+            // only save the current frame if Frame Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
                 ? (int)Local.CurrentFrameIndex
                 : -1;
 
@@ -1570,10 +1568,12 @@ public partial class FrmMain
         }
         catch (Exception ex)
         {
-            return ex;
+            error = ex;
         }
 
-        return null;
+
+        Local.IsBusy = false;
+        return error;
     }
 
 
@@ -1586,8 +1586,8 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
 
-            // only save the current frame if Page Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+            // only save the current frame if Frame Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
                 ? (int)Local.CurrentFrameIndex
                 : -1;
 
@@ -2019,7 +2019,7 @@ public partial class FrmMain
             PicMain.StopCurrentAnimator();
         }
 
-        UpdatePageNavToolbarButtonState();
+        UpdateFrameNavToolbarButtonState();
     }
 
 
@@ -2196,7 +2196,7 @@ public partial class FrmMain
     /// <summary>
     /// Toggles Window fit.
     /// </summary>
-    public bool IG_ToggleWindowFit(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleWindowFit(bool? enable = null)
     {
         enable ??= !Config.EnableWindowFit;
         Config.EnableWindowFit = enable.Value;
@@ -2206,7 +2206,7 @@ public partial class FrmMain
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -2216,21 +2216,9 @@ public partial class FrmMain
         // update menu item state
         MnuWindowFit.Checked = Config.EnableWindowFit;
 
-        // disable maximize button
-        MaximizeBox = !Config.EnableWindowFit;
 
         // update toolbar items state
         UpdateToolbarItemsState();
-
-        if (showInAppMessage)
-        {
-            var langPath = $"{Name}.{nameof(MnuWindowFit)}";
-            var message = Config.EnableWindowFit
-                ? Config.Language[$"{langPath}._Enable"]
-                : Config.Language[$"{langPath}._Disable"];
-
-            PicMain.ShowMessage("", message, Config.InAppMessageDuration);
-        }
 
         return Config.EnableWindowFit;
     }
@@ -2373,7 +2361,7 @@ public partial class FrmMain
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -2398,13 +2386,6 @@ public partial class FrmMain
             {
                 PicMain.ShowMessage(
                     string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
                     Config.InAppMessageDuration);
             }
         }
@@ -2416,7 +2397,7 @@ public partial class FrmMain
     /// <summary>
     /// Toggles full screen mode.
     /// </summary>
-    public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleFullScreen(bool? enable = null)
     {
         enable ??= !Config.EnableFullScreen;
         Config.EnableFullScreen = enable.Value;
@@ -2427,7 +2408,7 @@ public partial class FrmMain
             if (Config.EnableWindowFit)
             {
                 _isWindowFitBeforeFullscreen = true;
-                IG_ToggleWindowFit(false, false);
+                IG_ToggleWindowFit(false);
             }
 
             // exit frameless
@@ -2454,33 +2435,12 @@ public partial class FrmMain
         if (!Config.EnableFullScreen)
         {
             if (_isFramelessBeforeFullscreen) IG_ToggleFrameless(true, false);
-            if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true, false);
-        }
-        else
-        {
-            // update toolbar items state
-            UpdateToolbarItemsState();
+            if (_isWindowFitBeforeFullscreen) IG_ToggleWindowFit(true);
         }
 
+        // update toolbar items state
+        UpdateToolbarItemsState();
 
-        if (showInAppMessage)
-        {
-            var langPath = $"{Name}.{nameof(MnuFullScreen)}";
-
-            if (Config.EnableFullScreen)
-            {
-                PicMain.ShowMessage(
-                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
-                    Config.InAppMessageDuration);
-            }
-        }
 
         return Config.EnableFullScreen;
     }
@@ -3012,14 +2972,14 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Toggles Page naviagtion tool.
+    /// Toggles Frame navigation tool.
     /// </summary>
-    public bool IG_TogglePageNavTool(bool? visible = null)
+    public bool IG_ToggleFrameNavTool(bool? visible = null)
     {
-        visible ??= MnuPageNav.Checked;
+        visible ??= MnuFrameNav.Checked;
 
         // update menu item state
-        MnuPageNav.Checked = visible.Value;
+        MnuFrameNav.Checked = visible.Value;
 
         // update toolbar items state
         UpdateToolbarItemsState();
@@ -3042,7 +3002,7 @@ public partial class FrmMain
             // display frame info
             ToolbarContext.AddItem(new()
             {
-                Id = Const.PAGE_NAV_TOOLBAR_FRAME_INFO,
+                Id = Const.FRAME_NAV_TOOLBAR_FRAME_INFO,
                 DisplayStyle = ToolStripItemDisplayStyle.Text,
             });
 
@@ -3066,7 +3026,7 @@ public partial class FrmMain
             // play/pause frame animation
             ToolbarContext.AddItem(new()
             {
-                Id = Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
+                Id = Const.FRAME_NAV_TOOLBAR_TOGGLE_ANIMATION,
                 Image = nameof(Config.Theme.ToolbarIcons.Play),
                 OnClick = new(nameof(MnuToggleImageAnimation)),
             });
@@ -3104,20 +3064,20 @@ public partial class FrmMain
         ToolbarContext.ResumeLayout(true);
 
 
-        // update frame info on PageNav toolbar
-        UpdatePageNavToolbarButtonState();
+        // update frame info on Frame nav toolbar
+        UpdateFrameNavToolbarButtonState();
     }
 
 
     /// <summary>
-    /// Updates PageNav toolbar buttons state
+    /// Updates Frame nav toolbar buttons state
     /// </summary>
-    private void UpdatePageNavToolbarButtonState()
+    private void UpdateFrameNavToolbarButtonState()
     {
         if (!ToolbarContext.Visible) return;
 
         // update frame info
-        if (ToolbarContext.GetItem<ToolStripLabel>(Const.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
+        if (ToolbarContext.GetItem<ToolStripLabel>(Const.FRAME_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
         {
             var frameInfo = new StringBuilder(3);
             if (Local.Metadata != null)
@@ -3133,7 +3093,7 @@ public partial class FrmMain
 
 
         // update state of Toggle animation button
-        if (ToolbarContext.GetItem(Const.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
+        if (ToolbarContext.GetItem(Const.FRAME_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
         {
             btn.Enabled = PicMain.CanImageAnimate;
             if (btn.Tag is ToolbarItemTagModel model)

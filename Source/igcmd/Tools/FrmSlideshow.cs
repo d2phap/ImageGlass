@@ -178,7 +178,7 @@ public partial class FrmSlideshow : ThemedForm
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
 
 
             // to hide the animation effect of window border
@@ -190,7 +190,7 @@ public partial class FrmSlideshow : ThemedForm
             WindowSettings.SetPlacementToWindow(this,
                 WindowSettings.GetFrmMainPlacementFromConfig(SystemInformation.CaptionHeight, SystemInformation.CaptionHeight));
 
-            IG_ToggleFullScreen(true, false);
+            IG_ToggleFullScreen(true);
         }
         // windowed slideshow
         else
@@ -203,7 +203,7 @@ public partial class FrmSlideshow : ThemedForm
             IG_ToggleFrameless(Config.EnableFrameless, false);
 
             // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+            IG_ToggleWindowFit(Config.EnableWindowFit);
         }
 
 
@@ -222,6 +222,8 @@ public partial class FrmSlideshow : ThemedForm
         // start slideshow
         SetSlideshowState(true);
 
+        // focus on PicMain
+        PicMain.Focus();
     }
 
 
@@ -936,7 +938,7 @@ public partial class FrmSlideshow : ThemedForm
         {
             var isImageBigForFading = photo.Metadata.RenderedWidth > 8000
                 || photo.Metadata.RenderedHeight > 8000;
-            var enableFading = !isImageBigForFading;
+            var enableFading = !isImageBigForFading && Config.EnableImageTransition;
 
             // set the main image
             PicMain.SetImage(photo.ImgData,
@@ -1127,8 +1129,7 @@ public partial class FrmSlideshow : ThemedForm
     {
         var intervalTo = Config.UseRandomIntervalForSlideshow ? Config.SlideshowIntervalTo : Config.SlideshowInterval;
 
-        var ran = new Random();
-        var interval = (float)(ran.NextDouble() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
+        var interval = (Random.Shared.NextSingle() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
 
         return interval;
     }
@@ -1640,7 +1641,7 @@ public partial class FrmSlideshow : ThemedForm
     /// <summary>
     /// Toggles Window fit.
     /// </summary>
-    public bool IG_ToggleWindowFit(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleWindowFit(bool? enable = null)
     {
         enable ??= !Config.EnableWindowFit;
         Config.EnableWindowFit = enable.Value;
@@ -1650,7 +1651,7 @@ public partial class FrmSlideshow : ThemedForm
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -1660,18 +1661,6 @@ public partial class FrmSlideshow : ThemedForm
         // update menu item state
         MnuWindowFit.Checked = Config.EnableWindowFit;
 
-        // disable maximize button
-        MaximizeBox = !Config.EnableWindowFit;
-
-        if (showInAppMessage)
-        {
-            var langPath = $"FrmMain.{nameof(MnuWindowFit)}";
-            var message = Config.EnableWindowFit
-                ? Config.Language[$"{langPath}._Enable"]
-                : Config.Language[$"{langPath}._Disable"];
-
-            PicMain.ShowMessage("", message, Config.InAppMessageDuration);
-        }
 
         return Config.EnableWindowFit;
     }
@@ -1784,7 +1773,7 @@ public partial class FrmSlideshow : ThemedForm
             // exit full screen
             if (Config.EnableFullScreen)
             {
-                IG_ToggleFullScreen(false, false);
+                IG_ToggleFullScreen(false);
             }
         }
 
@@ -1804,13 +1793,6 @@ public partial class FrmSlideshow : ThemedForm
 
                 PicMain.ShowMessage(
                     string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
                     Config.InAppMessageDuration);
             }
         }
@@ -1847,7 +1829,7 @@ public partial class FrmSlideshow : ThemedForm
     /// <summary>
     /// Toggles full screen mode.
     /// </summary>
-    public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleFullScreen(bool? enable = null)
     {
         enable ??= !Config.EnableFullscreenSlideshow;
         Config.EnableFullscreenSlideshow = enable.Value;
@@ -1857,13 +1839,13 @@ public partial class FrmSlideshow : ThemedForm
             // exit full screen
             if (Config.EnableWindowFit)
             {
-                IG_ToggleWindowFit(false, false);
+                IG_ToggleWindowFit(false);
             }
 
             // exit frameless
             if (Config.EnableFrameless)
             {
-                IG_ToggleFrameless(false, false);
+                IG_ToggleFrameless(false);
             }
         }
 
@@ -1874,25 +1856,6 @@ public partial class FrmSlideshow : ThemedForm
 
         // update menu item state
         MnuFullScreen.Checked = Config.EnableFullscreenSlideshow;
-
-        if (showInAppMessage)
-        {
-            var langPath = $"FrmMain.{nameof(MnuFullScreen)}";
-
-            if (Config.EnableFullscreenSlideshow)
-            {
-                PicMain.ShowMessage(
-                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
-                    Config.Language[$"{langPath}._Enable"],
-                    Config.InAppMessageDuration);
-            }
-            else
-            {
-                PicMain.ShowMessage("",
-                    Config.Language[$"{langPath}._Disable"],
-                    Config.InAppMessageDuration);
-            }
-        }
 
         return Config.EnableFullscreenSlideshow;
     }

@@ -44,7 +44,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackdropStyle = Base.BackdropStyle.Mica;
-            ClientSize = new Size(594, 584);
+            ClientSize = new Size(594, 600);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(0);
             MinimizeBox = false;

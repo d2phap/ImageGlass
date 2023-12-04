@@ -82,6 +82,7 @@ public enum ZoomChangeSource
 {
     Unknown,
     ZoomMode,
+    SizeChanged,
 }
 
 

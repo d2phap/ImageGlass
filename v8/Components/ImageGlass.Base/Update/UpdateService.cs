@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CliWrap;
 using CliWrap.Buffered;
+using Microsoft.Win32;
 
 namespace ImageGlass.Base.Update {
     public class UpdateService {
@@ -95,7 +96,8 @@ namespace ImageGlass.Base.Update {
             if (newVersion.Major < 9) return list;
 
             // Windows 64-bit
-            list.Add("64-bit Windows", false); // Environment.Is64BitOperatingSystem);
+            list.Add("64-bit Windows", Environment.Is64BitOperatingSystem);
+
 
             // .NET Desktop Runtime versions
             try {
@@ -103,13 +105,7 @@ namespace ImageGlass.Base.Update {
                 var cmdOutput = await cli.WithArguments("--list-runtimes")
                     .ExecuteBufferedAsync(Encoding.UTF8);
 
-                if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 6")) {
-                    list.Add(".NET Desktop Runtime 6.0", true);
-                }
-                else if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 7")) {
-                    list.Add(".NET Desktop Runtime 7.0", true);
-                }
-                else if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 8")) {
+                if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 8")) {
                     list.Add(".NET Desktop Runtime 8.0", true);
                 }
                 else {
@@ -118,6 +114,28 @@ namespace ImageGlass.Base.Update {
             }
             catch {
                 list.Add(".NET Desktop Runtime", false);
+            }
+
+
+            // WebView2 runtime
+            try {
+                using var lmKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}", false);
+                var installedVersion = lmKey.GetValue("pv", string.Empty).ToString();
+
+                if (string.IsNullOrWhiteSpace(installedVersion)) {
+                    using var cuKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}", false);
+                    installedVersion = cuKey.GetValue("pv", string.Empty).ToString();
+                }
+
+                if (string.IsNullOrWhiteSpace(installedVersion)) {
+                    throw new Exception("WebView2 Runtime not found");
+                }
+                else {
+                    list.Add("WebView2 Runtime", true);
+                }
+            }
+            catch {
+                list.Add("WebView2 Runtime", false);
             }
 
             return list;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="DEHNCKA (Denis Velicanov), inkrimit (Вынгилев Алексей), DanRotaru (DanRotaru), zelyc81 (Гапоненко Евгений), Dimmimix (Dimmimix)" description="Russian" minVersion="8.8" isRightToLeftLayout="No"/>
+    <Info langCode="ru-RU" langName="Русский" author="d2phap (Phap Dieu Duong), DEHNCKA (Denis Velikanov), inkrimit (Вынгилев Алексей), DanRotaru (DanRotaru), zelyc81 (Гапоненко Евгений), Dimmimix (Dimmimix)" description="Russian" minVersion="8.8" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Некоторые настройки несовместимы с вашей версией ImageGlass {0}. Рекомендуется обновить их, прежде чем продолжить:&#10;&#10;— нажмите &quot;Да&quot;, чтобы узнать об изменениях.&#10;— нажмите &quot;Нет&quot;, чтобы запустить ImageGlass с настройками по умолчанию."/>
       <Item key="_.ImageOrderBy._Name" value="Имя (по умолчанию)"/>
@@ -152,7 +152,7 @@
       <Item key="frmAbout.lblComponent" value="Компоненты"/>
       <Item key="frmAbout.lblReferences" value="Дополнительные материалы"/>
       <Item key="frmAbout.lblVersion" value="Версия: {0}"/>
-      <Item key="frmAbout.lblInfoContact" value="Контакты"/>
+      <Item key="frmAbout.lblInfoContact" value="Обратная связь"/>
       <Item key="frmAbout.lblSoftwareUpdate" value="Обновление программы"/>
       <Item key="frmAbout.lnkCheckUpdate" value="Проверить обновления ..."/>
       <Item key="frmAbout._Text" value="О программе"/>
