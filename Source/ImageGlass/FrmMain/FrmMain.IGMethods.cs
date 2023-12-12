@@ -1972,23 +1972,27 @@ public partial class FrmMain
 
         if (result == null || result.ExitResult == PopupExitResult.OK)
         {
+            Local.IsBusy = true;
+
             try
             {
                 IG_Unload();
                 BHelper.DeleteFile(filePath, moveToRecycleBin);
 
-                // manually update the change if FileWatcher is not enabled
-                if (!Config.EnableRealTimeFileUpdate)
-                {
-                    Local.Images.Remove(Local.CurrentIndex);
-                    Gallery.Items.RemoveAt(Local.CurrentIndex);
-                    _ = ViewNextCancellableAsync(0);
-                }
+
+                // manually update the change because FileWatcher is disabled when Local.IsBusy = true
+                Local.Images.Remove(Local.CurrentIndex);
+                Gallery.Items.RemoveAt(Local.CurrentIndex);
+
+                Local.CurrentIndex = Math.Min(Local.Images.Length - 1, Local.CurrentIndex);
+                _ = ViewNextCancellableAsync(0);
             }
             catch (Exception ex)
             {
                 Config.ShowError(this, ex.Message, title);
             }
+
+            Local.IsBusy = false;
         }
     }
 
