@@ -1454,11 +1454,6 @@ public partial class FrmMain
         // image is empty
         else
         {
-            if (Config.EnableRealTimeFileUpdate)
-            {
-                _fileWatcher.Start();
-            }
-
             return false;
         }
 
@@ -1473,11 +1468,6 @@ public partial class FrmMain
                 title: Config.Language[langPath],
                 heading: string.Format(Config.Language[$"{langPath}._Error"]),
                 formOwner: this);
-
-            if (Config.EnableRealTimeFileUpdate)
-            {
-                _fileWatcher.Start();
-            }
 
             return false;
         }
