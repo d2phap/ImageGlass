@@ -51,7 +51,7 @@ public partial class FrmMain : ThemedForm
     private bool _isFramelessBeforeFullscreen;
     private bool _isWindowFitBeforeFullscreen;
     private bool _showToolbar = true;
-    private bool _showThumbnails = true;
+    private bool _showGallery = true;
     private Rectangle _windowBound;
     private FormWindowState _windowState = FormWindowState.Normal;
 

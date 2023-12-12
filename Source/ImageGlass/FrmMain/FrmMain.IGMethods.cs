@@ -2462,7 +2462,7 @@ public partial class FrmMain
             _windowBound = Bounds;
             _windowState = WindowState;
             if (hideToolbar) _showToolbar = Config.ShowToolbar;
-            if (hideThumbnails) _showThumbnails = Config.ShowGallery;
+            if (hideThumbnails) _showGallery = Config.ShowGallery;
 
             if (changeWindowState)
             {
@@ -2496,7 +2496,7 @@ public partial class FrmMain
 
             // restore last state of the window
             if (hideToolbar) Config.ShowToolbar = _showToolbar;
-            if (hideThumbnails) Config.ShowGallery = _showThumbnails;
+            if (hideThumbnails) Config.ShowGallery = _showGallery;
 
             if (hideToolbar && Config.ShowToolbar)
             {
