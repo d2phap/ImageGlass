@@ -1274,6 +1274,7 @@ public partial class FrmMain : ThemedForm
 
         var updateAll = ImageInfo.IsNull || types == null;
         var clipboardImageText = string.Empty;
+        var isClipboardImage = Local.ClipboardImage != null && !Local.ClipboardImage.ComObject.IsDisposed;
 
 
         // AppName
@@ -1289,7 +1290,8 @@ public partial class FrmMain : ThemedForm
         // Zoom
         if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
-            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom))
+                && (Local.Images.Length > 0 || isClipboardImage))
             {
                 ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n0}%";
             }
@@ -1301,7 +1303,7 @@ public partial class FrmMain : ThemedForm
 
 
         // the viewing image is a clipboard image
-        if (Local.ClipboardImage != null && !Local.ClipboardImage.ComObject.IsDisposed)
+        if (isClipboardImage)
         {
             clipboardImageText = Config.Language[$"{Name}._ClipboardImage"];
 
