@@ -83,12 +83,21 @@ public class Source
         try
         {
             var userConfig = new ConfigurationBuilder()
-              .SetBasePath(App.ConfigDir(PathType.Dir))
-              .AddJsonFile(DefaultFilename, optional: true)
-              .AddJsonFile(UserFilename, optional: true)
-              .AddCommandLine(args)
-              .AddJsonFile(AdminFilename, optional: true)
-              .Build();
+                // igconfig.default.json
+                .SetBasePath(App.StartUpDir())
+                .AddJsonFile(DefaultFilename, optional: true)
+
+                // igconfig.json
+                .SetBasePath(App.ConfigDir(PathType.Dir))
+                .AddJsonFile(UserFilename, optional: true)
+
+                // command line
+                .AddCommandLine(args)
+
+                // igconfig.admin.json
+                .SetBasePath(App.StartUpDir())
+                .AddJsonFile(AdminFilename, optional: true)
+                .Build();
 
             return userConfig;
         }
@@ -97,11 +106,11 @@ public class Source
 
         // fall back to default config if user config is invalid
         var defaultConfig = new ConfigurationBuilder()
-                .SetBasePath(App.ConfigDir(PathType.Dir))
-                .AddJsonFile(DefaultFilename, optional: true)
-                .AddCommandLine(args)
-                .AddJsonFile(AdminFilename, optional: true)
-                .Build();
+            .SetBasePath(App.StartUpDir())
+            .AddJsonFile(DefaultFilename, optional: true) // igconfig.default.json
+            .AddCommandLine(args) // command line
+            .AddJsonFile(AdminFilename, optional: true) // igconfig.admin.json
+            .Build();
 
         return defaultConfig;
     }
