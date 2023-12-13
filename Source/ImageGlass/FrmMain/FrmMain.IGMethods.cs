@@ -511,7 +511,7 @@ public partial class FrmMain
 
         if (frm.ShowDialog(this) != DialogResult.OK) return;
 
-        if (int.TryParse(frm.Value.Trim(), out var newZoom))
+        if (float.TryParse(frm.Value.Trim(), out var newZoom))
         {
             PicMain.ZoomFactor = newZoom / 100f;
         }

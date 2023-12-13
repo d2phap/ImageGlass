@@ -1293,7 +1293,7 @@ public partial class FrmMain : ThemedForm
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom))
                 && (Local.Images.Length > 0 || isClipboardImage))
             {
-                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n0}%";
+                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n2}%";
             }
             else
             {
