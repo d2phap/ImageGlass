@@ -464,6 +464,13 @@ public partial class FrmMain
 
     public async Task ZoomInAsync()
     {
+        if (PicMain.ZoomLevels.Length > 0)
+        {
+            PicMain.ZoomIn();
+            return;
+        }
+        
+        // smooth zooming
         PicMain.StartAnimation(AnimationSource.ZoomIn);
         await Task.Delay(100);
 
@@ -481,6 +488,13 @@ public partial class FrmMain
 
     public async Task ZoomOutAsync()
     {
+        if (PicMain.ZoomLevels.Length > 0)
+        {
+            PicMain.ZoomOut();
+            return;
+        }
+
+        // smooth zooming
         PicMain.StartAnimation(AnimationSource.ZoomOut);
         await Task.Delay(100);
 
@@ -1175,6 +1189,7 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?

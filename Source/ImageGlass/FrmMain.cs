@@ -1024,7 +1024,6 @@ public partial class FrmMain : ThemedForm
     }
 
 
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
     private async Task HandleImageProgress_LoadedAsync(ImageLoadedEventArgs e)
     {
         var error = e.Error;
