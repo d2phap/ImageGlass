@@ -2086,16 +2086,15 @@ public partial class FrmMain
             // save image to temp file
             filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
         }
-        else if (ext != ".BMP")
+        else if (ext != ".BMP"
+            && ext != ".JPG"
+            && ext != ".JPEG"
+            && ext != ".PNG"
+            && ext != ".GIF")
         {
-            if (ext != ".JPG"
-                && ext != ".JPEG"
-                && ext != ".PNG"
-                && ext != ".GIF")
-            {
-                // save image to temp file
-                filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
-            }
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
+
         }
 
 

@@ -33,15 +33,15 @@ public static class Functions
     /// <summary>
     /// Set desktop wallpaper
     /// </summary>
-    /// <param name="bmpPath">Full path of BMP file</param>
+    /// <param name="imgPath">Full path of image file</param>
     /// <param name="styleStr">Wallpaper style, see <see cref="WallpaperStyle"/>.</param>
-    public static IgExitCode SetDesktopWallpaper(string bmpPath, string styleStr)
+    public static IgExitCode SetDesktopWallpaper(string imgPath, string styleStr)
     {
         return Run(() =>
         {
             if (Enum.TryParse(styleStr, out WallpaperStyle style))
             {
-                var exception = DesktopApi.SetWallpaper(bmpPath, style);
+                var exception = DesktopApi.SetWallpaper(imgPath, style);
 
                 if (exception != null)
                 {
