@@ -1448,7 +1448,7 @@ public partial class FrmMain
         if (hasSelection)
         {
             using var selectedImg = await GetSelectedImageAreaAsync();
-            error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath);
+            error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath, false);
             saveSource = ImageSaveSource.SelectedArea;
         }
 
@@ -1490,12 +1490,8 @@ public partial class FrmMain
         // success
         if (saveSource == ImageSaveSource.SelectedArea)
         {
-            // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableRealTimeFileUpdate)
-            {
-                // reload to view the updated image
-                IG_Reload();
-            }
+            // reload to view the updated image
+            IG_Reload();
 
             // reset selection
             PicMain.ClientSelection = default;
@@ -1505,12 +1501,8 @@ public partial class FrmMain
             // clear the clipboard image
             ClearClipboardImage();
 
-            // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableRealTimeFileUpdate)
-            {
-                // reload to view the updated image
-                IG_Reload();
-            }
+            // reload to view the updated image
+            IG_Reload();
         }
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
@@ -1535,7 +1527,7 @@ public partial class FrmMain
     /// <summary>
     /// Saves the given <see cref="WicBitmapSource"/> image to file.
     /// </summary>
-    private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
+    private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath, bool saveTransform = true)
     {
         Exception? error = null;
         Local.IsBusy = true;
@@ -1543,23 +1535,27 @@ public partial class FrmMain
         try
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
+            var transform = saveTransform ? Local.ImageTransform : null;
 
             // only save the current frame if Frame Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
-                ? (int)Local.CurrentFrameIndex
-                : -1;
+            if (saveTransform)
+            {
+                transform.FrameIndex = MnuFrameNav.Checked
+                    ? (int)Local.CurrentFrameIndex
+                    : -1;
+            }
 
             // base64 format
             if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
                 var srcExt = Path.GetExtension(srcPath);
-                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath, Local.ImageTransform);
+                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath, transform);
             }
             // other formats
             else
             {
-                await PhotoCodec.SaveAsync(wicImg, destPath, Local.ImageTransform, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(wicImg, destPath, transform, Config.ImageEditQuality);
             }
 
             // Issue #307: option to preserve the modified date/time
@@ -1569,7 +1565,7 @@ public partial class FrmMain
             }
 
             // reset transformations
-            Local.ImageTransform.Clear();
+            if (saveTransform) Local.ImageTransform.Clear();
         }
         catch (Exception ex)
         {
@@ -2856,6 +2852,12 @@ public partial class FrmMain
 
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
         if (img == null) return null;
+
+        // apply transforms
+        if (Local.ImageTransform.HasChanges)
+        {
+            PhotoCodec.TransformImage(img.ImgData.Image, Local.ImageTransform);
+        }
 
         return BHelper.CropImage(img.ImgData.Image, PicMain.SourceSelection);
     }
