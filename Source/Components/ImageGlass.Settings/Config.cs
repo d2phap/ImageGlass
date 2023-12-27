@@ -970,7 +970,7 @@ public static class Config
         #region SlideshowBackgroundColor
 
         bgValue = items.GetValue(nameof(SlideshowBackgroundColor), string.Empty);
-        if (!string.IsNullOrEmpty(bgValue))
+        if (!string.IsNullOrWhiteSpace(bgValue))
         {
             SlideshowBackgroundColor = BHelper.ColorFromHex(bgValue);
         }
@@ -1135,8 +1135,15 @@ public static class Config
 
 
         #region Other types items
+        if (BackgroundColor == Theme.Colors.BgColor)
+        {
+            settings.TryAdd(nameof(BackgroundColor), ""); // follow theme background
+        }
+        else
+        {
+            settings.TryAdd(nameof(BackgroundColor), BackgroundColor.ToHex());
+        }
 
-        settings.TryAdd(nameof(BackgroundColor), BackgroundColor.ToHex());
         settings.TryAdd(nameof(SlideshowBackgroundColor), SlideshowBackgroundColor.ToHex());
         settings.TryAdd(nameof(Language), Language.FileName);
 
@@ -1505,6 +1512,39 @@ public static class Config
             return;
         }
 
+        // load theme pack
+        var th = FindAndLoadThemePack(themeFolderName, useFallBackTheme, throwIfThemeInvalid);
+
+        // update the name of dark/light theme
+        if (darkMode) DarkTheme = th.FolderName;
+        else LightTheme = th.FolderName;
+
+        // load theme settings
+        BHelper.RunSync(th.LoadThemeSettingsAsync);
+
+        // load theme colors
+        th.LoadThemeColors();
+
+
+        // load background color
+        if (Config.BackgroundColor == Theme.Colors.BgColor || forceUpdateBackground)
+        {
+            Config.BackgroundColor = th.Colors.BgColor;
+        }
+
+
+        // set to the current theme
+        Theme?.Dispose();
+        Theme = th;
+    }
+
+
+    /// <summary>
+    /// Finds the correct location of theme name and loads it.
+    /// </summary>
+    /// <exception cref="InvalidDataException"></exception>
+    private static IgTheme? FindAndLoadThemePack(string themeFolderName, bool useFallBackTheme, bool throwIfThemeInvalid)
+    {
         // look for theme pack in the Config dir
         var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
         if (!th.IsValid)
@@ -1535,26 +1575,7 @@ public static class Config
                 $"Please make sure '{Path.Combine(th.FolderName, IgTheme.CONFIG_FILE)}' file is valid.");
         }
 
-        // update the name of dark/light theme
-        if (darkMode) DarkTheme = th.FolderName;
-        else LightTheme = th.FolderName;
-
-        // load theme settings
-        BHelper.RunSync(th.LoadThemeSettingsAsync);
-
-        // load theme colors
-        th.LoadThemeColors();
-
-        // load background color
-        if (Config.BackgroundColor == Theme.Colors.BgColor || forceUpdateBackground)
-        {
-            Config.BackgroundColor = th.Colors.BgColor;
-        }
-
-
-        // set to the current theme
-        Theme?.Dispose();
-        Theme = th;
+        return th;
     }
 
 
