@@ -734,24 +734,6 @@ public partial class FrmMain : ThemedForm
 
         try
         {
-            // check if loading is cancelled
-            tokenSrc?.Token.ThrowIfCancellationRequested();
-            IgPhoto? photo = null;
-
-            var readSettings = new CodecReadOptions()
-            {
-                ColorProfileName = Config.ColorProfile,
-                ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
-                ImageChannel = Local.ImageChannel,
-                AutoScaleDownLargeImage = true,
-                UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
-                UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
-                EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
-                EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
-                FrameIndex = frameIndex,
-            };
-
-
             // Validate image index
             #region Validate image index
 
@@ -766,7 +748,16 @@ public partial class FrmMain : ThemedForm
                         FilePath = oldImgPath,
                     }, nameof(Local.RaiseLastImageReachedEvent)));
 
-                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
+                    {
+                        // if the image is not rendered yet
+                        if (PicMain.ImageDrawingState != Viewer.ImageDrawingState.Done)
+                        {
+                            Local.CurrentIndex = Local.Images.Length - 1;
+                            await ViewNextCancellableAsync(0, resetZoom, isSkipCache, frameIndex, filePath);
+                        }
+                        return;
+                    }
                 }
 
                 // Reach the first image of list
@@ -779,7 +770,16 @@ public partial class FrmMain : ThemedForm
                     }, nameof(Local.RaiseFirstImageReachedEvent)));
 
 
-                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
+                    {
+                        // if the image is not rendered yet
+                        if (PicMain.ImageDrawingState != Viewer.ImageDrawingState.Done)
+                        {
+                            Local.CurrentIndex = 0;
+                            await ViewNextCancellableAsync(0, resetZoom, isSkipCache, frameIndex, filePath);
+                        }
+                        return;
+                    }
                 }
             }
 
@@ -791,6 +791,33 @@ public partial class FrmMain : ThemedForm
             // Check if current index is less than lower limit
             if (imageIndex < 0)
                 imageIndex = Local.Images.Length - 1;
+
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                // Update current index
+                Local.CurrentIndex = imageIndex;
+            }
+
+            #endregion // Validate image index
+
+
+
+            // check if loading is cancelled
+            tokenSrc?.Token.ThrowIfCancellationRequested();
+            IgPhoto? photo = null;
+            var readSettings = new CodecReadOptions()
+            {
+                ColorProfileName = Config.ColorProfile,
+                ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
+                ImageChannel = Local.ImageChannel,
+                AutoScaleDownLargeImage = true,
+                UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
+                UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
+                EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
+                EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
+                FrameIndex = frameIndex,
+            };
 
 
             // load image metadata
@@ -810,11 +837,10 @@ public partial class FrmMain : ThemedForm
             {
                 Local.Metadata = Local.Images.GetMetadata(imageIndex, frameIndex);
 
-                // Update current index
-                Local.CurrentIndex = imageIndex;
+                //// Update current index
+                //Local.CurrentIndex = imageIndex;
             }
 
-            #endregion // Validate image index
 
 
             // image frame index
