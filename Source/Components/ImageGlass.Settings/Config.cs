@@ -298,7 +298,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that image fading transition is used while it's being loaded.
     /// </summary>
-    public static bool EnableImageTransition { get; set; } = true;
+    public static bool EnableImageTransition { get; set; } = false;
 
     /// <summary>
     /// Enables / Disables copy multiple files.
