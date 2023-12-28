@@ -306,7 +306,6 @@ public class Web2 : WebView2
             var appDataDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 App.AppName,
-                App.Version,
                 "Webview2_Data");
 
             // create the directory if not exists
