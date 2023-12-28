@@ -96,7 +96,6 @@ public partial class ImageGallery : Control, IComponent
     // Cache threads
     internal ThumbnailCacheManager thumbnailCache;
     internal ShellInfoCacheManager shellInfoCache;
-    internal MetadataCacheManager metadataCache;
     internal FileSystemAdaptor defaultAdaptor = new();
 
     #endregion
@@ -267,21 +266,6 @@ public partial class ImageGallery : Control, IComponent
     public bool DoNotDeletePersistentCache { get; set; } = true;
 
     /// <summary>
-    /// Provides the ability to control the metadata caching
-    /// </summary>
-    [Category("Behavior"), DefaultValue(false)]
-    public bool MetadataCacheEnabled
-    {
-        set
-        {
-            if (value)
-                metadataCache.Resume();
-            else
-                metadataCache.Pause();
-        }
-    }
-
-    /// <summary>
     /// Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB).
     /// </summary>
     [Category("Behavior"), DefaultValue("20MB"), RefreshProperties(RefreshProperties.All)]
@@ -414,13 +398,11 @@ public partial class ImageGallery : Control, IComponent
             {
                 thumbnailCache.Resume();
                 shellInfoCache.Resume();
-                metadataCache.Resume();
             }
             else
             {
                 thumbnailCache.Pause();
                 shellInfoCache.Pause();
-                metadataCache.Pause();
             }
         }
     }
@@ -497,8 +479,6 @@ public partial class ImageGallery : Control, IComponent
                 thumbnailCache.RetryOnError = mRetryOnError;
             if (shellInfoCache != null)
                 shellInfoCache.RetryOnError = mRetryOnError;
-            if (metadataCache != null)
-                metadataCache.RetryOnError = mRetryOnError;
         }
     }
 
@@ -810,11 +790,9 @@ public partial class ImageGallery : Control, IComponent
         layoutManager = new LayoutManager(this);
         navigationManager = new NavigationManager(this);
 
-        // Cache nabagers
+        // Cache managers
         thumbnailCache = new ThumbnailCacheManager(this);
         shellInfoCache = new ShellInfoCacheManager(this);
-        metadataCache = new MetadataCacheManager(this);
-
 
         // enable touch gesture support
         InitializeTouchGesture();
@@ -1891,7 +1869,6 @@ public partial class ImageGallery : Control, IComponent
                 defaultAdaptor?.Dispose();
                 thumbnailCache?.Dispose();
                 shellInfoCache?.Dispose();
-                metadataCache?.Dispose();
                 navigationManager?.Dispose();
                 mRenderer?.Dispose();
             }

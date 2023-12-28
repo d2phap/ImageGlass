@@ -80,15 +80,36 @@ public class Source
             .Select(cmd => cmd[1..]) // trim '/' from the command
             .ToArray();
 
+        var startUpDir = App.StartUpDir();
+        var configDir = App.ConfigDir(PathType.Dir);
+
         try
         {
+            // igconfig.default.json
+            var defaultConfig = new ConfigurationBuilder()
+                .SetBasePath(startUpDir)
+                .AddJsonFile(DefaultFilename, optional: true)
+                .Build();
+
+            // admin.igconfig.json
+            var adminConfig = new ConfigurationBuilder()
+                .SetBasePath(startUpDir)
+                .AddJsonFile(AdminFilename, optional: true)
+                .Build();
+
+            // final config
             var userConfig = new ConfigurationBuilder()
-              .SetBasePath(App.ConfigDir(PathType.Dir))
-              .AddJsonFile(DefaultFilename, optional: true)
-              .AddJsonFile(UserFilename, optional: true)
-              .AddCommandLine(args)
-              .AddJsonFile(AdminFilename, optional: true)
-              .Build();
+                .AddConfiguration(defaultConfig)
+
+                // igconfig.json
+                .SetBasePath(configDir)
+                .AddJsonFile(UserFilename, optional: true)
+
+                // command line
+                .AddCommandLine(args)
+
+                .AddConfiguration(adminConfig)
+                .Build();
 
             return userConfig;
         }
@@ -96,14 +117,14 @@ public class Source
 
 
         // fall back to default config if user config is invalid
-        var defaultConfig = new ConfigurationBuilder()
-                .SetBasePath(App.ConfigDir(PathType.Dir))
-                .AddJsonFile(DefaultFilename, optional: true)
-                .AddCommandLine(args)
-                .AddJsonFile(AdminFilename, optional: true)
-                .Build();
+        var fallBackConfig = new ConfigurationBuilder()
+            .SetBasePath(startUpDir)
+            .AddJsonFile(DefaultFilename, optional: true) // igconfig.default.json
+            .AddCommandLine(args) // command line
+            .AddJsonFile(AdminFilename, optional: true) // igconfig.admin.json
+            .Build();
 
-        return defaultConfig;
+        return fallBackConfig;
     }
 
 

@@ -329,12 +329,6 @@ public partial class FrmMain
             WindowSettings.SetFrmMainPlacementConfig(wp);
         }
 
-        // correct the settings when Full screen mode is enabled
-        if (Config.EnableFullScreen)
-        {
-            Config.ShowToolbar = _showToolbar;
-            Config.ShowGallery = _showThumbnails;
-        }
 
         Config.LastSeenImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;

@@ -51,7 +51,7 @@ public partial class FrmMain : ThemedForm
     private bool _isFramelessBeforeFullscreen;
     private bool _isWindowFitBeforeFullscreen;
     private bool _showToolbar = true;
-    private bool _showThumbnails = true;
+    private bool _showGallery = true;
     private Rectangle _windowBound;
     private FormWindowState _windowState = FormWindowState.Normal;
 
@@ -734,24 +734,6 @@ public partial class FrmMain : ThemedForm
 
         try
         {
-            // check if loading is cancelled
-            tokenSrc?.Token.ThrowIfCancellationRequested();
-            IgPhoto? photo = null;
-
-            var readSettings = new CodecReadOptions()
-            {
-                ColorProfileName = Config.ColorProfile,
-                ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
-                ImageChannel = Local.ImageChannel,
-                AutoScaleDownLargeImage = true,
-                UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
-                UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
-                EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
-                EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
-                FrameIndex = frameIndex,
-            };
-
-
             // Validate image index
             #region Validate image index
 
@@ -766,7 +748,16 @@ public partial class FrmMain : ThemedForm
                         FilePath = oldImgPath,
                     }, nameof(Local.RaiseLastImageReachedEvent)));
 
-                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
+                    {
+                        // if the image is not rendered yet
+                        if (PicMain.ImageDrawingState != Viewer.ImageDrawingState.Done)
+                        {
+                            Local.CurrentIndex = Local.Images.Length - 1;
+                            await ViewNextCancellableAsync(0, resetZoom, isSkipCache, frameIndex, filePath);
+                        }
+                        return;
+                    }
                 }
 
                 // Reach the first image of list
@@ -779,7 +770,16 @@ public partial class FrmMain : ThemedForm
                     }, nameof(Local.RaiseFirstImageReachedEvent)));
 
 
-                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1) return;
+                    if (!Config.EnableLoopBackNavigation || Local.Images.Length == 1)
+                    {
+                        // if the image is not rendered yet
+                        if (PicMain.ImageDrawingState != Viewer.ImageDrawingState.Done)
+                        {
+                            Local.CurrentIndex = 0;
+                            await ViewNextCancellableAsync(0, resetZoom, isSkipCache, frameIndex, filePath);
+                        }
+                        return;
+                    }
                 }
             }
 
@@ -791,6 +791,33 @@ public partial class FrmMain : ThemedForm
             // Check if current index is less than lower limit
             if (imageIndex < 0)
                 imageIndex = Local.Images.Length - 1;
+
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                // Update current index
+                Local.CurrentIndex = imageIndex;
+            }
+
+            #endregion // Validate image index
+
+
+
+            // check if loading is cancelled
+            tokenSrc?.Token.ThrowIfCancellationRequested();
+            IgPhoto? photo = null;
+            var readSettings = new CodecReadOptions()
+            {
+                ColorProfileName = Config.ColorProfile,
+                ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
+                ImageChannel = Local.ImageChannel,
+                AutoScaleDownLargeImage = true,
+                UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
+                UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
+                EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
+                EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
+                FrameIndex = frameIndex,
+            };
 
 
             // load image metadata
@@ -810,11 +837,10 @@ public partial class FrmMain : ThemedForm
             {
                 Local.Metadata = Local.Images.GetMetadata(imageIndex, frameIndex);
 
-                // Update current index
-                Local.CurrentIndex = imageIndex;
+                //// Update current index
+                //Local.CurrentIndex = imageIndex;
             }
 
-            #endregion // Validate image index
 
 
             // image frame index
@@ -1024,7 +1050,6 @@ public partial class FrmMain : ThemedForm
     }
 
 
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
     private async Task HandleImageProgress_LoadedAsync(ImageLoadedEventArgs e)
     {
         var error = e.Error;
@@ -1274,6 +1299,7 @@ public partial class FrmMain : ThemedForm
 
         var updateAll = ImageInfo.IsNull || types == null;
         var clipboardImageText = string.Empty;
+        var isClipboardImage = Local.ClipboardImage != null && !Local.ClipboardImage.ComObject.IsDisposed;
 
 
         // AppName
@@ -1289,9 +1315,10 @@ public partial class FrmMain : ThemedForm
         // Zoom
         if (updateAll || types!.Value.HasFlag(ImageInfoUpdateTypes.Zoom))
         {
-            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom)))
+            if (Config.ImageInfoTags.Contains(nameof(ImageInfo.Zoom))
+                && (Local.Images.Length > 0 || isClipboardImage))
             {
-                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n0}%";
+                ImageInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2):n2}%";
             }
             else
             {
@@ -1301,7 +1328,7 @@ public partial class FrmMain : ThemedForm
 
 
         // the viewing image is a clipboard image
-        if (Local.ClipboardImage != null && !Local.ClipboardImage.ComObject.IsDisposed)
+        if (isClipboardImage)
         {
             clipboardImageText = Config.Language[$"{Name}._ClipboardImage"];
 

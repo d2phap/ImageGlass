@@ -129,7 +129,6 @@ public partial class ImageGallery
                 if (_imageGallery != null)
                 {
                     _imageGallery.thumbnailCache.Remove(oldItem.Guid);
-                    _imageGallery.metadataCache.Remove(oldItem.Guid);
 
                     if (_imageGallery.CacheMode == CacheMode.Continuous)
                     {
@@ -141,8 +140,6 @@ public partial class ImageGallery
                             _imageGallery.UseEmbeddedThumbnails,
                             _imageGallery.AutoRotateThumbnails);
                     }
-
-                    _imageGallery.metadataCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey);
 
                     if (item.Selected != oldSelected)
                     {
@@ -299,7 +296,6 @@ public partial class ImageGallery
 
             if (_imageGallery != null)
             {
-                _imageGallery.metadataCache.Clear();
                 _imageGallery.thumbnailCache.Clear();
                 _imageGallery.SelectedItems.Clear();
 
@@ -523,9 +519,6 @@ public partial class ImageGallery
                     _imageGallery.ThumbnailSize, _imageGallery.UseEmbeddedThumbnails, _imageGallery.AutoRotateThumbnails);
             }
 
-            // Add to details cache
-            _imageGallery.metadataCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey);
-
             // Add to shell info cache
             var extension = item.extension;
             if (!string.IsNullOrEmpty(extension))
@@ -564,11 +557,11 @@ public partial class ImageGallery
         {
             for (int i = item.mIndex + 1; i < mItems.Count; i++)
                 mItems[i].mIndex--;
+
             if (item == mFocused) mFocused = null;
             if (removeFromCache && _imageGallery != null)
             {
                 _imageGallery.thumbnailCache.Remove(item.Guid);
-                _imageGallery.metadataCache.Remove(item.Guid);
             }
 
             var ret = mItems.Remove(item);

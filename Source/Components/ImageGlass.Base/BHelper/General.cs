@@ -264,8 +264,8 @@ public partial class BHelper
             {
                 return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => f, naturalSortComparer)
-                    .ThenBy(f => new FileInfo(f).LastWriteTimeUtc);
+                    .ThenBy(f => new FileInfo(f).LastWriteTimeUtc)
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
 

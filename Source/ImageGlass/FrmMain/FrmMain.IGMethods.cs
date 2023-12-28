@@ -464,6 +464,13 @@ public partial class FrmMain
 
     public async Task ZoomInAsync()
     {
+        if (PicMain.ZoomLevels.Length > 0)
+        {
+            PicMain.ZoomIn();
+            return;
+        }
+        
+        // smooth zooming
         PicMain.StartAnimation(AnimationSource.ZoomIn);
         await Task.Delay(100);
 
@@ -481,6 +488,13 @@ public partial class FrmMain
 
     public async Task ZoomOutAsync()
     {
+        if (PicMain.ZoomLevels.Length > 0)
+        {
+            PicMain.ZoomOut();
+            return;
+        }
+
+        // smooth zooming
         PicMain.StartAnimation(AnimationSource.ZoomOut);
         await Task.Delay(100);
 
@@ -511,7 +525,7 @@ public partial class FrmMain
 
         if (frm.ShowDialog(this) != DialogResult.OK) return;
 
-        if (int.TryParse(frm.Value.Trim(), out var newZoom))
+        if (float.TryParse(frm.Value.Trim(), out var newZoom))
         {
             PicMain.ZoomFactor = newZoom / 100f;
         }
@@ -1175,6 +1189,7 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?
@@ -1433,7 +1448,7 @@ public partial class FrmMain
         if (hasSelection)
         {
             using var selectedImg = await GetSelectedImageAreaAsync();
-            error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath);
+            error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath, false);
             saveSource = ImageSaveSource.SelectedArea;
         }
 
@@ -1454,11 +1469,6 @@ public partial class FrmMain
         // image is empty
         else
         {
-            if (Config.EnableRealTimeFileUpdate)
-            {
-                _fileWatcher.Start();
-            }
-
             return false;
         }
 
@@ -1474,23 +1484,14 @@ public partial class FrmMain
                 heading: string.Format(Config.Language[$"{langPath}._Error"]),
                 formOwner: this);
 
-            if (Config.EnableRealTimeFileUpdate)
-            {
-                _fileWatcher.Start();
-            }
-
             return false;
         }
 
         // success
         if (saveSource == ImageSaveSource.SelectedArea)
         {
-            // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableRealTimeFileUpdate)
-            {
-                // reload to view the updated image
-                IG_Reload();
-            }
+            // reload to view the updated image
+            IG_Reload();
 
             // reset selection
             PicMain.ClientSelection = default;
@@ -1500,12 +1501,8 @@ public partial class FrmMain
             // clear the clipboard image
             ClearClipboardImage();
 
-            // manually update the change if FileWatcher is not enabled
-            if (!Config.EnableRealTimeFileUpdate)
-            {
-                // reload to view the updated image
-                IG_Reload();
-            }
+            // reload to view the updated image
+            IG_Reload();
         }
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
@@ -1530,7 +1527,7 @@ public partial class FrmMain
     /// <summary>
     /// Saves the given <see cref="WicBitmapSource"/> image to file.
     /// </summary>
-    private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
+    private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath, bool saveTransform = true)
     {
         Exception? error = null;
         Local.IsBusy = true;
@@ -1538,23 +1535,27 @@ public partial class FrmMain
         try
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
+            var transform = saveTransform ? Local.ImageTransform : null;
 
             // only save the current frame if Frame Nav tool is open
-            Local.ImageTransform.FrameIndex = MnuFrameNav.Checked
-                ? (int)Local.CurrentFrameIndex
-                : -1;
+            if (saveTransform)
+            {
+                transform.FrameIndex = MnuFrameNav.Checked
+                    ? (int)Local.CurrentFrameIndex
+                    : -1;
+            }
 
             // base64 format
             if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
                 var srcExt = Path.GetExtension(srcPath);
-                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath, Local.ImageTransform);
+                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath, transform);
             }
             // other formats
             else
             {
-                await PhotoCodec.SaveAsync(wicImg, destPath, Local.ImageTransform, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(wicImg, destPath, transform, Config.ImageEditQuality);
             }
 
             // Issue #307: option to preserve the modified date/time
@@ -1564,7 +1565,7 @@ public partial class FrmMain
             }
 
             // reset transformations
-            Local.ImageTransform.Clear();
+            if (saveTransform) Local.ImageTransform.Clear();
         }
         catch (Exception ex)
         {
@@ -1982,23 +1983,27 @@ public partial class FrmMain
 
         if (result == null || result.ExitResult == PopupExitResult.OK)
         {
+            Local.IsBusy = true;
+
             try
             {
                 IG_Unload();
                 BHelper.DeleteFile(filePath, moveToRecycleBin);
 
-                // manually update the change if FileWatcher is not enabled
-                if (!Config.EnableRealTimeFileUpdate)
-                {
-                    Local.Images.Remove(Local.CurrentIndex);
-                    Gallery.Items.RemoveAt(Local.CurrentIndex);
-                    _ = ViewNextCancellableAsync(0);
-                }
+
+                // manually update the change because FileWatcher is disabled when Local.IsBusy = true
+                Local.Images.Remove(Local.CurrentIndex);
+                Gallery.Items.RemoveAt(Local.CurrentIndex);
+
+                Local.CurrentIndex = Math.Min(Local.Images.Length - 1, Local.CurrentIndex);
+                _ = ViewNextCancellableAsync(0);
             }
             catch (Exception ex)
             {
                 Config.ShowError(this, ex.Message, title);
             }
+
+            Local.IsBusy = false;
         }
     }
 
@@ -2077,16 +2082,15 @@ public partial class FrmMain
             // save image to temp file
             filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
         }
-        else if (ext != ".BMP")
+        else if (ext != ".BMP"
+            && ext != ".JPG"
+            && ext != ".JPEG"
+            && ext != ".PNG"
+            && ext != ".GIF")
         {
-            if (ext != ".JPG"
-                && ext != ".JPEG"
-                && ext != ".PNG"
-                && ext != ".GIF")
-            {
-                // save image to temp file
-                filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
-            }
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
+
         }
 
 
@@ -2468,7 +2472,7 @@ public partial class FrmMain
             _windowBound = Bounds;
             _windowState = WindowState;
             if (hideToolbar) _showToolbar = Config.ShowToolbar;
-            if (hideThumbnails) _showThumbnails = Config.ShowGallery;
+            if (hideThumbnails) _showGallery = Config.ShowGallery;
 
             if (changeWindowState)
             {
@@ -2502,7 +2506,7 @@ public partial class FrmMain
 
             // restore last state of the window
             if (hideToolbar) Config.ShowToolbar = _showToolbar;
-            if (hideThumbnails) Config.ShowGallery = _showThumbnails;
+            if (hideThumbnails) Config.ShowGallery = _showGallery;
 
             if (hideToolbar && Config.ShowToolbar)
             {
@@ -2848,6 +2852,12 @@ public partial class FrmMain
 
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
         if (img == null) return null;
+
+        // apply transforms
+        if (Local.ImageTransform.HasChanges)
+        {
+            PhotoCodec.TransformImage(img.ImgData.Image, Local.ImageTransform);
+        }
 
         return BHelper.CropImage(img.ImgData.Image, PicMain.SourceSelection);
     }

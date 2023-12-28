@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -62,7 +62,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="D2Phap.DXControl" Version="3.0.1" />
+        <PackageReference Include="D2Phap.DXControl" Version="3.0.2" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
     </ItemGroup>
 

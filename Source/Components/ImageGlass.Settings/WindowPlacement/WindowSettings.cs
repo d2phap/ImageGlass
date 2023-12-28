@@ -64,7 +64,16 @@ public class WindowSettings
 
         try
         {
-            _ = SetWindowPlacement(frm.Handle, ref wp);
+            if (wp.showCmd == WindowState.Normal)
+            {
+                frm.SetBounds(wp.normalPosition.Left, wp.normalPosition.Top,
+                wp.normalPosition.Right - wp.normalPosition.Left,
+                wp.normalPosition.Bottom - wp.normalPosition.Top);
+            }
+            else
+            {
+                _ = SetWindowPlacement(frm.Handle, ref wp);
+            }
         }
         catch { }
     }
@@ -153,8 +162,6 @@ public class WindowSettings
     /// <summary>
     /// Converts <see cref="FormWindowState"/> to <see cref="WindowState"/>
     /// </summary>
-    /// <param name="ws"></param>
-    /// <returns></returns>
     public static WindowState ToWindowState(FormWindowState ws)
     {
         if (ws == FormWindowState.Maximized)

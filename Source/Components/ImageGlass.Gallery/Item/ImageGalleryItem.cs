@@ -275,8 +275,7 @@ public class ImageGalleryItem : ICloneable
                 if (ImageGalleryOwner != null)
                 {
                     ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
-                    ImageGalleryOwner.metadataCache.Remove(Guid);
-                    ImageGalleryOwner.metadataCache.Add(Guid, Adaptor, mFileName);
+
                     if (ImageGalleryOwner.IsItemVisible(Guid))
                         ImageGalleryOwner.Refresh();
                 }
@@ -582,8 +581,7 @@ public class ImageGalleryItem : ICloneable
         if (ImageGalleryOwner != null)
         {
             ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
-            ImageGalleryOwner.metadataCache.Remove(Guid);
-            ImageGalleryOwner.metadataCache.Add(Guid, Adaptor, mFileName);
+
             if (ImageGalleryOwner.IsItemVisible(Guid))
                 ImageGalleryOwner.Refresh();
         }

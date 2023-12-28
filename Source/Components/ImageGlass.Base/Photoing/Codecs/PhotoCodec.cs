@@ -157,7 +157,7 @@ public static class PhotoCodec
                 meta.OriginalWidth = imgM.BaseWidth;
                 meta.OriginalHeight = imgM.BaseHeight;
 
-                meta.SupportsWriting = imgM.FormatInfo.SupportsWriting;
+                meta.SupportsWriting = MagickFormatInfo.Create(imgM.Format).SupportsWriting;
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
                 meta.ColorSpace = imgM.ColorSpace.ToString();
 
