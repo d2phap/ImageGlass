@@ -80,23 +80,35 @@ public class Source
             .Select(cmd => cmd[1..]) // trim '/' from the command
             .ToArray();
 
+        var startUpDir = App.StartUpDir();
+        var configDir = App.ConfigDir(PathType.Dir);
+
         try
         {
-            var userConfig = new ConfigurationBuilder()
-                // igconfig.default.json
-                .SetBasePath(App.StartUpDir())
+            // igconfig.default.json
+            var defaultConfig = new ConfigurationBuilder()
+                .SetBasePath(startUpDir)
                 .AddJsonFile(DefaultFilename, optional: true)
+                .Build();
+
+            // admin.igconfig.json
+            var adminConfig = new ConfigurationBuilder()
+                .SetBasePath(startUpDir)
+                .AddJsonFile(AdminFilename, optional: true)
+                .Build();
+
+            // final config
+            var userConfig = new ConfigurationBuilder()
+                .AddConfiguration(defaultConfig)
 
                 // igconfig.json
-                .SetBasePath(App.ConfigDir(PathType.Dir))
+                .SetBasePath(configDir)
                 .AddJsonFile(UserFilename, optional: true)
 
                 // command line
                 .AddCommandLine(args)
 
-                // igconfig.admin.json
-                .SetBasePath(App.StartUpDir())
-                .AddJsonFile(AdminFilename, optional: true)
+                .AddConfiguration(adminConfig)
                 .Build();
 
             return userConfig;
@@ -105,14 +117,14 @@ public class Source
 
 
         // fall back to default config if user config is invalid
-        var defaultConfig = new ConfigurationBuilder()
-            .SetBasePath(App.StartUpDir())
+        var fallBackConfig = new ConfigurationBuilder()
+            .SetBasePath(startUpDir)
             .AddJsonFile(DefaultFilename, optional: true) // igconfig.default.json
             .AddCommandLine(args) // command line
             .AddJsonFile(AdminFilename, optional: true) // igconfig.admin.json
             .Build();
 
-        return defaultConfig;
+        return fallBackConfig;
     }
 
 
