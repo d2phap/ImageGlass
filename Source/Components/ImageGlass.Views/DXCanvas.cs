@@ -1451,22 +1451,6 @@ public partial class DXCanvas : DXControl
         base.OnResize(e);
     }
 
-
-    protected override void OnVerticalBlankTickerWaitError(VerticalBlankTickerErrorEventArgs e)
-    {
-        base.OnVerticalBlankTickerWaitError(e);
-
-        // Win Server 2019: Unknown Error https://github.com/d2phap/ImageGlass/issues/1771
-        const uint UNKNOWN_ERROR = 0xC000000D;
-
-        if (e.Error == unchecked((int)UNKNOWN_ERROR))
-        {
-            Thread.Sleep(1000);
-            e.Handled = true;
-        }
-    }
-
-
     protected override void OnFrame(FrameEventArgs e)
     {
         if (InvokeRequired)
