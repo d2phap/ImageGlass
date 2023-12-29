@@ -1123,6 +1123,17 @@ public partial class DXCanvas : DXControl
         DisposeWeb2Control();
     }
 
+    protected override void OnVerticalBlankTickerWaitError(VerticalBlankTickerErrorEventArgs e)
+    {
+        base.OnVerticalBlankTickerWaitError(e);
+
+        if (!EnableDebug)
+        {
+            Thread.Sleep(1000);
+            e.Handled = true;
+        }
+    }
+
     protected override void OnMouseClick(MouseEventArgs e)
     {
         // disable the default OnMouseClick
