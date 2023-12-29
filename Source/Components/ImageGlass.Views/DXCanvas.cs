@@ -1556,10 +1556,20 @@ public partial class DXCanvas : DXControl
         // navigation layer
         DrawNavigationLayer(g);
 
-
         if (EnableDebug)
         {
-            var text = $"FPS: {FPS}";
+            var monitor = DirectN.Monitor.FromWindow(TopLevelControl.Handle);
+
+            var text = $"Monitor={monitor.Bounds.Size.ToString()}; Dpi={DeviceDpi} ({(int)monitor.ScaleFactor}%); Renderer={Source.ToString()}";
+            if (UseWebview2)
+            {
+                text += $"; v{Web2.Webview2Version}";
+            }
+            else
+            {
+                text += $"; Opacity={_imageOpacity}; FPS={FPS}";
+            }
+
             var textSize = g.MeasureText(text, Font.Name, Font.Size, textDpi: DeviceDpi);
             g.DrawRectangle(0, 0, textSize.Width, textSize.Height, 0, Color.Red, Color.Black.WithAlpha(200));
             g.DrawText(text, Font.Name, Font.Size, 0f, 0f, Color.Yellow, textDpi: DeviceDpi);
