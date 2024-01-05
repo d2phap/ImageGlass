@@ -1066,7 +1066,7 @@ public partial class FrmSlideshow : ThemedForm
                 if (!Config.EnableLoopSlideshow)
                 {
                     // pause slideshow
-                    SetSlideshowState(false, false);
+                    SetSlideshowState(false);
                     return;
                 }
             }
