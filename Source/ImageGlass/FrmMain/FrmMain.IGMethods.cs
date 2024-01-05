@@ -1308,7 +1308,13 @@ public partial class FrmMain
     {
         var srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var langPath = $"{Name}.{nameof(MnuSave)}";
+        var isOpeningImageList = Local.CurrentIndex > -1;
 
+        // use Save As if no image is opened
+        if (!isOpeningImageList && Local.ClipboardImage != null)
+        {
+            return await SaveCurrentImageAsACopyAsync();
+        }
 
         // show override warning
         if (Config.ShowSaveOverrideConfirmation)
