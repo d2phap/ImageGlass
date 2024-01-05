@@ -1905,6 +1905,10 @@ public partial class FrmMain : ThemedForm
             MnuContext.Items.Add(MenuUtils.Clone(MnuOpenLocation));
             MnuContext.Items.Add(MenuUtils.Clone(MnuImageProperties));
         }
+
+        // Exit menu
+        MnuContext.Items.Add(new ToolStripSeparator());//------------
+        MnuContext.Items.Add(MenuUtils.Clone(MnuExit));
     }
 
 
