@@ -1759,7 +1759,7 @@ public static class Config
         {
             foreach (var key in item.Value)
             {
-                var result = string.Compare(key.ToString(), hotkey.ToString(), true);
+                var result = string.Compare(key.ToString(), hotkey.ToString(), StringComparison.OrdinalIgnoreCase);
                 if (result == 0)
                 {
                     actions.Add(item.Key);
