@@ -1572,6 +1572,8 @@ public partial class FrmMain
 
             // reset transformations
             if (saveTransform) Local.ImageTransform.Clear();
+
+            await Task.Delay(200); // min time to pause file watcher
         }
         catch (Exception ex)
         {
@@ -3000,14 +3002,14 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        // toggle page nav toolbar
-        TogglePageNavToolbar(visible.Value);
+        // toggle frame nav toolbar
+        ToggleFrameNavToolbar(visible.Value);
 
         return visible.Value;
     }
 
 
-    private void TogglePageNavToolbar(bool visible)
+    private void ToggleFrameNavToolbar(bool visible)
     {
         ToolbarContext.SuspendLayout();
         ToolbarContext.ClearItems();
@@ -3130,6 +3132,83 @@ public partial class FrmMain
 
 
         ToolbarContext.UpdateAlignment();
+    }
+
+
+    /// <summary>
+    /// Runs lossless compression tool.
+    /// </summary>
+    public void IG_LosslessCompression()
+    {
+        if (Local.IsBusy || Local.Images.Length == 0) return;
+
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        if (string.IsNullOrWhiteSpace(filePath)) return;
+
+        var langPath = $"{Name}.{nameof(MnuLosslessCompression)}";
+
+        // image format not supported
+        if (!PhotoCodec.IsLosslessCompressSupported(filePath))
+        {
+            _ = Config.ShowInfo(this,
+                description: filePath,
+                title: Config.Language[langPath],
+                heading: Config.Language["_._NotSupported"],
+                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
+
+            return;
+        }
+
+        // always show confirmation dialog
+        var result = Config.ShowInfo(this,
+            description: $"{filePath}\r\n{Gallery.Items[Local.CurrentIndex].Details.FileSizeFormated}",
+            title: Config.Language[langPath],
+            heading: Config.Language[$"{langPath}._Description"],
+            thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+            buttons: PopupButton.Yes_No);
+        if (result.ExitResult != PopupExitResult.OK) return;
+
+
+        // perform lossless compression
+        _ = LosslessCompressImageAsync(filePath);
+    }
+
+    private async Task LosslessCompressImageAsync(string filePath)
+    {
+        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuLosslessCompression)}._Compressing"], null);
+
+        var oldIndex = Local.CurrentIndex;
+        var oldFileSize = new FileInfo(filePath).Length;
+        Local.IsBusy = true;
+
+        // perform lossless compression
+        var result = await Config.RunIgcmd($"{IgCommands.LOSSLESS_COMPRESS} \"{filePath}\"");
+
+        var currentImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        var isViewingSameFile = currentImagePath.Equals(filePath, StringComparison.OrdinalIgnoreCase);
+
+        // reload the image if
+        if (result == IgExitCode.Done)
+        {
+            if (isViewingSameFile)
+            {
+                var newFileSize = new FileInfo(filePath).Length;
+                var ratio = Math.Round((1 - (newFileSize * 1f / oldFileSize)) * 100f, 2);
+                var msg = string.Format(Config.Language[$"{Name}.{nameof(MnuLosslessCompression)}._Done"],
+                    $"{BHelper.FormatSize(newFileSize)}",
+                    $"{BHelper.FormatSize(oldFileSize - newFileSize)} ({ratio}%)");
+
+                PicMain.ShowMessage(msg, null, Config.InAppMessageDuration);
+
+                await Task.Delay(200); // min time to pause file watcher
+            }
+        }
+        else
+        {
+            PicMain.ClearMessage();
+        }
+
+        Local.IsBusy = false;
     }
 
 

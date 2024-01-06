@@ -244,6 +244,19 @@ internal static class Program
         #endregion
 
 
+        #region LOSSLESS_COMPRESS <string imgPath>
+        if (topCmd == IgCommands.LOSSLESS_COMPRESS)
+        {
+            if (args.Length < 2)
+            {
+                return Config.ShowDefaultIgCommandError(nameof(igcmd));
+            }
+
+            return (int)Functions.LosslessCompressImage(args[1]);
+        }
+        #endregion
+
+
         return (int)IgExitCode.Error;
     }
 

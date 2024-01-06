@@ -2307,6 +2307,11 @@ public partial class FrmMain : ThemedForm
         IG_ToggleFrameNavTool();
     }
 
+    private void MnuLosslessCompression_Click(object sender, EventArgs e)
+    {
+        IG_LosslessCompression();
+    }
+
     private void MnuGetMoreTools_Click(object sender, EventArgs e)
     {
         _ = BHelper.OpenUrlAsync("https://imageglass.org/tools", "from_get_more_tools");

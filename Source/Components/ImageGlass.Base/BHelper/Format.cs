@@ -33,7 +33,7 @@ public partial class BHelper
         var mod = 1024d;
         var sized = size * 1d;
 
-        var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+        var units = new string[] { "bytes", "KB", "MB", "GB", "TB", "PB" };
         int i;
         for (i = 0; sized > mod; i++)
         {

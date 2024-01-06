@@ -124,7 +124,8 @@ public partial class FrmMain
         // MnuTools
         { nameof(MnuColorPicker),           [new(Keys.K)] },
         { nameof(MnuCropTool),              [new(Keys.C)] },
-        { nameof(MnuFrameNav),               [new(Keys.P)] },
+        { nameof(MnuFrameNav),              [new(Keys.P)] },
+        { nameof(MnuLosslessCompression),   [new(Keys.Alt | Keys.C)] },
         { Const.IGTOOL_EXIFTOOL,            [new(Keys.X)] },
 
         // MnuHelp
@@ -747,6 +748,7 @@ public partial class FrmMain
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
         MnuFrameNav.Text = lang[$"{Name}.{nameof(MnuFrameNav)}"];
         MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
+        MnuLosslessCompression.Text = lang[$"{Name}.{nameof(MnuLosslessCompression)}"];
         MnuGetMoreTools.Text = lang[$"{Name}.{nameof(MnuGetMoreTools)}"];
 
         foreach (var item in MnuTools.DropDownItems)
@@ -1046,6 +1048,7 @@ public partial class FrmMain
             nameof(MnuColorPicker),
             nameof(MnuCropTool),
             nameof(MnuFrameNav),
+            nameof(MnuLosslessCompression),
             nameof(MnuExternalToolsSeparator),
             nameof(MnuGetMoreTools),
         };

@@ -400,6 +400,12 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuFrameNav", "Frame navigation"); // v7.5
         _ = TryAdd("FrmMain.MnuCropTool", "Crop image"); // v7.6
         _ = TryAdd("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
+
+        _ = TryAdd("FrmMain.MnuLosslessCompression", "Lossless compression"); // v9.0
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Description", "This tool uses Magick.NET library for lossless compression, optimizing file size. Overwrites only if the compressed file is smaller than the original.\r\n\r\nDo you want to proceed?"); // v9.0
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Compressing", "Performing lossless compression…"); // v9.0
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Done", "Done lossless compression.\r\nThe new file size is {0}, saved {1}."); // v9.0
+        
         #endregion
 
         _ = TryAdd("FrmMain.MnuSettings", "Settings"); // v3.0

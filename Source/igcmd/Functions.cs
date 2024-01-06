@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using igcmd.Tools;
 using ImageGlass.Base;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.IO.Compression;
@@ -331,4 +332,21 @@ public static class Functions
         return IgExitCode.Done;
     }
 
+
+    /// <summary>
+    /// Performs lossless compression.
+    /// </summary>
+    public static IgExitCode LosslessCompressImage(string imgPath)
+    {
+        return Run(() =>
+        {
+            _ = PhotoCodec.LosslessCompress(imgPath);
+        }, (error) =>
+        {
+            _ = Config.ShowError(null,
+                description: imgPath,
+                title: Config.Language["FrmMain.MnuLosslessCompression"],
+                heading: error.Message);
+        });
+    }
 }

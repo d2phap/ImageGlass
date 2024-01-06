@@ -33,6 +33,7 @@ public static class IgCommands
     public static string REMOVE_DEFAULT_PHOTO_VIEWER => "remove-default-viewer";
     public static string START_SLIDESHOW => "start-slideshow";
     public static string EXPORT_FRAMES => "export-frames";
+    public static string LOSSLESS_COMPRESS => "lossless-compress";
 
 
     public static string QUICK_SETUP => "quick-setup";

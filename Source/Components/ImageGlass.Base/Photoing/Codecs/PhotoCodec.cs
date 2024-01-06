@@ -384,7 +384,7 @@ public static class PhotoCodec
             var metadata = LoadMetadata(srcFileName, readOptions);
             if (!metadata.SupportsWriting)
             {
-                throw new FileFormatException("Unsupported image format.");
+                throw new FileFormatException("IGE_001: Unsupported image format.");
             }
 
             var settings = ParseSettings(readOptions, true, srcFileName);
@@ -671,6 +671,42 @@ public static class PhotoCodec
     {
         OpenCL.IsEnabled = true;
         ResourceLimits.LimitMemory(new Percentage(75));
+    }
+
+
+    /// <summary>
+    /// Checks if the supplied file name is supported for lossless compression using Magick.NET.
+    /// </summary>
+    public static bool IsLosslessCompressSupported(string? filePath)
+    {
+        var opt = new ImageOptimizer()
+        {
+            OptimalCompression = true,
+        };
+
+        return opt.IsSupported(filePath);
+    }
+
+    /// <summary>
+    /// Performs lossless compression on the specified file using Magick.NET.
+    /// If the new file size is not smaller, the file won't be overwritten.
+    /// </summary>
+    /// <returns>True when the image could be compressed otherwise false.</returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public static bool LosslessCompress(string? filePath)
+    {
+        if (string.IsNullOrWhiteSpace(filePath)) return false;
+
+        var fi = new FileInfo(filePath);
+        var opt = new ImageOptimizer()
+        {
+            OptimalCompression = true,
+        };
+
+        // check if the format is supported
+        if (!opt.IsSupported(fi)) throw new NotSupportedException("IGE_002: Unsupported image format.");
+
+        return opt.LosslessCompress(fi);
     }
 
     #endregion // Public functions
