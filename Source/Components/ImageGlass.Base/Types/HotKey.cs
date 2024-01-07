@@ -35,7 +35,11 @@ public class Hotkey
         {
             var str = KeyCode == Keys.None ? string.Empty : KeyCode.ToString();
 
-            if (str.StartsWith("Oem")
+            if (str.Equals(nameof(Keys.Next)))
+            {
+                str = "PageDown";
+            }
+            else if (str.StartsWith("Oem")
                 || (str.StartsWith('D') && str.Length == 2) // D0 -> D9
                 )
             {
