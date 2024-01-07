@@ -56,8 +56,8 @@ public partial class FrmMain
         { nameof(MnuUnload),                [new(Keys.U)] },
 
         // MnuNavigation
-        { nameof(MnuViewNext),              [new(Keys.Right)] },
-        { nameof(MnuViewPrevious),          [new(Keys.Left)] },
+        { nameof(MnuViewNext),              [new(Keys.Right), new(Keys.PageUp)] },
+        { nameof(MnuViewPrevious),          [new(Keys.Left), new(Keys.PageDown)] },
         { nameof(MnuGoTo),                  [new(Keys.F)] },
         { nameof(MnuGoToFirst),             [new(Keys.Home)] },
         { nameof(MnuGoToLast),              [new(Keys.End)] },
