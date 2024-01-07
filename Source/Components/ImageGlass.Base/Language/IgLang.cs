@@ -167,7 +167,10 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd($"_._CreatingFile", "Creating a temporary image file…"); //v9.0
         _ = TryAdd($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
         _ = TryAdd($"_._NotSupported", "Unsupported format"); //v9.0
-        _ = TryAdd($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
+
+        _ = TryAdd($"_._InvalidAction", "Invalid action"); //v9.0
+        _ = TryAdd($"_._InvalidAction._Transformation", "ImageGlass does not support rotation, flipping for this image."); //v9.0
+
 
         _ = TryAdd("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action"); // v9.0
         _ = TryAdd("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke the action"); // v9.0

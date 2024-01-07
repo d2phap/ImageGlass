@@ -2980,7 +2980,6 @@ public partial class DXCanvas : DXControl
         // emit OnImageChanging event
         ImageLoading?.Invoke(this, EventArgs.Empty);
 
-
         // Check and preprocess image info
         LoadImageData(imgData, frameIndex, autoAnimate);
 
@@ -3106,7 +3105,7 @@ public partial class DXCanvas : DXControl
     /// </summary>
     public bool RotateImage(float degree, bool requestRerender = true)
     {
-        if (_imageD2D == null || degree == 0 || degree == 360) return false;
+        if (_imageD2D == null || degree == 0 || degree == 360 || IsImageAnimating) return false;
 
         // create effect
         using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
@@ -3158,7 +3157,7 @@ public partial class DXCanvas : DXControl
     /// </summary>
     public bool FlipImage(FlipOptions flips, bool requestRerender = true)
     {
-        if (_imageD2D == null) return false;
+        if (_imageD2D == null || IsImageAnimating) return false;
 
         // create effect
         using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);

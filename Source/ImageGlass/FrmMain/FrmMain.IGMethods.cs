@@ -2786,8 +2786,8 @@ public partial class FrmMain
         else
         {
             PicMain.ShowMessage(
-                text: Config.Language["_._NotSupported._Transformation"],
-                heading: Config.Language["_._NotSupported"],
+                text: Config.Language["_._InvalidAction._Transformation"],
+                heading: Config.Language["_._InvalidAction"],
                 durationMs: Config.InAppMessageDuration);
         }
     }
@@ -2816,8 +2816,8 @@ public partial class FrmMain
         else
         {
             PicMain.ShowMessage(
-                text: Config.Language["_._NotSupported._Transformation"],
-                heading: Config.Language["_._NotSupported"],
+                text: Config.Language["_._InvalidAction._Transformation"],
+                heading: Config.Language["_._InvalidAction"],
                 durationMs: Config.InAppMessageDuration);
         }
     }
