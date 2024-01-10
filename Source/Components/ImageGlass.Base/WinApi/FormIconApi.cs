@@ -17,18 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace ImageGlass.Base.WinApi;
 
 public static class FormIconApi
 {
-    [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, int wParam, IntPtr lParam);
-
     private const uint WM_SETICON = 0x80u;
-    private const int ICON_SMALL = 0;
     private const int ICON_BIG = 1;
+
 
     /// <summary>
     /// Sets icon to taskbar
@@ -37,18 +35,6 @@ public static class FormIconApi
     /// <param name="iconPointer">Icon handler</param>
     public static void SetTaskbarIcon(Form frm, IntPtr iconPointer)
     {
-        SendMessage(frm.Handle, WM_SETICON, ICON_BIG, iconPointer);
+        _ = PInvoke.SendMessage(new HWND(frm.Handle), WM_SETICON, ICON_BIG, iconPointer);
     }
-
-
-    /// <summary>
-    /// Sets icon to window form
-    /// </summary>
-    /// <param name="frm">Form</param>
-    /// <param name="iconPointer">Icon handler</param>
-    public static void SetFormIcon(Form frm, IntPtr iconPointer)
-    {
-        SendMessage(frm.Handle, WM_SETICON, ICON_SMALL, iconPointer);
-    }
-
 }
