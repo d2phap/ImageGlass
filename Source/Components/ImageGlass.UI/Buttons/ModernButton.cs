@@ -48,7 +48,7 @@ public class ModernButton : Button
     private static readonly int _padding = 4;
     private int _imagePadding = 2;
 
-    private SHSTOCKICONID? _systemIcon = null;
+    private ShellStockIcon? _systemIcon = null;
     private IconName _svgIcon = IconName.None;
 
     #endregion // Private variables
@@ -76,7 +76,7 @@ public class ModernButton : Button
     /// Gets, sets the system icon.
     /// </summary>
     [DefaultValue(false)]
-    public SHSTOCKICONID? SystemIcon
+    public ShellStockIcon? SystemIcon
     {
         get => _systemIcon;
         set

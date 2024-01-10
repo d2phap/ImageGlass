@@ -32,7 +32,7 @@ using System.Media;
 using System.Reflection;
 using System.Text;
 using Const = ImageGlass.Base.Const;
-using SHSTOCKICONID = ImageGlass.Base.WinApi.SHSTOCKICONID;
+using ShellStockIcon = ImageGlass.Base.WinApi.ShellStockIcon;
 
 namespace ImageGlass.Settings;
 
@@ -1916,7 +1916,7 @@ public static class Config
         string heading = "",
         string details = "",
         string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
+        ShellStockIcon? icon = ShellStockIcon.SIID_INFO,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
         string optionText = "")
@@ -1943,7 +1943,7 @@ public static class Config
         string? heading = null,
         string details = "",
         string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
+        ShellStockIcon? icon = ShellStockIcon.SIID_WARNING,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
         string optionText = "")
@@ -1971,7 +1971,7 @@ public static class Config
         string? heading = null,
         string details = "",
         string note = "",
-        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
+        ShellStockIcon? icon = ShellStockIcon.SIID_ERROR,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
         string optionText = "")

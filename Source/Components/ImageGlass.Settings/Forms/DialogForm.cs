@@ -54,8 +54,8 @@ public partial class DialogForm : ThemedForm
     [DefaultValue(false)]
     public bool ShowAcceptButtonShieldIcon
     {
-        get => BtnAccept.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
-        set => BtnAccept.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
+        get => BtnAccept.SystemIcon == ShellStockIcon.SIID_SHIELD;
+        set => BtnAccept.SystemIcon = value ? ShellStockIcon.SIID_SHIELD : null;
     }
 
 
