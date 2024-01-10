@@ -23,3 +23,4 @@ MonitorFromPoint
 GetDpiForMonitor
 SHChangeNotify
 SHGetStockIconInfo
+SetThreadExecutionState
