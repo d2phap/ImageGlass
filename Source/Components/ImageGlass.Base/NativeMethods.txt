@@ -24,3 +24,6 @@ GetDpiForMonitor
 SHChangeNotify
 SHGetStockIconInfo
 SetThreadExecutionState
+timeBeginPeriod
+timeEndPeriod
+timeGetDevCaps

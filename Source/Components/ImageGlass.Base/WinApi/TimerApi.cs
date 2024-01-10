@@ -23,6 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************/
 
 using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Media;
 
 namespace ImageGlass.Base.WinApi;
 
@@ -34,39 +36,23 @@ namespace ImageGlass.Base.WinApi;
 public static class TimerApi
 {
     // locks ourCurRequests
-    //
-    private static readonly object ourLock;
+    private static readonly object _lock = new();
 
-    [DllImport("winmm.dll")]
-    private static extern int timeBeginPeriod(int msec);
+    private static readonly uint _minPeriod;
+    private static readonly uint _maxPeriod;
+    private static readonly List<int> _curRequests;
 
-    [DllImport("winmm.dll")]
-    private static extern int timeEndPeriod(int msec);
-
-    [DllImport("winmm.dll")]
-    private static extern int timeGetDevCaps(ref TIMECAPS ptc, int cbtc);
-
-    private static readonly int ourMinPeriod;
-    private static readonly int ourMaxPeriod;
-    private static readonly List<int> ourCurRequests;
-
-    [StructLayout(LayoutKind.Sequential)]
-    private struct TIMECAPS
-    {
-        public int periodMin;
-        public int periodMax;
-    }
 
     static TimerApi()
     {
-        ourLock = new object();
-
         var tc = new TIMECAPS();
-        timeGetDevCaps(ref tc, Marshal.SizeOf(tc));
-        ourMinPeriod = tc.periodMin;
-        ourMaxPeriod = tc.periodMax;
-        ourCurRequests = new List<int>();
+        PInvoke.timeGetDevCaps(out tc, (uint)Marshal.SizeOf(tc));
+
+        _minPeriod = tc.wPeriodMin;
+        _maxPeriod = tc.wPeriodMax;
+        _curRequests = new List<int>();
     }
+
 
     /// <summary>
     /// Request a rate from the system clock.
@@ -76,23 +62,24 @@ public static class TimerApi
     /// the given rate, otherwise returns false. </returns>
     public static bool TimeBeginPeriod(int timeInMilliseconds)
     {
-        if (timeInMilliseconds < ourMinPeriod || timeInMilliseconds > ourMaxPeriod)
+        if (timeInMilliseconds < _minPeriod || timeInMilliseconds > _maxPeriod)
         {
             return false;
         }
 
         bool successfullyRequestedPeriod;
-        lock (ourLock)
+        lock (_lock)
         {
-            successfullyRequestedPeriod = timeBeginPeriod(timeInMilliseconds) == 0;
+            successfullyRequestedPeriod = PInvoke.timeBeginPeriod((uint)timeInMilliseconds) == 0;
             if (successfullyRequestedPeriod)
             {
-                ourCurRequests.Add(timeInMilliseconds);
+                _curRequests.Add(timeInMilliseconds);
             }
         }
 
         return successfullyRequestedPeriod;
     }
+
 
     /// <summary>
     /// Revoke request for a rate from the system clock.
@@ -102,13 +89,15 @@ public static class TimerApi
     public static bool TimeEndPeriod(int timeInMilliseconds)
     {
         bool successfullyEndedPeriod;
-        lock (ourLock)
+        lock (_lock)
         {
-            successfullyEndedPeriod = ourCurRequests.Remove(timeInMilliseconds) && timeEndPeriod(timeInMilliseconds) == 0;
+            successfullyEndedPeriod = _curRequests.Remove(timeInMilliseconds)
+                && PInvoke.timeEndPeriod((uint)timeInMilliseconds) == 0;
         }
 
         return successfullyEndedPeriod;
     }
+
 
     /// <summary>
     /// Determines whether the current rate has already been requested.
@@ -117,13 +106,14 @@ public static class TimerApi
     public static bool HasRequestedRateAlready(int timeInMilliseconds)
     {
         bool hasRequestedAlready;
-        lock (ourLock)
+        lock (_lock)
         {
-            hasRequestedAlready = ourCurRequests.Contains(timeInMilliseconds);
+            hasRequestedAlready = _curRequests.Contains(timeInMilliseconds);
         }
 
         return hasRequestedAlready;
     }
+
 
     /// <summary>
     /// Determines whether a rate at least as fast as the given has been requested
@@ -132,9 +122,9 @@ public static class TimerApi
     public static bool HasRequestedRateAtLeastAsFastAs(int timeInMilliseconds)
     {
         bool result;
-        lock (ourLock)
+        lock (_lock)
         {
-            result = ourCurRequests.Exists(elt => elt <= timeInMilliseconds);
+            result = _curRequests.Exists(elt => elt <= timeInMilliseconds);
         }
 
         return result;
