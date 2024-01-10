@@ -16,7 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.System.Power;
 
 namespace ImageGlass.Base.WinApi;
 
@@ -27,28 +28,14 @@ namespace ImageGlass.Base.WinApi;
 /// </summary>
 public static class SysExecutionState
 {
-    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern ExecutionState SetThreadExecutionState(ExecutionState esFlags);
-
-    [Flags]
-    private enum ExecutionState : uint
-    {
-        ES_NONE = 0x00000000,
-        ES_SYSTEM_REQUIRED = 0x00000001,
-        ES_DISPLAY_REQUIRED = 0x00000002,
-        ES_AWAYMODE_REQUIRED = 0x00000040,
-        ES_CONTINUOUS = 0x80000000
-    }
-
-
     /// <summary>
     /// Prevents the system from entering sleep or turning off the display while the application is running.
     /// </summary>
     public static void PreventSleep()
     {
-        SetThreadExecutionState(ExecutionState.ES_CONTINUOUS
-            | ExecutionState.ES_SYSTEM_REQUIRED
-            | ExecutionState.ES_DISPLAY_REQUIRED);
+        _ = PInvoke.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS
+            | EXECUTION_STATE.ES_SYSTEM_REQUIRED
+            | EXECUTION_STATE.ES_DISPLAY_REQUIRED);
     }
 
 
@@ -57,6 +44,6 @@ public static class SysExecutionState
     /// </summary>
     public static void AllowSleep()
     {
-        SetThreadExecutionState(ExecutionState.ES_CONTINUOUS);
+        _ = PInvoke.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
     }
 }
