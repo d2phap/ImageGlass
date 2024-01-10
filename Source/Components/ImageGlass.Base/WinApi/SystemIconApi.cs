@@ -17,60 +17,45 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.UI.Shell;
 
 namespace ImageGlass.Base.WinApi;
 
 
 public static class SystemIconApi
 {
-
-    [DllImport("Shell32.dll", SetLastError = false)]
-    private static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
-
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    private struct SHSTOCKICONINFO
-    {
-        public uint cbSize;
-        public IntPtr hIcon;
-        public int iSysIconIndex;
-        public int iIcon;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szPath;
-    }
-
-
     /// <summary>
-    /// Loads the system icon.
+    /// Gets the system icon.
     /// </summary>
-    public static Bitmap? GetSystemIcon(SHSTOCKICONID? iconType, bool useLargeIcon = true)
+    public static Bitmap? GetSystemIcon(ShellStockIcon? iconType, bool useLargeIcon = true)
     {
         if (iconType == null) return null;
 
-        var iconResult = new SHSTOCKICONINFO();
-        iconResult.cbSize = (uint)Marshal.SizeOf(iconResult);
 
-        var size = SHGSI.SHGSI_ICON;
+        var iconRes = new SHSTOCKICONINFO();
+        iconRes.cbSize = (uint)Marshal.SizeOf(iconRes);
+
+        var size = SHGSI_FLAGS.SHGSI_ICON;
         if (useLargeIcon)
         {
-            size |= SHGSI.SHGSI_LARGEICON;
+            size |= SHGSI_FLAGS.SHGSI_LARGEICON;
         }
         else
         {
-            size |= SHGSI.SHGSI_SMALLICON;
+            size |= SHGSI_FLAGS.SHGSI_SMALLICON;
         }
 
         try
         {
-            _ = SHGetStockIconInfo(iconType.Value, size, ref iconResult);
+            _ = PInvoke.SHGetStockIconInfo((Windows.Win32.UI.Shell.SHSTOCKICONID)iconType.Value, size, ref iconRes);
 
-            if (iconResult.hIcon == IntPtr.Zero)
+            if (iconRes.hIcon == IntPtr.Zero)
             {
                 return null;
             }
 
-            return Icon.FromHandle(iconResult.hIcon)?.ToBitmap();
+            return Icon.FromHandle(iconRes.hIcon)?.ToBitmap();
         }
         catch { }
 
@@ -82,7 +67,7 @@ public static class SystemIconApi
 
 
 
-public enum SHSTOCKICONID : uint
+public enum ShellStockIcon : uint
 {
     SIID_DOCNOASSOC = 0,          // document (blank page), no associated program
     SIID_DOCASSOC = 1,            // document with an associated program
@@ -186,47 +171,4 @@ public enum SHSTOCKICONID : uint
 }
 
 
-[Flags]
-public enum SHGSI : uint
-{
-    /// <summary>
-    /// The szPath and iIcon members of the SHSTOCKICONINFO structure receive the path and icon index of the requested icon, in a format suitable for passing to the ExtractIcon function. The numerical value of this flag is zero, so you always get the icon location regardless of other flags.
-    /// </summary>
-    SHGSI_ICONLOCATION = 0,
-
-    /// <summary>
-    /// The hIcon member of the SHSTOCKICONINFO structure receives a handle to the specified icon.
-    /// </summary>
-    SHGSI_ICON = 0x000000100,
-
-    /// <summary>
-    /// The iSysImageImage member of the SHSTOCKICONINFO structure receives the index of the specified icon in the system imagelist.
-    /// </summary>
-    SHGSI_SYSICONINDEX = 0x000004000,
-
-    /// <summary>
-    /// Modifies the SHGSI_ICON value by causing the function to add the link overlay to the file's icon.
-    /// </summary>
-    SHGSI_LINKOVERLAY = 0x000008000,
-
-    /// <summary>
-    /// Modifies the SHGSI_ICON value by causing the function to blend the icon with the system highlight color.
-    /// </summary>
-    SHGSI_SELECTED = 0x000010000,
-
-    /// <summary>
-    /// Modifies the SHGSI_ICON value by causing the function to retrieve the large version of the icon, as specified by the SM_CXICON and SM_CYICON system metrics.
-    /// </summary>
-    SHGSI_LARGEICON = 0x000000000,
-
-    /// <summary>
-    /// Modifies the SHGSI_ICON value by causing the function to retrieve the small version of the icon, as specified by the SM_CXSMICON and SM_CYSMICON system metrics.
-    /// </summary>
-    SHGSI_SMALLICON = 0x000000001,
-
-    /// <summary>
-    /// Modifies the SHGSI_LARGEICON or SHGSI_SMALLICON values by causing the function to retrieve the Shell-sized icons rather than the sizes specified by the system metrics.
-    /// </summary>
-    SHGSI_SHELLICONSIZE = 0x000000004
-}
 

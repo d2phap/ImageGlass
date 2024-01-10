@@ -159,7 +159,7 @@ public partial class FrmQuickSetup : WebForm
             var result = Config.ShowInfo(this,
                 title: Text,
                 heading: Config.Language[$"{nameof(FrmQuickSetup)}._ConfirmCloseProcess"],
-                icon: ImageGlass.Base.WinApi.SHSTOCKICONID.SIID_HELP,
+                icon: ImageGlass.Base.WinApi.ShellStockIcon.SIID_HELP,
                 buttons: PopupButton.Yes_No);
 
             if (result.ExitResult == PopupExitResult.OK)
