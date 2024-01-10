@@ -29,33 +29,6 @@ public static class ExplorerApi
 {
     #region COM and WinAPI
 
-    [StructLayout(LayoutKind.Sequential)]
-    private struct SHELLEXECUTEINFO
-    {
-        public int cbSize;
-        public int fMask;
-        public IntPtr hwnd;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpVerb;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpFile;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpParameters;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpDirectory;
-        public int nShow;
-        public IntPtr hInstApp;
-        public IntPtr lpIDList;
-        public string lpClass;
-        public IntPtr hkeyClass;
-        public int dwHotKey;
-        public IntPtr hIcon;
-        public IntPtr hProcess;
-    }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-    private static extern int ShellExecuteEx(ref SHELLEXECUTEINFO s);
-
 
     [DllImport("shell32.dll", SetLastError = true)]
     private static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder,
@@ -247,21 +220,30 @@ public static class ExplorerApi
     /// </summary>
     /// <param name="filePath">Full file path</param>
     /// <param name="hwnd">Form handle</param>
-    public static void DisplayFileProperties(string filePath, IntPtr hwnd)
+    public static unsafe void DisplayFileProperties(string filePath, IntPtr hwnd)
     {
         const int SEE_MASK_INVOKEIDLIST = 0xc;
         const int SW_SHOW = 5;
-        var shInfo = new SHELLEXECUTEINFO();
+        var shInfo = new SHELLEXECUTEINFOW();
 
-        shInfo.cbSize = Marshal.SizeOf(shInfo);
-        shInfo.lpFile = filePath;
-        shInfo.nShow = SW_SHOW;
-        shInfo.fMask = SEE_MASK_INVOKEIDLIST;
-        shInfo.lpVerb = "properties";
-        shInfo.lpParameters = "Details";
-        shInfo.hwnd = hwnd;
+        fixed (char* pFilePath = filePath)
+        {
+            fixed (char* pVerb = "properties")
+            {
+                fixed (char* pParams = "Details")
+                {
+                    shInfo.cbSize = (uint)Marshal.SizeOf(shInfo);
+                    shInfo.lpFile = pFilePath;
+                    shInfo.nShow = SW_SHOW;
+                    shInfo.fMask = SEE_MASK_INVOKEIDLIST;
+                    shInfo.lpVerb = pVerb;
+                    shInfo.lpParameters = pParams;
+                    shInfo.hwnd = new HWND(hwnd);
+                }
+            }
+        }
 
-        _ = ShellExecuteEx(ref shInfo);
+        _ = PInvoke.ShellExecuteEx(ref shInfo);
     }
 
 

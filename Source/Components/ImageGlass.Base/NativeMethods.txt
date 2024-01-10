@@ -27,3 +27,4 @@ SetThreadExecutionState
 timeBeginPeriod
 timeEndPeriod
 timeGetDevCaps
+ShellExecuteEx
