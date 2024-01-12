@@ -157,7 +157,6 @@ public static class PhotoCodec
                 meta.OriginalWidth = imgM.BaseWidth;
                 meta.OriginalHeight = imgM.BaseHeight;
 
-                meta.SupportsWriting = MagickFormatInfo.Create(imgM.Format).SupportsWriting;
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
                 meta.ColorSpace = imgM.ColorSpace.ToString();
 
@@ -367,6 +366,15 @@ public static class PhotoCodec
 
 
     /// <summary>
+    /// Checks if the format can be written.
+    /// </summary>
+    public static bool CheckSupportFormatForSaving(string destFilePath)
+    {
+        return MagickFormatInfo.Create(destFilePath).SupportsWriting;
+    }
+
+
+    /// <summary>
     /// Save as image file, use Magick.NET.
     /// </summary>
     /// <param name="srcFileName">Source filename to save</param>
@@ -381,8 +389,7 @@ public static class PhotoCodec
 
         try
         {
-            var metadata = LoadMetadata(srcFileName, readOptions);
-            if (!metadata.SupportsWriting)
+            if (!CheckSupportFormatForSaving(destFilePath))
             {
                 throw new FileFormatException("IGE_001: Unsupported image format.");
             }
