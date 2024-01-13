@@ -16,13 +16,40 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Windows.Win32;
 
 namespace ImageGlass.Base.DirectoryComparer;
 
-public class IdentityComparer : IComparer<string?>
+
+public class StringNaturalComparer : IComparer<string?>
 {
-    public int Compare(string? filePath1, string? filePath2)
+    public bool OrderByAsc { get; set; } = true;
+    public bool IgnoreCase { get; set; } = false;
+
+
+    public StringNaturalComparer(bool orderByAsc = true, bool ignoreCase = false)
     {
-        return 0;
+        OrderByAsc = orderByAsc;
+        IgnoreCase = ignoreCase;
+    }
+
+
+    public int Compare(string? str1, string? str2)
+    {
+        str1 ??= "";
+        str2 ??= "";
+
+        if (IgnoreCase)
+        {
+            str1 = str1.ToLowerInvariant();
+            str2 = str2.ToLowerInvariant();
+        }
+
+        if (OrderByAsc)
+        {
+            return PInvoke.StrCmpLogical(str1, str2);
+        }
+
+        return PInvoke.StrCmpLogical(str2, str1);
     }
 }

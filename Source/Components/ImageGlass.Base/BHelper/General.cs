@@ -153,23 +153,14 @@ public partial class BHelper
         // KBR 20190605
         // Fix observed limitation: to more closely match the Windows Explorer's sort
         // order, we must sort by the target column, then by name.
-        var naturalSortComparer = orderType == ImageOrderType.Desc
-                                    ? (IComparer<string>)new ReverseWindowsNaturalSort()
-                                    : new WindowsNaturalSort();
+        var filePathComparer = new StringNaturalComparer(orderType == ImageOrderType.Asc, true);
 
         // initiate directory sorter to a comparer that does nothing
         // if user wants to group by directory, we initiate the real comparer
-        var directorySortComparer = (IComparer<string>)new IdentityComparer();
+        var dirPathComparer = (IComparer<string?>)new IdentityComparer();
         if (groupByDir)
         {
-            if (orderType == ImageOrderType.Desc)
-            {
-                directorySortComparer = new ReverseWindowsDirectoryNaturalSort();
-            }
-            else
-            {
-                directorySortComparer = new WindowsDirectoryNaturalSort();
-            }
+            dirPathComparer = new StringNaturalComparer(orderType == ImageOrderType.Asc, true);
         }
 
         // KBR 20190605 Fix observed discrepancy: using UTC for create,
@@ -181,16 +172,16 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenByDescending(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
@@ -200,16 +191,16 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenByDescending(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
@@ -219,16 +210,16 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenByDescending(f => new FileInfo(f).Extension.ToLowerInvariant())
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenBy(f => new FileInfo(f).Extension.ToLowerInvariant())
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
@@ -238,16 +229,16 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenByDescending(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
@@ -257,16 +248,16 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenByDescending(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
@@ -275,7 +266,7 @@ public partial class BHelper
         {
             // NOTE: ignoring the 'descending order' setting
             return fileList.AsParallel()
-                .OrderBy(f => f, directorySortComparer)
+                .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                 .ThenBy(_ => Guid.NewGuid());
         }
 
@@ -285,24 +276,24 @@ public partial class BHelper
             if (orderType == ImageOrderType.Desc)
             {
                 return fileList
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenByDescending(f => PhotoCodec.LoadMetadata(f).Date)
-                    .ThenBy(f => f, new WindowsNaturalSort());
+                    .ThenBy(f => Path.GetFileName(f), new StringNaturalComparer()); // always by ASC
             }
             else
             {
                 return fileList
-                    .OrderBy(f => f, directorySortComparer)
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => PhotoCodec.LoadMetadata(f).Date)
-                    .ThenBy(f => f, new WindowsNaturalSort());
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
 
 
         // sort by Name (default)
         return fileList.AsParallel()
-            .OrderBy(f => f, directorySortComparer)
-            .ThenBy(f => f, naturalSortComparer);
+            .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+            .ThenBy(f => Path.GetFileName(f), filePathComparer);
     }
 
 

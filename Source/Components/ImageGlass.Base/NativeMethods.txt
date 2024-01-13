@@ -28,3 +28,4 @@ timeBeginPeriod
 timeEndPeriod
 timeGetDevCaps
 ShellExecuteEx
+StrCmpLogicalW
