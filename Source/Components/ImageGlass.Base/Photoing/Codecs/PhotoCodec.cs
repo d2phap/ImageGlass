@@ -60,9 +60,9 @@ public static class PhotoCodec
         meta.FolderName = Path.GetFileName(meta.FolderPath);
 
         meta.FileSize = fi.Length;
-        meta.FileCreationTime = fi.CreationTimeUtc;
-        meta.FileLastWriteTime = fi.LastWriteTimeUtc;
-        meta.FileLastAccessTime = fi.LastAccessTimeUtc;
+        meta.FileCreationTime = fi.CreationTime;
+        meta.FileLastWriteTime = fi.LastWriteTime;
+        meta.FileLastAccessTime = fi.LastAccessTime;
 
         try
         {
@@ -133,6 +133,46 @@ public static class PhotoCodec
                     meta.ExifFocalLength = rational.Denominator == 0
                         ? null
                         : rational.Numerator / rational.Denominator;
+                }
+                else
+                {
+                    try
+                    {
+                        using var fs = File.OpenRead(filePath);
+                        using var img = Image.FromStream(fs, false, false);
+                        var enc = new ASCIIEncoding();
+
+                        var EXIF_DateTimeOriginal = 0x9003; //36867;
+                        var EXIF_DateTime = 0x0132;
+
+                        try
+                        {
+                            // get EXIF_DateTimeOriginal
+                            var pi = img.GetPropertyItem(EXIF_DateTimeOriginal);
+                            var dateTimeText = enc.GetString(pi.Value, 0, pi.Len - 1);
+
+                            if (DateTime.TryParseExact(dateTimeText, "yyyy:MM:dd HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out var exifDateTimeOriginal))
+                            {
+                                meta.ExifDateTimeOriginal = exifDateTimeOriginal;
+                            }
+                        }
+                        catch { }
+
+
+                        try
+                        {
+                            // get EXIF_DateTime
+                            var pi = img.GetPropertyItem(EXIF_DateTime);
+                            var dateTimeText = enc.GetString(pi.Value, 0, pi.Len - 1);
+
+                            if (DateTime.TryParseExact(dateTimeText, "yyyy:MM:dd HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out var exifDateTime))
+                            {
+                                meta.ExifDateTime = exifDateTime;
+                            }
+                        }
+                        catch { }
+                    }
+                    catch { }
                 }
 
                 // Color profile

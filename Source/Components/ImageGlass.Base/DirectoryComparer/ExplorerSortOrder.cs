@@ -31,8 +31,7 @@ public static class ExplorerSortOrder
     /// </summary>
     private static readonly Dictionary<string, ImageOrderBy> SortTranslation = new()
     {
-        { "System.DateModified", ImageOrderBy.LastWriteTime },
-        { "System.ItemDate", ImageOrderBy.LastWriteTime },
+        { "System.ItemDate", ImageOrderBy.Date },
         { "System.ItemTypeText", ImageOrderBy.Extension },
         { "System.FileExtension", ImageOrderBy.Extension },
         { "System.FileName", ImageOrderBy.Name },
@@ -40,6 +39,7 @@ public static class ExplorerSortOrder
         { "System.Size", ImageOrderBy.FileSize },
         { "System.DateCreated", ImageOrderBy.CreationTime },
         { "System.DateAccessed", ImageOrderBy.LastAccessTime },
+        { "System.DateModified", ImageOrderBy.LastWriteTime },
     };
 
     [DllImport("ExplorerSortOrder.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
@@ -86,9 +86,9 @@ public static class ExplorerSortOrder
             // Success! Attempt to translate the Explorer column to our supported
             // sort order values.
             var column = sb.ToString();
-            if (SortTranslation.ContainsKey(column))
+            if (SortTranslation.TryGetValue(column, out ImageOrderBy value))
             {
-                loadOrder = SortTranslation[column];
+                loadOrder = value;
             }
 
             isAscending = ascend > 0;

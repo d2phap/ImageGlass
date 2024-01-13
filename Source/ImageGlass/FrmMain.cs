@@ -300,6 +300,29 @@ public partial class FrmMain : ThemedForm
             tooltipLinesCount++;
         }
 
+        // ExifDateTimeOriginal
+        if (e.Item.Details.ExifDateTimeOriginal != null)
+        {
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.ExifDateTimeOriginal)}"]}: {BHelper.FormatDateTime(e.Item.Details.ExifDateTimeOriginal)}");
+            tooltipLinesCount++;
+        }
+
+        // ExifDateTime
+        if (e.Item.Details.ExifDateTime != null)
+        {
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.ExifDateTime)}"]}: {BHelper.FormatDateTime(e.Item.Details.ExifDateTime)}");
+            tooltipLinesCount++;
+        }
+
+
+        // DEBUG ONLY
+        if (Config.EnableDebug)
+        {
+            // Date
+            sb.AppendLine($"[DATE]: {BHelper.FormatDateTime(e.Item.Details.Date)}");
+            tooltipLinesCount++;
+        }
+
         e.TooltipContent = sb.ToString();
         e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth:n0}×{e.Item.Details.OriginalHeight:n0})";
         e.TooltipSize = (Gallery.Tooltip as ModernTooltip)?.CalculateSize(e.TooltipContent);

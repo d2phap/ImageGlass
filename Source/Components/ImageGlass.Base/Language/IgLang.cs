@@ -188,6 +188,9 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
         _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
         _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ExifDateTime)}", "EXIF DateTime"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.ExifDateTimeOriginal)}", "EXIF DateTimeOriginal"); //v9.0
+        _ = TryAdd($"_.Metadata._{nameof(IgMetadata.Date)}", "Date"); //v9.0
 
         // image info
         _ = TryAdd($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
@@ -205,10 +208,11 @@ public class IgLang : Dictionary<string, string>
         // ImageOrderBy
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
-        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Date)}", "Date"); //v9.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
 
         // ImageOrderType

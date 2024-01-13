@@ -27,12 +27,13 @@ namespace ImageGlass.Base;
 public enum ImageOrderBy
 {
     Name = 0,
-    FileSize = 1,
-    CreationTime = 2,
+    Random = 1,
+    FileSize = 2,
     Extension = 3,
     LastAccessTime = 4,
     LastWriteTime = 5,
-    Random = 6,
+    CreationTime = 6,
+    Date = 7,
 }
 
 

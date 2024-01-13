@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base.DirectoryComparer;
+using ImageGlass.Base.Photoing.Codecs;
 using System.Globalization;
 
 namespace ImageGlass.Base;
@@ -277,6 +278,26 @@ public partial class BHelper
                 .OrderBy(f => f, directorySortComparer)
                 .ThenBy(_ => Guid.NewGuid());
         }
+
+        // sort by DateTaken
+        if (orderBy == ImageOrderBy.Date)
+        {
+            if (orderType == ImageOrderType.Desc)
+            {
+                return fileList
+                    .OrderBy(f => f, directorySortComparer)
+                    .ThenByDescending(f => PhotoCodec.LoadMetadata(f).Date)
+                    .ThenBy(f => f, new WindowsNaturalSort());
+            }
+            else
+            {
+                return fileList
+                    .OrderBy(f => f, directorySortComparer)
+                    .ThenBy(f => PhotoCodec.LoadMetadata(f).Date)
+                    .ThenBy(f => f, new WindowsNaturalSort());
+            }
+        }
+
 
         // sort by Name (default)
         return fileList.AsParallel()
