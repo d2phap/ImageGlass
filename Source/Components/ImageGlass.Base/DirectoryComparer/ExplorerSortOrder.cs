@@ -40,7 +40,12 @@ public static class ExplorerSortOrder
         { "System.DateCreated", ImageOrderBy.CreationTime },
         { "System.DateAccessed", ImageOrderBy.LastAccessTime },
         { "System.DateModified", ImageOrderBy.LastWriteTime },
+
+        //{ "System.Photo.DateTaken", ImageOrderBy.Date },
+        //{ "System.Rating", ImageOrderBy.Name },
+        //{ "System.Image.Dimensions", ImageOrderBy.Name },
     };
+
 
     [DllImport("ExplorerSortOrder.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
     private static extern int GetExplorerSortOrder(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
