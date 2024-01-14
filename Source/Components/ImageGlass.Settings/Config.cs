@@ -669,58 +669,58 @@ public static class Config
         var items = Source.LoadUserConfigs();
 
         // save the config for all tools
-        ToolSettings = items.GetValue(nameof(ToolSettings)).GetValue(nameof(ToolSettings), new ExpandoObject());
+        ToolSettings = items.GetValueObj(nameof(ToolSettings)).GetValue(nameof(ToolSettings), new ExpandoObject());
 
 
         // Boolean values
         #region Boolean items
 
-        EnableSlideshow = items.GetValue(nameof(EnableSlideshow), EnableSlideshow);
-        HideMainWindowInSlideshow = items.GetValue(nameof(HideMainWindowInSlideshow), HideMainWindowInSlideshow);
-        ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
-        UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
-        EnableLoopSlideshow = items.GetValue(nameof(EnableLoopSlideshow), EnableLoopSlideshow);
-        EnableFullscreenSlideshow = items.GetValue(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
-        EnableFrameless = items.GetValue(nameof(EnableFrameless), EnableFrameless);
-        EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
-        ShowGallery = items.GetValue(nameof(ShowGallery), ShowGallery);
-        ShowGalleryScrollbars = items.GetValue(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
-        ShowGalleryFileName = items.GetValue(nameof(ShowGalleryFileName), ShowGalleryFileName);
-        ShowWelcomeImage = items.GetValue(nameof(ShowWelcomeImage), ShowWelcomeImage);
-        ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
-        ShowAppIcon = items.GetValue(nameof(ShowAppIcon), ShowAppIcon);
-        EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
-        ShowCheckerboard = items.GetValue(nameof(ShowCheckerboard), ShowCheckerboard);
-        ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
-        EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
-        EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
-        ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
-        ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
-        ShouldPreserveModifiedDate = items.GetValue(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
-        ShowNewVersionIndicator = items.GetValue(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
-        EnableCenterToolbar = items.GetValue(nameof(EnableCenterToolbar), EnableCenterToolbar);
-        ShouldOpenLastSeenImage = items.GetValue(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
-        ShouldUseColorProfileForAll = items.GetValue(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
-        EnableNavigationButtons = items.GetValue(nameof(EnableNavigationButtons), EnableNavigationButtons);
-        EnableRecursiveLoading = items.GetValue(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
-        ShouldUseExplorerSortOrder = items.GetValue(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
-        ShouldGroupImagesByDirectory = items.GetValue(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
-        ShouldLoadHiddenImages = items.GetValue(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
-        EnableWindowFit = items.GetValue(nameof(EnableWindowFit), EnableWindowFit);
-        CenterWindowFit = items.GetValue(nameof(CenterWindowFit), CenterWindowFit);
-        UseEmbeddedThumbnailRawFormats = items.GetValue(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
-        UseEmbeddedThumbnailOtherFormats = items.GetValue(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
-        ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
-        EnableImageTransition = items.GetValue(nameof(EnableImageTransition), EnableImageTransition);
-        EnableCopyMultipleFiles = items.GetValue(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
-        EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
-        EnableRealTimeFileUpdate = items.GetValue(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
-        ShouldAutoOpenNewAddedImage = items.GetValue(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
-        UseWebview2ForSvg = items.GetValue(nameof(UseWebview2ForSvg), UseWebview2ForSvg);
-        EnableDebug = items.GetValue(nameof(EnableDebug), EnableDebug);
+        EnableSlideshow = items.GetValueEx(nameof(EnableSlideshow), EnableSlideshow);
+        HideMainWindowInSlideshow = items.GetValueEx(nameof(HideMainWindowInSlideshow), HideMainWindowInSlideshow);
+        ShowSlideshowCountdown = items.GetValueEx(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
+        UseRandomIntervalForSlideshow = items.GetValueEx(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
+        EnableLoopSlideshow = items.GetValueEx(nameof(EnableLoopSlideshow), EnableLoopSlideshow);
+        EnableFullscreenSlideshow = items.GetValueEx(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
+        EnableFrameless = items.GetValueEx(nameof(EnableFrameless), EnableFrameless);
+        EnableFullScreen = items.GetValueEx(nameof(EnableFullScreen), EnableFullScreen);
+        ShowGallery = items.GetValueEx(nameof(ShowGallery), ShowGallery);
+        ShowGalleryScrollbars = items.GetValueEx(nameof(ShowGalleryScrollbars), ShowGalleryScrollbars);
+        ShowGalleryFileName = items.GetValueEx(nameof(ShowGalleryFileName), ShowGalleryFileName);
+        ShowWelcomeImage = items.GetValueEx(nameof(ShowWelcomeImage), ShowWelcomeImage);
+        ShowToolbar = items.GetValueEx(nameof(ShowToolbar), ShowToolbar);
+        ShowAppIcon = items.GetValueEx(nameof(ShowAppIcon), ShowAppIcon);
+        EnableLoopBackNavigation = items.GetValueEx(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
+        ShowCheckerboard = items.GetValueEx(nameof(ShowCheckerboard), ShowCheckerboard);
+        ShowCheckerboardOnlyImageRegion = items.GetValueEx(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
+        EnableMultiInstances = items.GetValueEx(nameof(EnableMultiInstances), EnableMultiInstances);
+        EnableWindowTopMost = items.GetValueEx(nameof(EnableWindowTopMost), EnableWindowTopMost);
+        ShowDeleteConfirmation = items.GetValueEx(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
+        ShowSaveOverrideConfirmation = items.GetValueEx(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
+        ShouldPreserveModifiedDate = items.GetValueEx(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
+        ShowNewVersionIndicator = items.GetValueEx(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
+        EnableCenterToolbar = items.GetValueEx(nameof(EnableCenterToolbar), EnableCenterToolbar);
+        ShouldOpenLastSeenImage = items.GetValueEx(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
+        ShouldUseColorProfileForAll = items.GetValueEx(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
+        EnableNavigationButtons = items.GetValueEx(nameof(EnableNavigationButtons), EnableNavigationButtons);
+        EnableRecursiveLoading = items.GetValueEx(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
+        ShouldUseExplorerSortOrder = items.GetValueEx(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
+        ShouldGroupImagesByDirectory = items.GetValueEx(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
+        ShouldLoadHiddenImages = items.GetValueEx(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
+        EnableWindowFit = items.GetValueEx(nameof(EnableWindowFit), EnableWindowFit);
+        CenterWindowFit = items.GetValueEx(nameof(CenterWindowFit), CenterWindowFit);
+        UseEmbeddedThumbnailRawFormats = items.GetValueEx(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
+        UseEmbeddedThumbnailOtherFormats = items.GetValueEx(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
+        ShowImagePreview = items.GetValueEx(nameof(ShowImagePreview), ShowImagePreview);
+        EnableImageTransition = items.GetValueEx(nameof(EnableImageTransition), EnableImageTransition);
+        EnableCopyMultipleFiles = items.GetValueEx(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
+        EnableCutMultipleFiles = items.GetValueEx(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
+        EnableRealTimeFileUpdate = items.GetValueEx(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
+        ShouldAutoOpenNewAddedImage = items.GetValueEx(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
+        UseWebview2ForSvg = items.GetValueEx(nameof(UseWebview2ForSvg), UseWebview2ForSvg);
+        EnableDebug = items.GetValueEx(nameof(EnableDebug), EnableDebug);
 
-        HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
-        HideGalleryInFullscreen = items.GetValue(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);
+        HideToolbarInFullscreen = items.GetValueEx(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
+        HideGalleryInFullscreen = items.GetValueEx(nameof(HideGalleryInFullscreen), HideGalleryInFullscreen);
 
         #endregion
 
@@ -728,56 +728,56 @@ public static class Config
         // Number values
         #region Number items
 
-        QuickSetupVersion = items.GetValue(nameof(QuickSetupVersion), QuickSetupVersion);
+        QuickSetupVersion = items.GetValueEx(nameof(QuickSetupVersion), QuickSetupVersion);
 
         // FrmMain
-        FrmMainPositionX = items.GetValue(nameof(FrmMainPositionX), FrmMainPositionX);
-        FrmMainPositionY = items.GetValue(nameof(FrmMainPositionY), FrmMainPositionY);
-        FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
-        FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
+        FrmMainPositionX = items.GetValueEx(nameof(FrmMainPositionX), FrmMainPositionX);
+        FrmMainPositionY = items.GetValueEx(nameof(FrmMainPositionY), FrmMainPositionY);
+        FrmMainWidth = items.GetValueEx(nameof(FrmMainWidth), FrmMainWidth);
+        FrmMainHeight = items.GetValueEx(nameof(FrmMainHeight), FrmMainHeight);
 
         // FrmSettings
-        FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
-        FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
-        FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
-        FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
+        FrmSettingsPositionX = items.GetValueEx(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        FrmSettingsPositionY = items.GetValueEx(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        FrmSettingsWidth = items.GetValueEx(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        FrmSettingsHeight = items.GetValueEx(nameof(FrmSettingsHeight), FrmSettingsHeight);
 
-        PanSpeed = items.GetValue(nameof(PanSpeed), PanSpeed);
-        ZoomSpeed = items.GetValue(nameof(ZoomSpeed), ZoomSpeed);
+        PanSpeed = items.GetValueEx(nameof(PanSpeed), PanSpeed);
+        ZoomSpeed = items.GetValueEx(nameof(ZoomSpeed), ZoomSpeed);
 
         #region Slideshow
-        SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
+        SlideshowInterval = items.GetValueEx(nameof(SlideshowInterval), SlideshowInterval);
         if (SlideshowInterval < 1) SlideshowInterval = 5f;
 
-        SlideshowIntervalTo = items.GetValue(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
+        SlideshowIntervalTo = items.GetValueEx(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         SlideshowIntervalTo = Math.Max(SlideshowIntervalTo, SlideshowInterval);
 
-        SlideshowImagesToNotifySound = items.GetValue(nameof(SlideshowImagesToNotifySound), SlideshowImagesToNotifySound);
+        SlideshowImagesToNotifySound = items.GetValueEx(nameof(SlideshowImagesToNotifySound), SlideshowImagesToNotifySound);
         #endregion
 
         #region Load gallery thumbnail width & position
-        ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
+        ThumbnailSize = items.GetValueEx(nameof(ThumbnailSize), ThumbnailSize);
         ThumbnailSize = Math.Max(20, ThumbnailSize);
-        GalleryCacheSizeInMb = items.GetValue(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
+        GalleryCacheSizeInMb = items.GetValueEx(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
 
-        GalleryColumns = items.GetValue(nameof(GalleryColumns), GalleryColumns);
+        GalleryColumns = items.GetValueEx(nameof(GalleryColumns), GalleryColumns);
         GalleryColumns = Math.Max(1, GalleryColumns);
         #endregion
 
-        ImageBoosterCacheCount = items.GetValue(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
+        ImageBoosterCacheCount = items.GetValueEx(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
         ImageBoosterCacheCount = Math.Max(0, Math.Min(ImageBoosterCacheCount, 10));
 
-        ImageBoosterCacheMaxDimension = items.GetValue(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
-        ImageBoosterCacheMaxFileSizeInMb = items.GetValue(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
+        ImageBoosterCacheMaxDimension = items.GetValueEx(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
+        ImageBoosterCacheMaxFileSizeInMb = items.GetValueEx(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
 
-        ZoomLockValue = items.GetValue(nameof(ZoomLockValue), ZoomLockValue);
+        ZoomLockValue = items.GetValueEx(nameof(ZoomLockValue), ZoomLockValue);
         if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
-        ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
-        ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
-        InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
-        EmbeddedThumbnailMinWidth = items.GetValue(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
-        EmbeddedThumbnailMinHeight = items.GetValue(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
+        ToolbarIconHeight = items.GetValueEx(nameof(ToolbarIconHeight), ToolbarIconHeight);
+        ImageEditQuality = items.GetValueEx(nameof(ImageEditQuality), ImageEditQuality);
+        InAppMessageDuration = items.GetValueEx(nameof(InAppMessageDuration), InAppMessageDuration);
+        EmbeddedThumbnailMinWidth = items.GetValueEx(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
+        EmbeddedThumbnailMinHeight = items.GetValueEx(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
 
         #endregion
 
@@ -785,15 +785,15 @@ public static class Config
         // Enum values
         #region Enum items
 
-        FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
-        FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
-        ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
-        ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
-        ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
-        ImageInterpolationScaleDown = items.GetValue(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
-        ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
-        AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
-        WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
+        FrmMainState = items.GetValueEx(nameof(FrmMainState), FrmMainState);
+        FrmSettingsState = items.GetValueEx(nameof(FrmSettingsState), FrmSettingsState);
+        ImageLoadingOrder = items.GetValueEx(nameof(ImageLoadingOrder), ImageLoadingOrder);
+        ImageLoadingOrderType = items.GetValueEx(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+        ZoomMode = items.GetValueEx(nameof(ZoomMode), ZoomMode);
+        ImageInterpolationScaleDown = items.GetValueEx(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
+        ImageInterpolationScaleUp = items.GetValueEx(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
+        AfterEditingAction = items.GetValueEx(nameof(AfterEditingAction), AfterEditingAction);
+        WindowBackdrop = items.GetValueEx(nameof(WindowBackdrop), WindowBackdrop);
 
         #endregion
 
@@ -801,14 +801,14 @@ public static class Config
         // String values
         #region String items
 
-        ColorProfile = items.GetValue(nameof(ColorProfile), ColorProfile);
+        ColorProfile = items.GetValueEx(nameof(ColorProfile), ColorProfile);
         ColorProfile = BHelper.GetCorrectColorProfileName(ColorProfile);
 
-        AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
-        LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
-        LastOpenedSetting = items.GetValue(nameof(LastOpenedSetting), LastOpenedSetting);
-        DarkTheme = items.GetValue(nameof(DarkTheme), DarkTheme);
-        LightTheme = items.GetValue(nameof(LightTheme), LightTheme);
+        AutoUpdate = items.GetValueEx(nameof(AutoUpdate), AutoUpdate);
+        LastSeenImagePath = items.GetValueEx(nameof(LastSeenImagePath), LastSeenImagePath);
+        LastOpenedSetting = items.GetValueEx(nameof(LastOpenedSetting), LastOpenedSetting);
+        DarkTheme = items.GetValueEx(nameof(DarkTheme), DarkTheme);
+        LightTheme = items.GetValueEx(nameof(LightTheme), LightTheme);
 
         #endregion
 
@@ -843,10 +843,10 @@ public static class Config
 
         #region ImageFormats
 
-        var formats = items.GetValue(nameof(FileFormats), Const.IMAGE_FORMATS);
+        var formats = items.GetValueEx(nameof(FileFormats), Const.IMAGE_FORMATS);
         FileFormats = GetImageFormats(formats);
 
-        formats = items.GetValue(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
+        formats = items.GetValueEx(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
         SingleFrameFormats = GetImageFormats(formats);
 
         #endregion
@@ -860,7 +860,7 @@ public static class Config
 
 
         // info items
-        var infoTagsHasValue = items.GetValue(nameof(ImageInfoTags)) is not null;
+        var infoTagsHasValue = items.GetValueObj(nameof(ImageInfoTags)) is not null;
         if (infoTagsHasValue)
         {
             ImageInfoTags = items.GetSection(nameof(ImageInfoTags))
@@ -935,14 +935,14 @@ public static class Config
             .Select(i => i.Get<string>())
             .ToList();
 
-        #endregion
+        #endregion // Array items
 
 
         // Other types values
         #region Other types items
 
         #region Language
-        var langPath = items.GetValue(nameof(Language), "English");
+        var langPath = items.GetValueEx(nameof(Language), "English");
         Language = new IgLang(langPath, App.StartUpDir(Dir.Language));
         #endregion
 
@@ -950,7 +950,7 @@ public static class Config
         // must load before Theme
         #region BackgroundColor
 
-        var bgValue = items.GetValue(nameof(BackgroundColor), string.Empty);
+        var bgValue = items.GetValueEx(nameof(BackgroundColor), string.Empty);
 
         if (string.IsNullOrEmpty(bgValue))
         {
@@ -969,7 +969,7 @@ public static class Config
 
         #region SlideshowBackgroundColor
 
-        bgValue = items.GetValue(nameof(SlideshowBackgroundColor), string.Empty);
+        bgValue = items.GetValueEx(nameof(SlideshowBackgroundColor), string.Empty);
         if (!string.IsNullOrWhiteSpace(bgValue))
         {
             SlideshowBackgroundColor = BHelper.ColorFromHex(bgValue);
@@ -977,7 +977,7 @@ public static class Config
 
         #endregion
 
-        #endregion
+        #endregion // Other types items
 
 
         // initialize Magick.NET
