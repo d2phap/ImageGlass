@@ -186,7 +186,7 @@ public partial class BHelper
         }
 
         // sort by CreationTime
-        if (orderBy == ImageOrderBy.CreationTime)
+        if (orderBy == ImageOrderBy.DateCreated)
         {
             if (orderType == ImageOrderType.Desc)
             {
@@ -224,7 +224,7 @@ public partial class BHelper
         }
 
         // sort by LastAccessTime
-        if (orderBy == ImageOrderBy.LastAccessTime)
+        if (orderBy == ImageOrderBy.DateAccessed)
         {
             if (orderType == ImageOrderType.Desc)
             {
@@ -243,7 +243,7 @@ public partial class BHelper
         }
 
         // sort by LastWriteTime
-        if (orderBy == ImageOrderBy.LastWriteTime)
+        if (orderBy == ImageOrderBy.DateModified)
         {
             if (orderType == ImageOrderType.Desc)
             {

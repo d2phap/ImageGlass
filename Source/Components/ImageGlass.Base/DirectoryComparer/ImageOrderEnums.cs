@@ -31,9 +31,9 @@ public enum ImageOrderBy
     FileSize = 2,
     Extension = 3,
     Date = 4,
-    CreationTime = 5,
-    LastAccessTime = 6,
-    LastWriteTime = 7,
+    DateCreated = 5,
+    DateAccessed = 6,
+    DateModified = 7,
     ExifDateTaken = 8,
     ExifRating = 9,
 }

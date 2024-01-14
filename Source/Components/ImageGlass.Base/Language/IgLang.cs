@@ -211,9 +211,9 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Date)}", "Date"); //v9.0
-        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
-        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Date accessed"); //v8.0
-        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Date modified"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.DateCreated)}", "Date created"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.DateAccessed)}", "Date accessed"); //v8.0
+        _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.DateModified)}", "Date modified"); //v8.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.ExifDateTaken)}", "EXIF: Date taken"); //v9.0
         _ = TryAdd($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.ExifRating)}", "EXIF: Rating"); //v9.0
 

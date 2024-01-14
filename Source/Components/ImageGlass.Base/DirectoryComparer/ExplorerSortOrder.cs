@@ -37,9 +37,9 @@ public static class ExplorerSortOrder
         { "System.FileName", ImageOrderBy.Name },
         { "System.ItemNameDisplay", ImageOrderBy.Name },
         { "System.Size", ImageOrderBy.FileSize },
-        { "System.DateCreated", ImageOrderBy.CreationTime },
-        { "System.DateAccessed", ImageOrderBy.LastAccessTime },
-        { "System.DateModified", ImageOrderBy.LastWriteTime },
+        { "System.DateCreated", ImageOrderBy.DateCreated },
+        { "System.DateAccessed", ImageOrderBy.DateAccessed },
+        { "System.DateModified", ImageOrderBy.DateModified },
 
         { "System.Photo.DateTaken", ImageOrderBy.ExifDateTaken },
         { "System.Rating", ImageOrderBy.ExifRating },
