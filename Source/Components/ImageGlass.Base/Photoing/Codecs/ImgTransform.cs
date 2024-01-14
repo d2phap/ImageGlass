@@ -76,8 +76,8 @@ public class ImgTransform
     /// </summary>
     public void Clear()
     {
-        Flips = FlipOptions.None;
-        Rotation = 0;
+        _flipOptions = FlipOptions.None;
+        _rotation = 0;
         FrameIndex = -1;
 
         Changed?.Invoke(this, EventArgs.Empty);

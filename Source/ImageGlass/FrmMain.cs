@@ -1047,6 +1047,13 @@ public partial class FrmMain : ThemedForm
             HandleImage_LastReached();
             return;
         }
+
+        // image transform changed
+        if (e.Type.Equals(nameof(ImageTransform_Changed), StringComparison.OrdinalIgnoreCase))
+        {
+            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
+            return;
+        }
     }
 
 
@@ -1203,7 +1210,7 @@ public partial class FrmMain : ThemedForm
 
     private void ImageTransform_Changed(object? sender, EventArgs e)
     {
-        LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
+        _uiReporter.Report(new ProgressReporterEventArgs(e, nameof(ImageTransform_Changed)));
     }
 
 
