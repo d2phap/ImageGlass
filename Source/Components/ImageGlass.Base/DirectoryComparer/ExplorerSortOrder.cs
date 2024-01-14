@@ -41,8 +41,8 @@ public static class ExplorerSortOrder
         { "System.DateAccessed", ImageOrderBy.LastAccessTime },
         { "System.DateModified", ImageOrderBy.LastWriteTime },
 
-        //{ "System.Photo.DateTaken", ImageOrderBy.Date },
-        //{ "System.Rating", ImageOrderBy.Name },
+        { "System.Photo.DateTaken", ImageOrderBy.ExifDateTaken },
+        { "System.Rating", ImageOrderBy.ExifRating },
         //{ "System.Image.Dimensions", ImageOrderBy.Name },
     };
 

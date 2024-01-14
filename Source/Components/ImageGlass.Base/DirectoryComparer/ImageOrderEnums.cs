@@ -30,10 +30,12 @@ public enum ImageOrderBy
     Random = 1,
     FileSize = 2,
     Extension = 3,
-    LastAccessTime = 4,
-    LastWriteTime = 5,
-    CreationTime = 6,
-    Date = 7,
+    Date = 4,
+    CreationTime = 5,
+    LastAccessTime = 6,
+    LastWriteTime = 7,
+    ExifDateTaken = 8,
+    ExifRating = 9,
 }
 
 

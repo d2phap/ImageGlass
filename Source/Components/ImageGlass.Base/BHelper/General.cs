@@ -270,7 +270,7 @@ public partial class BHelper
                 .ThenBy(_ => Guid.NewGuid());
         }
 
-        // sort by DateTaken
+        // sort by Date
         if (orderBy == ImageOrderBy.Date)
         {
             if (orderType == ImageOrderType.Desc)
@@ -285,6 +285,44 @@ public partial class BHelper
                 return fileList
                     .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
                     .ThenBy(f => PhotoCodec.LoadMetadata(f).Date)
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
+            }
+        }
+
+        // sort by DateTaken
+        if (orderBy == ImageOrderBy.ExifDateTaken)
+        {
+            if (orderType == ImageOrderType.Desc)
+            {
+                return fileList
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenByDescending(f => PhotoCodec.LoadMetadata(f).ExifDateTimeOriginal)
+                    .ThenBy(f => Path.GetFileName(f), new StringNaturalComparer()); // always by ASC
+            }
+            else
+            {
+                return fileList
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenBy(f => PhotoCodec.LoadMetadata(f).ExifDateTimeOriginal)
+                    .ThenBy(f => Path.GetFileName(f), filePathComparer);
+            }
+        }
+
+        // sort by Rating
+        if (orderBy == ImageOrderBy.ExifRating)
+        {
+            if (orderType == ImageOrderType.Desc)
+            {
+                return fileList
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenByDescending(f => PhotoCodec.LoadMetadata(f).ExifRatingPercent)
+                    .ThenBy(f => Path.GetFileName(f), new StringNaturalComparer()); // always by ASC
+            }
+            else
+            {
+                return fileList
+                    .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
+                    .ThenBy(f => PhotoCodec.LoadMetadata(f).ExifRatingPercent)
                     .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
