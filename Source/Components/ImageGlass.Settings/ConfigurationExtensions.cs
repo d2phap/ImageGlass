@@ -26,7 +26,7 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Gets config section as dynamic object.
     /// </summary>
-    public static ExpandoObject? GetValue(this IConfiguration config, string keyName)
+    public static ExpandoObject? GetValueObj(this IConfiguration config, string keyName)
     {
         var result = new ExpandoObject();
 
@@ -64,6 +64,21 @@ public static class ConfigurationExtensions
         ReplaceWithArray(null, null, result);
 
         return result;
+    }
+
+
+    /// <summary>
+    /// Gets config value, returns <paramref name="defaultValue"/> on error.
+    /// </summary>
+    public static T GetValueEx<T>(this IConfiguration config, string keyName, T defaultValue)
+    {
+        try
+        {
+            return config.GetValue(keyName, defaultValue);
+        }
+        catch { }
+
+        return defaultValue;
     }
 
 
