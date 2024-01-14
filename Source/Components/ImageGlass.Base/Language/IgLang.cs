@@ -533,6 +533,8 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings._EnableLoopBackNavigation", "Loop back to the first image when reaching the end of the image list");
         _ = TryAdd("FrmSettings._ShowImagePreview", "Display image preview while it's being loaded");
         _ = TryAdd("FrmSettings._EnableImageTransition", "Enable image transition effect");
+        _ = TryAdd("FrmSettings._EnableImageAsyncLoading", "Enable image asynchronous loading");
+
         _ = TryAdd("FrmSettings._EmbeddedThumbnail", "Embedded thumbnail");
         _ = TryAdd("FrmSettings._UseEmbeddedThumbnailRawFormats", "Load only the embedded thumbnail for RAW formats");
         _ = TryAdd("FrmSettings._UseEmbeddedThumbnailOtherFormats", "Load only the embedded thumbnail for other formats");
