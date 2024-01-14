@@ -166,7 +166,14 @@ public partial class FrmMain
     /// </summary>
     public void IG_ViewPreviousImage()
     {
-        _ = ViewNextCancellableAsync(-1);
+        if (Config.EnableImageAsyncLoading)
+        {
+            _ = ViewNextCancellableAsync(-1);
+        }
+        else
+        {
+            BHelper.RunSync(() => ViewNextCancellableAsync(-1));
+        }
     }
 
 
@@ -175,7 +182,14 @@ public partial class FrmMain
     /// </summary>
     public void IG_ViewNextImage()
     {
-        _ = ViewNextCancellableAsync(1);
+        if (Config.EnableImageAsyncLoading)
+        {
+            _ = ViewNextCancellableAsync(1);
+        }
+        else
+        {
+            BHelper.RunSync(() => ViewNextCancellableAsync(1));
+        }
     }
 
 

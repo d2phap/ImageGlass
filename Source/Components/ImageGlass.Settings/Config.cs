@@ -301,6 +301,11 @@ public static class Config
     public static bool EnableImageTransition { get; set; } = false;
 
     /// <summary>
+    /// Gets, sets value indicates that images should be loaded asynchronously.
+    /// </summary>
+    public static bool EnableImageAsyncLoading { get; set; } = true;
+
+    /// <summary>
     /// Enables / Disables copy multiple files.
     /// </summary>
     public static bool EnableCopyMultipleFiles { get; set; } = true;
@@ -712,6 +717,7 @@ public static class Config
         UseEmbeddedThumbnailOtherFormats = items.GetValueEx(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         ShowImagePreview = items.GetValueEx(nameof(ShowImagePreview), ShowImagePreview);
         EnableImageTransition = items.GetValueEx(nameof(EnableImageTransition), EnableImageTransition);
+        EnableImageAsyncLoading = items.GetValueEx(nameof(EnableImageAsyncLoading), EnableImageAsyncLoading);
         EnableCopyMultipleFiles = items.GetValueEx(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         EnableCutMultipleFiles = items.GetValueEx(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
         EnableRealTimeFileUpdate = items.GetValueEx(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
@@ -1057,6 +1063,7 @@ public static class Config
         settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
         settings.TryAdd(nameof(EnableImageTransition), EnableImageTransition);
+        settings.TryAdd(nameof(EnableImageAsyncLoading), EnableImageAsyncLoading);
         settings.TryAdd(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
         settings.TryAdd(nameof(EnableRealTimeFileUpdate), EnableRealTimeFileUpdate);
