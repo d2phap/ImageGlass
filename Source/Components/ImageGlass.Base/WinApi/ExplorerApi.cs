@@ -274,28 +274,32 @@ public static class ExplorerApi
     /// Register file type associations and app capabilities to registry
     /// </summary>
     /// <param name="extensions">Extension string, ex: <c>.png;.svg;</c></param>
-    public static Exception? RegisterAppAndExtensions(string extensions)
+    /// <param name="perMachine">
+    /// If <c>true</c>, uses <c>HKEY_LOCAL_MACHINE</c>,
+    /// otherwise uses <c>HKEY_CURRENT_USER</c>
+    /// </param>
+    public static Exception? RegisterAppAndExtensions(string extensions, bool perMachine = false)
     {
-        const string APP_NAME = "ImageGlass";
-        var capabilitiesPath = $@"Software\{APP_NAME}\Capabilities";
-
         _ = UnregisterAppAndExtensions(extensions);
 
-
+        const string APP_NAME = "ImageGlass";
+        var capabilitiesPath = $@"Software\{APP_NAME}\Capabilities";
+        using var BASE_KEY = perMachine ? Registry.LocalMachine : Registry.CurrentUser;
+        
         try
         {
             // register the application:
-            // HKEY_CURRENT_USER\SOFTWARE\RegisteredApplications --------------------------------
+            // HKEY_XXX\SOFTWARE\RegisteredApplications --------------------------------
             const string regAppPath = @"Software\RegisteredApplications";
-            using (var key = Registry.CurrentUser.OpenSubKey(regAppPath, true))
+            using (var key = BASE_KEY.OpenSubKey(regAppPath, true))
             {
                 key?.SetValue(APP_NAME, capabilitiesPath);
             }
 
 
             // register application information:
-            // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities -------------------------------
-            using (var key = Registry.CurrentUser.CreateSubKey(capabilitiesPath, true))
+            // HKEY_XXX\SOFTWARE\ImageGlass\Capabilities -------------------------------
+            using (var key = BASE_KEY.CreateSubKey(capabilitiesPath, true))
             {
                 key?.SetValue("ApplicationName", App.AppName);
                 key?.SetValue("ApplicationIcon", $"\"{App.IGExePath}\", 0");
@@ -303,7 +307,7 @@ public static class ExplorerApi
 
 
                 // Register application's file type associations:
-                // HKEY_CURRENT_USER\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
+                // HKEY_XXX\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
                 using (var faKey = key?.CreateSubKey("FileAssociations", true))
                 {
                     var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
@@ -319,8 +323,8 @@ public static class ExplorerApi
 
 
                         // write extension info
-                        // HKEY_CURRENT_USER\SOFTWARE\Classes\ImageGlass.AssocFile.<EXT>
-                        using (var extRootKey = Registry.CurrentUser.CreateSubKey(extAssocPath, true))
+                        // HKEY_XXX\SOFTWARE\Classes\ImageGlass.AssocFile.<EXT>
+                        using (var extRootKey = BASE_KEY.CreateSubKey(extAssocPath, true))
                         {
                             // DefaultIcon -------------------------------------------------------
                             // get extension icon
@@ -386,19 +390,24 @@ public static class ExplorerApi
     /// Unregister file type associations and app information from registry
     /// </summary>
     /// <param name="extensions">Extensions string to delete. Ex: <c>.png;.svg;</c></param>
-    public static Exception? UnregisterAppAndExtensions(string extensions)
+    /// <param name="perMachine">
+    /// If <c>true</c>, uses <c>HKEY_LOCAL_MACHINE</c>,
+    /// otherwise uses <c>HKEY_CURRENT_USER</c>
+    /// </param>
+    public static Exception? UnregisterAppAndExtensions(string extensions, bool perMachine = false)
     {
-        const string APP_NAME = "ImageGlass";
-
         // remove registry of ImageGlass v8
         _ = UnregisterAppAndExtensionsLegacy(extensions);
+
+        const string APP_NAME = "ImageGlass";
+        using var BASE_KEY = perMachine ? Registry.LocalMachine : Registry.CurrentUser;
 
         try
         {
             // Unregister the application:
-            // HKEY_CURRENT_USER\SOFTWARE\RegisteredApplications --------------------------------
+            // HKEY_XXX\SOFTWARE\RegisteredApplications --------------------------------
             const string regAppPath = @"Software\RegisteredApplications";
-            using (var key = Registry.CurrentUser.OpenSubKey(regAppPath, true))
+            using (var key = BASE_KEY.OpenSubKey(regAppPath, true))
             {
                 if (key.OpenSubKey(APP_NAME, true) != null)
                 {
@@ -408,22 +417,22 @@ public static class ExplorerApi
 
 
             // Delete application information:
-            // HKEY_CURRENT_USER\SOFTWARE\ImageGlass --------------------------------------------
-            using (var key = Registry.CurrentUser.OpenSubKey("Software", true))
+            // HKEY_XXX\SOFTWARE\ImageGlass --------------------------------------------
+            using (var key = BASE_KEY.OpenSubKey("Software", true))
             {
                 key?.DeleteSubKeyTree(APP_NAME, false);
             }
 
 
             // Delete file type associations
-            // HKEY_CURRENT_USER\Software\Classes\ImageGlass.AssocFile.<EXT>
+            // HKEY_XXX\Software\Classes\ImageGlass.AssocFile.<EXT>
             var exts = extensions.Split(";", StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in exts)
             {
                 var extNoDot = ext[1..].ToUpperInvariant();
                 var extAssocPath = $@"Software\Classes\{APP_NAME}.AssocFile.{extNoDot}";
 
-                Registry.CurrentUser.DeleteSubKeyTree(extAssocPath, false);
+                BASE_KEY.DeleteSubKeyTree(extAssocPath, false);
             }
 
 
@@ -498,14 +507,20 @@ public static class ExplorerApi
 
     /// <summary>
     /// Register app protocol to registry.
+    /// <param name="perMachine">
+    /// If <c>true</c>, uses <c>HKEY_LOCAL_MACHINE</c>,
+    /// otherwise uses <c>HKEY_CURRENT_USER</c>
+    /// </param>
     /// </summary>
-    public static Exception? RegisterAppProtocol()
+    public static Exception? RegisterAppProtocol(bool perMachine = false)
     {
+        using var BASE_KEY = perMachine ? Registry.LocalMachine : Registry.CurrentUser;
+
         try
         {
             // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> --------------------------------
             const string protocolPath = $@"Software\Classes\{Const.APP_PROTOCOL}";
-            using (var key = Registry.CurrentUser.CreateSubKey(protocolPath, true))
+            using (var key = BASE_KEY.CreateSubKey(protocolPath, true))
             {
                 key?.SetValue("", $"URL: {App.AppName} Protocol");
                 key?.SetValue("URL Protocol", "");
@@ -536,14 +551,20 @@ public static class ExplorerApi
 
     /// <summary>
     /// Delete app protocol from registry.
+    /// <param name="perMachine">
+    /// If <c>true</c>, uses <c>HKEY_LOCAL_MACHINE</c>,
+    /// otherwise uses <c>HKEY_CURRENT_USER</c>
+    /// </param>
     /// </summary>
-    public static Exception? UnregisterAppProtocol()
+    public static Exception? UnregisterAppProtocol(bool perMachine = false)
     {
+        using var BASE_KEY = perMachine ? Registry.LocalMachine : Registry.CurrentUser;
+
         try
         {
             // HKEY_CURRENT_USER\Software\Classes -----------------------------------------------
             const string protocolPath = $@"Software\Classes";
-            using (var key = Registry.CurrentUser.OpenSubKey(protocolPath, true))
+            using (var key = BASE_KEY.OpenSubKey(protocolPath, true))
             {
                 // delete tree:
                 // HKEY_CURRENT_USER\Software\Classes\<APP_PROTOCOL> ----------------------------
