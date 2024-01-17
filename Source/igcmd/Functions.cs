@@ -68,60 +68,40 @@ public static class Functions
     /// </summary>
     /// <param name="enable"></param>
     /// <param name="exts">Extensions to proceed. Example: <c>.png;.jpg;</c></param>
-    public static IgExitCode SetAppExtensions(bool enable, string exts = "", bool showUi = false, bool hideAdminRequiredErrorUi = false)
+    public static IgExitCode SetAppExtensions(
+        bool enable,
+        string exts = "",
+        bool perMachine = false,
+        bool showUi = false,
+        bool hideAdminRequiredErrorUi = false)
     {
-        var exitCode = IgExitCode.Done;
+        var langPath = enable
+            ? "FrmMain.MnuSetDefaultPhotoViewer"
+            : "FrmMain.MnuRemoveDefaultPhotoViewer";
 
-        if (string.IsNullOrEmpty(exts))
+        return Run(() =>
         {
-            exts = Config.GetImageFormats(Config.FileFormats);
-        }
-
-
-        var error = enable
-            ? ExplorerApi.RegisterAppAndExtensions(exts)
-            : ExplorerApi.UnregisterAppAndExtensions(exts);
-
-
-        if (error == null)
-        {
-            exitCode = IgExitCode.Done;
-        }
-        else if (error is SecurityException && !App.IsAdmin)
-        {
-            exitCode = IgExitCode.AdminRequired;
-        }
-        else
-        {
-            exitCode = IgExitCode.Error;
-        }
-
-
-        // show result dialog
-        if (showUi)
-        {
-            var langPath = enable
-                ? "FrmMain.MnuSetDefaultPhotoViewer"
-                : "FrmMain.MnuRemoveDefaultPhotoViewer";
-
-            if (error == null)
+            if (string.IsNullOrEmpty(exts))
             {
-                _ = Config.ShowInfo(null,
-                    title: Config.Language[langPath],
-                    heading: Config.Language[$"{langPath}._Success"]);
+                exts = Config.GetImageFormats(Config.FileFormats);
             }
-            else if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
-            {
-                _ = Config.ShowError(null,
-                    description: error.Message,
-                    title: Config.Language[langPath],
-                    heading: Config.Language[$"{langPath}._Error"],
-                    details: error.ToString());
-            }
-        }
 
+            var error = enable
+                ? ExplorerApi.RegisterAppAndExtensions(exts, perMachine)
+                : ExplorerApi.UnregisterAppAndExtensions(exts, perMachine);
+            if (error != null) throw error;
 
-        return exitCode;
+            _ = Config.ShowInfo(null,
+                title: Config.Language[langPath],
+                heading: Config.Language[$"{langPath}._Success"]);
+        }, (error) =>
+        {
+            _ = Config.ShowError(null,
+                description: error.Message,
+                title: Config.Language[langPath],
+                heading: Config.Language[$"{langPath}._Error"],
+                details: error.ToString());
+        });
     }
 
 
@@ -329,7 +309,7 @@ public static class Functions
             }
         }
 
-        return IgExitCode.Done;
+        return exitCode;
     }
 
 

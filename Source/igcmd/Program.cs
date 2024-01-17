@@ -54,6 +54,11 @@ internal static class Program
     /// </summary>
     public static bool HideAdminRequiredErrorUi => CmdArgs.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
 
+    /// <summary>
+    /// Uses per-machine config if applicable.
+    /// </summary>
+    public static bool PerMachine => CmdArgs.Contains(IgCommands.PER_MACHINE);
+
 
     /// <summary>
     ///  The main entry point for the application.
@@ -117,7 +122,7 @@ internal static class Program
         #endregion
 
 
-        #region SET_DEFAULT_PHOTO_VIEWER [string exts]
+        #region SET_DEFAULT_PHOTO_VIEWER [string exts] [--per-machine]
         if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
             var exts = "";
@@ -126,12 +131,12 @@ internal static class Program
                 exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, exts, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(true, exts, PerMachine, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 
 
-        #region REMOVE_DEFAULT_PHOTO_VIEWER [string exts]
+        #region REMOVE_DEFAULT_PHOTO_VIEWER [string exts] [--per-machine]
         if (topCmd == IgCommands.REMOVE_DEFAULT_PHOTO_VIEWER)
         {
             var exts = "";
@@ -140,7 +145,7 @@ internal static class Program
                 exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, exts, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(false, exts, PerMachine, ShowUi, HideAdminRequiredErrorUi);
         }
         #endregion
 
