@@ -8,6 +8,14 @@ export default class TabToolbar {
   static #toolbarBtnDialog = query<ToolbarButtonEditDialogHtmlElement>('[is="edit-toolbar-dialog"]');
 
   /**
+   * Gets current selected theme.
+   */
+  static get currentTheme() {
+    return _pageSettings.themeList.find(i => i.FolderName === _page.theme);
+  }
+
+
+  /**
    * Loads settings for tab Toolbar.
    */
   static loadSettings() {
@@ -52,9 +60,7 @@ export default class TabToolbar {
 
     const data = TabToolbar.#toolbarBtnDialog.getDialogData();
     const btn = JSON.parse(data.ButtonJson) as IToolbarButton;
-
-    const theme = _pageSettings.themeList.find(i => i.FolderName === _page.theme);
-    const themeBtnIconUrl = theme.ToolbarIcons[btn.Image];
+    const themeBtnIconUrl = TabToolbar.currentTheme.ToolbarIcons[btn.Image];
 
     // image is theme icon
     if (themeBtnIconUrl) {
@@ -75,9 +81,7 @@ export default class TabToolbar {
 
     const data = TabToolbar.#toolbarBtnDialog.getDialogData();
     const btn = JSON.parse(data.ButtonJson) as IToolbarButton;
-
-    const theme = _pageSettings.themeList.find(i => i.FolderName === _page.theme);
-    const themeBtnIconUrl = theme.ToolbarIcons[btn.Image];
+    const themeBtnIconUrl = TabToolbar.currentTheme.ToolbarIcons[btn.Image];
 
     // image is theme icon
     if (themeBtnIconUrl) {
