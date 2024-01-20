@@ -4,6 +4,13 @@ import Language from '../common/Language';
 
 export default class TabAppearance {
   /**
+   * Gets current selected theme.
+   */
+  static get currentTheme() {
+    return _pageSettings.themeList.find(i => i.FolderName === _page.theme);
+  }
+
+  /**
    * Loads settings for tab Appearance.
    */
   static loadSettings() {
@@ -187,10 +194,9 @@ export default class TabAppearance {
    * Resets the background color to the current theme's background color.
    */
   private static resetBackgroundColor() {
-    const theme = _pageSettings.themeList.find(i => i.FolderName === _page.theme);
-    if (!theme) return;
+    if (!TabAppearance.currentTheme) return;
 
-    const colorHex = theme.BgColor || '#00000000';
+    const colorHex = TabAppearance.currentTheme.BgColor || '#00000000';
 
     query<HTMLInputElement>('[name="BackgroundColor"]').value = colorHex;
     TabAppearance.handleBackgroundColorChanged();
@@ -201,8 +207,10 @@ export default class TabAppearance {
    * Handles when `BackgroundColor` is changed.
    */
   private static handleBackgroundColorChanged() {
-    const colorHex = query<HTMLInputElement>('[name="BackgroundColor"]').value;
-    if (!colorHex) return;
+    let colorHex = query<HTMLInputElement>('[name="BackgroundColor"]').value;
+    if (!colorHex) {
+      colorHex = TabAppearance.currentTheme.BgColor;
+    }
 
     query<HTMLInputElement>('#Btn_BackgroundColor > .color-display').style.setProperty('--color-picker-value', colorHex);
     query('#Lbl_BackgroundColorValue').innerText = colorHex;
