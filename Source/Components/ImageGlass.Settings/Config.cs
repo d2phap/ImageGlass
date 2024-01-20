@@ -2018,15 +2018,18 @@ public static class Config
     /// </summary>
     public static void HandleException(Exception ex)
     {
+        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
         var exeVersion = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
         var appInfo = Application.ProductName + " v" + exeVersion;
-        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
+        if (BHelper.IsRunningAsUwp()) appInfo += " (Store)";
 
         var langPath = $"_._UnhandledException";
         var description = Language[$"{langPath}._Description"];
         var details =
             $"Version: {appInfo}\r\n" +
             $"Release code: {Const.APP_CODE}\r\n" +
+            $"Magick.NET: {ImageMagick.MagickNET.Version}\r\n" +
+            $"WebView2 Runtime: {Web2.Webview2Version?.ToString()}\r\n" +
             $"OS: {osInfo}\r\n\r\n" +
 
             $"----------------------------------------------------\r\n" +
