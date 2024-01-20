@@ -116,7 +116,14 @@ public partial class FrmUpdate : WebForm
         }
         else if (e.Name.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
         {
-            _ = BHelper.OpenUrlAsync(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"from_{Web2.PageName}");
+            if (BHelper.IsRunningAsUwp())
+            {
+                BHelper.OpenImageGlassMsStore();
+            }
+            else
+            {
+                _ = BHelper.OpenUrlAsync(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), $"from_{Web2.PageName}");
+            }
         }
         else if (e.Name.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
         {

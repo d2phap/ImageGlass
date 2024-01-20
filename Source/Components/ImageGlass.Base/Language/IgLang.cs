@@ -137,6 +137,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._ResetToDefault", "Reset to default"); //v9.0
         _ = TryAdd("_._CheckForUpdate", "Check for update…"); //v5.0
         _ = TryAdd("_._Download", "Download"); //v9.0
+        _ = TryAdd("_._Update", "Update"); //v9.0
         _ = TryAdd("_._Website", "Website"); //v9.0
         _ = TryAdd("_._Email", "Email"); //v9.0
         _ = TryAdd("_._Install", "Install…");
