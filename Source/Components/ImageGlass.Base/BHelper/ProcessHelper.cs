@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics;
 using System.Globalization;
+using Windows.ApplicationModel;
 
 namespace ImageGlass.Base;
 
@@ -153,4 +154,18 @@ public partial class BHelper
         return code;
     }
 
+
+    /// <summary>
+    /// Checks if ImageGlass process is running as UWP app.
+    /// </summary>
+    public static bool IsRunningAsUwp()
+    {
+        try
+        {
+            return !string.IsNullOrWhiteSpace(Package.Current.Id.FullName);
+        }
+        catch { }
+
+        return false;
+    }
 }

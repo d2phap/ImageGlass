@@ -31,8 +31,6 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
-using Const = ImageGlass.Base.Const;
-using ShellStockIcon = ImageGlass.Base.WinApi.ShellStockIcon;
 
 namespace ImageGlass.Settings;
 

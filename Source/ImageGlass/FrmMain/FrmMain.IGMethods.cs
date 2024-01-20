@@ -483,7 +483,7 @@ public partial class FrmMain
             PicMain.ZoomIn();
             return;
         }
-        
+
         // smooth zooming
         PicMain.StartAnimation(AnimationSource.ZoomIn);
         await Task.Delay(100);
