@@ -36,7 +36,7 @@ public class FileLogicalComparer
             return;
         }
 
-        Files ??= new ArrayList();
+        Files ??= [];
         Files.Add(new DictionaryEntry(Path.GetFileName(file), file));
     }
 

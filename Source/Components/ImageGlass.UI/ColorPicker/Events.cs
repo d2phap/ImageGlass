@@ -48,18 +48,12 @@ public class ColorChangedEventArgs : EventArgs
 }
 
 
-public class SliderValueChangedEventArgs : EventArgs
+public class SliderValueChangedEventArgs(float sliderValue) : EventArgs
 {
     /// <summary>
     /// Gets value of the slider.
     /// </summary>
-    public float SliderValue { get; private set; } = 0f;
-
-
-    public SliderValueChangedEventArgs(float sliderValue)
-    {
-        SliderValue = sliderValue;
-    }
+    public float SliderValue { get; private set; } = sliderValue;
 }
 
 

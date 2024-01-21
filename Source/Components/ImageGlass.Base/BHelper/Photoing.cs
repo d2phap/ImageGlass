@@ -149,8 +149,10 @@ public partial class BHelper
 
         // supported MIME types:
         // https://www.iana.org/assignments/media-types/media-types.xhtml#image
-        var settings = new MagickReadSettings();
-        settings.Format = MimeTypeToMagickFormat(MimeType);
+        var settings = new MagickReadSettings
+        {
+            Format = MimeTypeToMagickFormat(MimeType)
+        };
 
         if (settings.Format == MagickFormat.Svg)
         {
@@ -322,8 +324,10 @@ public partial class BHelper
 
         // supported MIME types:
         // https://www.iana.org/assignments/media-types/media-types.xhtml#image
-        var settings = new MagickReadSettings();
-        settings.Format = MimeTypeToMagickFormat(MimeType);
+        var settings = new MagickReadSettings
+        {
+            Format = MimeTypeToMagickFormat(MimeType)
+        };
 
         if (settings.Format == MagickFormat.Svg)
         {

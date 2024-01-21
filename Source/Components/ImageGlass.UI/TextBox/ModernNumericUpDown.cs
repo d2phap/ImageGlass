@@ -97,7 +97,7 @@ public class ModernNumericUpDown : NumericUpDown
 
             if (method != null)
             {
-                object[] @params = { ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true };
+                object[] @params = [ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true];
                 method.Invoke(Controls[0], @params);
             }
         }

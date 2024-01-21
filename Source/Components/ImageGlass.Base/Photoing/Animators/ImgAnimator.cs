@@ -108,9 +108,11 @@ public class ImgAnimator : IDisposable
 
         _enable = true;
 
-        var _thHeartBeat = new Thread(HandleThreadHeartBeatTicked);
-        _thHeartBeat.IsBackground = true;
-        _thHeartBeat.Name = "heartbeat - ImageAnimator";
+        var _thHeartBeat = new Thread(HandleThreadHeartBeatTicked)
+        {
+            IsBackground = true,
+            Name = "heartbeat - ImageAnimator"
+        };
         _thHeartBeat.Start();
     }
 

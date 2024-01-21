@@ -27,7 +27,7 @@ public class SystemAccentColorChangedEventArgs
     /// <summary>
     /// Gets system accent color.
     /// </summary>
-    public Color AccentColor => WinColorsApi.GetAccentColor(true);
+    public static Color AccentColor => WinColorsApi.GetAccentColor(true);
 
 
     /// <summary>
@@ -38,22 +38,16 @@ public class SystemAccentColorChangedEventArgs
 }
 
 
-public class WindowStateChangedEventArgs
+public class WindowStateChangedEventArgs(FormWindowState state)
 {
     /// <summary>
     /// Gets form state.
     /// </summary>
-    public FormWindowState State { get; set; }
+    public FormWindowState State { get; set; } = state;
 
 
     /// <summary>
     /// Gets, sets value indicates that the event is already handled.
     /// </summary>
     public bool Handled { get; set; } = false;
-
-
-    public WindowStateChangedEventArgs(FormWindowState state)
-    {
-        State = state;
-    }
 }

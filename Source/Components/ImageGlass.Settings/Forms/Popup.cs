@@ -464,7 +464,7 @@ public partial class Popup : DialogForm
         base.OnSystemAccentColorChanged(e);
 
         // update the heading color to match system accent color
-        lblHeading.ForeColor = e.AccentColor
+        lblHeading.ForeColor = SystemAccentColorChangedEventArgs.AccentColor
             .NoAlpha()
             .WithBrightness(DarkMode ? 0.4f : 0f);
     }

@@ -101,13 +101,9 @@ public partial class BHelper
 }
 
 
-public class CustomDateTimeConverter : JsonConverter<DateTime>
+public class CustomDateTimeConverter(string format) : JsonConverter<DateTime>
 {
-    private readonly string Format;
-    public CustomDateTimeConverter(string format)
-    {
-        Format = format;
-    }
+    private readonly string Format = format;
 
     public override void Write(Utf8JsonWriter writer, DateTime date, JsonSerializerOptions options)
     {

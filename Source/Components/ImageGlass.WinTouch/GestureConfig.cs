@@ -28,30 +28,22 @@ namespace ImageGlass.WinTouch;
 /// <summary>
 /// Gesture configuration structure.
 /// </summary>
-public struct GestureConfig
+public struct GestureConfig(GestureConfigId id, GestureConfigFlags want, GestureConfigFlags block)
 {
     /// <summary>
     /// The identifier for the type of configuration that will have messages enabled or disabled.
     /// </summary>
-    public GestureConfigId Id;
+    public GestureConfigId Id = id;
 
     /// <summary>
     /// The messages to enable.
     /// </summary>
-    public GestureConfigFlags Want;
+    public GestureConfigFlags Want = want;
 
     /// <summary>
     /// The messages to disable.
     /// </summary>
-    public GestureConfigFlags Block;
-
-
-    public GestureConfig(GestureConfigId id, GestureConfigFlags want, GestureConfigFlags block)
-    {
-        Id = id;
-        Want = want;
-        Block = block;
-    }
+    public GestureConfigFlags Block = block;
 }
 
 

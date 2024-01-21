@@ -99,8 +99,10 @@ public class ModernLabel : Label
 
         using (var b = new SolidBrush(textColor))
         {
-            var textFormat = new StringFormat();
-            textFormat.Trimming = StringTrimming.EllipsisCharacter;
+            var textFormat = new StringFormat
+            {
+                Trimming = StringTrimming.EllipsisCharacter
+            };
 
             if (TextAlign == ContentAlignment.TopLeft)
             {

@@ -127,7 +127,7 @@ public partial class WebForm : ThemedForm
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         base.OnSystemAccentColorChanged(e);
-        _ = Web2.SetWeb2AccentColorAsync(e.AccentColor);
+        _ = Web2.SetWeb2AccentColorAsync(SystemAccentColorChangedEventArgs.AccentColor);
     }
 
 

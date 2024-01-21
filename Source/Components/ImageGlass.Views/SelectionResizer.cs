@@ -19,12 +19,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Viewer;
 
-public class SelectionResizer
+/// <summary>
+/// Initialize a new <see cref="SelectionResizer"/> instance.
+/// </summary>
+public class SelectionResizer(SelectionResizerType position, RectangleF indicatorRegion, RectangleF hitRegion)
 {
     /// <summary>
     /// Gets, sets the type of the resizer
     /// </summary>
-    public SelectionResizerType Type { get; set; }
+    public SelectionResizerType Type { get; set; } = position;
 
 
     /// <summary>
@@ -47,24 +50,13 @@ public class SelectionResizer
     /// <summary>
     /// Gets, sets the region to resize.
     /// </summary>
-    public RectangleF HitRegion { get; set; }
+    public RectangleF HitRegion { get; set; } = hitRegion;
 
 
     /// <summary>
     /// Gets, sets the region to draw resizer.
     /// </summary>
-    public RectangleF IndicatorRegion { get; set; }
-
-
-    /// <summary>
-    /// Initialize a new <see cref="SelectionResizer"/> instance.
-    /// </summary>
-    public SelectionResizer(SelectionResizerType position, RectangleF indicatorRegion, RectangleF hitRegion)
-    {
-        Type = position;
-        IndicatorRegion = indicatorRegion;
-        HitRegion = hitRegion;
-    }
+    public RectangleF IndicatorRegion { get; set; } = indicatorRegion;
 }
 
 

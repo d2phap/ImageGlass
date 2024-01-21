@@ -22,14 +22,9 @@ using System.Collections;
 namespace ImageGlass.Base.DirectoryComparer;
 
 
-public class DictionaryEntryComparer : IComparer
+public class DictionaryEntryComparer(IComparer nc) : IComparer
 {
-    private readonly IComparer? _comparer = null;
-
-    public DictionaryEntryComparer(IComparer nc)
-    {
-        _comparer = nc ?? throw new ArgumentNullException(nameof(nc));
-    }
+    private readonly IComparer? _comparer = nc ?? throw new ArgumentNullException(nameof(nc));
 
     public int Compare(object? x, object? y)
     {

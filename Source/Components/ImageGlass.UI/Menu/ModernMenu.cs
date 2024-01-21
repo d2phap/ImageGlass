@@ -26,7 +26,7 @@ namespace ImageGlass.UI;
 /// <summary>
 /// Modern menu with theme supported
 /// </summary>
-public class ModernMenu : ContextMenuStrip
+public class ModernMenu(IContainer container) : ContextMenuStrip(container)
 {
     private IgTheme _theme = new();
 
@@ -77,13 +77,7 @@ public class ModernMenu : ContextMenuStrip
     /// </summary>
     public new int DeviceDpi { get => base.DeviceDpi; }
 
-
     #endregion
-
-
-    public ModernMenu(IContainer container) : base(container)
-    {
-    }
 
 
     // Protected override
@@ -284,9 +278,9 @@ public class ModernMenu : ContextMenuStrip
     /// <summary>
     /// Gets the total width of all opening submenu dropdowns
     /// </summary>
-    private int GetWidthOfAllOpeningDropdowns(ToolStripMenuItem mnuItem)
+    private static int GetWidthOfAllOpeningDropdowns(ToolStripMenuItem mnuItem)
     {
-        if (mnuItem is not ToolStripMenuItem) return 0;
+        if (mnuItem is null) return 0;
         var parent = mnuItem.OwnerItem as ToolStripMenuItem;
 
         return mnuItem.DropDown.Width + GetWidthOfAllOpeningDropdowns(parent);

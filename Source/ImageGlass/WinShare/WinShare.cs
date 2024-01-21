@@ -27,7 +27,7 @@ public static class WinShare
 {
     // declare datapackage
     private static DataPackage? _dp;
-    private static readonly List<string> _filenames = new();
+    private static readonly List<string> _filenames = [];
 
     public static bool IsShareShown { get; set; }
 

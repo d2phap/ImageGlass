@@ -149,7 +149,7 @@ public static class ExplorerApi
                                 }
                                 else
                                 {
-                                    fileArray = new IntPtr[] { nativeFile };
+                                    fileArray = [nativeFile];
                                 }
 
                                 _ = SHOpenFolderAndSelectItems(pidl, (uint)fileArray.Length, fileArray, 0);
@@ -201,7 +201,7 @@ public static class ExplorerApi
             }
             else
             {
-                fileArray = new IntPtr[] { nativeFile };
+                fileArray = [nativeFile];
             }
 
             _ = SHOpenFolderAndSelectItems(nativeFolder, (uint)fileArray.Length, fileArray, 0);

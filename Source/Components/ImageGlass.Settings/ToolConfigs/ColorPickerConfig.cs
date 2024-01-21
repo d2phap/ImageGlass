@@ -27,9 +27,9 @@ namespace ImageGlass;
 /// <summary>
 /// Provides settings for Color Picker tool.
 /// </summary>
-public class ColorPickerConfig : IToolConfig
+public class ColorPickerConfig(string toolId) : IToolConfig
 {
-    public string ToolId { get; init; }
+    public string ToolId { get; init; } = toolId;
 
 
     /// <summary>
@@ -56,16 +56,6 @@ public class ColorPickerConfig : IToolConfig
     /// Shows alpha value of CIELAB code.
     /// </summary>
     public bool ShowCIELabWithAlpha { get; set; } = true;
-
-
-
-    /// <summary>
-    /// Initializes new instance of <see cref="ColorPickerConfig"/>.
-    /// </summary>
-    public ColorPickerConfig(string toolId)
-    {
-        ToolId = toolId;
-    }
 
 
     public void LoadFromAppConfig()

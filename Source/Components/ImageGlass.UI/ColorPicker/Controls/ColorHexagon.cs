@@ -29,8 +29,8 @@ public partial class ColorHexagon : Control
     private const int MAX_SECTORS = 7;
 
     private readonly ColorHexagonElement[] _hexagonElements = new ColorHexagonElement[0x93]; // 147
-    private readonly float[] _matrix1 = new float[] { -0.5f, -1f, -0.5f, 0.5f, 1f, 0.5f };
-    private readonly float[] _matrix2 = new float[] { COEFFCIENT, 0f, -COEFFCIENT, -COEFFCIENT, 0f, COEFFCIENT };
+    private readonly float[] _matrix1 = [-0.5f, -1f, -0.5f, 0.5f, 1f, 0.5f];
+    private readonly float[] _matrix2 = [COEFFCIENT, 0f, -COEFFCIENT, -COEFFCIENT, 0f, COEFFCIENT];
     private int _oldSelectedHexagonIndex = -1;
     private int _selectedHexagonIndex = -1;
 

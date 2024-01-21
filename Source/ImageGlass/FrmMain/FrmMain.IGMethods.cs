@@ -990,7 +990,7 @@ public partial class FrmMain
         {
             try
             {
-                WinShare.ShowShare(Handle, new string[] { filePath });
+                WinShare.ShowShare(Handle, [filePath]);
             }
             catch (Exception ex)
             {
@@ -1044,7 +1044,7 @@ public partial class FrmMain
                 Local.StringClipboard.Add(filePath);
             }
 
-            fileDropList.AddRange(Local.StringClipboard.ToArray());
+            fileDropList.AddRange([.. Local.StringClipboard]);
         }
 
         // single file copy
@@ -1104,7 +1104,7 @@ public partial class FrmMain
                 Local.StringClipboard.Add(filePath);
             }
 
-            fileDropList.AddRange(Local.StringClipboard.ToArray());
+            fileDropList.AddRange([.. Local.StringClipboard]);
         }
         else
         {
@@ -1153,7 +1153,7 @@ public partial class FrmMain
         // clear copied files in clipboard
         if (Local.StringClipboard.Count > 0)
         {
-            Local.StringClipboard = new();
+            Local.StringClipboard = [];
             Clipboard.Clear();
         }
 
@@ -1203,7 +1203,6 @@ public partial class FrmMain
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void IG_PasteImage()
     {
         // Is there a file in clipboard?
@@ -2820,7 +2819,7 @@ public partial class FrmMain
             var currentRotation = Local.ImageTransform.Rotation + degree;
             if (Math.Abs(currentRotation) >= 360)
             {
-                currentRotation = currentRotation % 360;
+                currentRotation %= 360;
             }
 
             Local.ImageTransform.Rotation = currentRotation;

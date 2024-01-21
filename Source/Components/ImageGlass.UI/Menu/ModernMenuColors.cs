@@ -36,10 +36,4 @@ public class ModernMenuColors : ProfessionalColorTable
     public override Color ButtonSelectedBorder => Color.Transparent;
     public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
 
-    private IgTheme theme { get; set; }
-
-    public ModernMenuColors(IgTheme theme)
-    {
-        this.theme = theme;
-    }
 }
