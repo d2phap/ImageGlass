@@ -64,7 +64,7 @@ internal static class Program
         }
         catch (Exception ex)
         {
-            Config.Language = new IgLang();
+            Config.Language = [];
 
             Config.ShowError(null, title: Config.Language["_._Error"],
                 heading: "Could not load user settings",

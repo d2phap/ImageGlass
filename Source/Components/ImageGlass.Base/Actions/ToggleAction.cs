@@ -30,7 +30,7 @@ public class ToggleAction(SingleAction? toggleOn = null)
     /// Gets the ToggleAction manager to check whether the <see cref="ToggleAction"/>
     /// toggling value is on (<c>true</c>) or off (<c>false</c>).
     /// </summary>
-    private static readonly Dictionary<Guid, bool> _manager = new();
+    private static readonly Dictionary<Guid, bool> _manager = [];
 
 
     /// <summary>

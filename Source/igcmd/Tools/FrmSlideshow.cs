@@ -283,7 +283,7 @@ public partial class FrmSlideshow : ThemedForm
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         Config.Theme.LoadThemeColors();
-        PicMain.AccentColor = e.AccentColor;
+        PicMain.AccentColor = SystemAccentColorChangedEventArgs.AccentColor;
         PicMain.Invalidate();
 
         // do not handle this event again in the parent class

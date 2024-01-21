@@ -33,7 +33,7 @@ public class ModernComboBox : ComboBox
     private bool _darkMode = false;
     private int _padding = 10;
     private IColors ColorPalatte => BHelper.GetThemeColorPalatte(_darkMode, DesignMode);
-    private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 3f : 0;
+    private static float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 3f : 0;
 
 
     // Public properties
@@ -119,8 +119,7 @@ public class ModernComboBox : ComboBox
     {
         if (ClientRectangle.Width <= 0 || ClientRectangle.Height <= 0)
             _buffer = new Bitmap(1, 1);
-        if (_buffer == null)
-            _buffer = new Bitmap(ClientRectangle.Width, ClientRectangle.Height);
+        _buffer ??= new Bitmap(ClientRectangle.Width, ClientRectangle.Height);
 
         using (var g = Graphics.FromImage(_buffer))
         {

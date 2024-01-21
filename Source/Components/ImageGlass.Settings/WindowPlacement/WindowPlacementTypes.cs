@@ -30,40 +30,23 @@ public enum WindowState
 
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct WindowPlacement
+public struct WindowPlacement(WpRect normalPos, WindowState state = WindowState.Normal)
 {
-    public int length;
-    public int flags;
-    public WindowState showCmd;
-    public WpPoint minPosition;
-    public WpPoint maxPosition;
-    public WpRect normalPosition;
-
-    public WindowPlacement(WpRect normalPos, WindowState state = WindowState.Normal)
-    {
-        length = Marshal.SizeOf(typeof(WindowPlacement));
-        flags = 0;
-        showCmd = state;
-        minPosition = new WpPoint(-1, -1);
-        maxPosition = new WpPoint(-1, -1);
-
-        normalPosition = normalPos;
-    }
+    public int length = Marshal.SizeOf(typeof(WindowPlacement));
+    public int flags = 0;
+    public WindowState showCmd = state;
+    public WpPoint minPosition = new WpPoint(-1, -1);
+    public WpPoint maxPosition = new WpPoint(-1, -1);
+    public WpRect normalPosition = normalPos;
 }
 
 
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct WpPoint
+public struct WpPoint(int x, int y)
 {
-    public int X;
-    public int Y;
-
-    public WpPoint(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
+    public int X = x;
+    public int Y = y;
 }
 
 
@@ -72,18 +55,10 @@ public struct WpPoint
 /// </summary>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct WpRect
+public struct WpRect(int left, int top, int right, int bottom)
 {
-    public int Left;
-    public int Top;
-    public int Right;
-    public int Bottom;
-
-    public WpRect(int left, int top, int right, int bottom)
-    {
-        Left = left;
-        Top = top;
-        Right = right;
-        Bottom = bottom;
-    }
+    public int Left = left;
+    public int Top = top;
+    public int Right = right;
+    public int Bottom = bottom;
 }

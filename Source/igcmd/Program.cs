@@ -96,7 +96,7 @@ internal static class Program
         }
         catch (Exception)
         {
-            Config.Language = new IgLang();
+            Config.Language = [];
         }
         Config.Theme.LoadTheme();
 

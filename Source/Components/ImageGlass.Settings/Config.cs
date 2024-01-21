@@ -1363,7 +1363,7 @@ public static class Config
             if (toolList != null)
             {
                 Config.Tools.Clear();
-                Config.Tools = toolList.ToList();
+                Config.Tools = [.. toolList];
             }
             Done = true;
         }
@@ -1391,7 +1391,7 @@ public static class Config
             if (btnList != null)
             {
                 Config.ToolbarButtons.Clear();
-                Config.ToolbarButtons = btnList.ToList();
+                Config.ToolbarButtons = [.. btnList];
             }
             Done = true;
         }
@@ -1661,7 +1661,7 @@ public static class Config
     {
         var result = dict.Select(i => new
         {
-            Key = i.Key,
+            i.Key,
             Value = i.Value.Select(k => k.ToString()),
         }).ToDictionary(i => i.Key, i => i.Value.ToArray());
 
@@ -1737,7 +1737,7 @@ public static class Config
     {
         dict.TryGetValue(action, out var hotkeyList);
 
-        return hotkeyList ?? new List<Hotkey>(0);
+        return hotkeyList ?? [];
     }
 
 
@@ -1772,7 +1772,7 @@ public static class Config
             }
         }
 
-        return actions.ToList();
+        return [.. actions];
     }
 
 
@@ -1831,9 +1831,7 @@ public static class Config
         // get default theme dir
         var defaultThemePath = App.StartUpDir(Dir.Themes, Const.DEFAULT_THEME, IgTheme.CONFIG_FILE);
 
-        allThemes = allThemes
-            .OrderBy(i => i.ConfigFilePath != defaultThemePath)
-            .ToList();
+        allThemes = [.. allThemes.OrderBy(i => i.ConfigFilePath != defaultThemePath)];
 
         return allThemes;
     }

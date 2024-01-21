@@ -106,7 +106,7 @@ public partial class FrmMain
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         Config.Theme.LoadThemeColors();
-        PicMain.AccentColor = e.AccentColor;
+        PicMain.AccentColor = SystemAccentColorChangedEventArgs.AccentColor;
         PicMain.NavButtonColor = Config.Theme.Colors.NavigationButtonColor;
         PicMain.Invalidate();
 

@@ -30,6 +30,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
 using WicNet;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace ImageGlass;
 
@@ -405,12 +406,12 @@ public partial class FrmMain : ThemedForm
 
         if (pathType == PathType.Dir)
         {
-            _ = PrepareLoadingAsync(new string[] { inputPath }, string.Empty);
+            _ = PrepareLoadingAsync([inputPath], string.Empty);
         }
         else
         {
             // load images list
-            _ = LoadImageListAsync(new string[] { inputPath }, path);
+            _ = LoadImageListAsync([inputPath], path);
 
             // load the current image
             _ = ViewNextCancellableAsync(0, filePath: path);
@@ -1220,7 +1221,6 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
@@ -1693,7 +1693,7 @@ public partial class FrmMain : ThemedForm
                 // method must be bool/void()
                 try
                 {
-                    method.Invoke(this, paramters.ToArray());
+                    method.Invoke(this, [.. paramters]);
                     error = null;
                 }
                 catch (Exception ex) { error = ex; }

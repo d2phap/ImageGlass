@@ -32,7 +32,6 @@ public static class DataTransferManagerHelper
     /// <summary>
     /// Gets <see cref="DataTransferManager"/> from window handle
     /// </summary>
-    /// <returns></returns>
     public static DataTransferManager GetForWindow(IntPtr hwnd)
     {
         var result = DataTransferManagerInterop.GetForWindow(hwnd, _dtm_iid);

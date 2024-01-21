@@ -29,21 +29,10 @@ namespace ImageGlass.UI;
 /// <summary>
 /// Displays items with large tiles.
 /// </summary>
-public class ModernGalleryRenderer : StyleRenderer
+/// <param name="theme"></param>
+public class ModernGalleryRenderer(IgTheme theme) : StyleRenderer
 {
-    private IgTheme Theme { get; set; }
-    private float DpiScale => (float)ImageGalleryOwner.DeviceDpi / DpiApi.DPI_DEFAULT;
-
-
-    /// <summary>
-    /// Initializes a new instance of the ModernGalleryRenderer class.
-    /// </summary>
-    /// <param name="theme"></param>
-    public ModernGalleryRenderer(IgTheme theme)
-    {
-        Theme = theme;
-    }
-
+    private IgTheme Theme { get; set; } = theme;
 
     public override void InitializeGraphics(Graphics g)
     {

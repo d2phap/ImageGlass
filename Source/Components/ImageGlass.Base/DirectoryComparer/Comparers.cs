@@ -21,18 +21,10 @@ using Windows.Win32;
 namespace ImageGlass.Base.DirectoryComparer;
 
 
-public class StringNaturalComparer : IComparer<string?>
+public class StringNaturalComparer(bool orderByAsc = true, bool ignoreCase = false) : IComparer<string?>
 {
-    public bool OrderByAsc { get; set; } = true;
-    public bool IgnoreCase { get; set; } = false;
-
-
-    public StringNaturalComparer(bool orderByAsc = true, bool ignoreCase = false)
-    {
-        OrderByAsc = orderByAsc;
-        IgnoreCase = ignoreCase;
-    }
-
+    public bool OrderByAsc { get; set; } = orderByAsc;
+    public bool IgnoreCase { get; set; } = ignoreCase;
 
     public int Compare(string? str1, string? str2)
     {

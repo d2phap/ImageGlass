@@ -67,7 +67,7 @@ public partial class FrmAbout : WebForm
                 AppCode: '{Const.APP_CODE}',
                 AppVersion: '{App.Version}',
                 AppArchitecture: '{archInfo}',
-                AppRuntime: '{Environment.Version.ToString()}',
+                AppRuntime: '{Environment.Version}',
                 WebView2Runtime: '{Web2.Webview2Version?.ToString()}',
             }});
         ");

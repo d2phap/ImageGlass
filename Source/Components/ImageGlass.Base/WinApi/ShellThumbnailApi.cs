@@ -248,9 +248,11 @@ public static class ShellThumbnailApi
         if (retCode != 0)
             throw Marshal.GetExceptionForHR(retCode) ?? new Exception($"Error with code: {retCode}");
 
-        var nativeSize = new NativeSize();
-        nativeSize.Width = width;
-        nativeSize.Height = height;
+        var nativeSize = new NativeSize
+        {
+            Width = width,
+            Height = height
+        };
 
         IntPtr hBitmap;
         HResult hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, options, out hBitmap);

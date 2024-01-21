@@ -27,9 +27,6 @@ namespace ImageGlass.Base;
 
 public partial class BHelper
 {
-    private const string LONG_PATH_PREFIX = @"\\?\";
-
-
     /// <summary>
     /// Check if the given path (file or directory) is writable. 
     /// </summary>
@@ -125,7 +122,7 @@ public partial class BHelper
             }
         }
 
-        return hashedDirsList.ToList();
+        return [.. hashedDirsList];
     }
 
 

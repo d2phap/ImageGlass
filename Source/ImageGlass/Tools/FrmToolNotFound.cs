@@ -88,7 +88,7 @@ public partial class FrmToolNotFound : DialogForm
         LblHeading.ForeColor =
             LnkGetTools.LinkColor =
             LnkGetTools.VisitedLinkColor =
-            e.AccentColor
+            SystemAccentColorChangedEventArgs.AccentColor
                 .NoAlpha()
                 .WithBrightness(DarkMode ? 0.4f : 0f);
         LnkGetTools.ActiveLinkColor = LnkGetTools.LinkColor.WithBrightness(0.3f);

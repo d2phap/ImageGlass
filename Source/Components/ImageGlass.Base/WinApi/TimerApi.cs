@@ -50,7 +50,7 @@ public static class TimerApi
 
         _minPeriod = tc.wPeriodMin;
         _maxPeriod = tc.wPeriodMax;
-        _curRequests = new List<int>();
+        _curRequests = [];
     }
 
 

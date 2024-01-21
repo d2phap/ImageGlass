@@ -82,17 +82,17 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// The list of Imgs
     /// </summary>
-    private List<IgPhoto> ImgList { get; } = new();
+    private List<IgPhoto> ImgList { get; } = [];
 
     /// <summary>
     /// The list of image index that waiting for loading
     /// </summary>
-    private List<int> QueuedList { get; } = new();
+    private List<int> QueuedList { get; } = [];
 
     /// <summary>
     /// The list of image index that waiting for releasing resource
     /// </summary>
-    private List<int> FreeList { get; } = new();
+    private List<int> FreeList { get; } = [];
 
 
     #endregion
@@ -108,7 +108,7 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Gets, sets the distinct directories list
     /// </summary>
-    public List<string> DistinctDirs { get; set; } = new();
+    public List<string> DistinctDirs { get; set; } = [];
 
     /// <summary>
     /// Gets length of Img list
@@ -123,7 +123,7 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Gets, sets the list of formats that only load the first page forcefully.
     /// </summary>
-    public HashSet<string> SingleFrameFormats { get; set; } = new();
+    public HashSet<string> SingleFrameFormats { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
@@ -279,10 +279,7 @@ public class ImageBooster : IDisposable
             {
                 // use cache metadata
                 var metadata = ImgList[itemIndex].Metadata;
-                if (metadata == null)
-                {
-                    metadata = PhotoCodec.LoadMetadata(ImgList[itemIndex].Filename);
-                }
+                metadata ??= PhotoCodec.LoadMetadata(ImgList[itemIndex].Filename);
 
                 // check image dimension
                 var notExceedDimension = MaxImageDimensionToCache <= 0

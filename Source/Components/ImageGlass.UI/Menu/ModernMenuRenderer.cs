@@ -24,16 +24,10 @@ using System.Drawing.Drawing2D;
 namespace ImageGlass.UI;
 
 
-public class ModernMenuRenderer : ToolStripProfessionalRenderer
+public class ModernMenuRenderer(IgTheme theme) : ToolStripProfessionalRenderer(new ModernMenuColors())
 {
-    private IgTheme _theme { get; set; }
+    private IgTheme _theme { get; set; } = theme;
     private static Padding ContentMargin => DpiApi.Scale(new Padding(5, 2, 5, 2));
-
-
-    public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
-    {
-        _theme = theme;
-    }
 
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)

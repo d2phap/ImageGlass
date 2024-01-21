@@ -452,12 +452,12 @@ public class Local
     /// <summary>
     /// Gets, sets the tools.
     /// </summary>
-    public static Dictionary<string, ToolForm?> Tools { get; set; } = new();
+    public static Dictionary<string, ToolForm?> Tools { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the list of tool pipe servers.
     /// </summary>
-    public static Dictionary<string, PipeServer?> ToolPipeServers { get; set; } = new();
+    public static Dictionary<string, PipeServer?> ToolPipeServers { get; set; } = [];
 
     /// <summary>
     /// Gets, sets the metadata of the current image in the list.
@@ -542,7 +542,7 @@ public class Local
     /// <summary>
     /// Gets, sets copied filename collection (multi-copy)
     /// </summary>
-    public static List<string> StringClipboard { get; set; } = new();
+    public static List<string> StringClipboard { get; set; } = [];
 
     #endregion // Public properties
 
@@ -564,7 +564,7 @@ public class Local
             MaxFileSizeInMbToCache = Config.ImageBoosterCacheMaxFileSizeInMb,
 
             ImageChannel = ImageChannel,
-            DistinctDirs = distinctDirsList ?? new(0),
+            DistinctDirs = distinctDirsList ?? [],
         };
     }
 
@@ -775,7 +775,7 @@ public class Local
     {
         if (tool == null
             || !Local.ToolPipeServers.TryGetValue(tool.ToolId, out var toolServer)
-            || toolServer is not PipeServer) return;
+            || toolServer is null) return;
 
         if (toolServer.ServerStream.IsConnected)
         {

@@ -22,7 +22,8 @@ namespace ImageGlass.Base.Photoing.Codecs;
 /// <summary>
 /// Initialize <see cref="IgPhoto"/> instance
 /// </summary>
-public class IgPhoto : IDisposable
+/// <param name="filename"></param>
+public class IgPhoto(string filename) : IDisposable
 {
     #region IDisposable Disposing
 
@@ -71,7 +72,7 @@ public class IgPhoto : IDisposable
     /// <summary>
     /// Gets, sets working filename.
     /// </summary>
-    public string Filename { get; set; } = string.Empty;
+    public string Filename { get; set; } = filename;
 
     /// <summary>
     /// Gets file extension. E.g: <c>.png</c>.
@@ -104,16 +105,6 @@ public class IgPhoto : IDisposable
     public IgMetadata? Metadata { get; set; }
 
     #endregion
-
-
-    /// <summary>
-    /// Initializes <see cref="IgPhoto"/> instance.
-    /// </summary>
-    /// <param name="filename"></param>
-    public IgPhoto(string filename)
-    {
-        Filename = filename;
-    }
 
 
     #region Public functions

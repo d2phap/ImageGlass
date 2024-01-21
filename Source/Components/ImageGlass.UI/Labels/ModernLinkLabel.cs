@@ -125,8 +125,10 @@ public class ModernLinkLabel : LinkLabel
         using var font = new Font(Font.FontFamily, Font.Size, FontStyle.Underline);
         using (var brush = new SolidBrush(textColor))
         {
-            var textFormat = new StringFormat();
-            textFormat.Trimming = StringTrimming.EllipsisCharacter;
+            var textFormat = new StringFormat
+            {
+                Trimming = StringTrimming.EllipsisCharacter
+            };
 
             if (TextAlign == ContentAlignment.TopLeft)
             {

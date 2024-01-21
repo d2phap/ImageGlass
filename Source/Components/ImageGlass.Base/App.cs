@@ -62,7 +62,7 @@ public class App
         var newPaths = paths.ToList();
         newPaths.Insert(0, Application.StartupPath);
 
-        return Path.Combine(newPaths.ToArray());
+        return Path.Combine([.. newPaths]);
     }
 
 
@@ -89,7 +89,7 @@ public class App
 
         var newPaths = paths.ToList();
         newPaths.Insert(0, appDataDir);
-        appDataDir = Path.Combine(newPaths.ToArray());
+        appDataDir = Path.Combine([.. newPaths]);
 
         return appDataDir;
     }

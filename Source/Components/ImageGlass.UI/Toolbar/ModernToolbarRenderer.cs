@@ -23,17 +23,11 @@ using System.Drawing.Imaging;
 
 namespace ImageGlass.UI;
 
-public class ModernToolbarRenderer : ToolStripSystemRenderer
+public class ModernToolbarRenderer(ModernToolbar control) : ToolStripSystemRenderer
 {
-    private ModernToolbar Toolbar { get; set; }
+    private ModernToolbar Toolbar { get; set; } = control;
     private IgTheme Theme => Toolbar.Theme ?? new();
     private float DpiScale => (float)Toolbar.DeviceDpi / DpiApi.DPI_DEFAULT;
-
-
-    public ModernToolbarRenderer(ModernToolbar control)
-    {
-        Toolbar = control;
-    }
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {

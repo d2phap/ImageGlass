@@ -1561,7 +1561,7 @@ public partial class DXCanvas : DXControl
         {
             var monitor = DirectN.Monitor.FromWindow(TopLevelControl.Handle);
 
-            var text = $"Monitor={monitor.Bounds.Size.ToString()}; Dpi={DeviceDpi} ({(int)monitor.ScaleFactor}%); Renderer={Source.ToString()}";
+            var text = $"Monitor={monitor.Bounds.Size}; Dpi={DeviceDpi} ({(int)monitor.ScaleFactor}%); Renderer={Source}";
             if (UseWebview2)
             {
                 text += $"; v{Web2.Webview2Version}";
