@@ -28,6 +28,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     private Keys _squareRatioSelectionKey = Keys.Shift | Keys.ShiftKey;
     private bool _isSquareRatioSelectionKeyPressed;
     private bool _isDefaultSelectionLoaded;
+    private bool _isNewFileSaved;
     private Rectangle _lastSelectionArea;
 
 
@@ -385,6 +386,9 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
 
     private void LoadDefaultSelectionSetting(bool drawSelection)
     {
+        var useLastSelection = _isNewFileSaved
+            || Settings.InitSelectionType == DefaultSelectionType.UseTheLastSelection;
+
         var srcW = (int)Local.FrmMain.PicMain.SourceWidth;
         var srcH = (int)Local.FrmMain.PicMain.SourceHeight;
 
@@ -393,7 +397,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         var w = 0;
         var h = 0;
 
-        if (Settings.InitSelectionType == DefaultSelectionType.UseTheLastSelection)
+        if (useLastSelection)
         {
             x = _lastSelectionArea.X;
             y = _lastSelectionArea.Y;
@@ -434,8 +438,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         }
 
         // auto-center the selection
-        if (Settings.AutoCenterSelection
-            && Settings.InitSelectionType != DefaultSelectionType.UseTheLastSelection)
+        if (Settings.AutoCenterSelection && !useLastSelection)
         {
             x = srcW / 2 - w / 2;
             y = srcH / 2 - h / 2;
@@ -514,6 +517,8 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
 
     private void Local_ImageSaved(ImageSaveEventArgs e)
     {
+        _isNewFileSaved = e.IsSaveAsNewFile;
+
         if (Settings.CloseToolAfterSaving
             && e.SaveSource == ImageSaveSource.SelectedArea)
         {
@@ -560,6 +565,8 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         {
             LoadDefaultSelectionSetting(false);
         }
+
+        _isNewFileSaved = false;
     }
 
 
