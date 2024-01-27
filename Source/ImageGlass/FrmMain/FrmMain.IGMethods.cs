@@ -1511,9 +1511,6 @@ public partial class FrmMain
         {
             // reload to view the updated image
             IG_Reload();
-
-            // reset selection
-            PicMain.ClientSelection = default;
         }
         else if (saveSource == ImageSaveSource.Clipboard)
         {

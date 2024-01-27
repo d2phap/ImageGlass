@@ -107,6 +107,7 @@ public class ImageSaveEventArgs(string srcFilePath, string destFilePath, ImageSa
 {
     public string SrcFilePath { get; init; } = srcFilePath;
     public string DestFilePath { get; init; } = destFilePath;
+    public bool IsSaveAsNewFile => !SrcFilePath.Equals(DestFilePath, StringComparison.OrdinalIgnoreCase);
     public ImageSaveSource SaveSource { get; init; } = saveSource;
 }
 
