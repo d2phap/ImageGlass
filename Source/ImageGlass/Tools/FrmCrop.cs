@@ -140,9 +140,15 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         var baseHeight = base.OnUpdateHeight(false);
 
         // calculate form height
-        var contentHeight = TableTop.Height + TableTop.Padding.Vertical
-            + TableBottom.Height;
-        var formHeight = contentHeight + baseHeight;
+        var formHeight = baseHeight;
+
+        try
+        {
+            var contentHeight = TableTop.Height + TableTop.Padding.Vertical
+                + TableBottom.Height;
+            formHeight = contentHeight + baseHeight;
+        }
+        catch { }
 
         if (performUpdate)
         {
