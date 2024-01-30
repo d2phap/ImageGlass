@@ -18,10 +18,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{3A61A3C2-71E1-4380-8146-2BA4D0775019} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{35D2E54D-F51D-4BCE-B499-67EB30062C5C} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="9.0.9.1305" Options="32"/>
+    <ROW Property="ProductVersion" Value="9.0.10.201" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -75,34 +75,67 @@
     <ROW Component="ActualSize.svg_1" ComponentId="{FE0A53A6-72A3-4E1F-B439-55E8C13FA1DE}" Directory_="KobeLight_Dir" Attributes="0" KeyPath="ActualSize.svg_1" Type="0"/>
     <ROW Component="ApacheLicense2.0.txt" ComponentId="{ADF12378-82F9-4CC3-BF06-28F422208F4A}" Directory_="License_Dir" Attributes="0" KeyPath="ApacheLicense2.0.txt" Type="0"/>
     <ROW Component="ArrowDown.svg" ComponentId="{1BC59768-B5E2-4478-A408-2B42014DE70C}" Directory_="Icons_Dir" Attributes="0" KeyPath="ArrowDown.svg" Type="0"/>
+    <ROW Component="D2Phap.DXControl.dll" ComponentId="{ADCA5A06-A462-43AA-9524-0B828E93BFDD}" Directory_="APPDIR" Attributes="256" KeyPath="D2Phap.DXControl.dll"/>
     <ROW Component="DOMPadding.d.ts" ComponentId="{27C52649-BEAF-43F0-89FE-FCB1B9547502}" Directory_="happlajs_Dir" Attributes="0" KeyPath="DOMPadding.d.ts" Type="0"/>
     <ROW Component="DXCanvas_Webview2.d.ts" ComponentId="{3BC80A27-83F4-45E4-B160-9506EDA40516}" Directory_="dist_1_Dir" Attributes="0" KeyPath="DXCanvas_Webview2.d.ts" Type="0"/>
     <ROW Component="DXCanvas_Webview2.html" ComponentId="{73105404-43F8-41E5-9004-5C399608CF7C}" Directory_="dist_Dir" Attributes="0" KeyPath="DXCanvas_Webview2.html" Type="0"/>
+    <ROW Component="DirectNStandard.dll" ComponentId="{68D80D1D-88B7-4CC0-8507-A932F9478D97}" Directory_="APPDIR" Attributes="256" KeyPath="DirectNStandard.dll"/>
     <ROW Component="EditAppDialogHtmlElement.d.ts" ComponentId="{7B57155A-8737-47C4-B060-F2393804C62B}" Directory_="webComponents_1_Dir" Attributes="0" KeyPath="EditAppDialogHtmlElement.d.ts" Type="0"/>
-    <ROW Component="ExplorerSortOrder.dll" ComponentId="{56A80003-ACA8-4247-A7E3-F2A7C4E99966}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
+    <ROW Component="ExplorerSortOrder.dll" ComponentId="{290EE666-B37A-4EB0-9A9C-D938697AF643}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
     <ROW Component="FR.ico" ComponentId="{D6A5CA88-A1F6-4284-8FF9-DB058F811FC9}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
+    <ROW Component="FileWatcherEx.dll" ComponentId="{AC10309C-BCF1-4A59-908F-D81E064F1132}" Directory_="APPDIR" Attributes="256" KeyPath="FileWatcherEx.dll"/>
     <ROW Component="FrmSettings.d.ts" ComponentId="{E35B4C09-AE38-42A2-949E-2831403E7AD1}" Directory_="types_Dir" Attributes="0" KeyPath="FrmSettings.d.ts" Type="0"/>
     <ROW Component="HapplaBoxHTMLElement.d.ts" ComponentId="{B7116C61-7789-4AEA-96E2-3CC1270F87E6}" Directory_="webComponents_Dir" Attributes="0" KeyPath="HapplaBoxHTMLElement.d.ts" Type="0"/>
     <ROW Component="HapplaBoxViewer.d.ts" ComponentId="{1BC2F5BE-9A25-4D31-B169-51866561C8D8}" Directory_="DXCanvas_Webview2_Dir" Attributes="0" KeyPath="HapplaBoxViewer.d.ts" Type="0"/>
-    <ROW Component="ImageGlass.Base.pdb" ComponentId="{08C56BB3-5E26-4609-AE2D-E6FA6C7E53F3}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Base.pdb" Type="4"/>
+    <ROW Component="ImageGlass.Base.dll" ComponentId="{78916D61-0BD1-4B19-8734-77CC8AC3FE30}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Base.dll"/>
+    <ROW Component="ImageGlass.Gallery.dll" ComponentId="{1FB031E2-4FF1-4327-A4AC-B2DD5E8C0BED}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Gallery.dll"/>
+    <ROW Component="ImageGlass.Settings.dll" ComponentId="{C830F95C-B0A2-4FAA-ACC2-7CA6729C4856}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Settings.dll"/>
+    <ROW Component="ImageGlass.Tools.dll" ComponentId="{1E869C13-A9F6-421E-AC34-43E38D972907}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Tools.dll"/>
+    <ROW Component="ImageGlass.UI.dll" ComponentId="{F150BD66-0A9D-4120-B418-434B4AEBF65E}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.UI.dll"/>
+    <ROW Component="ImageGlass.Viewer.dll" ComponentId="{804C46DD-BFBF-4F64-A4BD-F32C8FB141ED}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Viewer.dll"/>
+    <ROW Component="ImageGlass.WebP.dll" ComponentId="{F3009E99-0452-456F-99C5-86036871ADD3}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.WebP.dll"/>
+    <ROW Component="ImageGlass.WinTouch.dll" ComponentId="{C2EB3D44-71C7-4F65-BDC7-7056CC5A8182}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.WinTouch.dll"/>
+    <ROW Component="ImageGlass.dll" ComponentId="{F46AE92C-21B2-48F6-B09B-93C3AC12DBAC}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.dll"/>
     <ROW Component="ImageGlass.exe" ComponentId="{83A23D6B-8796-4869-B3D3-9BF035F55F5C}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.exe"/>
     <ROW Component="Language.d.ts" ComponentId="{475214D9-8A7C-40B6-9195-91E4D166A067}" Directory_="common_Dir" Attributes="0" KeyPath="Language.d.ts" Type="0"/>
-    <ROW Component="Magick.NativeQ16HDRIOpenMPx64.dll" ComponentId="{ACFD7051-E58F-4EB1-8D4F-87196F830226}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Component="Magick.NET.Core.dll" ComponentId="{536A880E-2AAE-45C1-9148-A84C722F5625}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.Core.dll"/>
+    <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{36A22BE5-1D02-4280-B075-9E6538A62207}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.SystemDrawing.dll"/>
+    <ROW Component="Magick.NET.SystemWindowsMedia.dll" ComponentId="{6E7FCE8A-BD2D-4721-8855-11B104EAB917}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.SystemWindowsMedia.dll"/>
+    <ROW Component="Magick.NETQ16HDRIOpenMPx64.dll" ComponentId="{34FC8D88-C014-422C-AA23-B01E529BECC7}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NETQ16HDRIOpenMPx64.dll"/>
+    <ROW Component="Magick.NativeQ16HDRIOpenMPx64.dll" ComponentId="{1EC8BE00-163F-4D53-9C38-9F420CB99921}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.Abstractions.dll" ComponentId="{3E492E91-5283-474D-A5F4-2B2E3131A595}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.Binder.dll" ComponentId="{9F17D755-9B64-4446-8EF6-885932DB7D91}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.Binder.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.CommandLine.dll" ComponentId="{E25B7888-6BDC-400E-8525-259ED96369FE}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.CommandLine.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.FileExtensions.dll" ComponentId="{2E163FCF-C076-4C24-852E-CB72AFEE96A9}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.FileExtensions.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.Json.dll" ComponentId="{473EDEBE-0409-4735-9C71-00E01D72296F}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.Json.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.dll" ComponentId="{99145764-40CE-404E-986C-B799D7EB0778}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Configuration.dll"/>
+    <ROW Component="Microsoft.Extensions.FileProviders.Abstractions.dll" ComponentId="{5429F699-8748-4A13-AF7F-551A1E86E933}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.FileProviders.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.FileProviders.Physical.dll" ComponentId="{9A7A9E81-8366-4EF0-BA6A-EBBDBA33D8B0}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.FileProviders.Physical.dll"/>
+    <ROW Component="Microsoft.Extensions.FileSystemGlobbing.dll" ComponentId="{FDB3104E-9DF9-4A28-9B59-CA94A52C51CE}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.FileSystemGlobbing.dll"/>
+    <ROW Component="Microsoft.Extensions.Primitives.dll" ComponentId="{5091D392-C300-47A4-83B6-2661751F9FE7}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Extensions.Primitives.dll"/>
+    <ROW Component="Microsoft.Web.WebView2.Core.dll" ComponentId="{4CA2E8B5-3FC1-4035-97B3-C7079BEFAC06}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Web.WebView2.Core.dll"/>
+    <ROW Component="Microsoft.Web.WebView2.WinForms.dll" ComponentId="{011E2A37-3411-4FE4-85EA-89D3B2F1A33F}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Web.WebView2.WinForms.dll"/>
+    <ROW Component="Microsoft.Web.WebView2.Wpf.dll" ComponentId="{FFBE3A3C-7D4C-4DB2-8D3E-76A633168DB1}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Web.WebView2.Wpf.dll"/>
+    <ROW Component="Microsoft.Windows.SDK.NET.dll" ComponentId="{AB28EAE5-D2B1-4B56-9F99-FE248673ADD3}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Windows.SDK.NET.dll"/>
     <ROW Component="MsStoreBadge.svg" ComponentId="{CF12EBFD-F28F-412C-B724-E85B3A47FDA6}" Directory_="img_Dir" Attributes="0" KeyPath="MsStoreBadge.svg" Type="0"/>
     <ROW Component="NewFolder_1" ComponentId="{E5638F55-0D32-42B6-9019-BFBA4761A036}" Directory_="NewFolder_1_Dir" Attributes="0"/>
+    <ROW Component="PhotoSauce.MagicScaler.dll" ComponentId="{1505F1E1-49E1-4C54-8379-7CB18607ECB0}" Directory_="APPDIR" Attributes="256" KeyPath="PhotoSauce.MagicScaler.dll"/>
     <ROW Component="ProductInformation" ComponentId="{ECF39610-A89A-4552-9ABB-8A45FCEF8EE0}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="Settings.d.ts" ComponentId="{9E7325BB-3BCE-4579-B173-10177F9E26CC}" Directory_="FrmSettings_Dir" Attributes="0" KeyPath="Settings.d.ts" Type="0"/>
     <ROW Component="Vietnamese.iglang.json" ComponentId="{CADA6F58-3FA6-49C8-95C1-0E71CFFB163F}" Directory_="Language_Dir" Attributes="0" KeyPath="Vietnamese.iglang.json" Type="0"/>
-    <ROW Component="WebView2Loader.dll" ComponentId="{D29095CC-4710-4AC4-9F73-5283F822D661}" Directory_="APPDIR" Attributes="256" KeyPath="WebView2Loader.dll"/>
+    <ROW Component="WebView2Loader.dll" ComponentId="{CAC47EC2-C10C-46B9-87A6-1FE69A8C7656}" Directory_="APPDIR" Attributes="256" KeyPath="WebView2Loader.dll"/>
     <ROW Component="WebView2Loader.dll_1" ComponentId="{734ED35E-882B-4000-A2C6-ABF3A1951F05}" Directory_="native_Dir" Attributes="256" KeyPath="WebView2Loader.dll_1"/>
+    <ROW Component="WicNet.dll" ComponentId="{104D60EF-94A4-496E-A344-66859C27FA75}" Directory_="APPDIR" Attributes="256" KeyPath="WicNet.dll"/>
+    <ROW Component="WinRT.Runtime.dll" ComponentId="{89BE7794-C3D0-415E-BFB9-DC37226F0621}" Directory_="APPDIR" Attributes="0" KeyPath="WinRT.Runtime.dll"/>
     <ROW Component="globalHelpers.d.ts" ComponentId="{0A7D65D1-BEEC-462C-B629-43455653A2AD}" Directory_="helpers_Dir" Attributes="0" KeyPath="globalHelpers.d.ts" Type="0"/>
-    <ROW Component="igcmd.dll.config" ComponentId="{FD6534D7-4727-44E3-9273-3CF6E1FC0141}" Directory_="APPDIR" Attributes="0" KeyPath="igcmd.dll.config" Type="0"/>
+    <ROW Component="igcmd.dll" ComponentId="{2BC725DB-D08A-43DC-AFB4-31ECE4564B12}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.dll"/>
+    <ROW Component="igcmd.dll.config" ComponentId="{FD6534D7-4727-44E3-9273-3CF6E1FC0141}" Directory_="APPDIR" Attributes="0" KeyPath="ReadMe.rtf" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{43E6E804-7B7E-426A-BAF0-53B9FA5D4374}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
-    <ROW Component="libsharpyuv.dll" ComponentId="{D97AC876-019A-4A39-B279-9B8D40ED6933}" Directory_="APPDIR" Attributes="256" KeyPath="libsharpyuv.dll"/>
-    <ROW Component="libwebp.dll" ComponentId="{6B26E70F-A672-4BBD-A6F1-E0931CB5502D}" Directory_="APPDIR" Attributes="256" KeyPath="libwebp.dll"/>
-    <ROW Component="libwebpdecoder.dll" ComponentId="{73CF64B7-CC66-4963-AF0E-147B4DAA5508}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdecoder.dll"/>
-    <ROW Component="libwebpdemux.dll" ComponentId="{28381EA3-BBBF-47ED-A128-443F3BA3409A}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdemux.dll"/>
-    <ROW Component="vcomp140.dll" ComponentId="{1C59F65D-1F89-42E3-A470-48EB447008D2}" Directory_="APPDIR" Attributes="256" KeyPath="vcomp140.dll"/>
+    <ROW Component="libsharpyuv.dll" ComponentId="{428CDC2B-0B01-45F6-98C1-6A536728AE97}" Directory_="APPDIR" Attributes="256" KeyPath="libsharpyuv.dll"/>
+    <ROW Component="libwebp.dll" ComponentId="{8BFF1863-A9DD-421E-BDAA-4FB1AD2A127F}" Directory_="APPDIR" Attributes="256" KeyPath="libwebp.dll"/>
+    <ROW Component="libwebpdecoder.dll" ComponentId="{745D64FC-76F3-47CA-A5D6-9A5E221B60D4}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdecoder.dll"/>
+    <ROW Component="libwebpdemux.dll" ComponentId="{ABC80AB7-59F6-4160-A7D1-1613F53B6AAE}" Directory_="APPDIR" Attributes="256" KeyPath="libwebpdemux.dll"/>
+    <ROW Component="vcomp140.dll" ComponentId="{21A0253D-8012-48BC-9A7D-391140CD63B6}" Directory_="APPDIR" Attributes="256" KeyPath="vcomp140.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeatures" Title="Main Features" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="16"/>
@@ -111,25 +144,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.exe" SelfReg="false" DigSign="true"/>
     <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ExplorerSortOrder.dll" SelfReg="false"/>
-    <ROW File="libsharpyuv.dll" Component_="libsharpyuv.dll" FileName="LIBSHA~1.DLL|libsharpyuv.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libsharpyuv.dll" SelfReg="false"/>
-    <ROW File="libwebp.dll" Component_="libwebp.dll" FileName="libwebp.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebp.dll" SelfReg="false"/>
-    <ROW File="libwebpdecoder.dll" Component_="libwebpdecoder.dll" FileName="LIBWEB~1.DLL|libwebpdecoder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdecoder.dll" SelfReg="false"/>
-    <ROW File="libwebpdemux.dll" Component_="libwebpdemux.dll" FileName="LIBWEB~2.DLL|libwebpdemux.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdemux.dll" SelfReg="false"/>
-    <ROW File="Magick.NativeQ16HDRIOpenMPx64.dll" Component_="Magick.NativeQ16HDRIOpenMPx64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-HDRI-OpenMP-x64.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.Native-Q16-HDRI-OpenMP-x64.dll" SelfReg="false"/>
-    <ROW File="vcomp140.dll" Component_="vcomp140.dll" FileName="vcomp140.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\vcomp140.dll" SelfReg="false"/>
-    <ROW File="WebView2Loader.dll" Component_="WebView2Loader.dll" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\WebView2Loader.dll" SelfReg="false"/>
-    <ROW File="igcmd.dll.config" Component_="igcmd.dll.config" FileName="IGCMDD~1.CON|igcmd.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.dll.config" SelfReg="false"/>
-    <ROW File="ImageGlass.dll.config" Component_="igcmd.dll.config" FileName="IMAGEG~1.CON|ImageGlass.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.dll.config" SelfReg="false"/>
-    <ROW File="igcmd.pdb" Component_="igcmd.exe" FileName="igcmd.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.Base.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~1.PDB|ImageGlass.Base.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Base.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.Gallery.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~2.PDB|ImageGlass.Gallery.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Gallery.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~3.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.Settings.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~4.PDB|ImageGlass.Settings.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Settings.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~6.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.UI.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.Viewer.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~7.PDB|ImageGlass.Viewer.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Viewer.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~8.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WebP.pdb" SelfReg="false"/>
-    <ROW File="ImageGlass.WinTouch.pdb" Component_="ImageGlass.Base.pdb" FileName="IMAGEG~9.PDB|ImageGlass.WinTouch.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WinTouch.pdb" SelfReg="false"/>
     <ROW File="FR.ico" Component_="FR.ico" FileName="3FR.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
     <ROW File="ARI.ico" Component_="FR.ico" FileName="ARI.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ARI.ico" SelfReg="false"/>
     <ROW File="ARW.ico" Component_="FR.ico" FileName="ARW.ico" Attributes="0" SourcePath="..\Assets\Ext-Icons\ARW.ico" SelfReg="false"/>
@@ -269,7 +283,6 @@
     <ROW File="Webview2.txt" Component_="ApacheLicense2.0.txt" FileName="Webview2.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\Webview2.txt" SelfReg="false"/>
     <ROW File="WicNet.txt" Component_="ApacheLicense2.0.txt" FileName="WicNet.txt" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\License\WicNet.txt" SelfReg="false"/>
     <ROW File="WebView2Loader.dll_1" Component_="WebView2Loader.dll_1" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\runtimes\win-x64\native\WebView2Loader.dll" SelfReg="false"/>
-    <ROW File="default.webp" Component_="igcmd.dll.config" FileName="DEFAUL~1.WEB|default.webp" Attributes="0" SourcePath="..\Assets\default.webp" SelfReg="false"/>
     <ROW File="ReadMe.rtf" Component_="igcmd.dll.config" FileName="ReadMe.rtf" Attributes="0" SourcePath="..\Assets\ReadMe.rtf" SelfReg="false"/>
     <ROW File="FrmSettings.d.ts" Component_="FrmSettings.d.ts" FileName="FRMSET~1.TS|FrmSettings.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\@types\FrmSettings.d.ts" SelfReg="false"/>
     <ROW File="Language.d.ts" Component_="Language.d.ts" FileName="LANGUA~1.TS|Language.d.ts" Attributes="0" SourcePath="..\..\Source\Components\ImageGlass.Settings\WebUI\dist\dist\common\Language.d.ts" SelfReg="false"/>
@@ -394,6 +407,65 @@
     <ROW File="Armenian.iglang.json" Component_="Vietnamese.iglang.json" FileName="ARMENI~1.JSO|Armenian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Armenian.iglang.json" SelfReg="false"/>
     <ROW File="Romanian.iglang.json" Component_="Vietnamese.iglang.json" FileName="ROMANI~1.JSO|Romanian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Romanian.iglang.json" SelfReg="false"/>
     <ROW File="SerbianLatin.iglang.json" Component_="Vietnamese.iglang.json" FileName="SERBIA~2.JSO|Serbian (Latin).iglang.json" Attributes="0" SourcePath="..\Assets\Language\Serbian (Latin).iglang.json" SelfReg="false"/>
+    <ROW File="Ukrainian.iglang.json" Component_="Vietnamese.iglang.json" FileName="UKRAIN~1.JSO|Ukrainian.iglang.json" Attributes="0" SourcePath="..\Assets\Language\Ukrainian.iglang.json" SelfReg="false"/>
+    <ROW File="D2Phap.DXControl.dll" Component_="D2Phap.DXControl.dll" FileName="D2PHAP~1.DLL|D2Phap.DXControl.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\D2Phap.DXControl.dll" SelfReg="false"/>
+    <ROW File="DirectNStandard.dll" Component_="DirectNStandard.dll" FileName="DIRECT~1.DLL|DirectNStandard.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\DirectNStandard.dll" SelfReg="false"/>
+    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ExplorerSortOrder.dll" SelfReg="false"/>
+    <ROW File="FileWatcherEx.dll" Component_="FileWatcherEx.dll" FileName="FILEWA~1.DLL|FileWatcherEx.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\FileWatcherEx.dll" SelfReg="false"/>
+    <ROW File="igcmd.dll" Component_="igcmd.dll" FileName="igcmd.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.dll" Component_="ImageGlass.Base.dll" FileName="IMAGEG~1.DLL|ImageGlass.Base.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Base.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.dll" Component_="ImageGlass.dll" FileName="IMAGEG~2.DLL|ImageGlass.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Gallery.dll" Component_="ImageGlass.Gallery.dll" FileName="IMAGEG~3.DLL|ImageGlass.Gallery.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Gallery.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.dll" Component_="ImageGlass.Settings.dll" FileName="IMAGEG~4.DLL|ImageGlass.Settings.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Settings.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Tools.dll" Component_="ImageGlass.Tools.dll" FileName="IMAGEG~5.DLL|ImageGlass.Tools.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Tools.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.dll" Component_="ImageGlass.UI.dll" FileName="IMAGEG~6.DLL|ImageGlass.UI.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.UI.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.Viewer.dll" Component_="ImageGlass.Viewer.dll" FileName="IMAGEG~7.DLL|ImageGlass.Viewer.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Viewer.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.WebP.dll" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~8.DLL|ImageGlass.WebP.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WebP.dll" SelfReg="false"/>
+    <ROW File="ImageGlass.WinTouch.dll" Component_="ImageGlass.WinTouch.dll" FileName="IMAGEG~9.DLL|ImageGlass.WinTouch.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WinTouch.dll" SelfReg="false"/>
+    <ROW File="libsharpyuv.dll" Component_="libsharpyuv.dll" FileName="LIBSHA~1.DLL|libsharpyuv.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libsharpyuv.dll" SelfReg="false"/>
+    <ROW File="libwebp.dll" Component_="libwebp.dll" FileName="libwebp.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebp.dll" SelfReg="false"/>
+    <ROW File="libwebpdecoder.dll" Component_="libwebpdecoder.dll" FileName="LIBWEB~1.DLL|libwebpdecoder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdecoder.dll" SelfReg="false"/>
+    <ROW File="libwebpdemux.dll" Component_="libwebpdemux.dll" FileName="LIBWEB~2.DLL|libwebpdemux.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\libwebpdemux.dll" SelfReg="false"/>
+    <ROW File="Magick.NativeQ16HDRIOpenMPx64.dll" Component_="Magick.NativeQ16HDRIOpenMPx64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-HDRI-OpenMP-x64.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.Native-Q16-HDRI-OpenMP-x64.dll" SelfReg="false"/>
+    <ROW File="Magick.NET.Core.dll" Component_="Magick.NET.Core.dll" FileName="MAGICK~2.DLL|Magick.NET.Core.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.NET.Core.dll" SelfReg="false"/>
+    <ROW File="Magick.NET.SystemDrawing.dll" Component_="Magick.NET.SystemDrawing.dll" FileName="MAGICK~3.DLL|Magick.NET.SystemDrawing.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.NET.SystemDrawing.dll" SelfReg="false"/>
+    <ROW File="Magick.NET.SystemWindowsMedia.dll" Component_="Magick.NET.SystemWindowsMedia.dll" FileName="MAGICK~4.DLL|Magick.NET.SystemWindowsMedia.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.NET.SystemWindowsMedia.dll" SelfReg="false"/>
+    <ROW File="Magick.NETQ16HDRIOpenMPx64.dll" Component_="Magick.NETQ16HDRIOpenMPx64.dll" FileName="MAGICK~5.DLL|Magick.NET-Q16-HDRI-OpenMP-x64.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Magick.NET-Q16-HDRI-OpenMP-x64.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.Abstractions.dll" Component_="Microsoft.Extensions.Configuration.Abstractions.dll" FileName="MICROS~1.DLL|Microsoft.Extensions.Configuration.Abstractions.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.Binder.dll" Component_="Microsoft.Extensions.Configuration.Binder.dll" FileName="MICROS~2.DLL|Microsoft.Extensions.Configuration.Binder.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.Binder.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.CommandLine.dll" Component_="Microsoft.Extensions.Configuration.CommandLine.dll" FileName="MICROS~3.DLL|Microsoft.Extensions.Configuration.CommandLine.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.CommandLine.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.dll" Component_="Microsoft.Extensions.Configuration.dll" FileName="MICROS~4.DLL|Microsoft.Extensions.Configuration.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.FileExtensions.dll" Component_="Microsoft.Extensions.Configuration.FileExtensions.dll" FileName="MICROS~5.DLL|Microsoft.Extensions.Configuration.FileExtensions.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.FileExtensions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.Json.dll" Component_="Microsoft.Extensions.Configuration.Json.dll" FileName="MICROS~6.DLL|Microsoft.Extensions.Configuration.Json.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Configuration.Json.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileProviders.Abstractions.dll" Component_="Microsoft.Extensions.FileProviders.Abstractions.dll" FileName="MICROS~7.DLL|Microsoft.Extensions.FileProviders.Abstractions.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.FileProviders.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileProviders.Physical.dll" Component_="Microsoft.Extensions.FileProviders.Physical.dll" FileName="MICROS~8.DLL|Microsoft.Extensions.FileProviders.Physical.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.FileProviders.Physical.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileSystemGlobbing.dll" Component_="Microsoft.Extensions.FileSystemGlobbing.dll" FileName="MICROS~9.DLL|Microsoft.Extensions.FileSystemGlobbing.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.FileSystemGlobbing.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Primitives.dll" Component_="Microsoft.Extensions.Primitives.dll" FileName="MICRO~10.DLL|Microsoft.Extensions.Primitives.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Extensions.Primitives.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Web.WebView2.Core.dll" Component_="Microsoft.Web.WebView2.Core.dll" FileName="MICRO~11.DLL|Microsoft.Web.WebView2.Core.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Web.WebView2.Core.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Web.WebView2.WinForms.dll" Component_="Microsoft.Web.WebView2.WinForms.dll" FileName="MICRO~12.DLL|Microsoft.Web.WebView2.WinForms.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Web.WebView2.WinForms.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Web.WebView2.Wpf.dll" Component_="Microsoft.Web.WebView2.Wpf.dll" FileName="MICRO~13.DLL|Microsoft.Web.WebView2.Wpf.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Web.WebView2.Wpf.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Windows.SDK.NET.dll" Component_="Microsoft.Windows.SDK.NET.dll" FileName="MICRO~14.DLL|Microsoft.Windows.SDK.NET.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\Microsoft.Windows.SDK.NET.dll" SelfReg="false"/>
+    <ROW File="PhotoSauce.MagicScaler.dll" Component_="PhotoSauce.MagicScaler.dll" FileName="PHOTOS~1.DLL|PhotoSauce.MagicScaler.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\PhotoSauce.MagicScaler.dll" SelfReg="false"/>
+    <ROW File="vcomp140.dll" Component_="vcomp140.dll" FileName="vcomp140.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\vcomp140.dll" SelfReg="false"/>
+    <ROW File="WebView2Loader.dll" Component_="WebView2Loader.dll" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\WebView2Loader.dll" SelfReg="false"/>
+    <ROW File="WicNet.dll" Component_="WicNet.dll" FileName="WicNet.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\WicNet.dll" SelfReg="false"/>
+    <ROW File="WinRT.Runtime.dll" Component_="WinRT.Runtime.dll" FileName="WINRTR~1.DLL|WinRT.Runtime.dll" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\WinRT.Runtime.dll" SelfReg="false"/>
+    <ROW File="igcmd.dll.config" Component_="igcmd.dll.config" FileName="IGCMDD~1.CON|igcmd.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.dll.config" Component_="igcmd.dll.config" FileName="IMAGEG~1.CON|ImageGlass.dll.config" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.dll.config" SelfReg="false"/>
+    <ROW File="igcmd.deps.json" Component_="igcmd.dll.config" FileName="IGCMDD~1.JSO|igcmd.deps.json" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.deps.json" SelfReg="false"/>
+    <ROW File="igcmd.runtimeconfig.json" Component_="igcmd.dll.config" FileName="IGCMDR~1.JSO|igcmd.runtimeconfig.json" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.runtimeconfig.json" SelfReg="false"/>
+    <ROW File="ImageGlass.deps.json" Component_="igcmd.dll.config" FileName="IMAGEG~1.JSO|ImageGlass.deps.json" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.deps.json" SelfReg="false"/>
+    <ROW File="ImageGlass.runtimeconfig.json" Component_="igcmd.dll.config" FileName="IMAGEG~2.JSO|ImageGlass.runtimeconfig.json" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.runtimeconfig.json" SelfReg="false"/>
+    <ROW File="igcmd.pdb" Component_="igcmd.exe" FileName="igcmd.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\igcmd.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.pdb" Component_="ImageGlass.Base.dll" FileName="IMAGEG~1.PDB|ImageGlass.Base.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Base.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Gallery.pdb" Component_="ImageGlass.Gallery.dll" FileName="IMAGEG~2.PDB|ImageGlass.Gallery.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Gallery.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.pdb" Component_="ImageGlass.exe" FileName="IMAGEG~3.PDB|ImageGlass.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.pdb" Component_="ImageGlass.Settings.dll" FileName="IMAGEG~4.PDB|ImageGlass.Settings.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Settings.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.pdb" Component_="ImageGlass.UI.dll" FileName="IMAGEG~5.PDB|ImageGlass.UI.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.UI.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.Viewer.pdb" Component_="ImageGlass.Viewer.dll" FileName="IMAGEG~6.PDB|ImageGlass.Viewer.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.Viewer.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.WebP.pdb" Component_="ImageGlass.WebP.dll" FileName="IMAGEG~7.PDB|ImageGlass.WebP.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WebP.pdb" SelfReg="false"/>
+    <ROW File="ImageGlass.WinTouch.pdb" Component_="ImageGlass.WinTouch.dll" FileName="IMAGEG~8.PDB|ImageGlass.WinTouch.pdb" Attributes="0" SourcePath="..\..\Source\ImageGlass\bin\Publish\net8.0-windows-x64\ImageGlass.WinTouch.pdb" SelfReg="false"/>
+    <ROW File="default.webp" Component_="igcmd.dll.config" FileName="DEFAUL~1.WEB|default.webp" Attributes="0" SourcePath="..\Assets\default.webp" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
@@ -518,16 +590,7 @@
     <ROW Feature_="MainFeatures" Component_="ProductInformation"/>
     <ROW Feature_="MainFeatures" Component_="igcmd.exe"/>
     <ROW Feature_="MainFeatures" Component_="ImageGlass.exe"/>
-    <ROW Feature_="MainFeatures" Component_="ExplorerSortOrder.dll"/>
-    <ROW Feature_="MainFeatures" Component_="libsharpyuv.dll"/>
-    <ROW Feature_="MainFeatures" Component_="libwebp.dll"/>
-    <ROW Feature_="MainFeatures" Component_="libwebpdecoder.dll"/>
-    <ROW Feature_="MainFeatures" Component_="libwebpdemux.dll"/>
-    <ROW Feature_="MainFeatures" Component_="Magick.NativeQ16HDRIOpenMPx64.dll"/>
-    <ROW Feature_="MainFeatures" Component_="vcomp140.dll"/>
-    <ROW Feature_="MainFeatures" Component_="WebView2Loader.dll"/>
     <ROW Feature_="MainFeatures" Component_="igcmd.dll.config"/>
-    <ROW Feature_="MainFeatures" Component_="ImageGlass.Base.pdb"/>
     <ROW Feature_="MainFeatures" Component_="FR.ico"/>
     <ROW Feature_="MainFeatures" Component_="Vietnamese.iglang.json"/>
     <ROW Feature_="MainFeatures" Component_="ActualSize.svg"/>
@@ -548,6 +611,48 @@
     <ROW Feature_="MainFeatures" Component_="NewFolder_1"/>
     <ROW Feature_="MainFeatures" Component_="AI_INSTALLPERUSER"/>
     <ROW Feature_="MainFeatures" Component_="ActualSize.svg_1"/>
+    <ROW Feature_="MainFeatures" Component_="D2Phap.DXControl.dll"/>
+    <ROW Feature_="MainFeatures" Component_="DirectNStandard.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ExplorerSortOrder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="FileWatcherEx.dll"/>
+    <ROW Feature_="MainFeatures" Component_="igcmd.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Base.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Gallery.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Settings.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Tools.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.UI.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Viewer.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.WebP.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.WinTouch.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libsharpyuv.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebp.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebpdecoder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="libwebpdemux.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NET.Core.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NET.SystemDrawing.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NET.SystemWindowsMedia.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NETQ16HDRIOpenMPx64.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.Abstractions.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.Binder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.CommandLine.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.FileExtensions.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Configuration.Json.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.FileProviders.Abstractions.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.FileProviders.Physical.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.FileSystemGlobbing.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Extensions.Primitives.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Web.WebView2.Core.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Web.WebView2.WinForms.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Web.WebView2.Wpf.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Windows.SDK.NET.dll"/>
+    <ROW Feature_="MainFeatures" Component_="PhotoSauce.MagicScaler.dll"/>
+    <ROW Feature_="MainFeatures" Component_="vcomp140.dll"/>
+    <ROW Feature_="MainFeatures" Component_="WebView2Loader.dll"/>
+    <ROW Feature_="MainFeatures" Component_="WicNet.dll"/>
+    <ROW Feature_="MainFeatures" Component_="WinRT.Runtime.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
@@ -609,9 +714,9 @@
     <ROW Registry="Version" Root="-1" Key="Software\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ImageGlass" Directory_="DesktopFolder" Name="IMAGEG~2|[|ProductName] 9" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ProductName9" Directory_="NewFolder_1_Dir" Name="IMAGEG~1|[|ProductName] 9" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="NewFolder_1_Dir" Name="UNINST~1.112|Uninstall [|ProductName] [|ProductVersion]" Component_="vcomp140.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="ImageGlass" Directory_="DesktopFolder" Name="IMAGEG~1|[|ProductName]" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ProductName9" Directory_="NewFolder_1_Dir" Name="IMAGEG~2|[|ProductName]" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="NewFolder_1_Dir" Name="UNINST~1.112|Uninstall [|ProductName] [|ProductVersion]" Component_="APPDIR" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
