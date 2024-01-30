@@ -217,11 +217,13 @@ export default class TabAppearance {
   }
 
   private static async onBtn_BackgroundColor() {
-    const colorEL = query<HTMLInputElement>('[name="BackgroundColor"]');
-    const colorValue = await postAsync<string>('Btn_BackgroundColor', colorEL.value);
+    const colorEl = query<HTMLInputElement>('[name="BackgroundColor"]');
+    const colorHex = colorEl.value || TabAppearance.currentTheme.BgColor;
 
-    if (colorValue) {
-      colorEL.value = colorValue;
+    const newColorHex = await postAsync<string>('Btn_BackgroundColor', colorHex);
+
+    if (newColorHex && newColorHex !== colorHex) {
+      colorEl.value = newColorHex;
       TabAppearance.handleBackgroundColorChanged();
     }
   }
