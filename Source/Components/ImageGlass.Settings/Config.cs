@@ -1573,11 +1573,13 @@ public static class Config
 
         if (!th.IsValid && throwIfThemeInvalid)
         {
+            var themeName = th.FolderName;
+
             th.Dispose();
             th = null;
 
-            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
-                $"Please make sure '{Path.Combine(th.FolderName, IgTheme.CONFIG_FILE)}' file is valid.");
+            throw new InvalidDataException($"Unable to load '{themeName}' theme pack. " +
+                $"Please make sure '{Path.Combine(themeName, IgTheme.CONFIG_FILE)}' file is valid.");
         }
 
         return th;
