@@ -131,7 +131,7 @@ internal static class Program
                 exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, exts, PerMachine, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(true, exts, PerMachine);
         }
         #endregion
 
@@ -145,7 +145,7 @@ internal static class Program
                 exts = CmdArgs[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, exts, PerMachine, ShowUi, HideAdminRequiredErrorUi);
+            return (int)Functions.SetAppExtensions(false, exts, PerMachine);
         }
         #endregion
 

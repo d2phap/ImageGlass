@@ -68,12 +68,7 @@ public static class Functions
     /// </summary>
     /// <param name="enable"></param>
     /// <param name="exts">Extensions to proceed. Example: <c>.png;.jpg;</c></param>
-    public static IgExitCode SetAppExtensions(
-        bool enable,
-        string exts = "",
-        bool perMachine = false,
-        bool showUi = false,
-        bool hideAdminRequiredErrorUi = false)
+    public static IgExitCode SetAppExtensions(bool enable, string exts = "", bool perMachine = false)
     {
         var langPath = enable
             ? "FrmMain.MnuSetDefaultPhotoViewer"
@@ -91,9 +86,12 @@ public static class Functions
                 : ExplorerApi.UnregisterAppAndExtensions(exts, perMachine);
             if (error != null) throw error;
 
-            _ = Config.ShowInfo(null,
-                title: Config.Language[langPath],
-                heading: Config.Language[$"{langPath}._Success"]);
+            if (Program.ShowUi)
+            {
+                _ = Config.ShowInfo(null,
+                    title: Config.Language[langPath],
+                    heading: Config.Language[$"{langPath}._Success"]);
+            }
         }, (error) =>
         {
             _ = Config.ShowError(null,
