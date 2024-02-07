@@ -154,7 +154,7 @@ public static class WebUI
             var isDarkMode = true;
             if (th.JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.IsDarkMode), out var darkMode))
             {
-                isDarkMode = darkMode.ToString().ToLowerInvariant() != "false";
+                isDarkMode = !darkMode.ToString().Equals("false", StringComparison.InvariantCultureIgnoreCase);
             }
             _ = obj.TryAdd(nameof(IgThemeSettings.IsDarkMode), isDarkMode);
 

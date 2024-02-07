@@ -44,7 +44,7 @@ public class QueuedWorker : Component
     private int _priorityQueues = 5;
     private LinkedList<AsyncOperation>[] _items = [];
     private AsyncOperation?[] _singleItems = [];
-    private readonly Dictionary<object, bool> _cancelledItems = new();
+    private readonly Dictionary<object, bool> _cancelledItems = [];
 
     private readonly SendOrPostCallback _workCompletedCallback;
 
@@ -403,10 +403,7 @@ public class QueuedWorker : Component
         if (single)
         {
             var currentOp = _singleItems[priority];
-            if (currentOp != null)
-            {
-                currentOp.OperationCompleted();
-            }
+            currentOp?.OperationCompleted();
 
             _singleItems[priority] = asyncOp;
         }
@@ -603,9 +600,9 @@ public class QueuedWorker : Component
                     if (!Stopping)
                         asyncOp?.PostOperationCompleted(_workCompletedCallback, workCompletedArg);
                 }
-                else if (asyncOp != null)
+                else
                 {
-                    asyncOp.OperationCompleted();
+                    asyncOp?.OperationCompleted();
                 }
 
                 // Check if the cache is exhausted
