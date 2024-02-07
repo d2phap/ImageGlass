@@ -76,11 +76,11 @@ public class ColorPickerConfig(string toolId) : IToolConfig
     {
         var settings = new ExpandoObject();
 
-        settings.TryAdd(nameof(ShowRgbWithAlpha), ShowRgbWithAlpha);
-        settings.TryAdd(nameof(ShowHexWithAlpha), ShowHexWithAlpha);
-        settings.TryAdd(nameof(ShowHslWithAlpha), ShowHslWithAlpha);
-        settings.TryAdd(nameof(ShowHsvWithAlpha), ShowHsvWithAlpha);
-        settings.TryAdd(nameof(ShowCIELabWithAlpha), ShowCIELabWithAlpha);
+        _ = settings.TryAdd(nameof(ShowRgbWithAlpha), ShowRgbWithAlpha);
+        _ = settings.TryAdd(nameof(ShowHexWithAlpha), ShowHexWithAlpha);
+        _ = settings.TryAdd(nameof(ShowHslWithAlpha), ShowHslWithAlpha);
+        _ = settings.TryAdd(nameof(ShowHsvWithAlpha), ShowHsvWithAlpha);
+        _ = settings.TryAdd(nameof(ShowCIELabWithAlpha), ShowCIELabWithAlpha);
 
         // save to app config
         Config.ToolSettings.Set(ToolId, settings);

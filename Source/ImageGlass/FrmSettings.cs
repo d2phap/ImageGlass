@@ -97,19 +97,19 @@ public partial class FrmSettings : WebForm
 
 
         var pageSettingObj = new ExpandoObject();
-        pageSettingObj.TryAdd("startUpDir", startupDir);
-        pageSettingObj.TryAdd("configDir", configDir);
-        pageSettingObj.TryAdd("userConfigFilePath", userConfigFilePath);
-        pageSettingObj.TryAdd("FILE_MACRO", Const.FILE_MACRO);
-        pageSettingObj.TryAdd("enums", WebUI.Enums);
-        pageSettingObj.TryAdd("defaultThemeDir", defaultThemeDir);
-        pageSettingObj.TryAdd("defaultImageInfoTags", Config.DefaultImageInfoTags);
-        pageSettingObj.TryAdd("toolList", Config.Tools);
-        pageSettingObj.TryAdd("langList", WebUI.LangList);
-        pageSettingObj.TryAdd("themeList", WebUI.ThemeList);
-        pageSettingObj.TryAdd("icons", WebUI.SvgIcons);
-        pageSettingObj.TryAdd("builtInToolbarButtons", builtInToolbarBtns);
-        pageSettingObj.TryAdd("config", configJsonObj);
+        _ = pageSettingObj.TryAdd("startUpDir", startupDir);
+        _ = pageSettingObj.TryAdd("configDir", configDir);
+        _ = pageSettingObj.TryAdd("userConfigFilePath", userConfigFilePath);
+        _ = pageSettingObj.TryAdd("FILE_MACRO", Const.FILE_MACRO);
+        _ = pageSettingObj.TryAdd("enums", WebUI.Enums);
+        _ = pageSettingObj.TryAdd("defaultThemeDir", defaultThemeDir);
+        _ = pageSettingObj.TryAdd("defaultImageInfoTags", Config.DefaultImageInfoTags);
+        _ = pageSettingObj.TryAdd("toolList", Config.Tools);
+        _ = pageSettingObj.TryAdd("langList", WebUI.LangList);
+        _ = pageSettingObj.TryAdd("themeList", WebUI.ThemeList);
+        _ = pageSettingObj.TryAdd("icons", WebUI.SvgIcons);
+        _ = pageSettingObj.TryAdd("builtInToolbarButtons", builtInToolbarBtns);
+        _ = pageSettingObj.TryAdd("config", configJsonObj);
         var pageSettingStr = BHelper.ToJson(pageSettingObj);
 
         var script = @$"

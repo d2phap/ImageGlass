@@ -71,7 +71,7 @@ public static class WebUI
             foreach (var item in enums)
             {
                 var keys = Enum.GetNames(item);
-                enumObj.TryAdd(item.Name, keys);
+                _ = enumObj.TryAdd(item.Name, keys);
             }
 
             return enumObj;
@@ -122,8 +122,8 @@ public static class WebUI
         {
             var obj = new ExpandoObject();
 
-            obj.TryAdd(nameof(i.FileName), i.FileName);
-            obj.TryAdd(nameof(i.Metadata), i.Metadata);
+            _ = obj.TryAdd(nameof(i.FileName), i.FileName);
+            _ = obj.TryAdd(nameof(i.Metadata), i.Metadata);
 
             return obj;
         });
@@ -143,11 +143,11 @@ public static class WebUI
             th.LoadThemeColors();
             var obj = new ExpandoObject();
 
-            obj.TryAdd(nameof(th.ConfigFilePath), th.ConfigFilePath);
-            obj.TryAdd(nameof(th.FolderName), th.FolderName);
-            obj.TryAdd(nameof(th.FolderPath), th.FolderPath);
-            obj.TryAdd(nameof(th.Info), th.JsonModel.Info);
-            obj.TryAdd(nameof(IgTheme.Colors.BgColor), th.Colors.BgColor.ToHex());
+            _ = obj.TryAdd(nameof(th.ConfigFilePath), th.ConfigFilePath);
+            _ = obj.TryAdd(nameof(th.FolderName), th.FolderName);
+            _ = obj.TryAdd(nameof(th.FolderPath), th.FolderPath);
+            _ = obj.TryAdd(nameof(th.Info), th.JsonModel.Info);
+            _ = obj.TryAdd(nameof(IgTheme.Colors.BgColor), th.Colors.BgColor.ToHex());
 
 
             // IsDarkMode
@@ -156,7 +156,7 @@ public static class WebUI
             {
                 isDarkMode = darkMode.ToString().ToLowerInvariant() != "false";
             }
-            obj.TryAdd(nameof(IgThemeSettings.IsDarkMode), isDarkMode);
+            _ = obj.TryAdd(nameof(IgThemeSettings.IsDarkMode), isDarkMode);
 
 
             // PreviewImage
@@ -165,7 +165,7 @@ public static class WebUI
                 var previewImgPath = Path.Combine(th.FolderPath, previewImgName.ToString());
                 var previewImgUri = new Uri(previewImgPath);
 
-                obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgUri.AbsoluteUri);
+                _ = obj.TryAdd(nameof(IgThemeSettings.PreviewImage), previewImgUri.AbsoluteUri);
             }
 
 
@@ -179,9 +179,9 @@ public static class WebUI
                     iconFileUrl = new Uri(iconFileUrl).AbsoluteUri;
                 }
 
-                buttons.TryAdd(item.Key, iconFileUrl);
+                _ = buttons.TryAdd(item.Key, iconFileUrl);
             }
-            obj.TryAdd(nameof(th.JsonModel.ToolbarIcons), buttons);
+            _ = obj.TryAdd(nameof(th.JsonModel.ToolbarIcons), buttons);
 
             return obj;
         });

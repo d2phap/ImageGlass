@@ -90,7 +90,7 @@ public static class ExpandoObjectExtensions
         }
         else
         {
-            dict.TryAdd(keyName, value);
+            _ = dict.TryAdd(keyName, value);
         }
     }
 
@@ -105,7 +105,7 @@ public static class ExpandoObjectExtensions
         foreach (var propertyInfo in typeof(T).GetProperties())
         {
             var currentValue = propertyInfo.GetValue(obj);
-            expObj.TryAdd(propertyInfo.Name, currentValue);
+            _ = expObj.TryAdd(propertyInfo.Name, currentValue);
         }
 
         return expObj;

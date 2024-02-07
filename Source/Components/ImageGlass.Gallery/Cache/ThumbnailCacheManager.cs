@@ -586,10 +586,11 @@ internal class ThumbnailCacheManager : IDisposable
     /// <param name="guid">The guid representing the item</param>
     public void BeginItemEdit(Guid guid)
     {
-        if (!_editCache.ContainsKey(guid))
+        try
         {
-            _editCache.Add(guid, false);
+            _ = _editCache.TryAdd(guid, false);
         }
+        catch { }
     }
 
     /// <summary>
@@ -599,7 +600,7 @@ internal class ThumbnailCacheManager : IDisposable
     /// <param name="guid">The guid representing the item.</param>
     public void EndItemEdit(Guid guid)
     {
-        _editCache.Remove(guid);
+        _ = _editCache.Remove(guid);
     }
 
     /// <summary>
@@ -624,17 +625,15 @@ internal class ThumbnailCacheManager : IDisposable
     public void Clear()
     {
         foreach (var item in _thumbCache.Values)
+        {
             item.Dispose();
+        }
         _thumbCache.Clear();
 
-        if (_galleryItem != null)
-        {
-            _galleryItem.Dispose();
-            _galleryItem = null;
-        }
+        _galleryItem?.Dispose();
+        _galleryItem = null;
 
-        if (_rendererItem != null)
-            _rendererItem.Dispose();
+        _rendererItem?.Dispose();
         _rendererItem = null;
 
         _bw.CancelAsync();

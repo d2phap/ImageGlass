@@ -2954,10 +2954,10 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
+        _ = Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
         if (frm == null)
         {
-            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this));
+            _ = Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this));
         }
         else if (frm.IsDisposed)
         {

@@ -126,16 +126,16 @@ public class CropToolConfig : IToolConfig
         var settings = new ExpandoObject();
 
         // Bool configs
-        settings.TryAdd(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
-        settings.TryAdd(nameof(AutoCenterSelection), AutoCenterSelection);
+        _ = settings.TryAdd(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
+        _ = settings.TryAdd(nameof(AutoCenterSelection), AutoCenterSelection);
 
         // Enum configs
-        settings.TryAdd(nameof(AspectRatio), AspectRatio);
-        settings.TryAdd(nameof(InitSelectionType), InitSelectionType);
+        _ = settings.TryAdd(nameof(AspectRatio), AspectRatio);
+        _ = settings.TryAdd(nameof(InitSelectionType), InitSelectionType);
 
         // Array configs
-        settings.TryAdd(nameof(AspectRatioValues), AspectRatioValues);
-        settings.TryAdd(nameof(InitSelectedArea), new int[]
+        _ = settings.TryAdd(nameof(AspectRatioValues), AspectRatioValues);
+        _ = settings.TryAdd(nameof(InitSelectedArea), new int[]
         {
             InitSelectedArea.Left,
             InitSelectedArea.Top,

@@ -102,7 +102,12 @@ public class StringCache
         if (!_stringCache.TryGetValue(str, out var result))
         {
             result = new string(str);
-            _stringCache.TryAdd(str, result);
+
+            try
+            {
+                _ = _stringCache.TryAdd(str, result);
+            }
+            catch { }
         }
 
         return result;
