@@ -76,6 +76,23 @@ public class Web2 : WebView2
 
 
     /// <summary>
+    /// Gets the path of WebView2 Runtime fixed version.
+    /// If not found, return <c>null</c>.
+    /// </summary>
+    public static string? WebView2RuntimeFixedVersionDirPath
+    {
+        get
+        {
+            var dir = App.StartUpDir(Dir.WebView2Runtime);
+
+            if (Directory.Exists(dir)) return dir;
+
+            return null;
+        }
+    }
+
+
+    /// <summary>
     /// Gets version of <see cref="WebView2"/> runtime,
     /// returns <c>null</c> if <see cref="WebView2"/> runtime is not installed.
     /// </summary>
@@ -85,7 +102,7 @@ public class Web2 : WebView2
         {
             try
             {
-                var version = CoreWebView2Environment.GetAvailableBrowserVersionString();
+                var version = CoreWebView2Environment.GetAvailableBrowserVersionString(WebView2RuntimeFixedVersionDirPath);
                 return new Version(version);
             }
             catch (WebView2RuntimeNotFoundException) { }
@@ -302,16 +319,17 @@ public class Web2 : WebView2
         try
         {
             // use AppData dir
-            // %LocalAppData%\ImageGlass\9.0.7.1125\Webview2_Data
+            // %LocalAppData%\ImageGlass\WebView2_Data
             var appDataDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 App.AppName,
-                "Webview2_Data");
+                "WebView2_Data");
 
             // create the directory if not exists
             Directory.CreateDirectory(appDataDir);
 
             var env = await CoreWebView2Environment.CreateAsync(
+                browserExecutableFolder: WebView2RuntimeFixedVersionDirPath,
                 userDataFolder: appDataDir,
                 options: options);
 
@@ -469,7 +487,7 @@ public class Web2 : WebView2
         catch (Exception ex)
         {
             throw new ArgumentException(
-                $"{ex.ToString()}\r\n" +
+                $"{ex}\r\n" +
                 $"JSON data:\r\n{json}\r\n\r\n" +
                 $"Error detail:\r\n", ex);
         }
