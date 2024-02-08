@@ -98,7 +98,6 @@ internal static class Program
         {
             Config.Language = [];
         }
-        Config.Theme.LoadTheme();
 
 
         if (CmdArgs.Length == 0)

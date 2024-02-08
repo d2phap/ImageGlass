@@ -313,7 +313,7 @@ public partial class FrmSlideshow : ThemedForm
         var newIconHeight = DpiApi.Scale(Config.ToolbarIconHeight);
 
         // reload theme
-        Config.Theme.LoadTheme(newIconHeight);
+        Config.Theme.LoadToolbarIcons(newIconHeight);
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));

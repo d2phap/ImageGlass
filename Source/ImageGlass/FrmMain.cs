@@ -96,7 +96,7 @@ public partial class FrmMain : ThemedForm
         var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);
 
         // reload theme
-        Config.Theme.LoadTheme(newIconHeight);
+        Config.Theme.LoadToolbarIcons(newIconHeight);
 
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);

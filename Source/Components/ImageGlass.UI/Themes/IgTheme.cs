@@ -70,7 +70,7 @@ public class IgTheme : IDisposable
 
     /// <summary>
     /// Gets, sets the height of toolbar icons.
-    /// You need to manually call <see cref="LoadTheme"/> to update toolbar icons.
+    /// You need to manually call <see cref="LoadToolbarIcons"/> to update toolbar icons.
     /// </summary>
     public int ToolbarActualIconHeight
     {
@@ -218,6 +218,9 @@ public class IgTheme : IDisposable
         {
             //parse theme config file
             JsonModel = BHelper.ReadJson<IgThemeJsonModel>(ConfigFilePath);
+
+            // import theme info
+            Info = JsonModel.Info;
         }
         catch { }
 
@@ -237,32 +240,6 @@ public class IgTheme : IDisposable
 
         IsValid = true;
         return IsValid;
-    }
-
-
-    /// <summary>
-    /// Loads theme data from <see cref="JsonModel"/>.
-    /// </summary>
-    /// <param name="iconHeight">Toolbar icon height.</param>
-    public void LoadTheme(int? iconHeight = null)
-    {
-        if (IsValid is false || JsonModel is null) return;
-
-        // import theme info
-        Info = JsonModel.Info;
-
-
-        // Theme settings
-        BHelper.RunSync(LoadThemeSettingsAsync);
-
-
-        // Theme colors
-        LoadThemeColors();
-
-
-        // Toolbar icons
-        LoadToolbarIcons(iconHeight);
-
     }
 
 

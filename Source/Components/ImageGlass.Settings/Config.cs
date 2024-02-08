@@ -1552,6 +1552,8 @@ public static class Config
     {
         // look for theme pack in the Config dir
         var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+        var themeConfigPath = th.ConfigFilePath;
+
         if (!th.IsValid)
         {
             // look for theme pack in the Startup dir
@@ -1573,13 +1575,11 @@ public static class Config
 
         if (!th.IsValid && throwIfThemeInvalid)
         {
-            var themeName = th.FolderName;
-
             th.Dispose();
             th = null;
 
-            throw new InvalidDataException($"Unable to load '{themeName}' theme pack. " +
-                $"Please make sure '{Path.Combine(themeName, IgTheme.CONFIG_FILE)}' file is valid.");
+            throw new InvalidDataException($"Unable to load '{themeFolderName}' theme pack. " +
+                $"Please make sure '{themeConfigPath}' file is valid.");
         }
 
         return th;
