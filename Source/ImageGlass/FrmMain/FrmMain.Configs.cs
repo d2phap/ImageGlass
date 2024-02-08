@@ -249,8 +249,6 @@ public partial class FrmMain
         IG_SetWindowMoveable(true);
         #endregion // Form movable
 
-        // make sure all controls are painted before showing window
-        Application.DoEvents();
 
         // toggle toolbar
         IG_ToggleToolbar(Config.ShowToolbar);
@@ -298,10 +296,6 @@ public partial class FrmMain
 
         // load context menu config
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
-
-
-        // focus on PicMain
-        PicMain.Focus();
 
 
         // update tag data for zoom mode menus
