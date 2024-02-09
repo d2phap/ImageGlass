@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
-using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace ImageGlass.Base.WinApi;
 
@@ -34,23 +35,15 @@ public enum WallpaperStyle : int
 }
 
 
-public static class DesktopApi
+public static partial class DesktopApi
 {
-    private const int SPI_SETDESKWALLPAPER = 20;
-    private const int SPIF_UPDATEINIFILE = 0x01;
-    private const int SPIF_SENDWININICHANGE = 0x02;
-
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-
-
     /// <summary>
     /// Set the desktop wallpaper.
     /// </summary>
     /// <param name="bmpPath">BMP image file path</param>
     /// <param name="style">Style of wallpaper</param>
     /// <returns>Success/failure indication.</returns>
-    public static Exception? SetWallpaper(string bmpPath, WallpaperStyle style)
+    public static unsafe Exception? SetWallpaper(string bmpPath, WallpaperStyle style)
     {
         try
         {
@@ -58,7 +51,7 @@ public static class DesktopApi
 
             if (key == null)
             {
-                throw new Exception($"Cannot open registry key: {key.ToString()}");
+                throw new Exception($"Cannot open registry key: {key}");
             }
 
             var tileVal = "0"; // default not-tiled
@@ -85,7 +78,13 @@ public static class DesktopApi
             key.SetValue("Wallpaper", bmpPath);
 
 
-            _ = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, bmpPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            fixed (char* pathPtr = bmpPath)
+            {
+                _ = PInvoke.SystemParametersInfo(
+                    SYSTEM_PARAMETERS_INFO_ACTION.SPI_SETDESKWALLPAPER,
+                    0, pathPtr,
+                    SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS.SPIF_UPDATEINIFILE | SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS.SPIF_SENDWININICHANGE);
+            }
         }
         catch (Exception ex)
         {
