@@ -18,7 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base.Photoing.Codecs;
 
-public class AnimatedImg : IDisposable
+/// <summary>
+/// Initialize new instance of <see cref="AnimatedImg"/>.
+/// </summary>
+public class AnimatedImg(IEnumerable<AnimatedImgFrame> frames) : IDisposable
 {
 
     #region IDisposable Disposing
@@ -58,22 +61,12 @@ public class AnimatedImg : IDisposable
     /// <summary>
     /// Gets frames list.
     /// </summary>
-    public IEnumerable<AnimatedImgFrame> Frames { get; private set; }
+    public IEnumerable<AnimatedImgFrame> Frames { get; private set; } = frames;
 
     /// <summary>
     /// Gets frams count.
     /// </summary>
-    public int FrameCount { get; private set; } = 0;
-
-
-    /// <summary>
-    /// Initialize new instance of <see cref="AnimatedImg"/>.
-    /// </summary>
-    public AnimatedImg(IEnumerable<AnimatedImgFrame> frames)
-    {
-        Frames = frames;
-        FrameCount = frames.Count();
-    }
+    public int FrameCount { get; private set; } = frames.Count();
 
 
     /// <summary>

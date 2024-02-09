@@ -238,11 +238,11 @@ public partial class FrmMain
         _movableForm = new(this)
         {
             Key = Keys.ShiftKey | Keys.Shift,
-            FreeMoveControlNames = new HashSet<string>()
-            {
+            FreeMoveControlNames =
+            [
                 nameof(Toolbar),
                 nameof(ToolbarContext),
-            },
+            ],
         };
 
         // Enable form movable
@@ -509,7 +509,7 @@ public partial class FrmMain
     {
         if (forcedReset)
         {
-            Config.ToolbarButtons = new();
+            Config.ToolbarButtons = [];
             foreach (var btnId in Local.DefaultToolbarItemIds)
             {
                 if (btnId == nameof(ToolbarItemModelType.Separator))

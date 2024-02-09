@@ -860,9 +860,6 @@ public partial class FrmMain : ThemedForm
             else
             {
                 Local.Metadata = Local.Images.GetMetadata(imageIndex, frameIndex);
-
-                //// Update current index
-                //Local.CurrentIndex = imageIndex;
             }
 
 
@@ -1250,11 +1247,10 @@ public partial class FrmMain : ThemedForm
                 if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
                 {
                     token.ThrowIfCancellationRequested();
-                    var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
-                    var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+                    var thumbItem = Gallery.Items[Local.CurrentIndex];
 
-                    if (thumb != null
-                        && thumbnailPath.Equals(filePath, StringComparison.OrdinalIgnoreCase))
+                    if (thumbItem.ThumbnailImage is Image thumb
+                        && thumbItem.FileName.Equals(filePath, StringComparison.OrdinalIgnoreCase))
                     {
                         wicSrc?.Dispose();
                         wicSrc = BHelper.ToWicBitmapSource(thumb);
