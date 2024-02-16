@@ -82,20 +82,31 @@ public partial class WebForm : ThemedForm
         // show message if WebView2 runtime is not found
         if (!IsWebView2Installed)
         {
-            var label = new ModernLabel()
+            this.Padding = this.ScaleToDpi(new Padding(5));
+
+            var lnkWebView2NotFound = new ModernLinkLabel()
             {
+                Name = "LnkWebView2NotFound",
                 Text = Config.Language["_._Webview2._NotFound"],
                 Dock = DockStyle.Top,
                 AutoSize = true,
-                TextAlign = ContentAlignment.TopCenter,
-                Padding = new Padding(20),
+                TextAlign = ContentAlignment.TopLeft,
+                Padding = this.ScaleToDpi(new Padding(5)),
+                Font = new Font(this.Font.FontFamily, this.Font.Size * 1.2f),
             };
+            lnkWebView2NotFound.LinkClicked += LnkWebView2NotFound_LinkClicked;
 
-            Controls.Add(label);
+            Controls.Add(lnkWebView2NotFound);
         }
 
         _ = Config.UpdateFormIcon(this);
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
+    }
+
+
+    private void LnkWebView2NotFound_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
+    {
+        _ = BHelper.OpenUrlAsync("https://developer.microsoft.com/en-us/microsoft-edge/webview2");
     }
 
 

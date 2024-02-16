@@ -178,7 +178,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported"); // v9.0
         _ = TryAdd("_._UserAction._Win32ExeError", "Cannot execute command '{0}'. Make sure the name is correct."); // v9.0
 
-        _ = TryAdd("_._Webview2._NotFound", "ImageGlass could not detect WebView2 Runtime 64-bit on your machine."); // 9.1
+        _ = TryAdd("_._Webview2._NotFound", "Please install the latest version of WebView2 Runtime."); // 9.1
 
         // Gallery tooltip
         _ = TryAdd($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
