@@ -666,10 +666,10 @@ public static class Config
     /// <summary>
     /// Loads and parsse configs from file
     /// </summary>
-    public static void Load()
+    public static void Load(IConfigurationRoot? items = null)
     {
 #nullable disable
-        var items = Source.LoadUserConfigs();
+        items ??= Source.LoadUserConfigs();
 
         // save the config for all tools
         ToolSettings = items.GetValueObj(nameof(ToolSettings)).GetValue(nameof(ToolSettings), new ExpandoObject());

@@ -61,6 +61,16 @@ public class Source
     public bool IsCompatible { get; set; } = true;
 
 
+    /// <summary>
+    /// Gets user settings from command line arguments
+    /// </summary>
+    public static string[] SettingsFromCmdLine => Environment.GetCommandLineArgs()
+        // filter the command lines begin with '/'
+        // example: ImageGlass.exe /FrmMainWidth=900
+        .Where(cmd => cmd.StartsWith(Const.CONFIG_CMD_PREFIX))
+        .Select(cmd => cmd[1..]) // trim '/' from the command
+        .ToArray();
+
     #endregion
 
 
@@ -73,13 +83,6 @@ public class Source
     /// </summary>
     public static IConfigurationRoot LoadUserConfigs()
     {
-        // filter the command lines begin with '/'
-        // example: ImageGlass.exe /FrmMainWidth=900
-        var args = Environment.GetCommandLineArgs()
-            .Where(cmd => cmd.StartsWith(Const.CONFIG_CMD_PREFIX))
-            .Select(cmd => cmd[1..]) // trim '/' from the command
-            .ToArray();
-
         var startUpDir = App.StartUpDir();
         var configDir = App.ConfigDir(PathType.Dir);
 
@@ -106,7 +109,7 @@ public class Source
                 .AddJsonFile(UserFilename, optional: true)
 
                 // command line
-                .AddCommandLine(args)
+                .AddCommandLine(SettingsFromCmdLine)
 
                 .AddConfiguration(adminConfig)
                 .Build();
@@ -120,7 +123,7 @@ public class Source
         var fallBackConfig = new ConfigurationBuilder()
             .SetBasePath(startUpDir)
             .AddJsonFile(DefaultFilename, optional: true) // igconfig.default.json
-            .AddCommandLine(args) // command line
+            .AddCommandLine(SettingsFromCmdLine) // command line
             .AddJsonFile(AdminFilename, optional: true) // igconfig.admin.json
             .Build();
 
@@ -128,8 +131,37 @@ public class Source
     }
 
 
-    #endregion
+    /// <summary>
+    /// Loads configs, takes pre-defined settings from
+    /// <see cref="DefaultFilename"/> and <see cref="AdminFilename"/>.
+    /// </summary>
+    public static IConfigurationRoot LoadNonUserConfigs()
+    {
+        var startUpDir = App.StartUpDir();
 
+        // igconfig.default.json
+        var defaultConfig = new ConfigurationBuilder()
+            .SetBasePath(startUpDir)
+            .AddJsonFile(DefaultFilename, optional: true)
+            .Build();
+
+        // admin.igconfig.json
+        var adminConfig = new ConfigurationBuilder()
+            .SetBasePath(startUpDir)
+            .AddJsonFile(AdminFilename, optional: true)
+            .Build();
+
+        // final config
+        var userConfig = new ConfigurationBuilder()
+            .AddConfiguration(defaultConfig)
+            .AddCommandLine(SettingsFromCmdLine)
+            .AddConfiguration(adminConfig)
+            .Build();
+
+        return userConfig;
+    }
+
+    #endregion
 
 }
 
