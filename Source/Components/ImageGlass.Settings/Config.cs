@@ -643,7 +643,7 @@ public static class Config
     /// <summary>
     /// Gets, sets background color of of the main window
     /// </summary>
-    public static Color BackgroundColor { get; set; } = Color.Black;
+    public static Color BackgroundColor { get; set; } = Color.Empty;
 
     /// <summary>
     /// Gets, sets background color of slideshow
@@ -848,6 +848,7 @@ public static class Config
         #region ImageFormats
 
         var formats = items.GetValueEx(nameof(FileFormats), Const.IMAGE_FORMATS);
+        if (string.IsNullOrWhiteSpace(formats)) formats = Const.IMAGE_FORMATS;
         FileFormats = GetImageFormats(formats);
 
         formats = items.GetValueEx(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
@@ -1140,7 +1141,7 @@ public static class Config
 
 
         #region Other types items
-        if (BackgroundColor == Theme.Colors.BgColor)
+        if (BackgroundColor == Theme.Colors.BgColor || BackgroundColor.IsEmpty)
         {
             _ = settings.TryAdd(nameof(BackgroundColor), ""); // follow theme background
         }
