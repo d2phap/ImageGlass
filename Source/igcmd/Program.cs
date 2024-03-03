@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass;
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
@@ -89,23 +90,37 @@ internal static class Program
         #endregion
 
 
-        try
-        {
-            // load application configs
-            Config.Load();
-        }
-        catch (Exception)
-        {
-            Config.Language = [];
-        }
-
-
         if (CmdArgs.Length == 0)
         {
+            LoadAllConfigs();
             return Config.ShowDefaultIgCommandError(nameof(igcmd));
         }
 
         var topCmd = CmdArgs[0].ToLowerInvariant().Trim();
+
+
+        #region QUICK_SETUP
+        if (topCmd == IgCommands.QUICK_SETUP)
+        {
+            // load the non-user settings
+            var nonUserConfig = Source.LoadNonUserConfigs();
+
+            // load language setting
+            var langPath = nonUserConfig.GetValueEx(nameof(Config.Language), "English");
+            Config.Language = new IgLang(langPath, App.StartUpDir(Dir.Language));
+
+            // load theme
+            Config.LoadThemePack(WinColorsApi.IsDarkMode, true, true, false);
+
+
+            Application.Run(new Tools.FrmQuickSetup());
+            return (int)IgExitCode.Done;
+        }
+        #endregion
+
+
+        // load all configs
+        LoadAllConfigs();
 
 
         #region SET_WALLPAPER <string imgPath> [int style]
@@ -187,16 +202,6 @@ internal static class Program
         #endregion
 
 
-        #region QUICK_SETUP
-        if (topCmd == IgCommands.QUICK_SETUP)
-        {
-            Application.Run(new Tools.FrmQuickSetup());
-
-            return (int)IgExitCode.Done;
-        }
-        #endregion
-
-
         #region INSTALL_LANGUAGES [string filePaths]
         if (topCmd == IgCommands.INSTALL_LANGUAGES)
         {
@@ -265,4 +270,19 @@ internal static class Program
     }
 
 
+    /// <summary>
+    /// Loads all user configs
+    /// </summary>
+    private static void LoadAllConfigs()
+    {
+        try
+        {
+            // load application configs
+            Config.Load();
+        }
+        catch (Exception)
+        {
+            Config.Language = [];
+        }
+    }
 }
