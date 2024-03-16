@@ -540,7 +540,7 @@ public partial class Popup : DialogForm
     private void SetFocus()
     {
         // set default focus
-        if (!TextInputReadOnly)
+        if (ShowTextInput && !TextInputReadOnly)
         {
             txtValue.Focus();
             txtValue.SelectAll();
@@ -643,7 +643,7 @@ public partial class Popup : DialogForm
         Form? formOwner = null)
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
-        var hasDetails = string.IsNullOrEmpty(details);
+        var hasDetails = !string.IsNullOrEmpty(details);
 
         using var frm = new Popup()
         {
@@ -651,12 +651,13 @@ public partial class Popup : DialogForm
             Heading = heading,
             Description = description,
             NoteStatusType = noteStatusType ?? ColorStatusType.Neutral,
+
             TextInputReadOnly = hasDetails,
             TextInputMultiLine = hasDetails,
+            ShowTextInput = hasDetails,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
-            ShowTextInput = false,
             ShowInTaskbar = true,
 
             TopMost = topMost,
@@ -670,7 +671,7 @@ public partial class Popup : DialogForm
             FormIconApi.SetTaskbarIcon(frm, formIconHandle);
         }
 
-        if (!string.IsNullOrEmpty(details))
+        if (hasDetails)
         {
             frm.Value = details;
             frm.Width += 200;
