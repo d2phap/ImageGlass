@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 namespace ImageGlass.Base;
 
 
@@ -37,4 +38,4 @@ public record IgLangMetadata
 /// </summary>
 /// <param name="_Metadata"></param>
 /// <param name="Items"></param>
-public record IgLangJsonModel(IgLangMetadata _Metadata, Dictionary<string, string> Items) { }
+public record IgLangJsonModel(IgLangMetadata _Metadata, IDictionary<string, string> Items) { }

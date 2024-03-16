@@ -23,6 +23,7 @@ using ImageGlass.Base.Services;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
+using System.Collections.Frozen;
 using System.Diagnostics;
 using System.IO.Pipes;
 using System.Runtime;
@@ -42,7 +43,7 @@ public class Local
     /// <summary>
     /// Gets the built-in toolbar buttons.
     /// </summary>
-    public static List<ToolbarItemModel> BuiltInToolbarItems => [
+    public static readonly FrozenSet<ToolbarItemModel> BuiltInToolbarItems = FrozenSet.ToFrozenSet<ToolbarItemModel>([
         new() // MnuActualSize
         {
             Id = $"Btn_{nameof(FrmMain.MnuActualSize)}",
@@ -223,12 +224,12 @@ public class Local
             Image = nameof(Config.Theme.ToolbarIcons.ZoomOut),
             OnClick = new(nameof(FrmMain.MnuZoomOut)),
         },
-    ];
+    ]);
 
     /// <summary>
     /// Gets the default toolbar button IDs.
     /// </summary>
-    public static List<string> DefaultToolbarItemIds => [
+    public static readonly FrozenSet<string> DefaultToolbarItemIds = FrozenSet.ToFrozenSet<string>([
         $"Btn_{nameof(FrmMain.MnuOpenFile)}",
         $"Btn_{nameof(FrmMain.MnuViewPrevious)}",
         $"Btn_{nameof(FrmMain.MnuViewNext)}",
@@ -257,7 +258,7 @@ public class Local
 
         nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
-    ];
+    ]);
 
 
 

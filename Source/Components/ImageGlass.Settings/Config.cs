@@ -26,11 +26,13 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Win32;
+using System.Collections.Frozen;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
+using Windows.Globalization;
 
 namespace ImageGlass.Settings;
 
@@ -588,7 +590,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the list of disabled menus
     /// </summary>
-    public static List<string> DisabledMenus { get; set; } = [];
+    public static FrozenSet<string> DisabledMenus { get; set; } = FrozenSet<string>.Empty;
 
     #endregion // Array items
 
@@ -944,7 +946,7 @@ public static class Config
         DisabledMenus = items.GetSection(nameof(DisabledMenus))
             .GetChildren()
             .Select(i => i.Get<string>())
-            .ToList();
+            .ToFrozenSet();
 
         #endregion // Array items
 
@@ -1196,7 +1198,7 @@ public static class Config
     /// Converts <c>List{ToolbarItemModel}</c> to <c>List{ExpandoObject}</c>.
     /// Also adds <c>ImageUrl</c> property to the item.
     /// </summary>
-    public static List<ExpandoObject> ConvertToolbarButtonsToExpandoObjList(List<ToolbarItemModel> list)
+    public static List<ExpandoObject> ConvertToolbarButtonsToExpandoObjList(IEnumerable<ToolbarItemModel> list)
     {
         var items = list.Select(i =>
         {
