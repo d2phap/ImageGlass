@@ -137,6 +137,10 @@ public partial class Popup : DialogForm
             {
                 lblNote.Visible = true;
                 tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
+
+                // need to set the following row AutoSize to make this row visible
+                var chkOptionRowIndex = tableMain.GetRow(ChkOption);
+                tableMain.RowStyles[chkOptionRowIndex].SizeType = SizeType.AutoSize;
             }
             else
             {
@@ -402,9 +406,9 @@ public partial class Popup : DialogForm
         Heading = "";
         Description = "";
         Title = "";
+        OptionCheckBoxText = "";
         Note = "";
         Thumbnail = null; // hide thumbnail by default
-        OptionCheckBoxText = "";
 
         ApplyLanguage();
     }
@@ -640,7 +644,6 @@ public partial class Popup : DialogForm
             Title = title,
             Heading = heading,
             Description = description,
-            Note = note,
             NoteStatusType = noteStatusType ?? ColorStatusType.Neutral,
 
             Thumbnail = thumbnail ?? sysIcon,
@@ -659,7 +662,7 @@ public partial class Popup : DialogForm
             FormIconApi.SetTaskbarIcon(frm, formIconHandle);
         }
 
-        if (!string.IsNullOrEmpty(details.Trim()))
+        if (!string.IsNullOrEmpty(details))
         {
             frm.Value = details;
             frm.TextInputMultiLine = true;
@@ -669,9 +672,14 @@ public partial class Popup : DialogForm
             frm.Width += 200;
         }
 
-        if (!string.IsNullOrEmpty(optionText.Trim()))
+        if (!string.IsNullOrEmpty(optionText))
         {
             frm.OptionCheckBoxText = optionText;
+        }
+
+        if (!string.IsNullOrEmpty(note))
+        {
+            frm.Note = note;
         }
 
         if (buttons == PopupButton.OK_Cancel)

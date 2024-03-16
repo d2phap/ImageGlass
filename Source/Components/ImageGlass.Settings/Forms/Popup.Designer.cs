@@ -30,149 +30,147 @@ namespace ImageGlass.Settings
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableMain = new System.Windows.Forms.TableLayoutPanel();
-            this.lblHeading = new ImageGlass.UI.ModernLabel();
-            this.lblNote = new ImageGlass.UI.ModernLabel();
-            this.txtValue = new ImageGlass.UI.ModernTextBox();
-            this.lblDescription = new ImageGlass.UI.ModernLabel();
-            this.picThumbnail = new System.Windows.Forms.PictureBox();
-            this.ChkOption = new ImageGlass.UI.ModernCheckBox();
-            this.tableMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
-            this.SuspendLayout();
+            tableMain = new TableLayoutPanel();
+            lblHeading = new ModernLabel();
+            lblNote = new ModernLabel();
+            txtValue = new ModernTextBox();
+            lblDescription = new ModernLabel();
+            picThumbnail = new PictureBox();
+            ChkOption = new ModernCheckBox();
+            tableMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picThumbnail).BeginInit();
+            SuspendLayout();
             // 
             // tableMain
             // 
-            this.tableMain.AutoSize = true;
-            this.tableMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableMain.BackColor = System.Drawing.Color.Transparent;
-            this.tableMain.ColumnCount = 2;
-            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableMain.Controls.Add(this.lblHeading, 1, 1);
-            this.tableMain.Controls.Add(this.lblNote, 0, 4);
-            this.tableMain.Controls.Add(this.txtValue, 1, 3);
-            this.tableMain.Controls.Add(this.lblDescription, 1, 2);
-            this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
-            this.tableMain.Controls.Add(this.ChkOption, 1, 5);
-            this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableMain.Location = new System.Drawing.Point(0, 0);
-            this.tableMain.Margin = new System.Windows.Forms.Padding(0);
-            this.tableMain.Name = "tableMain";
-            this.tableMain.Padding = new System.Windows.Forms.Padding(0, 40, 0, 40);
-            this.tableMain.RowCount = 7;
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(1228, 579);
-            this.tableMain.TabIndex = 1;
+            tableMain.AutoSize = true;
+            tableMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableMain.BackColor = Color.Transparent;
+            tableMain.ColumnCount = 2;
+            tableMain.ColumnStyles.Add(new ColumnStyle());
+            tableMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableMain.Controls.Add(lblHeading, 1, 1);
+            tableMain.Controls.Add(lblNote, 0, 4);
+            tableMain.Controls.Add(txtValue, 1, 3);
+            tableMain.Controls.Add(lblDescription, 1, 2);
+            tableMain.Controls.Add(picThumbnail, 0, 1);
+            tableMain.Controls.Add(ChkOption, 1, 5);
+            tableMain.Dock = DockStyle.Top;
+            tableMain.Location = new Point(0, 0);
+            tableMain.Margin = new Padding(0);
+            tableMain.Name = "tableMain";
+            tableMain.Padding = new Padding(0, 15, 0, 15);
+            tableMain.RowCount = 7;
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.RowStyles.Add(new RowStyle());
+            tableMain.Size = new Size(478, 230);
+            tableMain.TabIndex = 1;
             // 
             // lblHeading
             // 
-            this.lblHeading.AutoSize = true;
-            this.lblHeading.BackColor = System.Drawing.Color.Transparent;
-            this.lblHeading.DarkMode = false;
-            this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(270, 40);
-            this.lblHeading.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
-            this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(197, 54);
-            this.lblHeading.TabIndex = 100;
-            this.lblHeading.Text = "[Heading]";
+            lblHeading.AutoSize = true;
+            lblHeading.BackColor = Color.Transparent;
+            lblHeading.DarkMode = false;
+            lblHeading.Font = new Font("Segoe UI", 12F);
+            lblHeading.Location = new Point(106, 15);
+            lblHeading.Margin = new Padding(12, 0, 16, 15);
+            lblHeading.Name = "lblHeading";
+            lblHeading.Size = new Size(78, 21);
+            lblHeading.TabIndex = 100;
+            lblHeading.Text = "[Heading]";
             // 
             // lblNote
             // 
-            this.lblNote.AutoSize = true;
-            this.lblNote.BackColor = System.Drawing.Color.Transparent;
-            this.tableMain.SetColumnSpan(this.lblNote, 2);
-            this.lblNote.DarkMode = false;
-            this.lblNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblNote.Location = new System.Drawing.Point(40, 346);
-            this.lblNote.Margin = new System.Windows.Forms.Padding(40, 40, 40, 0);
-            this.lblNote.Name = "lblNote";
-            this.lblNote.Padding = new System.Windows.Forms.Padding(20);
-            this.lblNote.Size = new System.Drawing.Size(1148, 85);
-            this.lblNote.TabIndex = 5;
-            this.lblNote.Text = "[###]";
+            lblNote.AutoSize = true;
+            lblNote.BackColor = Color.Transparent;
+            tableMain.SetColumnSpan(lblNote, 2);
+            lblNote.DarkMode = false;
+            lblNote.Dock = DockStyle.Top;
+            lblNote.Location = new Point(16, 138);
+            lblNote.Margin = new Padding(16, 15, 16, 0);
+            lblNote.Name = "lblNote";
+            lblNote.Padding = new Padding(8, 8, 8, 8);
+            lblNote.Size = new Size(446, 33);
+            lblNote.TabIndex = 5;
             // 
             // txtValue
             // 
-            this.txtValue.BackColor = System.Drawing.SystemColors.Window;
-            this.txtValue.DarkMode = false;
-            this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtValue.Location = new System.Drawing.Point(280, 217);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(40, 0, 40, 39);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtValue.Size = new System.Drawing.Size(908, 50);
-            this.txtValue.TabIndex = 0;
-            this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
+            txtValue.BackColor = SystemColors.Window;
+            txtValue.DarkMode = false;
+            txtValue.Dock = DockStyle.Fill;
+            txtValue.ForeColor = SystemColors.WindowText;
+            txtValue.Location = new Point(110, 83);
+            txtValue.Margin = new Padding(16, 0, 16, 15);
+            txtValue.Name = "txtValue";
+            txtValue.ScrollBars = ScrollBars.Vertical;
+            txtValue.Size = new Size(352, 25);
+            txtValue.TabIndex = 0;
+            txtValue.TextChanged += TxtValue_TextChanged;
             // 
             // lblDescription
             // 
-            this.lblDescription.AutoSize = true;
-            this.lblDescription.BackColor = System.Drawing.Color.Transparent;
-            this.lblDescription.DarkMode = false;
-            this.lblDescription.Location = new System.Drawing.Point(270, 133);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(154, 45);
-            this.lblDescription.TabIndex = 101;
-            this.lblDescription.Text = "[Content]";
+            lblDescription.AutoSize = true;
+            lblDescription.BackColor = Color.Transparent;
+            lblDescription.DarkMode = false;
+            lblDescription.Location = new Point(106, 51);
+            lblDescription.Margin = new Padding(12, 0, 16, 15);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(61, 17);
+            lblDescription.TabIndex = 101;
+            lblDescription.Text = "[Content]";
             // 
             // picThumbnail
             // 
-            this.picThumbnail.BackColor = System.Drawing.Color.Transparent;
-            this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.picThumbnail.Location = new System.Drawing.Point(40, 40);
-            this.picThumbnail.Margin = new System.Windows.Forms.Padding(40, 0, 0, 39);
-            this.picThumbnail.MaximumSize = new System.Drawing.Size(200, 196);
-            this.picThumbnail.Name = "picThumbnail";
-            this.tableMain.SetRowSpan(this.picThumbnail, 4);
-            this.picThumbnail.Size = new System.Drawing.Size(200, 196);
-            this.picThumbnail.TabIndex = 4;
-            this.picThumbnail.TabStop = false;
-            this.picThumbnail.Visible = false;
+            picThumbnail.BackColor = Color.Transparent;
+            picThumbnail.BackgroundImageLayout = ImageLayout.Center;
+            picThumbnail.Location = new Point(16, 15);
+            picThumbnail.Margin = new Padding(16, 0, 0, 15);
+            picThumbnail.MaximumSize = new Size(78, 74);
+            picThumbnail.Name = "picThumbnail";
+            tableMain.SetRowSpan(picThumbnail, 4);
+            picThumbnail.Size = new Size(78, 74);
+            picThumbnail.TabIndex = 4;
+            picThumbnail.TabStop = false;
+            picThumbnail.Visible = false;
             // 
             // ChkOption
             // 
-            this.ChkOption.AutoSize = true;
-            this.ChkOption.BackColor = System.Drawing.Color.Transparent;
-            this.tableMain.SetColumnSpan(this.ChkOption, 2);
-            this.ChkOption.DarkMode = true;
-            this.ChkOption.Location = new System.Drawing.Point(40, 451);
-            this.ChkOption.Margin = new System.Windows.Forms.Padding(40, 20, 40, 39);
-            this.ChkOption.Name = "ChkOption";
-            this.ChkOption.Size = new System.Drawing.Size(539, 49);
-            this.ChkOption.TabIndex = 1;
-            this.ChkOption.Text = "[Do not show this message again]";
-            this.ChkOption.UseVisualStyleBackColor = false;
+            ChkOption.AutoSize = true;
+            ChkOption.BackColor = Color.Transparent;
+            tableMain.SetColumnSpan(ChkOption, 2);
+            ChkOption.DarkMode = true;
+            ChkOption.Location = new Point(16, 179);
+            ChkOption.Margin = new Padding(16, 8, 16, 15);
+            ChkOption.Name = "ChkOption";
+            ChkOption.Size = new Size(225, 21);
+            ChkOption.TabIndex = 1;
+            ChkOption.Text = "[Do not show this message again]";
+            ChkOption.UseVisualStyleBackColor = false;
             // 
             // Popup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 860);
-            this.ControlBox = false;
-            this.Controls.Add(this.tableMain);
-            this.DarkMode = false;
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(12);
-            this.Name = "Popup";
-            this.Text = "[Title]";
-            this.Controls.SetChildIndex(this.tableMain, 0);
-            this.tableMain.ResumeLayout(false);
-            this.tableMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(478, 325);
+            ControlBox = false;
+            Controls.Add(tableMain);
+            DarkMode = false;
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(5, 5, 5, 5);
+            Name = "Popup";
+            Text = "[Title]";
+            Controls.SetChildIndex(tableMain, 0);
+            tableMain.ResumeLayout(false);
+            tableMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picThumbnail).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
