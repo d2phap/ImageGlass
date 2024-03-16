@@ -1371,7 +1371,7 @@ public partial class FrmMain
         {
             srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
-            
+
 
             if (Config.OpenSaveAsDialogInTheCurrentImageDir)
             {
@@ -3177,13 +3177,16 @@ public partial class FrmMain
             return;
         }
 
+
         // always show confirmation dialog
         var result = Config.ShowInfo(this,
             description: $"{filePath}\r\n{Gallery.Items[Local.CurrentIndex].Details.FileSizeFormated}",
             title: Config.Language[langPath],
-            heading: Config.Language[$"{langPath}._Description"],
+            heading: Config.Language[$"{langPath}._Confirm"],
+            note: Config.Language[$"{langPath}._Description"],
             thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
             buttons: PopupButton.Yes_No);
+
         if (result.ExitResult != PopupExitResult.OK) return;
 
 

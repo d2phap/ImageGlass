@@ -412,10 +412,11 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmMain.MnuCropTool", "Crop image"); // v7.6
         _ = TryAdd("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
 
-        _ = TryAdd("FrmMain.MnuLosslessCompression", "Lossless compression"); // v9.0
-        _ = TryAdd("FrmMain.MnuLosslessCompression._Description", "This tool uses Magick.NET library for lossless compression, optimizing file size. Overwrites only if the compressed file is smaller than the original.\r\n\r\nDo you want to proceed?"); // v9.0
-        _ = TryAdd("FrmMain.MnuLosslessCompression._Compressing", "Performing lossless compression…"); // v9.0
-        _ = TryAdd("FrmMain.MnuLosslessCompression._Done", "Done lossless compression.\r\nThe new file size is {0}, saved {1}."); // v9.0
+        _ = TryAdd("FrmMain.MnuLosslessCompression", "Magick.NET Lossless Compression"); // v9.1
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Confirm", "Are you sure you want to proceed?"); // v9.1
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Description", "This tool uses Magick.NET library for lossless compression, optimizing file size. Overwrites only if the compressed file is smaller than the original."); // v9.1
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Compressing", "Performing lossless compression…"); // v9.1
+        _ = TryAdd("FrmMain.MnuLosslessCompression._Done", "Done lossless compression.\r\nThe new file size is {0}, saved {1}."); // v9.1
         
         #endregion
 
