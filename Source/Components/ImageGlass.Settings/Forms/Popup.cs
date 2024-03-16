@@ -439,7 +439,14 @@ public partial class Popup : DialogForm
         base.OnLoad(e);
 
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-        _ = SetFocusAsync();
+    }
+
+
+    protected override void OnShown(EventArgs e)
+    {
+        base.OnShown(e);
+
+        SetFocus();
     }
 
 
@@ -528,12 +535,10 @@ public partial class Popup : DialogForm
 
 
     /// <summary>
-    /// Set focus to the form.
+    /// Set default focus to the form
     /// </summary>
-    private async Task SetFocusAsync()
+    private void SetFocus()
     {
-        await Task.Delay(300);
-
         // set default focus
         if (!TextInputReadOnly)
         {
@@ -638,6 +643,7 @@ public partial class Popup : DialogForm
         Form? formOwner = null)
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
+        var hasDetails = string.IsNullOrEmpty(details);
 
         using var frm = new Popup()
         {
@@ -645,6 +651,8 @@ public partial class Popup : DialogForm
             Heading = heading,
             Description = description,
             NoteStatusType = noteStatusType ?? ColorStatusType.Neutral,
+            TextInputReadOnly = hasDetails,
+            TextInputMultiLine = hasDetails,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
@@ -665,10 +673,6 @@ public partial class Popup : DialogForm
         if (!string.IsNullOrEmpty(details))
         {
             frm.Value = details;
-            frm.TextInputMultiLine = true;
-            frm.TextInputReadOnly = true;
-            frm.ShowTextInput = true;
-
             frm.Width += 200;
         }
 

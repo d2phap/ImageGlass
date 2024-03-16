@@ -94,7 +94,7 @@ namespace ImageGlass.Settings
             lblNote.Location = new Point(16, 138);
             lblNote.Margin = new Padding(16, 15, 16, 0);
             lblNote.Name = "lblNote";
-            lblNote.Padding = new Padding(8, 8, 8, 8);
+            lblNote.Padding = new Padding(8);
             lblNote.Size = new Size(446, 33);
             lblNote.TabIndex = 5;
             // 
@@ -162,7 +162,7 @@ namespace ImageGlass.Settings
             DarkMode = false;
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(5, 5, 5, 5);
+            Margin = new Padding(5);
             Name = "Popup";
             Text = "[Title]";
             Controls.SetChildIndex(tableMain, 0);
