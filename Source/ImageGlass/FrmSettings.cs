@@ -149,6 +149,10 @@ public partial class FrmSettings : WebForm
         {
             _ = BHelper.OpenUrlAsync("https://imageglass.org/docs", $"from_setting_{Config.LastOpenedSetting}");
         }
+        else if (e.Name.Equals("LnkResetSettings", StringComparison.Ordinal))
+        {
+            FrmMain.IG_OpenQuickSetupDialog();
+        }
         #endregion // General events
 
 

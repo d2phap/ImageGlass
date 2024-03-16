@@ -124,6 +124,7 @@ export default class Settings {
    */
   private static addGeneralEvents() {
     query('#LnkHelp').addEventListener('click', () => post('LnkHelp'), false);
+    query('#LnkResetSettings').addEventListener('click', () => post('LnkResetSettings'), false);
 
     query('#BtnCancel').addEventListener('click', () => post('BtnCancel'), false);
 

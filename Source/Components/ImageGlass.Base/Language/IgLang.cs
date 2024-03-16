@@ -478,6 +478,9 @@ public class IgLang : Dictionary<string, string>
 
         #region FrmSettings
 
+        _ = TryAdd("FrmSettings._ResetSettings", "Reset settings"); // v9.1
+
+
         #region Nav bar
         _ = TryAdd("FrmSettings.Nav._General", "General");
         _ = TryAdd("FrmSettings.Nav._Image", "Image");

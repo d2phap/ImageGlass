@@ -51,6 +51,14 @@ public partial class FrmQuickSetup : WebForm
     }
 
 
+    protected override void OnRequestUpdatingLanguage()
+    {
+        base.OnRequestUpdatingLanguage();
+
+        Text = Config.Language[$"{Name}._Text"];
+    }
+
+
     protected override async Task OnWeb2ReadyAsync()
     {
         await base.OnWeb2ReadyAsync();
@@ -124,11 +132,6 @@ public partial class FrmQuickSetup : WebForm
         // Parse settings JSON
         #region Parse settings JSON
         var dict = BHelper.ParseJson<Dictionary<string, object?>>(settingJson);
-
-        if (dict.TryGetValue(nameof(Config.Language), out var lang))
-        {
-            Config.Language = new IgLang(lang?.ToString(), App.StartUpDir(Dir.Language));
-        }
 
         if (dict.TryGetValue(nameof(Config.ColorProfile), out var enableColorProfileObj))
         {
