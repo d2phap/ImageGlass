@@ -1358,6 +1358,14 @@ public static class PhotoCodec
         {
             settings.Width = options.Width;
             settings.Height = options.Height;
+
+            if (ext == ".JPG" || ext == ".JPEG" || ext == ".JPE" || ext == ".JFIF")
+            {
+                settings.SetDefines(new JpegReadDefines()
+                {
+                    Size = new MagickGeometry(options.Width, options.Height),
+                });
+            }
         }
 
         // Fixed #708: length and filesize do not match

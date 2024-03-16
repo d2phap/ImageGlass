@@ -27,17 +27,18 @@ public static class SavingExts
     /// </summary>
     public static List<SavingExt> SupportedExts => [
         // the order here matters
-        new SavingExt { Ext = ".png", Description = "PNG" },
-        new SavingExt { Ext = ".jpg", Description = "JPG" },
-        new SavingExt { Ext = ".jxl", Description = "JXL" },
+        new SavingExt { Ext = ".avif", Description = "AVIF" },
         new SavingExt { Ext = ".bmp", Description = "BMP" },
         new SavingExt { Ext = ".gif", Description = "GIF" },
+        new SavingExt { Ext = ".jpg", Description = "JPG" },
+        new SavingExt { Ext = ".jxl", Description = "JXL" },
+        new SavingExt { Ext = ".png", Description = "PNG" },
+        new SavingExt { Ext = ".tiff", Description = "TIFF" },
         new SavingExt { Ext = ".webp", Description = "WEBP" },
-        new SavingExt { Ext = ".ico", Description = "ICO" },
 
         new SavingExt { Ext = ".emf", Description = "EMF" },
         new SavingExt { Ext = ".exif", Description = "EXIF" },
-        new SavingExt { Ext = ".tiff", Description = "TIFF" },
+        new SavingExt { Ext = ".ico", Description = "ICO" },
         new SavingExt { Ext = ".wmf", Description = "WMF" },
         new SavingExt { Ext = ".b64", Description = "Base64" },
         new SavingExt { Ext = ".txt", Description = "Base64 text" },
