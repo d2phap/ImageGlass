@@ -209,12 +209,12 @@ public static class Config
     public static bool EnableWindowTopMost { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
+    /// Gets, sets value indicates that Confirmation dialog is displayed when deleting image
     /// </summary>
     public static bool ShowDeleteConfirmation { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets value indicating that Confirmation dialog is displayed when overriding the viewing image
+    /// Gets, sets value indicates that Confirmation dialog is displayed when overriding the viewing image
     /// </summary>
     public static bool ShowSaveOverrideConfirmation { get; set; } = true;
 
@@ -222,6 +222,11 @@ public static class Config
     /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
     /// </summary>
     public static bool ShouldPreserveModifiedDate { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that Save dialog should use the current image folder as initial directory
+    /// </summary>
+    public static bool OpenSaveAsDialogInTheCurrentImageDir { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that there is a new version
@@ -700,6 +705,7 @@ public static class Config
         ShowDeleteConfirmation = items.GetValueEx(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         ShowSaveOverrideConfirmation = items.GetValueEx(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         ShouldPreserveModifiedDate = items.GetValueEx(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
+        OpenSaveAsDialogInTheCurrentImageDir = items.GetValueEx(nameof(OpenSaveAsDialogInTheCurrentImageDir), OpenSaveAsDialogInTheCurrentImageDir);
         ShowNewVersionIndicator = items.GetValueEx(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
         EnableCenterToolbar = items.GetValueEx(nameof(EnableCenterToolbar), EnableCenterToolbar);
         ShouldOpenLastSeenImage = items.GetValueEx(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
@@ -1047,6 +1053,7 @@ public static class Config
         _ = settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         _ = settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         _ = settings.TryAdd(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
+        _ = settings.TryAdd(nameof(OpenSaveAsDialogInTheCurrentImageDir), OpenSaveAsDialogInTheCurrentImageDir);
         _ = settings.TryAdd(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
         _ = settings.TryAdd(nameof(EnableCenterToolbar), EnableCenterToolbar);
         _ = settings.TryAdd(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);

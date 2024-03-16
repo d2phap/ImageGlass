@@ -1365,11 +1365,18 @@ public partial class FrmMain
     {
         var srcFilePath = "";
         var srcExt = ".png";
+        var initSaveDirPath = "";
 
         if (Local.ClipboardImage == null)
         {
             srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
+            
+
+            if (Config.OpenSaveAsDialogInTheCurrentImageDir)
+            {
+                initSaveDirPath = Path.GetDirectoryName(srcFilePath);
+            }
 
             if (string.IsNullOrEmpty(srcExt) || srcExt.Length < 2)
             {
@@ -1385,6 +1392,7 @@ public partial class FrmMain
                 ? $"untitle{srcExt}"
                 : Path.GetFileNameWithoutExtension(srcFilePath),
             RestoreDirectory = true,
+            InitialDirectory = initSaveDirPath,
             SupportMultiDottedExtensions = true,
             Title = Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
             OverwritePrompt = !Config.ShowSaveOverrideConfirmation, // only show 1 prompt

@@ -474,6 +474,7 @@ public partial class FrmSettings : WebForm
         _ = Config.SetFromJson(dict, nameof(Config.ShowDeleteConfirmation));
         _ = Config.SetFromJson(dict, nameof(Config.ShowSaveOverrideConfirmation));
         _ = Config.SetFromJson(dict, nameof(Config.ShouldPreserveModifiedDate));
+        _ = Config.SetFromJson(dict, nameof(Config.OpenSaveAsDialogInTheCurrentImageDir));
         _ = Config.SetFromJson(dict, nameof(Config.ImageEditQuality));
         _ = Config.SetFromJson(dict, nameof(Config.AfterEditingAction));
         _ = Config.SetFromJson(dict, nameof(Config.EnableCopyMultipleFiles));

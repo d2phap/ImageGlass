@@ -579,6 +579,7 @@ public class IgLang : Dictionary<string, string>
         _ = TryAdd("FrmSettings._ShowDeleteConfirmation", "Show confirmation dialog when deleting file");
         _ = TryAdd("FrmSettings._ShowSaveOverrideConfirmation", "Show confirmation dialog when overriding file");
         _ = TryAdd("FrmSettings._ShouldPreserveModifiedDate", "Preserve the image's modified date on save");
+        _ = TryAdd("FrmSettings._OpenSaveAsDialogInTheCurrentImageDir", "Open the Save As dialog in the current image directory"); // v9.1
         _ = TryAdd("FrmSettings._ImageEditQuality", "Image quality");
         _ = TryAdd("FrmSettings._AfterEditingAction", "After opening editing app");
 
