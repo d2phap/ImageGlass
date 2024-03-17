@@ -76,16 +76,6 @@ public partial class FrmMain : ThemedForm
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
-    private void FrmMain_Load(object sender, EventArgs e)
-    {
-        SetupFileWatcher();
-
-
-        Local.ImageTransform.Changed += ImageTransform_Changed;
-        Application.ApplicationExit += Application_ApplicationExit;
-
-        LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
-    }
 
     protected override void OnDpiChanged()
     {
@@ -993,6 +983,14 @@ public partial class FrmMain : ThemedForm
 
     private void ReportToUIThread(ProgressReporterEventArgs e)
     {
+        // lazy load low priority form data
+        if (e.Type.Equals(nameof(LoadLowPriorityFormData), StringComparison.OrdinalIgnoreCase))
+        {
+            LoadLowPriorityFormData();
+            return;
+        }
+
+
         // Image is being loaded
         if (e.Type.Equals(nameof(Local.RaiseImageLoadingEvent), StringComparison.OrdinalIgnoreCase)
             && e.Data is ImageLoadingEventArgs e1)

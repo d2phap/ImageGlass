@@ -181,14 +181,8 @@ public partial class FrmMain
 
         ResumeLayout(false);
 
-        Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
         SizeChanged += FrmMainConfig_SizeChanged;
-
-
-        // load default mouse actions
-        LoadDefaultMouseClickActions();
-        LoadDefaultMouseWheelActions();
     }
 
 
@@ -218,40 +212,18 @@ public partial class FrmMain
     }
 
 
-    private void FrmMainConfig_Load(object? sender, EventArgs e)
+    private void FrmMain_Load(object sender, EventArgs e)
     {
         Local.FrmMainUpdateRequested += Local_FrmMainUpdateRequested;
+
 
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
 
-        // load language pack
-        Local.UpdateFrmMain(UpdateRequests.Language);
-
-        // load menu
-        LoadExternalTools();
-        CurrentMenuHotkeys = Config.GetAllHotkeys(CurrentMenuHotkeys);
-        Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
-
-        // Initialize form movable
-        #region Form movable
-        _movableForm = new(this)
-        {
-            Key = Keys.ShiftKey | Keys.Shift,
-            FreeMoveControlNames =
-            [
-                nameof(Toolbar),
-                nameof(ToolbarContext),
-            ],
-        };
-
-        // Enable form movable
-        IG_SetWindowMoveable(true);
-        #endregion // Form movable
-
 
         // toggle toolbar
         IG_ToggleToolbar(Config.ShowToolbar);
+
 
         // toggle gallery
         IG_ToggleGallery(Config.ShowGallery);
@@ -288,14 +260,57 @@ public partial class FrmMain
             IG_ToggleWindowFit(Config.EnableWindowFit);
         }
 
+
         // start slideshow
         if (Config.EnableSlideshow)
         {
             IG_ToggleSlideshow();
         }
 
-        // load context menu config
-        Local.UpdateFrmMain(UpdateRequests.MouseActions);
+        // load first image
+        LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
+
+
+        // load other low priority data after 500ms
+        Task.Run(async () =>
+        {
+            await Task.Delay(500);
+            _uiReporter.Report(new(EventArgs.Empty, nameof(LoadLowPriorityFormData)));
+        });
+    }
+
+
+    private void LoadLowPriorityFormData()
+    {
+        // load menu
+        LoadExternalTools();
+        CurrentMenuHotkeys = Config.GetAllHotkeys(CurrentMenuHotkeys);
+
+
+        // load default mouse actions
+        LoadDefaultMouseClickActions();
+        LoadDefaultMouseWheelActions();
+
+
+        // load language pack
+        Local.UpdateFrmMain(UpdateRequests.Language | UpdateRequests.MenuHotkeys | UpdateRequests.MouseActions);
+
+
+        // Initialize form movable
+        #region Form movable
+        _movableForm = new(this)
+        {
+            Key = Keys.ShiftKey | Keys.Shift,
+            FreeMoveControlNames =
+            [
+                nameof(Toolbar),
+                nameof(ToolbarContext),
+            ],
+        };
+
+        // Enable form movable
+        IG_SetWindowMoveable(true);
+        #endregion // Form movable
 
 
         // update tag data for zoom mode menus
@@ -305,7 +320,16 @@ public partial class FrmMain
         MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
+
+
+        // File watcher
+        SetupFileWatcher();
+
+
+        Local.ImageTransform.Changed += ImageTransform_Changed;
+        Application.ApplicationExit += Application_ApplicationExit;
     }
+
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
