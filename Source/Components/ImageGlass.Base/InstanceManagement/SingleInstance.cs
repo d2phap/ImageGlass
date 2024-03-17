@@ -55,13 +55,14 @@ public class SingleInstance : IDisposable
 
     private Mutex? _mutex;
     private readonly bool _ownsMutex;
-    private readonly Guid _id = Guid.Empty;
+    private readonly string _id = string.Empty;
 
 
     /// <summary>
     /// Indicates whether this is the first instance of this application.
     /// </summary>
     public bool IsFirstInstance => _ownsMutex;
+
 
     /// <summary>
     /// Event raised when arguments are received from successive instances.
@@ -73,10 +74,10 @@ public class SingleInstance : IDisposable
     /// Enforces single instance for an application.
     /// </summary>
     /// <param name="id">An identifier unique to this application.</param>
-    public SingleInstance(Guid id)
+    public SingleInstance(string id)
     {
         _id = id;
-        _mutex = new Mutex(true, id.ToString(), out _ownsMutex);
+        _mutex = new Mutex(true, id, out _ownsMutex);
     }
 
 
@@ -92,7 +93,7 @@ public class SingleInstance : IDisposable
 
         try
         {
-            using var client = new NamedPipeClientStream(_id.ToString());
+            using var client = new NamedPipeClientStream(_id);
             using var writer = new StreamWriter(client);
 
             await client.ConnectAsync(200).ConfigureAwait(false);
@@ -132,7 +133,7 @@ public class SingleInstance : IDisposable
     {
         try
         {
-            using var server = new NamedPipeServerStream(_id.ToString());
+            using var server = new NamedPipeServerStream(_id);
             using var reader = new StreamReader(server);
             server.WaitForConnection();
 
@@ -147,7 +148,7 @@ public class SingleInstance : IDisposable
                 }
             }
 
-            ThreadPool.QueueUserWorkItem(new(CallOnArgsReceived), args.ToArray());
+            ThreadPool.QueueUserWorkItem(CallOnArgsReceived, args.ToArray());
         }
         catch (IOException) { } // Pipe was broken
         finally

@@ -27,7 +27,7 @@ namespace ImageGlass;
 
 internal static class Program
 {
-    public static string APP_GUID => "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+    public static string APP_SINGLE_INSTANCE_ID => "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
 
 
     /// <summary>
@@ -178,10 +178,8 @@ internal static class Program
         }
         else
         {
-            var guid = new Guid(APP_GUID);
-
             // single instance is required
-            using var instance = new SingleInstance(guid);
+            using var instance = new SingleInstance(APP_SINGLE_INSTANCE_ID);
             if (instance.IsFirstInstance)
             {
                 instance.ArgsReceived += Instance_ArgumentsReceived;
