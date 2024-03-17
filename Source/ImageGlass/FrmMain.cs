@@ -110,7 +110,7 @@ public partial class FrmMain : ThemedForm
         // gallery
         UpdateGallerySize();
 
-        ResumeLayout(false);
+        ResumeLayout(true);
     }
 
     protected override void OnDpiChanged(DpiChangedEventArgs e)
