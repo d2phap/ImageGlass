@@ -39,6 +39,9 @@ public class IgTheme : IDisposable
             // Free any other managed objects here.
             Settings.Dispose();
             ToolbarIcons.Dispose();
+
+            _defaultIcon?.Dispose();
+            _defaultIcon = null;
         }
 
         // Free any unmanaged objects here.
@@ -60,6 +63,7 @@ public class IgTheme : IDisposable
 
 
     private int _iconHeight = Const.TOOLBAR_ICON_HEIGHT;
+    private Bitmap? _defaultIcon = null;
 
 
     /// <summary>
@@ -69,13 +73,20 @@ public class IgTheme : IDisposable
 
 
     /// <summary>
-    /// Gets, sets the height of toolbar icons.
-    /// You need to manually call <see cref="LoadToolbarIcons"/> to update toolbar icons.
+    /// Gets, sets the height of toolbar icons, also disposes all icons if new height is set.
     /// </summary>
     public int ToolbarActualIconHeight
     {
         get => DpiApi.Scale(_iconHeight);
-        set => _iconHeight = value;
+        set
+        {
+            if (_iconHeight == value) return;
+
+            // dispose the current icons
+            ToolbarIcons.Dispose();
+
+            _iconHeight = value;
+        }
     }
 
     /// <summary>
@@ -379,39 +390,6 @@ public class IgTheme : IDisposable
 
 
     /// <summary>
-    /// Loads theme <see cref="ToolbarIcons"/> from <see cref="JsonModel"/>.
-    /// </summary>
-    /// <param name="iconHeight">Toolbar icon height.</param>
-    public void LoadToolbarIcons(int? iconHeight = null)
-    {
-        if (IsValid is false || JsonModel is null) return;
-
-        if (iconHeight is not null)
-        {
-            _iconHeight = iconHeight.Value;
-        }
-
-        // dispose the current icons
-        ToolbarIcons.Dispose();
-
-        foreach (var item in JsonModel.ToolbarIcons)
-        {
-            var iconPath = GetToolbarIconFilePath(item.Key);
-            if (string.IsNullOrEmpty(iconPath))
-                continue;
-
-            try
-            {
-                var bmp = PhotoCodec.GetThumbnail(iconPath, ToolbarActualIconHeight, ToolbarActualIconHeight);
-
-                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, bmp);
-            }
-            catch { }
-        }
-    }
-
-
-    /// <summary>
     /// Saves current settings as a new config file.
     /// </summary>
     /// <param name="filePath"></param>
@@ -440,12 +418,18 @@ public class IgTheme : IDisposable
         // load icon from custom file
         try
         {
-            icon = PhotoCodec.GetThumbnail(name, ToolbarActualIconHeight, ToolbarActualIconHeight);
+            var iconPath = GetToolbarIconFilePath(name);
+
+            // load icon from full path
+            icon = PhotoCodec.GetThumbnail(
+                !string.IsNullOrEmpty(iconPath) ? iconPath : name,
+                ToolbarActualIconHeight, ToolbarActualIconHeight);
         }
         catch
         {
             // set empty icon
-            icon ??= BHelper.CreateDefaultToolbarIcon(ToolbarActualIconHeight, Settings.IsDarkMode);
+            _defaultIcon ??= BHelper.CreateDefaultToolbarIcon(ToolbarActualIconHeight, Settings.IsDarkMode);
+            icon = _defaultIcon;
         }
 
         return icon as Bitmap;
