@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Settings;
@@ -48,7 +49,7 @@ public partial class FrmExportFrames : DialogForm
         ProgressBar.Style = ProgressBarStyle.Marquee;
 
 
-        LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], 1, FrameCount, SrcFilePath);
+        LblStatus.Text = ZString.Format(Config.Language[$"{Name}._Exporting"], 1, FrameCount, SrcFilePath);
 
         _exportProgress = new Progress<(int, string)>(ReportProgress);
     }
@@ -182,13 +183,13 @@ public partial class FrmExportFrames : DialogForm
             BtnAccept.Focus();
 
             ProgressBar.Value -= 1;
-            LblStatus.Text = string.Format(Config.Language[$"{Name}._ExportDone"], info.FrameNumber, $"\"{DestDirPath}\"");
+            LblStatus.Text = ZString.Format(Config.Language[$"{Name}._ExportDone"], info.FrameNumber, $"\"{DestDirPath}\"");
         }
         // in progress
         else
         {
             var frameFilePath = Path.Combine(DestDirPath, info.FileName);
-            LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], info.FrameNumber, FrameCount, $"\"{frameFilePath}\"");
+            LblStatus.Text = ZString.Format(Config.Language[$"{Name}._Exporting"], info.FrameNumber, FrameCount, $"\"{frameFilePath}\"");
         }
 
         OnUpdateHeight();

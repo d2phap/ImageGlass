@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
@@ -58,10 +59,10 @@ public partial class FrmMain
     /// </summary>
     public void OpenFilePicker()
     {
-        var sb = new StringBuilder(Config.FileFormats.Count);
+        using var sb = ZString.CreateStringBuilder();
         foreach (var ext in Config.FileFormats)
         {
-            sb.Append('*').Append(ext).Append(';');
+            sb.Append($"*{ext};");
         }
 
         using var o = new OpenFileDialog()
@@ -1058,7 +1059,7 @@ public partial class FrmMain
 
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCopyFile)}._Success"], Config.EnableCopyMultipleFiles ? Local.StringClipboard.Count : 1),
+            ZString.Format(Config.Language[$"{Name}.{nameof(MnuCopyFile)}._Success"], Config.EnableCopyMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 
@@ -1125,7 +1126,7 @@ public partial class FrmMain
 
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCutFile)}._Success"], Config.EnableCutMultipleFiles ? Local.StringClipboard.Count : 1),
+            ZString.Format(Config.Language[$"{Name}.{nameof(MnuCutFile)}._Success"], Config.EnableCutMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 
@@ -1508,7 +1509,7 @@ public partial class FrmMain
             _ = Config.ShowError(
                 description: error.Source + ":\r\n" + error.Message + "\r\n\r\n" + destFilePath,
                 title: Config.Language[langPath],
-                heading: string.Format(Config.Language[$"{langPath}._Error"]),
+                heading: Config.Language[$"{langPath}._Error"],
                 formOwner: this);
 
             return false;
@@ -1808,7 +1809,7 @@ public partial class FrmMain
             {
                 _ = Config.ShowInfo(
                     description: filePath,
-                    title: string.Format(Config.Language[langPath], ""),
+                    title: ZString.Format(Config.Language[langPath], ""),
                     heading: Config.Language[$"{langPath}._AppNotFound"],
                     formOwner: this);
 
@@ -1830,7 +1831,7 @@ public partial class FrmMain
             {
                 _ = Config.ShowError(
                     description: ex.Message + $"\r\n\r\n{filePath}",
-                    title: string.Format(Config.Language[langPath], "(MS Paint)"),
+                    title: ZString.Format(Config.Language[langPath], "(MS Paint)"),
                     formOwner: this);
             }
 
@@ -1880,7 +1881,7 @@ public partial class FrmMain
             // show error: file does not have associated app
             _ = Config.ShowError(
                 description: win32ErrorMsg + $"\r\n\r\n{filePath}",
-                title: string.Format(Config.Language[langPath], ""),
+                title: ZString.Format(Config.Language[langPath], ""),
                 formOwner: this);
         }
         catch { }
@@ -2415,7 +2416,7 @@ public partial class FrmMain
             if (Config.EnableFrameless)
             {
                 PicMain.ShowMessage(
-                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
+                    ZString.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
                     Config.InAppMessageDuration);
             }
         }
@@ -3115,7 +3116,7 @@ public partial class FrmMain
         // update frame info
         if (ToolbarContext.GetItem<ToolStripLabel>(Const.FRAME_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
         {
-            var frameInfo = new StringBuilder(3);
+            using var frameInfo = ZString.CreateStringBuilder();
             if (Local.Metadata != null)
             {
                 frameInfo.Append(Local.Metadata.FrameIndex + 1);
@@ -3215,7 +3216,7 @@ public partial class FrmMain
             {
                 var newFileSize = new FileInfo(filePath).Length;
                 var ratio = Math.Round((1 - (newFileSize * 1f / oldFileSize)) * 100f, 2);
-                var msg = string.Format(Config.Language[$"{Name}.{nameof(MnuLosslessCompression)}._Done"],
+                var msg = ZString.Format(Config.Language[$"{Name}.{nameof(MnuLosslessCompression)}._Done"],
                     $"{BHelper.FormatSize(newFileSize)}",
                     $"{BHelper.FormatSize(oldFileSize - newFileSize)} ({ratio}%)");
 

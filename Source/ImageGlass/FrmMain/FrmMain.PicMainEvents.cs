@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.Viewer;
@@ -33,7 +34,7 @@ public partial class FrmMain
     private void PicMain_DragEnter(object sender, DragEventArgs e)
     {
         e.DropImageType = DropImageType.Link;
-        e.Message = string.Format(Config.Language[$"{Name}._OpenWith"], "%1");
+        e.Message = ZString.Format(Config.Language[$"{Name}._OpenWith"], "%1");
         e.MessageReplacementToken = App.AppName;
     }
 

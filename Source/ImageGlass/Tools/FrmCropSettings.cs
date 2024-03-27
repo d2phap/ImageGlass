@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Settings;
 
@@ -181,7 +182,7 @@ public partial class FrmCropSettings : DialogForm
                     _ => enumName,
                 };
 
-                displayName = string.Format(displayName ?? enumName, percentText);
+                displayName = ZString.Format(displayName ?? enumName, percentText);
             }
 
             CmbSelectionType.Items.Add(displayName ?? enumName);

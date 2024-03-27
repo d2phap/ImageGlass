@@ -208,11 +208,10 @@ public class RotateEventArgs : GestureEventArgs
 
     internal RotateEventArgs(GestureInfo info, double lastRotation) : base(info)
     {
-        int loword = LoDWord((long)info.Arguments);
+        var loword = LoDWord((long)info.Arguments);
+
         TotalAngle = RotateAngleFromArgument(loword);
         Angle = TotalAngle - lastRotation;
-        string msg = string.Format("Total:{0} Angle:{1} Last:{2}", TotalAngle, Angle, lastRotation);
-        System.Diagnostics.Debug.WriteLine(msg);
     }
 
 

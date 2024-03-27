@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
+
 namespace ImageGlass.Base;
 
 public static class ColorExtensions
@@ -211,10 +213,10 @@ public static class ColorExtensions
     {
         if (skipAlpha)
         {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
+            return ZString.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
         }
 
-        return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
+        return ZString.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
     }
 
 

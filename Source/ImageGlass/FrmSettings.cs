@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
@@ -231,7 +232,7 @@ public partial class FrmSettings : WebForm
                     if (isCreate
                         && Config.ToolbarButtons.Any(i => i.Id.Equals(btn.Id, StringComparison.OrdinalIgnoreCase)))
                     {
-                        throw new ArgumentException(string.Format(Config.Language[$"{langPath}._ButtonIdDuplicated"], btn.Id), nameof(btn.Id));
+                        throw new ArgumentException(ZString.Format(Config.Language[$"{langPath}._ButtonIdDuplicated"], btn.Id), nameof(btn.Id));
                     }
 
                     if (string.IsNullOrEmpty(btn.OnClick.Executable))

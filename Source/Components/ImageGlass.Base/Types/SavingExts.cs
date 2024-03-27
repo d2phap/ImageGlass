@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using System.Text;
 
 namespace ImageGlass.Base;
@@ -50,7 +51,7 @@ public static class SavingExts
     /// </summary>
     public static string GetFilterStringForSaveDialog()
     {
-        var sb = new StringBuilder();
+        using var sb = ZString.CreateStringBuilder();
 
         for (int i = 0; i < SupportedExts.Count; i++)
         {

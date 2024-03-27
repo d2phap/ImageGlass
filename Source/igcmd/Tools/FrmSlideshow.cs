@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using D2Phap;
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
@@ -1186,12 +1187,12 @@ public partial class FrmSlideshow : ThemedForm
             if (Config.ImageInfoTags.Contains(nameof(ImageInfo.ListCount))
                 && _images.Length > 0)
             {
-                var listInfo = new StringBuilder(3);
+                using var listInfo = ZString.CreateStringBuilder();
                 listInfo.Append(_currentIndex + 1);
                 listInfo.Append('/');
                 listInfo.Append(_images.Length);
 
-                ImageInfo.ListCount = string.Format(
+                ImageInfo.ListCount = ZString.Format(
                     Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}"],
                     listInfo.ToString());
             }
@@ -1248,7 +1249,7 @@ public partial class FrmSlideshow : ThemedForm
                 && _currentMetadata != null
                 && _currentMetadata.FrameCount > 1)
             {
-                ImageInfo.FrameCount = string.Format(
+                ImageInfo.FrameCount = ZString.Format(
                     Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}"],
                     _currentMetadata.FrameCount);
             }
@@ -1792,7 +1793,7 @@ public partial class FrmSlideshow : ThemedForm
                 WindowApi.SetRoundCorner(Handle);
 
                 PicMain.ShowMessage(
-                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
+                    ZString.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
                     Config.InAppMessageDuration);
             }
         }

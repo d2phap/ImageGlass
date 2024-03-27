@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
@@ -149,8 +150,8 @@ public partial class FrmToolNotFound : DialogForm
 
         var toolName = Tool.ToolName ?? Tool.ToolId;
 
-        LblHeading.Text = string.Format(Config.Language[$"{Name}.{nameof(LblHeading)}"], toolName);
-        LblDescription.Text = string.Format(Config.Language[$"{Name}.{nameof(LblDescription)}"], toolName);
+        LblHeading.Text = ZString.Format(Config.Language[$"{Name}.{nameof(LblHeading)}"], toolName);
+        LblDescription.Text = ZString.Format(Config.Language[$"{Name}.{nameof(LblDescription)}"], toolName);
         LblDownloadToolText.Text = Config.Language[$"{Name}.{nameof(LblDownloadToolText)}"];
         BtnSelectExecutable.Text = Config.Language[$"{Name}.{nameof(BtnSelectExecutable)}"];
     }

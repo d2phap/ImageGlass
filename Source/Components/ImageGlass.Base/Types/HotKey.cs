@@ -185,7 +185,7 @@ public class Hotkey
         }
 
 
-        return string.Join('+', modifiers);
+        return string.Join('+', modifiers); // do not use ZString here
     }
 
 }

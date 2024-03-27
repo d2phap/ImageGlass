@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using System.Text;
 
 namespace ImageGlass.Base;
@@ -63,7 +64,7 @@ public static class ImageInfo
     /// </summary>
     public static string ToString(List<string> infoTags, bool isVirtualImage, string clipboardImageText = "")
     {
-        var strBuilder = new StringBuilder();
+        using var strBuilder = ZString.CreateStringBuilder();
         int count = 0;
 
         // remove unsupported tags for virtual image

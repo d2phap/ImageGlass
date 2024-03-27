@@ -98,6 +98,7 @@
         </PackageReference>
         <PackageReference Include="PhotoSauce.MagicScaler" Version="0.14.0" />
         <PackageReference Include="WicNet" Version="1.7.1" />
+        <PackageReference Include="ZString" Version="2.6.0" />
     </ItemGroup>
 
     <ItemGroup>

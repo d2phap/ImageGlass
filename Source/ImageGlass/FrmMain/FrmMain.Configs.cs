@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
@@ -1204,7 +1205,7 @@ public partial class FrmMain
             }
         }
 
-        MnuEdit.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuEdit)}"], appName);
+        MnuEdit.Text = ZString.Format(Config.Language[$"{Name}.{nameof(MnuEdit)}"], appName);
     }
 
 

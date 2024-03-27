@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using System.Globalization;
 
 namespace ImageGlass.Base;
@@ -40,7 +41,7 @@ public partial class BHelper
             sized /= mod;
         }
 
-        return string.Format("{0} {1}", Math.Round(sized, 2), units[i]);
+        return ZString.Format("{0} {1}", Math.Round(sized, 2), units[i]);
     }
 
     /// <summary>

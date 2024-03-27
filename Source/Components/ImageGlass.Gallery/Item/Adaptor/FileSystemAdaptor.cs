@@ -22,6 +22,7 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using Cysharp.Text;
 using ImageGlass.Base.Cache;
 using ImageGlass.Base.Photoing.Codecs;
 using System.Text;
@@ -80,7 +81,7 @@ public class FileSystemAdaptor : IAdaptor
     /// <returns>A unique identifier string for the thumnail.</returns>
     public override string GetUniqueIdentifier(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
-        var sb = new StringBuilder();
+        using var sb = ZString.CreateStringBuilder();
         sb.Append((string)key); // Filename
         sb.Append(':');
         sb.Append(size.Width); // Thumbnail size

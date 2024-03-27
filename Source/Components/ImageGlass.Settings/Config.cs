@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Cysharp.Text;
 using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
@@ -859,7 +860,7 @@ public static class Config
         if (string.IsNullOrWhiteSpace(formats)) formats = Const.IMAGE_FORMATS;
         FileFormats = GetImageFormats(formats);
 
-        formats = items.GetValueEx(nameof(SingleFrameFormats), string.Join(";", SingleFrameFormats));
+        formats = items.GetValueEx(nameof(SingleFrameFormats), ZString.Join(';', SingleFrameFormats));
         SingleFrameFormats = GetImageFormats(formats);
 
         #endregion
@@ -1732,7 +1733,7 @@ public static class Config
 
         if (hotkeyList != null)
         {
-            var str = string.Join(", ", hotkeyList.Select(k => k.ToString()));
+            var str = ZString.Join(", ", hotkeyList);
 
             return str ?? string.Empty;
         }
@@ -2010,7 +2011,7 @@ public static class Config
         var result = ShowError(null,
             title: Application.ProductName + " v" + Application.ProductVersion,
             heading: Language[$"{langPath}._Heading"],
-            description: string.Format(Language[$"{langPath}._Description"], url),
+            description: ZString.Format(Language[$"{langPath}._Description"], url),
             buttons: PopupButton.LearnMore_Close);
 
 
@@ -2095,10 +2096,11 @@ public static class Config
     /// <param name="list">The input HashSet</param>
     public static string GetImageFormats(HashSet<string> list)
     {
-        var sb = new StringBuilder(list.Count);
+        using var sb = ZString.CreateStringBuilder();
         foreach (var item in list)
         {
-            sb.Append(item).Append(';');
+            sb.Append(item);
+            sb.Append(';');
         }
 
         return sb.ToString();

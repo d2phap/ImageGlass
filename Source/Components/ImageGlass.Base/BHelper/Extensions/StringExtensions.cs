@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Cysharp.Text;
 using System.Globalization;
 using System.Text;
 
@@ -43,7 +44,9 @@ public static class StringExtensions
     /// </summary>
     public static string ReplaceMultiple(this string value, IEnumerable<(string Variable, string Value)> toReplace)
     {
-        var result = new StringBuilder(value);
+        using var result = ZString.CreateStringBuilder();
+        result.Append(value);
+
         foreach (var item in toReplace)
         {
             result.Replace(item.Variable, item.Value);
