@@ -1238,7 +1238,7 @@ public partial class FrmMain
             {
                 try
                 {
-                    var img = BHelper.ToWicBitmapSource(text);
+                    using var img = BHelper.ToWicBitmapSource(text);
                     LoadClipboardImage(img);
                 }
                 catch (Exception ex)
