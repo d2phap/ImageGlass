@@ -423,4 +423,17 @@ public partial class FrmMain
         this.OnKeyUp(e);
     }
 
+
+    private void PicMain_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.Left || FormBorderStyle != FormBorderStyle.None || Config.ShowToolbar)
+        {
+            return;
+        }
+        if (!PicMain.IsNavLeftHovered && !PicMain.IsNavRightHovered)
+        {
+            ReleaseCapture();
+            _ = SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        }
+    }
 }

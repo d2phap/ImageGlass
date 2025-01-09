@@ -28,6 +28,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using WicNet;
 
@@ -53,6 +54,14 @@ public partial class FrmMain : ThemedForm
     private bool _showGallery = true;
     private Rectangle _windowBound;
     private FormWindowState _windowState = FormWindowState.Normal;
+
+    // allow dragging the window when in borderless mode and the toolbar is hidden
+    [DllImport("user32.dll")]
+    private static extern bool ReleaseCapture();
+    [DllImport("user32.dll")]
+    private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+    private const int WM_NCLBUTTONDOWN = 0xA1;
+    private const int HTCAPTION = 0x2;
 
     public FrmMain() : base()
     {

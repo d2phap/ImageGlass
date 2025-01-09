@@ -1129,6 +1129,7 @@ namespace ImageGlass
             PicMain.DragOver += PicMain_DragOver;
             PicMain.MouseClick += PicMain_MouseClick;
             PicMain.MouseDoubleClick += PicMain_MouseDoubleClick;
+            PicMain.MouseDown += PicMain_MouseDown;
             PicMain.MouseWheel += PicMain_MouseWheel;
             // 
             // Gallery

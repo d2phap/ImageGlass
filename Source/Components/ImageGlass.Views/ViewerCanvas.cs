@@ -115,8 +115,10 @@ public partial class ViewerCanvas : DXCanvas
 
     // Navigation buttons
     private bool _isNavLeftHovered = false;
+    public bool IsNavLeftHovered => _isNavLeftHovered;
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;
+    public bool IsNavRightHovered => _isNavRightHovered;
     private bool _isNavRightPressed = false;
     private bool _isNavVisible = false;
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
