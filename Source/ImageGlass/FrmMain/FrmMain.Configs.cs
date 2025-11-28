@@ -129,6 +129,7 @@ public partial class FrmMain
         // MnuTools
         { nameof(MnuColorPicker),           [new(Keys.K)] },
         { nameof(MnuCropTool),              [new(Keys.C)] },
+        { nameof(MnuCompareTool),           [new(Keys.Alt | Keys.M)] },
         { nameof(MnuFrameNav),              [new(Keys.P)] },
         { nameof(MnuResizeTool),            [new(Keys.Alt | Keys.R)] },
         { nameof(MnuLosslessCompression),   [new(Keys.Alt | Keys.C)] },
@@ -179,6 +180,14 @@ public partial class FrmMain
         {
             PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
         }
+
+        // comparison mode events
+        PicMain.ComparisonPaneClicked += PicMain_ComparisonPaneClicked;
+        PicMain.ComparisonPaneFileDrop += PicMain_ComparisonPaneFileDrop;
+
+        // comparison mode localized strings
+        PicMain.DropToReplaceMainImageText = Config.Language["FrmCompare._DropToReplaceMainImage"];
+        PicMain.DropToSetComparisonImageText = Config.Language["FrmCompare._DropToSetComparisonImage"];
 
         IG_ToggleCheckerboard(Config.ShowCheckerboard);
 
@@ -775,6 +784,7 @@ public partial class FrmMain
         MnuToggleToolbar.Text = lang[$"{Name}.{nameof(MnuToggleToolbar)}"];
         MnuToggleGallery.Text = lang[$"{Name}.{nameof(MnuToggleGallery)}"];
         MnuToggleCheckerboard.Text = lang[$"{Name}.{nameof(MnuToggleCheckerboard)}"];
+        MnuCompareTool.Text = lang[$"{Name}.{nameof(MnuCompareTool)}"];
         MnuToggleTopMost.Text = lang[$"{Name}.{nameof(MnuToggleTopMost)}"];
         MnuChangeBackgroundColor.Text = lang[$"{Name}.{nameof(MnuChangeBackgroundColor)}"];
         #endregion

@@ -34,8 +34,11 @@ public partial class ViewerCanvas
     private bool _web2DarkMode = true;
     private string _web2NavLeftImagePath = string.Empty;
     private string _web2NavRightImagePath = string.Empty;
+    private string _web2CompareSliderHandlePath = string.Empty;
     private MouseEventArgs? _web2PointerDownEventArgs = null;
     private RectangleF _web2DestRect = RectangleF.Empty;
+    private bool _isWeb2ComparisonModeActive = false;
+    private Keys _web2LastMouseWheelModifiers = Keys.None;
 
 
     // Properties
@@ -58,6 +61,18 @@ public partial class ViewerCanvas
     /// should use <see cref="Web2"/> to render the image.
     /// </summary>
     public bool UseWebview2 => _imageSource == ImageSource.Webview2;
+
+
+    /// <summary>
+    /// Gets whether WebView2 is handling comparison rendering (for SVG).
+    /// </summary>
+    public bool IsWeb2ComparisonModeActive => _isWeb2ComparisonModeActive;
+
+
+    /// <summary>
+    /// Gets modifier keys from the last WebView2 mouse wheel event.
+    /// </summary>
+    public Keys Web2LastMouseWheelModifiers => _web2LastMouseWheelModifiers;
 
 
     /// <summary>
@@ -105,6 +120,13 @@ public partial class ViewerCanvas
             _web2NavRightImagePath = value;
             SetWeb2NavButtonStyles();
         }
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public string Web2CompareSliderHandlePath
+    {
+        get => _web2CompareSliderHandlePath;
+        set => _web2CompareSliderHandlePath = value;
     }
 
     #endregion // Properties
@@ -209,6 +231,7 @@ public partial class ViewerCanvas
         else if (e.Name == Web2FrontendMsgNames.ON_MOUSE_WHEEL)
         {
             var mouseWheelEventArgs = ViewerCanvas.ParseMouseEventJson(e.Data);
+            _web2LastMouseWheelModifiers = ViewerCanvas.ParseModifierKeysFromJson(e.Data);
             this.OnMouseWheel(mouseWheelEventArgs);
         }
         else if (e.Name == Web2FrontendMsgNames.ON_CONTENT_SIZE_CHANGED)
@@ -245,6 +268,39 @@ public partial class ViewerCanvas
                 {
                     OnNavRightClicked?.Invoke(this, pointerEventArgs);
                 }
+            }
+        }
+        // Handle WebView2 comparison slider changes
+        else if (e.Name == Web2FrontendMsgNames.ON_COMPARISON_SLIDER_CHANGED)
+        {
+            var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
+                .ToDictionary(i => i.Key, i => i.Value?.ToString() ?? string.Empty);
+
+            if (dict.TryGetValue("SliderPosition", out var posStr)
+                && float.TryParse(posStr, out var pos))
+            {
+                // Update D2D slider position to stay in sync (without triggering another event)
+                _comparisonSliderPos = Math.Clamp(pos, 0f, 1f);
+                Invalidate();
+            }
+        }
+        // Handle WebView2 comparison pane file drops
+        else if (e.Name == Web2FrontendMsgNames.ON_COMPARISON_PANE_DROP)
+        {
+            var dict = BHelper.ParseJson<ExpandoObject>(e.Data)
+                .ToDictionary(i => i.Key, i => i.Value?.ToString() ?? string.Empty);
+
+            var filePaths = e.AdditionalObjects.Where(i => i is CoreWebView2File)
+                .Select(i => (i as CoreWebView2File).Path)
+                .ToArray();
+
+            if (dict.TryGetValue("Pane", out var paneStr) && filePaths.Length > 0)
+            {
+                var pane = paneStr.Equals("left", StringComparison.OrdinalIgnoreCase)
+                    ? ComparisonPaneHover.LeftPane
+                    : ComparisonPaneHover.RightPane;
+
+                ComparisonPaneFileDrop?.Invoke(this, new ComparisonPaneDropEventArgs(pane, filePaths[0]));
             }
         }
     }
@@ -567,6 +623,36 @@ public partial class ViewerCanvas
 
 
     /// <summary>
+    /// Parses modifier keys from JSON string.
+    /// </summary>
+    private static Keys ParseModifierKeysFromJson(string json)
+    {
+        var dict = BHelper.ParseJson<ExpandoObject>(json)
+            .ToDictionary(i => i.Key, i => i.Value?.ToString() ?? string.Empty);
+
+        var modifiers = Keys.None;
+
+        if (dict.TryGetValue("AltKey", out var altStr) &&
+            bool.TryParse(altStr, out var altKey) && altKey)
+        {
+            modifiers |= Keys.Alt;
+        }
+        if (dict.TryGetValue("CtrlKey", out var ctrlStr) &&
+            bool.TryParse(ctrlStr, out var ctrlKey) && ctrlKey)
+        {
+            modifiers |= Keys.Control;
+        }
+        if (dict.TryGetValue("ShiftKey", out var shiftStr) &&
+            bool.TryParse(shiftStr, out var shiftKey) && shiftKey)
+        {
+            modifiers |= Keys.Shift;
+        }
+
+        return modifiers;
+    }
+
+
+    /// <summary>
     /// Sets zoom factor for <see cref="Web2"/>.
     /// </summary>
     /// <param name="zoomFactor"></param>
@@ -703,8 +789,223 @@ public partial class ViewerCanvas
         Web2.PostWeb2Message(Web2BackendMsgNames.SET_NAVIGATION, BHelper.ToJson(obj));
     }
 
-
     #endregion // Private methods
+
+
+    // WebView2 Comparison mode methods
+    #region WebView2 Comparison mode methods
+
+    /// <summary>
+    /// Enables or disables WebView2 comparison mode.
+    /// </summary>
+    public async Task SetWeb2ComparisonModeAsync(bool enabled, CancellationToken token = default)
+    {
+        // Track the WebView2 comparison mode state
+        _isWeb2ComparisonModeActive = enabled;
+
+        try
+        {
+            // If disabling and WebView2 not needed, skip initialization
+            if (!enabled && !IsWeb2Ready)
+            {
+                return;
+            }
+
+            if (!IsWeb2Ready)
+            {
+                await InitializeWeb2Async();
+            }
+
+            // Wait for Web2 navigation to complete before sending messages
+            while (!_isWeb2NavigationDone)
+            {
+                await Task.Delay(10, token);
+            }
+
+            token.ThrowIfCancellationRequested();
+
+            // Ensure Web2 is still valid after waiting
+            if (Web2 == null) return;
+
+            // Bring WebView2 to front when enabling comparison mode
+            // so it renders on top of D2D canvas
+            if (enabled)
+            {
+                Web2.BringToFront();
+                Web2.Visible = true;
+            }
+            else if (!UseWebview2)
+            {
+                // Hide WebView2 when disabling comparison and not using WebView2 for main image
+                Web2.SendToBack();
+                await Web2.SetWeb2VisibilityAsync(false);
+            }
+
+            var sliderHandleUrl = string.Empty;
+            if (!string.IsNullOrWhiteSpace(Web2CompareSliderHandlePath))
+            {
+                sliderHandleUrl = new Uri(Web2CompareSliderHandlePath).AbsoluteUri;
+            }
+
+            var obj = new ExpandoObject();
+            _ = obj.TryAdd("Enabled", enabled);
+            _ = obj.TryAdd("AccentColor", AccentColor.ToRgbaArray().ToList());
+            _ = obj.TryAdd("SliderHandleUrl", sliderHandleUrl);
+
+            Web2.PostWeb2Message(Web2BackendMsgNames.SET_COMPARISON_MODE, BHelper.ToJson(obj));
+        }
+        catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException) { }
+    }
+
+    /// <summary>
+    /// Sets the comparison images in WebView2.
+    /// </summary>
+    public async Task SetWeb2ComparisonImagesAsync(
+        string? leftImagePath,
+        string? leftImageHtml,
+        string? rightImagePath,
+        string? rightImageHtml,
+        CancellationToken token = default)
+    {
+        // Store comparison image path for cycling to work correctly
+        _compareImagePath = rightImagePath ?? string.Empty;
+
+        try
+        {
+            if (!IsWeb2Ready)
+            {
+                await InitializeWeb2Async();
+            }
+
+            // Wait for Web2 navigation to complete before sending messages
+            while (!_isWeb2NavigationDone)
+            {
+                await Task.Delay(10, token);
+            }
+
+            token.ThrowIfCancellationRequested();
+
+            // Ensure Web2 is still valid after waiting
+            if (Web2 == null) return;
+
+            var obj = new ExpandoObject();
+
+            // Left image
+            if (!string.IsNullOrEmpty(leftImageHtml))
+            {
+                _ = obj.TryAdd("LeftImageHtml", leftImageHtml);
+                _ = obj.TryAdd("LeftImageUrl", string.Empty);
+            }
+            else if (!string.IsNullOrEmpty(leftImagePath))
+            {
+                _ = obj.TryAdd("LeftImageUrl", new Uri(leftImagePath).AbsoluteUri);
+                _ = obj.TryAdd("LeftImageHtml", string.Empty);
+            }
+
+            // Right image
+            if (!string.IsNullOrEmpty(rightImageHtml))
+            {
+                _ = obj.TryAdd("RightImageHtml", rightImageHtml);
+                _ = obj.TryAdd("RightImageUrl", string.Empty);
+            }
+            else if (!string.IsNullOrEmpty(rightImagePath))
+            {
+                _ = obj.TryAdd("RightImageUrl", new Uri(rightImagePath).AbsoluteUri);
+                _ = obj.TryAdd("RightImageHtml", string.Empty);
+            }
+
+            Web2.PostWeb2Message(Web2BackendMsgNames.SET_COMPARISON_IMAGES, BHelper.ToJson(obj));
+        }
+        catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException) { }
+    }
+
+    /// <summary>
+    /// Sets the comparison slider position in WebView2.
+    /// </summary>
+    public void SetWeb2ComparisonSlider(float position)
+    {
+        if (!IsWeb2Ready) return;
+
+        var obj = new ExpandoObject();
+        _ = obj.TryAdd("Position", Math.Clamp(position, 0f, 1f));
+
+        Web2.PostWeb2Message(Web2BackendMsgNames.SET_COMPARISON_SLIDER, BHelper.ToJson(obj));
+    }
+
+    /// <summary>
+    /// Reads SVG file content for use in WebView2 comparison.
+    /// </summary>
+    public static async Task<string?> ReadSvgContentAsync(string filePath, CancellationToken token = default)
+    {
+        if (string.IsNullOrEmpty(filePath)) return null;
+        if (!filePath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase)) return null;
+        if (!File.Exists(filePath)) return null;
+
+        try
+        {
+            return await File.ReadAllTextAsync(filePath, token);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// Reads image file content as HTML for WebView2 comparison.
+    /// Returns SVG content for SVG files, or base64 img tag for raster images.
+    /// </summary>
+    public static async Task<string?> ReadImageAsHtmlAsync(string filePath, CancellationToken token = default)
+    {
+        if (string.IsNullOrEmpty(filePath)) return null;
+        if (!File.Exists(filePath)) return null;
+
+        try
+        {
+            // For SVG files, return the SVG content directly
+            if (filePath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
+            {
+                return await File.ReadAllTextAsync(filePath, token);
+            }
+
+            // For raster images, convert to base64 img tag
+            var bytes = await File.ReadAllBytesAsync(filePath, token);
+            var base64 = Convert.ToBase64String(bytes);
+            var mimeType = GetMimeType(filePath);
+
+            return $"<img src=\"data:{mimeType};base64,{base64}\" style=\"max-width:none;max-height:none;\" />";
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// Gets the MIME type for an image file.
+    /// </summary>
+    private static string GetMimeType(string filePath)
+    {
+        var ext = Path.GetExtension(filePath).ToLowerInvariant();
+        return ext switch
+        {
+            ".png" => "image/png",
+            ".jpg" or ".jpeg" or ".jpe" or ".jfif" => "image/jpeg",
+            ".gif" => "image/gif",
+            ".webp" => "image/webp",
+            ".bmp" or ".dib" => "image/bmp",
+            ".ico" => "image/x-icon",
+            ".tif" or ".tiff" => "image/tiff",
+            ".avif" => "image/avif",
+            ".heic" or ".heif" => "image/heic",
+            ".jxl" => "image/jxl",
+            _ => "image/png", // fallback
+        };
+    }
+
+    #endregion // WebView2 Comparison mode methods
 
 
 }

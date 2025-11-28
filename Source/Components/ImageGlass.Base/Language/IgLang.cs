@@ -510,6 +510,7 @@ public class IgLang : IDictionary<string, string>
             { "FrmMain.MnuTools", "Tools" }, //v3.0
             { "FrmMain.MnuColorPicker", "Color picker" }, //v5.0
             { "FrmMain.MnuCropTool", "Crop image" }, // v7.6
+            { "FrmMain.MnuCompareTool", "Compare images" }, // v9.1
             { "FrmMain.MnuResizeTool", "Resize image" }, // v9.2
             { "FrmMain.MnuFrameNav", "Frame navigation" }, // v7.5
             { "FrmMain.MnuGetMoreTools", "Get more tools…" }, // v9.0
@@ -888,6 +889,13 @@ public class IgLang : IDictionary<string, string>
             { "FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…" }, //v9.0
 
             #endregion // FrmCrop
+
+
+            #region FrmCompare
+            { "FrmCompare._DropToReplaceMainImage", "Drop to replace main image" }, // v9.1
+            { "FrmCompare._DropToSetComparisonImage", "Drop to set comparison image" }, // v9.1
+            { "FrmCompare._SelectImageToCompare", "Select an image to compare using the button below." }, // v9.1
+            #endregion // FrmCompare
 
 
             #region FrmColorPicker

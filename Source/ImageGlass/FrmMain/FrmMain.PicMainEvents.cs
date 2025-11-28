@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using Cysharp.Text;
 using D2Phap;
 using ImageGlass.Base;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Settings;
 using ImageGlass.Viewer;
 
@@ -40,6 +41,15 @@ public partial class FrmMain
     }
 
 
+    private void PicMain_DragLeave(object? sender, EventArgs e)
+    {
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ClearComparisonDropHighlight();
+        }
+    }
+
+
     private void PicMain_DragOver(object? sender, DragEventArgs e)
     {
         try
@@ -55,6 +65,12 @@ public partial class FrmMain
 
             if (data is not string[] paths) return;
             var filePath = paths[0];
+
+            if (PicMain.ComparisonMode && paths.Length == 1)
+            {
+                var targetPane = PicMain.GetDropTargetPane(new Point(e.X, e.Y));
+                PicMain.SetComparisonDropHighlight(targetPane);
+            }
 
             // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because
             // we set the drag effect to Move, which is not allowed
@@ -88,6 +104,25 @@ public partial class FrmMain
         if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop)) return;
         if (e.Data.GetData(DataFormats.FileDrop, false) is not string[] paths) return;
 
+        if (PicMain.ComparisonMode && paths.Length == 1)
+        {
+            var clientPoint = PicMain.PointToClient(new Point(e.X, e.Y));
+            var sliderX = PicMain.ComparisonSliderScreenX;
+            var filePath = BHelper.ResolvePath(paths[0]);
+
+            PicMain.ClearComparisonDropHighlight();
+
+            if (clientPoint.X < sliderX)
+            {
+                PrepareLoading(filePath, false);
+            }
+            else
+            {
+                await LoadComparisonImageAsync(filePath);
+            }
+            return;
+        }
+
         if (paths.Length > 1)
         {
             await PrepareLoadingAsync(paths);
@@ -95,8 +130,8 @@ public partial class FrmMain
         }
 
 
-        var filePath = BHelper.ResolvePath(paths[0]);
-        var imageIndex = Local.Images.IndexOf(filePath);
+        var resolvedPath = BHelper.ResolvePath(paths[0]);
+        var imageIndex = Local.Images.IndexOf(resolvedPath);
 
 
         // get foreground shell
@@ -107,13 +142,13 @@ public partial class FrmMain
         }
 
         // save init input path
-        Program.UpdateInputImagePath(filePath);
+        Program.UpdateInputImagePath(resolvedPath);
 
 
         // The file is located another folder, load the entire folder
         if (imageIndex == -1 || Program.CanUseForegroundShell())
         {
-            PrepareLoading(filePath, false);
+            PrepareLoading(resolvedPath, false);
         }
         // The file is in current folder AND it is the viewing image
         else if (Local.CurrentIndex == imageIndex)
@@ -294,15 +329,25 @@ public partial class FrmMain
     private void PicMain_MouseWheel(object? sender, MouseEventArgs e)
     {
         MouseWheelAction action;
+        var modifiers = PicMain.UseWebview2 ? PicMain.Web2LastMouseWheelModifiers : ModifierKeys;
 
-        var eventType = ModifierKeys switch
+        MouseWheelEvent eventType;
+        if (modifiers.HasFlag(Keys.Control))
         {
-            Keys.Control => MouseWheelEvent.CtrlAndScroll,
-            Keys.Shift => MouseWheelEvent.ShiftAndScroll,
-            Keys.Alt => MouseWheelEvent.AltAndScroll,
-            _ => MouseWheelEvent.Scroll,
-        };
-
+            eventType = MouseWheelEvent.CtrlAndScroll;
+        }
+        else if (modifiers.HasFlag(Keys.Shift))
+        {
+            eventType = MouseWheelEvent.ShiftAndScroll;
+        }
+        else if (modifiers.HasFlag(Keys.Alt))
+        {
+            eventType = MouseWheelEvent.AltAndScroll;
+        }
+        else
+        {
+            eventType = MouseWheelEvent.Scroll;
+        }
 
         // Get mouse wheel action
         #region Get mouse wheel action
@@ -368,13 +413,25 @@ public partial class FrmMain
         }
         else if (action == MouseWheelAction.BrowseImages)
         {
-            if (e.Delta < 0)
+            var paneAtCursor = PicMain.ComparisonMode
+                ? PicMain.GetComparisonPaneAt(e.Location)
+                : ImageGlass.Viewer.ComparisonPaneHover.None;
+
+            if (paneAtCursor == ImageGlass.Viewer.ComparisonPaneHover.RightPane)
             {
-                IG_ViewImage(1);
+                var delta = e.Delta < 0 ? 1 : -1;
+                _ = CycleComparisonImageAsync(delta);
             }
             else
             {
-                IG_ViewImage(-1);
+                if (e.Delta < 0)
+                {
+                    IG_ViewImage(1);
+                }
+                else
+                {
+                    IG_ViewImage(-1);
+                }
             }
         }
         #endregion
@@ -443,5 +500,180 @@ public partial class FrmMain
         // pass keyup to FrmMain
         this.OnKeyUp(e);
     }
+
+
+    // Comparison mode events
+    #region Comparison mode events
+
+    private void PicMain_ComparisonPaneClicked(object? sender, ComparisonPaneClickedEventArgs e)
+    {
+    }
+
+
+    private void PicMain_ComparisonPaneFileDrop(object? sender, ComparisonPaneDropEventArgs e)
+    {
+        if (e.Pane == ComparisonPaneHover.RightPane)
+        {
+            _ = LoadComparisonImageAsync(e.FilePath);
+        }
+        else if (e.Pane == ComparisonPaneHover.LeftPane)
+        {
+            PrepareLoading(e.FilePath, false);
+        }
+    }
+
+
+    /// <summary>
+    /// Opens a file picker to select a comparison image.
+    /// </summary>
+    private async Task OpenComparisonImageAsync()
+    {
+        using var sb = ZString.CreateStringBuilder();
+        foreach (var ext in Config.FileFormats)
+        {
+            sb.Append($"*{ext};");
+        }
+
+        using var o = new OpenFileDialog()
+        {
+            Title = Config.Language[$"FrmCompare.BtnSelectImage._DialogTitle"],
+            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + sb.ToString(),
+            CheckFileExists = true,
+            RestoreDirectory = true,
+        };
+
+        // Set initial directory based on current image
+        var currentPath = Local.Images.GetFilePath(Local.CurrentIndex);
+        if (!string.IsNullOrEmpty(currentPath))
+        {
+            o.InitialDirectory = Path.GetDirectoryName(currentPath);
+        }
+
+        if (o.ShowDialog() == DialogResult.OK)
+        {
+            await LoadComparisonImageAsync(o.FileName);
+        }
+    }
+
+
+    /// <summary>
+    /// Loads an image file as the comparison image.
+    /// </summary>
+    private async Task LoadComparisonImageAsync(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath)) return;
+
+        _comparisonLoadCts?.Cancel();
+        _comparisonLoadCts?.Dispose();
+        _comparisonLoadCts = new CancellationTokenSource();
+        var token = _comparisonLoadCts.Token;
+
+        try
+        {
+            Gallery.ComparisonImagePath = filePath;
+            Gallery.Refresh(true, false);
+
+            if (ShouldUseWeb2ForComparison(filePath))
+            {
+                await PicMain.SetWeb2ComparisonModeAsync(true, token);
+                if (token.IsCancellationRequested) return;
+
+                var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+                var leftHtml = await ViewerCanvas.ReadImageAsHtmlAsync(leftImagePath, token);
+                if (token.IsCancellationRequested) return;
+
+                var rightHtml = await ViewerCanvas.ReadImageAsHtmlAsync(filePath, token);
+                if (token.IsCancellationRequested) return;
+
+                await PicMain.SetWeb2ComparisonImagesAsync(
+                    leftImagePath,
+                    leftHtml,
+                    filePath,
+                    rightHtml,
+                    token);
+            }
+            else
+            {
+                var imgData = await PhotoCodec.LoadAsync(filePath, new CodecReadOptions()
+                {
+                    ColorProfileName = Config.ColorProfile,
+                    FirstFrameOnly = true,
+                }, null, token);
+
+                if (token.IsCancellationRequested) return;
+
+                if (imgData != null)
+                {
+                    PicMain.SetCompareImage(imgData, filePath);
+                }
+
+                await PicMain.SetWeb2ComparisonModeAsync(false, token);
+            }
+
+            if (token.IsCancellationRequested) return;
+
+            PicMain.ShowMessage(
+                Path.GetFileName(filePath),
+                heading: Config.Language[$"{Name}.{nameof(MnuCompareTool)}"],
+                durationMs: Config.InAppMessageDuration);
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            PicMain.ShowMessage(
+                ex.Message,
+                heading: Config.Language[$"{Name}.{nameof(MnuCompareTool)}"],
+                durationMs: Config.InAppMessageDuration);
+        }
+    }
+
+
+    /// <summary>
+    /// Cycles the comparison image by the given delta (1 for next, -1 for previous).
+    /// </summary>
+    private async Task CycleComparisonImageAsync(int delta)
+    {
+        if (Local.Images.Length == 0) return;
+
+        var currentCompareIndex = -1;
+        var comparePath = PicMain.CompareImagePath;
+
+        if (!string.IsNullOrEmpty(comparePath))
+        {
+            for (var i = 0; i < Local.Images.Length; i++)
+            {
+                if (string.Equals(Local.Images.GetFilePath(i), comparePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    currentCompareIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (currentCompareIndex < 0)
+        {
+            currentCompareIndex = Local.CurrentIndex;
+        }
+
+        // Calculate new index with wrapping
+        var newIndex = currentCompareIndex + delta;
+        if (newIndex >= Local.Images.Length) newIndex = 0;
+        if (newIndex < 0) newIndex = Local.Images.Length - 1;
+
+        if (newIndex == Local.CurrentIndex)
+        {
+            newIndex += delta;
+            if (newIndex >= Local.Images.Length) newIndex = 0;
+            if (newIndex < 0) newIndex = Local.Images.Length - 1;
+        }
+
+        var newPath = Local.Images.GetFilePath(newIndex);
+        if (!string.IsNullOrEmpty(newPath))
+        {
+            await LoadComparisonImageAsync(newPath);
+        }
+    }
+
+    #endregion // Comparison mode events
 
 }

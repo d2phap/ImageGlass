@@ -1026,6 +1026,99 @@ public class StyleRenderer : IDisposable
         {
             ControlPaint.DrawFocusRectangle(g, bounds);
         }
+
+        // Draw comparison A/B badges
+        if (ImageGalleryOwner.ComparisonMode)
+        {
+            DrawComparisonBadge(g, item, bounds);
+        }
+    }
+
+    /// <summary>
+    /// Draws the A/B comparison badge for items in comparison mode.
+    /// </summary>
+    protected virtual void DrawComparisonBadge(Graphics g, ImageGalleryItem item, Rectangle bounds)
+    {
+        var isMainImage = item.Index == ImageGalleryOwner.ComparisonMainIndex;
+        var isCompareImage = !string.IsNullOrEmpty(ImageGalleryOwner.ComparisonImagePath) &&
+            string.Equals(item.FilePath, ImageGalleryOwner.ComparisonImagePath, StringComparison.OrdinalIgnoreCase);
+
+        if (!isMainImage && !isCompareImage) return;
+
+        var colorA = Color.FromArgb(220, 59, 130, 246); // Blue
+        var colorB = Color.FromArgb(220, 34, 197, 94); // Green
+
+        var badgePadding = 4;
+        var badgeHeight = 20;
+
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+        using var font = new Font("Segoe UI", 9f, FontStyle.Bold);
+        using var format = new StringFormat
+        {
+            Alignment = StringAlignment.Center,
+            LineAlignment = StringAlignment.Center
+        };
+
+        if (isMainImage && isCompareImage)
+        {
+            // Split pill: A on left (blue), B on right (green)
+            var pillWidth = 36;
+            var pillRect = new Rectangle(
+                bounds.Right - pillWidth - badgePadding,
+                bounds.Top + badgePadding,
+                pillWidth,
+                badgeHeight);
+
+            var halfWidth = pillWidth / 2;
+            var radius = badgeHeight / 2;
+
+            // Draw left half (A - blue) with rounded left side
+            using var pathLeft = new System.Drawing.Drawing2D.GraphicsPath();
+            pathLeft.AddArc(pillRect.Left, pillRect.Top, badgeHeight, badgeHeight, 90, 180);
+            pathLeft.AddLine(pillRect.Left + radius, pillRect.Top, pillRect.Left + halfWidth, pillRect.Top);
+            pathLeft.AddLine(pillRect.Left + halfWidth, pillRect.Top, pillRect.Left + halfWidth, pillRect.Bottom);
+            pathLeft.AddLine(pillRect.Left + halfWidth, pillRect.Bottom, pillRect.Left + radius, pillRect.Bottom);
+            pathLeft.CloseFigure();
+
+            using var brushA = new SolidBrush(colorA);
+            g.FillPath(brushA, pathLeft);
+
+            // Draw right half (B - green) with rounded right side
+            using var pathRight = new System.Drawing.Drawing2D.GraphicsPath();
+            pathRight.AddLine(pillRect.Left + halfWidth, pillRect.Top, pillRect.Right - radius, pillRect.Top);
+            pathRight.AddArc(pillRect.Right - badgeHeight, pillRect.Top, badgeHeight, badgeHeight, -90, 180);
+            pathRight.AddLine(pillRect.Right - radius, pillRect.Bottom, pillRect.Left + halfWidth, pillRect.Bottom);
+            pathRight.CloseFigure();
+
+            using var brushB = new SolidBrush(colorB);
+            g.FillPath(brushB, pathRight);
+
+            // Draw letters
+            var leftRect = new RectangleF(pillRect.Left, pillRect.Top, halfWidth, badgeHeight);
+            var rightRect = new RectangleF(pillRect.Left + halfWidth, pillRect.Top, halfWidth, badgeHeight);
+            g.DrawString("A", font, Brushes.White, leftRect, format);
+            g.DrawString("B", font, Brushes.White, rightRect, format);
+        }
+        else
+        {
+            // Single circular badge
+            var badgeSize = 20;
+            var badgeRect = new Rectangle(
+                bounds.Right - badgeSize - badgePadding,
+                bounds.Top + badgePadding,
+                badgeSize,
+                badgeSize);
+
+            var badgeText = isMainImage ? "A" : "B";
+            var badgeColor = isMainImage ? colorA : colorB;
+
+            using var brush = new SolidBrush(badgeColor);
+            g.FillEllipse(brush, badgeRect);
+            g.DrawString(badgeText, font, Brushes.White, badgeRect, format);
+        }
+
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
     }
 
     /// <summary>

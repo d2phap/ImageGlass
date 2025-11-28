@@ -140,6 +140,7 @@ namespace ImageGlass
             MnuTools = new ToolStripMenuItem();
             MnuColorPicker = new ToolStripMenuItem();
             MnuCropTool = new ToolStripMenuItem();
+            MnuCompareTool = new ToolStripMenuItem();
             MnuResizeTool = new ToolStripMenuItem();
             MnuFrameNav = new ToolStripMenuItem();
             MnuLosslessCompression = new ToolStripMenuItem();
@@ -911,7 +912,7 @@ namespace ImageGlass
             // 
             // MnuLayout
             // 
-            MnuLayout.DropDownItems.AddRange(new ToolStripItem[] { MnuToggleToolbar, MnuToggleGallery, MnuToggleCheckerboard, toolStripMenuItem20, MnuToggleTopMost, MnuChangeBackgroundColor });
+            MnuLayout.DropDownItems.AddRange(new ToolStripItem[] { MnuToggleToolbar, MnuToggleGallery, MnuToggleCheckerboard, MnuCompareTool, toolStripMenuItem20, MnuToggleTopMost, MnuChangeBackgroundColor });
             MnuLayout.Image = (Image)resources.GetObject("MnuLayout.Image");
             MnuLayout.ImageAlign = ContentAlignment.MiddleLeft;
             MnuLayout.ImageScaling = ToolStripItemImageScaling.None;
@@ -988,7 +989,15 @@ namespace ImageGlass
             MnuCropTool.Size = new Size(195, 22);
             MnuCropTool.Text = "[Crop image]";
             MnuCropTool.Click += MnuCropTool_Click;
-            // 
+            //
+            // MnuCompareTool
+            //
+            MnuCompareTool.CheckOnClick = true;
+            MnuCompareTool.Name = "MnuCompareTool";
+            MnuCompareTool.Size = new Size(195, 22);
+            MnuCompareTool.Text = "[Compare images]";
+            MnuCompareTool.Click += MnuCompareTool_Click;
+            //
             // MnuResizeTool
             // 
             MnuResizeTool.Name = "MnuResizeTool";
@@ -1135,6 +1144,7 @@ namespace ImageGlass
             PicMain.Web2KeyUp += PicMain_Web2KeyUp;
             PicMain.DragDrop += PicMain_DragDrop;
             PicMain.DragEnter += PicMain_DragEnter;
+            PicMain.DragLeave += PicMain_DragLeave;
             PicMain.DragOver += PicMain_DragOver;
             PicMain.MouseClick += PicMain_MouseClick;
             PicMain.MouseDoubleClick += PicMain_MouseDoubleClick;
@@ -1333,6 +1343,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuToggleTopMost;
         public ToolStripMenuItem MnuColorPicker;
         public ToolStripMenuItem MnuCropTool;
+        public ToolStripMenuItem MnuCompareTool;
         public ToolStripMenuItem MnuFrameNav;
         public ToolStripMenuItem MnuAbout;
         public ToolStripMenuItem MnuCheckForUpdate;

@@ -171,6 +171,28 @@ public class IgTheme : IDisposable
         }
     }
 
+    /// <summary>
+    /// Gets the full path of comparison slider handle image.
+    /// </summary>
+    public string CompareSliderHandlePath
+    {
+        get
+        {
+            if (JsonModel == null) return string.Empty;
+
+            if (JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.CompareSliderHandle), out var imgObj))
+            {
+                var imgName = imgObj.ToString();
+                if (!string.IsNullOrWhiteSpace(imgName))
+                {
+                    return Path.Combine(FolderPath, imgName);
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+
 
     /// <summary>
     /// Initializes theme pack and reads the theme config file.
@@ -273,6 +295,15 @@ public class IgTheme : IDisposable
                 using var bmp = await PhotoCodec.GetThumbnailAsync(iconPath, navBtnSize, navBtnSize);
 
                 Settings.NavButtonRight = BHelper.ToWicBitmapSource(bmp);
+            }
+
+            // CompareSliderHandle
+            if (JsonModel.Settings.TryGetValue(nameof(IgThemeSettings.CompareSliderHandle), out var compareSliderObject))
+            {
+                var iconPath = Path.Combine(FolderPath, compareSliderObject?.ToString());
+                using var bmp = await PhotoCodec.GetThumbnailAsync(iconPath, navBtnSize, navBtnSize);
+
+                Settings.CompareSliderHandle = BHelper.ToWicBitmapSource(bmp);
             }
 
             // AppLogo

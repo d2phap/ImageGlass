@@ -39,6 +39,8 @@ public partial class FrmMain : ThemedForm
 
     // cancellation tokens of synchronious task
     private CancellationTokenSource? _loadCancelTokenSrc = new();
+    private CancellationTokenSource? _comparisonLoadCts = new();
+    private CancellationTokenSource? _comparisonUpdateCts = new();
     private readonly IProgress<ProgressReporterEventArgs> _uiReporter;
     private MovableForm? _movableForm;
     private FileFinder? _fileFinder = new();
@@ -162,6 +164,26 @@ public partial class FrmMain : ThemedForm
             return;
         }
 
+        // Comparison mode keyboard shortcuts (D2D mode only; WebView2 handles its own)
+        if (PicMain.ComparisonMode && !PicMain.IsWeb2ComparisonModeActive)
+        {
+            // Backspace: Reset slider to center
+            if (e.KeyCode == Keys.Back)
+            {
+                PicMain.ResetComparisonSlider();
+                e.Handled = true;
+                return;
+            }
+
+            // Backtick (`): Reset zoom and pan to fit the image
+            if (e.KeyCode == Keys.Oem3)
+            {
+                PicMain.Refresh();
+                e.Handled = true;
+                return;
+            }
+        }
+
         #endregion // Special actions
 
 
@@ -255,7 +277,13 @@ public partial class FrmMain : ThemedForm
     {
         if (e.Buttons == MouseButtons.Left)
         {
-            if (e.Item.Index == Local.CurrentIndex)
+            var ctrlPressed = ModifierKeys.HasFlag(Keys.Control);
+
+            if (ctrlPressed && PicMain.ComparisonMode)
+            {
+                _ = LoadComparisonImageAsync(e.Item.FilePath);
+            }
+            else if (e.Item.Index == Local.CurrentIndex)
             {
                 PicMain.Refresh();
             }
@@ -1130,6 +1158,15 @@ public partial class FrmMain : ThemedForm
             SelectCurrentGalleryThumbnail();
         }
 
+        // update comparison A indicator in gallery
+        if (Gallery.ComparisonMode)
+        {
+            Gallery.ComparisonMainIndex = Local.CurrentIndex;
+            Gallery.Refresh(true, false);
+
+            // Update comparison when A image changes (handles D2D/WebView2 transitions)
+            _ = UpdateComparisonLeftImageAsync();
+        }
 
         LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FrameCount);
 
@@ -2393,6 +2430,11 @@ public partial class FrmMain : ThemedForm
     private void MnuCropTool_Click(object sender, EventArgs e)
     {
         IG_ToggleCropTool();
+    }
+
+    private void MnuCompareTool_Click(object sender, EventArgs e)
+    {
+        IG_ToggleCompareTool();
     }
 
     private void MnuResizeTool_Click(object sender, EventArgs e)

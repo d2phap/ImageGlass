@@ -26,6 +26,33 @@
     </div>
   </div>
 
+  <div id="layerComparison" hidden tabindex="0">
+    <div class="comparison-container">
+      <div class="comparison-image comparison-image-left">
+        <img id="compareImageLeft" alt="Image A">
+      </div>
+      <div class="comparison-image comparison-image-right">
+        <img id="compareImageRight" alt="Image B">
+      </div>
+      <div class="comparison-slider">
+        <div class="comparison-slider-line"></div>
+        <div class="comparison-slider-handle">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="comparison-drop-overlay comparison-drop-overlay-left">
+        <div class="comparison-drop-border"></div>
+        <span class="comparison-drop-text">Drop to replace main image</span>
+      </div>
+      <div class="comparison-drop-overlay comparison-drop-overlay-right">
+        <div class="comparison-drop-border"></div>
+        <span class="comparison-drop-text">Drop to set comparison image</span>
+      </div>
+    </div>
+  </div>
+
   <script src="./dist/DXCanvas_Webview2.js"></script>
 </body>
 </html>

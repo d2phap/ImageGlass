@@ -80,6 +80,12 @@ public class Local
             Image = nameof(Config.Theme.ToolbarIcons.Crop),
             OnClick = new(nameof(FrmMain.MnuCropTool)),
         },
+        new() // MnuCompareTool
+        {
+            Id = $"Btn_{nameof(FrmMain.MnuCompareTool)}",
+            Image = nameof(Config.Theme.ToolbarIcons.Compare),
+            OnClick = new(nameof(FrmMain.MnuCompareTool)),
+        },
         new() // MnuMoveToRecycleBin
         {
             Id = $"Btn_{nameof(FrmMain.MnuMoveToRecycleBin)}",
@@ -256,6 +262,7 @@ public class Local
         nameof(ToolbarItemModelType.Separator),
         $"Btn_{nameof(FrmMain.MnuRefresh)}",
         $"Btn_{nameof(FrmMain.MnuToggleGallery)}",
+        $"Btn_{nameof(FrmMain.MnuCompareTool)}",
         $"Btn_{nameof(FrmMain.MnuToggleCheckerboard)}",
         $"Btn_{nameof(FrmMain.MnuFullScreen)}",
         $"Btn_{nameof(FrmMain.MnuSlideshow)}",

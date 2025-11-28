@@ -1,0 +1,163 @@
+#layerComparison {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  background: transparent;
+  outline: none;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.comparison-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comparison-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img,
+  svg {
+    max-width: none;
+    max-height: none;
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  svg {
+    overflow: visible;
+  }
+}
+
+.comparison-image-left {
+  z-index: 1;
+  // clip-path is set dynamically in JS to clip content right of the slider
+}
+
+.comparison-image-right {
+  z-index: 2;
+  // clip-path is set dynamically in JS to clip content left of the slider
+}
+
+.comparison-slider {
+  position: absolute;
+  // left is set dynamically in JS using pixel values for image-based positioning
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 4px;
+  transform: translateX(-50%);
+  cursor: move;
+  touch-action: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.comparison-slider-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--accent-color, #0078d4);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.comparison-slider-handle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-color, #0078d4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  &:active {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+.comparison-drop-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  &.is--visible {
+    opacity: 1;
+  }
+}
+
+.comparison-drop-overlay-left,
+.comparison-drop-overlay-right {
+  // Position and width are set dynamically in JS
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.comparison-drop-border {
+  position: absolute;
+  inset: 4px;
+  border: 3px solid var(--accent-color, #0078d4);
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.comparison-drop-text {
+  position: relative;
+  z-index: 1;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}

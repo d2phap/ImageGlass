@@ -16,6 +16,7 @@
     "IsShowTitlebarLogo": true,
     "NavButtonLeft": "ViewPreviousImage.svg",
     "NavButtonRight": "ViewNextImage.svg",
+    "CompareSliderHandle": "CompareSlider.svg",
     "PreviewImage": "preview.webp",
     "AppLogo": "Logo.svg"
   },
@@ -47,6 +48,7 @@
     "AutoZoom": "AutoZoom.svg",
     "Checkerboard": "Checkerboard.svg",
     "ColorPicker": "ColorPicker.svg",
+    "Compare": "Compare.svg",
     "Crop": "Crop.svg",
     "Delete": "Delete.svg",
     "Edit": "Edit.svg",
