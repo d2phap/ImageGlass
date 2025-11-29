@@ -1607,7 +1607,15 @@ public partial class FrmMain : ThemedForm
         }
 
 
+        var originalName = ImageInfo.Name;
+        if (PicMain.ComparisonMode && !string.IsNullOrEmpty(PicMain.CompareImagePath))
+        {
+            var bName = Path.GetFileName(PicMain.CompareImagePath);
+            ImageInfo.Name = $"Compare: {originalName} ⇄ {bName}";
+        }
+
         Text = ImageInfo.ToString(Config.ImageInfoTags, Local.ClipboardImage != null, clipboardImageText);
+        ImageInfo.Name = originalName;
     }
 
 

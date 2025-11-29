@@ -3227,6 +3227,7 @@ public partial class FrmMain
             _ = PicMain.SetWeb2ComparisonModeAsync(false);
         }
         Gallery.Refresh(true, false);
+        LoadImageInfo();
 
         return visible.Value;
     }

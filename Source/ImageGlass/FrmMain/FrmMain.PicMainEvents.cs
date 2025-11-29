@@ -616,6 +616,8 @@ public partial class FrmMain
                 Path.GetFileName(filePath),
                 heading: Config.Language[$"{Name}.{nameof(MnuCompareTool)}"],
                 durationMs: Config.InAppMessageDuration);
+
+            LoadImageInfo();
         }
         catch (OperationCanceledException) { }
         catch (Exception ex)
