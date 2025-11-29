@@ -954,7 +954,8 @@ public partial class ViewerCanvas
 
     /// <summary>
     /// Reads image file content as HTML for WebView2 comparison.
-    /// Returns SVG content for SVG files, or base64 img tag for raster images.
+    /// Returns SVG content for SVG files, null for animated formats (use URL instead),
+    /// or base64 img tag for other raster images.
     /// </summary>
     public static async Task<string?> ReadImageAsHtmlAsync(string filePath, CancellationToken token = default)
     {
@@ -969,7 +970,15 @@ public partial class ViewerCanvas
                 return await File.ReadAllTextAsync(filePath, token);
             }
 
-            // For raster images, convert to base64 img tag
+            // For animated formats, return null so the file URL is used instead
+            // This ensures animation works properly without base64 overhead
+            var animatedExtensions = new[] { ".gif", ".gifv", ".webp", ".apng" };
+            if (animatedExtensions.Any(ext => filePath.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+            {
+                return null;
+            }
+
+            // For other raster images, convert to base64 img tag
             var bytes = await File.ReadAllBytesAsync(filePath, token);
             var base64 = Convert.ToBase64String(bytes);
             var mimeType = GetMimeType(filePath);

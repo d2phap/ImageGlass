@@ -3234,13 +3234,25 @@ public partial class FrmMain
 
     /// <summary>
     /// Checks if WebView2 should be used for comparison mode.
-    /// Returns true only if either image is SVG and WebView2 is enabled for SVG.
+    /// Returns true if either image is SVG (and WebView2 is enabled for SVG),
+    /// or if either image is an animated format (GIF, WEBP, etc.).
     /// </summary>
     private bool ShouldUseWeb2ForComparison(string? rightImagePath = null)
     {
+        var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+
+        // Check for animated formats - always use WebView2 for animation support
+        var animatedExtensions = new[] { ".gif", ".gifv", ".webp", ".apng" };
+        var leftIsAnimated = animatedExtensions.Any(ext =>
+            leftImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
+        var rightIsAnimated = animatedExtensions.Any(ext =>
+            rightImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
+
+        if (leftIsAnimated || rightIsAnimated) return true;
+
+        // Check for SVG (requires UseWebview2ForSvg setting)
         if (!Config.UseWebview2ForSvg) return false;
 
-        var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var leftIsSvg = leftImagePath?.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) == true;
         var rightIsSvg = rightImagePath?.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) == true;
 
