@@ -3242,10 +3242,9 @@ public partial class FrmMain
         var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
         // Check for animated formats - always use WebView2 for animation support
-        var animatedExtensions = new[] { ".gif", ".gifv", ".webp", ".apng" };
-        var leftIsAnimated = animatedExtensions.Any(ext =>
+        var leftIsAnimated = Const.ANIMATED_FORMATS.Any(ext =>
             leftImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
-        var rightIsAnimated = animatedExtensions.Any(ext =>
+        var rightIsAnimated = Const.ANIMATED_FORMATS.Any(ext =>
             rightImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
 
         if (leftIsAnimated || rightIsAnimated) return true;

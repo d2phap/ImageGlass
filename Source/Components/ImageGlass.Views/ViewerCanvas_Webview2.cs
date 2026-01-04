@@ -972,8 +972,7 @@ public partial class ViewerCanvas
 
             // For animated formats, return null so the file URL is used instead
             // This ensures animation works properly without base64 overhead
-            var animatedExtensions = new[] { ".gif", ".gifv", ".webp", ".apng" };
-            if (animatedExtensions.Any(ext => filePath.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+            if (Const.ANIMATED_FORMATS.Any(ext => filePath.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
             {
                 return null;
             }
