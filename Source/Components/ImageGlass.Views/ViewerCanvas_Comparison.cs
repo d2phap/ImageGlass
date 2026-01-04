@@ -21,6 +21,7 @@ using D2Phap.DXControl;
 using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 using WicNet;
 
@@ -51,10 +52,11 @@ public partial class ViewerCanvas
     private WicBitmapSource? _wicCompareSliderHandle;
     private IComObject<ID2D1Bitmap1>? _d2dCompareSliderHandle;
 
-    // Slider appearance
-    private const int SLIDER_HIT_AREA = 20;
-    private const int SLIDER_LINE_WIDTH = 2;
-    private const int SLIDER_HANDLE_SIZE = 24;
+    // Slider appearance (base values before DPI scaling)
+    private const float SLIDER_LINE_HIT_WIDTH_BASE = 20f;
+    private const float SLIDER_LINE_WIDTH_BASE = 2f;
+    private const float SLIDER_HANDLE_SIZE_BASE = 20f;
+    private const float SLIDER_HANDLE_HIT_SIZE_BASE = 26f;
 
     // Drop highlight state
     private ComparisonPaneHover _dropHighlightPane = ComparisonPaneHover.None;
@@ -364,10 +366,22 @@ public partial class ViewerCanvas
         var handleX = GetSliderScreenXClamped();
         var handleY = GetSliderHandleScreenY();
 
+        // Check handle hit area (circular)
+        var handleHitSize = DpiApi.Scale(SLIDER_HANDLE_HIT_SIZE_BASE);
         var dx = point.X - handleX;
         var dy = point.Y - handleY;
         var distSq = dx * dx + dy * dy;
-        if (distSq <= SLIDER_HIT_AREA * SLIDER_HIT_AREA)
+        var handleRadius = handleHitSize / 2f;
+        if (distSq <= handleRadius * handleRadius)
+        {
+            return ComparisonPaneHover.Slider;
+        }
+
+        // Check line hit area (rectangular along the full height)
+        var lineHitWidth = DpiApi.Scale(SLIDER_LINE_HIT_WIDTH_BASE);
+        var lineHitLeft = sliderX - lineHitWidth / 2f;
+        var lineHitRight = sliderX + lineHitWidth / 2f;
+        if (point.X >= lineHitLeft && point.X <= lineHitRight)
         {
             return ComparisonPaneHover.Slider;
         }
@@ -382,20 +396,22 @@ public partial class ViewerCanvas
     /// </summary>
     private int GetSliderHandleScreenY()
     {
-        const int HANDLE_PADDING = 20;
-        var handleY = (int)(HANDLE_PADDING + (Height - 2 * HANDLE_PADDING) * _comparisonSliderHandleY);
-        return Math.Clamp(handleY, HANDLE_PADDING, Height - HANDLE_PADDING);
+        var handlePadding = (int)DpiApi.Scale(20f);
+        var handleY = (int)(handlePadding + (Height - 2 * handlePadding) * _comparisonSliderHandleY);
+        return Math.Clamp(handleY, handlePadding, Height - handlePadding);
     }
 
     /// <summary>
     /// Converts slider position (0-1) to screen X coordinate.
+    /// Rounds to pixel boundary to avoid splitting pixels.
     /// </summary>
     private int GetSliderScreenX()
     {
         var virtualRect = GetVirtualImageRect();
         if (virtualRect.Width > 0)
         {
-            return (int)(virtualRect.X + virtualRect.Width * _comparisonSliderPos);
+            // Round to nearest pixel boundary to avoid line cutting through pixels
+            return (int)MathF.Round(virtualRect.X + virtualRect.Width * _comparisonSliderPos);
         }
 
         return Width / 2;
@@ -407,8 +423,8 @@ public partial class ViewerCanvas
     private int GetSliderScreenXClamped()
     {
         var sliderX = GetSliderScreenX();
-        const int SLIDER_PADDING = 20;
-        return Math.Clamp(sliderX, SLIDER_PADDING, Width - SLIDER_PADDING);
+        var sliderPadding = (int)DpiApi.Scale(20f);
+        return Math.Clamp(sliderX, sliderPadding, Width - sliderPadding);
     }
 
     /// <summary>
@@ -508,17 +524,22 @@ public partial class ViewerCanvas
     /// </summary>
     private void DrawComparisonSlider(DXGraphics g, int sliderX, int handleX)
     {
-        g.DrawLine(sliderX, 0, sliderX, Height, _accentColor, SLIDER_LINE_WIDTH);
+        // DPI-scaled values
+        var lineWidth = DpiApi.Scale(SLIDER_LINE_WIDTH_BASE);
+        var handleSize = DpiApi.Scale(SLIDER_HANDLE_SIZE_BASE);
+        var handlePadding = (int)DpiApi.Scale(20f);
 
-        const int HANDLE_PADDING = 20;
-        var handleY = (int)(HANDLE_PADDING + (Height - 2 * HANDLE_PADDING) * _comparisonSliderHandleY);
-        handleY = Math.Clamp(handleY, HANDLE_PADDING, Height - HANDLE_PADDING);
+        // Draw the separator line
+        g.DrawLine(sliderX, 0, sliderX, Height, _accentColor, lineWidth);
+
+        var handleY = (int)(handlePadding + (Height - 2 * handlePadding) * _comparisonSliderHandleY);
+        handleY = Math.Clamp(handleY, handlePadding, Height - handlePadding);
 
         var handleRect = new RectangleF(
-            handleX - SLIDER_HANDLE_SIZE / 2,
-            handleY - SLIDER_HANDLE_SIZE / 2,
-            SLIDER_HANDLE_SIZE,
-            SLIDER_HANDLE_SIZE);
+            handleX - handleSize / 2,
+            handleY - handleSize / 2,
+            handleSize,
+            handleSize);
 
         if (_wicCompareSliderHandle != null)
         {
@@ -532,16 +553,25 @@ public partial class ViewerCanvas
             }
         }
 
-        g.DrawEllipse(handleRect, _accentColor, _accentColor, 1f);
+        // Draw circle handle similar to crop tool resizers
+        var borderWidth = DpiApi.Scale(2f);
+        g.DrawEllipse(handleRect, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), DpiApi.Scale(8f));
+        g.DrawEllipse(handleRect, _accentColor, _accentColor, borderWidth);
 
+        // Draw arrows inside handle
         var arrowColor = Color.White;
-        var arrowOffset = 6;
+        var arrowOffset = DpiApi.Scale(6f);
+        var arrowTip = DpiApi.Scale(2f);
+        var arrowHeight = DpiApi.Scale(4f);
+        var arrowStroke = DpiApi.Scale(2f);
 
-        g.DrawLine(handleX - arrowOffset, handleY, handleX - 2, handleY - 4, arrowColor, 2);
-        g.DrawLine(handleX - arrowOffset, handleY, handleX - 2, handleY + 4, arrowColor, 2);
+        // Left arrow
+        g.DrawLine(handleX - arrowOffset, handleY, handleX - arrowTip, handleY - arrowHeight, arrowColor, arrowStroke);
+        g.DrawLine(handleX - arrowOffset, handleY, handleX - arrowTip, handleY + arrowHeight, arrowColor, arrowStroke);
 
-        g.DrawLine(handleX + arrowOffset, handleY, handleX + 2, handleY - 4, arrowColor, 2);
-        g.DrawLine(handleX + arrowOffset, handleY, handleX + 2, handleY + 4, arrowColor, 2);
+        // Right arrow
+        g.DrawLine(handleX + arrowOffset, handleY, handleX + arrowTip, handleY - arrowHeight, arrowColor, arrowStroke);
+        g.DrawLine(handleX + arrowOffset, handleY, handleX + arrowTip, handleY + arrowHeight, arrowColor, arrowStroke);
     }
 
     /// <summary>
@@ -687,11 +717,11 @@ public partial class ViewerCanvas
     /// </summary>
     private float ScreenYToHandlePosition(float screenY)
     {
-        const int HANDLE_PADDING = 20;
-        var usableHeight = Height - 2 * HANDLE_PADDING;
+        var handlePadding = DpiApi.Scale(20f);
+        var usableHeight = Height - 2 * handlePadding;
         if (usableHeight <= 0) return 0.5f;
 
-        var pos = (screenY - HANDLE_PADDING) / usableHeight;
+        var pos = (screenY - handlePadding) / usableHeight;
         return Math.Clamp(pos, 0f, 1f);
     }
 

@@ -3162,6 +3162,16 @@ public partial class FrmMain
     /// </summary>
     public bool IG_ToggleCropTool(bool? visible = null)
     {
+        // Disable crop tool during comparison mode
+        if (PicMain.ComparisonMode && visible != false)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return false;
+        }
+
         visible ??= MnuCropTool.Checked;
 
         // update menu item state
