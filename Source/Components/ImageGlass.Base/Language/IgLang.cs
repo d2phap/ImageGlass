@@ -276,6 +276,7 @@ public class IgLang : IDictionary<string, string>
 
             { $"_._InvalidAction", "Invalid action" }, //v9.0
             { $"_._InvalidAction._Transformation", "ImageGlass does not support rotation, flipping for this image." }, //v9.0
+            { $"_._InvalidAction._ComparisonMode", "This feature is not available in comparison mode." }, //v9.1
 
 
             { "_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action" }, // v9.0

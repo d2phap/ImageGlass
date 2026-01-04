@@ -2917,6 +2917,16 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
+
         // update flip changes
         if (PicMain.FlipImage(options))
         {
@@ -2962,6 +2972,16 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
+
         var degree = option == RotateOption.Left ? -90 : 90;
 
         // update rotation changes
@@ -2991,6 +3011,16 @@ public partial class FrmMain
     public void IG_InvertColors()
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
+
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
 
         // invert image colors
         if (PicMain.InvertColor(true))
@@ -3663,6 +3693,15 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
 
         // apply color channels filter
         if (PicMain.FilterColorChannels(channels, false))

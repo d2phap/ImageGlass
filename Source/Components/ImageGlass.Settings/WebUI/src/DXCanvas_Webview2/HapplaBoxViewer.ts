@@ -468,6 +468,11 @@ export default class HapplaBoxViewer {
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
     _comparisonZoom = Math.max(0.1, Math.min(10, _comparisonZoom * delta));
 
+    // Re-constrain pan after zoom change (zooming out may invalidate current pan)
+    const constrained = HapplaBoxViewer.constrainComparisonPan(_comparisonPanX, _comparisonPanY);
+    _comparisonPanX = constrained.panX;
+    _comparisonPanY = constrained.panY;
+
     HapplaBoxViewer.updateComparisonTransform();
   }
 
@@ -496,10 +501,50 @@ export default class HapplaBoxViewer {
     const hasDragged = Math.abs(dx) > _dragThreshold || Math.abs(dy) > _dragThreshold;
 
     if (hasDragged) {
-      _comparisonPanX = _panStartPanX + dx;
-      _comparisonPanY = _panStartPanY + dy;
+      const newPanX = _panStartPanX + dx;
+      const newPanY = _panStartPanY + dy;
+
+      // Apply constrained panning
+      const constrained = HapplaBoxViewer.constrainComparisonPan(newPanX, newPanY);
+      _comparisonPanX = constrained.panX;
+      _comparisonPanY = constrained.panY;
       HapplaBoxViewer.updateComparisonTransform();
     }
+  }
+
+  /**
+   * Constrains pan values based on zoom level and image/container dimensions.
+   * Only allows panning when the scaled image is larger than the container.
+   */
+  private static constrainComparisonPan(panX: number, panY: number): { panX: number, panY: number } {
+    const layerEl = query('#layerComparison');
+    const containerRect = layerEl.getBoundingClientRect();
+
+    const scaledWidth = _comparisonImageWidth * _comparisonZoom;
+    const scaledHeight = _comparisonImageHeight * _comparisonZoom;
+
+    let constrainedPanX = panX;
+    let constrainedPanY = panY;
+
+    // Only allow horizontal panning if image is wider than container
+    if (scaledWidth <= containerRect.width) {
+      constrainedPanX = 0;
+    } else {
+      // Clamp so image edges don't go past container center
+      const maxPanX = (scaledWidth - containerRect.width) / 2;
+      constrainedPanX = Math.max(-maxPanX, Math.min(maxPanX, panX));
+    }
+
+    // Only allow vertical panning if image is taller than container
+    if (scaledHeight <= containerRect.height) {
+      constrainedPanY = 0;
+    } else {
+      // Clamp so image edges don't go past container center
+      const maxPanY = (scaledHeight - containerRect.height) / 2;
+      constrainedPanY = Math.max(-maxPanY, Math.min(maxPanY, panY));
+    }
+
+    return { panX: constrainedPanX, panY: constrainedPanY };
   }
 
   private static onComparisonPanUp(e: PointerEvent) {
@@ -934,6 +979,11 @@ export default class HapplaBoxViewer {
         configureImg(img, 'compareImageRight');
       }
     }
+
+    // Reset transform when images change to avoid "stuck in previous cutout" issue
+    _comparisonZoom = 1;
+    _comparisonPanX = 0;
+    _comparisonPanY = 0;
 
     HapplaBoxViewer.updateComparisonTransform();
   }
