@@ -7,6 +7,9 @@ export type IMouseEventArgs = {
   Y: number;
   Delta: number;
   NavigationButton?: 'left' | 'right' | '';
+  AltKey?: boolean;
+  CtrlKey?: boolean;
+  ShiftKey?: boolean;
 };
 
 export type IZoomEventArgs = {

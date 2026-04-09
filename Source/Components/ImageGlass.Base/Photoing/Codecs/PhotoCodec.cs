@@ -866,7 +866,7 @@ public static class PhotoCodec
                     base64Content = fs.ReadToEnd();
                 }
 
-                if (result.CanAnimate)
+                if (result.CanAnimate && options?.FirstFrameOnly != true)
                 {
                     result.Source = BHelper.ToGdiPlusBitmapFromBase64(base64Content);
                 }
@@ -887,16 +887,16 @@ public static class PhotoCodec
                 try
                 {
                     // Note: Using WIC is much faster than using MagickImageCollection
-                    if (result.CanAnimate)
+                    if (result.CanAnimate && options?.FirstFrameOnly != true)
                     {
                         result.Source = BHelper.ToGdiPlusBitmap(filePath);
                     }
-                    // multiple frame
-                    else if (result.FrameCount > 0)
+                    // multiple frame (but not animating or FirstFrameOnly requested)
+                    else if (result.FrameCount > 1 && options?.FirstFrameOnly != true)
                     {
                         result.Source = WicBitmapDecoder.Load(filePath);
                     }
-                    // single frame
+                    // single frame or FirstFrameOnly requested
                     else
                     {
                         result.Image = WicBitmapSource.Load(filePath);
@@ -913,7 +913,7 @@ public static class PhotoCodec
                 {
                     using var webp = new WebPWrapper();
 
-                    if (result.CanAnimate)
+                    if (result.CanAnimate && options?.FirstFrameOnly != true)
                     {
                         var aniWebP = webp.AnimLoad(filePath);
                         var frames = aniWebP.Select(frame =>

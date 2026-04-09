@@ -79,10 +79,12 @@ public partial class FrmMain
         PicMain.NavButtonColor = Config.Theme.Colors.NavigationButtonColor;
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
+        PicMain.CompareSliderHandleImage = Config.Theme.Settings.CompareSliderHandle;
 
         PicMain.Web2DarkMode = darkMode;
         PicMain.Web2NavLeftImagePath = Config.Theme.NavLeftImagePath;
         PicMain.Web2NavRightImagePath = Config.Theme.NavRightImagePath;
+        PicMain.Web2CompareSliderHandlePath = Config.Theme.CompareSliderHandlePath;
 
 
         // Thumbnail bar

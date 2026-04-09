@@ -276,6 +276,7 @@ public class IgLang : IDictionary<string, string>
 
             { $"_._InvalidAction", "Invalid action" }, //v9.0
             { $"_._InvalidAction._Transformation", "ImageGlass does not support rotation, flipping for this image." }, //v9.0
+            { $"_._InvalidAction._ComparisonMode", "This feature is not available in comparison mode." }, //v9.1
 
 
             { "_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke the action" }, // v9.0
@@ -510,6 +511,7 @@ public class IgLang : IDictionary<string, string>
             { "FrmMain.MnuTools", "Tools" }, //v3.0
             { "FrmMain.MnuColorPicker", "Color picker" }, //v5.0
             { "FrmMain.MnuCropTool", "Crop image" }, // v7.6
+            { "FrmMain.MnuCompareTool", "Compare images" }, // v9.1
             { "FrmMain.MnuResizeTool", "Resize image" }, // v9.2
             { "FrmMain.MnuFrameNav", "Frame navigation" }, // v7.5
             { "FrmMain.MnuGetMoreTools", "Get more tools…" }, // v9.0
@@ -888,6 +890,13 @@ public class IgLang : IDictionary<string, string>
             { "FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…" }, //v9.0
 
             #endregion // FrmCrop
+
+
+            #region FrmCompare
+            { "FrmCompare._DropToReplaceMainImage", "Drop to replace main image" }, // v9.1
+            { "FrmCompare._DropToSetComparisonImage", "Drop to set comparison image" }, // v9.1
+            { "FrmCompare._SelectImageToCompare", "Select an image to compare using the button below." }, // v9.1
+            #endregion // FrmCompare
 
 
             #region FrmColorPicker

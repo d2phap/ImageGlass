@@ -136,6 +136,10 @@ public static class Web2BackendMsgNames
     public static string SET_MESSAGE => "SET_MESSAGE";
     public static string SET_NAVIGATION => "SET_NAVIGATION";
 
+    // Comparison mode
+    public static string SET_COMPARISON_MODE => "SET_COMPARISON_MODE";
+    public static string SET_COMPARISON_IMAGES => "SET_COMPARISON_IMAGES";
+    public static string SET_COMPARISON_SLIDER => "SET_COMPARISON_SLIDER";
 }
 
 
@@ -148,4 +152,7 @@ public static class Web2FrontendMsgNames
     public static string ON_FILE_DROP => "ON_FILE_DROP";
     public static string ON_NAV_CLICK => "ON_NAV_CLICK";
 
+    // Comparison mode
+    public static string ON_COMPARISON_SLIDER_CHANGED => "ON_COMPARISON_SLIDER_CHANGED";
+    public static string ON_COMPARISON_PANE_DROP => "ON_COMPARISON_PANE_DROP";
 }

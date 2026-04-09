@@ -117,6 +117,9 @@ public record IgThemeSettings : IDisposable
             NavButtonRight?.Dispose();
             NavButtonRight = null;
 
+            CompareSliderHandle?.Dispose();
+            CompareSliderHandle = null;
+
             AppLogo?.Dispose();
             AppLogo = null;
         }
@@ -155,6 +158,11 @@ public record IgThemeSettings : IDisposable
     public WicBitmapSource? NavButtonRight { get; set; }
 
     /// <summary>
+    /// Gets, sets the comparison slider handle icon
+    /// </summary>
+    public WicBitmapSource? CompareSliderHandle { get; set; }
+
+    /// <summary>
     /// Sets, sets app logo
     /// </summary>
     public Bitmap? AppLogo { get; set; } = null;
@@ -175,6 +183,7 @@ public class IgThemeToolbarIcons : IDisposable
     public Bitmap? AutoZoom { get; set; }
     public Bitmap? Checkerboard { get; set; }
     public Bitmap? ColorPicker { get; set; }
+    public Bitmap? Compare { get; set; }
     public Bitmap? Crop { get; set; }
     public Bitmap? Delete { get; set; }
     public Bitmap? Edit { get; set; }
@@ -232,6 +241,9 @@ public class IgThemeToolbarIcons : IDisposable
 
             ColorPicker?.Dispose();
             ColorPicker = null;
+
+            Compare?.Dispose();
+            Compare = null;
 
             Crop?.Dispose();
             Crop = null;

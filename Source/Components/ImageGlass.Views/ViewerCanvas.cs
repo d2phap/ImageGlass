@@ -529,7 +529,14 @@ public partial class ViewerCanvas : DXCanvas
 
             if (_web2 != null)
             {
-                _ = _web2.SetWeb2VisibilityAsync(value == ImageSource.Webview2);
+                // WebView2 visible for SVG source or SVG comparison mode
+                var shouldBeVisible = value == ImageSource.Webview2 || IsWeb2ComparisonModeActive;
+                _ = _web2.SetWeb2VisibilityAsync(shouldBeVisible);
+
+                if (IsWeb2ComparisonModeActive && value != ImageSource.Webview2)
+                {
+                    _web2.BringToFront();
+                }
             }
         }
     }
@@ -1086,9 +1093,12 @@ public partial class ViewerCanvas : DXCanvas
         base.Dispose(disposing);
 
         DisposeImageResources();
+        DisposeCompareImageResources();
 
         DXHelper.DisposeD2D1Bitmap(ref _d2dNavLeftImage);
         DXHelper.DisposeD2D1Bitmap(ref _d2dNavRightImage);
+        _d2dCompareSliderHandle?.Dispose();
+        _d2dCompareSliderHandle = null;
 
         DisposeCheckerboardBrushes();
 
@@ -1114,6 +1124,13 @@ public partial class ViewerCanvas : DXCanvas
 
             // dispose the Direct2D image
             DXHelper.DisposeD2D1Bitmap(ref _d2dImage);
+
+            // dispose and recreate comparison D2D image if we have a WIC source
+            DXHelper.DisposeD2D1Bitmap(ref _d2dCompareImage);
+            if (_wicCompareImage != null)
+            {
+                _d2dCompareImage = DXHelper.ToD2D1Bitmap(Device, _wicCompareImage);
+            }
         }
     }
 
@@ -1133,6 +1150,12 @@ public partial class ViewerCanvas : DXCanvas
     {
         base.OnMouseDown(e);
         if (!IsReady) return;
+
+        // Handle comparison mode interactions first
+        if (_comparisonMode && HandleComparisonMouseDown(e))
+        {
+            return;
+        }
 
         _mouseDownButton = e.Button;
         _isMouseDragged = false;
@@ -1215,6 +1238,15 @@ public partial class ViewerCanvas : DXCanvas
     {
         base.OnMouseUp(e);
         if (!IsReady) return;
+
+        // Handle comparison mode interactions first
+        if (_comparisonMode && HandleComparisonMouseUp(e))
+        {
+            // Reset mouse state to prevent stuck panning
+            _mouseDownButton = MouseButtons.None;
+            _mouseDownPoint = null;
+            return;
+        }
 
 
         // Distinguish between clicks
@@ -1323,6 +1355,12 @@ public partial class ViewerCanvas : DXCanvas
     {
         base.OnMouseMove(e);
         if (!IsReady) return;
+
+        // Handle comparison mode interactions first
+        if (_comparisonMode && HandleComparisonMouseMove(e))
+        {
+            return;
+        }
 
         var canSelect = EnableSelection && _mouseDownButton == MouseButtons.Left;
         var requestRerender = false;
@@ -1571,8 +1609,15 @@ public partial class ViewerCanvas : DXCanvas
         DrawCheckerboardLayer(g);
 
 
-        // draw image layer
-        DrawImageLayer(g);
+        // draw image layer (or comparison layer if in comparison mode)
+        if (_comparisonMode)
+        {
+            DrawComparisonLayer(g);
+        }
+        else
+        {
+            DrawImageLayer(g);
+        }
 
 
         // emits event ImageDrawn

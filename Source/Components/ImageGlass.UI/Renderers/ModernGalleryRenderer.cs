@@ -209,6 +209,12 @@ public class ModernGalleryRenderer(IgTheme theme) : StyleRenderer
 
         #endregion
 
+
+        // Draw comparison A/B badges
+        if (ImageGalleryOwner.ComparisonMode)
+        {
+            DrawComparisonBadge(g, item, bounds);
+        }
     }
 
 

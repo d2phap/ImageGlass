@@ -764,6 +764,25 @@ public partial class ImageGallery : Control, IComponent
         mErrorImageChanged = false;
     }
 
+
+    /// <summary>
+    /// Gets or sets whether comparison mode is active (shows A/B indicators).
+    /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public bool ComparisonMode { get; set; } = false;
+
+    /// <summary>
+    /// Gets or sets the index of the main comparison image (A).
+    /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public int ComparisonMainIndex { get; set; } = -1;
+
+    /// <summary>
+    /// Gets or sets the file path of the comparison image (B).
+    /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public string ComparisonImagePath { get; set; } = string.Empty;
+
     #endregion
 
 

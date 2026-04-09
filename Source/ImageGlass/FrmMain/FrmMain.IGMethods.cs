@@ -215,6 +215,13 @@ public partial class FrmMain
     public void GoToImage(int index)
     {
         Local.CurrentIndex = index;
+
+        if (PicMain.ComparisonMode)
+        {
+            Gallery.ComparisonMainIndex = index;
+            Gallery.Refresh(true, false);
+        }
+
         _ = ViewNextCancellableAsync(0);
     }
 
@@ -2910,6 +2917,16 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
+
         // update flip changes
         if (PicMain.FlipImage(options))
         {
@@ -2955,6 +2972,16 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
+
         var degree = option == RotateOption.Left ? -90 : 90;
 
         // update rotation changes
@@ -2984,6 +3011,16 @@ public partial class FrmMain
     public void IG_InvertColors()
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
+
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
 
         // invert image colors
         if (PicMain.InvertColor(true))
@@ -3125,6 +3162,16 @@ public partial class FrmMain
     /// </summary>
     public bool IG_ToggleCropTool(bool? visible = null)
     {
+        // Disable crop tool during comparison mode
+        if (PicMain.ComparisonMode && visible != false)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return false;
+        }
+
         visible ??= MnuCropTool.Checked;
 
         // update menu item state
@@ -3177,6 +3224,172 @@ public partial class FrmMain
         ToggleTool(Local.Tools[nameof(FrmColorPicker)], visible.Value);
 
         return visible.Value;
+    }
+
+
+    /// <summary>
+    /// Toggles Compare tool.
+    /// </summary>
+    public bool IG_ToggleCompareTool(bool? visible = null)
+    {
+        visible ??= !PicMain.ComparisonMode;
+
+        MnuCompareTool.Checked = visible.Value;
+        UpdateToolbarItemsState();
+
+        PicMain.ComparisonMode = visible.Value;
+
+        Gallery.ComparisonMode = visible.Value;
+        if (visible.Value)
+        {
+            Gallery.ComparisonMainIndex = Local.CurrentIndex;
+
+            if (ShouldUseWeb2ForComparison())
+            {
+                _ = EnableWeb2ComparisonModeAsync();
+            }
+            else
+            {
+                _ = PicMain.SetWeb2ComparisonModeAsync(false);
+            }
+
+            PicMain.ShowMessage(
+                Config.Language[$"FrmCompare._SelectImageToCompare"],
+                heading: Config.Language[$"{Name}.{nameof(MnuCompareTool)}"],
+                durationMs: Config.InAppMessageDuration);
+        }
+        else
+        {
+            Gallery.ComparisonMainIndex = -1;
+            Gallery.ComparisonImagePath = string.Empty;
+            PicMain.ClearCompareImage();
+
+            _ = PicMain.SetWeb2ComparisonModeAsync(false);
+        }
+        Gallery.Refresh(true, false);
+        LoadImageInfo();
+
+        return visible.Value;
+    }
+
+    /// <summary>
+    /// Checks if WebView2 should be used for comparison mode.
+    /// Returns true if either image is SVG (and WebView2 is enabled for SVG),
+    /// or if either image is an animated format (GIF, WEBP, etc.).
+    /// </summary>
+    private bool ShouldUseWeb2ForComparison(string? rightImagePath = null)
+    {
+        var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+
+        // Check for animated formats - always use WebView2 for animation support
+        var leftIsAnimated = Const.ANIMATED_FORMATS.Any(ext =>
+            leftImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
+        var rightIsAnimated = Const.ANIMATED_FORMATS.Any(ext =>
+            rightImagePath?.EndsWith(ext, StringComparison.OrdinalIgnoreCase) == true);
+
+        if (leftIsAnimated || rightIsAnimated) return true;
+
+        // Check for SVG (requires UseWebview2ForSvg setting)
+        if (!Config.UseWebview2ForSvg) return false;
+
+        var leftIsSvg = leftImagePath?.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) == true;
+        var rightIsSvg = rightImagePath?.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) == true;
+
+        return leftIsSvg || rightIsSvg;
+    }
+
+    /// <summary>
+    /// Enables WebView2 comparison mode and loads the current image.
+    /// </summary>
+    private async Task EnableWeb2ComparisonModeAsync()
+    {
+        await PicMain.SetWeb2ComparisonModeAsync(true);
+
+        // Load current image as left (A) image (supports SVG or raster)
+        var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        if (!string.IsNullOrEmpty(leftImagePath))
+        {
+            var leftHtml = await ViewerCanvas.ReadImageAsHtmlAsync(leftImagePath);
+            await PicMain.SetWeb2ComparisonImagesAsync(
+                leftImagePath,
+                leftHtml,
+                null,
+                null);
+        }
+    }
+
+
+    /// <summary>
+    /// Updates the left (A) comparison image, handling D2D/WebView2 transitions.
+    /// </summary>
+    private async Task UpdateComparisonLeftImageAsync()
+    {
+        _comparisonUpdateCts?.Cancel();
+        _comparisonUpdateCts?.Dispose();
+        _comparisonUpdateCts = new CancellationTokenSource();
+        var token = _comparisonUpdateCts.Token;
+
+        try
+        {
+            var rightImagePath = Gallery.ComparisonImagePath;
+            var leftImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
+            if (string.IsNullOrEmpty(leftImagePath)) return;
+
+            var needsWebView2 = ShouldUseWeb2ForComparison(rightImagePath);
+
+            if (needsWebView2)
+            {
+                if (!PicMain.IsWeb2ComparisonModeActive)
+                {
+                    await PicMain.SetWeb2ComparisonModeAsync(true, token);
+                }
+                token.ThrowIfCancellationRequested();
+
+                var leftHtml = await ViewerCanvas.ReadImageAsHtmlAsync(leftImagePath, token);
+                token.ThrowIfCancellationRequested();
+
+                var rightHtml = !string.IsNullOrEmpty(rightImagePath)
+                    ? await ViewerCanvas.ReadImageAsHtmlAsync(rightImagePath, token)
+                    : null;
+                token.ThrowIfCancellationRequested();
+
+                await PicMain.SetWeb2ComparisonImagesAsync(
+                    leftImagePath,
+                    leftHtml,
+                    rightImagePath,
+                    rightHtml,
+                    token);
+            }
+            else
+            {
+                var wasWeb2Active = PicMain.IsWeb2ComparisonModeActive;
+                if (wasWeb2Active)
+                {
+                    await PicMain.SetWeb2ComparisonModeAsync(false, token);
+                }
+                token.ThrowIfCancellationRequested();
+
+                if (!string.IsNullOrEmpty(rightImagePath) && (!PicMain.HasCompareImage || wasWeb2Active))
+                {
+                    var imgData = await PhotoCodec.LoadAsync(rightImagePath, new CodecReadOptions()
+                    {
+                        ColorProfileName = Config.ColorProfile,
+                        FirstFrameOnly = true,
+                    }, null, token);
+
+                    token.ThrowIfCancellationRequested();
+
+                    if (imgData != null)
+                    {
+                        PicMain.SetCompareImage(imgData, rightImagePath);
+                    }
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when navigating rapidly
+        }
     }
 
 
@@ -3490,6 +3703,15 @@ public partial class FrmMain
     {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
 
+        // Disable during comparison mode
+        if (PicMain.ComparisonMode)
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._InvalidAction._ComparisonMode"],
+                heading: Config.Language["_._InvalidAction"],
+                durationMs: Config.InAppMessageDuration);
+            return;
+        }
 
         // apply color channels filter
         if (PicMain.FilterColorChannels(channels, false))
