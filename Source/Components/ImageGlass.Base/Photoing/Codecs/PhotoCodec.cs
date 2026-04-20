@@ -53,6 +53,11 @@ public static class PhotoCodec
         if (fi == null) return meta;
         var ext = fi.Extension.ToUpperInvariant();
 
+        if (IthmbDecoder.IsIthmbFile(filePath))
+        {
+            return IthmbDecoder.LoadMetadata(filePath, options);
+        }
+
         meta.FileName = fi.Name;
         meta.FileExtension = ext;
         meta.FolderPath = fi.DirectoryName ?? string.Empty;
@@ -236,6 +241,11 @@ public static class PhotoCodec
         options ??= new();
         var cancelToken = token ?? default;
 
+        if (IthmbDecoder.IsIthmbFile(filePath))
+        {
+            return await IthmbDecoder.LoadAsync(filePath, options, transform, cancelToken);
+        }
+
         try
         {
             var (loadSuccessful, result, ext, settings) = ReadWithStream(filePath, options, transform);
@@ -259,6 +269,11 @@ public static class PhotoCodec
     public static async Task<Bitmap?> GetThumbnailAsync(string filePath, uint width, uint height)
     {
         if (string.IsNullOrEmpty(filePath) || width == 0 || height == 0) return null;
+
+        if (IthmbDecoder.IsIthmbFile(filePath))
+        {
+            return await IthmbDecoder.GetThumbnailAsync(filePath, width, height);
+        }
 
 
         var options = new CodecReadOptions()
@@ -455,6 +470,23 @@ public static class PhotoCodec
                 throw new FileFormatException("IGE_001: Unsupported image format.");
             }
 
+            if (IthmbDecoder.IsIthmbFile(srcFileName))
+            {
+                var frameIndex = transform?.FrameIndex >= 0
+                    ? transform.FrameIndex
+                    : (readOptions.FrameIndex ?? 0);
+
+                using var ithmbData = await IthmbDecoder.LoadAsync(srcFileName, readOptions with
+                {
+                    FrameIndex = frameIndex,
+                    Width = 0,
+                    Height = 0,
+                }, transform, token);
+
+                await SaveAsync(ithmbData.Image, destFilePath, null, quality, MagickFormat.Unknown, token);
+                return;
+            }
+
             var settings = ParseSettings(readOptions, true, srcFileName);
 
 
@@ -564,6 +596,37 @@ public static class PhotoCodec
     /// <param name="destFolder">The destination folder to save to</param>
     public static async IAsyncEnumerable<(int FrameNumber, string FileName)> SaveFramesAsync(string srcFilePath, string destFolder, [EnumeratorCancellation] CancellationToken token = default)
     {
+        if (IthmbDecoder.IsIthmbFile(srcFilePath))
+        {
+            Directory.CreateDirectory(destFolder);
+
+            await foreach (var (frameNumber, frame) in IthmbDecoder.EnumerateFramesAsync(srcFilePath, token))
+            {
+                if (frame == null)
+                {
+                    continue;
+                }
+
+                var fileName = Path.GetFileNameWithoutExtension(srcFilePath)
+                    + " - " + frameNumber.ToString("D4")
+                    + ".png";
+                var destFilePath = Path.Combine(destFolder, fileName);
+
+                try
+                {
+                    await SaveAsync(frame, destFilePath, null, 100, MagickFormat.Png, token);
+                }
+                finally
+                {
+                    frame.Dispose();
+                }
+
+                yield return (frameNumber, fileName);
+            }
+
+            yield break;
+        }
+
         // create dirs unless it does not exist
         Directory.CreateDirectory(destFolder);
 
@@ -639,6 +702,23 @@ public static class PhotoCodec
     /// <param name="destFilePath">Destination file path</param>
     public static async Task SaveAsBase64Async(string srcFilePath, string destFilePath, CodecReadOptions readOptions, ImgTransform? transform = null, CancellationToken token = default)
     {
+        if (IthmbDecoder.IsIthmbFile(srcFilePath))
+        {
+            var frameIndex = transform?.FrameIndex >= 0
+                ? transform.FrameIndex
+                : (readOptions.FrameIndex ?? 0);
+
+            using var ithmbData = await IthmbDecoder.LoadAsync(srcFilePath, readOptions with
+            {
+                FrameIndex = frameIndex,
+                Width = 0,
+                Height = 0,
+            }, transform, token);
+
+            await SaveAsBase64Async(ithmbData.Image, ".png", destFilePath, null, token);
+            return;
+        }
+
         if (transform.HasChanges)
         {
             using var imgC = new MagickImageCollection();
