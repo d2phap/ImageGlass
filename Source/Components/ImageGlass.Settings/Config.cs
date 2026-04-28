@@ -27,6 +27,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Win32;
+using System.Collections.Concurrent;
 using System.Collections.Frozen;
 using System.Diagnostics;
 using System.Dynamic;
@@ -1890,7 +1891,7 @@ public static class Config
         allThemeNames.AddRange(userThemeNames);
         allThemeNames = allThemeNames.Distinct().ToList();
 
-        var allThemes = new List<IgTheme>(allThemeNames.Count);
+        var allThemesBag = new ConcurrentBag<IgTheme>();
 
         Parallel.ForEach(allThemeNames, dir =>
         {
@@ -1900,9 +1901,11 @@ public static class Config
             // valid theme
             if (th.IsValid)
             {
-                allThemes.Add(th);
+                allThemesBag.Add(th);
             }
         });
+
+        var allThemes = allThemesBag.ToList();
 
 
         // get default theme dir

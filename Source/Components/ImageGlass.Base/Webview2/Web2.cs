@@ -346,10 +346,31 @@ public class Web2 : WebView2
             // create the directory if not exists
             Directory.CreateDirectory(appDataDir);
 
-            var env = await CoreWebView2Environment.CreateAsync(
-                browserExecutableFolder: WebView2RuntimeFixedVersionDirPath,
-                userDataFolder: appDataDir,
-                options: options);
+            CoreWebView2Environment env;
+
+            // First try the local fixed-version runtime (WebView2_Runtime folder)
+            try
+            {
+                env = await CoreWebView2Environment.CreateAsync(
+                    browserExecutableFolder: WebView2RuntimeFixedVersionDirPath,
+                    userDataFolder: appDataDir,
+                    options: options);
+            }
+            catch
+            {
+                // Fall back to the system-installed WebView2 Runtime
+                if (WebView2RuntimeFixedVersionDirPath != null)
+                {
+                    env = await CoreWebView2Environment.CreateAsync(
+                        browserExecutableFolder: null,
+                        userDataFolder: appDataDir,
+                        options: options);
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             await this.EnsureCoreWebView2Async(env).ConfigureAwait(true);
 

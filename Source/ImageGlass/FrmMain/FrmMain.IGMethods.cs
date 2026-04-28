@@ -1215,17 +1215,8 @@ public partial class FrmMain
 
         if (Config.EnableCutMultipleFiles)
         {
-            // update the list
-            var fileList = new List<string>();
-            fileList.AddRange(Local.StringClipboard);
-
-            Parallel.ForEach(fileList, f =>
-            {
-                if (!File.Exists(f))
-                {
-                    Local.StringClipboard.Remove(f);
-                }
-            });
+            // remove files that no longer exist on disk
+            Local.StringClipboard = [.. Local.StringClipboard.Where(f => File.Exists(f))];
 
             // exit if duplicated filename
             if (Local.StringClipboard.IndexOf(filePath) == -1)
