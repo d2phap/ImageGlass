@@ -107,12 +107,24 @@ public class Web2 : WebView2
     {
         get
         {
+            // First try the local fixed-version runtime (WebView2_Runtime folder)
             try
             {
                 var version = CoreWebView2Environment.GetAvailableBrowserVersionString(WebView2RuntimeFixedVersionDirPath);
                 return new Version(version);
             }
             catch (WebView2RuntimeNotFoundException) { }
+
+            // Fall back to the system-installed WebView2 Runtime
+            if (WebView2RuntimeFixedVersionDirPath != null)
+            {
+                try
+                {
+                    var version = CoreWebView2Environment.GetAvailableBrowserVersionString();
+                    return new Version(version);
+                }
+                catch (WebView2RuntimeNotFoundException) { }
+            }
 
             return null;
         }

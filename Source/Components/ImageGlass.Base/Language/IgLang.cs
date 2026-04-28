@@ -128,10 +128,17 @@ public class IgLang : IDictionary<string, string>
     private string FilePath { get; set; } = "English";
 
     /// <summary>
+    /// Stores the originally requested file name, so that
+    /// <see cref="FileName"/> returns the correct value even
+    /// when the language file does not exist on disk.
+    /// </summary>
+    private string? _requestedFileName;
+
+    /// <summary>
     /// Gets the name of language file.
     /// Example: <c>Vietnameses.iglang.json</c>
     /// </summary>
-    public string FileName => Path.GetFileName(FilePath);
+    public string FileName => _requestedFileName ?? Path.GetFileName(FilePath);
 
     /// <summary>
     /// Language information
@@ -158,6 +165,10 @@ public class IgLang : IDictionary<string, string>
     {
         var defaultLang = InitDefaultLanguage();
         var filePath = Path.Combine(dirPath, fileName);
+
+        // Always preserve the original requested file name so that
+        // FileName returns the correct value when saving config.
+        _requestedFileName = fileName;
 
         if (File.Exists(filePath))
         {

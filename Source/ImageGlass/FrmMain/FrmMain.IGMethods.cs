@@ -965,6 +965,11 @@ public partial class FrmMain
         if (!Web2.CheckWebview2Installed())
         {
             var configFilePath = App.ConfigDir(PathType.File, Source.UserFilename);
+
+            _ = Config.ShowWarning(this,
+                description: Config.Language["_._Webview2._NotFound"],
+                title: Config.Language[$"{nameof(FrmMain)}.{nameof(MnuSettings)}"]);
+
             _ = FrmSettings.OpenUserConfigFileAsync(configFilePath);
 
             return;
