@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches: [v10]
+  pull_request:
+    branches: [v10]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Source/Components/ImageGlass.Settings/WebUI/package-lock.json
+
+      - name: Build WebUI
+        working-directory: Source/Components/ImageGlass.Settings/WebUI
+        run: |
+          npm ci
+          npm run build
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build with MSBuild
+        shell: cmd
+        run: |
+          for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do set "MSBUILD=%%i"
+          "%MSBUILD%" Source/ImageGlass/ImageGlass.csproj /p:Configuration=Release /p:Platform=x64 /p:NoWarn="NU1901;NU1902;NU1903;NETSDK1233;IDISP001;IDISP003;IDISP004;IDISP015;CA1051" /restore
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ImageGlass-build
+          path: Source/ImageGlass/bin/x64/Release/net10.0-windows10.0.17763.0/
