@@ -52,3 +52,5 @@ GetNamedPipeClientProcessId
 
 GetCurrentPackageFullName
 
+
+RegisterApplicationRestart

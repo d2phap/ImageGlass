@@ -452,6 +452,15 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Enables / Disables downloading app updates in the background so they are ready to install.
+    /// </summary>
+    public bool EnableAutoInstallUpdate
+    {
+        get => Get(ConfigId.EnableAutoInstallUpdate, false);
+        set => Set(ConfigId.EnableAutoInstallUpdate, value);
+    }
+
+    /// <summary>
     /// Enables, disables debug mode.
     /// </summary>
     public bool EnableDebug
@@ -664,6 +673,16 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.UpdateSkippedVersion, string.Empty);
         set => Set(ConfigId.UpdateSkippedVersion, value);
+    }
+
+
+    /// <summary>
+    /// Gets, sets the version of the verified update package waiting to be installed.
+    /// </summary>
+    public string UpdatePendingVersion
+    {
+        get => Get(ConfigId.UpdatePendingVersion, string.Empty);
+        set => Set(ConfigId.UpdatePendingVersion, value);
     }
 
     /// <summary>

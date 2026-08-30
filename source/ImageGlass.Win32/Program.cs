@@ -50,6 +50,7 @@ sealed class Program
             Core.ShellProvider = new Win32ShellProvider();
             Core.PrintProvider = new Win32PrintProvider();
             Core.PipeSecurityProvider = new Win32PipeSecurityProvider();
+            Core.UpdateInstaller = new Win32MsixUpdateInstaller();
         });
 
         if (isHandled) return 0;

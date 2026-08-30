@@ -27,6 +27,7 @@ using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Licensing;
+using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
 using ImageGlass.Plugins;
 using ImageGlass.SDK.Plugins;
@@ -134,6 +135,18 @@ public static class Core
     /// Provides the update service for checking and downloading app updates.
     /// </summary>
     public static UpdateProvider Update { get; set; } = null!;
+
+
+    /// <summary>
+    /// Installs a downloaded update in place; <c>null</c> on a channel that cannot update itself.
+    /// </summary>
+    public static IAppUpdateInstaller? UpdateInstaller { get; set; } = null;
+
+
+    /// <summary>
+    /// Whether a verified update package is downloaded and waiting to be installed.
+    /// </summary>
+    public static bool HasPendingUpdate => !string.IsNullOrWhiteSpace(Config?.UpdatePendingVersion);
 
 
     /// <summary>
