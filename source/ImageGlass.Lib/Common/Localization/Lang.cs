@@ -868,6 +868,8 @@ public class Lang
         new(LangId.Menu_MnuCheckForUpdate_LatestVersion, "The latest version: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_PublishedDate, "Published date: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_ReadyToInstall, "Update ready to install"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_Downloading, "Downloading the update…"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_DownloadFailed, "Could not download the update."), //v10.0
         new(LangId.Menu_MnuRestartToUpdate, "Restart to update"), //v10.0
         new(LangId.Menu_MnuRestartToUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
 

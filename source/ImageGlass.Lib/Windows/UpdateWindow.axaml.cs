@@ -24,6 +24,8 @@ using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Windowing;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Windows;
 
@@ -31,6 +33,8 @@ public partial class UpdateWindow : ModalWindow
 {
     private UpdateCheckResult? _result;
     private bool _isReadyToInstall;
+    private bool _canDownloadAndInstall;
+    private CancellationTokenSource? _cancelDownload;
 
     protected override int MIN_WIDTH => 550;
     protected override int MAX_WIDTH => 550;
@@ -84,6 +88,13 @@ public partial class UpdateWindow : ModalWindow
             return;
         }
 
+        // this build can install it itself, so fetch the package instead of opening a browser
+        if (_canDownloadAndInstall)
+        {
+            _ = DownloadThenInstallAsync();
+            return;
+        }
+
         // the Store delivers updates for its own package, so go to the Store listing
         if (IsMsStoreBuild)
         {
@@ -100,6 +111,13 @@ public partial class UpdateWindow : ModalWindow
         {
             _ = BHelper.OpenUrlAsync(this, url, "from_update_dialog");
         }
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+
+        _cancelDownload?.Cancel();
     }
 
     #endregion // Override Methods
@@ -178,6 +196,45 @@ public partial class UpdateWindow : ModalWindow
         PART_BtnSkipVersion.IsVisible = false;
     }
 
+    /// <summary>
+    /// Downloads the package with progress, then hands it to the installer.
+    /// </summary>
+    private async Task DownloadThenInstallAsync()
+    {
+        var release = _result?.Release;
+        if (release is null) return;
+
+        _cancelDownload?.Cancel();
+        _cancelDownload = new CancellationTokenSource();
+        var token = _cancelDownload.Token;
+
+        // downloading state: determinate bar, only [Close] which cancels
+        Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_Downloading];
+        IsButton1Visible = false;
+        Button2Text = Core.Lang[LangId._Cancel];
+        IsProgressVisible = true;
+        IsProgressIndeterminate = false;
+        ProgressValue = 0;
+        PART_BtnSkipVersion.IsVisible = false;
+
+        var progress = new Progress<double>(percent => ProgressValue = percent);
+        var isReady = await UpdateProvider.TryDownloadForInstallAsync(release, progress, token);
+
+        if (token.IsCancellationRequested) return;
+
+        if (!isReady)
+        {
+            // put the dialog back so the user can still reach the download page
+            SetResultState(_result!);
+            Note = Core.Lang[LangId.Menu_MnuCheckForUpdate_DownloadFailed];
+            NoteStyle = InfoBarSeverity.Danger;
+            _canDownloadAndInstall = false;
+            return;
+        }
+
+        await AppAPIProvider.IG_RestartToUpdateAsync(false);
+    }
+
     #endregion // Private Methods
 
 
@@ -220,6 +277,7 @@ public partial class UpdateWindow : ModalWindow
         Note = null;
         Thumbnail = null;
         _isReadyToInstall = false;
+        _canDownloadAndInstall = false;
         HideResultContent();
         IsButton1Visible = false;
         IsButton3Visible = false;
@@ -237,6 +295,10 @@ public partial class UpdateWindow : ModalWindow
                     StringComparison.OrdinalIgnoreCase)
                 && UpdateProvider.CanApplyPendingUpdate
                 && UpdateProvider.GetPendingPackagePath() is not null;
+
+            _canDownloadAndInstall = !_isReadyToInstall
+                && UpdateProvider.CanInstallUpdateInApp
+                && UpdateProvider.ResolveArtifact(release) is not null;
 
             Heading = Core.Lang[_isReadyToInstall
                 ? LangId.Menu_MnuCheckForUpdate_ReadyToInstall

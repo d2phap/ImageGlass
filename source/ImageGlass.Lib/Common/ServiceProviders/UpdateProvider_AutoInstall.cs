@@ -35,11 +35,16 @@ public sealed partial class UpdateProvider
 
 
     /// <summary>
-    /// Whether this build may download updates itself right now.
+    /// Whether the user can install an update from inside the app at all (licence, channel, policy).
     /// </summary>
-    public static bool CanAutoInstall => Core.IsProEnabled
-        && Core.Config?.EnableAutoInstallUpdate == true
-        && CanInstallUpdate;
+    public static bool CanInstallUpdateInApp => Core.IsProEnabled && CanInstallUpdate;
+
+
+    /// <summary>
+    /// Whether this build may download updates in the background without being asked.
+    /// </summary>
+    public static bool CanAutoInstall => CanInstallUpdateInApp
+        && Core.Config?.EnableAutoInstallUpdate == true;
 
 
     /// <summary>
@@ -164,42 +169,91 @@ public sealed partial class UpdateProvider
                 return false;
             }
 
-            // only one instance may fetch; a lock file, since a Mutex cannot be held across an await
-            using var gate = AppUpdateDownloader.TryAcquireDownloadLock();
-            if (gate is null)
-            {
-                UpdateTrace.Mark("download:skipBusy");
-                return false;
-            }
-
-            var path = await AppUpdateDownloader
-                .DownloadAsync(_httpClient, artifact, release.Version, null, ct)
-                .ConfigureAwait(false);
-            if (path is null) return false;
-
-            // a skip during this download had no pending version to retract, so honour it now
-            if (string.Equals(release.Version, config.UpdateSkippedVersion, StringComparison.OrdinalIgnoreCase))
-            {
-                UpdateTrace.Mark($"download:skippedMidFlight {release.Version}");
-                AppUpdateDownloader.ClearCache();
-                return false;
-            }
-
-            config.UpdatePendingVersion = release.Version;
-
-            // an ignored update would otherwise leave its package behind on every release
-            AppUpdateDownloader.PruneCacheExcept(release.Version);
-
-            // config is otherwise only written on close, and a crash would lose the pending state
-            _ = await Core.Config.SaveAsync().ConfigureAwait(false);
-
-            UpdateTrace.Mark($"download:ready {release.Version}");
-            return true;
+            return await DownloadAndArmAsync(release, artifact, null, ct).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             UpdateTrace.Mark($"download:unhandled {ex.Message}");
             return false;
         }
+    }
+
+
+    /// <summary>
+    /// Downloads the package for a user-initiated install, reporting progress 0-100. Never throws.
+    /// </summary>
+    /// <remarks>
+    /// Ignores the auto-download setting and the metered check: an explicit click is consent.
+    /// </remarks>
+    public static async Task<bool> TryDownloadForInstallAsync(UpdateReleaseInfo? release,
+        IProgress<double>? progress, CancellationToken ct)
+    {
+        try
+        {
+            if (release is null || !CanInstallUpdateInApp) return false;
+
+            // already downloaded in an earlier session
+            if (string.Equals(Core.Config?.UpdatePendingVersion, release.Version, StringComparison.OrdinalIgnoreCase)
+                && GetPendingPackagePath() is not null) return true;
+
+            if (Core.UpdateInstaller?.RequiresDownload == false) return false;
+
+            var artifact = ResolveArtifact(release);
+            if (artifact is null)
+            {
+                UpdateTrace.Mark($"manual:noArtifact key={Core.UpdateInstaller?.ArtifactKey}");
+                return false;
+            }
+
+            return await DownloadAndArmAsync(release, artifact, progress, ct).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            UpdateTrace.Mark($"manual:unhandled {ex.Message}");
+            return false;
+        }
+    }
+
+
+    /// <summary>
+    /// Fetches and verifies the package, then records it as the pending update.
+    /// </summary>
+    private static async Task<bool> DownloadAndArmAsync(UpdateReleaseInfo release,
+        UpdateArtifactInfo artifact, IProgress<double>? progress, CancellationToken ct)
+    {
+        var config = Core.Config;
+        if (config is null) return false;
+
+        // only one instance may fetch; a lock file, since a Mutex cannot be held across an await
+        using var gate = AppUpdateDownloader.TryAcquireDownloadLock();
+        if (gate is null)
+        {
+            UpdateTrace.Mark("download:skipBusy");
+            return false;
+        }
+
+        var path = await AppUpdateDownloader
+            .DownloadAsync(_httpClient, artifact, release.Version, progress, ct)
+            .ConfigureAwait(false);
+        if (path is null) return false;
+
+        // a skip during this download had no pending version to retract, so honour it now
+        if (string.Equals(release.Version, config.UpdateSkippedVersion, StringComparison.OrdinalIgnoreCase))
+        {
+            UpdateTrace.Mark($"download:skippedMidFlight {release.Version}");
+            AppUpdateDownloader.ClearCache();
+            return false;
+        }
+
+        config.UpdatePendingVersion = release.Version;
+
+        // an ignored update would otherwise leave its package behind on every release
+        AppUpdateDownloader.PruneCacheExcept(release.Version);
+
+        // config is otherwise only written on close, and a crash would lose the pending state
+        _ = await config.SaveAsync().ConfigureAwait(false);
+
+        UpdateTrace.Mark($"download:ready {release.Version}");
+        return true;
     }
 }

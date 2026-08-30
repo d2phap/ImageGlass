@@ -427,6 +427,8 @@ public enum LangId
     Menu_MnuCheckForUpdate_LatestVersion,
     Menu_MnuCheckForUpdate_PublishedDate,
     Menu_MnuCheckForUpdate_ReadyToInstall,
+    Menu_MnuCheckForUpdate_Downloading,
+    Menu_MnuCheckForUpdate_DownloadFailed,
     Menu_MnuRestartToUpdate,
     Menu_MnuRestartToUpdate_Confirm,
 
