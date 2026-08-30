@@ -329,7 +329,7 @@ public enum ResxIconId
     IconVerify,
     IconWeatherMoon,
     IconWeatherSunny,
-    IconArrowUp,
+    IconUpdateIndicator,
 }
 
 

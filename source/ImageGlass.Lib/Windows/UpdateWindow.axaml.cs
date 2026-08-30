@@ -81,14 +81,14 @@ public partial class UpdateWindow : ModalWindow
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
-        // installed directly, not via RunApiAsync: a locked API would swallow the click silently
+        // restart to install
         if (_isReadyToInstall)
         {
-            _ = AppAPIProvider.IG_RestartToUpdateAsync(false);
+            _ = AppAPIProvider.IG_InstallUpdateAsync(false);
             return;
         }
 
-        // this build can install it itself, so fetch the package instead of opening a browser
+        // download and install
         if (_canDownloadAndInstall)
         {
             _ = DownloadThenInstallAsync();
@@ -140,7 +140,7 @@ public partial class UpdateWindow : ModalWindow
             // nothing was staged with the OS, so skipping really does retract the update
             if (string.Equals(Core.Config.UpdatePendingVersion, version, StringComparison.OrdinalIgnoreCase))
             {
-                UpdateProvider.DiscardPendingUpdate();
+                Core.UpdateProvider.DiscardPendingUpdate();
                 _ = Core.Config.SaveAsync();
             }
         }
@@ -196,6 +196,7 @@ public partial class UpdateWindow : ModalWindow
         PART_BtnSkipVersion.IsVisible = false;
     }
 
+
     /// <summary>
     /// Downloads the package with progress, then hands it to the installer.
     /// </summary>
@@ -208,7 +209,7 @@ public partial class UpdateWindow : ModalWindow
         _cancelDownload = new CancellationTokenSource();
         var token = _cancelDownload.Token;
 
-        // downloading state: determinate bar, only [Close] which cancels
+        // downloading state
         Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_Downloading];
         IsButton1Visible = false;
         Button2Text = Core.Lang[LangId._Cancel];
@@ -218,21 +219,26 @@ public partial class UpdateWindow : ModalWindow
         PART_BtnSkipVersion.IsVisible = false;
 
         var progress = new Progress<double>(percent => ProgressValue = percent);
-        var isReady = await UpdateProvider.TryDownloadForInstallAsync(release, progress, token);
+        var download = await Core.UpdateProvider.TryDownloadForInstallAsync(release, progress, token);
 
-        if (token.IsCancellationRequested) return;
+        if (token.IsCancellationRequested || download.IsSkipped) return;
 
-        if (!isReady)
+        if (!download.IsSuccess)
         {
             // put the dialog back so the user can still reach the download page
             SetResultState(_result!);
-            Note = Core.Lang[LangId.Menu_MnuCheckForUpdate_DownloadFailed];
-            NoteStyle = InfoBarSeverity.Danger;
             _canDownloadAndInstall = false;
-            return;
+
+            _ = AppAPIProvider.ShowUpdateFailedAsync(download);
+        }
+        else
+        {
+            await AppAPIProvider.IG_InstallUpdateAsync(false);
         }
 
-        await AppAPIProvider.IG_RestartToUpdateAsync(false);
+
+        DialogResult = DialogExitCode.Cancel;
+        Close();
     }
 
     #endregion // Private Methods
@@ -293,12 +299,12 @@ public partial class UpdateWindow : ModalWindow
             // a downloaded package installs from disk; otherwise the button opens the download page
             _isReadyToInstall = string.Equals(Core.Config.UpdatePendingVersion, release.Version,
                     StringComparison.OrdinalIgnoreCase)
-                && UpdateProvider.CanApplyPendingUpdate
-                && UpdateProvider.GetPendingPackagePath() is not null;
+                && Core.UpdateProvider.CanApplyPendingUpdate
+                && Core.UpdateProvider.GetPendingPackagePath() is not null;
 
             _canDownloadAndInstall = !_isReadyToInstall
-                && UpdateProvider.CanInstallUpdateInApp
-                && UpdateProvider.ResolveArtifact(release) is not null;
+                && Core.UpdateProvider.CanInstallUpdateInApp
+                && Core.UpdateProvider.ResolveArtifact(release) is not null;
 
             Heading = Core.Lang[_isReadyToInstall
                 ? LangId.Menu_MnuCheckForUpdate_ReadyToInstall
@@ -309,7 +315,10 @@ public partial class UpdateWindow : ModalWindow
 
             // "Skip this version" link + [Update / Restart now] [Close]
             PART_BtnSkipVersion.IsVisible = true;
-            Button1Text = Core.Lang[_isReadyToInstall ? LangId._RestartNow : LangId._Update];
+            // "Download" is the honest label when the click fetches the package instead of a page
+            Button1Text = Core.Lang[_isReadyToInstall
+                ? LangId._RestartNow
+                : _canDownloadAndInstall ? LangId._Download : LangId._Update];
             IsButton1Visible = true;
             DefaultButton = DialogButton.Button1;
             DefaultFocus = DialogFocus.Button1;

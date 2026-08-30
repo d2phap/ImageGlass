@@ -69,10 +69,10 @@
 
         <!--  attention: a soft tinted row, e.g. a downloaded update waiting to install  -->
         <Style Selector="^.attention /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource IG_BackgroundInfoBrush}" />
+            <Setter Property="Background" Value="{DynamicResource IG_BackgroundWarningBrush}" />
         </Style>
         <Style Selector="^.attention:selected /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource IG_BackgroundInfoBrush}" />
+            <Setter Property="Background" Value="{DynamicResource IG_BackgroundWarningBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource IG_TextAccentColor}" />
         </Style>
     </Style>

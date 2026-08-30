@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Common.ServiceProviders;
 
-public sealed partial class UpdateProvider
+public partial class UpdateProvider : IUpdateProvider
 {
     private static readonly HttpClient _httpClient = CreateHttpClient();
     private InterlockedBool _isChecking;

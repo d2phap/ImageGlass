@@ -122,18 +122,31 @@ internal static class AppUpdateDownloader
     /// <remarks>
     /// A file handle, not a Mutex: Mutex has thread affinity and cannot survive an await.
     /// </remarks>
-    public static IDisposable? TryAcquireDownloadLock()
+    public static async Task<IDisposable?> AcquireDownloadLockAsync(CancellationToken ct)
     {
-        try
-        {
-            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
-            Directory.CreateDirectory(dir);
+        var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+        Directory.CreateDirectory(dir);
+        var lockPath = Path.Combine(dir, UpdateConstants.DownloadLockFile);
 
-            return new FileStream(Path.Combine(dir, UpdateConstants.DownloadLockFile),
-                FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1,
-                FileOptions.DeleteOnClose);
+        // another instance may be mid-download, so wait it out rather than reporting a failure
+        for (var i = 0; i < UpdateConstants.DownloadLockRetries; i++)
+        {
+            try
+            {
+                return new FileStream(lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite,
+                    FileShare.None, 1, FileOptions.DeleteOnClose);
+            }
+            catch (IOException)
+            {
+                await Task.Delay(UpdateConstants.DownloadLockRetryDelayMs, ct).ConfigureAwait(false);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await Task.Delay(UpdateConstants.DownloadLockRetryDelayMs, ct).ConfigureAwait(false);
+            }
         }
-        catch { return null; }
+
+        return null;
     }
 
 
@@ -154,11 +167,48 @@ internal static class AppUpdateDownloader
                 var name = Path.GetFileName(file);
                 if (name.Equals(keep, StringComparison.OrdinalIgnoreCase)) continue;
                 if (name.Equals(UpdateConstants.DownloadLockFile, StringComparison.OrdinalIgnoreCase)) continue;
+                if (name.Equals(UpdateConstants.ApplyAttemptFile, StringComparison.OrdinalIgnoreCase)) continue;
 
                 TryDelete(file);
             }
         }
         catch { }
+    }
+
+
+    /// <summary>
+    /// Records that an install of <paramref name="version"/> is starting.
+    /// </summary>
+    /// <remarks>
+    /// Deployment kills this process before reporting, so the marker is the only failure evidence.
+    /// </remarks>
+    public static void MarkApplyAttempt(string version)
+    {
+        try
+        {
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+            Directory.CreateDirectory(dir);
+            File.WriteAllText(Path.Combine(dir, UpdateConstants.ApplyAttemptFile), version);
+        }
+        catch { }
+    }
+
+
+    /// <summary>
+    /// Version of the last install attempt, or <c>null</c> when none is recorded.
+    /// </summary>
+    public static string? ReadApplyAttempt()
+    {
+        try
+        {
+            var path = Path.Combine(BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir),
+                UpdateConstants.ApplyAttemptFile);
+            if (!File.Exists(path)) return null;
+
+            var version = File.ReadAllText(path).Trim();
+            return string.IsNullOrEmpty(version) ? null : version;
+        }
+        catch { return null; }
     }
 
 
@@ -208,7 +258,7 @@ internal static class AppUpdateDownloader
     /// <summary>
     /// Downloads and verifies the artifact, returning the cached path or <c>null</c> on failure.
     /// </summary>
-    public static async Task<string?> DownloadAsync(HttpClient client, UpdateArtifactInfo artifact,
+    public static async Task<UpdateOpResult> DownloadAsync(HttpClient client, UpdateArtifactInfo artifact,
         string version, IProgress<double>? progress, CancellationToken ct)
     {
         var destPath = GetPackagePath(version, artifact.Url);
@@ -217,7 +267,7 @@ internal static class AppUpdateDownloader
         if (File.Exists(destPath) && await VerifyAsync(destPath, artifact.Sha256, ct).ConfigureAwait(false))
         {
             UpdateTrace.Mark($"download:cached {destPath}");
-            return destPath;
+            return UpdateOpResult.Ok();
         }
 
         var partPath = destPath + ".part";
@@ -271,7 +321,12 @@ internal static class AppUpdateDownloader
             {
                 UpdateTrace.Mark($"download:hashMismatch expected={artifact.Sha256} actual={actual}");
                 TryDelete(partPath);
-                return null;
+
+                return UpdateOpResult.Fail(
+                    "IGE: The downloaded update failed its integrity check and was discarded.",
+                    $"URL: {artifact.Url}{Environment.NewLine}"
+                    + $"Expected SHA-256: {artifact.Sha256}{Environment.NewLine}"
+                    + $"Actual SHA-256:   {actual}");
             }
 
             // rename only after the digest matches, so a torn file is never installable
@@ -279,13 +334,18 @@ internal static class AppUpdateDownloader
             File.Move(partPath, destPath);
 
             UpdateTrace.Mark($"download:ok {destPath}");
-            return destPath;
+            return UpdateOpResult.Ok();
+        }
+        catch (OperationCanceledException)
+        {
+            TryDelete(partPath);
+            return UpdateOpResult.Skip();
         }
         catch (Exception ex)
         {
-            UpdateTrace.Mark($"download:failed {ex.Message}");
+            UpdateTrace.Mark($"download:failed {ex}");
             TryDelete(partPath);
-            return null;
+            return UpdateOpResult.Fail(ex);
         }
     }
 

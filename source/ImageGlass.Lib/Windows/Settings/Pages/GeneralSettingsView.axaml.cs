@@ -82,7 +82,7 @@ public partial class GeneralSettingsView : SettingsPageView
         ProGate(ConfigId.EnableAutoInstallUpdate, PART_AutoInstallUpdateBadge, PART_AutoInstallUpdate);
 
         // nothing to offer on a channel that cannot install its own updates, or when an admin locked it
-        var canSelfUpdate = UpdateProvider.CanInstallUpdate;
+        var canSelfUpdate = Core.UpdateProvider.CanInstallUpdate;
         PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
 
         // Others

@@ -475,6 +475,7 @@ public class Lang
         new(LangId._ResetToDefault, "Reset to default"), //v9.0
         new(LangId._CheckForUpdate, "Check for update…"), //v5.0
         new(LangId._Update, "Update"), //v9.0
+        new(LangId._Download, "Download"), //v10.0
         new(LangId._RestartNow, "Restart now"), //v10.0
         new(LangId._Website, "Website"), //v9.0
         new(LangId._TypeToFilter, "Type to filter…"),
@@ -869,9 +870,8 @@ public class Lang
         new(LangId.Menu_MnuCheckForUpdate_PublishedDate, "Published date: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_ReadyToInstall, "Update ready to install"), //v10.0
         new(LangId.Menu_MnuCheckForUpdate_Downloading, "Downloading the update…"), //v10.0
-        new(LangId.Menu_MnuCheckForUpdate_DownloadFailed, "Could not download the update."), //v10.0
-        new(LangId.Menu_MnuRestartToUpdate, "Restart to update"), //v10.0
-        new(LangId.Menu_MnuRestartToUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
+        new(LangId.Menu_MnuInstallUpdate, "Install update…"), //v10.0
+        new(LangId.Menu_MnuInstallUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
 
         new(LangId.Menu_MnuSetDefaultPhotoViewer, "Set default photo viewer"), //v9.0
         new(LangId.Menu_MnuSetDefaultPhotoViewer_Success, "You have successfully set ImageGlass as default photo viewer."), //v9.0

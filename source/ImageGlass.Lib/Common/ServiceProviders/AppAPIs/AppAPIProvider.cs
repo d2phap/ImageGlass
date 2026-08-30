@@ -3282,7 +3282,7 @@ public partial class AppAPIProvider
         }
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-        var result = await Core.Update.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
+        var result = await Core.UpdateProvider.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
 
         if (showUI)
         {
@@ -3295,8 +3295,8 @@ public partial class AppAPIProvider
         else
         {
             // auto-download when enabled; the ready package shows the menu affordance, not a popup
-            var isDownloaded = await UpdateProvider.TryDownloadUpdateAsync(result, CancellationToken.None);
-            if (isDownloaded) return;
+            var download = await Core.UpdateProvider.TryDownloadUpdateAsync(result, CancellationToken.None);
+            if (download.IsSuccess) return;
 
             // silent mode: only show window for an update the user has not already checked for
             if (result.Status == Update.UpdateCheckStatus.UpdateAvailable && !_hasManualUpdateCheck)
@@ -3312,31 +3312,37 @@ public partial class AppAPIProvider
     /// <summary>
     /// Installs the downloaded update and relaunches the app.
     /// </summary>
-    public static async Task IG_RestartToUpdateAsync(string? boolStr = null)
+    public static async Task IG_InstallUpdateAsync(string? boolStr = null)
     {
         var needsConfirm = BHelper.ConvertStringToBool(boolStr) ?? true;
-        await IG_RestartToUpdateAsync(needsConfirm);
+        await IG_InstallUpdateAsync(needsConfirm);
     }
 
 
     /// <summary>
     /// Installs the downloaded update and relaunches the app.
     /// </summary>
-    public static async Task IG_RestartToUpdateAsync(bool needsConfirm)
+    public static async Task IG_InstallUpdateAsync(bool needsConfirm)
     {
-        var installer = Core.UpdateInstaller;
+        var provider = Core.UpdateProvider;
         var version = Core.Config.UpdatePendingVersion;
         var title = Core.Lang[LangId._CheckForUpdate];
 
         // self-guard: reachable without RunApiAsync, so the admin lock is enforced here too
-        if (FeatureManager.IsLocked(API.IG_RestartToUpdate)) return;
-        if (installer is null || string.IsNullOrWhiteSpace(version)) return;
+        if (FeatureManager.IsLocked(API.IG_InstallUpdate)) return;
+        if (string.IsNullOrWhiteSpace(version)) return;
 
-        var pkgPath = UpdateProvider.GetPendingPackagePath();
+        var pkgPath = provider.GetPendingPackagePath();
         if (pkgPath is null)
         {
-            UpdateProvider.DiscardPendingUpdate();
-            await ShowUpdateFailedAsync(title, Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed]);
+            provider.DiscardPendingUpdate();
+            _ = await Core.Config.SaveAsync();
+
+            var cacheDir = BHelper.ConfigDir(Dir.Cache, Update.UpdateConstants.PackageCacheDir);
+            var realCacheDir = BHelper.GetRealPlatformPath(cacheDir);
+
+            await ShowUpdateFailedAsync(Update.UpdateOpResult.Fail(
+                $"IGE: The downloaded update package for {version} is no longer in the cache folder.", realCacheDir));
             return;
         }
 
@@ -3347,7 +3353,7 @@ public partial class AppAPIProvider
             {
                 Title = title,
                 Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
-                Description = Core.Lang[LangId.Menu_MnuRestartToUpdate_Confirm],
+                Description = Core.Lang[LangId.Menu_MnuInstallUpdate_Confirm],
                 Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
             }, ModalWindowButton.OK_Cancel);
             if (confirm.ExitCode != DialogExitCode.OK) return;
@@ -3360,30 +3366,29 @@ public partial class AppAPIProvider
         }
 
         var release = new Update.UpdateReleaseInfo { Version = version };
-        var isApplied = await installer.ApplyAndRestartAsync(pkgPath, release);
-        if (!isApplied)
+        var apply = await provider.ApplyAndRestartAsync(pkgPath, release);
+
+        // on success the process is already being torn down by the installer
+        if (!apply.IsSuccess && !apply.IsSkipped)
         {
-            await ShowUpdateFailedAsync(title, Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed]);
+            await ShowUpdateFailedAsync(apply);
         }
     }
 
 
     /// <summary>
-    /// Reports a failed self-update and offers the download page instead.
+    /// Reports the real reason a self-update failed and offers the download page instead.
     /// </summary>
-    private static async Task ShowUpdateFailedAsync(string title, string heading)
+    public static async Task ShowUpdateFailedAsync(Update.UpdateOpResult opResult, PhWindow? owner = null)
     {
-        var result = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
-        {
-            Title = title,
-            Heading = heading,
-        }, ModalWindowButton.LearnMore_Close);
+        owner ??= App.MainWindow;
 
-        if (result.ExitCode == DialogExitCode.OK)
+        var result = await ModalWindow.ShowErrorAsync(owner, new ModalWindowOptions
         {
-            _ = BHelper.OpenUrlAsync(App.MainWindow, Update.UpdateConstants.FallbackReleasesUrl,
-                "from_update_failed");
-        }
+            Title = Core.Lang[LangId._CheckForUpdate],
+            Heading = opResult.ErrorMessage ?? Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed],
+            Details = opResult.ErrorDetails,
+        });
     }
 
 

@@ -806,10 +806,10 @@ public partial class ToolbarControl : PhControl
     /// </summary>
     public void RefreshPendingUpdateState()
     {
-        var hasUpdate = UpdateProvider.CanApplyPendingUpdate;
+        var hasUpdate = Core.UpdateProvider.CanApplyPendingUpdate;
 
-        PART_MnuRestartToUpdate.IsVisible = hasUpdate;
-        PART_MnuRestartToUpdateSeparator.IsVisible = hasUpdate;
+        PART_MnuInstallUpdate.IsVisible = hasUpdate;
+        PART_MnuInstallUpdateSeparator.IsVisible = hasUpdate;
         PART_UpdateBadge.IsVisible = hasUpdate;
     }
 

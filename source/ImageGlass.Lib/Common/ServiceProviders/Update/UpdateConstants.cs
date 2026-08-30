@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -67,6 +67,22 @@ internal static class UpdateConstants
     /// Lock file serializing the download across app instances.
     /// </summary>
     public const string DownloadLockFile = ".download.lock";
+
+    /// <summary>
+    /// Marker written just before an install; it survives only when that install did not land.
+    /// </summary>
+    public const string ApplyAttemptFile = ".apply-attempt";
+
+
+    /// <summary>
+    /// How many times to retry the download lock before giving up.
+    /// </summary>
+    public const int DownloadLockRetries = 60;
+
+    /// <summary>
+    /// Delay between download-lock attempts, in milliseconds.
+    /// </summary>
+    public const int DownloadLockRetryDelayMs = 500;
 
     /// <summary>
     /// Default background check interval (7 days).
