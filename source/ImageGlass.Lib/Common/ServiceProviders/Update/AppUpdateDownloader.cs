@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -29,7 +29,7 @@ namespace ImageGlass.Common.ServiceProviders.Update;
 
 
 /// <summary>
-/// Downloads an update artifact to the temp dir and verifies it against the manifest digest.
+/// Downloads an update artifact and verifies it against the manifest digest.
 /// </summary>
 internal static class AppUpdateDownloader
 {
@@ -44,7 +44,7 @@ internal static class AppUpdateDownloader
         var ext = Path.GetExtension(new Uri(url).AbsolutePath);
         if (string.IsNullOrWhiteSpace(ext)) ext = ".pkg";
 
-        return BHelper.ConfigDir(Dir.Temporary, UpdateConstants.PackageCacheDir,
+        return BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir,
             $"{BHelper.AppName}_{version}{ext}");
     }
 
@@ -56,7 +56,7 @@ internal static class AppUpdateDownloader
     {
         try
         {
-            var dir = BHelper.ConfigDir(Dir.Temporary, UpdateConstants.PackageCacheDir);
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
             if (!Directory.Exists(dir)) return null;
 
             foreach (var file in Directory.EnumerateFiles(dir, $"{BHelper.AppName}_{version}.*"))
@@ -77,7 +77,7 @@ internal static class AppUpdateDownloader
     {
         try
         {
-            var dir = BHelper.ConfigDir(Dir.Temporary, UpdateConstants.PackageCacheDir);
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
             if (Directory.Exists(dir)) Directory.Delete(dir, true);
         }
         catch { }

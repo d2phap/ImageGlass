@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -49,7 +49,7 @@ internal static class UpdateConstants
     public static readonly TimeSpan MetadataTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Folder under the temp dir holding the downloaded update package.
+    /// Cache subfolder for the downloaded update package; NOT under _temp, which is wiped on exit.
     /// </summary>
     public const string PackageCacheDir = "_update";
 
