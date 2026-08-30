@@ -567,7 +567,7 @@ public partial class App : Application
         Core.Update = new UpdateProvider();
 
         // drop a pending update that already installed, before anything reads the flag
-        UpdateProvider.ReconcilePendingUpdate();
+        await UpdateProvider.ReconcilePendingUpdateAsync();
 
         // silent check handles disabled/interval logic
         _ = await Core.API.RunApiAsync(API.IG_CheckForUpdate, "false");

@@ -64,9 +64,9 @@ internal static class UpdateConstants
     public static readonly TimeSpan DownloadTimeout = TimeSpan.FromMinutes(30);
 
     /// <summary>
-    /// Named mutex serializing the download across app instances.
+    /// Lock file serializing the download across app instances.
     /// </summary>
-    public const string DownloadMutexName = @"Local\ImageGlass_UpdateDownload";
+    public const string DownloadLockFile = ".download.lock";
 
     /// <summary>
     /// Default background check interval (7 days).

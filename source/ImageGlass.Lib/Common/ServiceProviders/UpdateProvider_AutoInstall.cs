@@ -78,27 +78,27 @@ public sealed partial class UpdateProvider
     /// <summary>
     /// Drops a pending update that already installed, or whose package went missing.
     /// </summary>
-    public static void ReconcilePendingUpdate()
+    public static async Task ReconcilePendingUpdateAsync()
     {
         try
         {
-            var pending = Core.Config?.UpdatePendingVersion;
-            if (string.IsNullOrWhiteSpace(pending)) return;
+            var config = Core.Config;
+            var pending = config?.UpdatePendingVersion;
+            if (config is null || string.IsNullOrWhiteSpace(pending)) return;
 
             // the running build is at or past the pending one, so the update landed
-            if (CompareVersions(Core.BuildInfo.Version, pending) <= 0)
-            {
-                UpdateTrace.Mark($"reconcile:applied {pending}");
-                DiscardPendingUpdate();
-                return;
-            }
+            var isApplied = CompareVersions(Core.BuildInfo.Version, pending) <= 0;
 
             // the attention UI must never point at a package that is no longer on disk
-            if (GetPendingPackagePath() is null)
-            {
-                UpdateTrace.Mark($"reconcile:missing {pending}");
-                DiscardPendingUpdate();
-            }
+            var isMissing = !isApplied && GetPendingPackagePath() is null;
+
+            if (!isApplied && !isMissing) return;
+
+            UpdateTrace.Mark($"reconcile:{(isApplied ? "applied" : "missing")} {pending}");
+            DiscardPendingUpdate();
+
+            // persist now, so a crash before the next clean exit cannot resurrect the flag
+            _ = await config.SaveAsync().ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -147,8 +147,7 @@ public sealed partial class UpdateProvider
                 return false;
             }
 
-            // every instance runs the scheduled check, so only one of them may fetch.
-            // a lock FILE, not a Mutex: Mutex is thread-affine and cannot be held across an await
+            // only one instance may fetch; a lock file, since a Mutex cannot be held across an await
             using var gate = AppUpdateDownloader.TryAcquireDownloadLock();
             if (gate is null)
             {
