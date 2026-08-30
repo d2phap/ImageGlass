@@ -147,31 +147,21 @@ public sealed partial class UpdateProvider
                 return false;
             }
 
-            // every instance runs the scheduled check, so only one of them may fetch
-            using var mutex = new Mutex(false, UpdateConstants.DownloadMutexName);
-            var hasLock = false;
-            try
+            // every instance runs the scheduled check, so only one of them may fetch.
+            // a lock FILE, not a Mutex: Mutex is thread-affine and cannot be held across an await
+            using var gate = AppUpdateDownloader.TryAcquireDownloadLock();
+            if (gate is null)
             {
-                try { hasLock = mutex.WaitOne(0); }
-                catch (AbandonedMutexException) { hasLock = true; }
-
-                if (!hasLock)
-                {
-                    UpdateTrace.Mark("download:skipBusy");
-                    return false;
-                }
-
-                var path = await AppUpdateDownloader
-                    .DownloadAsync(_httpClient, artifact, release.Version, null, ct)
-                    .ConfigureAwait(false);
-                if (path is null) return false;
-
-                config.UpdatePendingVersion = release.Version;
+                UpdateTrace.Mark("download:skipBusy");
+                return false;
             }
-            finally
-            {
-                if (hasLock) mutex.ReleaseMutex();
-            }
+
+            var path = await AppUpdateDownloader
+                .DownloadAsync(_httpClient, artifact, release.Version, null, ct)
+                .ConfigureAwait(false);
+            if (path is null) return false;
+
+            config.UpdatePendingVersion = release.Version;
 
             // config is otherwise only written on close, and a crash would lose the pending state
             _ = await Core.Config.SaveAsync().ConfigureAwait(false);

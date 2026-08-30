@@ -71,6 +71,27 @@ internal static class AppUpdateDownloader
 
 
     /// <summary>
+    /// Takes the cross-process download lock, or returns <c>null</c> when another instance holds it.
+    /// </summary>
+    /// <remarks>
+    /// A file handle, not a Mutex: Mutex has thread affinity and cannot survive an await.
+    /// </remarks>
+    public static IDisposable? TryAcquireDownloadLock()
+    {
+        try
+        {
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+            Directory.CreateDirectory(dir);
+
+            return new FileStream(Path.Combine(dir, UpdateConstants.DownloadLockFile),
+                FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1,
+                FileOptions.DeleteOnClose);
+        }
+        catch { return null; }
+    }
+
+
+    /// <summary>
     /// Deletes every cached update package.
     /// </summary>
     public static void ClearCache()
