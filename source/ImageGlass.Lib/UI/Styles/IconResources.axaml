@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <StreamGeometry x:Key="IconEllipsis">
         M3,12 A1.5,1.5 0 1,1 6,12 A1.5,1.5 0 1,1 3,12 M10,12 A1.5,1.5 0 1,1 13,12 A1.5,1.5 0 1,1 10,12 M17,12 A1.5,1.5 0 1,1 20,12 A1.5,1.5 0 1,1 17,12
@@ -90,6 +90,8 @@
     <StreamGeometry x:Key="IconWeatherSunny">M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z</StreamGeometry>
 
     <!--  update available (arrow up)  -->
-    <StreamGeometry x:Key="IconUpdateIndicator">M12 3.5 4.5 11h4.75v9.5h5.5V11h4.75z</StreamGeometry>
+    <StreamGeometry x:Key="IconUpdateIndicator">
+        M0,0 M24,24 M4.2095 10.7327C3.9238 11.0326 3.9354 11.5074 4.2353 11.7931C4.5352 12.0788 5.01 12.0672 5.2957 11.7673L11.2503 5.5159L11.2503 20.25C11.2503 20.6642 11.5861 21 12.0003 21C12.4145 21 12.7503 20.6642 12.7503 20.25L12.7503 5.5158L18.705 11.7673C18.9907 12.0672 19.4654 12.0787 19.7653 11.7931C20.0652 11.5074 20.0768 11.0326 19.7911 10.7327L12.7244 3.3138C12.5635 3.1449 12.3583 3.0449 12.1449 3.0139C12.0981 3.0048 12.0497 3 12.0003 3C11.9507 3 11.9023 3.0048 11.8554 3.014C11.6421 3.045 11.437 3.145 11.2762 3.3138L4.2095 10.7327Z
+    </StreamGeometry>
 
 </ResourceDictionary>

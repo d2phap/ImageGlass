@@ -85,7 +85,7 @@
                         Width="13"
                         Height="13"
                         Margin="0,4,4,0"
-                        Padding="3"
+                        Padding="2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Background="{DynamicResource PhAccentFill}"
