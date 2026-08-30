@@ -3294,6 +3294,10 @@ public partial class AppAPIProvider
         }
         else
         {
+            // auto-download when enabled; the ready package shows the menu affordance, not a popup
+            var isDownloaded = await UpdateProvider.TryDownloadUpdateAsync(result, CancellationToken.None);
+            if (isDownloaded) return;
+
             // silent mode: only show window for an update the user has not already checked for
             if (result.Status == Update.UpdateCheckStatus.UpdateAvailable && !_hasManualUpdateCheck)
             {

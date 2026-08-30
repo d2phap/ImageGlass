@@ -49,6 +49,26 @@ internal static class UpdateConstants
     public static readonly TimeSpan MetadataTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
+    /// Folder under the temp dir holding the downloaded update package.
+    /// </summary>
+    public const string PackageCacheDir = "_update";
+
+    /// <summary>
+    /// Maximum update package size (1 GB).
+    /// </summary>
+    public const long MaxPackageSize = 1024L * 1024 * 1024;
+
+    /// <summary>
+    /// Whole-download timeout; generous, since this runs in the background.
+    /// </summary>
+    public static readonly TimeSpan DownloadTimeout = TimeSpan.FromMinutes(30);
+
+    /// <summary>
+    /// Named mutex serializing the download across app instances.
+    /// </summary>
+    public const string DownloadMutexName = @"Local\ImageGlass_UpdateDownload";
+
+    /// <summary>
     /// Default background check interval (7 days).
     /// </summary>
     public static readonly TimeSpan BackgroundCheckInterval = TimeSpan.FromDays(7);
