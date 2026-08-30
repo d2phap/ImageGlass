@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -29,8 +29,7 @@ namespace ImageGlass.Common.Loggers;
 /// Auto-update trace, written to <c>ig_update.log</c> in the <see cref="Dir.Logs"/> folder.
 /// </summary>
 /// <remarks>
-/// Gated on <c>Config.EnableDebug</c> rather than a CLI flag: a background update failure cannot be
-/// reproduced on demand, so the switch has to be one the user already has on.
+/// Gated on <c>Config.EnableDebug</c>, not a CLI flag: a background failure cannot be reproduced on demand.
 /// </remarks>
 public static class UpdateTrace
 {

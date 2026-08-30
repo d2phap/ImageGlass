@@ -39,8 +39,7 @@ public sealed partial class UpdateProvider
     /// Path of the verified package waiting to be installed, or <c>null</c>.
     /// </summary>
     /// <remarks>
-    /// Located by version alone: at restart time there is no manifest, and re-hashing would not be
-    /// the real gate anyway - a tampered MSIX fails signature validation inside the installer.
+    /// By version alone: there is no manifest at restart time, and MSIX signature checking is the real gate.
     /// </remarks>
     public static string? GetPendingPackagePath()
     {

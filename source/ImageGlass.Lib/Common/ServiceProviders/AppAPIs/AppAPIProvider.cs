@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -3312,7 +3312,17 @@ public partial class AppAPIProvider
     /// <summary>
     /// Installs the downloaded update and relaunches the app.
     /// </summary>
-    public static async Task IG_RestartToUpdateAsync()
+    public static async Task IG_RestartToUpdateAsync(string? boolStr = null)
+    {
+        var needsConfirm = BHelper.ConvertStringToBool(boolStr) ?? true;
+        await IG_RestartToUpdateAsync(needsConfirm);
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_RestartToUpdateAsync(bool needsConfirm)
     {
         var installer = Core.UpdateInstaller;
         var version = Core.Config.UpdatePendingVersion;
@@ -3328,17 +3338,26 @@ public partial class AppAPIProvider
             return;
         }
 
-        var release = new Update.UpdateReleaseInfo { Version = version };
-
-        var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
+        // the menu entry is one click from killing the app; the dialog's [Restart now] already confirmed
+        if (needsConfirm)
         {
-            Title = title,
-            Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
-            Description = Core.Lang[LangId.Menu_MnuRestartToUpdate_Confirm],
-            Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
-        }, ModalWindowButton.OK_Cancel);
-        if (confirm.ExitCode != DialogExitCode.OK) return;
+            var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
+            {
+                Title = title,
+                Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
+                Description = Core.Lang[LangId.Menu_MnuRestartToUpdate_Confirm],
+                Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
+            }, ModalWindowButton.OK_Cancel);
+            if (confirm.ExitCode != DialogExitCode.OK) return;
+        }
 
+        // deployment terminates the process, so OnClosing never runs: persist window state now
+        if (App.MainWindow is { } mainWindow)
+        {
+            _ = await mainWindow.CaptureAndSaveConfigAsync();
+        }
+
+        var release = new Update.UpdateReleaseInfo { Version = version };
         var isApplied = await installer.ApplyAndRestartAsync(pkgPath, release);
         if (!isApplied)
         {

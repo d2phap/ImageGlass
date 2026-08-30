@@ -302,7 +302,10 @@ public partial class MainWindow : PhWindow
     }
 
 
-    private async Task SaveConfigOnClosingAsync()
+    /// <summary>
+    /// Captures live window/viewer state into config and saves it; also used before a self-update kills us.
+    /// </summary>
+    internal async Task<bool> CaptureAndSaveConfigAsync()
     {
         // 1. save full screen mode; a minimized window reports the state it will restore to
         Core.Config.EnableFullScreen = RestorableWindowState == WindowState.FullScreen;
@@ -323,7 +326,7 @@ public partial class MainWindow : PhWindow
         Core.Config.LastSeenImagePath = Core.Config.EnableLastSeenImage
             ? Core.Photos.CurrentFilePath
             : string.Empty;
-        
+
 
         // persist the current hosted tool's settings, but keep LastOpenedTool intact
         // (IG_CloseTool clears it) so the tool is re-opened on next launch
@@ -332,14 +335,19 @@ public partial class MainWindow : PhWindow
             ToolRegistry.SaveToolSettings(toolToSave);
         }
 
+        return await Core.Config.SaveAsync();
+    }
 
+
+    private async Task SaveConfigOnClosingAsync()
+    {
         // hide the open windows
         Hide();
         App.SettingsWindow?.Hide();
 
 
         // save config to file
-        var taskConfig = Core.Config.SaveAsync();
+        var taskConfig = CaptureAndSaveConfigAsync();
 
 
         // permanently adds the data that is on the Clipboard so that it is available
