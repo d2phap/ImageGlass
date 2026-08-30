@@ -41,12 +41,11 @@ internal static class AppUpdateDownloader
     /// <summary>
     /// Full path the artifact for <paramref name="version"/> is cached at.
     /// </summary>
-    /// <remarks>
-    /// Both parts come from the remote manifest, so unsanitized they are an arbitrary-file-write primitive.
-    /// </remarks>
     public static string GetPackagePath(string version, string url)
     {
         var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+
+        // both parts come from the remote manifest: unsanitized they are an arbitrary-file-write primitive
         var fileName = $"{BHelper.AppName}_{Sanitize(version, 40)}{SanitizeExtension(url)}";
         var fullPath = Path.GetFullPath(Path.Combine(dir, fileName));
 
@@ -117,11 +116,8 @@ internal static class AppUpdateDownloader
 
 
     /// <summary>
-    /// Takes the cross-process download lock, or returns <c>null</c> when another instance holds it.
+    /// Takes the cross-process download lock (a file handle, since a Mutex is thread-affine).
     /// </summary>
-    /// <remarks>
-    /// A file handle, not a Mutex: Mutex has thread affinity and cannot survive an await.
-    /// </remarks>
     public static async Task<IDisposable?> AcquireDownloadLockAsync(CancellationToken ct)
     {
         var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
@@ -215,11 +211,8 @@ internal static class AppUpdateDownloader
 
 
     /// <summary>
-    /// Records that an install of <paramref name="version"/> is starting.
+    /// Records that an install is starting; deployment kills us before reporting, so this is the only evidence.
     /// </summary>
-    /// <remarks>
-    /// Deployment kills this process before reporting, so the marker is the only failure evidence.
-    /// </remarks>
     public static void MarkApplyAttempt(string version)
     {
         try

@@ -101,11 +101,8 @@ public partial class UpdateProvider
 
 
     /// <summary>
-    /// Path of the verified package waiting to be installed, or <c>null</c>.
+    /// Path of the verified package waiting to be installed, found by version alone, or <c>null</c>.
     /// </summary>
-    /// <remarks>
-    /// By version alone: there is no manifest at restart time, and MSIX signature checking is the real gate.
-    /// </remarks>
     public string? GetPendingPackagePath()
     {
         var version = Core.Config.UpdatePendingVersion;
@@ -257,11 +254,8 @@ public partial class UpdateProvider
 
 
     /// <summary>
-    /// Downloads the package for a user-initiated install, reporting progress 0-100. Never throws.
+    /// Downloads for a user-initiated install, ignoring the metered check. Reports 0-100, never throws.
     /// </summary>
-    /// <remarks>
-    /// Ignores the metered check: an explicit click is consent.
-    /// </remarks>
     public async Task<UpdateOpResult> TryDownloadForInstallAsync(UpdateReleaseInfo? release,
         IProgress<double>? progress, CancellationToken ct)
     {

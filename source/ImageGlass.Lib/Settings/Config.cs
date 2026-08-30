@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -662,7 +662,7 @@ public partial class Config : PhReactive
     /// </summary>
     public string AutoUpdate
     {
-        get => Get(ConfigId.AutoUpdate, DateTime.UtcNow.Subtract(TimeSpan.FromDays(30)).ToString());
+        get => Get(ConfigId.AutoUpdate, BHelper.FormatUtcRoundtrip(DateTime.UtcNow.AddDays(-30)));
         set => Set(ConfigId.AutoUpdate, value);
     }
 
