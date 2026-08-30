@@ -1,4 +1,4 @@
-<ui:PhControl
+﻿<ui:PhControl
     x:Class="ImageGlass.UI.ToolbarControl"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -81,13 +81,14 @@
                 <Panel>
                     <Border
                         x:Name="PART_UpdateBadge"
-                        Width="11"
-                        Height="11"
-                        Margin="0,-1,-1,0"
+                        Width="13"
+                        Height="13"
+                        Margin="0,-2,-2,0"
+                        Padding="3"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Background="{DynamicResource PhAccentFill}"
-                        CornerRadius="6"
+                        CornerRadius="7"
                         IsHitTestVisible="False"
                         IsVisible="False"
                         ZIndex="95">
