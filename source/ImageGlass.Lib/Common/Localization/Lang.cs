@@ -936,7 +936,6 @@ public class Lang
         new(LangId.Settings_AutoUpdate_Description, "The update check also includes a short anonymous message that helps improve ImageGlass. It contains no name, no account, and no identifier, and nothing about your files. Turning this off stops it completely."),
         new(LangId.Settings_SeeWhatIsSent, "See exactly what is sent…"),
         new(LangId.Settings_EnableAutoInstallUpdate, "Download and install updates automatically"), //v10.0
-        new(LangId.Settings_EnableAutoInstallUpdate_Description, "ImageGlass downloads updates in the background so they are ready to install."), //v10.0
 
         // General > Others
         new(LangId.Settings_Others, "Others"),

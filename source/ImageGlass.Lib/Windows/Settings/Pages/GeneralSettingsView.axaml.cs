@@ -84,7 +84,6 @@ public partial class GeneralSettingsView : SettingsPageView
         // nothing to offer on a channel that cannot install its own updates, or when an admin locked it
         var canSelfUpdate = UpdateProvider.CanInstallUpdate;
         PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
-        PART_AutoInstallUpdateDescription.IsVisible = canSelfUpdate;
 
         // Others
         BindIntInput(PART_MsgDuration, ConfigId.InAppMessageDuration,

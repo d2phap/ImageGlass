@@ -495,7 +495,6 @@ public enum LangId
     Settings_AutoUpdate_Description,
     Settings_SeeWhatIsSent,
     Settings_EnableAutoInstallUpdate,
-    Settings_EnableAutoInstallUpdate_Description,
 
     // General > Others
     Settings_Others,
