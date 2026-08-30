@@ -20,8 +20,10 @@ using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Types;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,13 +41,54 @@ internal static class AppUpdateDownloader
     /// <summary>
     /// Full path the artifact for <paramref name="version"/> is cached at.
     /// </summary>
+    /// <remarks>
+    /// Both parts come from the remote manifest, so unsanitized they are an arbitrary-file-write primitive.
+    /// </remarks>
     public static string GetPackagePath(string version, string url)
     {
-        var ext = Path.GetExtension(new Uri(url).AbsolutePath);
-        if (string.IsNullOrWhiteSpace(ext)) ext = ".pkg";
+        var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+        var fileName = $"{BHelper.AppName}_{Sanitize(version, 40)}{SanitizeExtension(url)}";
+        var fullPath = Path.GetFullPath(Path.Combine(dir, fileName));
 
-        return BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir,
-            $"{BHelper.AppName}_{version}{ext}");
+        // last line of defence: the result must still be inside the cache folder
+        var root = Path.GetFullPath(dir) + Path.DirectorySeparatorChar;
+        if (!fullPath.StartsWith(root, StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException("IGE: Update package path escaped the cache folder.");
+
+        return fullPath;
+    }
+
+
+    /// <summary>
+    /// Keeps only characters that are safe in a file name.
+    /// </summary>
+    private static string Sanitize(string value, int maxLength)
+    {
+        var sb = new StringBuilder(Math.Min(value.Length, maxLength));
+
+        foreach (var c in value)
+        {
+            if (sb.Length >= maxLength) break;
+            if (char.IsAsciiLetterOrDigit(c) || c == '.' || c == '-' || c == '_') sb.Append(c);
+        }
+
+        return sb.Length > 0 ? sb.ToString() : "update";
+    }
+
+
+    /// <summary>
+    /// Extension of the artifact URL, restricted to a short alphanumeric suffix.
+    /// </summary>
+    private static string SanitizeExtension(string url)
+    {
+        try
+        {
+            var ext = Path.GetExtension(new Uri(url).AbsolutePath);
+            if (ext.Length is > 1 and <= 12 && ext[1..].All(char.IsAsciiLetterOrDigit)) return ext;
+        }
+        catch { }
+
+        return ".pkg";
     }
 
 
@@ -59,9 +102,12 @@ internal static class AppUpdateDownloader
             var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
             if (!Directory.Exists(dir)) return null;
 
-            foreach (var file in Directory.EnumerateFiles(dir, $"{BHelper.AppName}_{version}.*"))
+            var prefix = $"{BHelper.AppName}_{Sanitize(version, 40)}.";
+            foreach (var file in Directory.EnumerateFiles(dir))
             {
-                if (!file.EndsWith(".part", StringComparison.OrdinalIgnoreCase)) return file;
+                var name = Path.GetFileName(file);
+                if (name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                    && !name.EndsWith(".part", StringComparison.OrdinalIgnoreCase)) return file;
             }
         }
         catch { }
@@ -88,6 +134,31 @@ internal static class AppUpdateDownloader
                 FileOptions.DeleteOnClose);
         }
         catch { return null; }
+    }
+
+
+    /// <summary>
+    /// Deletes every cached package except the one for <paramref name="keepVersion"/>.
+    /// </summary>
+    public static void PruneCacheExcept(string keepVersion)
+    {
+        try
+        {
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+            if (!Directory.Exists(dir)) return;
+
+            var keep = Path.GetFileName(FindCachedPackage(keepVersion) ?? string.Empty);
+
+            foreach (var file in Directory.EnumerateFiles(dir))
+            {
+                var name = Path.GetFileName(file);
+                if (name.Equals(keep, StringComparison.OrdinalIgnoreCase)) continue;
+                if (name.Equals(UpdateConstants.DownloadLockFile, StringComparison.OrdinalIgnoreCase)) continue;
+
+                TryDelete(file);
+            }
+        }
+        catch { }
     }
 
 

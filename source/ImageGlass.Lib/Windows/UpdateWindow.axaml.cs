@@ -80,7 +80,7 @@ public partial class UpdateWindow : ModalWindow
         // the package is already on disk: install it instead of sending the user to a browser
         if (_isReadyToInstall)
         {
-            _ = Core.API.RunApiAsync(API.IG_RestartToUpdate);
+            _ = Core.API.RunApiAsync(API.IG_RestartToUpdate, "false");
             return;
         }
 

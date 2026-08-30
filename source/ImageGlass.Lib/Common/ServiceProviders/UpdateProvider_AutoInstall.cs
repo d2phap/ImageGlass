@@ -89,12 +89,17 @@ public sealed partial class UpdateProvider
             // the running build is at or past the pending one, so the update landed
             var isApplied = CompareVersions(Core.BuildInfo.Version, pending) <= 0;
 
+            // a skip that raced an in-flight download can leave both flags set on the same version
+            var isSkipped = !isApplied
+                && string.Equals(pending, config.UpdateSkippedVersion, StringComparison.OrdinalIgnoreCase);
+
             // the attention UI must never point at a package that is no longer on disk
-            var isMissing = !isApplied && GetPendingPackagePath() is null;
+            var isMissing = !isApplied && !isSkipped && GetPendingPackagePath() is null;
 
-            if (!isApplied && !isMissing) return;
+            if (!isApplied && !isSkipped && !isMissing) return;
 
-            UpdateTrace.Mark($"reconcile:{(isApplied ? "applied" : "missing")} {pending}");
+            var reason = isApplied ? "applied" : isSkipped ? "skipped" : "missing";
+            UpdateTrace.Mark($"reconcile:{reason} {pending}");
             DiscardPendingUpdate();
 
             // persist now, so a crash before the next clean exit cannot resurrect the flag
@@ -108,8 +113,7 @@ public sealed partial class UpdateProvider
 
 
     /// <summary>
-    /// Downloads and verifies the update package for a scheduled check; returns <c>true</c> when a
-    /// package is ready to install. Never throws.
+    /// Downloads and verifies the package for a scheduled check; true when one is ready. Never throws.
     /// </summary>
     public static async Task<bool> TryDownloadUpdateAsync(UpdateCheckResult result, CancellationToken ct)
     {
@@ -160,7 +164,18 @@ public sealed partial class UpdateProvider
                 .ConfigureAwait(false);
             if (path is null) return false;
 
+            // a skip during this download had no pending version to retract, so honour it now
+            if (string.Equals(release.Version, config.UpdateSkippedVersion, StringComparison.OrdinalIgnoreCase))
+            {
+                UpdateTrace.Mark($"download:skippedMidFlight {release.Version}");
+                AppUpdateDownloader.ClearCache();
+                return false;
+            }
+
             config.UpdatePendingVersion = release.Version;
+
+            // an ignored update would otherwise leave its package behind on every release
+            AppUpdateDownloader.PruneCacheExcept(release.Version);
 
             // config is otherwise only written on close, and a crash would lose the pending state
             _ = await Core.Config.SaveAsync().ConfigureAwait(false);
