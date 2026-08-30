@@ -78,6 +78,23 @@
                 x:Name="PART_SeeWhatIsSent"
                 HorizontalAlignment="Left"
                 Variant="Link" />
+
+            <StackPanel
+                x:Name="PART_AutoInstallUpdateRow"
+                Margin="0,10,0,0"
+                Orientation="Horizontal"
+                Spacing="8">
+                <CheckBox x:Name="PART_AutoInstallUpdate">
+                    <ui:PhTextBlock LangKey="Settings_EnableAutoInstallUpdate" TextWrapping="Wrap" />
+                </CheckBox>
+                <ui:PhProBadge x:Name="PART_AutoInstallUpdateBadge" IsVisible="False" />
+            </StackPanel>
+            <ui:PhTextBlock
+                x:Name="PART_AutoInstallUpdateDescription"
+                Margin="0,4,0,0"
+                LangKey="Settings_EnableAutoInstallUpdate_Description"
+                Opacity="0.75"
+                TextWrapping="Wrap" />
         </StackPanel>
 
 

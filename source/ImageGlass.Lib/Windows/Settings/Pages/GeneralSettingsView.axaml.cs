@@ -76,6 +76,15 @@ public partial class GeneralSettingsView : SettingsPageView
             LangId.Settings_AutoUpdate, LangId.Settings_AppUpdate);
         BindLink(PART_SeeWhatIsSent, LangId.Settings_SeeWhatIsSent, ShowUsageStatsPreview);
 
+        BindToggle(PART_AutoInstallUpdate, ConfigId.EnableAutoInstallUpdate,
+            LangId.Settings_EnableAutoInstallUpdate, LangId.Settings_AppUpdate);
+        ProGate(ConfigId.EnableAutoInstallUpdate, PART_AutoInstallUpdateBadge, PART_AutoInstallUpdate);
+
+        // nothing to offer on a channel that cannot install its own updates
+        var canSelfUpdate = Core.UpdateInstaller?.IsSupported == true;
+        PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
+        PART_AutoInstallUpdateDescription.IsVisible = canSelfUpdate;
+
         // Others
         BindIntInput(PART_MsgDuration, ConfigId.InAppMessageDuration,
             LangId.Settings_InAppMessageDuration, LangId.Settings_Others);
