@@ -179,13 +179,7 @@ public static partial class UsageStatsAgent
     }
 
 
-    private static string GetArchToken() => RuntimeInformation.OSArchitecture switch
-    {
-        Architecture.X64 => "x64",
-        Architecture.Arm64 => "arm64",
-        Architecture.X86 => "x86",
-        _ => "other",
-    };
+    private static string GetArchToken() => BHelper.ArchToken;
 
 
     /// <summary>

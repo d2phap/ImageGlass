@@ -97,5 +97,31 @@ public sealed class UpdateArtifactInfo
 {
     [JsonPropertyName("url")]
     public string Url { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Lowercase hex SHA-256; required to auto-install, unverified bytes are never installed.
+    /// </summary>
+    [JsonPropertyName("sha256")]
+    public string Sha256 { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Artifact size in bytes; <c>0</c> when the manifest omits it.
+    /// </summary>
+    [JsonPropertyName("size")]
+    public long Size { get; set; }
+
+    /// <summary>
+    /// Native package version; an MSIX identity is <c>Major.Minor.IgBundleBuild.0</c>, not the app version.
+    /// </summary>
+    [JsonPropertyName("packageVersion")]
+    public string PackageVersion { get; set; } = string.Empty;
+
+
+    /// <summary>
+    /// Whether this artifact carries everything an auto-install needs.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsInstallable => !string.IsNullOrWhiteSpace(Url)
+        && !string.IsNullOrWhiteSpace(Sha256);
 }
 
