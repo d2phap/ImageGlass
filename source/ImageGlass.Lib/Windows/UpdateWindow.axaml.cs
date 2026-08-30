@@ -235,6 +235,7 @@ public partial class UpdateWindow : ModalWindow
             // a downloaded package installs from disk; otherwise the button opens the download page
             _isReadyToInstall = string.Equals(Core.Config.UpdatePendingVersion, release.Version,
                     StringComparison.OrdinalIgnoreCase)
+                && UpdateProvider.CanApplyPendingUpdate
                 && UpdateProvider.GetPendingPackagePath() is not null;
 
             Heading = Core.Lang[_isReadyToInstall

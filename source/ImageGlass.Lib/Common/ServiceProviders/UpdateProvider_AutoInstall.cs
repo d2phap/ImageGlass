@@ -28,11 +28,24 @@ namespace ImageGlass.Common.ServiceProviders;
 public sealed partial class UpdateProvider
 {
     /// <summary>
+    /// Whether installing an update in place is available at all (channel, license, admin policy).
+    /// </summary>
+    public static bool CanInstallUpdate => Core.UpdateInstaller?.IsSupported == true
+        && !FeatureManager.IsLocked(API.IG_RestartToUpdate);
+
+
+    /// <summary>
     /// Whether this build may download updates itself right now.
     /// </summary>
     public static bool CanAutoInstall => Core.IsProEnabled
         && Core.Config?.EnableAutoInstallUpdate == true
-        && Core.UpdateInstaller?.IsSupported == true;
+        && CanInstallUpdate;
+
+
+    /// <summary>
+    /// Whether a downloaded update is waiting and may be offered to the user.
+    /// </summary>
+    public static bool CanApplyPendingUpdate => Core.HasPendingUpdate && CanInstallUpdate;
 
 
     /// <summary>

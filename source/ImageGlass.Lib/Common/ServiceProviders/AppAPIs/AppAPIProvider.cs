@@ -3328,6 +3328,8 @@ public partial class AppAPIProvider
         var version = Core.Config.UpdatePendingVersion;
         var title = Core.Lang[LangId._CheckForUpdate];
 
+        // self-guard: reachable without RunApiAsync, so the admin lock is enforced here too
+        if (FeatureManager.IsLocked(API.IG_RestartToUpdate)) return;
         if (installer is null || string.IsNullOrWhiteSpace(version)) return;
 
         var pkgPath = UpdateProvider.GetPendingPackagePath();

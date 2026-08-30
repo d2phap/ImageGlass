@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -806,7 +806,7 @@ public partial class ToolbarControl : PhControl
     /// </summary>
     public void RefreshPendingUpdateState()
     {
-        var hasUpdate = Core.HasPendingUpdate;
+        var hasUpdate = UpdateProvider.CanApplyPendingUpdate;
 
         PART_MnuRestartToUpdate.IsVisible = hasUpdate;
         PART_MnuRestartToUpdateSeparator.IsVisible = hasUpdate;

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia.Controls;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.UI.Windowing;
 using ImageGlass.Windows;
@@ -80,8 +81,8 @@ public partial class GeneralSettingsView : SettingsPageView
             LangId.Settings_EnableAutoInstallUpdate, LangId.Settings_AppUpdate);
         ProGate(ConfigId.EnableAutoInstallUpdate, PART_AutoInstallUpdateBadge, PART_AutoInstallUpdate);
 
-        // nothing to offer on a channel that cannot install its own updates
-        var canSelfUpdate = Core.UpdateInstaller?.IsSupported == true;
+        // nothing to offer on a channel that cannot install its own updates, or when an admin locked it
+        var canSelfUpdate = UpdateProvider.CanInstallUpdate;
         PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
         PART_AutoInstallUpdateDescription.IsVisible = canSelfUpdate;
 
