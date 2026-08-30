@@ -66,6 +66,15 @@
         <Style Selector="^:selected /template/ Border#PART_LayoutRoot">
             <Setter Property="BorderBrush" Value="{DynamicResource IG_ToolButtonBackgroundHover}" />
         </Style>
+
+        <!--  attention: a soft tinted row, e.g. a downloaded update waiting to install  -->
+        <Style Selector="^.attention /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource IG_BackgroundInfoBrush}" />
+        </Style>
+        <Style Selector="^.attention:selected /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource IG_BackgroundInfoBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource IG_TextAccentColor}" />
+        </Style>
     </Style>
 
 </Styles>

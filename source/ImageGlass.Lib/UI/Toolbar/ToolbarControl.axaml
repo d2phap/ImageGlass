@@ -77,7 +77,26 @@
                     Spacing="{CompiledBinding ItemSpacing}" />
 
 
-                <!--  Main Menu button  -->
+                <!--  Main Menu button + "update ready" badge  -->
+                <Panel>
+                    <Border
+                        x:Name="PART_UpdateBadge"
+                        Width="11"
+                        Height="11"
+                        Margin="0,-1,-1,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="{DynamicResource PhAccentFill}"
+                        CornerRadius="6"
+                        IsHitTestVisible="False"
+                        IsVisible="False"
+                        ZIndex="95">
+                        <Path
+                            Data="{StaticResource IconArrowUp}"
+                            Fill="{DynamicResource AccentButtonForeground}"
+                            Stretch="Uniform" />
+                    </Border>
+
                 <ui:ToolbarButton
                     x:Name="PART_BtnMainMenu"
                     DataContext="{CompiledBinding ButtonMenuVM}"
@@ -89,6 +108,18 @@
                             x:Name="PART_MainMenu"
                             HorizontalOffset="6"
                             Placement="BottomEdgeAlignedRight">
+
+                            <!--  Restart to update (only when a package is ready)  -->
+                            <ui:PhMenuItem
+                                x:Name="PART_MnuRestartToUpdate"
+                                Classes="attention"
+                                Click="MainMenuItem_Click"
+                                IsVisible="False"
+                                LangKey="Menu_MnuRestartToUpdate" />
+                            <ui:PhMenuItem
+                                x:Name="PART_MnuRestartToUpdateSeparator"
+                                Header="-"
+                                IsVisible="False" />
 
                             <!--  File  -->
                             <ui:PhMenuItem LangKey="Menu_MnuFile">
@@ -524,6 +555,7 @@
                         </ContextMenu>
                     </ui:ToolbarButton.DropdownMenu>
                 </ui:ToolbarButton>
+                </Panel>
 
             </StackPanel>
 

@@ -100,6 +100,7 @@ public partial class ToolbarControl : PhControl
 
         Core.Config.PropertyChanged += Config_PropertyChanged;
 
+        RefreshPendingUpdateState();
         ScheduleOverflowUpdate();
     }
 
@@ -178,6 +179,13 @@ public partial class ToolbarControl : PhControl
         else
         {
             UpdateButtonCheckState(e.PropertyName);
+        }
+
+
+        // the badge must appear the moment a download finishes, not on the next menu open
+        if (nameof(Core.Config.UpdatePendingVersion).Equals(e.PropertyName))
+        {
+            Avalonia.Threading.Dispatcher.UIThread.Post(RefreshPendingUpdateState);
         }
 
 
@@ -788,6 +796,21 @@ public partial class ToolbarControl : PhControl
         // Pro licensing: show exactly one item for the current license state
         PART_MnuUpgradeLicense.IsVisible = !Core.IsProEnabled;
         PART_MnuManageLicense.IsVisible = Core.IsProEnabled;
+
+        RefreshPendingUpdateState();
+    }
+
+
+    /// <summary>
+    /// Shows or hides the "Restart to update" item and the main-menu button badge.
+    /// </summary>
+    public void RefreshPendingUpdateState()
+    {
+        var hasUpdate = Core.HasPendingUpdate;
+
+        PART_MnuRestartToUpdate.IsVisible = hasUpdate;
+        PART_MnuRestartToUpdateSeparator.IsVisible = hasUpdate;
+        PART_UpdateBadge.IsVisible = hasUpdate;
     }
 
 
