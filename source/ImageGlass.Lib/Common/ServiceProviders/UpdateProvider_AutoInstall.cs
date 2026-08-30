@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -38,18 +38,16 @@ public sealed partial class UpdateProvider
     /// <summary>
     /// Path of the verified package waiting to be installed, or <c>null</c>.
     /// </summary>
-    public static string? GetPendingPackagePath(UpdateReleaseInfo? release)
+    /// <remarks>
+    /// Located by version alone: at restart time there is no manifest, and re-hashing would not be
+    /// the real gate anyway - a tampered MSIX fails signature validation inside the installer.
+    /// </remarks>
+    public static string? GetPendingPackagePath()
     {
         var version = Core.Config?.UpdatePendingVersion;
         if (string.IsNullOrWhiteSpace(version)) return null;
-        if (release is not null && !string.Equals(release.Version, version, StringComparison.OrdinalIgnoreCase))
-            return null;
 
-        var artifact = ResolveArtifact(release);
-        if (artifact is null) return null;
-
-        var path = AppUpdateDownloader.GetPackagePath(version, artifact.Url);
-        return File.Exists(path) ? path : null;
+        return AppUpdateDownloader.FindCachedPackage(version);
     }
 
 
@@ -97,7 +95,7 @@ public sealed partial class UpdateProvider
             }
 
             // the attention UI must never point at a package that is no longer on disk
-            if (!Directory.Exists(BHelper.ConfigDir(Types.Dir.Temporary, UpdateConstants.PackageCacheDir)))
+            if (GetPendingPackagePath() is null)
             {
                 UpdateTrace.Mark($"reconcile:missing {pending}");
                 DiscardPendingUpdate();
@@ -132,7 +130,8 @@ public sealed partial class UpdateProvider
                 return false;
 
             // already downloaded and verified in an earlier session
-            if (GetPendingPackagePath(release) is not null) return true;
+            if (string.Equals(config.UpdatePendingVersion, release.Version, StringComparison.OrdinalIgnoreCase)
+                && GetPendingPackagePath() is not null) return true;
 
             if (!installer.RequiresDownload) return false;
 

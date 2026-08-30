@@ -50,6 +50,27 @@ internal static class AppUpdateDownloader
 
 
     /// <summary>
+    /// Finds the cached package for <paramref name="version"/>, without needing the manifest.
+    /// </summary>
+    public static string? FindCachedPackage(string version)
+    {
+        try
+        {
+            var dir = BHelper.ConfigDir(Dir.Temporary, UpdateConstants.PackageCacheDir);
+            if (!Directory.Exists(dir)) return null;
+
+            foreach (var file in Directory.EnumerateFiles(dir, $"{BHelper.AppName}_{version}.*"))
+            {
+                if (!file.EndsWith(".part", StringComparison.OrdinalIgnoreCase)) return file;
+            }
+        }
+        catch { }
+
+        return null;
+    }
+
+
+    /// <summary>
     /// Deletes every cached update package.
     /// </summary>
     public static void ClearCache()

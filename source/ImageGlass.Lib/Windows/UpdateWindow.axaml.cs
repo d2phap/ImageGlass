@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Licensing;
 using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
@@ -29,6 +30,7 @@ namespace ImageGlass.Windows;
 public partial class UpdateWindow : ModalWindow
 {
     private UpdateCheckResult? _result;
+    private bool _isReadyToInstall;
 
     protected override int MIN_WIDTH => 550;
     protected override int MAX_WIDTH => 550;
@@ -75,6 +77,13 @@ public partial class UpdateWindow : ModalWindow
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
+        // the package is already on disk: install it instead of sending the user to a browser
+        if (_isReadyToInstall)
+        {
+            _ = Core.API.RunApiAsync(API.IG_RestartToUpdate);
+            return;
+        }
+
         // the Store delivers updates for its own package, so go to the Store listing
         if (IsMsStoreBuild)
         {
@@ -109,6 +118,13 @@ public partial class UpdateWindow : ModalWindow
         {
             Core.Config.UpdateSkippedVersion = version;
             IsSkipped = true;
+
+            // nothing was staged with the OS, so skipping really does retract the update
+            if (string.Equals(Core.Config.UpdatePendingVersion, version, StringComparison.OrdinalIgnoreCase))
+            {
+                UpdateProvider.DiscardPendingUpdate();
+                _ = Core.Config.SaveAsync();
+            }
         }
 
         DialogResult = DialogExitCode.Cancel;
@@ -203,6 +219,7 @@ public partial class UpdateWindow : ModalWindow
         // shared defaults: a single [Close] button, no extra content
         Note = null;
         Thumbnail = null;
+        _isReadyToInstall = false;
         HideResultContent();
         IsButton1Visible = false;
         IsButton3Visible = false;
@@ -215,14 +232,21 @@ public partial class UpdateWindow : ModalWindow
 
         if (result.Status == UpdateCheckStatus.UpdateAvailable && release is not null)
         {
-            Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_NewVersion];
+            // a downloaded package installs from disk; otherwise the button opens the download page
+            _isReadyToInstall = string.Equals(Core.Config.UpdatePendingVersion, release.Version,
+                    StringComparison.OrdinalIgnoreCase)
+                && UpdateProvider.GetPendingPackagePath() is not null;
+
+            Heading = Core.Lang[_isReadyToInstall
+                ? LangId.Menu_MnuCheckForUpdate_ReadyToInstall
+                : LangId.Menu_MnuCheckForUpdate_NewVersion];
             Description = Core.Lang[LangId.Menu_MnuCheckForUpdate_CurrentVersion, Core.BuildInfo.Version];
             Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck);
             ShowReleaseCard(release);
 
-            // "Skip this version" link + [Update] [Close]
+            // "Skip this version" link + [Update / Restart now] [Close]
             PART_BtnSkipVersion.IsVisible = true;
-            Button1Text = Core.Lang[LangId._Update];
+            Button1Text = Core.Lang[_isReadyToInstall ? LangId._RestartNow : LangId._Update];
             IsButton1Visible = true;
             DefaultButton = DialogButton.Button1;
             DefaultFocus = DialogFocus.Button1;

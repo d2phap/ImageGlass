@@ -185,6 +185,7 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuUpgradeLicense,              API.IG_ManageLicense),
         new(LangId.Menu_MnuManageLicense,               API.IG_ManageLicense),
         new(LangId._CheckForUpdate,                     API.IG_CheckForUpdate),
+        new(LangId.Menu_MnuRestartToUpdate,             API.IG_RestartToUpdate),
         new(LangId.Menu_MnuReportIssue,                 API.IG_ReportIssue),
         new(LangId.Menu_MnuQuickSetup,                  API.IG_QuickSetup),
         new(LangId.Menu_MnuSetDefaultPhotoViewer,       API.IG_SetDefaultPhotoViewer),

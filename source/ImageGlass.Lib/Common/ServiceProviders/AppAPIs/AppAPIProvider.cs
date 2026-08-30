@@ -3310,6 +3310,63 @@ public partial class AppAPIProvider
 
 
     /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_RestartToUpdateAsync()
+    {
+        var installer = Core.UpdateInstaller;
+        var version = Core.Config.UpdatePendingVersion;
+        var title = Core.Lang[LangId._CheckForUpdate];
+
+        if (installer is null || string.IsNullOrWhiteSpace(version)) return;
+
+        var pkgPath = UpdateProvider.GetPendingPackagePath();
+        if (pkgPath is null)
+        {
+            UpdateProvider.DiscardPendingUpdate();
+            await ShowUpdateFailedAsync(title, Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed]);
+            return;
+        }
+
+        var release = new Update.UpdateReleaseInfo { Version = version };
+
+        var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
+        {
+            Title = title,
+            Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
+            Description = Core.Lang[LangId.Menu_MnuRestartToUpdate_Confirm],
+            Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
+        }, ModalWindowButton.OK_Cancel);
+        if (confirm.ExitCode != DialogExitCode.OK) return;
+
+        var isApplied = await installer.ApplyAndRestartAsync(pkgPath, release);
+        if (!isApplied)
+        {
+            await ShowUpdateFailedAsync(title, Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed]);
+        }
+    }
+
+
+    /// <summary>
+    /// Reports a failed self-update and offers the download page instead.
+    /// </summary>
+    private static async Task ShowUpdateFailedAsync(string title, string heading)
+    {
+        var result = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
+        {
+            Title = title,
+            Heading = heading,
+        }, ModalWindowButton.LearnMore_Close);
+
+        if (result.ExitCode == DialogExitCode.OK)
+        {
+            _ = BHelper.OpenUrlAsync(App.MainWindow, Update.UpdateConstants.FallbackReleasesUrl,
+                "from_update_failed");
+        }
+    }
+
+
+    /// <summary>
     /// Opens the "ImageGlass Quick Setup" wizard window.
     /// </summary>
     public static async Task IG_QuickSetupAsync()
