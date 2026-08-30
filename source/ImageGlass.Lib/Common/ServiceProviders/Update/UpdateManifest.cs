@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -26,6 +26,7 @@ namespace ImageGlass.Common.ServiceProviders.Update;
 /// Source-generated JSON context for AOT-safe serialization of update manifest.
 /// </summary>
 [JsonSerializable(typeof(UpdateManifest))]
+[JsonSerializable(typeof(UpdateReleaseInfo))]
 public partial class UpdateManifestJsonContext : JsonSerializerContext;
 
 

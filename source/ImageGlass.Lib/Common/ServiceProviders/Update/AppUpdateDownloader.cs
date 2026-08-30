@@ -168,11 +168,49 @@ internal static class AppUpdateDownloader
                 if (name.Equals(keep, StringComparison.OrdinalIgnoreCase)) continue;
                 if (name.Equals(UpdateConstants.DownloadLockFile, StringComparison.OrdinalIgnoreCase)) continue;
                 if (name.Equals(UpdateConstants.ApplyAttemptFile, StringComparison.OrdinalIgnoreCase)) continue;
+                if (name.Equals(UpdateConstants.PendingReleaseFile, StringComparison.OrdinalIgnoreCase)) continue;
 
                 TryDelete(file);
             }
         }
         catch { }
+    }
+
+
+    /// <summary>
+    /// Caches the release notes of the downloaded package.
+    /// </summary>
+    public static async Task SavePendingReleaseAsync(UpdateReleaseInfo release)
+    {
+        try
+        {
+            var dir = BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir);
+            Directory.CreateDirectory(dir);
+
+            await BHelper.WriteJsonToFileAsync(Path.Combine(dir, UpdateConstants.PendingReleaseFile),
+                release, UpdateManifestJsonContext.Default.UpdateReleaseInfo).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            UpdateTrace.Mark($"release:saveFailed {ex.Message}");
+        }
+    }
+
+
+    /// <summary>
+    /// Cached release notes of the pending update, or <c>null</c> when none were stored.
+    /// </summary>
+    public static UpdateReleaseInfo? ReadPendingRelease()
+    {
+        try
+        {
+            var path = Path.Combine(BHelper.ConfigDir(Dir.Cache, UpdateConstants.PackageCacheDir),
+                UpdateConstants.PendingReleaseFile);
+            if (!File.Exists(path)) return null;
+
+            return BHelper.ReadJsonFromFile(path, UpdateManifestJsonContext.Default.UpdateReleaseInfo);
+        }
+        catch { return null; }
     }
 
 

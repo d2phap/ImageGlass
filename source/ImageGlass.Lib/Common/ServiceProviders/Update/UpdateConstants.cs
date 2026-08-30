@@ -69,6 +69,12 @@ internal static class UpdateConstants
     public const string DownloadLockFile = ".download.lock";
 
     /// <summary>
+    /// Release notes of the pending update, cached so the install prompt works offline.
+    /// </summary>
+    public const string PendingReleaseFile = "release.json";
+
+
+    /// <summary>
     /// Marker written just before an install; it survives only when that install did not land.
     /// </summary>
     public const string ApplyAttemptFile = ".apply-attempt";

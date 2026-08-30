@@ -113,6 +113,12 @@ public interface IUpdateProvider
 
 
     /// <summary>
+    /// Release notes of the pending update, or <c>null</c> when they do not match what is armed.
+    /// </summary>
+    UpdateReleaseInfo? GetPendingRelease();
+
+
+    /// <summary>
     /// Returns the artifact this build can install, or <c>null</c> when the manifest has none.
     /// </summary>
     UpdateArtifactInfo? ResolveArtifact(UpdateReleaseInfo? release);

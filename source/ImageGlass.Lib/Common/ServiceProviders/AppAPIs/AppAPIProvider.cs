@@ -3346,9 +3346,23 @@ public partial class AppAPIProvider
             return;
         }
 
+        // notes are cached with the package, so the prompt can show them with no network call
+        var pendingRelease = provider.GetPendingRelease();
+
         // the menu entry is one click from killing the app; the dialog's [Restart now] already confirmed
         if (needsConfirm)
         {
+            // the update window already renders the release card, changelog link and skip link
+            if (pendingRelease is not null)
+            {
+                var updateWindow = new UpdateWindow();
+                updateWindow.SetResultState(Update.UpdateCheckResult.Available(pendingRelease));
+                _ = await updateWindow.ShowAsync(App.MainWindow);
+
+                // it installs through this same API, so this call is done either way
+                return;
+            }
+
             var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
             {
                 Title = title,
@@ -3365,7 +3379,7 @@ public partial class AppAPIProvider
             _ = await mainWindow.CaptureAndSaveConfigAsync();
         }
 
-        var release = new Update.UpdateReleaseInfo { Version = version };
+        var release = pendingRelease ?? new Update.UpdateReleaseInfo { Version = version };
         var apply = await provider.ApplyAndRestartAsync(pkgPath, release);
 
         // on success the process is already being torn down by the installer

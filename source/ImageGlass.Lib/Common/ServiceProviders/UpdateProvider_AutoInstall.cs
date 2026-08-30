@@ -122,6 +122,19 @@ public partial class UpdateProvider
 
 
     /// <summary>
+    /// Release notes of the pending update, or <c>null</c> when they do not match what is armed.
+    /// </summary>
+    public UpdateReleaseInfo? GetPendingRelease()
+    {
+        var version = Core.Config.UpdatePendingVersion;
+        if (string.IsNullOrWhiteSpace(version)) return null;
+
+        var release = AppUpdateDownloader.ReadPendingRelease();
+        return string.Equals(release?.Version, version, StringComparison.OrdinalIgnoreCase) ? release : null;
+    }
+
+
+    /// <summary>
     /// Returns the artifact this build can install, or <c>null</c> when the manifest has none.
     /// </summary>
     public UpdateArtifactInfo? ResolveArtifact(UpdateReleaseInfo? release)
@@ -315,6 +328,9 @@ public partial class UpdateProvider
         }
 
         config.UpdatePendingVersion = release.Version;
+
+        // the install prompt shows these, and it must work without going back to the network
+        await AppUpdateDownloader.SavePendingReleaseAsync(release).ConfigureAwait(false);
 
         // an ignored update would otherwise leave its package behind on every release
         AppUpdateDownloader.PruneCacheExcept(release.Version);
