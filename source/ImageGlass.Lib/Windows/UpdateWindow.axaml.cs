@@ -77,10 +77,10 @@ public partial class UpdateWindow : ModalWindow
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
-        // the package is already on disk: install it instead of sending the user to a browser
+        // installed directly, not via RunApiAsync: a locked API would swallow the click silently
         if (_isReadyToInstall)
         {
-            _ = Core.API.RunApiAsync(API.IG_RestartToUpdate, "false");
+            _ = AppAPIProvider.IG_RestartToUpdateAsync(false);
             return;
         }
 
