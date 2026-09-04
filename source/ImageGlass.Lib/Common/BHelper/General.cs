@@ -46,6 +46,14 @@ public partial class BHelper
 
 
     /// <summary>
+    /// Gets the path to relaunch the app with: the .AppImage file, never the binary inside its
+    /// mount, which is unmounted as soon as the exiting process dies.
+    /// </summary>
+    public static string AppRelaunchPath =>
+        Environment.GetEnvironmentVariable("APPIMAGE") is { Length: > 0 } appImage ? appImage : AppExePath;
+
+
+    /// <summary>
     /// Gets the type of operating system.
     /// </summary>
     public static OSType OS { get; } = GetOS();

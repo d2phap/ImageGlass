@@ -88,6 +88,7 @@ public partial class FileTypeAssociationsSettingsView : SettingsPageView
     {
         BuildExtensionIcons();
         BuildDefaultPhotoViewer();
+        BuildAppMenuEntry();
         BuildFileFormats();
     }
 
@@ -215,6 +216,32 @@ public partial class FileTypeAssociationsSettingsView : SettingsPageView
     }
 
     #endregion // Default photo viewer
+
+
+    #region Applications menu
+
+    /// <summary>
+    /// Builds the applications-menu group. Hidden unless the build has an entry to register.
+    /// </summary>
+    private void BuildAppMenuEntry()
+    {
+        if (Core.ShellProvider?.CanRegisterAppMenuEntry != true) return;
+
+        PART_AppMenuHeading.IsVisible = true;
+        PART_AppMenuGroup.IsVisible = true;
+
+        SetLocalizedText(PART_RegisterAppMenu, LangId._Register);
+        AddLangRefresher(() => ToolTip.SetTip(PART_RegisterAppMenu, Core.Lang[LangId.Settings_UnmanagedSettingReminder]));
+        PART_RegisterAppMenu.Click += async (_, _) => await AppAPIProvider.RegisterAppMenuEntryAsync(true);
+
+        SetLocalizedText(PART_UnregisterAppMenu, LangId._Unregister);
+        PART_UnregisterAppMenu.Click += async (_, _) => await AppAPIProvider.RegisterAppMenuEntryAsync(false);
+
+        RegisterSearchKey(PART_RegisterAppMenu, LangId.Settings_AppMenuEntry, null, LangId.Settings_AppMenuEntry);
+    }
+
+    #endregion // Applications menu
+
 
 
     #region File formats

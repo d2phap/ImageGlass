@@ -136,8 +136,30 @@ public interface IShellProvider : IDisposable
 
 
     /// <summary>
+    /// Whether the app can add itself to the system's application menu. False wherever the
+    /// installer already did it, so only a self-contained build that installs nothing says true.
+    /// </summary>
+    bool CanRegisterAppMenuEntry => false;
+
+
+    /// <summary>
+    /// Adds the app to the system's application menu, so it can be launched from there and picked
+    /// as a default handler for image files.
+    /// </summary>
+    /// <returns><c>true</c> when an entry was written.</returns>
+    Task<bool> RegisterAppMenuEntryAsync() => Task.FromResult(false);
+
+
+    /// <summary>
+    /// Removes the entry created by <see cref="RegisterAppMenuEntryAsync"/>.
+    /// </summary>
+    /// <returns><c>true</c> when an entry was removed.</returns>
+    Task<bool> UnregisterAppMenuEntryAsync() => Task.FromResult(false);
+
+
+    /// <summary>
     /// Coarse distribution channel reported by the anonymous usage statistics, e.g.
-    /// <c>msstore</c>, <c>msix</c>, <c>msi</c>, <c>flatpak</c>, <c>dmg</c>, <c>zip</c>.
+    /// <c>msstore</c>, <c>msix</c>, <c>msi</c>, <c>flatpak</c>, <c>appimage</c>, <c>dmg</c>, <c>zip</c>.
     /// Must stay a small closed set; never derive it from a filesystem path.
     /// </summary>
     string InstallChannelId => "zip";
@@ -172,4 +194,16 @@ public interface IShellProvider : IDisposable
     /// the app theme implement this.
     /// </summary>
     void SetTitleBarDarkMode(nint windowHandle, bool isDark) { }
+
+
+    /// <summary>
+    /// Keeps the system and the display awake, e.g. while a slideshow plays. Best-effort.
+    /// </summary>
+    void PreventSleep(string reason) { }
+
+
+    /// <summary>
+    /// Releases the request held by <see cref="PreventSleep"/>.
+    /// </summary>
+    void AllowSleep() { }
 }

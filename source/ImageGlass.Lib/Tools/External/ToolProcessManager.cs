@@ -182,15 +182,15 @@ public sealed class ToolProcessManager : PhDisposable
 
 
     /// <summary>
-    /// Builds the pipe name. A bare GUID normally; inside a Flatpak sandbox an absolute socket path
-    /// under the shared host home, since each sandbox's <c>/tmp</c> (the default) is private.
+    /// Builds the pipe name. A bare GUID on Windows and macOS; on Linux an absolute socket path
+    /// under the shared host home.
     /// </summary>
     private static string CreatePipeName()
     {
         var id = $"ig_{Guid.NewGuid():N}";
-        if (!BHelper.IsFlatpakSandbox) return id;
+        if (BHelper.OS != OSType.Linux) return id;
 
-        // ~/.cache is shared via --filesystem=host, so the tool's own sandbox can reach the socket.
+        // ~/.cache stays visible through --filesystem=host, unlike /tmp.
         var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
             ".cache", "ImageGlass", "tools");
         Directory.CreateDirectory(dir);

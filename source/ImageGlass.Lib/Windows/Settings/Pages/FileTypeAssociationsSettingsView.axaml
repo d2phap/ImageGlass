@@ -89,6 +89,41 @@
         </StackPanel>
 
 
+        <!--  Applications menu (visibility decided in code: AppImage builds only)  -->
+        <ui:PhTextBlock
+            x:Name="PART_AppMenuHeading"
+            Classes="group"
+            IsVisible="False"
+            LangKey="Settings_AppMenuEntry" />
+        <StackPanel
+            x:Name="PART_AppMenuGroup"
+            Margin="{DynamicResource SettingsGroupIndent}"
+            IsVisible="False"
+            Spacing="10">
+            <ui:PhTextBlock
+                LangKey="Settings_AppMenuEntry_Description"
+                Opacity="0.75"
+                TextWrapping="Wrap" />
+            <Border
+                Margin="0,0,0,4"
+                Padding="8"
+                Background="{DynamicResource IG_BackgroundWarningBrush}"
+                CornerRadius="{DynamicResource ControlCornerRadius}">
+                <ui:PhTextBlock LangKey="Settings_UnmanagedSettingReminder" TextWrapping="Wrap" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ui:PhButton
+                    x:Name="PART_RegisterAppMenu"
+                    MinWidth="100"
+                    HorizontalContentAlignment="Center" />
+                <ui:PhButton
+                    x:Name="PART_UnregisterAppMenu"
+                    MinWidth="100"
+                    HorizontalContentAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+
+
         <!--  File formats  -->
         <ui:PhTextBlock Classes="group" LangKey="Settings_FileFormats" />
         <StackPanel Margin="{DynamicResource SettingsGroupIndent}" Spacing="10">

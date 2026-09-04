@@ -84,6 +84,7 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     protected override void OnDisposing()
     {
         base.OnDisposing();
+        AllowSleep();
         ForegroundShell = null;
     }
 
@@ -412,6 +413,18 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     /// <inheritdoc/>
     /// </summary>
     public void SetTitleBarDarkMode(nint windowHandle, bool isDark) => Win32WindowApi.SetTitleBarDarkMode(windowHandle, isDark);
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void PreventSleep(string reason) => Win32PowerApi.PreventSleep();
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void AllowSleep() => Win32PowerApi.AllowSleep();
 
     #endregion // Public Methods
 

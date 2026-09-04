@@ -48,11 +48,11 @@
                 Margin="0,0,20,8"
                 Spacing="2">
                 <ui:PhTextBlock
-                    x:Name="PART_LblWhitePoint"
-                    LangKey="Tool_Hdr_LblWhitePoint"
+                    x:Name="PART_LblReferenceWhite"
+                    LangKey="Tool_Hdr_LblReferenceWhite"
                     Opacity="0.6" />
                 <Slider
-                    x:Name="PART_SldWhitePoint"
+                    x:Name="PART_SldReferenceWhite"
                     IsSnapToTickEnabled="True"
                     Maximum="1000"
                     Minimum="50"

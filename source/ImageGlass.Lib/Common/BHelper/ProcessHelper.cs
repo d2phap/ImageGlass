@@ -47,6 +47,14 @@ public partial class BHelper
 
 
     /// <summary>
+    /// Whether running from an AppImage. The runtime exports <c>APPIMAGE</c> with the image path;
+    /// only its presence is read, never its value.
+    /// </summary>
+    public static bool IsAppImage { get; } = OS == OSType.Linux
+        && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPIMAGE"));
+
+
+    /// <summary>
     /// In a Flatpak sandbox, rewrites <paramref name="psi"/> to launch via <c>flatpak-spawn --host</c>
     /// so host paths resolve (needs <c>--talk-name=org.freedesktop.Flatpak</c>); no-op otherwise.
     /// </summary>
@@ -438,7 +446,7 @@ public partial class BHelper
         Core.AppInstance.Dispose();
 
         IReadOnlyList<string> args = suppressQuickSetup ? [AppCmds.NO_QUICK_SETUP] : [];
-        _ = RunExeAsync(AppExePath, args);
+        _ = RunExeAsync(AppRelaunchPath, args);
         ExitApp(false);
     }
 

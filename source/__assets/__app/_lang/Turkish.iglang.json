@@ -505,7 +505,7 @@
     "Settings_Plugins_StatusDisabled": "Devre dışı",
     "Settings_Plugins_StatusUntrusted": "Etkin değil",
     "Settings_Plugins_StatusChanged": "Dosya değiştirildi",
-    "Settings_Plugins_StatusNotLoaded": "Not loaded",
+    "Settings_Plugins_StatusNotLoaded": "Yüklenmedi",
     "Settings_Plugins_TrustTitle": "Bu eklenti etkinleştirilsin mi?",
     "Settings_Plugins_TrustPrompt": "\"{0}\", ImageGlass'ın içinde çalışan, dosyalarınıza ve sisteminize tam erişim sağlayan yerel bir eklentidir. Yalnızca güvendiğiniz bir kaynaktan edindiğiniz eklentileri etkinleştirin.",
     "Settings_Plugins_TrustChangedWarning": "Bu eklentinin dosyası en son etkinleştirildiğinden bu yana değişti. Yalnızca eklentiyi kendiniz güncellediyseniz yeniden etkinleştirin.",

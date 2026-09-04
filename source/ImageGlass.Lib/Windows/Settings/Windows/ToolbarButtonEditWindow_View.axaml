@@ -116,7 +116,8 @@
                     Margin="0,2,0,0"
                     Padding="0,10,0,0"
                     BorderBrush="{DynamicResource IG_BorderNeutralBrush}"
-                    BorderThickness="0,1,0,0" />
+                    BorderThickness="0,1,0,0"
+                    IsExecutableRequired="False" />
 
             </StackPanel>
         </StackPanel>

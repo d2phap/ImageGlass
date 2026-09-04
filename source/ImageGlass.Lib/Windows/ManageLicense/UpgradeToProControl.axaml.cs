@@ -174,7 +174,7 @@ public partial class UpgradeToProControl : PhControl
             return null;
         }
 
-        // authentic but out of validity (expired past grace) can't activate Pro
+        // authentic but past its expiry instant, so it can't activate Pro
         if (!LicenseService.IsWithinValidity(lic))
         {
             await ShowErrorAsync(owner, title, LangId.Menu_MnuManageLicense_ImportExpired, path);
@@ -258,14 +258,37 @@ public partial class UpgradeToProControl : PhControl
         PART_LblImportLicense.Text = _importedLicenseId
             ?? lang[LangId.Menu_MnuUpgradeLicense_ImportLicense];
 
-        // an authentic license bought for another version line: say so instead of a generic pitch
-        var lic = Core.OutOfScopeLicense;
-        if (lic is null) return;
+        // an authentic license the app cannot use: name the reason, lapsed first, over a pitch
+        var expiredLic = Core.ExpiredLicense;
+        var outOfScopeLic = Core.OutOfScopeLicense;
+        var isExpired = expiredLic is not null;
 
-        PART_LblOutOfScope.Text = lang[LangId.Menu_MnuUpgradeLicense_OutOfScope,
-            lic.Plan, lic.VersionScope, LicenseScope.GetRunningAppMajorText()];
-        PART_LblOutOfScope.IsVisible = true;
-        PART_LblDescription.IsVisible = false;
+        PART_LblExpired.IsVisible = isExpired;
+        PART_LblOutOfScope.IsVisible = !isExpired && outOfScopeLic is not null;
+        PART_LblDescription.IsVisible = !isExpired && outOfScopeLic is null;
+
+        if (expiredLic is not null)
+        {
+            PART_LblExpired.Text = lang[LangId.Menu_MnuUpgradeLicense_Expired,
+                expiredLic.Plan, FormatExpiry(expiredLic)];
+        }
+        if (outOfScopeLic is not null)
+        {
+            PART_LblOutOfScope.Text = lang[LangId.Menu_MnuUpgradeLicense_OutOfScope,
+                outOfScopeLic.Plan, outOfScopeLic.VersionScope, LicenseScope.GetRunningAppMajorText()];
+        }
+    }
+
+
+    /// <summary>
+    /// Formats the expiry of a license in local time, falling back to the raw value.
+    /// </summary>
+    private static string FormatExpiry(LicenseInfo license)
+    {
+        var expiresAt = LicenseService.GetExpiryUtc(license);
+        if (expiresAt is null) return license.ExpiresAt ?? string.Empty;
+
+        return BHelper.FormatDateTime(expiresAt.Value.ToLocalTime().DateTime);
     }
 
 

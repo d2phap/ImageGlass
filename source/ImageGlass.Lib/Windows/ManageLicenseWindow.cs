@@ -17,8 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Layout;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.ServiceProviders.Licensing;
+using ImageGlass.UI;
 using ImageGlass.UI.Windowing;
+using System;
 
 namespace ImageGlass.Common.Windows;
 
@@ -27,6 +31,11 @@ public partial class ManageLicenseWindow : DialogWindow
     protected override int MIN_WIDTH => 500;
     protected override Thickness ContentPadding => new(0);
 
+    private readonly PhButton _btnHelp;
+
+    // captured once so the footer text and the close action can never disagree
+    private readonly bool _isLicenseExpired = Core.ExpiredLicense is not null;
+
 
     public ManageLicenseWindow()
     {
@@ -34,13 +43,46 @@ public partial class ManageLicenseWindow : DialogWindow
         IsButton2Visible = false;
         IsButton3Visible = false;
 
-        // Close is the only footer button and must stay neutral, never accent
+        // the only footer button, and it must stay neutral, never accent
         DefaultButton = DialogButton.None;
         DefaultFocus = DialogFocus.Button1;
         ShowInTaskbar = true;
 
         Title = "ImageGlass Pro";
         DialogContent = new ManageLicenseView();
+        DialogFooterLeftContent = _btnHelp = CreateHelpButton();
+    }
+
+
+    /// <summary>
+    /// The footer link to the support page, for anything the license actions cannot resolve.
+    /// </summary>
+    private PhButton CreateHelpButton()
+    {
+        var btn = new PhButton
+        {
+            Variant = PhButtonVariant.Link,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        var campaign = Core.IsProEnabled ? "from_manage_license" : "from_upgrade_dialog";
+        btn.Click += (_, _) => _ = BHelper.OpenUrlAsync(this, "https://imageglass.org/support", campaign);
+
+        return btn;
+    }
+
+
+    /// <summary>
+    /// Leaving an expired license behind settles on Classic, whichever way the window was closed.
+    /// </summary>
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        if (!_isLicenseExpired) return;
+
+        // silent: this runs on the close path, where a dialog has no window left to own it
+        _ = LicenseService.TryUninstallExpiredLicenses(out _);
+        Core.ExpiredLicense = null;
     }
 
 
@@ -48,7 +90,10 @@ public partial class ManageLicenseWindow : DialogWindow
     {
         base.OnIgLanguageChanged();
 
-        Button1Text = Core.Lang[LangId._Close];
+        Button1Text = Core.Lang[_isLicenseExpired
+            ? LangId.Menu_MnuUpgradeLicense_SwitchToClassic
+            : LangId._Close];
+        _btnHelp.Text = Core.Lang[LangId._GetHelp];
     }
 
 }

@@ -40,6 +40,7 @@ public partial class ViewerControl : PhControl
     private CancellationTokenSource? _cancelPreview;
     internal InterlockedBool _isPreviewing = new(false);
     internal InterlockedBool _isFirstDraw = new(false);
+    private InterlockedBool _isRecoveringPhoto = new(false);
     internal PhotoLoadingOptions _loadingOptions = new();
 
     // completes once the current photo is painted; null when nothing is pending
@@ -713,6 +714,60 @@ public partial class ViewerControl : PhControl
                 useCache: useCache,
                 skipLoadingEvent: !_loadingOptions.ResetZoom);
         }
+
+        await RecoverIfNothingRenderedAsync(inputPhoto);
+    }
+
+
+    /// <summary>
+    /// Recovers a photo whose load ended without a frame, which would leave the viewer blank.
+    /// </summary>
+    private async Task RecoverIfNothingRenderedAsync(Photo photo)
+    {
+        // the reload below comes back through LoadPhotoAsync, so recover only once
+        if (_isRecoveringPhoto) return;
+        if (!NeedsRecovery(photo)) return;
+
+        PhotoTrace.Mark("viewer:recover", photo.FilePath, $"state={photo.State}");
+
+        // decoded meanwhile (a concurrent loader won the race): render what is already in memory
+        if (photo.State == PhotoState.Loaded)
+        {
+            await HandlePhotoLoadedAsync(new(PhotoState.Loaded, photo, CancellationToken.None));
+            if (!NeedsRecovery(photo)) return;
+        }
+
+        // nothing usable in memory: decode again, ignoring the cache
+        PhotoTrace.Mark("viewer:recover-reload", photo.FilePath);
+        _isRecoveringPhoto.SetTrue();
+        try
+        {
+            await LoadPhotoAsync(useCache: false, skipLoadingEvent: true);
+        }
+        finally
+        {
+            _isRecoveringPhoto.SetFalse();
+        }
+    }
+
+
+    /// <summary>
+    /// Whether <paramref name="photo"/> is the photo on screen yet has nothing renderable.
+    /// </summary>
+    private bool NeedsRecovery(Photo photo)
+    {
+        // a newer navigation owns the viewer now, and its own load will paint
+        if (!ReferenceEquals(photo, Photo)) return false;
+
+        // quick browsing renders the preview on purpose, and an error is reported by its own path
+        if (!ShouldLoadFullResolution || photo.Error is not null) return false;
+
+        lock (_lock)
+        {
+            if (IsVectorSource() || _animator is not null) return false;
+
+            return _imgSource is null || _imgSource.Image.IsDisposed();
+        }
     }
 
 
@@ -722,8 +777,11 @@ public partial class ViewerControl : PhControl
     public async Task LoadPhotoAsync(bool useCache, bool skipLoadingEvent)
     {
         if (Photo is null) return;
+        var photo = Photo;
 
-        await Photo.LoadAsync(useCache, OnPhotoLoadingProgressAsync, skipLoadingEvent);
+        await photo.LoadAsync(useCache, OnPhotoLoadingProgressAsync, skipLoadingEvent);
+
+        await RecoverIfNothingRenderedAsync(photo);
     }
 
 
@@ -989,7 +1047,8 @@ public partial class ViewerControl : PhControl
                         PhotoTrace.Mark("viewer:color-managed", e.Photo.FilePath, "skipped");
                     }
 
-                    hasSource = imgFrame != null;
+                    // IsDisposed, not null: a dead frame renders nothing yet claims the photo is shown
+                    hasSource = !imgFrame.IsDisposed();
                 }
             }
 

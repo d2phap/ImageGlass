@@ -176,6 +176,9 @@ public partial class App : Application
             MainWindow.Show();
             StartupTrace.Mark("MainWindow:show");
 
+            // an expired license leaves the app in Classic: say so and offer the ways out
+            ShowExpiredLicenseNotice();
+
             // an update that died mid-install would otherwise re-arm itself silently on every launch
             _ = ReportFailedUpdateAsync();
         }
@@ -368,8 +371,9 @@ public partial class App : Application
         if (ConfigMode.IsPortable) StartupTrace.Mark("InitInstance:portableMode");
 
         // verify the Pro license before config (config-independent; admin locks need it)
-        Core.AppLicense = LicenseService.LoadActive(out var outOfScopeLicense);
+        Core.AppLicense = LicenseService.LoadActive(out var outOfScopeLicense, out var expiredLicense);
         Core.OutOfScopeLicense = outOfScopeLicense;
+        Core.ExpiredLicense = expiredLicense;
         StartupTrace.Mark("InitInstance:licenseLoaded");
 
         Core.Config = Config.Load(Config.CONFIG_USER, Core.Args);
@@ -525,6 +529,28 @@ public partial class App : Application
         // Close / Alt+F4 / Esc: quit (forced; no main window to close for a graceful shutdown)
         BHelper.ExitApp(true);
         return false;
+    }
+
+
+    /// <summary>
+    /// Tells the user their Pro license has expired, once the main window is up.
+    /// </summary>
+    private static void ShowExpiredLicenseNotice()
+    {
+        if (Core.ExpiredLicense is null || Core.IsProEnabled) return;
+
+        // posted so startup finishes first; nothing may escape an async void on the UI thread
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                _ = await new ManageLicenseWindow().ShowAsync(MainWindow);
+            }
+            catch (Exception ex)
+            {
+                _ = await ModalWindow.ShowUnhandledErrorAsync(ex);
+            }
+        });
     }
 
 

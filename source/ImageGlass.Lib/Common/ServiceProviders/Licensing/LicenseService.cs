@@ -63,11 +63,6 @@ public static class LicenseService
     private const int LICENSE_SCHEMA_VERSION = 1;
 
     /// <summary>
-    /// Days a subscription keeps working past expiry before downgrading.
-    /// </summary>
-    private const int GRACE_DAYS = 14;
-
-    /// <summary>
     /// Maps a license keyId to its embedded public-key resource. Add keys here to rotate.
     /// </summary>
     private static readonly Dictionary<string, string> _keyResources = new(StringComparer.Ordinal)
@@ -87,9 +82,14 @@ public static class LicenseService
     /// The first authentic license that does not cover this app version, so the caller can
     /// name it in the upgrade prompt. Null when there is none.
     /// </param>
-    public static LicenseInfo? LoadActive(out LicenseInfo? outOfScopeLicense)
+    /// <param name="expiredLicense">
+    /// The first authentic license past its expiry, or null. Cleared when Pro does turn on.
+    /// </param>
+    public static LicenseInfo? LoadActive(out LicenseInfo? outOfScopeLicense,
+        out LicenseInfo? expiredLicense)
     {
         outOfScopeLicense = null;
+        expiredLicense = null;
 
         try
         {
@@ -113,8 +113,13 @@ public static class LicenseService
                     var isAuthentic = TryVerify(path, out var lic, out _);
                     if (!isAuthentic) continue;
 
+                    // authentic but past its expiry instant: keep it so the caller can say so
                     var isWithinValidity = IsWithinValidity(lic);
-                    if (!isWithinValidity) continue;
+                    if (!isWithinValidity)
+                    {
+                        expiredLicense ??= lic;
+                        continue;
+                    }
 
                     // authentic and current, but bought for another version line
                     var coversThisApp = LicenseScope.CoversRunningApp(lic);
@@ -124,6 +129,9 @@ public static class LicenseService
                         continue;
                     }
 
+                    // Pro is on, so neither notice is worth showing any more
+                    outOfScopeLicense = null;
+                    expiredLicense = null;
                     return lic;
                 }
             }
@@ -259,6 +267,35 @@ public static class LicenseService
 
         UninstallLicensesExcept(destPath);
         return true;
+    }
+
+
+    /// <summary>
+    /// Deletes every expired, signature-verified license file so the app stops asking about it.
+    /// </summary>
+    /// <param name="error">The first failure, e.g. a license in a read-only install folder.</param>
+    public static bool TryUninstallExpiredLicenses(out Exception? error)
+    {
+        error = null;
+
+        foreach (var dir in new[] { BHelper.BaseDir(), BHelper.ConfigPath })
+        {
+            var files = EnumerateLicenseFiles(dir);
+
+            foreach (var path in files)
+            {
+                var isAuthentic = TryVerify(path, out var lic, out _);
+                if (!isAuthentic) continue;
+
+                var isWithinValidity = IsWithinValidity(lic);
+                if (isWithinValidity) continue;
+
+                try { File.Delete(path); }
+                catch (Exception ex) { error ??= ex; }
+            }
+        }
+
+        return error is null;
     }
 
 
@@ -416,20 +453,29 @@ public static class LicenseService
 
 
     /// <summary>
-    /// True when the license is perpetual or still within the expiry grace period.
+    /// True when the license is perpetual or its expiry instant has not passed yet.
     /// </summary>
     public static bool IsWithinValidity(LicenseInfo license)
     {
-        if (string.IsNullOrEmpty(license.ExpiresAt)) return true;
+        var expiresAt = GetExpiryUtc(license);
+        if (expiresAt is null) return true;
 
-        // lenient: an unparseable expiry counts as valid (trust-based)
-        if (!DateTimeOffset.TryParse(license.ExpiresAt, CultureInfo.InvariantCulture,
-                DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out var expiresAt))
-        {
-            return true;
-        }
+        // the whole timestamp counts, not just its date, so a same-day expiry lapses on the minute
+        return DateTimeOffset.UtcNow <= expiresAt.Value;
+    }
 
-        return DateTimeOffset.UtcNow <= expiresAt.AddDays(GRACE_DAYS);
+
+    /// <summary>
+    /// Parses the expiry, or null when perpetual or unreadable (lenient, trust-based).
+    /// </summary>
+    public static DateTimeOffset? GetExpiryUtc(LicenseInfo license)
+    {
+        if (string.IsNullOrEmpty(license.ExpiresAt)) return null;
+
+        var isParsed = DateTimeOffset.TryParse(license.ExpiresAt, CultureInfo.InvariantCulture,
+            DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out var expiresAt);
+
+        return isParsed ? expiresAt : null;
     }
 
 

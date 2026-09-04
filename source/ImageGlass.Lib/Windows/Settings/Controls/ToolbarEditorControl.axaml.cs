@@ -344,7 +344,9 @@ public partial class ToolbarEditorControl : PhControl
             Transitions = [new DoubleTransition { Property = OpacityProperty, Duration = TimeSpan.FromMilliseconds(180) }],
         };
 
-        ToolTip.SetTip(chip, name);
+        // a button with no text gets no tooltip; an empty tip string still pops an empty box up
+        if (!string.IsNullOrWhiteSpace(name)) ToolTip.SetTip(chip, name);
+
         AutomationProperties.SetName(chip, name); // screen-reader label
 
         // PhToolButton (a button) marks pointer events handled, so listen on the tunnel route
@@ -395,7 +397,19 @@ public partial class ToolbarEditorControl : PhControl
         }
 
         var src = GetSvg(model.ImagePath);
-        if (src is null) return new Border { Width = ICON_SIZE, Height = ICON_SIZE };
+        if (src is null)
+        {
+            // same hatch the toolbar shows for a button that runs something but has no icon
+            if (!model.IsPlaceholderIconVisible) return new Border { Width = ICON_SIZE, Height = ICON_SIZE };
+
+            return new PathIcon
+            {
+                Width = ICON_SIZE,
+                Height = ICON_SIZE,
+                Opacity = 0.6,
+                Data = Resx.GetIcon(ResxIconId.IconPlaceholder),
+            };
+        }
 
         return new Image
         {

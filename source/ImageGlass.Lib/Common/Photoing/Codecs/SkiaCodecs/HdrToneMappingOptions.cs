@@ -46,18 +46,16 @@ public sealed record HdrToneMappingOptions
     public double Exposure { get; set; } = 0d;
 
     /// <summary>
-    /// The luminance level (in nits) treated as HDR reference white; absolute for PQ, relative to
-    /// the default for HLG and scene-referred sources, which carry no nit scale.
-    /// Lower values produce brighter output; higher values retain more highlights.
+    /// Override for the luminance (in nits) treated as HDR reference white. It is the
+    /// normalization divisor, so lower brightens and higher darkens; the curve's peak is separate.
     /// Default: <c>203</c> (ITU-R BT.2408 reference white).
     /// Typical range: <c>100</c> to <c>400</c>.
     /// </summary>
-    public double WhitePointNits { get; set; } = 203d;
+    public double ReferenceWhiteNits { get; set; } = 203d;
 
     /// <summary>
-    /// Controls the strength of highlight compression in the tone curve shoulder.
-    /// <c>0</c> = default shoulder (mode-specific), <c>1</c> = maximum compression
-    /// (preserves more highlight detail at the cost of lower peak brightness).
+    /// Extra tone-curve headroom above the peak the file declares, for a grade brighter than its
+    /// own metadata claims. <c>0</c> = trust the declared peak, <c>1</c> = 4x it.
     /// Typical range: <c>0</c> to <c>1</c>.
     /// </summary>
     public double HighlightCompression { get; set; } = 0d;

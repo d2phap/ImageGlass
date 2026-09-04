@@ -397,6 +397,9 @@ public enum LangId
     Menu_MnuUpgradeLicense_BuyOnline,
     Menu_MnuUpgradeLicense_ViewFeatures,
     Menu_MnuUpgradeLicense_OutOfScope,
+    Menu_MnuUpgradeLicense_Expired,
+    Menu_MnuUpgradeLicense_ExpiredTitle,
+    Menu_MnuUpgradeLicense_SwitchToClassic,
 
     Menu_MnuManageLicense,
     Menu_MnuManageLicense_ChangeLicense,
@@ -697,6 +700,11 @@ public enum LangId
 
     // File type associations > Default photo viewer
     Settings_DefaultPhotoViewer,
+    Settings_AppMenuEntry,
+    Settings_AppMenuEntry_Description,
+    Settings_AppMenuEntry_Success,
+    Settings_AppMenuEntry_RemoveSuccess,
+    Settings_AppMenuEntry_Error,
     Settings_DefaultPhotoViewer_Description,
     Settings_DefaultPhotoViewer_ScopePerMachine,
     Settings_DefaultPhotoViewer_ScopePerUser,
@@ -816,7 +824,7 @@ public enum LangId
     #region Tool: HDR tone mapper
     Tool_Hdr_LblMode,
     Tool_Hdr_LblExposure,
-    Tool_Hdr_LblWhitePoint,
+    Tool_Hdr_LblReferenceWhite,
     Tool_Hdr_LblHighlightCompression,
     Tool_Hdr_LblSaturation,
     Tool_Hdr_BtnReset,

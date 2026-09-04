@@ -43,6 +43,7 @@ public partial class ManageLicenseView : PhControl
         PART_ManageBody.IsVisible = isPro;
 
         UpdateLogo();
+        UpdateHeading();
         if (isPro) FillLicenseInfo();
 
         PART_BtnPlan.Click += (_, _) => OpenUrl("https://imageglass.org/license");
@@ -68,9 +69,7 @@ public partial class ManageLicenseView : PhControl
         // the license values are not localized, but the "Perpetual" fallback and the source are
         if (Core.IsProEnabled) FillLicenseInfo();
 
-        PART_LblHeading.Text = Core.Lang[Core.IsProEnabled
-            ? LangId.Menu_MnuManageLicense
-            : LangId.Menu_MnuUpgradeLicense];
+        UpdateHeading();
     }
 
     #endregion // Overrides
@@ -78,6 +77,19 @@ public partial class ManageLicenseView : PhControl
 
 
     #region Methods
+
+    /// <summary>
+    /// An expired license names the expiry, so its owner is not greeted with a sales pitch.
+    /// </summary>
+    private void UpdateHeading()
+    {
+        var headingId = LangId.Menu_MnuUpgradeLicense;
+        if (Core.IsProEnabled) headingId = LangId.Menu_MnuManageLicense;
+        else if (Core.ExpiredLicense is not null) headingId = LangId.Menu_MnuUpgradeLicense_ExpiredTitle;
+
+        PART_LblHeading.Text = Core.Lang[headingId];
+    }
+
 
     private void FillLicenseInfo()
     {
@@ -93,7 +105,7 @@ public partial class ManageLicenseView : PhControl
         PART_ValSeats.Text = (lic?.SeatCount ?? 1).ToString();
         PART_ValExpires.Text = string.IsNullOrEmpty(lic?.ExpiresAt)
             ? Core.Lang[LangId.Menu_MnuManageLicense_Perpetual]
-            : FormatDate(lic.ExpiresAt);
+            : FormatExpiry(lic);
         PART_ValSource.Text = isStoreBuild
             ? LicenseService.GetChannelDisplayName(Core.StoreEntitlementProvider?.ChannelId)
             : string.Empty;
@@ -203,11 +215,13 @@ public partial class ManageLicenseView : PhControl
     }
 
 
-    private static string FormatDate(string iso)
+    // the expiry is instant-precise, so the time belongs on screen next to the date
+    private static string FormatExpiry(LicenseInfo license)
     {
-        return DateTimeOffset.TryParse(iso, out var dt)
-            ? dt.ToLocalTime().ToString("yyyy-MM-dd")
-            : iso;
+        var expiresAt = LicenseService.GetExpiryUtc(license);
+        if (expiresAt is null) return license.ExpiresAt ?? string.Empty;
+
+        return BHelper.FormatDateTime(expiresAt.Value.ToLocalTime().DateTime);
     }
 
 

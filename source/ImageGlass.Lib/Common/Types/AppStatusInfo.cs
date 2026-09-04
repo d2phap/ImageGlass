@@ -314,7 +314,7 @@ public partial class AppStatusInfo : PhDisposable
                 && Core.Photos.CurrentMetadata is { } meta
                 && (meta.IsHdr || meta.IsWideGamut))
             {
-                var parts = new System.Collections.Generic.List<string>(3);
+                var parts = new System.Collections.Generic.List<string>(4);
 
                 if (meta.IsHdr)
                 {
@@ -327,6 +327,11 @@ public partial class AppStatusInfo : PhDisposable
                         _ => "HDR",
                     };
                     parts.Add(fn);
+
+                    if (meta.ContentPeakNits > 0)
+                    {
+                        parts.Add($"{meta.ContentPeakNits:0} nits");
+                    }
                 }
                 else if (meta.IsWideGamut)
                 {

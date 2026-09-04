@@ -164,6 +164,7 @@ public partial class ViewerControl
         // snapshot UI-thread-affine state: the pass must not touch Photo or styled properties
         var isHdr = EnableHdrRendering && meta?.IsHdr == true;
         var transferFn = meta?.HdrTransferFn ?? HdrTransferFunction.None;
+        var contentPeakNits = meta?.ContentPeakNits ?? 0d;
 
         // tuning the options is Pro-only
         var options = Core.IsProEnabled ? Core.HdrToneMappingConfig : new HdrToneMappingOptions();
@@ -173,7 +174,7 @@ public partial class ViewerControl
         if (!isHdr && destProfile is null) return null;
 
         return await Task.Run(()
-            => ApplySkiaColorSpace(srcImage, isHdr, transferFn, options, destProfile));
+            => ApplySkiaColorSpace(srcImage, isHdr, transferFn, options, contentPeakNits, destProfile));
     }
 
 
@@ -182,12 +183,13 @@ public partial class ViewerControl
     /// safe to run on a background thread.
     /// </summary>
     private static SKImage? ApplySkiaColorSpace(SKImage srcImage, bool isHdr,
-        HdrTransferFunction transferFn, HdrToneMappingOptions options, SKColorSpace? destProfile)
+        HdrTransferFunction transferFn, HdrToneMappingOptions options, double contentPeakNits,
+        SKColorSpace? destProfile)
     {
         // 1. HDR: tone-map to standard sRGB first, then the monitor profile below (same as SDR)
         if (isHdr)
         {
-            var toneMapped = HdrToneMapper.ToneMapToSdr(srcImage, transferFn, options);
+            var toneMapped = HdrToneMapper.ToneMapToSdr(srcImage, transferFn, options, contentPeakNits);
 
             if (!toneMapped.IsDisposed())
             {
@@ -337,6 +339,7 @@ public partial class ViewerControl
             SKImageRef.ImageLease? lease;
             Photo? photoAtStart;
             HdrTransferFunction transferFn;
+            double contentPeakNits;
             bool applyProfile;
             var destProfile = Core.DestColorProfile;
 
@@ -351,6 +354,7 @@ public partial class ViewerControl
                 lease = _imgHdrSource?.Acquire();
                 photoAtStart = Photo;
                 transferFn = Photo.Metadata.HdrTransferFn;
+                contentPeakNits = Photo.Metadata.ContentPeakNits;
                 applyProfile = CanApplySkiaColorSpace();
             }
 
@@ -372,7 +376,8 @@ public partial class ViewerControl
             {
                 (result, passthrough) = await Task.Run(() =>
                 {
-                    var toneMapped = HdrToneMapper.ToneMapToSdr(lease.Image, transferFn, Core.HdrToneMappingConfig);
+                    var toneMapped = HdrToneMapper.ToneMapToSdr(lease.Image, transferFn,
+                        Core.HdrToneMappingConfig, contentPeakNits);
 
                     // None / gain-map => pass-through (show the raw frame, optionally monitor-profiled)
                     if (toneMapped.IsDisposed())

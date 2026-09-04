@@ -29,6 +29,15 @@
             TextAlignment="Center"
             TextWrapping="Wrap" />
 
+        <!--  shown instead when an authentic license has passed its expiry  -->
+        <ui:PhTextBlock
+            x:Name="PART_LblExpired"
+            MaxWidth="420"
+            HorizontalAlignment="Center"
+            IsVisible="False"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
+
         <!--  link to the feature comparison on the website  -->
         <ui:PhButton
             x:Name="PART_BtnViewFeatures"

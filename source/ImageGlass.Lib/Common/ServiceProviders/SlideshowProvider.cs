@@ -100,6 +100,9 @@ public sealed class SlideshowProvider : PhDisposable
             _beepImageCount = 1; // the initial image counts as #1
             SetCountdown(0);
 
+            // playback is hands-off, so the OS must not blank the screen or suspend
+            Core.ShellProvider?.PreventSleep($"{BHelper.AppDisplayName} slideshow");
+
             var token = _cts.Token;
             _ = RunLoopAsync(token);
         }
@@ -190,6 +193,8 @@ public sealed class SlideshowProvider : PhDisposable
 
     private void Stop_Locked()
     {
+        Core.ShellProvider?.AllowSleep();
+
         _isRunning = false;
         _isPaused = false;
         _beepImageCount = 0;

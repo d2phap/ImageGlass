@@ -23,12 +23,11 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Mac.Common.ServiceProviders;
 
-internal partial class MacShellProvider : PhDisposable, IShellProvider
+internal class MacShellProvider : PhDisposable, IShellProvider
 {
     public object? ForegroundShell { get; set; }
 
@@ -45,6 +44,7 @@ internal partial class MacShellProvider : PhDisposable, IShellProvider
     protected override void OnDisposing()
     {
         base.OnDisposing();
+        AllowSleep();
         ForegroundShell = null;
     }
 
@@ -251,40 +251,22 @@ internal partial class MacShellProvider : PhDisposable, IShellProvider
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public bool HasPreciseScrollingDeltas()
-    {
-        var app = objc_msgSend(_nsAppClass.Value, _sharedAppSel.Value);
-        var currentEvent = objc_msgSend(app, _currentEventSel.Value);
-        if (currentEvent == 0) return false;
+    public bool HasPreciseScrollingDeltas() => MacEventApi.HasPreciseScrollingDeltas();
 
-        return objc_msgSend_bool(currentEvent, _hasPreciseSel.Value);
-    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void PreventSleep(string reason) => MacPowerApi.PreventSleep(reason);
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void AllowSleep() => MacPowerApi.AllowSleep();
 
 
     #region Private helpers
-
-    #region ObjC runtime interop
-
-    [LibraryImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-    private static partial nint objc_msgSend(nint receiver, nint selector);
-
-    [LibraryImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static partial bool objc_msgSend_bool(nint receiver, nint selector);
-
-    [LibraryImport("/usr/lib/libobjc.dylib", StringMarshalling = StringMarshalling.Utf8)]
-    private static partial nint sel_registerName(string name);
-
-    [LibraryImport("/usr/lib/libobjc.dylib", StringMarshalling = StringMarshalling.Utf8)]
-    private static partial nint objc_getClass(string name);
-
-    private static readonly Lazy<nint> _sharedAppSel = new(() => sel_registerName("sharedApplication"));
-    private static readonly Lazy<nint> _currentEventSel = new(() => sel_registerName("currentEvent"));
-    private static readonly Lazy<nint> _hasPreciseSel = new(() => sel_registerName("hasPreciseScrollingDeltas"));
-    private static readonly Lazy<nint> _nsAppClass = new(() => objc_getClass("NSApplication"));
-
-    #endregion // ObjC runtime interop
-
 
     /// <summary>
     /// Executes an AppleScript expression via <c>osascript</c>.

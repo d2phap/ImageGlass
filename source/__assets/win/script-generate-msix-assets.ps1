@@ -4,8 +4,9 @@
     Generate the MSIX tile/store logo set from a single source image.
 
 .DESCRIPTION
-    The signed (GitHub) release uses logos rendered from the current app logo
-    (__assets/logo_c_512.png) rather than the Store-supplied artwork. This script
+    Both MSIX flavours use logos rendered from the current app logo: the signed
+    (GitHub) set from __assets/logo_c_512.png, the msstore set from
+    __assets/logo_p_512.png (the Store identity itself grants Pro). This script
     mirrors a REFERENCE asset folder filename-for-filename: for every
     "<LogoName>.<qualifiers>.png" in -ReferenceDir it works out the target pixel
     size from the logo name + qualifiers, renders it from -Source, and writes it
@@ -25,6 +26,7 @@
 
 .PARAMETER ReferenceDir
     Folder whose filenames are mirrored. Default: appxmanifest/Assets-msstore.
+    Must never be the same folder as -OutDir, which is wiped before enumeration.
 
 .PARAMETER OutDir
     Output folder. Default: appxmanifest/Assets-signed.
@@ -32,6 +34,12 @@
 .EXAMPLE
     pwsh __assets/win/script-generate-msix-assets.ps1
     # Regenerate appxmanifest/Assets-signed from __assets/logo_c_512.png.
+
+.EXAMPLE
+    pwsh __assets/win/script-generate-msix-assets.ps1 -Source __assets/logo_p_512.png `
+        -ReferenceDir __assets/win/appxmanifest/Assets-signed `
+        -OutDir __assets/win/appxmanifest/Assets-msstore
+    # Regenerate appxmanifest/Assets-msstore from __assets/logo_p_512.png.
 #>
 
 [CmdletBinding()]

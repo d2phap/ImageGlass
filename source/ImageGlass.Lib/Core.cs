@@ -246,6 +246,12 @@ public static class Core
 
 
     /// <summary>
+    /// A signature-verified license past its expiry, or null. Drives the expired-license prompt.
+    /// </summary>
+    public static LicenseInfo? ExpiredLicense { get; set; }
+
+
+    /// <summary>
     /// Whether Pro features are unlocked (a valid license is active).
     /// </summary>
     public static bool IsProEnabled => AppLicense is not null;
@@ -829,6 +835,16 @@ public static class Core
 
         // 3. set background color
         Resx.Set(ResxId.IG_ViewerBackgroundBrush, bgColor.ToBrush());
+
+
+        // 4. set tool host background color
+        var toolHostBg = bgColor.Blend(Core.Theme.BaseColor, 0.55, Math.Max((byte)50, bgColor.A));
+        if (bgColor.NoAlpha() == Core.Theme.BaseColor)
+        {
+            toolHostBg = bgColor.Blend(Core.Theme.InvertedBaseColor, 0.95, Math.Max((byte)50, bgColor.A));
+        }
+
+        Resx.Set(ResxId.IG_ToolHostBackgroundBrush, toolHostBg.ToBrush());
     }
 
 

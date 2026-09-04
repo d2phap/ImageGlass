@@ -116,6 +116,9 @@ public partial class GalleryControl : PhControl
     public GalleryControl()
     {
         InitializeComponent();
+
+        // tunneling: ScrollContentPresenter consumes the bubbling wheel event with its own fixed 50px step
+        AddHandler(PointerWheelChangedEvent, GalleryControl_PointerWheelChanged, RoutingStrategies.Tunnel);
     }
 
 
@@ -188,26 +191,40 @@ public partial class GalleryControl : PhControl
 
     #region Control Events
 
-    private void PART_ScrollViewer_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    private void GalleryControl_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
     {
-        if (ViewMode == PhVirtualizingUniformPanelViewMode.Gallery) return;
-        if (sender is not ScrollViewer svEl) return;
-        if (svEl.Extent.Width <= svEl.Viewport.Width) return;
-
-        // 1. Check if the user is scrolling vertically (Mouse Wheel)
-        //    and NOT already scrolling horizontally (Shift + Wheel / Touchpad)
         if (e.Delta.X == 0 && e.Delta.Y == 0) return;
 
-        // 2. Translate Vertical Delta (Y) to Horizontal Offset (X)
-        // Multiply by 50 for reasonable scroll speed (adjust as needed)
-        var scrollAmount = e.Delta.Y * 50d;
+        var svEl = FindScrollViewer();
+        if (svEl is null) return;
 
-        // Subtract to match natural scroll direction (Wheel Down -> Scroll Right)
-        svEl.Offset = new Vector(svEl.Offset.X - scrollAmount, 0);
+        var cellSize = GetCellSize();
 
-        // 3. Mark event as handled to prevent bubbling
+        if (ViewMode == PhVirtualizingUniformPanelViewMode.FilmStrip)
+        {
+            if (svEl.Extent.Width <= svEl.Viewport.Width) return;
+
+            // touchpad horizontal swipe reports the delta on X, mouse wheel on Y
+            var delta = e.Delta.Y != 0 ? e.Delta.Y : e.Delta.X;
+            var step = GetWheelScrollStep(cellSize.Width, svEl.Viewport.Width);
+            var maxOffset = Math.Max(0, svEl.Extent.Width - svEl.Viewport.Width);
+
+            // subtract to match natural scroll direction (wheel down -> scroll right)
+            var targetX = svEl.Offset.X - (delta * step);
+            svEl.Offset = new Vector(Math.Clamp(targetX, 0, maxOffset), 0);
+        }
+        else
+        {
+            if (svEl.Extent.Height <= svEl.Viewport.Height) return;
+
+            var step = GetWheelScrollStep(cellSize.Height, svEl.Viewport.Height);
+            var maxOffset = Math.Max(0, svEl.Extent.Height - svEl.Viewport.Height);
+
+            var targetY = svEl.Offset.Y - (e.Delta.Y * step);
+            svEl.Offset = new Vector(svEl.Offset.X, Math.Clamp(targetY, 0, maxOffset));
+        }
+
         e.Handled = true;
-
     }
 
 
@@ -275,15 +292,39 @@ public partial class GalleryControl : PhControl
 
 
     /// <summary>
+    /// Gets the size of a single item cell: item size + margin on each side (must match panel layout).
+    /// </summary>
+    private static Size GetCellSize()
+    {
+        var itemSize = (double)Core.Config.ThumbnailSize;
+        var cellWidth = itemSize + GalleryItemMargin.Left + GalleryItemMargin.Right;
+        var cellHeight = itemSize + GalleryItemMargin.Top + GalleryItemMargin.Bottom;
+
+        return new Size(cellWidth, cellHeight);
+    }
+
+
+    /// <summary>
+    /// Gets the distance to scroll for one wheel notch: one item cell, capped to the viewport
+    /// so a thumbnail larger than the viewport never scrolls past a full page.
+    /// </summary>
+    private static double GetWheelScrollStep(double cellLength, double viewportLength)
+    {
+        if (viewportLength <= 0) return cellLength;
+
+        return Math.Min(cellLength, viewportLength);
+    }
+
+
+    /// <summary>
     /// Calculates the scroll offset that centers the item at <paramref name="index"/>.
     /// </summary>
     private Vector GetCenteredScrollOffset(ScrollViewer svEl, int index)
     {
-        // Cell size = ItemSize + margin on each side (must match panel layout).
         // Border padding offsets the panel within the scroll content.
-        var itemSize = (double)Core.Config.ThumbnailSize;
-        var cellWidth = itemSize + GalleryItemMargin.Left + GalleryItemMargin.Right;
-        var cellHeight = itemSize + GalleryItemMargin.Top + GalleryItemMargin.Bottom;
+        var cellSize = GetCellSize();
+        var cellWidth = cellSize.Width;
+        var cellHeight = cellSize.Height;
         var padLeft = GalleryPadding.Left;
         var padTop = GalleryPadding.Top;
 

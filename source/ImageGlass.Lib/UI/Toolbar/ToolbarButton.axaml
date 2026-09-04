@@ -19,10 +19,19 @@
         Orientation="Horizontal"
         Spacing="{CompiledBinding InnerSpacing}">
 
-        <Svg
+        <Panel
             Width="{CompiledBinding Config.ToolbarIconHeight}"
-            Height="{CompiledBinding Config.ToolbarIconHeight}"
-            Path="{CompiledBinding ImagePath}" />
+            Height="{CompiledBinding Config.ToolbarIconHeight}">
+            <Svg Path="{CompiledBinding ImagePath}" />
+
+            <!--  placeholder for a button that runs something but has no icon  -->
+            <Path
+                Data="{StaticResource IconPlaceholder}"
+                Fill="{DynamicResource TextControlForeground}"
+                IsVisible="{CompiledBinding IsPlaceholderIconVisible}"
+                Opacity="0.6"
+                Stretch="Uniform" />
+        </Panel>
 
         <TextBlock
             x:Name="PART_ButtonText"

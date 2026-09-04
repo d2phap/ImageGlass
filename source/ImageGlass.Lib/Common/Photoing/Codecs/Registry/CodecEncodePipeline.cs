@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Common.Extensions;
 using SkiaSharp;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,10 +32,6 @@ namespace ImageGlass.Common.Photoing;
 /// </summary>
 internal static class CodecEncodePipeline
 {
-    // Marks the host's own staging file. Kept identifiable so leftovers can be swept.
-    private const string TEMP_PREFIX = ".ig-save-";
-
-
     /// <summary>
     /// Tries to write <paramref name="destFilePath"/> with a plugin encoder. Returns <c>false</c>
     /// when no plugin claims it, so the caller falls back to the built-in path. Throws when a
@@ -57,8 +52,8 @@ internal static class CodecEncodePipeline
             && photo.Metadata.FrameCount > 1
             && ReferenceEquals(Core.CodecRegistry.SelectMultiFrameEncodeCodec(destFilePath), codec);
 
-        var tempPath = BuildTempPath(destFilePath);
-        SweepStaleTempFiles(destFilePath);
+        var tempPath = SaveStaging.BuildTempPath(destFilePath);
+        SaveStaging.SweepStaleTempFiles(destFilePath);
 
         try
         {
@@ -68,34 +63,30 @@ internal static class CodecEncodePipeline
 
             if (result.Unsupported)
             {
-                TryDelete(tempPath);
+                SaveStaging.TryDelete(tempPath);
                 return false;
             }
             if (!result.Succeeded)
             {
-                TryDelete(tempPath);
+                SaveStaging.TryDelete(tempPath);
                 throw new InvalidDataException(
                     $"IGE: '{codec.CodecName}' could not write the image. {result.Error}".TrimEnd());
             }
-
-            if (!TryPromote(tempPath, destFilePath, out var moveError))
-            {
-                TryDelete(tempPath);
-                throw new IOException($"IGE: could not finalize '{destFilePath}'. {moveError}".TrimEnd());
-            }
-
-            return true;
-        }
-        catch (OperationCanceledException)
-        {
-            TryDelete(tempPath);
-            throw;
         }
         catch
         {
-            TryDelete(tempPath);
+            SaveStaging.TryDelete(tempPath);
             throw;
         }
+
+        // a failed promote deliberately keeps the staged file: it holds the finished image
+        var (promoted, promoteError) = await SaveStaging.PromoteAsync(tempPath, destFilePath, token).ConfigureAwait(false);
+        if (!promoted)
+        {
+            throw new IOException($"IGE: could not finalize '{destFilePath}'. {promoteError}".TrimEnd());
+        }
+
+        return true;
     }
 
 
@@ -250,68 +241,4 @@ internal static class CodecEncodePipeline
     }
 
 
-    /// <summary>
-    /// Builds the staging path: same folder so the move is cheap, and the real extension stays last
-    /// because encoders read it to pick a container.
-    /// </summary>
-    private static string BuildTempPath(string destFilePath)
-    {
-        var dir = Path.GetDirectoryName(destFilePath);
-        var ext = Path.GetExtension(destFilePath);
-        var name = TEMP_PREFIX + Guid.NewGuid().ToString("N") + ext;
-
-        return string.IsNullOrEmpty(dir) ? name : Path.Combine(dir, name);
-    }
-
-
-    /// <summary>
-    /// Moves the staged file onto the real destination. Reports failure instead of throwing, so a
-    /// plugin that left its handle open cannot look like a corrupt save.
-    /// </summary>
-    private static bool TryPromote(string tempPath, string destFilePath, out string error)
-    {
-        error = string.Empty;
-        try
-        {
-            File.Move(tempPath, destFilePath, overwrite: true);
-            return true;
-        }
-        catch (Exception ex)
-        {
-            error = ex.Message;
-            return false;
-        }
-    }
-
-
-    /// <summary>
-    /// Best-effort delete; a still-locked staging file is left for a later sweep.
-    /// </summary>
-    private static void TryDelete(string path)
-    {
-        try { if (File.Exists(path)) File.Delete(path); }
-        catch (Exception ex) { Debug.WriteLine($"[CodecEncodePipeline] temp delete failed: {ex.Message}"); }
-    }
-
-
-    /// <summary>
-    /// Removes staging files a previous save could not clean up (a plugin held the handle open).
-    /// </summary>
-    private static void SweepStaleTempFiles(string destFilePath)
-    {
-        try
-        {
-            var dir = Path.GetDirectoryName(destFilePath);
-            if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir)) return;
-
-            foreach (var stale in Directory.EnumerateFiles(dir, TEMP_PREFIX + "*"))
-            {
-                try { File.Delete(stale); } catch { }
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[CodecEncodePipeline] temp sweep failed: {ex.Message}");
-        }
-    }
 }

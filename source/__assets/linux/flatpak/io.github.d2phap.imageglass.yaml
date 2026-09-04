@@ -14,6 +14,8 @@ finish-args:
   # Notification sound; also covers PipeWire hosts via pipewire-pulse.
   - --socket=pulseaudio
   - --talk-name=org.freedesktop.FileManager1
+  # Slideshow keeps the screen awake by resetting the session idle timer.
+  - --talk-name=org.freedesktop.ScreenSaver
   # Allow launching external tools on the host via flatpak-spawn --host.
   - --talk-name=org.freedesktop.Flatpak
 

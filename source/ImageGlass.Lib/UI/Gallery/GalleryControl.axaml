@@ -16,10 +16,7 @@
         <!--  GalleryControl: Control template  -->
         <ItemsControl.Template>
             <ControlTemplate>
-                <ScrollViewer
-                    HorizontalScrollBarVisibility="Auto"
-                    PointerWheelChanged="PART_ScrollViewer_PointerWheelChanged"
-                    VerticalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Border Padding="{x:Static ui:GalleryControl.GalleryPadding}">
                         <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
                     </Border>

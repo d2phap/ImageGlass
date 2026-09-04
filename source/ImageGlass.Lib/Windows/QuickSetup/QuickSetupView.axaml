@@ -220,6 +220,42 @@
 
 
 
+            <!--  Applications menu (AppImage only: every other build installs its own entry)  -->
+            <StackPanel
+                x:Name="PART_StepAppMenu"
+                VerticalAlignment="Center"
+                IsVisible="False"
+                Spacing="12">
+                <ui:PhTextBlock
+                    x:Name="PART_LblAppMenu"
+                    FontWeight="SemiBold"
+                    TextAlignment="Center" />
+                <ui:PhTextBlock
+                    x:Name="PART_LblAppMenuDesc"
+                    Opacity="0.75"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+
+                <Border
+                    Padding="8"
+                    Background="{DynamicResource IG_BackgroundWarningBrush}"
+                    CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <ui:PhTextBlock
+                        x:Name="PART_LblAppMenuWarning"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </Border>
+
+                <ui:PhButton
+                    x:Name="PART_BtnRegisterAppMenu"
+                    MinWidth="100"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Variant="Outline" />
+            </StackPanel>
+
+
+
             <!--  Step 4: Upgrade to Pro (Classic only)  -->
             <StackPanel
                 x:Name="PART_Step4"

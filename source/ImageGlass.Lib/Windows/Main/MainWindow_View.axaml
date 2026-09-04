@@ -32,32 +32,36 @@
         <Grid
             x:Name="PART_ViewerWrapper"
             Grid.Row="1"
-            RowDefinitions="*, Auto"
-            Background="{DynamicResource IG_ViewerBackgroundBrush}">
-            <viewer:ViewerControl
-                x:Name="PART_Viewer"
-                Grid.Row="0"
-                CheckerboardMode="{CompiledBinding CheckerboardMode, Source={x:Static cm:Core.Config}}"
-                EnableDebug="{CompiledBinding EnableDebug, Source={x:Static cm:Core.Config}}"
-                EnableFreePan="{CompiledBinding EnableFreePan, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.Bool}}"
-                EnableHdrRendering="{CompiledBinding EnableHdrToneMapping, Source={x:Static cm:Core.Config}}"
-                EnableNavButtons="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}"
-                InterpolationScaleDown="{CompiledBinding ImageInterpolationScaleDown, Source={x:Static cm:Core.Config}}"
-                InterpolationScaleUp="{CompiledBinding ImageInterpolationScaleUp, Source={x:Static cm:Core.Config}}"
-                IsWindowFitMode="{CompiledBinding EnableWindowFit, Source={x:Static cm:Core.Config}}"
-                PanMargin="{CompiledBinding PanMargin, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.DoubleOrZero}}"
-                PanSpeed="{CompiledBinding PanSpeed, Source={x:Static cm:Core.Config}}"
-                ZoomLevels="{CompiledBinding ZoomLevels, Source={x:Static cm:Core.Config}}"
-                ZoomMode="{CompiledBinding ZoomMode, Source={x:Static cm:Core.Config}}"
-                ZoomSpeed="{CompiledBinding ZoomSpeed, Source={x:Static cm:Core.Config}}">
-                <Panel>
-                    <ui:MessageControl x:Name="PART_Message" />
-                    <viewer:SlideshowCountdownOverlay x:Name="PART_SlideshowCountdown" IsHitTestVisible="False" />
-                    <viewer:NavButtonsOverlay IsVisible="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}" />
-                </Panel>
-            </viewer:ViewerControl>
+            RowDefinitions="*, Auto">
+            <Border Background="{DynamicResource IG_ViewerBackgroundBrush}">
+                <viewer:ViewerControl
+                    x:Name="PART_Viewer"
+                    Grid.Row="0"
+                    CheckerboardMode="{CompiledBinding CheckerboardMode, Source={x:Static cm:Core.Config}}"
+                    EnableDebug="{CompiledBinding EnableDebug, Source={x:Static cm:Core.Config}}"
+                    EnableFreePan="{CompiledBinding EnableFreePan, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.Bool}}"
+                    EnableHdrRendering="{CompiledBinding EnableHdrToneMapping, Source={x:Static cm:Core.Config}}"
+                    EnableNavButtons="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}"
+                    InterpolationScaleDown="{CompiledBinding ImageInterpolationScaleDown, Source={x:Static cm:Core.Config}}"
+                    InterpolationScaleUp="{CompiledBinding ImageInterpolationScaleUp, Source={x:Static cm:Core.Config}}"
+                    IsWindowFitMode="{CompiledBinding EnableWindowFit, Source={x:Static cm:Core.Config}}"
+                    PanMargin="{CompiledBinding PanMargin, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.DoubleOrZero}}"
+                    PanSpeed="{CompiledBinding PanSpeed, Source={x:Static cm:Core.Config}}"
+                    ZoomLevels="{CompiledBinding ZoomLevels, Source={x:Static cm:Core.Config}}"
+                    ZoomMode="{CompiledBinding ZoomMode, Source={x:Static cm:Core.Config}}"
+                    ZoomSpeed="{CompiledBinding ZoomSpeed, Source={x:Static cm:Core.Config}}">
+                    <Panel>
+                        <ui:MessageControl x:Name="PART_Message" />
+                        <viewer:SlideshowCountdownOverlay x:Name="PART_SlideshowCountdown" IsHitTestVisible="False" />
+                        <viewer:NavButtonsOverlay IsVisible="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}" />
+                    </Panel>
+                </viewer:ViewerControl>
+            </Border>
 
-            <tool:ToolHostControl x:Name="PART_ToolHost" Grid.Row="1" />
+            <tool:ToolHostControl
+                x:Name="PART_ToolHost"
+                Grid.Row="1"
+                Background="{DynamicResource IG_ToolHostBackgroundBrush}" />
         </Grid>
 
 

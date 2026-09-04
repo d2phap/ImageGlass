@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=ImageGlass
+Comment=A Fast, Seamless Photo Viewer
+Exec=AppRun %F
+Icon=io.github.d2phap.imageglass
+Terminal=false
+Categories=Graphics;Viewer;
+StartupWMClass=ImageGlass
+MimeType=image/jpeg;image/png;image/gif;image/bmp;image/tiff;image/svg+xml;image/webp;image/avif;image/heic;image/heif;image/x-icon;image/vnd.microsoft.icon;image/x-tga;image/x-xcf;image/x-xbitmap;image/x-portable-pixmap;image/x-portable-graymap;image/x-portable-bitmap;image/x-portable-anymap;image/x-exr;image/x-radiance;image/x-dds;image/x-adobe-dng;image/x-canon-cr2;image/x-canon-cr3;image/x-canon-crw;image/x-nikon-nef;image/x-nikon-nrw;image/x-sony-arw;image/x-sony-sr2;image/x-sony-srf;image/x-panasonic-raw;image/x-panasonic-rw2;image/x-olympus-orf;image/x-fuji-raf;image/x-kodak-dcr;image/x-pentax-pef;image/x-samsung-srw;image/vnd.adobe.photoshop;

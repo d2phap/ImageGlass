@@ -186,6 +186,9 @@ public partial class PhotoManager
         var ext = Path.GetExtension(filePath);
         if (string.IsNullOrEmpty(ext)) return false;
 
+        // a save in progress writes a sibling temp file that keeps the real extension
+        if (SaveStaging.IsStagingFile(filePath)) return false;
+
         return Core.GetSupportedFileExtensions().Contains(ext);
     }
 
@@ -246,6 +249,14 @@ public partial class PhotoManager
     {
         var newFilePath = e.FullPath ?? "";
         var oldFilePath = e.OldFullPath ?? "";
+
+        // a finished save renames its staging file onto the target: that is a content change,
+        // not a new file, so routing it here avoids a duplicate entry for a photo already listed
+        if (SaveStaging.IsStagingFile(oldFilePath))
+        {
+            FileWatcher_OnChanged(sender, e);
+            return;
+        }
 
         var oldSupported = IsSupportedFile(oldFilePath);
         var newSupported = IsSupportedFile(newFilePath);

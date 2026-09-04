@@ -148,6 +148,25 @@
       "problemMatcher": [],
       "group": "build"
     },
+    // Linux AppImage pack task. Like the Flatpak one the script publishes a fresh AOT
+    // build itself. Unlike Flatpak, an AppImage runs against the HOST glibc, so the
+    // script prints the floor of the shipped binaries on every run.
+    {
+      "label": "pack-linux-x64-appimage",
+      "type": "process",
+      "command": "/bin/bash",
+      "args": [
+        "${workspaceFolder}/__assets/linux/script-pack-linux-x64-appimage.sh"
+      ],
+      "options": {
+        "env": {
+          // Prompts on each run; leave blank to build an unsigned AppImage.
+          "GPG_KEY": "${input:gpgKey}"
+        }
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
 
     // Windows MSIX pack tasks. The script publishes a fresh AOT build, so these
     // do NOT depend on the publish-win-* tasks.
@@ -289,11 +308,11 @@
   ],
   "inputs": [
     {
-      // Used by "pack-linux-x64-flatpak". Not stored on disk — VS Code only keeps
-      // the last value for the current session. Blank => unsigned bundle.
+      // Used by "pack-linux-x64-flatpak" and "pack-linux-x64-appimage". Not stored on
+      // disk — VS Code only keeps the last value for the session. Blank => unsigned.
       "id": "gpgKey",
       "type": "promptString",
-      "description": "GPG key (email or key ID) to sign the .flatpak bundle. Leave blank for an unsigned bundle.",
+      "description": "GPG key (email or key ID) to sign the .flatpak bundle / .AppImage. Leave blank for an unsigned build.",
       "default": ""
     }
   ],

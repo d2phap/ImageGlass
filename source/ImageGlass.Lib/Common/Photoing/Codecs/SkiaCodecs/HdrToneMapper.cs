@@ -46,13 +46,20 @@ public static class HdrToneMapper
     private const float PqPeakNits = 10_000f;
 
     /// <summary>
-    /// Input level, in reference-white units, that the default tone curve maps to SDR white.
-    /// Covers a 1000-nit grade with margin so HDR highlights roll off instead of clipping.
+    /// Input level, in reference-white units, mapped to SDR white when the file declares no
+    /// content peak. Covers a 1200-nit grade, so brighter grades clip.
     /// </summary>
-    private const float ToneCurveWhiteLevel = 6f;
+    private const float FallbackToneCurveWhiteLevel = 6f;
 
     /// <summary>
-    /// ITU-R BT.2408 HDR reference white, and the default <see cref="HdrToneMappingOptions.WhitePointNits"/>.
+    /// Bounds for a white level derived from a declared content peak: below 1 the curve would clip
+    /// reference white itself, and past 24 the extra headroom no longer changes the midtones.
+    /// </summary>
+    private const float MinToneCurveWhiteLevel = 1f;
+    private const float MaxToneCurveWhiteLevel = 24f;
+
+    /// <summary>
+    /// ITU-R BT.2408 HDR reference white, and the default <see cref="HdrToneMappingOptions.ReferenceWhiteNits"/>.
     /// </summary>
     private const float Bt2408ReferenceWhiteNits = 203f;
 
@@ -60,6 +67,24 @@ public static class HdrToneMapper
     /// scRGB reference white (IEC 61966-2-2): the luminance its 1.0 stands for.
     /// </summary>
     private const float ScRgbWhiteNits = 80f;
+
+    /// <summary>
+    /// Above this, a linearized sample carries real HDR range; the slack absorbs rounding from the
+    /// color-space conversion.
+    /// </summary>
+    private const float DiffuseWhiteThreshold = 1.001f;
+
+    /// <summary>
+    /// Peak histogram shape: buckets per reference-white unit, spanning [0, 32).
+    /// </summary>
+    private const int PeakBucketsPerUnit = 32;
+    private const int PeakBuckets = 32 * PeakBucketsPerUnit;
+
+    /// <summary>
+    /// Share of samples allowed above the measured peak, so a few blown pixels cannot darken the
+    /// whole image the way a true maximum would.
+    /// </summary>
+    private const double PeakPercentile = 0.9999d;
 
     // Rec.2020 luminance coefficients (ITU-R BT.2020) — used by luminance-based path
     private const float Lum2020R = 0.2627f;
@@ -87,8 +112,9 @@ public static class HdrToneMapper
     /// is <see cref="HdrToneMappingMode.None"/> (pass-through), or when the
     /// decoded image is not actually HDR-encoded.
     /// </summary>
+    /// <param name="contentPeakNits">Declared peak from the file's HDR10 metadata; <c>0</c> if none.</param>
     public static SKImage? ToneMapToSdr(SKImage? source,
-        HdrTransferFunction transferFn, HdrToneMappingOptions options)
+        HdrTransferFunction transferFn, HdrToneMappingOptions options, double contentPeakNits = 0d)
     {
         ArgumentNullException.ThrowIfNull(options);
         if (source.IsDisposed()) return null;
@@ -133,20 +159,7 @@ public static class HdrToneMapper
                 }
             }
 
-            // Build the tone curve with highlight compression factored in
-            var compression = Math.Clamp((float)options.HighlightCompression, 0f, 1f);
-            var saturation = Math.Clamp((float)options.Saturation, 0f, 2f);
-            Func<float, float> toneCurve = options.Mode switch
-            {
-                HdrToneMappingMode.BT2408 => v => ReferenceWhiteToneMap(v, compression),
-                HdrToneMappingMode.Reinhard => v => ExtendedReinhardToneMap(v, compression),
-                HdrToneMappingMode.ACES => v => AcesToneMap(v, compression),
-                _ => null!,
-            };
-
-            if (toneCurve is null) return null;
-
-            return ToneMapManual(effectiveSource, transferFn, options, saturation, toneCurve);
+            return ToneMapManual(effectiveSource, transferFn, options, contentPeakNits);
         }
         finally
         {
@@ -196,8 +209,7 @@ public static class HdrToneMapper
     /// </para>
     /// </summary>
     private static unsafe SKImage? ToneMapManual(SKImage source,
-        HdrTransferFunction transferFn, HdrToneMappingOptions options, float saturation,
-        Func<float, float> toneCurve)
+        HdrTransferFunction transferFn, HdrToneMappingOptions options, double contentPeakNits)
     {
         var isLinearSrgb = transferFn is HdrTransferFunction.None or HdrTransferFunction.Linear
             or HdrTransferFunction.ScRgb;
@@ -206,8 +218,27 @@ public static class HdrToneMapper
         using var linearBmp = LinearizeToFloat(source, isLinearSrgb);
         if (linearBmp is null) return null;
 
+        // one pass covers both the SDR check and the peak, for a source that declares none
+        var (maxSample, measuredPeak) = MeasureLinearPeak(linearBmp);
+
         // nothing above diffuse white means no HDR range, so mapping it would only darken an SDR image
-        if (isLinearSrgb && !HasValuesAboveDiffuseWhite(linearBmp)) return null;
+        if (isLinearSrgb && maxSample <= DiffuseWhiteThreshold) return null;
+
+        // ── Step 1b: build the tone curve around the peak this image actually has ──
+        var compression = Math.Clamp((float)options.HighlightCompression, 0f, 1f);
+        var saturation = Math.Clamp((float)options.Saturation, 0f, 2f);
+        var whiteLevel = ComputeToneCurveWhiteLevel(transferFn, options,
+            contentPeakNits, measuredPeak, compression);
+
+        Func<float, float>? toneCurve = options.Mode switch
+        {
+            HdrToneMappingMode.BT2408 => v => ReferenceWhiteToneMap(v, whiteLevel),
+            HdrToneMappingMode.Reinhard => v => ExtendedReinhardToneMap(v, compression),
+            HdrToneMappingMode.ACES => v => AcesToneMap(v, compression),
+            _ => null,
+        };
+
+        if (toneCurve is null) return null;
 
         var width = linearBmp.Width;
         var height = linearBmp.Height;
@@ -277,35 +308,70 @@ public static class HdrToneMapper
 
 
     /// <summary>
-    /// Whether any RGB sample exceeds diffuse white, which tells real HDR range from linear SDR.
+    /// Per-thread accumulator for <see cref="MeasureLinearPeak"/>.
     /// </summary>
-    private static unsafe bool HasValuesAboveDiffuseWhite(SKBitmap linearBmp)
+    private sealed class PeakScan
     {
-        // tolerance absorbs rounding from the color-space conversion
-        const float threshold = 1.001f;
+        public readonly int[] Histogram = new int[PeakBuckets + 1];
+        public float Max;
+    }
 
+
+    /// <summary>
+    /// Measures the linearized image in one parallel pass: the true maximum sample (which tells real
+    /// HDR range from linear SDR) and the <see cref="PeakPercentile"/> sample used as the peak.
+    /// </summary>
+    private static unsafe (float Max, float Peak) MeasureLinearPeak(SKBitmap linearBmp)
+    {
         var basePtr = (nint)linearBmp.GetPixels();
         var rowBytes = linearBmp.RowBytes;
         var width = linearBmp.Width;
-        var found = 0;
 
-        Parallel.For(0, linearBmp.Height, (y, state) =>
+        var merged = new int[PeakBuckets + 1];
+        var maxSample = 0f;
+        var mergeLock = new Lock();
+
+        Parallel.For(0, linearBmp.Height, () => new PeakScan(), (y, _, scan) =>
         {
             var row = (float*)((byte*)basePtr + (long)y * rowBytes);
 
             for (var x = 0; x < width; x++)
             {
                 var i = x * 4;
-                if (row[i] > threshold || row[i + 1] > threshold || row[i + 2] > threshold)
-                {
-                    Interlocked.Exchange(ref found, 1);
-                    state.Stop();
-                    return;
-                }
+                var v = MathF.Max(row[i], MathF.Max(row[i + 1], row[i + 2]));
+                if (v > scan.Max) scan.Max = v;
+
+                var bucket = v <= 0f ? 0 : (int)(v * PeakBucketsPerUnit);
+                scan.Histogram[Math.Min(bucket, PeakBuckets)]++;
+            }
+
+            return scan;
+        },
+        scan =>
+        {
+            lock (mergeLock)
+            {
+                if (scan.Max > maxSample) maxSample = scan.Max;
+                for (var b = 0; b <= PeakBuckets; b++) merged[b] += scan.Histogram[b];
             }
         });
 
-        return found != 0;
+        long total = 0;
+        for (var b = 0; b <= PeakBuckets; b++) total += merged[b];
+
+        // walk down from the brightest bucket until more than the allowed share sits above it
+        var allowedAbove = (long)(total * (1d - PeakPercentile));
+        long above = 0;
+        for (var b = PeakBuckets; b > 0; b--)
+        {
+            above += merged[b];
+            if (above <= allowedAbove) continue;
+
+            var peak = (b + 1) / (float)PeakBucketsPerUnit;
+            return (maxSample, MathF.Min(peak, maxSample));
+        }
+
+        return (maxSample, maxSample);
     }
 
 
@@ -314,16 +380,8 @@ public static class HdrToneMapper
     /// </summary>
     private static float ComputeNormScale(HdrTransferFunction transferFn, HdrToneMappingOptions options)
     {
-        var whiteNits = Math.Clamp((float)options.WhitePointNits, 50f, 1000f);
-
-        // Every branch puts reference white at 1.0, but each source encodes 1.0 differently:
-        // PQ is absolute nits, scRGB pins 1.0 to 80 nits, scene-referred calls 1.0 diffuse white.
-        var normScale = transferFn switch
-        {
-            HdrTransferFunction.PQ => PqPeakNits / whiteNits,
-            HdrTransferFunction.ScRgb => ScRgbWhiteNits / whiteNits,
-            _ => Bt2408ReferenceWhiteNits / whiteNits,
-        };
+        var whiteNits = ClampReferenceWhiteNits(options);
+        var normScale = EncodingWhiteNits(transferFn) / whiteNits;
 
         // Exposure in EV stops: 0 = no change, +1 = 2×, -1 = 0.5×.
         var exposure = (float)options.Exposure;
@@ -508,18 +566,64 @@ public static class HdrToneMapper
 
 
     /// <summary>
-    /// Reference-white anchored roll-off (extended Reinhard) over the whole range.
-    /// Reference white lands near half SDR peak, so brighter content compresses instead of clipping.
+    /// The reference-white override in nits, clamped to the range the HDR tool's slider offers.
     /// </summary>
-    /// <param name="compression">0 = white level at 6x reference white, 1 = 24x (max compression).</param>
-    private static float ReferenceWhiteToneMap(float v, float compression)
+    private static float ClampReferenceWhiteNits(HdrToneMappingOptions options)
+        => Math.Clamp((float)options.ReferenceWhiteNits, 50f, 1000f);
+
+
+    /// <summary>
+    /// The luminance a linearized 1.0 stands for: PQ is absolute nits, scRGB pins 1.0 to 80 nits,
+    /// scene-referred calls 1.0 diffuse white. Converts a sample to nits, and nits to v.
+    /// </summary>
+    private static float EncodingWhiteNits(HdrTransferFunction transferFn) => transferFn switch
+    {
+        HdrTransferFunction.PQ => PqPeakNits,
+        HdrTransferFunction.ScRgb => ScRgbWhiteNits,
+        _ => Bt2408ReferenceWhiteNits,
+    };
+
+
+    /// <summary>
+    /// Input level, in reference-white units, that the BT.2408 curve maps to SDR white. Taken from
+    /// the file's declared peak so a 400-nit and a 4000-nit grade each land on white, not on a guess.
+    /// </summary>
+    /// <param name="compression">0 = white level at the declared peak, 1 = 4x it (max compression).</param>
+    private static float ComputeToneCurveWhiteLevel(HdrTransferFunction transferFn,
+        HdrToneMappingOptions options, double contentPeakNits, float measuredPeak, float compression)
+    {
+        var whiteNits = ClampReferenceWhiteNits(options);
+
+        // v is in reference-white units under every transfer function except HLG, whose 1.0 is its
+        // own peak, so only there is a peak in nits not comparable with v
+        var peakIsComparable = transferFn is not HdrTransferFunction.HLG;
+
+        // metadata wins; failing that the samples are absolute, so the brightest one IS the peak
+        var peakNits = contentPeakNits > 0d
+            ? contentPeakNits
+            : measuredPeak * EncodingWhiteNits(transferFn);
+
+        var baseLevel = peakIsComparable && peakNits > 0d
+            ? Math.Clamp((float)(peakNits / whiteNits),
+                MinToneCurveWhiteLevel, MaxToneCurveWhiteLevel)
+            : FallbackToneCurveWhiteLevel;
+
+        // headroom past the peak, since a grade can exceed both its metadata and its own p99.99
+        return baseLevel * (1f + 3f * compression);
+    }
+
+
+    /// <summary>
+    /// Reference-white anchored roll-off (extended Reinhard), reaching SDR white exactly at
+    /// <paramref name="whiteLevel"/> so content below it compresses instead of clipping.
+    /// </summary>
+    /// <param name="whiteLevel">Input level, in reference-white units, that maps to SDR white.</param>
+    private static float ReferenceWhiteToneMap(float v, float whiteLevel)
     {
         // A knee curve is wrong here: real HDR grades put a lot of content above reference white
         // (29% on a 1164-nit sample), and a tight knee clips all of it to white.
         if (v <= 0f) return 0f;
 
-        // A higher white level keeps more highlight detail at a lower peak brightness
-        var whiteLevel = ToneCurveWhiteLevel * (1f + 3f * compression);
         var mapped = v * (1f + v / (whiteLevel * whiteLevel)) / (1f + v);
 
         return MathF.Min(1f, mapped);

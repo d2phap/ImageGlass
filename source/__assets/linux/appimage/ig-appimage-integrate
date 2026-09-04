@@ -1,0 +1,92 @@
+#!/bin/sh
+#
+# Desktop integration for the ImageGlass AppImage: installs a .desktop entry and icons into
+# ~/.local/share so the app appears in the applications menu.
+#
+#   --install   install or re-point the entry; called by the app
+#   --remove    uninstall
+#   --maybe     called by AppRun: re-points an existing entry after the .AppImage is moved.
+#               Never prompts and never installs; the app owns the asking.
+
+set -eu
+
+APP_ID="io.github.d2phap.imageglass"
+DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+APPS_DIR="$DATA_HOME/applications"
+ICONS_DIR="$DATA_HOME/icons/hicolor"
+DESKTOP_TARGET="$APPS_DIR/$APP_ID.desktop"
+
+# Set by AppRun; recomputed so the helper also works when run by hand.
+if [ -z "${APPDIR:-}" ]; then
+    APPDIR="$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")"
+fi
+
+# Key-file layer only: a plain value, so backslashes just double.
+tryexec_value() {
+    printf '%s' "$APPIMAGE" | sed 's/\\/\\\\/g'
+}
+
+refresh_caches() {
+    if command -v update-desktop-database >/dev/null 2>&1; then
+        update-desktop-database "$APPS_DIR" >/dev/null 2>&1 || :
+    fi
+    if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+        gtk-update-icon-cache -f -t "$ICONS_DIR" >/dev/null 2>&1 || :
+    fi
+}
+
+do_install() {
+    mkdir -p "$APPS_DIR" "$ICONS_DIR/512x512/apps" "$ICONS_DIR/scalable/apps"
+    if [ -f "$APPDIR/$APP_ID.png" ]; then
+        cp -f "$APPDIR/$APP_ID.png" "$ICONS_DIR/512x512/apps/$APP_ID.png"
+    fi
+    if [ -f "$APPDIR/$APP_ID.svg" ]; then
+        cp -f "$APPDIR/$APP_ID.svg" "$ICONS_DIR/scalable/apps/$APP_ID.svg"
+    fi
+
+    # Shell-quote layer, then the key-file layer which doubles every backslash again.
+    # '%' is left alone: the spec wants '%%', but GLib then rejects the whole entry.
+    _exec=$(printf '%s' "$APPIMAGE" | sed -e 's/\\/\\\\/g' -e 's/["$`]/\\&/g' -e 's/\\/\\\\/g')
+    _tryexec=$(tryexec_value)
+
+    # printf %s never re-interprets escapes in its argument, unlike awk -v, which would
+    # turn a lone backslash in the path into a tab.
+    while IFS= read -r _line || [ -n "$_line" ]; do
+        case "$_line" in
+            Exec=*)    printf 'Exec="%s" %%F\n' "$_exec"; printf 'TryExec=%s\n' "$_tryexec" ;;
+            TryExec=*) ;;
+            *)         printf '%s\n' "$_line" ;;
+        esac
+    done < "$APPDIR/$APP_ID.desktop" > "$DESKTOP_TARGET"
+
+    refresh_caches
+}
+
+do_remove() {
+    rm -f "$DESKTOP_TARGET" \
+          "$ICONS_DIR/512x512/apps/$APP_ID.png" \
+          "$ICONS_DIR/scalable/apps/$APP_ID.svg"
+    refresh_caches
+}
+
+case "${1:---maybe}" in
+    --install)
+        if [ -z "${APPIMAGE:-}" ]; then echo "Not running from an AppImage." >&2; exit 1; fi
+        do_install
+        ;;
+    --remove)
+        do_remove
+        ;;
+    --maybe)
+        # The installed entry is the only state: absent means the user never opted in (or
+        # removed it), and a TryExec that already matches means there is nothing to do.
+        [ -n "${APPIMAGE:-}" ] || exit 0
+        [ -f "$DESKTOP_TARGET" ] || exit 0
+        grep -qxF "TryExec=$(tryexec_value)" "$DESKTOP_TARGET" && exit 0
+        do_install
+        ;;
+    *)
+        echo "usage: ${0##*/} [--maybe|--install|--remove]" >&2
+        exit 2
+        ;;
+esac

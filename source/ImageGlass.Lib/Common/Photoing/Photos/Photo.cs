@@ -48,8 +48,16 @@ public partial class Photo : PhDisposable
     private readonly Lock _lock = new();
     private int _loadGeneration;
 
+    // serializes LoadAsync on this photo: a second loader joins the load in flight, never cancels it
+    private readonly SemaphoreSlim _loadGate = new(1, 1);
+    private int _cancelEpoch;
+
     // track pending tasks
     private ConcurrentDictionary<Guid, bool> _taskRefs = new();
+
+    // in-flight file writes across all photos; shutdown waits on this
+    private static int _pendingSaveCount;
+
     private CancellationTokenSource? _cancelThumbnailLoading;
     private double _galleryThumbnailRequestSize;
 
@@ -646,6 +654,19 @@ public partial class Photo : PhDisposable
     [MemberNotNull(nameof(_cancelPhotoLoading))]
     public virtual CancellationToken CancelLoading()
     {
+        // a cancel must also drop a load still queued behind another one, which holds no token yet
+        _ = Interlocked.Increment(ref _cancelEpoch);
+
+        return ResetCancelToken();
+    }
+
+
+    /// <summary>
+    /// Replaces the loading token without counting as a cancel of a queued load.
+    /// </summary>
+    [MemberNotNull(nameof(_cancelPhotoLoading))]
+    private CancellationToken ResetCancelToken()
+    {
         lock (_lock)
         {
             _cancelPhotoLoading?.Cancel();
@@ -660,6 +681,9 @@ public partial class Photo : PhDisposable
     /// <summary>
     /// Loads photo from file.
     /// </summary>
+    /// <remarks>
+    /// Serialized per photo: cancelling a load in flight instead left its caller with no Loaded event.
+    /// </remarks>
     public virtual async Task LoadAsync(bool useCache,
         Func<PhotoLoadingEventArgs, Task>? handleProgressFn = null,
         bool skipLoadingEvent = false)
@@ -668,9 +692,59 @@ public partial class Photo : PhDisposable
         if (useCache && State != PhotoState.None)
         {
             PhotoTrace.Mark("load:cache-hit", FilePath, $"state={State}");
+            await DispatchLoadedAsync(handleProgressFn);
             return;
         }
-        var token = CancelLoading();
+
+        // no ConfigureAwait(false) below: handleProgressFn renders, so it resumes on the UI thread
+        var epoch = Volatile.Read(ref _cancelEpoch);
+        await _loadGate.WaitAsync();
+        try
+        {
+            // cancelled while queued, i.e. the caller navigated away before we got our turn
+            if (Volatile.Read(ref _cancelEpoch) != epoch)
+            {
+                PhotoTrace.Mark("load:queued-cancel", FilePath, $"state={State}");
+                return;
+            }
+
+            // the load we queued behind may have decoded the photo already
+            if (useCache && State != PhotoState.None)
+            {
+                PhotoTrace.Mark("load:cache-hit", FilePath, $"state={State}, afterGate=True");
+                await DispatchLoadedAsync(handleProgressFn);
+                return;
+            }
+
+            await LoadAsync__(useCache, handleProgressFn, skipLoadingEvent);
+        }
+        finally
+        {
+            _ = _loadGate.Release();
+        }
+    }
+
+
+    /// <summary>
+    /// Raises Loaded for an already-decoded photo, so a cache hit still tells its caller to render.
+    /// </summary>
+    private async Task DispatchLoadedAsync(Func<PhotoLoadingEventArgs, Task>? handleProgressFn)
+    {
+        if (handleProgressFn is null || State != PhotoState.Loaded) return;
+
+        // CancellationToken.None: the decode is done, there is nothing left to abort
+        await handleProgressFn(new(PhotoState.Loaded, this, CancellationToken.None));
+    }
+
+
+    /// <summary>
+    /// The load itself; runs one at a time per photo.
+    /// </summary>
+    private async Task LoadAsync__(bool useCache,
+        Func<PhotoLoadingEventArgs, Task>? handleProgressFn,
+        bool skipLoadingEvent)
+    {
+        var token = ResetCancelToken();
         var myGeneration = Interlocked.Increment(ref _loadGeneration);
 
         PhotoTrace.Begin(FilePath, $"useCache={useCache}, skipLoadingEvent={skipLoadingEvent}");
@@ -961,6 +1035,7 @@ public partial class Photo : PhDisposable
     {
         var taskId = Guid.NewGuid();
         _ = _taskRefs.TryAdd(taskId, true);
+        _ = Interlocked.Increment(ref _pendingSaveCount);
 
         try
         {
@@ -972,27 +1047,29 @@ public partial class Photo : PhDisposable
             // 1. save clipboard photo to file
             if (!handled && IsClipboard && Bitmap is SKImage img)
             {
-                await Task.Factory.StartNew(async () =>
-                {
-                    await SkiaCodec.SaveAsync(img, destFilePath, transforms, quality, token);
-                }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
+                await SaveStaging.WriteThenPromoteAsync(destFilePath, stagePath =>
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await SkiaCodec.SaveAsync(img, stagePath, transforms, quality, token);
+                    }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap(), token);
             }
 
             // 2. save photo to file
             else if (!handled)
             {
-                await Task.Factory.StartNew(async () =>
+                // update read options
+                var readOptions = ReadOptions with
                 {
-                    // update read options
-                    var readOptions = ReadOptions with
-                    {
-                        FrameIndex = Metadata.FrameCount > 1
-                            ? -1 // save all frame
-                            : ReadOptions.FrameIndex, // save only current frame
-                    };
+                    FrameIndex = Metadata.FrameCount > 1
+                        ? -1 // save all frame
+                        : ReadOptions.FrameIndex, // save only current frame
+                };
 
-                    await MagickCodec.SaveAsync(Metadata, destFilePath, readOptions, transforms, quality, token);
-                }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
+                await SaveStaging.WriteThenPromoteAsync(destFilePath, stagePath =>
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await MagickCodec.SaveAsync(Metadata, stagePath, readOptions, transforms, quality, token);
+                    }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap(), token);
             }
 
 
@@ -1005,7 +1082,28 @@ public partial class Photo : PhDisposable
         catch (OperationCanceledException) { }
         finally
         {
+            _ = Interlocked.Decrement(ref _pendingSaveCount);
             _ = _taskRefs.TryRemove(taskId, out _);
+        }
+    }
+
+
+    /// <summary>
+    /// Number of file writes currently in flight across all photos.
+    /// </summary>
+    public static int PendingSaveCount => Volatile.Read(ref _pendingSaveCount);
+
+
+    /// <summary>
+    /// Waits until every in-flight save has finished, so the app cannot tear down mid-write.
+    /// </summary>
+    public static async Task WaitForPendingSavesAsync(TimeSpan timeout)
+    {
+        var startedAt = Stopwatch.StartNew();
+
+        while (Volatile.Read(ref _pendingSaveCount) > 0 && startedAt.Elapsed < timeout)
+        {
+            await Task.Delay(20).ConfigureAwait(false);
         }
     }
 

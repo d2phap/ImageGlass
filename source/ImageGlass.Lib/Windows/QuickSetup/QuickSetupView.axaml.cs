@@ -88,6 +88,13 @@ public partial class QuickSetupView : PhControl
 
 
     /// <summary>
+    /// Whether the applications-menu step applies: only a build that installs nothing has an entry
+    /// to add (currently the Linux AppImage).
+    /// </summary>
+    private static bool CanRegisterAppMenuEntry => Core.ShellProvider?.CanRegisterAppMenuEntry == true;
+
+
+    /// <summary>
     /// Gets the current 1-based step index.
     /// </summary>
     public int CurrentStep { get; private set; } = 1;
@@ -117,6 +124,10 @@ public partial class QuickSetupView : PhControl
         if (CanSetDefaultViewer) _stepPanels.Add(PART_Step3);
         else PART_Step3.IsVisible = false;
 
+        // the applications-menu step is the AppImage counterpart of the default-viewer step
+        if (CanRegisterAppMenuEntry) _stepPanels.Add(PART_StepAppMenu);
+        else PART_StepAppMenu.IsVisible = false;
+
         // step 4 pitches Pro, so there is nothing to show once it is active
         if (!Core.IsProEnabled) _stepPanels.Add(PART_Step4);
         else PART_Step4.IsVisible = false;
@@ -135,6 +146,9 @@ public partial class QuickSetupView : PhControl
         // step 3: default photo viewer (applied immediately, it is not a config setting)
         PART_BtnRegisterViewer.Click += async (_, _) => await AppAPIProvider.SetDefaultPhotoViewerAsync(
             true, TopLevel.GetTopLevel(this) as PhWindow, _previewLang);
+
+        // applications menu (applied immediately, it is not a config setting)
+        PART_BtnRegisterAppMenu.Click += async (_, _) => await RegisterAppMenuEntryAsync();
 
         UpdateLogo();
         LocalizeAll();
@@ -313,6 +327,26 @@ public partial class QuickSetupView : PhControl
     #endregion // Profile
 
 
+    #region Applications menu
+
+    /// <summary>
+    /// Registers the app in the system applications menu, reusing the shared result dialog. The
+    /// button latches off once it succeeds, and comes back on failure so the user can retry.
+    /// </summary>
+    private async Task RegisterAppMenuEntryAsync()
+    {
+        PART_BtnRegisterAppMenu.IsEnabled = false;
+
+        var ok = await AppAPIProvider.RegisterAppMenuEntryAsync(true,
+            TopLevel.GetTopLevel(this) as PhWindow, _previewLang);
+
+        PART_BtnRegisterAppMenu.IsEnabled = !ok;
+    }
+
+    #endregion // Applications menu
+
+
+
 
     #region Header
 
@@ -413,6 +447,11 @@ public partial class QuickSetupView : PhControl
             ? LangId.Settings_DefaultPhotoViewer_ScopePerMachine
             : LangId.Settings_DefaultPhotoViewer_ScopePerUser];
         PART_BtnRegisterViewer.Text = lang[LangId._Register];
+
+        PART_LblAppMenu.Text = lang[LangId.Settings_AppMenuEntry];
+        PART_LblAppMenuDesc.Text = lang[LangId.Settings_AppMenuEntry_Description];
+        PART_LblAppMenuWarning.Text = lang[LangId.Settings_UnmanagedSettingReminder];
+        PART_BtnRegisterAppMenu.Text = lang[LangId._Register];
 
         PART_LblUpgradePro.Text = lang[LangId.Menu_MnuUpgradeLicense];
         PART_UpgradePro.PreviewLang = lang;

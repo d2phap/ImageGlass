@@ -21,6 +21,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using ImageGlass.Common.Loggers;
+using ImageGlass.Common.Localization;
+using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
 using ImageGlass.Tools;
@@ -143,6 +145,15 @@ public partial class MainWindow : PhWindow
         // cancel the close so async work can complete before the app tears down
         e.Cancel = true;
         _isClosingHandled = true;
+
+        // let a save the user just triggered finish writing before anything is torn down
+        if (Photo.PendingSaveCount > 0)
+        {
+            _ = PART_MainView.PART_Message.ShowAsync(Core.Photos.CurrentFilePath,
+                Core.Lang[LangId.Menu_MnuSave_Saving], durationMs: 0);
+
+            await Photo.WaitForPendingSavesAsync(TimeSpan.FromMinutes(2));
+        }
 
         // control events
         _status.Changed -= Status_Changed;

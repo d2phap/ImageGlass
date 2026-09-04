@@ -134,6 +134,7 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
 
             _ = OnPropertyChanged();
             _ = OnPropertyChanged(nameof(ImagePath));
+            _ = OnPropertyChanged(nameof(IsPlaceholderIconVisible));
         }
     } = "";
 
@@ -237,6 +238,8 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
             field = value;
 
             _ = OnPropertyChanged();
+            _ = OnPropertyChanged(nameof(HasClickAction));
+            _ = OnPropertyChanged(nameof(IsPlaceholderIconVisible));
         }
     } = null;
 
@@ -281,6 +284,13 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
     /// </summary>
     [JsonIgnore]
     public bool IsToggle => !string.IsNullOrWhiteSpace(ConfigBinding);
+
+
+    /// <summary>
+    /// Checks if the toolbar button has something to run on click; without it the button is inert.
+    /// </summary>
+    [JsonIgnore]
+    public bool HasClickAction => !string.IsNullOrWhiteSpace(OnClick?.Executable);
 
 
     /// <summary>
@@ -339,6 +349,13 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
 
 
     /// <summary>
+    /// Checks if the hatch placeholder icon is shown: a button that runs something but has no valid icon.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsPlaceholderIconVisible => HasClickAction && string.IsNullOrEmpty(ImagePath);
+
+
+    /// <summary>
     /// Checks if the button text is visible.
     /// </summary>
     [JsonIgnore]
@@ -363,16 +380,20 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
 
 
     /// <summary>
-    /// Gets the tooltip of toolbar item.
+    /// Gets the tooltip of toolbar item, or <c>null</c> when it has no text: a null tip is what makes
+    /// Avalonia skip the tooltip entirely, where an empty string still pops an empty box up.
     /// </summary>
-    public string Tooltip
+    public string? Tooltip
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(HotkeyText))
-                return DisplayText;
+            var text = DisplayText;
+            if (string.IsNullOrWhiteSpace(text)) return null;
 
-            return $"{DisplayText} ({HotkeyText})";
+            if (string.IsNullOrWhiteSpace(HotkeyText))
+                return text;
+
+            return $"{text} ({HotkeyText})";
         }
     }
 

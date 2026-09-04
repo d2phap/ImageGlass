@@ -70,7 +70,9 @@ public partial class ToolbarButton : PhToolButton, IToolbarItem
     {
         base.OnIgThemeChanged(e);
 
+        // a theme pack may not ship the icon this button asks for
         _ = VM.OnPropertyChanged(nameof(VM.ImagePath));
+        _ = VM.OnPropertyChanged(nameof(VM.IsPlaceholderIconVisible));
     }
 
 

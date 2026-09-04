@@ -795,7 +795,7 @@ public static partial class MagickCodec
             }
             else if (result.SingleFrame is not null)
             {
-                result.SingleFrame.Quality = quality;
+                result.SingleFrame.Quality = ResolveHdrSafeQuality__(meta, destExt, quality);
 
                 // resize ICO file if it's larger than 256
                 if (destExt.Equals(".ICO", StringComparison.OrdinalIgnoreCase))
@@ -815,6 +815,19 @@ public static partial class MagickCodec
             }
         }
         catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Keeps an HDR image out of an encoder path that would discard its color encoding.
+    /// </summary>
+    private static uint ResolveHdrSafeQuality__(PhotoMetadata meta, string destExt, uint quality)
+    {
+        if (!meta.IsHdr || quality >= 100) return quality;
+
+        // Measured: below 100 the JXL writer drops uses_original_profile, replacing the source
+        // profile with a synthesized sRGB one, and no jxl: define overrides it. Other formats keep it.
+        return destExt.Equals(".JXL", StringComparison.OrdinalIgnoreCase) ? 100 : quality;
     }
 
 
@@ -950,6 +963,24 @@ public static partial class MagickCodec
             else if (meta.MagickColorProfile is { } metaIcc)
             {
                 icc = metaIcc.ToReadOnlySpan();
+            }
+
+            // 3a. the profile's own cicp tag, which is exact where the text scan below only guesses
+            if (icc.Length > 0 && ParseCicpFromIcc(icc) is (var iccPrimaries, var iccTransfer))
+            {
+                if (iccTransfer == 16)
+                {
+                    meta.HdrTransferFn = HdrTransferFunction.PQ;
+                }
+                else if (iccTransfer == 18)
+                {
+                    meta.HdrTransferFn = HdrTransferFunction.HLG;
+                }
+
+                if (!meta.IsWideGamut && iccPrimaries is 9 or 11 or 12)
+                {
+                    meta.IsWideGamut = true;
+                }
             }
 
             if (icc.Length > 0)
@@ -1092,6 +1123,29 @@ public static partial class MagickCodec
         {
             meta.IsWideGamut = true;
         }
+
+        // 10. HDR10 content peak, which the tone curve uses as its white level instead of guessing
+        if (meta.IsHdr && meta.HdrTransferFn != HdrTransferFunction.GainMap)
+        {
+            meta.ContentPeakNits = DetectContentPeakNits(meta);
+        }
+    }
+
+
+    /// <summary>
+    /// Reads the declared peak content luminance in nits, preferring the container's own HDR10
+    /// metadata over the EXIF copy. Returns <c>0</c> when the file declares none.
+    /// </summary>
+    private static double DetectContentPeakNits(PhotoMetadata meta)
+    {
+        var peak = meta.FileExtension switch
+        {
+            ".avif" or ".heif" or ".heic" or ".hif" => ParseContentPeakFromIsobmff(meta.FilePath),
+            ".png" => ParseContentPeakFromPng(meta.FilePath),
+            _ => null,
+        };
+
+        return peak ?? 0d;
     }
 
 

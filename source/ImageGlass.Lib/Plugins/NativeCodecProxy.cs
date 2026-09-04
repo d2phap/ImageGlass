@@ -549,13 +549,22 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
     /// buffer, reusing <paramref name="pixels"/> when it is already big enough.
     /// </summary>
     private static void ReadPixelsInto(SKImage image, ref byte* pixels, ref nuint capacity,
-        out IGPixelBuffer buffer)
+        out IGPixelBuffer buffer, bool keepPrecision)
     {
-        // Unpremul because that is what IGPixelFormat.Bgra8Unorm means to a plugin. Do NOT copy
+        // Unpremul because that is what every IGPixelFormat means to a plugin. Do NOT copy
         // SkiaCodec.ToMagick, which uses Premul: handing premultiplied bytes over is a silent
         // dark-halo bug on any image with alpha.
-        var info = new SKImageInfo(image.Width, image.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul);
-        var stride = checked(info.Width * 4);
+        var (colorType, pixelFormat, bytesPerPixel) = keepPrecision
+            ? ResolveEncodeFormat(image.ColorType)
+            : (SKColorType.Bgra8888, IGPixelFormat.Bgra8Unorm, 4);
+
+        // The source color space rides along so ReadPixels does not convert; an 8-bit hand-over
+        // stays untagged, exactly as it was before high-precision formats were offered.
+        var info = keepPrecision
+            ? new SKImageInfo(image.Width, image.Height, colorType, SKAlphaType.Unpremul, image.ColorSpace)
+            : new SKImageInfo(image.Width, image.Height, colorType, SKAlphaType.Unpremul);
+
+        var stride = checked(info.Width * bytesPerPixel);
         var byteCount = (long)stride * info.Height;
 
         if (byteCount > int.MaxValue) throw new InvalidDataException("IGE: frame too large to encode.");
@@ -580,9 +589,36 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
             Width = info.Width,
             Height = info.Height,
             Stride = stride,
-            PixelFormat = (int)IGPixelFormat.Bgra8Unorm,
+            PixelFormat = (int)pixelFormat,
             ReleaseContext = HOST_OWNED_BUFFER,
         };
+    }
+
+
+    /// <summary>
+    /// The hand-over format that keeps a high-bit-depth source intact, and its byte width.
+    /// </summary>
+    private static (SKColorType ColorType, IGPixelFormat PixelFormat, int BytesPerPixel)
+        ResolveEncodeFormat(SKColorType sourceColorType) => sourceColorType switch
+        {
+            SKColorType.RgbaF16 or SKColorType.RgbaF16Clamped or SKColorType.RgbaF32
+                => (SKColorType.RgbaF16, IGPixelFormat.RgbaFloat16, 8),
+
+            SKColorType.Rgba16161616 or SKColorType.Rgba1010102 or SKColorType.Bgra1010102
+                or SKColorType.Rgb101010x or SKColorType.Bgr101010x
+                => (SKColorType.Rgba16161616, IGPixelFormat.Rgba16Unorm, 8),
+
+            _ => (SKColorType.Bgra8888, IGPixelFormat.Bgra8Unorm, 4),
+        };
+
+
+    /// <summary>
+    /// <c>true</c> when flattening to 8 bits would throw away real precision, so the encode should
+    /// be offered the wider format first.
+    /// </summary>
+    private static bool NeedsHighPrecision(SKImage image)
+    {
+        return ResolveEncodeFormat(image.ColorType).BytesPerPixel > 4;
     }
 
 
@@ -635,30 +671,43 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
 
         try
         {
-            ReadPixelsInto(request.Source, ref pixels, ref capacity, out var buffer);
-            token.ThrowIfCancellationRequested();
+            // Offer a high-bit-depth source in its own format so HDR is not flattened to 8 bits;
+            // a plugin that takes only Bgra8Unorm answers Unsupported and the retry obliges it.
+            var keepPrecision = NeedsHighPrecision(request.Source);
 
-            IGStatus status;
-            fixed (char* pDest = request.DestFilePath)
-            fixed (char* pSrc = srcPath)
-            fixed (byte* pIcc = icc)
+            while (true)
             {
-                var opts = BuildOptions(request.Quality, request.Source, srcPath, pSrc, icc, pIcc);
-                var destRef = new IGStringRef { Data = pDest, Length = request.DestFilePath.Length };
+                ReadPixelsInto(request.Source, ref pixels, ref capacity, out var buffer, keepPrecision);
+                token.ThrowIfCancellationRequested();
 
-                try
+                IGStatus status;
+                fixed (char* pDest = request.DestFilePath)
+                fixed (char* pSrc = srcPath)
+                fixed (byte* pIcc = icc)
                 {
-                    status = _codecApi->EncodeStaticRaster(destRef, &buffer, &opts, (void*)cancelHandle);
+                    var opts = BuildOptions(request.Quality, request.Source, srcPath, pSrc, icc, pIcc);
+                    var destRef = new IGStringRef { Data = pDest, Length = request.DestFilePath.Length };
+
+                    try
+                    {
+                        status = _codecApi->EncodeStaticRaster(destRef, &buffer, &opts, (void*)cancelHandle);
+                    }
+                    catch (Exception ex)
+                    {
+                        _failureManager.RecordSoftFailure(_plugin.PluginId,
+                            $"managed exception during EncodeStaticRaster: {ex.Message}");
+                        return new CodecEncodeResult(false, false, ex.Message);
+                    }
                 }
-                catch (Exception ex)
+
+                if (keepPrecision && status is IGStatus.Unsupported or IGStatus.NotImplemented)
                 {
-                    _failureManager.RecordSoftFailure(_plugin.PluginId,
-                        $"managed exception during EncodeStaticRaster: {ex.Message}");
-                    return new CodecEncodeResult(false, false, ex.Message);
+                    keepPrecision = false;
+                    continue;
                 }
+
+                return MapEncodeStatus(status, token);
             }
-
-            return MapEncodeStatus(status, token);
         }
         finally
         {
@@ -770,7 +819,8 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
     private IGStatus WriteFrame(CodecEncodeFrame frame, int index, ref byte* pixels, ref nuint capacity,
         void* session, nint cancelHandle)
     {
-        ReadPixelsInto(frame.Image, ref pixels, ref capacity, out var buffer);
+        // 8-bit: the session is already open, so a per-frame format retry would mean restarting it
+        ReadPixelsInto(frame.Image, ref pixels, ref capacity, out var buffer, keepPrecision: false);
 
         var frameInfo = new IGEncodeFrameInfo
         {

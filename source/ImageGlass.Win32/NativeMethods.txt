@@ -54,3 +54,5 @@ GetCurrentPackageFullName
 
 
 RegisterApplicationRestart
+
+SetThreadExecutionState

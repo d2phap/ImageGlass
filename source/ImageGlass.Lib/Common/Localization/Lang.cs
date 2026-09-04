@@ -837,6 +837,9 @@ public class Lang
         new(LangId.Menu_MnuUpgradeLicense_BuyOnline, "Buy online…"), // v10.0
         new(LangId.Menu_MnuUpgradeLicense_ViewFeatures, "View Pro features"), // v10.0
         new(LangId.Menu_MnuUpgradeLicense_OutOfScope, "Your {0} license covers ImageGlass {1}, not ImageGlass {2}. Upgrade your license to turn Pro back on."), // v10.0
+        new(LangId.Menu_MnuUpgradeLicense_Expired, "Your {0} license expired on {1}, and ImageGlass has switched to the Classic edition. Purchase a new license or import a renewal to reactivate Pro features."), // v10.0
+        new(LangId.Menu_MnuUpgradeLicense_ExpiredTitle, "Your license is expired"), // v10.0
+        new(LangId.Menu_MnuUpgradeLicense_SwitchToClassic, "Switch to Classic edition"), // v10.0
 
         new(LangId.Menu_MnuManageLicense, "Manage license"), // v10.0
         new(LangId.Menu_MnuManageLicense_ChangeLicense, "Change license file…"), // v10.0
@@ -1141,6 +1144,11 @@ public class Lang
 
         // File type associations > Default photo viewer
         new(LangId.Settings_DefaultPhotoViewer, "Default photo viewer"),
+        new(LangId.Settings_AppMenuEntry, "Applications menu"), //v10.0
+        new(LangId.Settings_AppMenuEntry_Description, "Register ImageGlass in your applications menu, so you can launch it from there and set it as your default image viewer."), //v10.0
+        new(LangId.Settings_AppMenuEntry_Success, "ImageGlass has been registered in your applications menu."), //v10.0
+        new(LangId.Settings_AppMenuEntry_RemoveSuccess, "ImageGlass is no longer in your applications menu."), //v10.0
+        new(LangId.Settings_AppMenuEntry_Error, "Could not update the applications menu."), //v10.0
         new(LangId.Settings_DefaultPhotoViewer_Description, "Register the supported formats of ImageGlass with Windows. You might need to open the Default apps settings and manually select ImageGlass from the list for it to take effect."),
         new(LangId.Settings_DefaultPhotoViewer_ScopePerMachine, "Scope: all user accounts on this computer (per-machine)."),
         new(LangId.Settings_DefaultPhotoViewer_ScopePerUser, "Scope: your user account only (per-user)."),
@@ -1256,7 +1264,7 @@ public class Lang
         #region Tool: HDR tone mapper
         new(LangId.Tool_Hdr_LblMode, "Mode"), //v10.0
         new(LangId.Tool_Hdr_LblExposure, "Exposure: {0}"), //v10.0
-        new(LangId.Tool_Hdr_LblWhitePoint, "White point (nits): {0}"), //v10.0
+        new(LangId.Tool_Hdr_LblReferenceWhite, "Reference white: {0} nits"), //v10.0
         new(LangId.Tool_Hdr_LblHighlightCompression, "Highlight compression: {0}"), //v10.0
         new(LangId.Tool_Hdr_LblSaturation, "Saturation: {0}"), //v10.0
         new(LangId.Tool_Hdr_BtnReset, "Reset"), //v10.0

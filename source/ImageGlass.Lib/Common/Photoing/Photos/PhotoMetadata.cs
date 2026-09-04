@@ -124,6 +124,12 @@ public partial class PhotoMetadata : PhDisposable
     /// <summary>Whether the image has a wider-than-sRGB color gamut.</summary>
     public bool IsWideGamut { get; set; } = false;
 
+    /// <summary>
+    /// Peak content luminance in nits from the container's HDR10 metadata (MaxCLL, else the
+    /// mastering display max luminance). <c>0</c> when the file declares none.
+    /// </summary>
+    public double ContentPeakNits { get; set; } = 0;
+
     /// <summary>The native bit depth per channel from the source codec.</summary>
     public int BitsPerChannel { get; set; } = 8;
 
@@ -235,6 +241,7 @@ public partial class PhotoMetadata : PhDisposable
 
         EmbeddedVideoOffsetFromEnd = 0;
         HdrTransferFn = HdrTransferFunction.None;
+        ContentPeakNits = 0;
     }
 
 

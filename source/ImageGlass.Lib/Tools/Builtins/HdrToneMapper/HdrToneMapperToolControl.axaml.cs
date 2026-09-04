@@ -84,7 +84,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
 
         PART_CmbMode.SelectionChanged += Mode_SelectionChanged;
         PART_SldExposure.ValueChanged += Slider_ValueChanged;
-        PART_SldWhitePoint.ValueChanged += Slider_ValueChanged;
+        PART_SldReferenceWhite.ValueChanged += Slider_ValueChanged;
         PART_SldHighlightCompression.ValueChanged += Slider_ValueChanged;
         PART_SldSaturation.ValueChanged += Slider_ValueChanged;
         PART_BtnReset.Click += PART_BtnReset_Click;
@@ -97,7 +97,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
     {
         PART_CmbMode.SelectionChanged -= Mode_SelectionChanged;
         PART_SldExposure.ValueChanged -= Slider_ValueChanged;
-        PART_SldWhitePoint.ValueChanged -= Slider_ValueChanged;
+        PART_SldReferenceWhite.ValueChanged -= Slider_ValueChanged;
         PART_SldHighlightCompression.ValueChanged -= Slider_ValueChanged;
         PART_SldSaturation.ValueChanged -= Slider_ValueChanged;
         PART_BtnReset.Click -= PART_BtnReset_Click;
@@ -261,7 +261,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
 
             PART_CmbMode.SelectedIndex = Array.IndexOf(_modes, cfg.Mode);
             PART_SldExposure.Value = cfg.Exposure;
-            PART_SldWhitePoint.Value = cfg.WhitePointNits;
+            PART_SldReferenceWhite.Value = cfg.ReferenceWhiteNits;
             PART_SldHighlightCompression.Value = cfg.HighlightCompression;
             PART_SldSaturation.Value = cfg.Saturation;
 
@@ -294,7 +294,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
         PART_CmbMode.IsEnabled = !isProPreview;
         PART_BtnReset.IsEnabled = !isProPreview;
         PART_SldExposure.IsEnabled = enabled;
-        PART_SldWhitePoint.IsEnabled = enabled;
+        PART_SldReferenceWhite.IsEnabled = enabled;
         PART_SldHighlightCompression.IsEnabled = enabled;
         PART_SldSaturation.IsEnabled = enabled;
     }
@@ -309,7 +309,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
         var cfg = Core.HdrToneMappingConfig;
         cfg.Mode = _modes[Math.Max(0, PART_CmbMode.SelectedIndex)];
         cfg.Exposure = PART_SldExposure.Value;
-        cfg.WhitePointNits = PART_SldWhitePoint.Value;
+        cfg.ReferenceWhiteNits = PART_SldReferenceWhite.Value;
         cfg.HighlightCompression = PART_SldHighlightCompression.Value;
         cfg.Saturation = PART_SldSaturation.Value;
 
@@ -330,7 +330,7 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
     private void UpdateValueLabels()
     {
         PART_LblExposure.LangParams = PART_SldExposure.Value.ToString("0.0#", CultureInfo.InvariantCulture);
-        PART_LblWhitePoint.LangParams = PART_SldWhitePoint.Value.ToString("0", CultureInfo.InvariantCulture);
+        PART_LblReferenceWhite.LangParams = PART_SldReferenceWhite.Value.ToString("0", CultureInfo.InvariantCulture);
         PART_LblHighlightCompression.LangParams = PART_SldHighlightCompression.Value.ToString("0.00", CultureInfo.InvariantCulture);
         PART_LblSaturation.LangParams = PART_SldSaturation.Value.ToString("0.00", CultureInfo.InvariantCulture);
     }

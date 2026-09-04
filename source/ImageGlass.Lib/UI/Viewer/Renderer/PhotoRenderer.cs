@@ -138,10 +138,33 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
     protected virtual void OnDisposing()
     {
-        _isFirstDraw = false;
+        // the frame was dropped before it rendered, so the next paint must do the first draw
+        ReturnFirstDrawClaim();
+
         _imgSource?.RequestDispose();
         _imgRender?.RequestDispose();
     }
+
+
+    /// <summary>
+    /// Gives an unconsumed first-draw claim back, else it dies here and nothing caches the image.
+    /// </summary>
+    private void ReturnFirstDrawClaim()
+    {
+        lock (_lock)
+        {
+            if (!_isFirstDraw) return;
+            _isFirstDraw = false;
+
+            // a newer source owns the claim now
+            if (ReferenceEquals(_viewer._imgSource, _imgSource))
+            {
+                _viewer._isFirstDraw.SetTrue();
+            }
+        }
+    }
+
+
     public bool Equals(ICustomDrawOperation? other) => false;
     public bool HitTest(Point p) => true;
 
@@ -191,7 +214,13 @@ public partial class PhotoRenderer : ICustomDrawOperation
                 {
                     srcLease = _imgSource?.Acquire();
                     var srcImage = srcLease?.Image;
-                    if (srcImage.IsDisposed()) return;
+
+                    // source went away since the snapshot: let a later paint do the first draw
+                    if (srcImage.IsDisposed())
+                    {
+                        ReturnFirstDrawClaim();
+                        return;
+                    }
 
 
                     // set the image to draw

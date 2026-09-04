@@ -68,6 +68,7 @@ public partial class AppAPIProvider
     private bool _showGalleryBeforeSlideshow = true;
     private bool _windowMaximizedBeforeSlideshow;
     private DispatcherTimer? _slideshowCountdownTimer;
+    private IdleCursorHider? _slideshowCursorHider;
     private bool _slideshowIsAdvancing;
 
     // set once the user runs a check-for-update with UI; the startup silent check then completes
@@ -308,7 +309,7 @@ public partial class AppAPIProvider
         var boundStr = newBounds.ToStringDelimiter();
         var boundCmd = BHelper.BuildConfigCmdLine(nameof(Config.MainWindowBounds), boundStr);
 
-        _ = BHelper.RunExeAsync(BHelper.AppExePath, [boundCmd, filePath]);
+        _ = BHelper.RunExeAsync(BHelper.AppRelaunchPath, [boundCmd, filePath]);
     }
 
 
@@ -2698,6 +2699,12 @@ public partial class AppAPIProvider
 
         // 4. start countdown refresh timer for the viewer overlay
         SetSlideshowCountdown(Core.Config.EnableSlideshowCountdown);
+
+
+        // 5. auto-hide the idle cursor; the viewer is listed since its own cursor shadows the window's
+        _slideshowCursorHider?.Dispose();
+        _slideshowCursorHider = new IdleCursorHider(App.MainWindow, Viewer);
+        _slideshowCursorHider.Start();
     }
 
     private void StopSlideshow__()
@@ -2706,8 +2713,11 @@ public partial class AppAPIProvider
 
         Core.Config.EnableSlideshow = false;
 
-        // 1. stop countdown timer
+        // 1. stop countdown timer and bring the mouse cursor back
         SetSlideshowCountdown(false);
+
+        _slideshowCursorHider?.Dispose();
+        _slideshowCursorHider = null;
 
 
         // 2. stop and dispose the slideshow service
@@ -3442,6 +3452,48 @@ public partial class AppAPIProvider
     public static async Task IG_RemoveDefaultPhotoViewerAsync()
     {
         await SetDefaultPhotoViewerAsync(false);
+    }
+
+
+    /// <summary>
+    /// Registers or unregisters the app in the system applications menu, then reports the result.
+    /// </summary>
+    /// <param name="owner">Modal owner</param>
+    /// <param name="lang">Language for the result dialog</param>
+    /// <returns><c>true</c> when the menu was updated.</returns>
+    public static async Task<bool> RegisterAppMenuEntryAsync(bool enable, PhWindow? owner = null, Lang? lang = null)
+    {
+        if (Core.ShellProvider is null) return false;
+
+        owner ??= App.MainWindow;
+        lang ??= Core.Lang;
+
+        var ok = enable
+            ? await Core.ShellProvider.RegisterAppMenuEntryAsync()
+            : await Core.ShellProvider.UnregisterAppMenuEntryAsync();
+
+        if (!ok)
+        {
+            await ModalWindow.ShowErrorAsync(owner, new ModalWindowOptions
+            {
+                Title = lang[LangId.Settings_AppMenuEntry],
+                Heading = lang[LangId.Settings_AppMenuEntry_Error],
+            });
+            return false;
+        }
+
+        // the entry and icons live outside the app dir, so uninstalling cannot remove them
+        await ModalWindow.ShowInfoAsync(owner, new ModalWindowOptions
+        {
+            Title = lang[LangId.Settings_AppMenuEntry],
+            Heading = lang[enable
+                ? LangId.Settings_AppMenuEntry_Success
+                : LangId.Settings_AppMenuEntry_RemoveSuccess],
+            Note = enable ? lang[LangId.Settings_UnmanagedSettingReminder] : null,
+            NoteStyle = InfoBarSeverity.Warning,
+        });
+
+        return true;
     }
 
 

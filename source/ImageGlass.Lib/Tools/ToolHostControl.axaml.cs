@@ -20,7 +20,6 @@ using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using ImageGlass.Common;
-using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.UI;
@@ -108,13 +107,6 @@ public partial class ToolHostControl : PhControl
 
 
     #region Control Events
-
-    protected override void OnIgThemeChanged(ThemePackChangedEventArgs e)
-    {
-        base.OnIgThemeChanged(e);
-
-        Background = Core.Theme.InvertedBaseColor.WithAlpha(10).ToBrush();
-    }
 
 
     protected override void OnIgLanguageChanged()

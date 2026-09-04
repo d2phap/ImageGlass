@@ -33,7 +33,60 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public string InstallChannelId => BHelper.IsFlatpakSandbox ? "flatpak" : "zip";
+    public string InstallChannelId => BHelper.IsFlatpakSandbox ? "flatpak"
+        : BHelper.IsAppImage ? "appimage"
+        : "zip";
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public bool CanRegisterAppMenuEntry => IntegrationHelperPath is not null;
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<bool> RegisterAppMenuEntryAsync() => RunIntegrationHelperAsync("--install");
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<bool> UnregisterAppMenuEntryAsync() => RunIntegrationHelperAsync("--remove");
+
+
+    /// <summary>
+    /// Path of the bundled integration script, or <c>null</c> when not running from an AppImage.
+    /// </summary>
+    private static string? IntegrationHelperPath
+    {
+        get
+        {
+            if (!BHelper.IsAppImage) return null;
+
+            var appDir = Environment.GetEnvironmentVariable("APPDIR");
+            if (string.IsNullOrEmpty(appDir)) return null;
+
+            var path = Path.Combine(appDir, "usr", "bin", "ig-appimage-integrate");
+            return File.Exists(path) ? path : null;
+        }
+    }
+
+
+    /// <summary>
+    /// Runs the bundled integration script; never throws, so a failure cannot reach the caller.
+    /// </summary>
+    private static async Task<bool> RunIntegrationHelperAsync(string arg)
+    {
+        if (IntegrationHelperPath is not string helper) return false;
+
+        try
+        {
+            return await BHelper.RunExeAsync(helper, [arg], waitForExit: true) == 0;
+        }
+        catch { return false; }
+    }
 
 
     public object? ForegroundShell { get; set; }
@@ -45,6 +98,7 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
     protected override void OnDisposing()
     {
         base.OnDisposing();
+        AllowSleep();
         ForegroundShell = null;
     }
 
@@ -243,6 +297,18 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
         // which the gdbus CLI cannot pass. Re-enable here once a managed D-Bus client
         // that can pass FDs is wired up.
     }
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void PreventSleep(string reason) => LinuxPowerApi.PreventSleep(reason);
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public void AllowSleep() => LinuxPowerApi.AllowSleep();
 
 
 
