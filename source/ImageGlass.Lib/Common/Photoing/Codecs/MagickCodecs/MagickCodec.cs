@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -494,7 +495,33 @@ public static partial class MagickCodec
         if (options.FrameIndex < 0)
         {
             var imgColl = new MagickImageCollection();
-            await imgColl.ReadAsync(meta.FilePath, settings, cancelToken);
+            try
+            {
+                cancelToken.ThrowIfCancellationRequested();
+                await imgColl.ReadAsync(meta.FilePath, settings, cancelToken).ConfigureAwait(false);
+                cancelToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                imgColl.Dispose();
+                cancelToken.ThrowIfCancellationRequested();
+                if (!CanRetryContentRead__(ex, settings, meta.FilePath)) throw;
+
+                try
+                {
+                    imgColl = new MagickImageCollection();
+                    using var stream = File.OpenRead(meta.FilePath);
+                    await imgColl.ReadAsync(stream, settings, cancelToken).ConfigureAwait(false);
+                    cancelToken.ThrowIfCancellationRequested();
+                }
+                catch (Exception retryError)
+                {
+                    imgColl.Dispose();
+                    cancelToken.ThrowIfCancellationRequested();
+                    ex.Data["ImageGlass.ContentSniffFallbackException"] = retryError;
+                    ExceptionDispatchInfo.Capture(ex).Throw();
+                }
+            }
 
             var i = 0;
             foreach (var imgFrameM in imgColl)
@@ -550,7 +577,33 @@ public static partial class MagickCodec
         if (!hasRequestedThumbnail)
         {
             imgM.Dispose();
-            await imgM.ReadAsync(meta.FilePath, settings, cancelToken);
+            try
+            {
+                cancelToken.ThrowIfCancellationRequested();
+                await imgM.ReadAsync(meta.FilePath, settings, cancelToken).ConfigureAwait(false);
+                cancelToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                imgM.Dispose();
+                cancelToken.ThrowIfCancellationRequested();
+                if (!CanRetryContentRead__(ex, settings, meta.FilePath)) throw;
+
+                try
+                {
+                    imgM = new MagickImage();
+                    using var stream = File.OpenRead(meta.FilePath);
+                    await imgM.ReadAsync(stream, settings, cancelToken).ConfigureAwait(false);
+                    cancelToken.ThrowIfCancellationRequested();
+                }
+                catch (Exception retryError)
+                {
+                    imgM.Dispose();
+                    cancelToken.ThrowIfCancellationRequested();
+                    ex.Data["ImageGlass.ContentSniffFallbackException"] = retryError;
+                    ExceptionDispatchInfo.Capture(ex).Throw();
+                }
+            }
         }
 
 
@@ -617,7 +670,21 @@ public static partial class MagickCodec
         var imgM = new MagickImage();
         try
         {
-            await imgM.ReadAsync(filePath, settings, token);
+            try
+            {
+                token.ThrowIfCancellationRequested();
+                await imgM.ReadAsync(filePath, settings, token).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                imgM.Dispose();
+                token.ThrowIfCancellationRequested();
+                if (!CanRetryContentRead__(ex, settings, filePath)) throw;
+
+                imgM = new MagickImage();
+                using var stream = File.OpenRead(filePath);
+                await imgM.ReadAsync(stream, settings, token).ConfigureAwait(false);
+            }
             token.ThrowIfCancellationRequested();
 
             return imgM;
@@ -627,6 +694,36 @@ public static partial class MagickCodec
             imgM.Dispose();
             return null;
         }
+    }
+
+
+    /// <summary>
+    /// Allows a content-based retry for decoder errors when the filename supplied a format hint.
+    /// </summary>
+    private static bool CanRetryContentRead__(Exception error, MagickReadSettings settings, string filePath)
+    {
+        if (settings.Format != MagickFormat.Unknown
+            || error is not (MagickCorruptImageErrorException or MagickCoderErrorException)) return false;
+
+        var pending = new Stack<Exception>();
+        var visited = new HashSet<Exception>(ReferenceEqualityComparer.Instance);
+        pending.Push(error);
+        while (pending.Count > 0)
+        {
+            var current = pending.Pop();
+            if (!visited.Add(current)) continue;
+            if (current is not (MagickCorruptImageErrorException
+                or MagickCoderErrorException or MagickWarningException)) return false;
+
+            if (current is MagickException magickError)
+            {
+                foreach (var related in magickError.RelatedExceptions) pending.Push(related);
+            }
+            if (current.InnerException is { } inner) pending.Push(inner);
+        }
+
+        // Unknown extensions supply no hint, so retrying would repeat the same format detection.
+        return MagickFormatInfo.Create(filePath) is not null;
     }
 
 
@@ -785,10 +882,21 @@ public static partial class MagickCodec
             if (result.MultiFrames is not null)
             {
                 // convert GIF to non-GIF formats, we need to coalesce all frames
-                if (meta.FileExtension.Equals(".gif", StringComparison.OrdinalIgnoreCase)
+                if (result.MultiFrames.Count > 0
+                    && result.MultiFrames[0].Format == MagickFormat.Gif
                     && !destExt.Equals(".gif", StringComparison.OrdinalIgnoreCase))
                 {
                     result.MultiFrames.Coalesce();
+                }
+
+                // ParseSettings can inherit TIFF layer output from an incorrect source extension.
+                if (result.MultiFrames.Count > 0
+                    && MagickFormatInfo.Create(result.MultiFrames[0].Format)?.ModuleFormat != MagickFormat.Tiff)
+                {
+                    foreach (var imgM in result.MultiFrames)
+                    {
+                        imgM.Settings.RemoveDefine(MagickFormat.Tiff, "write-layers");
+                    }
                 }
 
                 await result.MultiFrames.WriteAsync(destFilePath, token);
