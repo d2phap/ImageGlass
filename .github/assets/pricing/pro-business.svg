@@ -1,31 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="340" height="560" viewBox="0 0 340 560" role="img" aria-label="Pro Business plan">
+<svg xmlns="http://www.w3.org/2000/svg" width="308" height="434" viewBox="0 0 308 434" role="img" aria-label="Pro Business plan">
 <title>ImageGlass Pro Business</title>
+<rect x="0" y="0" width="308" height="434" rx="14" fill="#ffffff"/>
 <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
-<rect x="0" y="0" width="340" height="560" rx="16" fill="#ffffff"/>
-<rect x="22" y="30" width="44" height="44" rx="13" fill="#e4f1fb"/>
-<path d="M37 45v-3.6a3.4 3.4 0 0 1 3.4-3.4h7.2a3.4 3.4 0 0 1 3.4 3.4V45" fill="none" stroke="#0a84d8" stroke-width="2.6" stroke-linecap="round"/><rect x="30" y="45.5" width="28" height="17.5" rx="3.5" fill="#0a84d8"/><rect x="30" y="52" width="28" height="2.4" fill="#e4f1fb"/><rect x="40.6" y="50.2" width="6.8" height="6" rx="1.6" fill="#e4f1fb"/>
-<text x="78" y="60" font-size="22" font-weight="700" fill="#1f2328">Pro Business</text>
-<text x="24" y="108" font-size="14.5" fill="#59636e">Commercial use with tax invoicing,</text>
-<text x="24" y="128" font-size="14.5" fill="#59636e">dedicated priority support, and</text>
-<text x="24" y="148" font-size="14.5" fill="#59636e">high-volume seat pricing.</text>
-<text x="24" y="232" font-size="40" font-weight="700" fill="#0a84d8">From $99</text>
-<text x="212" y="232" font-size="14.5" fill="#59636e">/seat/year</text>
-<text x="291" y="232" font-size="14.5" font-weight="600" fill="#cf222e">-17%</text>
-<rect x="24" y="250" width="116" height="24" rx="7" fill="#fff4e5" stroke="#f2c078"/>
-<text x="82" y="266" font-size="12" font-weight="600" fill="#bc4c00" text-anchor="middle">Volume pricing</text>
-<text x="24" y="292" font-size="13" fill="#59636e">as low as $19/seat at scale</text>
-<line x1="24" y1="314" x2="316" y2="314" stroke="#d1d9e0"/>
-<text x="24" y="344" font-size="14.5" fill="#59636e">Users</text>
-<text x="113" y="344" font-size="14.5" font-weight="600" fill="#1f2328">Seat based</text>
-<text x="24" y="373" font-size="14.5" fill="#59636e">Payment</text>
-<text x="113" y="373" font-size="14.5" font-weight="600" fill="#1f2328">Subscription</text>
-<text x="24" y="402" font-size="14.5" fill="#59636e">License</text>
-<text x="113" y="402" font-size="14.5" font-weight="600" fill="#1f2328">Commercial Pro</text>
-<text x="24" y="431" font-size="14.5" fill="#59636e">Updates</text>
-<text x="113" y="431" font-size="14.5" font-weight="600" fill="#1f2328">All versions</text>
-<text x="24" y="460" font-size="14.5" fill="#59636e">Support</text>
-<text x="113" y="460" font-size="14.5" font-weight="600" fill="#1f2328">Priority support</text>
-<rect x="24" y="492" width="292" height="46" rx="11" fill="#0a84d8"/>
-<text x="170" y="521" font-size="15.5" font-weight="600" fill="#ffffff" text-anchor="middle">Get Pro Business</text>
+<rect x="6" y="6" width="40" height="40" rx="12" fill="#e4f1fb"/>
+<g transform="translate(-18,-26)"><path d="M37 45v-3.6a3.4 3.4 0 0 1 3.4-3.4h7.2a3.4 3.4 0 0 1 3.4 3.4V45" fill="none" stroke="#0a84d8" stroke-width="2.6" stroke-linecap="round"/><rect x="30" y="45.5" width="28" height="17.5" rx="3.5" fill="#0a84d8"/><rect x="30" y="52" width="28" height="2.4" fill="#e4f1fb"/><rect x="40.6" y="50.2" width="6.8" height="6" rx="1.6" fill="#e4f1fb"/></g>
+<text x="54" y="32" font-size="22" font-weight="700" fill="#1f2328">Pro Business</text>
+<text x="6" y="70" font-size="14.5" fill="#59636e">Commercial use with tax invoicing,</text>
+<text x="6" y="90" font-size="14.5" fill="#59636e">dedicated priority support, and</text>
+<text x="6" y="110" font-size="14.5" fill="#59636e">high-volume seat pricing.</text>
+<text x="6" y="160" font-size="36" font-weight="700" fill="#0a84d8">From $99</text>
+<text x="178" y="160" font-size="14.5" fill="#59636e">/seat/year</text>
+<text x="260" y="160" font-size="14.5" font-weight="600" fill="#cf222e">-17%</text>
+<rect x="6" y="172" width="112" height="23" rx="7" fill="#fff4e5" stroke="#f2c078"/>
+<text x="62" y="187.5" font-size="12" font-weight="600" fill="#bc4c00" text-anchor="middle">Volume pricing</text>
+<text x="6" y="212" font-size="13" fill="#59636e">as low as $19/seat at scale</text>
+<line x1="6" y1="228" x2="302" y2="228" stroke="#d1d9e0"/>
+<text x="6" y="252" font-size="14.5" fill="#59636e">Users</text>
+<text x="90" y="252" font-size="14.5" font-weight="600" fill="#1f2328">Seat based</text>
+<text x="6" y="280" font-size="14.5" fill="#59636e">Payment</text>
+<text x="90" y="280" font-size="14.5" font-weight="600" fill="#1f2328">Subscription</text>
+<text x="6" y="308" font-size="14.5" fill="#59636e">License</text>
+<text x="90" y="308" font-size="14.5" font-weight="600" fill="#1f2328">Commercial Pro</text>
+<text x="6" y="336" font-size="14.5" fill="#59636e">Updates</text>
+<text x="90" y="336" font-size="14.5" font-weight="600" fill="#1f2328">All versions</text>
+<text x="6" y="364" font-size="14.5" fill="#59636e">Support</text>
+<text x="90" y="364" font-size="14.5" font-weight="600" fill="#1f2328">Priority support</text>
+<rect x="6" y="384" width="296" height="44" rx="10" fill="#0a84d8"/>
+<text x="154" y="412" font-size="15.5" font-weight="600" fill="#ffffff" text-anchor="middle">Get Pro Business</text>
 </g>
 </svg>
