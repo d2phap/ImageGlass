@@ -514,11 +514,10 @@ public static partial class MagickCodec
                     await imgColl.ReadAsync(stream, settings, cancelToken).ConfigureAwait(false);
                     cancelToken.ThrowIfCancellationRequested();
                 }
-                catch (Exception retryError)
+                catch (Exception)
                 {
                     imgColl.Dispose();
                     cancelToken.ThrowIfCancellationRequested();
-                    ex.Data["ImageGlass.ContentSniffFallbackException"] = retryError;
                     ExceptionDispatchInfo.Capture(ex).Throw();
                 }
             }
@@ -596,11 +595,10 @@ public static partial class MagickCodec
                     await imgM.ReadAsync(stream, settings, cancelToken).ConfigureAwait(false);
                     cancelToken.ThrowIfCancellationRequested();
                 }
-                catch (Exception retryError)
+                catch (Exception)
                 {
                     imgM.Dispose();
                     cancelToken.ThrowIfCancellationRequested();
-                    ex.Data["ImageGlass.ContentSniffFallbackException"] = retryError;
                     ExceptionDispatchInfo.Capture(ex).Throw();
                 }
             }
@@ -705,6 +703,13 @@ public static partial class MagickCodec
         if (settings.Format != MagickFormat.Unknown
             || error is not (MagickCorruptImageErrorException or MagickCoderErrorException)) return false;
 
+        // Keep rejected RAW containers on their original decoder instead of falling back to TIFF.
+        var extFormatInfo = MagickFormatInfo.Create(filePath);
+        if (extFormatInfo is null || extFormatInfo.ModuleFormat == MagickFormat.Dng)
+        {
+            return false;
+        }
+
         var pending = new Stack<Exception>();
         var visited = new HashSet<Exception>(ReferenceEqualityComparer.Instance);
         pending.Push(error);
@@ -722,8 +727,7 @@ public static partial class MagickCodec
             if (current.InnerException is { } inner) pending.Push(inner);
         }
 
-        // Unknown extensions supply no hint, so retrying would repeat the same format detection.
-        return MagickFormatInfo.Create(filePath) is not null;
+        return true;
     }
 
 
