@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="446" viewBox="0 0 320 446" role="img" aria-label="Pro Team plan">
+<title>ImageGlass Pro Team</title>
+<rect x="0" y="0" width="320" height="446" rx="14" fill="#0d1117"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect x="12" y="12" width="40" height="40" rx="12" fill="#121d2f"/>
+<g transform="translate(-12,-20)"><circle cx="38.5" cy="45.5" r="5.8" fill="#4493f8"/><path d="M29 62c0-5.2 4.3-9.5 9.5-9.5S48 56.8 48 62z" fill="#4493f8"/><circle cx="51.5" cy="46.5" r="4.6" fill="#4493f8" opacity="0.6"/><path d="M44.5 62c0-4.1 3.1-7.5 7-7.5s7 3.4 7 7.5z" fill="#4493f8" opacity="0.6"/></g>
+<text x="60" y="38" font-size="22" font-weight="700" fill="#f0f6fc">Pro Team</text>
+<text x="12" y="76" font-size="14.5" fill="#9198a1">Small studios and teams sharing Pro</text>
+<text x="12" y="96" font-size="14.5" fill="#9198a1">across a few named users or managed</text>
+<text x="12" y="116" font-size="14.5" fill="#9198a1">devices for commercial use.</text>
+<text x="12" y="166" font-size="36" font-weight="700" fill="#4493f8">$69</text>
+<text x="81" y="166" font-size="14.5" fill="#9198a1">one-time</text>
+<line x1="12" y1="234" x2="308" y2="234" stroke="#3d444d"/>
+<text x="12" y="258" font-size="14.5" fill="#9198a1">Users</text>
+<text x="96" y="258" font-size="14.5" font-weight="600" fill="#f0f6fc">Up to 3 users or devices</text>
+<text x="12" y="286" font-size="14.5" fill="#9198a1">Payment</text>
+<text x="96" y="286" font-size="14.5" font-weight="600" fill="#f0f6fc">One-time</text>
+<text x="12" y="314" font-size="14.5" fill="#9198a1">License</text>
+<text x="96" y="314" font-size="14.5" font-weight="600" fill="#f0f6fc">Commercial Pro</text>
+<text x="12" y="342" font-size="14.5" fill="#9198a1">Updates</text>
+<text x="96" y="342" font-size="14.5" font-weight="600" fill="#f0f6fc">Pro v10.x</text>
+<text x="12" y="370" font-size="14.5" fill="#9198a1">Support</text>
+<text x="96" y="370" font-size="14.5" font-weight="600" fill="#f0f6fc">Standard purchase help</text>
+<rect x="12" y="390" width="296" height="44" rx="10" fill="#1f6feb"/>
+<text x="160" y="418" font-size="15.5" font-weight="600" fill="#ffffff" text-anchor="middle">Get Pro Team</text>
+</g>
+</svg>

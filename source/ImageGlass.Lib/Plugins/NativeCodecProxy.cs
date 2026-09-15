@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -1021,7 +1021,7 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
             {
                 // Build Skia/Magick profile objects and the human-readable profile name.
                 var iccSpan = new ReadOnlySpan<byte>(info.IccProfileData, info.IccProfileSize);
-                skiaCs = SKColorSpace.CreateIcc(iccSpan);
+                skiaCs = SkiaCodec.CreateIccColorSpace(iccSpan);
 
                 var bytes = iccSpan.ToArray();
                 var photoProfile = new PhotoColorProfile(bytes);

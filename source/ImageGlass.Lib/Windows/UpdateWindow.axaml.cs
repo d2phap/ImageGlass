@@ -64,6 +64,9 @@ public partial class UpdateWindow : ModalWindow
         PART_BtnTitle.Click += (_, _) => OpenChangeLog();
         PART_BtnChangelog.Click += (_, _) => OpenChangeLog();
         PART_BtnSkipVersion.Click += (_, _) => SkipVersion();
+
+        PART_BtnUpgradePro.Click += (_, _) => OpenUrl(UpdateConstants.ProPricingUrl);
+        PART_BtnProStore.Click += (_, _) => OpenUrl(UpdateConstants.MsStoreProductUrl);
     }
 
 
@@ -76,6 +79,9 @@ public partial class UpdateWindow : ModalWindow
 
         PART_BtnSkipVersion.Text = Core.Lang[LangId.Menu_MnuCheckForUpdate_SkipVersion];
         PART_BtnChangelog.Text = Core.Lang[LangId.QuickSetup_SeeWhatNew];
+
+        PART_BtnUpgradePro.Text = Core.Lang[LangId.Menu_MnuUpgradeLicense];
+        PART_BtnProStore.Text = Core.Lang[LangId.Menu_MnuCheckForUpdate_ProFromStore];
     }
 
 
@@ -158,8 +164,26 @@ public partial class UpdateWindow : ModalWindow
         var url = _result?.Release?.ChangelogUrl;
         if (!string.IsNullOrWhiteSpace(url))
         {
-            _ = BHelper.OpenUrlAsync(this, url, "from_update_dialog");
+            OpenUrl(url);
         }
+    }
+
+
+    /// <summary>
+    /// Opens a url tagged with this dialog's campaign.
+    /// </summary>
+    private void OpenUrl(string url) => _ = BHelper.OpenUrlAsync(this, url, "from_update_dialog");
+
+
+    /// <summary>
+    /// Shows the Pro ad card, unless Pro is already on or the Store build already grants it.
+    /// </summary>
+    private void ShowProPitch()
+    {
+        PART_ProAdCard.IsVisible = !Core.IsProEnabled && !IsMsStoreBuild;
+
+        // the Store route only exists on Windows, and only for a build that is not already from it
+        PART_BtnProStore.IsVisible = PART_ProAdCard.IsVisible && BHelper.OS == OSType.Windows;
     }
 
 
@@ -183,6 +207,7 @@ public partial class UpdateWindow : ModalWindow
         PART_NotesSeparator.IsVisible = hasNotes;
         PART_NotesScroller.IsVisible = hasNotes;
 
+        ShowProPitch();
         PART_ReleaseCard.IsVisible = true;
     }
 

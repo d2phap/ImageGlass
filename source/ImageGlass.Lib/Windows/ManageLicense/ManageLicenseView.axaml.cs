@@ -17,13 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia.Controls;
-using Avalonia.Media.Imaging;
+using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using Avalonia.Svg.Skia;
-using ImageGlass.Common.AppThemes;
+using Avalonia.Threading;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.ServiceProviders.Licensing;
-using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using ImageGlass.UI.Windowing;
 using System;
@@ -34,6 +32,11 @@ namespace ImageGlass.Common.Windows;
 
 public partial class ManageLicenseView : PhControl
 {
+    private const int HERO_INTRO_DELAY_SEC = 1;
+
+    private IDisposable? _heroIntroTimer;
+
+
     public ManageLicenseView()
     {
         InitializeComponent();
@@ -42,9 +45,9 @@ public partial class ManageLicenseView : PhControl
         PART_UpgradeBody.IsVisible = !isPro;
         PART_ManageBody.IsVisible = isPro;
 
-        UpdateLogo();
         UpdateHeading();
         if (isPro) FillLicenseInfo();
+        SetupHero();
 
         PART_BtnPlan.Click += (_, _) => OpenUrl("https://imageglass.org/license");
         PART_BtnChangeLicense.Click += async (_, _) => await UpgradeToProControl.ImportLicenseAsync(this);
@@ -55,10 +58,24 @@ public partial class ManageLicenseView : PhControl
 
     #region Overrides
 
-    protected override void OnIgThemeChanged(ThemePackChangedEventArgs e)
+    protected override void OnLoaded(RoutedEventArgs e)
     {
-        base.OnIgThemeChanged(e);
-        UpdateLogo();
+        base.OnLoaded(e);
+
+        // OnLoaded can fire again on a tree re-attach, so never leave a timer armed twice
+        _heroIntroTimer?.Dispose();
+        _heroIntroTimer = DispatcherTimer.RunOnce(PlayHeroBurst,
+            TimeSpan.FromSeconds(HERO_INTRO_DELAY_SEC));
+    }
+
+
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+
+        // RunOnce is dispatcher-global, so a closed dialog would be held until it fires
+        _heroIntroTimer?.Dispose();
+        _heroIntroTimer = null;
     }
 
 
@@ -147,6 +164,30 @@ public partial class ManageLicenseView : PhControl
     }
 
 
+    /// <summary>
+    /// Wires up the hero decoration; a failure here must never block the license actions.
+    /// </summary>
+    private void SetupHero()
+    {
+        try
+        {
+            PART_HeroStars.BobTarget = PART_Logo;
+            PART_Header.PointerPressed += (_, _) => PlayHeroBurst();
+        }
+        catch { }
+    }
+
+
+    private void PlayHeroBurst()
+    {
+        // an early click must not be restarted by the pending intro timer
+        _heroIntroTimer?.Dispose();
+        _heroIntroTimer = null;
+
+        PART_HeroStars?.Play();
+    }
+
+
     private void OpenUrl(string url)
     {
         var campaign = Core.IsProEnabled ? "from_manage_license" : "from_upgrade_dialog";
@@ -224,32 +265,6 @@ public partial class ManageLicenseView : PhControl
         return BHelper.FormatDateTime(expiresAt.Value.ToLocalTime().DateTime);
     }
 
-
-    private void UpdateLogo()
-    {
-        if (PART_Logo is null) return;
-
-        // try the theme logo first
-        try
-        {
-            var iconPath = Core.Theme.GetIconPath(IgThemeIcon.AppLogo);
-            PART_Logo.Source = new SvgImage
-            {
-                Source = SvgSource.Load(iconPath),
-            };
-        }
-        catch { }
-
-        // fall back to the default logo
-        if (PART_Logo.Source is null)
-        {
-            using var stream = Resx.GetDefaultWindowIconAsStream();
-            if (stream is not null)
-            {
-                PART_Logo.Source = Bitmap.DecodeToHeight(stream, 256);
-            }
-        }
-    }
 
     #endregion // Methods
 

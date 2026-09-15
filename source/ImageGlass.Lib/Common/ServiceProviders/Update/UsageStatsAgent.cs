@@ -31,7 +31,7 @@ namespace ImageGlass.Common.ServiceProviders.Update;
 /// runtime-derived tokens that the server counts in aggregate; nothing is stored on the device
 /// for this, and no identifier of any kind is emitted.
 /// <para>
-/// Example: <c>ImageGlass/10.0.0.306 (Windows 11; x64; msix; beta; vi; pro; gap=7; new)</c>
+/// Example: <c>ImageGlass/10.0.0.306 (Windows 11; x64; msix; beta; vi; pro-msstore; gap=7)</c>
 /// </para>
 /// </summary>
 public static partial class UsageStatsAgent
@@ -138,7 +138,7 @@ public static partial class UsageStatsAgent
             SanitizeToken(Core.ShellProvider?.InstallChannelId) ?? "other",
             SanitizeToken(Core.BuildInfo?.ReleaseType) ?? "stable",
             GetLangToken(),
-            Core.IsProEnabled ? "pro" : "classic",
+            GetEditionToken(),
         };
 
         // a first check has no interval; the bookmark still holds its built-in default, and
@@ -153,6 +153,21 @@ public static partial class UsageStatsAgent
         }
 
         return tokens;
+    }
+
+
+    /// <summary>
+    /// <c>classic</c>, <c>pro</c> (license file), or <c>pro-{store}</c> for a store entitlement.
+    /// </summary>
+    private static string GetEditionToken()
+    {
+        if (!Core.IsProEnabled) return "classic";
+
+        var provider = Core.StoreEntitlementProvider;
+        if (provider?.IsStoreEntitled != true) return "pro";
+
+        var store = SanitizeToken(provider.ChannelId);
+        return store is null ? "pro" : $"pro-{store}";
     }
 
 

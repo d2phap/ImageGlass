@@ -29,14 +29,31 @@ ImageGlass is a fast, modern, open-source image viewer built for Windows, macOS,
 
 </div>
 
+<br/>
 
-<div align="center">
 
-<a href="https://imageglass.org/pricing">
-  <img width="225" height="37" alt="Get ImageGlass" src="https://github.com/user-attachments/assets/a44993c4-8fbb-4209-8341-be6996059b5a" />
-</a>
+<table>
+<tr valign="top">
+<td width="25%" align="center"><a target="_blank" href="https://buy.stripe.com/dRmfZh2wJaCSaOB1h7fUQ09?client_reference_id=pro-individual__onetime__imageglass-10-0-6-906-66"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/pro-individual-dark.svg"/>
+  <img src=".github/assets/pricing/pro-individual.svg" width="100%" alt="Pro Individual: $14.90 one-time, 1 user or device, Pro license, Pro v10.x updates"/>
+</picture></a></td>
+<td width="25%" align="center"><a target="_blank" href="https://buy.stripe.com/6oU8wP5IVh1g4qdcZPfUQ0a?client_reference_id=pro-team__onetime__imageglass-10-0-6-906-66"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/pro-team-dark.svg"/>
+  <img src=".github/assets/pricing/pro-team.svg" width="100%" alt="Pro Team: $69 one-time, up to 3 users or devices, Commercial Pro license, Pro v10.x updates"/>
+</picture></a></td>
+<td width="25%" align="center"><a target="_blank" href="https://buy.stripe.com/14A4gz8V73aq5uhcZPfUQ0b?client_reference_id=pro-business__yearly__imageglass-10-0-6-906-66"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/pro-business-dark.svg"/>
+  <img src=".github/assets/pricing/pro-business.svg" width="100%" alt="Pro Business: from $99 per seat per year, subscription, Commercial Pro license, all versions, priority support"/>
+</picture></a></td>
+<td width="25%" align="center"><a target="_blank" href="https://imageglass.org/download"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/classic-dark.svg"/>
+  <img src=".github/assets/pricing/classic.svg" width="100%" alt="Classic: free, unlimited users, GPLv3 license, all versions, community support"/>
+</picture></a></td>
+</tr>
+</table>
 
-</div>
+👉 Compare all plans and features at [imageglass.org/pricing](https://imageglass.org/pricing).
 
 <br/>
 

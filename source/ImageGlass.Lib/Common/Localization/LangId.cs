@@ -434,6 +434,7 @@ public enum LangId
     Menu_MnuCheckForUpdate_Downloading,
     Menu_MnuInstallUpdate,
     Menu_MnuInstallUpdate_Confirm,
+    Menu_MnuCheckForUpdate_ProFromStore,
 
     Menu_MnuSetDefaultPhotoViewer,
     Menu_MnuSetDefaultPhotoViewer_Success,

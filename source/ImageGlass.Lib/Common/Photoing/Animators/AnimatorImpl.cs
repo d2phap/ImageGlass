@@ -40,6 +40,13 @@ public abstract class AnimatorImpl : PhDisposable
     protected Stopwatch _stopwatch = new();
     protected TimeSpan _lastFrameTime = TimeSpan.Zero;
     protected TimeSpan _pauseStartTime = TimeSpan.Zero;
+    private bool _needsInitialFrame = true;
+
+
+    /// <summary>
+    /// How far playback may fall behind before the clock resyncs instead of catching up.
+    /// </summary>
+    private static readonly TimeSpan MAX_CATCH_UP = TimeSpan.FromSeconds(1);
 
 
     /// <summary>
@@ -161,6 +168,15 @@ public abstract class AnimatorImpl : PhDisposable
 
         _isPaused = false;
         StartTimer();
+
+        // frame N owns delay[N], so the first frame is shown now and held for its own delay
+        if (_needsInitialFrame)
+        {
+            _needsInitialFrame = false;
+            _lastFrameTime = _stopwatch.Elapsed;
+
+            RaiseFrameChanged();
+        }
     }
 
 
@@ -185,18 +201,12 @@ public abstract class AnimatorImpl : PhDisposable
         if (frameIndex < 0 || frameIndex >= _frameCount) return;
 
         _currentFrame = frameIndex;
+        _needsInitialFrame = false;
 
-        // Reset timing for accurate delay tracking
+        // the seeked frame is on screen now, so it gets its full delay from here
         _lastFrameTime = _stopwatch.Elapsed;
 
-        // frame changed
-        OnFrameChanged(new AnimatorFrameChangedEventArgs()
-        {
-            CurrentFrame = (uint)_currentFrame,
-            CurrentLoop = (uint)_currentLoop,
-            FrameCount = (uint)_frameCount,
-            LoopCount = (uint)_loopCount,
-        });
+        RaiseFrameChanged();
     }
 
     #endregion // Public methods
@@ -242,10 +252,10 @@ public abstract class AnimatorImpl : PhDisposable
 
         _lastFrameTime = TimeSpan.Zero;
         _pauseStartTime = TimeSpan.Zero;
-        _lastFrameTime = TimeSpan.Zero;
 
         _currentFrame = 0;
         _currentLoop = 0;
+        _needsInitialFrame = true;
     }
 
 
@@ -258,43 +268,45 @@ public abstract class AnimatorImpl : PhDisposable
     /// </remarks>
     protected virtual void OnTimerTicked()
     {
-        if (_isPaused) return;
+        if (_isPaused || _frameCount == 0) return;
 
-        var frameIndex = _currentFrame;
-        var frameDelay = GetFrameDelay(frameIndex);
         var now = _stopwatch.Elapsed;
+        var frameDelay = GetFrameDelay(_currentFrame);
 
-        // check if it's time to update frame
-        if ((now - _lastFrameTime) >= frameDelay)
+        // the frame on screen has not reached its delay yet
+        if ((now - _lastFrameTime) < frameDelay) return;
+
+        // advance by the frame's own delay, never to the tick time: snapping there discards the
+        // sub-tick remainder, which rounds every frame up to a whole poll interval
+        _lastFrameTime += frameDelay;
+
+        // a long UI stall would otherwise fast-forward a frame per tick until the backlog cleared
+        if (now - _lastFrameTime > MAX_CATCH_UP)
         {
             _lastFrameTime = now;
+        }
 
-            // frame changed
-            OnFrameChanged(new AnimatorFrameChangedEventArgs()
+        _currentFrame++;
+
+        // check for loop
+        if (_currentFrame >= _frameCount)
+        {
+            _currentFrame = 0;
+            _currentLoop++;
+
+            if (_loopCount > 0 && _currentLoop >= _loopCount)
             {
-                CurrentFrame = (uint)frameIndex,
-                CurrentLoop = (uint)_currentLoop,
-                FrameCount = (uint)_frameCount,
-                LoopCount = (uint)_loopCount,
-            });
+                // hold the last frame rather than snapping back to the first one
+                _currentFrame = _frameCount - 1;
+                Pause();
 
-            _currentFrame = frameIndex + 1;
-
-            // check for loop
-            if (_currentFrame >= _frameCount)
-            {
-                _currentFrame = 0;
-                _currentLoop++;
-
-                if (_loopCount > 0 && _currentLoop >= _loopCount)
-                {
-                    Pause();
-
-                    // loop ended
-                    OnStopped(EventArgs.Empty);
-                }
+                // loop ended
+                OnStopped(EventArgs.Empty);
+                return;
             }
         }
+
+        RaiseFrameChanged();
     }
 
 
@@ -316,6 +328,21 @@ public abstract class AnimatorImpl : PhDisposable
         }
 
         return TimeSpan.FromMilliseconds(delayMs);
+    }
+
+
+    /// <summary>
+    /// Raises <see cref="FrameChanged"/> for the frame that is now on screen.
+    /// </summary>
+    private void RaiseFrameChanged()
+    {
+        OnFrameChanged(new AnimatorFrameChangedEventArgs()
+        {
+            CurrentFrame = (uint)_currentFrame,
+            CurrentLoop = (uint)_currentLoop,
+            FrameCount = (uint)_frameCount,
+            LoopCount = (uint)_loopCount,
+        });
     }
 
 

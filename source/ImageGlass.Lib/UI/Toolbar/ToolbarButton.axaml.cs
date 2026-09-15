@@ -41,6 +41,9 @@ public partial class ToolbarButton : PhToolButton, IToolbarItem
         base.OnLoaded(e);
 
         Core.Config.PropertyChanged += Config_PropertyChanged;
+
+        // the theme pack may have loaded while this button was detached (and unsubscribed)
+        RefreshIconState();
     }
 
 
@@ -70,7 +73,15 @@ public partial class ToolbarButton : PhToolButton, IToolbarItem
     {
         base.OnIgThemeChanged(e);
 
-        // a theme pack may not ship the icon this button asks for
+        RefreshIconState();
+    }
+
+
+    /// <summary>
+    /// Re-resolves the button icon (and thus the placeholder) against the current theme pack.
+    /// </summary>
+    private void RefreshIconState()
+    {
         _ = VM.OnPropertyChanged(nameof(VM.ImagePath));
         _ = VM.OnPropertyChanged(nameof(VM.IsPlaceholderIconVisible));
     }

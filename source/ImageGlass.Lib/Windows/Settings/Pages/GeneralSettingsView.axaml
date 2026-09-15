@@ -19,7 +19,10 @@
             ColumnSpacing="64">
 
             <!--  Locations: tooltip = full path, click = open  -->
-            <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+            <StackPanel
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Spacing="8">
                 <ui:PhButton
                     x:Name="PART_StartupDir"
                     HorizontalAlignment="Left"
@@ -35,7 +38,10 @@
             </StackPanel>
 
             <!--  Actions  -->
-            <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Spacing="8">
                 <ui:PhButton
                     x:Name="PART_GetHelp"
                     HorizontalAlignment="Left"
@@ -89,6 +95,13 @@
                 HorizontalAlignment="Left"
                 Variant="Link" />
 
+            <ui:PhButton
+                x:Name="PART_CheckForUpdate"
+                MinWidth="100"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Center"
+                Variant="Outline" />
         </StackPanel>
 
 

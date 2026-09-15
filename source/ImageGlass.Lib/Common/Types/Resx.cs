@@ -331,7 +331,7 @@ public enum ResxIconId
     IconPlaceholder,
     IconWeatherMoon,
     IconWeatherSunny,
-    IconUpdateIndicator,
+    IconProStar,
 }
 
 

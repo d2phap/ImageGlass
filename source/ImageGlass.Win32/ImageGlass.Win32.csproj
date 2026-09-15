@@ -65,11 +65,6 @@
 
   
   <ItemGroup>
-    <AdditionalFiles Remove="NativeMethods.json" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.HarfBuzz" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -87,11 +82,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ImageGlass.Lib\ImageGlass.Lib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="NativeMethods.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

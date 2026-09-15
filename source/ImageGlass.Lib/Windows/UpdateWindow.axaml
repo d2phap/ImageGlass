@@ -12,55 +12,80 @@
 
     <!--  Latest-release card  -->
     <uiw:ModalWindow.ModalExtraContent>
-        <StackPanel
-            x:Name="PART_ReleaseCard"
-            IsVisible="False"
-            Spacing="12">
+        <StackPanel Spacing="18">
 
-            <!--  release info  -->
-            <Border
-                Padding="14,8"
-                Background="{DynamicResource IG_BackgroundNeutralBrush}"
-                ClipToBounds="True"
-                CornerRadius="{DynamicResource ControlCornerRadius}">
-
-                <StackPanel>
-                    <!--  release title  -->
+            <!--  Pro ad card  -->
+            <ui:PhAmbientCard
+                x:Name="PART_ProAdCard"
+                Padding="14"
+                CornerRadius="{DynamicResource OverlayCornerRadius}"
+                IsVisible="False">
+                <StackPanel Spacing="8">
                     <ui:PhButton
-                        x:Name="PART_BtnTitle"
+                        x:Name="PART_BtnUpgradePro"
+                        HorizontalAlignment="Stretch"
                         FontWeight="SemiBold"
-                        TextWrapping="Wrap"
-                        Variant="Link" />
-
-                    <!--  release info  -->
-                    <StackPanel Margin="0,5,0,0" Spacing="2">
-                        <SelectableTextBlock x:Name="PART_LblVersion" />
-                        <SelectableTextBlock x:Name="PART_LblPublishedDate" />
-                    </StackPanel>
-
-                    <Border
-                        x:Name="PART_NotesSeparator"
-                        Height="1"
-                        Margin="0,14"
-                        Background="{DynamicResource TextControlBorderBrush}" />
-
-                    <!--  release notes  -->
-                    <ScrollViewer
-                        x:Name="PART_NotesScroller"
-                        MaxHeight="200"
-                        HorizontalScrollBarVisibility="Disabled"
-                        VerticalScrollBarVisibility="Auto">
-                        <SelectableTextBlock x:Name="PART_LblNotes" TextWrapping="Wrap" />
-                    </ScrollViewer>
+                        Variant="Accent" />
+                    <ui:PhButton
+                        x:Name="PART_BtnProStore"
+                        HorizontalAlignment="Stretch"
+                        IsVisible="False" />
                 </StackPanel>
-            </Border>
+            </ui:PhAmbientCard>
 
 
-            <!--  See Changelog  -->
-            <ui:PhButton
-                x:Name="PART_BtnChangelog"
-                FontWeight="SemiBold"
-                Variant="Outline" />
+            <StackPanel
+                x:Name="PART_ReleaseCard"
+                IsVisible="False"
+                Spacing="12">
+
+                <!--  release info  -->
+                <Border
+                    Padding="14,8"
+                    Background="{DynamicResource IG_BackgroundNeutralBrush}"
+                    ClipToBounds="True"
+                    CornerRadius="{DynamicResource ControlCornerRadius}">
+
+                    <StackPanel>
+                        <!--  release title  -->
+                        <ui:PhButton
+                            x:Name="PART_BtnTitle"
+                            FontWeight="SemiBold"
+                            TextWrapping="Wrap"
+                            Variant="Link" />
+
+                        <!--  release info  -->
+                        <StackPanel Margin="0,5,0,0" Spacing="2">
+                            <SelectableTextBlock x:Name="PART_LblVersion" />
+                            <SelectableTextBlock x:Name="PART_LblPublishedDate" />
+                        </StackPanel>
+
+                        <Border
+                            x:Name="PART_NotesSeparator"
+                            Height="1"
+                            Margin="0,14"
+                            Background="{DynamicResource TextControlBorderBrush}" />
+
+                        <!--  release notes  -->
+                        <ScrollViewer
+                            x:Name="PART_NotesScroller"
+                            MaxHeight="200"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                            <SelectableTextBlock x:Name="PART_LblNotes" TextWrapping="Wrap" />
+                        </ScrollViewer>
+
+                        <!--  See Changelog  -->
+                        <ui:PhButton
+                            x:Name="PART_BtnChangelog"
+                            Margin="0,14,0,0"
+                            HorizontalAlignment="Stretch"
+                            FontWeight="SemiBold"
+                            Variant="Outline" />
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
 
         </StackPanel>
     </uiw:ModalWindow.ModalExtraContent>

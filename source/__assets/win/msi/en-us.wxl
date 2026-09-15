@@ -31,17 +31,20 @@
   <String Id="IgFolderLabel"           Value="Install location:" />
   <!-- The UI extension defines WixUIBack/Next/Cancel but has no Browse string. -->
   <String Id="IgBrowse"                Value="Br&amp;owse..." />
-  <String Id="IgElevationNote"         Value="Windows will ask for administrator approval when the installation starts." />
-  <String Id="IgReplaceNote"           Value="An existing ImageGlass installation was found and will be replaced." />
-  <String Id="IgReplaceNoteLocked"     Value="ImageGlass is already installed. Setup will replace it, so the installation type is fixed to match it." />
+  <String Id="IgElevationNote"         Value="Windows will ask for administrator approval when the install starts." />
+  <String Id="IgReplaceNote"           Value="An existing ImageGlass install was found and will be replaced." />
+  <String Id="IgReplaceNoteLocked"     Value="ImageGlass is already installed. Setup will replace it, so the install type is fixed to match it." />
   <!-- Silent installs only: the wizard cannot reach a mismatch, because it locks the choice. -->
-  <String Id="IgScopeMismatchMachine"  Value="ImageGlass is already installed for all users of this computer. Windows Installer cannot move it to a per-user installation, so run setup again with ALLUSERS=2 MSIINSTALLPERUSER=&quot;&quot; to update it, or uninstall it first." />
-  <String Id="IgScopeMismatchUser"     Value="ImageGlass is already installed for the current user only. Windows Installer cannot move it to a per-machine installation, so run setup again with ALLUSERS=2 MSIINSTALLPERUSER=1 to update it, or uninstall it first." />
+  <String Id="IgScopeMismatchMachine"  Value="ImageGlass is already installed for all users of this computer. Windows Installer cannot move it to a per-user install, so run setup again with ALLUSERS=1 to update it, or uninstall it first." />
+  <String Id="IgScopeMismatchUser"     Value="ImageGlass is already installed for the current user only. Windows Installer cannot move it to a per-machine install, so run setup again with ALLUSERS=2 MSIINSTALLPERUSER=1 to update it, or uninstall it first." />
+
+  <!-- 10.0.5.825 only; its "All users" install is registered per-user and cannot be upgraded. -->
+  <String Id="IgScopeBrokenLegacy"     Value="ImageGlass 10.0.5.825 was installed for all users by a setup that recorded the install incorrectly, so it cannot be upgraded in place. You need to uninstall it first: {1B2217AA-C4FA-50EE-A284-588149763B66}" />
 
   <!-- Two strings because an XML attribute cannot carry the line break, and no emoji: MSI
        stores strings in an ANSI codepage, so anything outside CP1252 fails the build. -->
   <String Id="IgProPitchTitle"         Value="Upgrade to ImageGlass Pro!" />
-  <String Id="IgProPitch"              Value="Everything you love about ImageGlass, tuned for professionals and teams. Unlock HDR tone mapping, free panning, and fleet-wide admin controls." />
+  <String Id="IgProPitch"              Value="Everything you love about ImageGlass, tuned for professionals and teams. Unlock HDR tone mapping, free panning, and admin controls." />
   <String Id="IgProLink"               Value="&lt;a href=&quot;https://imageglass.org/pricing?utm_source=ig_installer_[ProductVersion]&amp;utm_medium=ig_installer_click&amp;utm_campaign=ig_installer&quot;&gt;See Plans and Pricing&lt;/a&gt;" />
 
   <!-- Screen 4: complete -->

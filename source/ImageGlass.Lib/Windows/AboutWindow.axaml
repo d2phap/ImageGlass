@@ -1,0 +1,154 @@
+<uiw:DialogWindow
+    x:Class="ImageGlass.Common.Windows.AboutWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="using:ImageGlass.Common.Types"
+    xmlns:ui="using:ImageGlass.UI"
+    xmlns:uiw="using:ImageGlass.UI.Windowing"
+    mc:Ignorable="d"
+    d:DesignWidth="500">
+
+    <uiw:DialogWindow.DialogContent>
+        <StackPanel
+            VerticalAlignment="Top"
+            Orientation="Vertical"
+            Spacing="4">
+
+            <!--  hero: no background of its own, only the star burst behind the logo and titles  -->
+            <Panel x:Name="PART_Hero" Background="Transparent">
+                <!--  first child, so the stars stay behind the logo and titles  -->
+                <ui:PhStarsOverlay x:Name="PART_HeroStars" />
+
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <!--  app logo  -->
+                    <ui:PhLogo
+                        x:Name="PART_Logo"
+                        Margin="0,16,0,0"
+                        HorizontalAlignment="Center"
+                        LogoSize="96" />
+
+                    <!--  app name  -->
+                    <TextBlock
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="26"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource IG_TextAccentColor}"
+                        Text="ImageGlass 10" />
+
+                    <!--  slogan  -->
+                    <TextBlock
+                        x:Name="PART_LblSlogan"
+                        HorizontalAlignment="Center"
+                        FontSize="{x:Static types:Const.FONT_SIZE_SUBTITLE}"
+                        TextAlignment="Center" />
+                </StackPanel>
+            </Panel>
+
+            <!--  edition chip; text, variant, padding and cursor are set in code, see SetupEditionChip  -->
+            <ui:PhButton
+                x:Name="PART_BtnEdition"
+                MinWidth="0"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                CornerRadius="20"
+                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                FontWeight="SemiBold" />
+
+            <!--  version info  -->
+            <SelectableTextBlock
+                x:Name="PART_LblVersion"
+                Margin="0,16,0,0"
+                HorizontalAlignment="Center"
+                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                TextAlignment="Center" />
+
+            <Border
+                Height="1"
+                Margin="0,16,0,12"
+                Background="{DynamicResource IG_BorderNeutralBrush}" />
+
+            <!--  links; the Link variant resets Padding, so it is applied in code  -->
+            <WrapPanel HorizontalAlignment="Center">
+                <ui:PhButton
+                    x:Name="PART_BtnWebsite"
+                    Margin="1"
+                    FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                    Variant="Link" />
+                <ui:PhButton
+                    x:Name="PART_BtnGitHub"
+                    Margin="1"
+                    FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                    Variant="Link" />
+                <ui:PhButton
+                    x:Name="PART_BtnEula"
+                    Margin="1"
+                    FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                    Variant="Link" />
+                <ui:PhButton
+                    x:Name="PART_BtnPrivacy"
+                    Margin="1"
+                    FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                    Variant="Link" />
+            </WrapPanel>
+
+            <!--  copyright; the year comes from the clock, so the text is set in code  -->
+            <SelectableTextBlock
+                x:Name="PART_LblCopyright"
+                Margin="0,2,0,0"
+                HorizontalAlignment="Center"
+                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                TextAlignment="Center" />
+
+            <Border
+                Height="1"
+                Margin="0,16"
+                Background="{DynamicResource IG_BorderNeutralBrush}" />
+
+            <!--  credits  -->
+            <TextBlock
+                x:Name="PART_LblCredits"
+                Margin="0,0,0,4"
+                HorizontalAlignment="Center"
+                FontWeight="SemiBold"
+                TextAlignment="Center" />
+
+            <Border ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+                <ScrollViewer
+                    MaxHeight="100"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <!--  the credit list is a formatted literal, so it is assigned in code  -->
+                    <SelectableTextBlock
+                        x:Name="PART_LblCreditContent"
+                        Padding="6"
+                        Background="{DynamicResource IG_BackgroundNeutralBrush}"
+                        FontFamily="{x:Static types:Const.FONT_CODE}"
+                        FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                        FontWeight="SemiLight"
+                        TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </uiw:DialogWindow.DialogContent>
+
+
+    <!--  footer-left actions  -->
+    <uiw:DialogWindow.DialogFooterLeftContent>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <ui:PhButton
+                x:Name="PART_BtnDonate"
+                MinWidth="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" />
+            <ui:PhButton
+                x:Name="PART_BtnCheckForUpdate"
+                MinWidth="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" />
+        </StackPanel>
+    </uiw:DialogWindow.DialogFooterLeftContent>
+
+</uiw:DialogWindow>

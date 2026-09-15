@@ -84,6 +84,10 @@ public partial class GeneralSettingsView : SettingsPageView
         // nothing to offer on a channel that cannot install its own updates, or when an admin locked it
         var canSelfUpdate = Core.UpdateProvider.CanInstallUpdate;
         PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
+        SetLocalizedText(PART_CheckForUpdate, LangId._CheckForUpdate);
+        PART_CheckForUpdate.Click += (_, _) => CheckForUpdate();
+        PART_CheckForUpdate.IsVisible = !FeatureManager.IsLocked(API.IG_CheckForUpdate);
+        RegisterSearchKey(PART_CheckForUpdate, LangId._CheckForUpdate, null, LangId.Settings_AppUpdate);
 
         // Others
         BindIntInput(PART_MsgDuration, ConfigId.InAppMessageDuration,
@@ -102,6 +106,19 @@ public partial class GeneralSettingsView : SettingsPageView
             VM.SetValue(id, (chk.IsChecked ?? false) ? BHelper.FormatUtcRoundtrip(DateTime.UtcNow) : "0");
 
         RegisterSearchKey(chk, label, id, section);
+    }
+
+
+    /// <summary>
+    /// Runs a manual update check: opens the update window in its checking state.
+    /// </summary>
+    private static async void CheckForUpdate()
+    {
+        try
+        {
+            _ = await Core.API.RunApiAsync(API.IG_CheckForUpdate, "true");
+        }
+        catch {}
     }
 
 

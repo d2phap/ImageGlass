@@ -137,11 +137,16 @@ package, delete the signed copy, and remove the test certificate from `Cert:\Cur
 
 ## Notes
 
-- **Version.** Both flavours use `<Major>.<Minor>.<IgBundleBuild>.0`, derived from
-  `Directory.Build.props` (e.g. short `10.0.2` + build `535` -> `10.0.535.0`). The
-  build number lives in the 3rd part because the Microsoft Store reserves the 4th
-  (revision) part, which must be `0`. Bump `<IgBundleBuild>` per release. Override
-  the whole value with `-PackageVersion`.
+- **Version.** The two flavours differ, because only the Store constrains the value.
+  Sideload packs `<IgVersion>` verbatim (e.g. `10.0.6.906`), matching the MSI and the
+  About box. msstore must leave the 4th (revision) part `0`, which the Store reserves,
+  so it packs `<Major>.<Minor>.<IgBundleBuild>.0` (e.g. short `10.0.6` + build `906` ->
+  `10.0.906.0`) and drops the patch. Both come from `Directory.Build.props`; override
+  either with `-PackageVersion`. Windows refuses to install a package older than the
+  installed one, so keep each flavour's version rising across releases: sideload
+  packages up to `10.0.6.906` shipped as `10.0.<build>.0`, which the new scheme sorts
+  *below*, so the first release on it needs a higher major/minor (or a
+  `-PackageVersion` above `10.0.906.0`) or existing installs cannot upgrade.
 - **File type associations** are kept in sync with `Const.IMAGE_FORMATS`
   ([`ImageGlass.Lib/Common/Types/Const.cs`](../../ImageGlass.Lib/Common/Types/Const.cs)).
   If that list changes, update the `<uap:FileType>` entries in the manifest template.
@@ -225,7 +230,7 @@ resolves to the per-user folder. Both custom dialogs live in `msi/UI.wxs`.
 
 ```powershell
 msiexec /i ImageGlass_<version>_win-x64.msi /qn ALLUSERS=2 MSIINSTALLPERUSER=1     # per-user
-msiexec /i ImageGlass_<version>_win-x64.msi /qn ALLUSERS=2 MSIINSTALLPERUSER=""    # per-machine
+msiexec /i ImageGlass_<version>_win-x64.msi /qn ALLUSERS=1                         # per-machine
 msiexec /i ImageGlass_<version>_win-x64.msi /qn /l*v "%TEMP%\ig.log"               # with a log
 msiexec /x {PRODUCT-CODE} /qn                                                      # uninstall
 ```
@@ -233,7 +238,22 @@ msiexec /x {PRODUCT-CODE} /qn                                                   
 Per-machine needs an already-elevated caller under `/qn`, because a silent install cannot show a
 UAC prompt (`MSI_LUA: Installation UI level is silent, no credential elevation is possible`).
 
-Public properties, all settable on the command line: `MSIINSTALLPERUSER`, `INSTALLFOLDER`,
+**A dialog must publish `ALLUSERS`, not just `MSIINSTALLPERUSER`.** The client collapses
+`ALLUSERS=2` the moment it starts, before any action runs (`MSI (c): Deleting ALLUSERS property. Its
+current value is '2'`), and with the Property table's `MSIINSTALLPERUSER=1` that settles the context
+as per-user. Nothing re-resolves it later, so clearing `MSIINSTALLPERUSER` from the wizard is a
+no-op; `ALLUSERS=1` is what the server honours. On the **command line** either form works, because
+the properties are in place before that collapse. 10.0.5.825 shipped without the `ALLUSERS` publish,
+so its "All users" installs put files in `%ProgramFiles%` and the ARP row in HKLM while registering
+the product per-user and writing the `HKMU` scope marker to HKCU.
+
+`FindRelatedProducts` is sequenced after that scope pre-set for the same reason: it silently skips
+any related product whose context differs from the one in force when it runs
+(`current install is per-user. Related install ... is per-machine. Skipping...`), and would then
+leave the previous version registered. It still runs before `LaunchConditions`, so the downgrade
+guard is unaffected.
+
+Public properties, all settable on the command line: `ALLUSERS`, `MSIINSTALLPERUSER`, `INSTALLFOLDER`,
 `IGDESKTOPSHORTCUT`, `IGSTARTMENUSHORTCUT`, `IGREMOVEFILEASSOC`, `IGAGREETOTERMS`. `IGINSTALLSCOPE`
 only drives the radio button in the UI; it does **not** change the install context.
 
@@ -250,8 +270,10 @@ own `HKMU` marker landed in:
 | `<IgSetupRegKey>\StartMenuShortcut`, `\DesktopShortcut` | earlier builds, unless the user declined both shortcuts |
 | `Software\Duong Dieu Phap\{<Ig9UpgradeCode>}\AI_INSTALLPERUSER` | ImageGlass 9 (Advanced Installer wrote it the same way) |
 
-`ComponentSearch` on `IgExeComponentGuid` then yields the exact folder, custom paths included, so
-an upgrade lands on top of the previous install rather than in the default location.
+`<IgSetupRegKey>\InstallLocation` also carries the exact folder, custom paths included, so an
+upgrade lands on top of the previous install rather than in the default location. A
+`ComponentSearch` cannot do this job: `Type="directory"` asserts the component's key path *is* a
+directory, and the exe component's key path is a file, so it never resolves.
 
 - **In the wizard**, the scope is preselected and the radio group is **disabled**, so a mismatch
   cannot be produced at all. ImageGlass 9 only preselects: its removal is best-effort, and forcing
@@ -261,11 +283,35 @@ an upgrade lands on top of the previous install rather than in the default locat
   `ALLUSERS` from a custom action changes whether elevation is demanded but *not* the directory
   redirection already applied to `ProgramFiles64Folder`, which would put a per-machine install in
   `%LocalAppData%`. Measured, not assumed.
+- **An older build of the same release is refused.** `ProductVersion` carries the build in the
+  fourth field, which MSI ignores, so `10.0.5.825` and `10.0.5.906` compare as *equal* and land in
+  the upgrade range: `MajorUpgrade`'s own downgrade guard cannot fire, and the older installer would
+  replace the newer one. The install therefore records `InstalledBuild` beside `InstallLocation`,
+  and `IgBlockOlderBuild` refuses anything lower, reusing the downgrade message. An install
+  predating that value leaves `IGPREVBUILD` empty and is not refused.
+- **10.0.5.825 installed "for all users" is refused outright**, because it is registered per-user
+  (see the `ALLUSERS` note above) and no scope can upgrade it. It is recognised by its HKLM ARP row
+  paired with an HKCU marker, so uninstalling it clears the block. Uninstall it elevated, or MSI
+  cannot delete its files from `%ProgramFiles%`.
 - **Neither covers an install too old to have left any marker** (an earlier build where the user
   declined both shortcuts). That case still fails the way it always did.
 
 ### Notes
 
+- **The "Launch ImageGlass" action is type 50, not type 18.** A `FileRef` custom action fails with
+  error 2753 (*"The File is not marked for installation"*) whenever that component is not installed
+  in the session, and MSI skips a component whose key path is already present at a higher version.
+  It runs from `IgLaunchTarget` instead, set to `[#FileImageGlassExe]` **after** `ExecuteAction`: at
+  `CostFinalize` the folder the dialog chose is not applied yet, so the path would still be the
+  per-user default and the launch would silently fail.
+- **`Magick.Native-*.dll` is hand-authored as a companion file of `ImageGlass.exe`.** Costing runs
+  at `CostFinalize` (1000) but `RemoveExistingProducts` only at 1401, so MSI decides each component
+  against the *old* product's files, which are still on disk. It skips a component whose key path is
+  already present at a **higher** version (`Action: Null`), and the removal then deletes that file,
+  leaving it installed by neither product; only a Repair brings it back. Magick.NET 14.14 stamped
+  that DLL `10.2.0.0` and 14.17.1 stamps `7.1.2.31`, so the version went backwards and the upgrade
+  silently dropped it. As a companion file its version is read from `ImageGlass.exe`, which only ever
+  rises. Any other payload file whose version drops needs the same treatment.
 - **The package must NOT be marked "UAC compliant".** Word Count summary bit 3 ("elevated
   privileges are not required") turns an MSI into a per-user-only package: Windows Installer then
   logs *"MSIINSTALLPERUSER property is not valid for UAC compliant package"*, deletes `ALLUSERS`,

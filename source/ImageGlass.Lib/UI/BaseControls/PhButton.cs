@@ -277,9 +277,7 @@ public class PhButton : Button
 
 
     /// <summary>
-    /// Applies the look of the current <see cref="Variant"/>: toggles the style class
-    /// (<c>accent</c> / <c>link</c> / <c>outline</c>, defined in <c>ButtonStyle.axaml</c>) and the
-    /// foreground/chrome overrides our custom content needs.
+    /// Applies the look of the current <see cref="Variant"/>.
     /// </summary>
     private void ApplyVariant()
     {
@@ -290,31 +288,26 @@ public class PhButton : Button
         ClearValue(ForegroundProperty);
         ClearValue(BackgroundProperty);
         ClearValue(BorderThicknessProperty);
-        ClearValue(PaddingProperty);
         ClearValue(CursorProperty);
 
         switch (Variant)
         {
             case PhButtonVariant.Accent:
                 Classes.Add("accent");
-                // the accent style only colors the inner ContentPresenter; our custom content (icon +
-                // text) binds to Foreground, so drive it from the accent-aware resource to stay readable
                 this[!ForegroundProperty] = Resx.CreateBinding(ResxId.AccentButtonForeground);
                 break;
 
             case PhButtonVariant.Link:
                 Classes.Add("link");
-                // borderless, transparent, accent-colored text with a hand cursor
                 Background = Brushes.Transparent;
                 BorderThickness = new Thickness(0);
-                Padding = new Thickness(0, 2);
                 Cursor = new Cursor(StandardCursorType.Hand);
+                this[!PaddingProperty] = this[!PaddingProperty];
                 this[!ForegroundProperty] = Resx.CreateBinding(ResxId.IG_TextAccentColor);
                 break;
 
             case PhButtonVariant.Outline:
                 Classes.Add("outline");
-                // default background (from ButtonStyle.axaml) with accent text + accent border
                 this[!ForegroundProperty] = Resx.CreateBinding(ResxId.IG_TextAccentColor);
                 break;
 

@@ -422,6 +422,10 @@ for ($i = 0; $i -lt 3; $i++) {
     }
 }
 
+# The fourth field is the only thing separating two builds of one release, so the authoring
+# records it and compares it itself; MSI never sees it.
+$buildNumber = if ($versionFields.Count -ge 4) { [int]$versionFields[3] } else { 0 }
+
 $upgradeCode = Get-WxiDefine 'IgUpgradeCode'
 if (-not $upgradeCode) { throw "Could not read IgUpgradeCode from $WxiFile" }
 $productCode = New-DeterministicGuid ([guid]$upgradeCode) "ImageGlass-msi-$Platform-$msiVersion"
@@ -534,6 +538,7 @@ $wixArgs = @(
     '-culture', 'en-US',
     '-loc', $WxlFile,
     '-d', "ProductVersion=$msiVersion",
+    '-d', "BuildNumber=$buildNumber",
     '-d', "ProductCode=$($productCode.ToString().ToUpperInvariant())",
     '-d', "PayloadDir=$payloadDir",
     '-d', "Cabinet=$CompressionLevel",

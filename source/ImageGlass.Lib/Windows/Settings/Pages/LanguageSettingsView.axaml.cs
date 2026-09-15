@@ -60,6 +60,8 @@ public partial class LanguageSettingsView : SettingsPageView
         // display-language list (each item shows the pack metadata)
         PART_LanguageList.SelectionChanged += (_, _) =>
         {
+            ShowSelectedContributors();
+
             if (_isPopulating) return;
             if (PART_LanguageList.SelectedItem is Lang lang)
             {
@@ -94,7 +96,7 @@ public partial class LanguageSettingsView : SettingsPageView
     {
         var packs = await Lang.LoadAllLanguagePacksAsync();
 
-        // built-in English (empty path, so its path line stays hidden) always first, to revert to
+        // built-in English (no pack file, so its path line stays hidden) always first, to revert to
         _langs = [new Lang(string.Empty), .. packs];
         PopulateCombo();
     }
@@ -115,6 +117,19 @@ public partial class LanguageSettingsView : SettingsPageView
             ?? _langs[0];
 
         _isPopulating = false;
+        ShowSelectedContributors();
+    }
+
+
+    /// <summary>
+    /// Shows the contributors of the selected pack; hidden when the pack declares none.
+    /// </summary>
+    private void ShowSelectedContributors()
+    {
+        var author = (PART_LanguageList.SelectedItem as Lang)?.Metadata.Author ?? string.Empty;
+
+        PART_Contributors.Text = author;
+        PART_ContributorsSection.IsVisible = !string.IsNullOrWhiteSpace(author);
     }
 
 

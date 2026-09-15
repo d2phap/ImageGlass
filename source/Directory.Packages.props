@@ -6,22 +6,22 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.HarfBuzz" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Skia" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.1.1" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageVersion Include="Avalonia" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.HarfBuzz" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Skia" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.2" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.2" />
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageVersion Include="D2Phap.EggShell-ARM64" Version="1.1.824" />
     <PackageVersion Include="D2Phap.EggShell-x64" Version="1.1.824" />
     <PackageVersion Include="D2Phap.FileWatcherEx" Version="3.0.0" />
     <PackageVersion Include="ImageGlass.SDK" Version="1.2.0" />
-    <PackageVersion Include="Magick.NET-Q16-HDRI-arm64" Version="14.16.0" />
-    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="14.16.0" />
-    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="14.16.0" />
-    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.321" />
+    <PackageVersion Include="Magick.NET-Q16-HDRI-arm64" Version="14.17.1" />
+    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="14.17.1" />
+    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="14.17.1" />
+    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.333" />
     <PackageVersion Include="NativeMemoryArray" Version="1.2.2" />
     <PackageVersion Include="NetCoreAudio" Version="2.0.1" />
     <PackageVersion Include="SkiaSharp" Version="3.119.4" />

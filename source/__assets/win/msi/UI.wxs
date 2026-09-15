@@ -178,21 +178,25 @@
         <!-- Publish order is load-bearing: context, then folder, then commit it to the Directory row. -->
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes"
                  Text="!(loc.WixUINext)">
-          <Publish Property="MSIINSTALLPERUSER" Value="1" Order="1"
+          <!-- ALLUSERS too: the client collapsed it at startup, so the other alone is a no-op. -->
+          <Publish Property="ALLUSERS" Value="{}" Order="1"
                    Condition="IGINSTALLSCOPE = &quot;perUser&quot;" />
-          <!-- {} is the Formatted-field idiom for the empty string, i.e. per-machine. -->
-          <Publish Property="MSIINSTALLPERUSER" Value="{}" Order="2"
-                   Condition="IGINSTALLSCOPE = &quot;perMachine&quot;" />
-          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERUSER]" Order="3"
+          <Publish Property="MSIINSTALLPERUSER" Value="1" Order="2"
                    Condition="IGINSTALLSCOPE = &quot;perUser&quot;" />
-          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERMACHINE]" Order="4"
+          <Publish Property="ALLUSERS" Value="1" Order="3"
                    Condition="IGINSTALLSCOPE = &quot;perMachine&quot;" />
-          <Publish Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="5" />
-          <Publish Event="DoAction" Value="WixUIValidatePath_$(var.WixUiArch)" Order="6" />
-          <Publish Event="SpawnDialog" Value="InvalidDirDlg" Order="7"
+          <Publish Property="MSIINSTALLPERUSER" Value="{}" Order="4"
+                   Condition="IGINSTALLSCOPE = &quot;perMachine&quot;" />
+          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERUSER]" Order="5"
+                   Condition="IGINSTALLSCOPE = &quot;perUser&quot;" />
+          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERMACHINE]" Order="6"
+                   Condition="IGINSTALLSCOPE = &quot;perMachine&quot;" />
+          <Publish Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="7" />
+          <Publish Event="DoAction" Value="WixUIValidatePath_$(var.WixUiArch)" Order="8" />
+          <Publish Event="SpawnDialog" Value="InvalidDirDlg" Order="9"
                    Condition="WIXUI_INSTALLDIR_VALID &lt;&gt; &quot;1&quot;" />
           <!-- Straight to ProgressDlg: no VerifyReadyDlg, so the flow stays at four screens. -->
-          <Publish Event="EndDialog" Value="Return" Order="8"
+          <Publish Event="EndDialog" Value="Return" Order="10"
                    Condition="WIXUI_INSTALLDIR_VALID = &quot;1&quot;" />
         </Control>
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17"
@@ -277,8 +281,11 @@
       <Show Dialog="IgCompleteDlg" OnExit="success" />
     </AdminUISequence>
 
-    <!-- Plain type-18 CA rather than util:ShellExecute, to avoid pulling in WixToolset.Util. -->
-    <CustomAction Id="IgLaunchApp" FileRef="FileImageGlassExe" ExeCommand=""
+    <!-- After ExecuteAction, or it resolves before the dialog has chosen the folder. -->
+    <SetProperty Id="IgLaunchTarget" Value="[#FileImageGlassExe]"
+                 After="ExecuteAction" Sequence="ui" />
+    <!-- Type 50, not util:ShellExecute (an extra extension) nor FileRef (type 18 errors 2753). -->
+    <CustomAction Id="IgLaunchApp" Property="IgLaunchTarget" ExeCommand=""
                   Execute="immediate" Impersonate="yes" Return="asyncNoWait" />
   </Fragment>
 </Wix>

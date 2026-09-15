@@ -39,6 +39,11 @@ internal static class UpdateConstants
     public const string MsStoreProductUrl = "ms-windows-store://pdp/?productid=9N33VZK3C7TH";
 
     /// <summary>
+    /// Pro pricing page, the online purchase route offered next to the Store one.
+    /// </summary>
+    public const string ProPricingUrl = "https://imageglass.org/pricing";
+
+    /// <summary>
     /// Maximum metadata response size (1 MB).
     /// </summary>
     public const long MaxMetadataSize = 1 * 1024 * 1024;

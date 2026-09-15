@@ -29,9 +29,12 @@
     registration and the _ext_icons folder in charge; the Store flavour, where that registration
     is virtualized away, declares one association per format with its own uap:Logo.
 
-    Both flavours share the same package version: Major.Minor (from
-    <IgBundleShortVersion>) . <IgBundleBuild> . 0 — e.g. 10.0.535.0. The 4th
-    (revision) part is 0 because the Microsoft Store reserves it.
+    The package version differs per flavour, because only the Store constrains it.
+    Sideload ships <IgVersion> verbatim (e.g. 10.0.6.906), matching the MSI and the
+    About box; msstore must leave the 4th (revision) part 0, which the Store reserves,
+    so it packs Major.Minor (from <IgBundleShortVersion>) . <IgBundleBuild> . 0 —
+    e.g. 10.0.906.0. Windows refuses to install a package older than the installed
+    one, so a scheme change must not lower the version an existing install carries.
 
     With -Bundle, both x64 and arm64 are built and packed into a single
     .msixbundle (Windows installs the matching architecture). The per-arch packages
@@ -71,8 +74,9 @@
     RFC-3161 timestamp server. Default: http://timestamp.sectigo.com
 
 .PARAMETER PackageVersion
-    Override the 4-part package version. Defaults to
-    <Major>.<Minor>.<IgBundleBuild>.0 derived from Directory.Build.props.
+    Override the package version for either flavour. Defaults to <IgVersion> when
+    signing (sideload) and <Major>.<Minor>.<IgBundleBuild>.0 for msstore, both read
+    from Directory.Build.props.
 
 .PARAMETER SkipPublish
     Reuse the existing __artifacts/publish/win-<arch> output instead of re-publishing
@@ -182,6 +186,30 @@ function Get-BuildProp([string]$Tag) {
     $m = Select-String -Path $BuildProps -Pattern "<$Tag>(.*?)</$Tag>" | Select-Object -First 1
     if ($m) { return $m.Matches[0].Groups[1].Value.Trim() }
     return ''
+}
+
+# MSIX versions are exactly 4 parts, each 0..65535, with a non-zero major; a shorter one is
+# padded rather than rejected so a 3-part <IgVersion> still packs.
+function Assert-PackageVersion([string]$Version) {
+    $parts = $Version.Split('.')
+    if ($parts.Count -lt 3 -or $parts.Count -gt 4) {
+        throw "Package version '$Version' must have 3 or 4 numeric parts."
+    }
+    if ($parts.Count -eq 3) { $parts += '0' }
+
+    for ($i = 0; $i -lt 4; $i++) {
+        $parsed = 0
+        if (-not [int]::TryParse($parts[$i], [ref]$parsed)) {
+            throw "Package version '$Version' part $($i + 1) is not a number."
+        }
+        if ($parsed -lt 0 -or $parsed -gt 65535) {
+            throw "Package version '$Version' part $($i + 1) must be 0..65535."
+        }
+        $parts[$i] = "$parsed"
+    }
+    if ([int]$parts[0] -eq 0) { throw "Package version '$Version' major part cannot be 0." }
+
+    return ($parts -join '.')
 }
 
 # Explorer's file-icon sizes, emitted as MRT "targetsize-N" variants of each extension logo.
@@ -493,12 +521,16 @@ $igReleaseType = Get-BuildProp 'IgReleaseType'
 
 $relLabel = if ($igReleaseType) { "$igVersion-$igReleaseType" } else { $igVersion }
 
-# Package version = Major.Minor (from IgBundleShortVersion) . IgBundleBuild . 0
-# e.g. short=10.0.2 + build=535 -> 10.0.535.0. The 4th (revision) part is 0
-# because the Microsoft Store reserves it. The build number lives in the 3rd part
-# so it is preserved in both the signed and msstore packages.
+# The package version scheme differs per flavour, because only the Store constrains it:
+# it reserves the 4th (revision) part and requires a 0 there, so the msstore flavour has
+# 3 usable parts for a 4-part <IgVersion> and keeps Major.Minor + IgBundleBuild
+# (10.0.6.906 -> 10.0.906.0), dropping the patch. Windows itself has no such rule, so the
+# sideload flavour ships <IgVersion> verbatim and matches the MSI and the About box.
 if ($PackageVersion) {
     $pkgVersion = $PackageVersion
+}
+elseif ($Sign) {
+    $pkgVersion = $igVersion
 }
 else {
     $shortVer = Get-BuildProp 'IgBundleShortVersion'
@@ -511,6 +543,9 @@ else {
     $minor = if ($sp.Count -gt 1) { $sp[1] } else { '0' }
     $pkgVersion = "$major.$minor.$bundleBuild.0"
 }
+
+# A malformed version only surfaces as an opaque makeappx failure minutes into the publish.
+$pkgVersion = Assert-PackageVersion $pkgVersion
 
 # --- Identity / publisher per flavour -----------------------------------------
 # (Flavour-level: identical across architectures; only ProcessorArchitecture, set

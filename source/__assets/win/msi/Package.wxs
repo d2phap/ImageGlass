@@ -77,12 +77,6 @@
     <!-- Windows Installer cannot move a product between per-user and per-machine, so an upgrade
          only succeeds when it runs in the same scope as the install it replaces. -->
 
-    <!-- The exact folder of that install, custom paths included. The component GUID never
-         changes, so this locates one an earlier release created just as well. -->
-    <Property Id="IGPREVDIR" Secure="yes">
-      <ComponentSearch Id="PrevAppDir" Guid="$(var.IgExeComponentGuid)" Type="directory" />
-    </Property>
-
     <!-- Scope is whichever hive the HKMU marker landed in. InstallLocation is written below;
          the two shortcut values are the only trace an earlier release left, so they count too. -->
     <Property Id="IGPREVMACHINEDIR" Secure="yes">
@@ -110,6 +104,23 @@
                       Name="DesktopShortcut" Type="raw" />
     </Property>
 
+    <!-- MSI ignores the fourth version field, so the build number is compared from here instead. -->
+    <Property Id="IGPREVMACHINEBUILD" Secure="yes">
+      <RegistrySearch Id="PrevMachineBuild" Root="HKLM" Key="$(var.IgSetupRegKey)"
+                      Name="InstalledBuild" Type="raw" Bitness="always64" />
+    </Property>
+    <Property Id="IGPREVUSERBUILD" Secure="yes">
+      <RegistrySearch Id="PrevUserBuild" Root="HKCU" Key="$(var.IgSetupRegKey)"
+                      Name="InstalledBuild" Type="raw" />
+    </Property>
+
+    <!-- An HKLM ARP row is the only proof that 10.0.5.825 was the "All users" install it claimed. -->
+    <Property Id="IGBROKENSCOPEARP" Secure="yes">
+      <RegistrySearch Id="BrokenScopeArp" Root="HKLM" Type="raw" Bitness="always64"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{$(var.IgBrokenScopeProductCode)}"
+                      Name="DisplayName" />
+    </Property>
+
     <!-- ImageGlass 9 recorded its scope the same way, under its own vendor key. -->
     <Property Id="IGPREV9MACHINE" Secure="yes">
       <RegistrySearch Id="Prev9Machine" Root="HKLM" Key="$(var.Ig9SetupRegKey)"
@@ -126,16 +137,49 @@
          cannot force an elevated install for nothing. -->
     <SetProperty Id="IGPREV9PERMACHINE" Value="1" After="SetIGPREVPERUSER" Sequence="both"
                  Condition="IGV9INSTALLED AND IGPREV9MACHINE" />
+    <!-- Paired with the HKCU marker, so removing that install clears the block with it. -->
+    <SetProperty Id="IGBROKENSCOPE" Value="1" After="SetIGPREV9PERMACHINE" Sequence="both"
+                 Condition="IGBROKENSCOPEARP AND IGPREVUSERDIR" />
+    <!-- Whichever hive the marker landed in; only one of the two is ever present. -->
+    <SetProperty Id="IGPREVBUILD" Action="SetIgPrevBuildFromMachine" Value="[IGPREVMACHINEBUILD]"
+                 After="SetIGBROKENSCOPE" Sequence="both" Condition="IGPREVMACHINEBUILD" />
+    <SetProperty Id="IGPREVBUILD" Action="SetIgPrevBuildFromUser" Value="[IGPREVUSERBUILD]"
+                 After="SetIgPrevBuildFromMachine" Sequence="both"
+                 Condition="IGPREVUSERBUILD AND NOT IGPREVMACHINEBUILD" />
 
     <!-- Refused rather than auto-corrected, because a late ALLUSERS flip cannot undo the
          directory redirection already applied. See README, "Upgrading an existing install". -->
     <CustomAction Id="IgBlockPerUserOverMachine" Error="!(loc.IgScopeMismatchMachine)" />
     <CustomAction Id="IgBlockPerMachineOverUser" Error="!(loc.IgScopeMismatchUser)" />
+    <!-- Reachable from the wizard too, so unlike those two they are sequenced in both sequences. -->
+    <CustomAction Id="IgBlockBrokenScope" Error="!(loc.IgScopeBrokenLegacy)" />
+    <!-- MajorUpgrade's own downgrade guard cannot see this: it compares three fields. -->
+    <CustomAction Id="IgBlockOlderBuild" Error="!(loc.IgNewerVersionInstalled)" />
+
+    <InstallUISequence>
+      <Custom Action="IgBlockOlderBuild" After="SetIgPrevBuildFromUser"
+              Condition="NOT Installed AND IGPREVBUILD AND IGPREVBUILD &gt; $(var.BuildNumber)" />
+      <Custom Action="IgBlockBrokenScope" After="IgBlockOlderBuild"
+              Condition="NOT Installed AND IGBROKENSCOPE" />
+      <!-- Behind the scope pre-set: it skips any related product in another context. -->
+      <FindRelatedProducts After="SetIgAllUsersFromPrev" />
+    </InstallUISequence>
 
     <!-- Preselect the scope already in use. The dialog locks the choice for a previous
          ImageGlass 10, and leaves it changeable for ImageGlass 9, whose removal is best-effort. -->
-    <SetProperty Id="IGINSTALLSCOPE" Value="perMachine" After="SetIGPREV9PERMACHINE" Sequence="ui"
+    <SetProperty Id="IGINSTALLSCOPE" Value="perMachine" After="IgBlockBrokenScope" Sequence="ui"
                  Condition="IGPREVPERMACHINE OR IGPREV9PERMACHINE" />
+
+    <!-- Matches it, so FindRelatedProducts sees the install being replaced; Next re-publishes it. -->
+    <SetProperty Id="ALLUSERS" Action="SetIgAllUsersFromPrev" Value="1" After="SetIGINSTALLSCOPE"
+                 Sequence="ui" Condition="IGPREVPERMACHINE OR IGPREV9PERMACHINE" />
+
+    <!-- Not a ComponentSearch: Type="directory" needs a directory key path, and the exe's is a file. -->
+    <SetProperty Id="IGPREVDIR" Action="SetIgPrevDirFromMachine" Value="[IGPREVMACHINEDIR]"
+                 After="FindRelatedProducts" Sequence="ui" Condition="IGPREVMACHINEDIR" />
+    <SetProperty Id="IGPREVDIR" Action="SetIgPrevDirFromUser" Value="[IGPREVUSERDIR]"
+                 After="SetIgPrevDirFromMachine" Sequence="ui"
+                 Condition="IGPREVUSERDIR AND NOT IGPREVMACHINEDIR" />
 
     <!-- Both path editors need a non-empty initial value before their dialog is created; the
          previous folder seeds them first, so an upgrade lands on a custom path rather than beside it. -->
@@ -201,7 +245,11 @@
     <InstallExecuteSequence>
       <!-- Ahead of costing and RemoveExistingProducts, so a refusal changes nothing. NOT ALLUSERS
            is how per-user reads by here, the switching pair having already been collapsed. -->
-      <Custom Action="IgBlockPerUserOverMachine" After="SetIGPREV9PERMACHINE"
+      <Custom Action="IgBlockOlderBuild" After="SetIgPrevBuildFromUser"
+              Condition="NOT Installed AND IGPREVBUILD AND IGPREVBUILD &gt; $(var.BuildNumber)" />
+      <Custom Action="IgBlockBrokenScope" After="IgBlockOlderBuild"
+              Condition="NOT Installed AND IGBROKENSCOPE" />
+      <Custom Action="IgBlockPerUserOverMachine" After="IgBlockBrokenScope"
               Condition="NOT Installed AND IGPREVPERMACHINE AND NOT ALLUSERS" />
       <Custom Action="IgBlockPerMachineOverUser" After="IgBlockPerUserOverMachine"
               Condition="NOT Installed AND IGPREVPERUSER AND NOT IGPREVPERMACHINE AND ALLUSERS" />
@@ -220,6 +268,9 @@
       <Component Id="CmpImageGlassExe" Guid="$(var.IgExeComponentGuid)">
         <File Id="FileImageGlassExe" Source="$(var.PayloadDir)\ImageGlass.exe"
               Name="ImageGlass.exe" KeyPath="yes" />
+        <!-- Rides the exe's version because its own went backwards once; see README. -->
+        <File Id="FileMagickNative" Source="$(var.PayloadDir)\$(var.IgMagickNativeFile)"
+              Name="$(var.IgMagickNativeFile)" CompanionFile="FileImageGlassExe" />
       </Component>
 
       <!-- Unconditional, unlike the shortcut markers, so the next upgrade can still tell which
@@ -227,12 +278,16 @@
       <Component Id="CmpInstallInfo" Guid="DB85ED25-70C2-494B-91F7-9F137447CD58">
         <RegistryValue Root="HKMU" Key="$(var.IgSetupRegKey)" Name="InstallLocation"
                        Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
+        <!-- String, not integer: a raw RegistrySearch would read a DWORD back as "#906". -->
+        <RegistryValue Root="HKMU" Key="$(var.IgSetupRegKey)" Name="InstalledBuild"
+                       Type="string" Value="$(var.BuildNumber)" />
       </Component>
 
       <!-- Flat layout is load-bearing: native DLLs, default.webp and the _-folders all resolve
            via BHelper.BaseDir(). _store is pruned by the packer; Files throws on absent dirs. -->
       <Files Include="$(var.PayloadDir)\**">
         <Exclude Files="$(var.PayloadDir)\ImageGlass.exe" />
+        <Exclude Files="$(var.PayloadDir)\$(var.IgMagickNativeFile)" />
         <Exclude Files="**\*.pdb" />
         <Exclude Files="**\.igportable" />
       </Files>

@@ -1,0 +1,25 @@
+<ui:PhControl
+    x:Class="ImageGlass.UI.PhLogo"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:ImageGlass.UI"
+    mc:Ignorable="d"
+    d:DesignWidth="48"
+    d:DesignHeight="48"
+    HorizontalContentAlignment="Stretch"
+    VerticalContentAlignment="Stretch">
+
+    <Panel>
+        <!--  the source follows the theme pack, so it is assigned in code  -->
+        <Image x:Name="PART_Logo" />
+
+        <!--  size and inset scale with LogoSize, see ApplyLogoSize  -->
+        <ui:PhProStar
+            x:Name="PART_ProStar"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            IsVisible="False" />
+    </Panel>
+</ui:PhControl>

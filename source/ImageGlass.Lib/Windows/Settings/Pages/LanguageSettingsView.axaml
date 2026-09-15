@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
     xmlns:loc="using:ImageGlass.Common.Localization"
     xmlns:types="using:ImageGlass.Common.Types"
     xmlns:ui="using:ImageGlass.UI"
@@ -46,33 +45,14 @@
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
 
-                                    <!--  pack details: hidden for the built-in language  -->
-                                    <StackPanel IsVisible="{CompiledBinding !IsBuiltIn}" Spacing="2">
-                                        <!--  contributors: caption + truncated author (full value on hover)  -->
-                                        <Grid ColumnDefinitions="Auto,*" IsVisible="{CompiledBinding Metadata.Author, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}">
-                                            <ui:PhTextBlock
-                                                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
-                                                LangKey="Settings_Contributors"
-                                                Opacity="0.6" />
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                Margin="5,0,0,0"
-                                                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
-                                                Opacity="0.6"
-                                                Text="{CompiledBinding Metadata.Author}"
-                                                TextTrimming="CharacterEllipsis"
-                                                ToolTip.Tip="{CompiledBinding Metadata.Author}" />
-                                        </Grid>
-
-                                        <!--  full path  -->
-                                        <TextBlock
-                                            FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
-                                            IsVisible="{CompiledBinding DisplayFilePath, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
-                                            Opacity="0.6"
-                                            Text="{CompiledBinding DisplayFilePath}"
-                                            TextTrimming="CharacterEllipsis"
-                                            ToolTip.Tip="{CompiledBinding DisplayFilePath}" />
-                                    </StackPanel>
+                                    <!--  lang pack path  -->
+                                    <TextBlock
+                                        FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                                        IsVisible="{CompiledBinding !IsBuiltIn}"
+                                        Opacity="0.6"
+                                        Text="{CompiledBinding DisplayFilePath}"
+                                        TextTrimming="PathSegmentEllipsis"
+                                        ToolTip.Tip="{CompiledBinding DisplayFilePath}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -86,8 +66,22 @@
             </StackPanel>
 
 
+            <!--  Contributors  -->
+            <StackPanel x:Name="PART_ContributorsSection" Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock FontWeight="SemiBold" LangKey="Settings_Contributors" />
+                <SelectableTextBlock
+                    x:Name="PART_Contributors"
+                    MaxWidth="600"
+                    HorizontalAlignment="Left"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+
             <!--  Actions  -->
-            <StackPanel HorizontalAlignment="Left" Spacing="2">
+            <StackPanel
+                Margin="0,14,0,0"
+                HorizontalAlignment="Left"
+                Spacing="2">
                 <ui:PhButton x:Name="PART_InstallLanguage" Variant="Link" />
                 <ui:PhButton x:Name="PART_GetMoreLanguages" Variant="Link" />
                 <ui:PhButton x:Name="PART_ExportLanguage" Variant="Link" />

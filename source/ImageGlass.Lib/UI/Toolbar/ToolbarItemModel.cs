@@ -352,7 +352,17 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
     /// Checks if the hatch placeholder icon is shown: a button that runs something but has no valid icon.
     /// </summary>
     [JsonIgnore]
-    public bool IsPlaceholderIconVisible => HasClickAction && string.IsNullOrEmpty(ImagePath);
+    public bool IsPlaceholderIconVisible
+    {
+        get
+        {
+            if (!HasClickAction) return false;
+            if (!string.IsNullOrEmpty(ImagePath)) return false;
+
+            // an unloaded theme pack means the icon is pending, not failed
+            return string.IsNullOrWhiteSpace(Image) || Core.Theme.IsValid;
+        }
+    }
 
 
     /// <summary>
@@ -380,8 +390,7 @@ public partial class ToolbarItemModel : PhReactive, IJsonOnDeserialized
 
 
     /// <summary>
-    /// Gets the tooltip of toolbar item, or <c>null</c> when it has no text: a null tip is what makes
-    /// Avalonia skip the tooltip entirely, where an empty string still pops an empty box up.
+    /// Gets the tooltip, or <c>null</c> with no text: an empty string still pops an empty box.
     /// </summary>
     public string? Tooltip
     {

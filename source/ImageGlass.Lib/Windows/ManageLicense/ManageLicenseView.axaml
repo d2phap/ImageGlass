@@ -22,22 +22,27 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <StackPanel
-                Margin="24,22"
-                HorizontalAlignment="Center"
-                Orientation="Vertical"
-                Spacing="12">
-                <Image
-                    x:Name="PART_Logo"
-                    Width="48"
-                    Height="48"
-                    VerticalAlignment="Center" />
-                <ui:PhTextBlock
-                    x:Name="PART_LblHeading"
-                    VerticalAlignment="Center"
-                    FontSize="{x:Static types:Const.FONT_SIZE_TITLE}"
-                    FontWeight="SemiBold" />
-            </StackPanel>
+            <Panel>
+                <!--  first child, so the stars stay behind the logo and heading  -->
+                <ui:PhStarsOverlay x:Name="PART_HeroStars" />
+
+                <StackPanel
+                    Margin="24,22"
+                    HorizontalAlignment="Center"
+                    Orientation="Vertical"
+                    Spacing="12">
+                    <ui:PhLogo
+                        x:Name="PART_Logo"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        LogoSize="64" />
+                    <ui:PhTextBlock
+                        x:Name="PART_LblHeading"
+                        VerticalAlignment="Center"
+                        FontSize="{x:Static types:Const.FONT_SIZE_TITLE}"
+                        FontWeight="SemiBold" />
+                </StackPanel>
+            </Panel>
         </Border>
 
 

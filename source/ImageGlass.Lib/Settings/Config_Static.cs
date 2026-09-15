@@ -57,7 +57,7 @@ public partial class Config
 
 
     /// <summary>
-    /// Gets the default config file located.
+    /// Gets the default config file name. Looked up in the startup dir first, then the config dir.
     /// </summary>
     [JsonIgnore]
     public static string CONFIG_DEFAULT => "igconfig.default.json";
@@ -558,7 +558,7 @@ public partial class Config
     /// Loads and merges configs from multiple sources.
     /// Priority (lowest -> highest):
     /// developer defaults -> igconfig.default.json -> igconfig.json -> CLI args -> igconfig.admin.json.
-    /// The admin layer is included only when the Pro license is active.
+    /// The default and admin layers are included only when the Pro license is active.
     /// </summary>
     public static Config Load(string configFileName, string[]? cliArgs = null)
     {
@@ -572,10 +572,8 @@ public partial class Config
             var jsonOptions = BHelper.CreateJsonOptions();
             var jsonContext = new ConfigJsonContext(jsonOptions);
 
-            // 1. read igconfig.default.json (Startup Dir, then Config Dir fallback)
-            using var defaultDoc = ReadConfigJsonDocument(
-                BHelper.BaseDir(CONFIG_DEFAULT),
-                BHelper.ConfigDir(CONFIG_DEFAULT));
+            // 1. read igconfig.default.json (BaseDir, then ConfigDir). Pro only.
+            using var defaultDoc = ReadDefaultConfigDocument();
 
             // 2. read igconfig.json (Config Dir only)
             var userConfigPath = BHelper.ConfigDir(configFileName);
@@ -1194,15 +1192,24 @@ public partial class Config
 
 
     /// <summary>
+    /// Resolves a config file: primary path first, then an optional fallback path.
+    /// Returns <c>null</c> if neither exists.
+    /// </summary>
+    private static string? ResolveConfigJsonPath(string primaryPath, string? fallbackPath = null)
+    {
+        return File.Exists(primaryPath) ? primaryPath
+            : (!string.IsNullOrEmpty(fallbackPath) && File.Exists(fallbackPath)) ? fallbackPath
+            : null;
+    }
+
+
+    /// <summary>
     /// Reads a JSON config file: primary path first, then an optional fallback path.
     /// Returns <c>null</c> if neither exists.
     /// </summary>
     private static JsonDocument? ReadConfigJsonDocument(string primaryPath, string? fallbackPath = null)
     {
-        var path = File.Exists(primaryPath) ? primaryPath
-            : (!string.IsNullOrEmpty(fallbackPath) && File.Exists(fallbackPath)) ? fallbackPath
-            : null;
-
+        var path = ResolveConfigJsonPath(primaryPath, fallbackPath);
         if (string.IsNullOrEmpty(path)) return null;
 
         return BHelper.ReadJsonDocFromFile(path);
@@ -1210,18 +1217,41 @@ public partial class Config
 
 
     /// <summary>
-    /// Reads <see cref="CONFIG_ADMIN"/>: install BaseDir first, then ConfigDir. The BaseDir copy
-    /// always wins so a user cannot override a machine-wide admin config from AppData.
-    /// Returns <c>null</c> when the Pro license is inactive or no admin file exists.
+    /// Reads a Pro-only config layer: install BaseDir first, then ConfigDir, so a read-only install
+    /// can still ship it. Returns <c>null</c> when the license is inactive or no file exists.
     /// </summary>
-    private static JsonDocument? ReadAdminConfigDocument()
+    private static JsonDocument? ReadProConfigDocument(string configFileName)
     {
-        if (!Core.IsProEnabled) return null;
+        var primaryPath = BHelper.BaseDir(configFileName);
+        var fallbackPath = BHelper.ConfigDir(configFileName);
 
-        return ReadConfigJsonDocument(
-            BHelper.BaseDir(CONFIG_ADMIN),
-            BHelper.ConfigDir(CONFIG_ADMIN));
+        if (!Core.IsProEnabled)
+        {
+            // name the deployed file it refused: otherwise the layer vanishes with no trace
+            var refusedPath = ResolveConfigJsonPath(primaryPath, fallbackPath);
+            if (!string.IsNullOrEmpty(refusedPath))
+            {
+                System.Diagnostics.Debug.WriteLine($"[Config] '{refusedPath}' ignored (requires a Pro license).");
+            }
+
+            return null;
+        }
+
+        return ReadConfigJsonDocument(primaryPath, fallbackPath);
     }
+
+
+    /// <summary>
+    /// Reads <see cref="CONFIG_DEFAULT"/>, the sole reader of it. Pro only.
+    /// </summary>
+    private static JsonDocument? ReadDefaultConfigDocument() => ReadProConfigDocument(CONFIG_DEFAULT);
+
+
+    /// <summary>
+    /// Reads <see cref="CONFIG_ADMIN"/>, the sole reader of it. Pro only. The BaseDir copy always
+    /// wins so a user cannot override a machine-wide admin config from AppData.
+    /// </summary>
+    private static JsonDocument? ReadAdminConfigDocument() => ReadProConfigDocument(CONFIG_ADMIN);
 
 
     /// <summary>
