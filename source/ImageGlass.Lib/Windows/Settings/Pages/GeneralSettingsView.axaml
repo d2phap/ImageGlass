@@ -92,6 +92,7 @@
                 TextWrapping="Wrap" />
             <ui:PhButton
                 x:Name="PART_SeeWhatIsSent"
+                Margin="0,8,0,0"
                 HorizontalAlignment="Left"
                 Variant="Link" />
 
