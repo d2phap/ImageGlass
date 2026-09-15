@@ -590,7 +590,7 @@ public static partial class SkiaCodec
         using var surface = SKSurface.Create(info);
         if (surface.IsDisposed()) return null;
 
-        surface.Canvas.DrawImage(imgSrc, 0, 0, paint);
+        surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default, paint);
         return surface.Snapshot();
     }
 
@@ -659,7 +659,7 @@ public static partial class SkiaCodec
             surface.Canvas.Clear(SKColors.Black);
         }
 
-        surface.Canvas.DrawImage(imgSrc, 0, 0, paint);
+        surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default, paint);
         return surface.Snapshot();
     }
 
@@ -696,7 +696,7 @@ public static partial class SkiaCodec
         canvas.Translate(outW / 2f, outH / 2f);
         canvas.RotateDegrees((float)degree);
         canvas.Translate(-w / 2f, -h / 2f);
-        canvas.DrawImage(imgSrc, 0, 0);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
 
         return surface.Snapshot();
     }
@@ -726,7 +726,7 @@ public static partial class SkiaCodec
             canvas.Scale(1, -1, 0, h / 2f);
         }
 
-        canvas.DrawImage(imgSrc, 0, 0);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
         return surface.Snapshot();
     }
 
@@ -824,7 +824,7 @@ public static partial class SkiaCodec
                         break;
                 }
 
-                canvas.DrawBitmap(bmpSrc, 0, 0);
+                canvas.DrawBitmap(bmpSrc, 0, 0, SKSamplingOptions.Default);
                 canvas.Flush();
             }
 
@@ -904,7 +904,7 @@ public static partial class SkiaCodec
             using var surface = SKSurface.Create(info);
             if (surface is null) return false;
 
-            surface.Canvas.DrawImage(imgSrc, 0, 0);
+            surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
             output = surface.Snapshot();
             return true;
         }
@@ -1045,6 +1045,18 @@ public static partial class SkiaCodec
     {
         (SKColorSpace? ColorSpace, bool IsSupported) results = new(null, true);
 
+        // the app presents SDR, so an HDR display profile would convert every SDR image INTO PQ
+        static (SKColorSpace?, bool) AsSdrProfile(SKColorSpace? cs)
+        {
+            if (HdrToneMapper.IsHdrColorSpace(cs))
+            {
+                cs?.Dispose();
+                cs = null;
+            }
+
+            return (cs, cs is not null); // Skia does not support all profiles
+        }
+
 
         // 1. don't use color profile
         if (name.Equals(nameof(ColorProfileOption.None))) return results;
@@ -1057,8 +1069,7 @@ public static partial class SkiaCodec
                 return results;
 
             using var data = SKData.Create(Core.ColorProfileProvider.ProfilePath);
-            results.ColorSpace = CreateIccColorSpace(data);
-            results.IsSupported = results.ColorSpace is not null; // Skia does not support all profiles
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(data));
 
             return results;
         }
@@ -1068,8 +1079,7 @@ public static partial class SkiaCodec
         var magickProfile = MagickCodec.GetBuiltinColorProfile(name);
         if (magickProfile is not null)
         {
-            results.ColorSpace = CreateIccColorSpace(magickProfile.ToReadOnlySpan());
-            results.IsSupported = results.ColorSpace is not null;
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(magickProfile.ToReadOnlySpan()));
 
             return results;
         }
@@ -1079,8 +1089,7 @@ public static partial class SkiaCodec
         if (Path.Exists(name))
         {
             using var data = SKData.Create(name);
-            results.ColorSpace = CreateIccColorSpace(data);
-            results.IsSupported = results.ColorSpace is not null;
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(data));
 
             return results;
         }
@@ -1109,6 +1118,13 @@ public static partial class SkiaCodec
     {
         decodeScale = 1;
         if (imgM is null) return null;
+
+        // an SDR hand-over (thumbnail, preview) must not carry a PQ/HLG tag, or a later
+        // conversion to the destination profile blows it out
+        if (!isHdr && HdrToneMapper.IsHdrColorSpace(srcColorSpace))
+        {
+            srcColorSpace = null;
+        }
 
         // prepare image info
         var alphaType = imgM.HasAlpha ? SKAlphaType.Unpremul : SKAlphaType.Opaque;
