@@ -218,7 +218,7 @@ public static partial class SkiaCodec
         // 1. read animated formats
         if (codec.FrameCount > 0)
         {
-            var frames = meta.Frames.Select(f => (SKCodecFrameInfo)f.Animation!).ToArray();
+            var frames = meta.Frames.Select(f => f.Animation ?? CreateUnknownFrameInfo()).ToArray();
             result.Animator = new SkiaAnimator(codec, frames);
             return result;
         }
@@ -491,6 +491,7 @@ public static partial class SkiaCodec
 
         int frameCount = codec.FrameCount;
         var metadataList = new List<SKCodecFrameInfo>(frameCount);
+        var readCount = 0;
 
         for (int i = 0; i < frameCount; i++)
         {
@@ -498,11 +499,34 @@ public static partial class SkiaCodec
             if (codec.GetFrameInfo(i, out var info))
             {
                 metadataList.Add(info);
+                readCount++;
+            }
+            else
+            {
+                metadataList.Add(CreateUnknownFrameInfo());
             }
         }
 
+        // an animation whose every frame is unreadable is not usable; a still image keeps its empty list
+        if (frameCount > 0 && readCount == 0) return null;
+
         return metadataList;
     }
+
+
+    /// <summary>
+    /// Creates the stand-in for a frame whose info the codec cannot read.
+    /// </summary>
+    private static SKCodecFrameInfo CreateUnknownFrameInfo() => new()
+    {
+        // independent, so nothing composes itself onto a frame we know nothing about
+        RequiredFrame = -1,
+
+        // AnimatorImpl.GetFrameDelay substitutes its default for a zero delay
+        Duration = 0,
+
+        DisposalMethod = SKCodecAnimationDisposalMethod.Keep,
+    };
 
 
     /// <summary>

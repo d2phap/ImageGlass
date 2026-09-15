@@ -34,6 +34,11 @@ public class SkiaAnimator : AnimatorImpl
 {
     private const int MAX_CACHE_COUNT = 5;
 
+    /// <summary>
+    /// <c>SkCodec::kNoFrame</c>: no usable prior frame, so the codec rebuilds the chain itself.
+    /// </summary>
+    private const int NO_FRAME = -1;
+
     private readonly SKCodec _codec;
     private readonly SKImage?[] _frameCache;
     private readonly Queue<uint> _cachedFramesQueue = new();
@@ -45,12 +50,6 @@ public class SkiaAnimator : AnimatorImpl
     /// Keeps the current visual state of the animation.
     /// </summary>
     private SKBitmap? _compositeBitmap;
-
-    /// <summary>
-    /// Back buffer used ONLY when a frame requires <see cref="SKCodecAnimationDisposalMethod.RestorePrevious"/>.
-    /// Instantiated lazily to save memory.
-    /// </summary>
-    private SKBitmap? _backupBitmap;
 
     private int _lastRenderedFrameIndex = -1;
     private DispatcherTimer _timer;
@@ -87,9 +86,6 @@ public class SkiaAnimator : AnimatorImpl
 
             _compositeBitmap?.Dispose();
             _compositeBitmap = null;
-
-            _backupBitmap?.Dispose();
-            _backupBitmap = null;
 
             // Dispose caches
             for (int i = 0; i < _frameCache.Length; i++)
@@ -158,27 +154,12 @@ public class SkiaAnimator : AnimatorImpl
             }
 
 
-            // 3. Handle Seeking: If we are not strictly sequential, we must reset and replay.
-            // Optimization: If moving from -1 to 0, or N to N+1, it is sequential.
-            // If frameIndex == _lastRenderedFrameIndex, we just return the current state (idempotent).
-            if (frameIndex < _lastRenderedFrameIndex || frameIndex > _lastRenderedFrameIndex + 1)
-            {
-                // Reset composition to restart
-                _compositeBitmap.Erase(SKColors.Transparent);
-                _lastRenderedFrameIndex = -1;
-            }
+            // 3. Compose the requested frame. A seek needs no replay: the codec rebuilds
+            // any non-sequential frame from its own required-frame chain.
+            RenderFrame((int)frameIndex);
 
 
-            // 4. Sequential Catch-up Loop
-            // Renders all frames from the last rendered point up to the requested frame.
-            // This ensures disposal methods and composition are applied correctly.
-            for (int i = _lastRenderedFrameIndex + 1; i <= frameIndex; i++)
-            {
-                RenderSingleFrame(i);
-            }
-
-
-            // 5. Return Snapshot
+            // 4. Return Snapshot
             // SKImage.FromBitmap creates a copy if the bitmap is mutable.
             // This copy is ESSENTIAL for thread safety, preventing the UI from reading 
             // the bitmap while the animator modifies it for the next frame.
@@ -186,7 +167,7 @@ public class SkiaAnimator : AnimatorImpl
             _frameCache[frameIndex] = frameImage;
 
 
-            // 6. Manage Cache: FIFO Eviction
+            // 5. Manage Cache: FIFO Eviction
             if (!_cachedFramesQueue.Contains(frameIndex))
             {
                 _cachedFramesQueue.Enqueue(frameIndex);
@@ -210,156 +191,43 @@ public class SkiaAnimator : AnimatorImpl
 
 
     /// <summary>
-    /// Renders a single frame into the _compositeBitmap.
+    /// Composes <paramref name="frameIndex"/> into <c>_compositeBitmap</c>.
     /// </summary>
-    private void RenderSingleFrame(int frameIndex)
+    /// <remarks>
+    /// The codec owns disposal and blending. Given a prior frame it applies that frame's disposal
+    /// method and the current frame's blend itself, so doing either here corrupts the result.
+    /// </remarks>
+    private void RenderFrame(int frameIndex)
     {
-        if (frameIndex < 0 || frameIndex >= _frames.Length) return;
         if (_compositeBitmap is null) return;
+        if (frameIndex < 0 || frameIndex >= _frames.Length) return;
 
+        var info = _compositeBitmap.Info;
 
-        // 1. Dispose the PREVIOUS frame:
-        // Apply the disposal method defined in the PREVIOUS frame's metadata.
-        ProcessPreviousFrameDisposal(frameIndex, _compositeBitmap, _backupBitmap);
+        // ask the DECODING codec, not _frames: that array is built by a separate SKCodec whose
+        // builder skips indexes it cannot read, which would shift every later entry
+        var requiredFrame = _codec.GetFrameInfo(frameIndex, out var frameMeta)
+            ? frameMeta.RequiredFrame
+            : NO_FRAME;
 
+        // chaining is only legal while the buffer really holds the frame the codec is told about,
+        // and only priorFrame == requiredFrame makes the codec apply that frame's disposal
+        var canChainFromPrevious = frameIndex > 0
+            && _lastRenderedFrameIndex == frameIndex - 1
+            && requiredFrame == frameIndex - 1;
 
-        // 2. Prepare for CURRENT frame disposal requirements:
-        // If the CURRENT frame requires "RestorePrevious" later, we must save the 
-        // current state (Composite before this frame is drawn) now.
-        ProcessCurrentFrameDisposal(frameIndex, _compositeBitmap, _backupBitmap);
+        var options = canChainFromPrevious
+            ? new SKCodecOptions(frameIndex, frameIndex - 1)
+            : new SKCodecOptions(frameIndex);
 
+        // an independent decode paints only its own sub-rect, so the rest must start clear
+        if (!canChainFromPrevious) _compositeBitmap.Erase(SKColors.Transparent);
 
-        // 3. Draw the CURRENT Frame:
-        // Decode the frame pixels onto the composite bitmap.
-        DrawCurrentFrame(frameIndex, _compositeBitmap);
+        var frameInfo = new SKImageInfo(info.Width, info.Height, info.ColorType, info.AlphaType);
+        var result = _codec.GetPixels(frameInfo, _compositeBitmap.GetPixels(), _compositeBitmap.RowBytes, options);
 
-
-        _lastRenderedFrameIndex = frameIndex;
-    }
-
-
-    /// <summary>
-    /// Dispose the PREVIOUS frame:
-    /// Apply the disposal method defined in the PREVIOUS frame's metadata.
-    /// </summary>
-    private void ProcessPreviousFrameDisposal(int frameIndex, SKBitmap bmpComposite, SKBitmap? bmpBackup)
-    {
-        if (frameIndex <= 0) return;
-
-        var prevIndex = frameIndex - 1;
-        var prevMeta = _frames[prevIndex];
-
-        // NOTE: Accurate GIF rendering requires the specific FrameRect of the previous frame.
-        // Standard SkiaSharp 2.88 SKCodecFrameInfo may not expose FrameRect.
-        // We default to full size here for safety, or assume you have a helper/extension.
-        var prevRect = new SKRectI(0, 0, bmpComposite.Width, bmpComposite.Height);
-
-        // Clip rect to bitmap bounds
-        var safePrevRect = SKRectI.Intersect(new SKRectI(0, 0, bmpComposite.Width, bmpComposite.Height), prevRect);
-
-        if (prevMeta.DisposalMethod == SKCodecAnimationDisposalMethod.RestoreBackgroundColor)
-        {
-            // Clear the previous frame's area to Transparent
-            if (!safePrevRect.IsEmpty)
-            {
-                using var canvas = new SKCanvas(bmpComposite);
-                using var paint = new SKPaint { BlendMode = SKBlendMode.Clear };
-                canvas.DrawRect(safePrevRect, paint);
-            }
-        }
-        else if (prevMeta.DisposalMethod == SKCodecAnimationDisposalMethod.RestorePrevious)
-        {
-            // Restore the area from the backup buffer
-            if (bmpBackup is not null)
-            {
-                using var canvas = new SKCanvas(bmpComposite);
-                // Only redraw the specific area that needs restoring
-                var srcRect = safePrevRect;
-                var dstRect = safePrevRect;
-                canvas.DrawBitmap(bmpBackup, srcRect, dstRect);
-            }
-        }
-        else
-        {
-            // Preserve the previous frame (draw over it)
-        }
-
-    }
-
-
-    /// <summary>
-    /// Prepare for CURRENT frame disposal requirements:
-    /// If the CURRENT frame requires "RestorePrevious" later, we must save the 
-    /// current state (Composite before this frame is drawn) now.
-    /// </summary>
-    private void ProcessCurrentFrameDisposal(int frameIndex, SKBitmap bmpComposite, SKBitmap? bmpBackup)
-    {
-        var curMeta = _frames[frameIndex];
-
-        if (curMeta.DisposalMethod == SKCodecAnimationDisposalMethod.RestorePrevious)
-        {
-            // Allocate or re-allocate backup buffer if size mismatch
-            if (bmpBackup is null || bmpBackup.Info.Size != bmpComposite.Info.Size)
-            {
-                bmpBackup?.Dispose();
-                bmpBackup = bmpComposite.Copy(); // Full copy
-            }
-            else
-            {
-                // Copy current composite state to backup
-                // Using DrawBitmap is often faster/safer than raw memory copy for managed Skia wrappers
-                using var canvas = new SKCanvas(bmpBackup);
-                using var paint = new SKPaint { BlendMode = SKBlendMode.Src };
-                canvas.DrawBitmap(bmpComposite, 0, 0, paint);
-            }
-        }
-
-    }
-
-
-    /// <summary>
-    /// Draw the CURRENT Frame:
-    /// Decode the frame pixels onto the composite bitmap.
-    /// </summary>
-    private void DrawCurrentFrame(int frameIndex, SKBitmap bmpComposite)
-    {
-        // Assumption: We decode full frame size if FrameRect is unavailable.
-        var curMeta = _frames[frameIndex];
-        var curRect = new SKRectI(0, 0, bmpComposite.Width, bmpComposite.Height);
-
-        // OPTIMIZATION: Passing priorFrame tells the codec we are drawing on top of an existing state.
-        // This dramatically speeds up decoding for formats that support inter-frame compression (GIF/WebP).
-        var frameOptions = new SKCodecOptions(frameIndex, curMeta.RequiredFrame);
-
-        // Zero-copy attempt: Write directly to bitmap memory
-        // We calculate the memory address for the sub-rectangle (if curRect is used)
-        var info = bmpComposite.Info;
-
-        if (curRect.Left >= 0 && curRect.Top >= 0 && curRect.Right <= info.Width && curRect.Bottom <= info.Height)
-        {
-            var pixels = bmpComposite.GetPixels();
-            var rowBytes = bmpComposite.RowBytes;
-
-            // Offset logic: Top * RowBytes + Left * BytesPerPixel
-            var offset = curRect.Top * rowBytes + curRect.Left * info.BytesPerPixel;
-            var ptr = new IntPtr(pixels.ToInt64() + offset);
-
-            // Decode directly into the composite bitmap
-            var frameInfo = new SKImageInfo(curRect.Width, curRect.Height, info.ColorType, info.AlphaType);
-            _ = _codec.GetPixels(frameInfo, ptr, rowBytes, frameOptions);
-        }
-        else
-        {
-            // Fallback for safety or complex bounds: Decode to temp and draw
-            using var bmpFrame = new SKBitmap(curRect.Width, curRect.Height, info.ColorType, info.AlphaType);
-            var result = _codec.GetPixels(bmpFrame.Info, bmpFrame.GetPixels(), bmpFrame.RowBytes, frameOptions);
-
-            if (result == SKCodecResult.Success)
-            {
-                using var canvas = new SKCanvas(bmpComposite);
-                canvas.DrawBitmap(bmpFrame, curRect.Left, curRect.Top);
-            }
-        }
+        // a failed decode leaves the buffer in an unknown state, so the next frame must not chain onto it
+        _lastRenderedFrameIndex = result == SKCodecResult.Success ? frameIndex : NO_FRAME;
     }
 
 
