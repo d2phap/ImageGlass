@@ -112,13 +112,6 @@ public sealed class UpdateArtifactInfo
     public long Size { get; set; }
 
     /// <summary>
-    /// Native package version; an MSIX identity is <c>Major.Minor.IgBundleBuild.0</c>, not the app version.
-    /// </summary>
-    [JsonPropertyName("packageVersion")]
-    public string PackageVersion { get; set; } = string.Empty;
-
-
-    /// <summary>
     /// Whether this artifact carries everything an auto-install needs.
     /// </summary>
     [JsonIgnore]
