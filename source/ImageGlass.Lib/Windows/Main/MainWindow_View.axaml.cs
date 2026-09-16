@@ -930,19 +930,23 @@ public partial class MainWindowView : PhControl
             Core.Photos.InitPhoto = Core.Photos.Select(lastIndex);
             _ = ViewPhotoAsync(Core.Photos.InitPhoto, true, false);
         }
-        // if we haven't found current index for the init photo yet
-        else if (Core.Photos.InitPhoto is not null && Core.Photos.CurrentIndex == -1)
+        // the init photo owns the selection for every batch, incl. the later sub-dir ones
+        else if (Core.Photos.InitPhoto is not null)
         {
-            // find index of the init photo and select it
-            _ = Core.Photos.Select(Core.Photos.InitPhoto.FilePath);
-
-            // save the init photo to the list
-            var initIndex = Core.Photos.CurrentIndex;
-            if (initIndex >= 0 && initIndex < Core.Photos.Items.Count)
+            // if we haven't found current index for the init photo yet
+            if (Core.Photos.CurrentIndex == -1)
             {
-                Core.Photos.Items[initIndex]?.Dispose();
-                Core.Photos.Items[initIndex] = Core.Photos.InitPhoto;
-                Core.Photos.Items[initIndex].IsCurrent = true;
+                // find index of the init photo and select it
+                _ = Core.Photos.Select(Core.Photos.InitPhoto.FilePath);
+
+                // save the init photo to the list
+                var initIndex = Core.Photos.CurrentIndex;
+                if (initIndex >= 0 && initIndex < Core.Photos.Items.Count)
+                {
+                    Core.Photos.Items[initIndex]?.Dispose();
+                    Core.Photos.Items[initIndex] = Core.Photos.InitPhoto;
+                    Core.Photos.Items[initIndex].IsCurrent = true;
+                }
             }
         }
         // display the first file in a folder
