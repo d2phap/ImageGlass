@@ -50,6 +50,12 @@ public partial class App : Application
     private static MainWindow? _mainWindow = null;
     private TaskCompletionSource _taskUi = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
+    /// <summary>
+    /// How long Linux startup waits for the portal-backed system theme before painting anyway.
+    /// Measured at 20-34ms; overshooting it only costs a corrected theme, never the launch.
+    /// </summary>
+    private const int LINUX_SYSTEM_THEME_GRACE_MS = 100;
+
 
     #region Public Properties
 
@@ -602,39 +608,58 @@ public partial class App : Application
     /// </summary>
     private async Task ApplyUIConfigsAsync()
     {
-        // update the base styles
-        Core.UpdateBaseResources();
-
-
-        // load theme for the first time
-        // NOTE: on Linux, we skip this because we need to wait for the first ColorValuesChanged event
-        // to get the system dark mode.
-        if (BHelper.OS != OSType.Linux)
+        try
         {
-            var info = PlatformSettings!.GetColorValues();
-            var isSystemDarkMode = info.ThemeVariant == PlatformThemeVariant.Dark;
+            // update the base styles
+            Core.UpdateBaseResources();
 
-            // sync the global: ColorValuesChanged only fires on later OS theme changes, so without
-            // this Core.IsSystemDarkMode would stay at its default and mis-resolve live theme re-applies
-            Core.IsSystemDarkMode = isSystemDarkMode;
 
-            try
+            // Linux resolves the system theme asynchronously, so the first read is a provisional
+            // Light; let ColorValuesChanged correct it first, or a dark desktop flashes light
+            var themeApplied = false;
+            if (BHelper.OS == OSType.Linux)
             {
-                await ApplyThemePackAsync(isSystemDarkMode, info.AccentColor1);
+                await Task.WhenAny(_taskUi.Task, Task.Delay(LINUX_SYSTEM_THEME_GRACE_MS));
+
+                // completing the task is the last thing ApplyThemePackAsync does
+                themeApplied = _taskUi.Task.IsCompleted;
             }
-            catch (Exception ex)
+
+
+            // load theme for the first time
+            if (!themeApplied)
             {
-                var isContinue = await ModalWindow.ShowUnhandledErrorAsync(ex);
-                if (!isContinue) return;
+                var info = PlatformSettings!.GetColorValues();
+                var isSystemDarkMode = info.ThemeVariant == PlatformThemeVariant.Dark;
+
+                // sync the global: ColorValuesChanged only fires on later OS theme changes, so without
+                // this Core.IsSystemDarkMode would stay at its default and mis-resolve live theme re-applies
+                Core.IsSystemDarkMode = isSystemDarkMode;
+
+                try
+                {
+                    await ApplyThemePackAsync(isSystemDarkMode, info.AccentColor1);
+                }
+                catch (Exception ex)
+                {
+                    var isContinue = await ModalWindow.ShowUnhandledErrorAsync(ex);
+                    if (!isContinue) return;
+                }
             }
+
+
+            // initialize Magick decoder on background thread
+            _ = Task.Run(MagickCodec.Initialize);
+
+            // load app language
+            _ = Core.Config.LoadCurrentLanguageAsync();
         }
-
-
-        // initialize Magick decoder on background thread
-        _ = Task.Run(MagickCodec.Initialize);
-
-        // load app language
-        _ = Core.Config.LoadCurrentLanguageAsync();
+        finally
+        {
+            // the main window is gated on this task: leaving it uncompleted starts the app with no
+            // visible window and no error at all, so it must be set on every path out of here
+            _ = _taskUi.TrySetResult();
+        }
     }
 
 
