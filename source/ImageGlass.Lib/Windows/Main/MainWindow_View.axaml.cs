@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -28,6 +29,7 @@ using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.FileSearchService;
 using ImageGlass.Common.Types;
+using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using ImageGlass.UI.Viewer.ZoomAndPan;
@@ -97,6 +99,12 @@ public partial class MainWindowView : PhControl
         PART_Viewer.ViewerMouseWheel += PART_Viewer_ViewerMouseWheel;
         PART_Viewer.ContextMenu?.Opened += PART_Viewer_ContextMenu_Opened;
 
+        // motion/live photo overlay button
+        PART_ToolHost.PropertyChanged += PART_ToolHost_PropertyChanged;
+        PART_BtnMotionVideo.Click += PART_BtnMotionVideo_Click;
+        UpdateMotionButtonTooltip();
+        UpdateMotionButtonState();
+
         // hook viewer events for external tool broadcasting
         PART_Viewer.PhotoLoading += Core.Viewer_PhotoLoadingForPlugins;
         PART_Viewer.ViewerPointerMoved += Core.Viewer_PointerMovedForPlugins;
@@ -130,6 +138,10 @@ public partial class MainWindowView : PhControl
         PART_Viewer.ViewerMouseWheel -= PART_Viewer_ViewerMouseWheel;
         PART_Viewer.ContextMenu?.Opened -= PART_Viewer_ContextMenu_Opened;
 
+        // motion/live photo overlay button
+        PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
+        PART_BtnMotionVideo.Click -= PART_BtnMotionVideo_Click;
+
         // unhook viewer events for external tools
         PART_Viewer.PhotoLoading -= Core.Viewer_PhotoLoadingForPlugins;
         PART_Viewer.ViewerPointerMoved -= Core.Viewer_PointerMovedForPlugins;
@@ -144,6 +156,14 @@ public partial class MainWindowView : PhControl
         base.OnSizeChanged(e);
 
         UpdateGalleryWidth();
+    }
+
+
+    protected override void OnIgLanguageChanged()
+    {
+        base.OnIgLanguageChanged();
+
+        UpdateMotionButtonTooltip();
     }
 
 
@@ -402,6 +422,23 @@ public partial class MainWindowView : PhControl
             // clear in-app message
             _ = PART_Message.ShowAsync(null);
         }
+
+        UpdateMotionButtonState();
+    }
+
+
+    private void PART_ToolHost_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        if (e.Property == ToolHostControl.PluginContentProperty)
+        {
+            UpdateMotionButtonState();
+        }
+    }
+
+
+    private async void PART_BtnMotionVideo_Click(object? sender, RoutedEventArgs e)
+    {
+        _ = await Core.API.RunApiAsync(API.IG_ToggleImageAnimation);
     }
 
 
@@ -1256,6 +1293,29 @@ public partial class MainWindowView : PhControl
             PART_Layout.ColumnDefinitions[galleryResizerColIndex].Width = new(5);
             PART_GalleryResizer.IsVisible = true;
         }
+    }
+
+
+    /// <summary>
+    /// Shows the motion-video button for a live photo while the Frame nav tool is closed.
+    /// </summary>
+    private void UpdateMotionButtonState()
+    {
+        var photo = PART_Viewer.Photo;
+        var isLivePhoto = photo?.Error is null && (photo?.Metadata?.IsLivePhoto ?? false);
+        var isFrameNavOpen = PART_ToolHost.Tool?.ToolId == FrameNavToolControl.TOOL_ID;
+
+        PART_MotionButtonHost.IsVisible = isLivePhoto && !isFrameNavOpen;
+    }
+
+
+    /// <summary>
+    /// Updates the motion-video button tooltip.
+    /// </summary>
+    private void UpdateMotionButtonTooltip()
+    {
+        ToolTip.SetTip(PART_BtnMotionVideo, AppAPIProvider.GetMenuTooltipText(
+            LangId._PlayMotionVideo, LangId.Menu_MnuToggleImageAnimation));
     }
 
 

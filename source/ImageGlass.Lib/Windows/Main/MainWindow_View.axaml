@@ -54,6 +54,26 @@
                         <ui:MessageControl x:Name="PART_Message" />
                         <viewer:SlideshowCountdownOverlay x:Name="PART_SlideshowCountdown" IsHitTestVisible="False" />
                         <viewer:NavButtonsOverlay IsVisible="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}" />
+
+                        <!--  Motion photo playback  -->
+                        <Border
+                            x:Name="PART_MotionButtonHost"
+                            Margin="0,0,0,14"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Background="{DynamicResource IG_MessageBackgroundBrush}"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            IsVisible="False">
+                            <ui:PhToolButton
+                                x:Name="PART_BtnMotionVideo"
+                                Padding="8"
+                                Focusable="False">
+                                <PathIcon
+                                    Width="25"
+                                    Height="25"
+                                    Data="{StaticResource IconLivePhoto}" />
+                            </ui:PhToolButton>
+                        </Border>
                     </Panel>
                 </viewer:ViewerControl>
             </Border>

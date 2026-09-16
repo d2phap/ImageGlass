@@ -32,8 +32,10 @@
                 Orientation="Horizontal"
                 Spacing="4">
                 <!--  View first frame  -->
-                <ui:ToolbarButton
+                <ui:PhToolButton
                     x:Name="PART_BtnViewFirstFrame"
+                    Padding="6"
+                    BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
@@ -43,12 +45,14 @@
                         Height="24"
                         Data="{StaticResource IconArrowPrevious}"
                         IsHitTestVisible="False" />
-                </ui:ToolbarButton>
+                </ui:PhToolButton>
 
 
                 <!--  View previous frame  -->
-                <ui:ToolbarButton
+                <ui:PhToolButton
                     x:Name="PART_BtnViewPreviousFrame"
+                    Padding="6"
+                    BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
@@ -58,12 +62,14 @@
                         Height="24"
                         Data="{StaticResource IconArrowLeft}"
                         IsHitTestVisible="False" />
-                </ui:ToolbarButton>
+                </ui:PhToolButton>
 
 
                 <!--  Play/Pause animation  -->
-                <ui:ToolbarButton
+                <ui:PhToolButton
                     x:Name="PART_BtnToggleAnimation"
+                    Padding="6"
+                    BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.CanPlay}"
                     ToolTip.Placement="Top"
@@ -90,12 +96,14 @@
                                 IsVisible="{CompiledBinding #Root.IsPlaying}" />
                         </StackPanel>
                     </Panel>
-                </ui:ToolbarButton>
+                </ui:PhToolButton>
 
 
                 <!--  View next frame  -->
-                <ui:ToolbarButton
+                <ui:PhToolButton
                     x:Name="PART_BtnViewNextFrame"
+                    Padding="6"
+                    BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
@@ -105,12 +113,14 @@
                         Height="24"
                         Data="{StaticResource IconArrowRight}"
                         IsHitTestVisible="False" />
-                </ui:ToolbarButton>
+                </ui:PhToolButton>
 
 
                 <!--  View last frame  -->
-                <ui:ToolbarButton
+                <ui:PhToolButton
                     x:Name="PART_BtnViewLastFrame"
+                    Padding="6"
+                    BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
@@ -120,7 +130,7 @@
                         Height="24"
                         Data="{StaticResource IconArrowNext}"
                         IsHitTestVisible="False" />
-                </ui:ToolbarButton>
+                </ui:PhToolButton>
             </StackPanel>
         </Border>
 
@@ -130,8 +140,10 @@
             VerticalAlignment="Center"
             Orientation="Horizontal">
             <!--  Export current frame  -->
-            <ui:ToolbarButton
+            <ui:PhToolButton
                 x:Name="PART_BtnExportFrame"
+                Padding="6"
+                BorderThickness="1"
                 Focusable="False"
                 IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                 ToolTip.Placement="Top"
@@ -141,7 +153,7 @@
                     Height="24"
                     Data="{StaticResource IconImageForward}"
                     IsHitTestVisible="False" />
-            </ui:ToolbarButton>
+            </ui:PhToolButton>
         </StackPanel>
 
     </Grid>

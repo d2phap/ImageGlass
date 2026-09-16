@@ -128,6 +128,7 @@ public enum LangId
     _SwitchedToNextFolder,
     _SwitchedToPreviousFolder,
     _ClipboardImage,
+    _PlayMotionVideo,
 
     // about
     _Slogan,
