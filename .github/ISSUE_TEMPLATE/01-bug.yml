@@ -5,9 +5,7 @@ body:
 - type: markdown
   attributes:
     value: |
-      Before you fill in this template,
-      **please search** open/closed issues and discussions before submitting.
-      It might be already known and fixed before.
+      Before you fill in this template, **please search** open/closed issues and discussions before submitting. It might be already known and fixed before.
 
 - type: input
   id: os-version
@@ -39,6 +37,7 @@ body:
       - DMG
       - Flatpak
       - AppImage
+      - Other
     description: Select "Microsoft Store" if you installed ImageGlass from [Microsoft Store](https://apps.microsoft.com/detail/9N33VZK3C7TH?launch=true&cid=ig_github_bug_report&mode=full).
   validations:
     required: true
@@ -48,7 +47,7 @@ body:
   attributes:
     label: Are you using Pro edition?
     options:
-      - label: "YES"
+      - label: "YES – ⭐"
 
 - type: textarea
   id: reproduction-steps
