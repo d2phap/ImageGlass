@@ -48,7 +48,7 @@ body:
   attributes:
     label: Are you using Pro edition?
     options:
-      - YES
+      - label: "YES"
 
 - type: textarea
   id: reproduction-steps
