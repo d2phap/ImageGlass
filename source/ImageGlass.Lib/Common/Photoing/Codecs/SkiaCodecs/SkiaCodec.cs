@@ -236,10 +236,15 @@ public static partial class SkiaCodec
 
         if (codec.GetPixels(decodeInfo, bmpFrame.GetPixels(), codecOption) == SKCodecResult.Success)
         {
+            // piex reports no origin for most RAW containers, so fall back to the one the metadata Ping read
+            var origin = codec.EncodedOrigin is SKEncodedOrigin.TopLeft or SKEncodedOrigin.Default
+                ? meta.Orientation
+                : codec.EncodedOrigin;
+
             // 2.1 correct rotation
             if (options.CorrectRotation)
             {
-                if (TryApplyOrientation(bmpFrame, codec.EncodedOrigin, out var bmpOriented))
+                if (TryApplyOrientation(bmpFrame, origin, out var bmpOriented))
                 {
                     if (bmpOriented is not null)
                     {
@@ -445,6 +450,18 @@ public static partial class SkiaCodec
         if (isMultiFrames) return codec.FrameCount > 1;
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Checks if the RAW embedded preview can be decoded and is at least the requested size.
+    /// </summary>
+    public static bool CanReadRawPreview(PhotoMetadata meta, int minWidth, int minHeight)
+    {
+        using var codec = SKCodec.Create(meta.FilePath);
+        if (codec.IsDisposed()) return false;
+
+        return codec.Info.Width > minWidth && codec.Info.Height > minHeight;
     }
 
 

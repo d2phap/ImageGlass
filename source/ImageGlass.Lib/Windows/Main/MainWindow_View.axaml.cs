@@ -1025,14 +1025,7 @@ public partial class MainWindowView : PhControl
         // set read options for photo
         if (photo is not null)
         {
-            photo.ReadOptions = new()
-            {
-                FrameIndex = 0,
-                OnlyLoadRawPreview = Core.Config.EnableOnlyLoadRawPreview,
-                OnlyLoadNonRawPreview = Core.Config.EnableOnlyLoadNonRawPreview,
-                PreviewMinWidth = Core.Config.PreviewMinWidth,
-                PreviewMinHeight = Core.Config.PreviewMinHeight,
-            };
+            photo.ReadOptions = PhotoReadOptions.FromConfig();
         }
 
         Dispatcher.UIThread.Post(async () =>

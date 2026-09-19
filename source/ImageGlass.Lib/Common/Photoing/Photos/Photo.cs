@@ -469,6 +469,8 @@ public partial class Photo : PhDisposable
             IsDestColorProfileSupported = Core.IsDestColorProfileSupported,
             LoadRawThumbnailOnly = ReadOptions.OnlyLoadRawPreview && meta.RawThumbnail is not null,
             LoadOtherThumbnailOnly = ReadOptions.OnlyLoadNonRawPreview && (meta.ExifProfile?.ThumbnailLength ?? 0) > 0,
+            PreviewMinWidth = ReadOptions.PreviewMinWidth,
+            PreviewMinHeight = ReadOptions.PreviewMinHeight,
         };
     }
 
@@ -539,8 +541,32 @@ public partial class Photo : PhDisposable
         // describe before ApplyDecodeResult nulls out the result fields (moves them to Bitmap)
         if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath, $"kind={DescribeDecodeResult(result)}");
 
+        // a codec that claimed the file but decoded no frame would leave the viewer blank
+        var fallbackCodec = Core.CodecRegistry.FallbackDecodeCodec;
+        if (IsEmptyDecodeResult(result) && !isFallback && !ReferenceEquals(codec, fallbackCodec))
+        {
+            token.ThrowIfCancellationRequested();
+            PhotoTrace.Mark("decode:retry-fallback", FilePath, $"{codec.CodecId} decoded no frame");
+
+            using var fallbackResult = await fallbackCodec
+                .DecodeAsync(meta, ReadOptions, context, token).ConfigureAwait(false);
+
+            if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath,
+                $"kind={DescribeDecodeResult(fallbackResult)} (fallback)");
+
+            ApplyDecodeResult(fallbackResult);
+            return;
+        }
+
         ApplyDecodeResult(result);
     }
+
+
+    /// <summary>
+    /// Whether a decode produced no usable source at all.
+    /// </summary>
+    private static bool IsEmptyDecodeResult(CodecDecodeResult result) =>
+        result.VectorSource is null && result.Animator is null && result.SingleFrame is null;
 
 
     /// <summary>

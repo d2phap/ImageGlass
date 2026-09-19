@@ -269,6 +269,9 @@ public partial class PhotoManager
                     continue;
                 }
 
+                // decode under the same policy the viewer uses, or a cache hit later serves it wrong
+                photo.ReadOptions = PhotoReadOptions.FromConfig();
+
                 if (!isSlideshow)
                 {
                     if (maxFileSizeBytes > 0 && !SatisfiesFileSizeLimit(photo.FilePath, maxFileSizeBytes))
