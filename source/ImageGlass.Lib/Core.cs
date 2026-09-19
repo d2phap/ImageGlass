@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -27,6 +27,7 @@ using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Licensing;
+using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
 using ImageGlass.Plugins;
 using ImageGlass.SDK.Plugins;
@@ -131,9 +132,9 @@ public static class Core
 
 
     /// <summary>
-    /// Provides the update service for checking and downloading app updates.
+    /// Checks for app updates and, where the packaging format allows, installs them in place.
     /// </summary>
-    public static UpdateProvider Update { get; set; } = null!;
+    public static IUpdateProvider UpdateProvider { get; set; } = new UpdateProvider();
 
 
     /// <summary>
@@ -223,6 +224,12 @@ public static class Core
     /// Gets or sets the HDR tone mapping options used when rendering high dynamic range images.
     /// </summary>
     public static HdrToneMappingOptions HdrToneMappingConfig { get; set; } = new();
+
+
+    /// <summary>
+    /// Whether a verified update package is downloaded and waiting to be installed.
+    /// </summary>
+    public static bool HasPendingUpdate => !string.IsNullOrWhiteSpace(Config?.UpdatePendingVersion);
 
 
     /// <summary>

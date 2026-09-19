@@ -46,6 +46,37 @@ public partial class BHelper
     }
 
     /// <summary>
+    /// Formats a timestamp for persistence as culture-independent UTC, e.g. <c>2026-08-30T10:08:12.4924980Z</c>.
+    /// </summary>
+    public static string FormatUtcRoundtrip(DateTime dt)
+    {
+        return dt.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+    }
+
+
+    /// <summary>
+    /// Reverses <see cref="FormatUtcRoundtrip"/> in UTC; also reads values written before that format.
+    /// </summary>
+    public static bool TryParseUtcRoundtrip(string? value, out DateTime utc)
+    {
+        utc = DateTime.MinValue;
+        if (string.IsNullOrWhiteSpace(value)) return false;
+
+        if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var dt)
+            || DateTime.TryParse(value, CultureInfo.CurrentCulture, DateTimeStyles.None, out dt))
+        {
+            // values written before this format carried no zone, and every writer used UtcNow
+            utc = dt.Kind == DateTimeKind.Unspecified
+                ? DateTime.SpecifyKind(dt, DateTimeKind.Utc)
+                : dt.ToUniversalTime();
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /// <summary>
     /// Formats date time string to string.
     /// </summary>
     public static string FormatDateTime(string? str, bool includeTime = true)

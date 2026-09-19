@@ -81,7 +81,7 @@
             <StackPanel
                 Margin="0,14,0,0"
                 HorizontalAlignment="Left"
-                Spacing="2">
+                Spacing="8">
                 <ui:PhButton x:Name="PART_InstallLanguage" Variant="Link" />
                 <ui:PhButton x:Name="PART_GetMoreLanguages" Variant="Link" />
                 <ui:PhButton x:Name="PART_ExportLanguage" Variant="Link" />

@@ -22,6 +22,7 @@ using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace ImageGlass.Common;
 
@@ -63,6 +64,18 @@ public partial class BHelper
         if (OperatingSystem.IsWindows()) return OSType.Windows;
         return OSType.Unknown;
     }
+
+
+    /// <summary>
+    /// Architecture token (<c>x64</c>/<c>arm64</c>/<c>x86</c>/<c>other</c>), shared by usage stats and update artifact keys.
+    /// </summary>
+    public static string ArchToken { get; } = RuntimeInformation.OSArchitecture switch
+    {
+        Architecture.X64 => "x64",
+        Architecture.Arm64 => "arm64",
+        Architecture.X86 => "x86",
+        _ => "other",
+    };
 
     /// <summary>
     /// Gets a value indicating whether the current operating system is Windows 10.

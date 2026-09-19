@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -40,6 +40,8 @@ public enum LangId
     _ResetToDefault,
     _CheckForUpdate,
     _Update,
+    _Download,
+    _RestartNow,
     _Website,
     _TypeToFilter,
     _Delete,
@@ -428,6 +430,10 @@ public enum LangId
     Menu_MnuCheckForUpdate_CurrentVersion,
     Menu_MnuCheckForUpdate_LatestVersion,
     Menu_MnuCheckForUpdate_PublishedDate,
+    Menu_MnuCheckForUpdate_ReadyToInstall,
+    Menu_MnuCheckForUpdate_Downloading,
+    Menu_MnuInstallUpdate,
+    Menu_MnuInstallUpdate_Confirm,
     Menu_MnuCheckForUpdate_ProFromStore,
 
     Menu_MnuSetDefaultPhotoViewer,
@@ -494,6 +500,7 @@ public enum LangId
     Settings_AppUpdate,
     Settings_AutoUpdate_Description,
     Settings_SeeWhatIsSent,
+    Settings_EnableAutoInstallUpdate,
 
     // General > Others
     Settings_Others,

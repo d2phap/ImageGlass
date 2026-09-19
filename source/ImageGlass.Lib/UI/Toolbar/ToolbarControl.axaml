@@ -1,4 +1,4 @@
-<ui:PhControl
+﻿<ui:PhControl
     x:Class="ImageGlass.UI.ToolbarControl"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -78,452 +78,486 @@
 
 
                 <!--  Main Menu button  -->
-                <ui:ToolbarButton
-                    x:Name="PART_BtnMainMenu"
-                    DataContext="{CompiledBinding ButtonMenuVM}"
-                    DropdownOpened="PART_BtnMainMenu_DropdownOpened"
-                    Focusable="False"
-                    IsOpenDropdownMenuOnClick="True">
-                    <ui:ToolbarButton.DropdownMenu>
-                        <ContextMenu
-                            x:Name="PART_MainMenu"
-                            HorizontalOffset="6"
-                            Placement="BottomEdgeAlignedRight">
+                <Panel>
+                    <!--  Update ready badge  -->
+                    <Border
+                        x:Name="PART_UpdateBadge"
+                        Width="13"
+                        Height="13"
+                        Margin="0,4,4,0"
+                        Padding="2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="{DynamicResource PhAccentFill}"
+                        CornerRadius="7"
+                        IsHitTestVisible="False"
+                        IsVisible="False"
+                        ZIndex="95">
+                        <Path
+                            Data="{StaticResource IconUpdateIndicator}"
+                            Fill="{DynamicResource AccentButtonForeground}"
+                            Stretch="Uniform" />
+                    </Border>
 
-                            <!--  File  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuFile">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuOpenFile" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuNewWindow" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSave" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSaveAs" />
+                    <ui:ToolbarButton
+                        x:Name="PART_BtnMainMenu"
+                        DataContext="{CompiledBinding ButtonMenuVM}"
+                        DropdownOpened="PART_BtnMainMenu_DropdownOpened"
+                        Focusable="False"
+                        IsOpenDropdownMenuOnClick="True">
+                        <ui:ToolbarButton.DropdownMenu>
+                            <ContextMenu
+                                x:Name="PART_MainMenu"
+                                HorizontalOffset="6"
+                                Placement="BottomEdgeAlignedRight">
+
+                                <!--  Install update (only when a package is ready)  -->
                                 <ui:PhMenuItem
-                                    x:Name="PART_MnuExportFrames"
+                                    x:Name="PART_MnuInstallUpdate"
+                                    Classes="attention"
                                     Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuExportFrames" />
-                                <ui:PhMenuItem Header="-" />
-
+                                    IsVisible="False"
+                                    LangKey="Menu_MnuInstallUpdate" />
                                 <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsVisible="{OnPlatform False,
-                                                           Windows=True,
-                                                           x:TypeArguments=x:Boolean}"
-                                    LangKey="Menu_MnuOpenWith" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsVisible="{OnPlatform False,
-                                                           Windows=True,
-                                                           x:TypeArguments=x:Boolean}"
-                                    LangKey="Menu_MnuPrint" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsVisible="{OnPlatform False,
-                                                           Windows=True,
-                                                           x:TypeArguments=x:Boolean}"
-                                    LangKey="Menu_MnuShare" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuOpenLocation" />
-                                <ui:PhMenuItem Header="-" />
+                                    x:Name="PART_MnuInstallUpdateSeparator"
+                                    Header="-"
+                                    IsVisible="False" />
 
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuRename" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuMoveToRecycleBin" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuDeleteFromHardDisk" />
-                                <ui:PhMenuItem Header="-" />
+                                <!--  File  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuFile">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuOpenFile" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuNewWindow" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSave" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSaveAs" />
+                                    <ui:PhMenuItem
+                                        x:Name="PART_MnuExportFrames"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuExportFrames" />
+                                    <ui:PhMenuItem Header="-" />
 
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuImageProperties" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Navigation  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuNavigation">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuViewNext" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuViewPrevious" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoTo" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoToFirst" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoToLast" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuViewNextFrame"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuViewNextFrame" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuViewPreviousFrame"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuViewPreviousFrame" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuViewFirstFrame"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuViewFirstFrame" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuViewLastFrame"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuViewLastFrame" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Zoom  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuZoom">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuZoomIn" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuZoomOut" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCustomZoom" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuActualSize" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeAutoZoom}"
-                                    LangKey="Menu_MnuAutoZoom"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeLockZoom}"
-                                    LangKey="Menu_MnuLockZoom"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeScaleToWidth}"
-                                    LangKey="Menu_MnuScaleToWidth"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeScaleToHeight}"
-                                    LangKey="Menu_MnuScaleToHeight"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeScaleToFit}"
-                                    LangKey="Menu_MnuScaleToFit"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding IsZoomModeScaleToFill}"
-                                    LangKey="Menu_MnuScaleToFill"
-                                    ToggleType="CheckBox" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Panning  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuPanning">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanLeft" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanRight" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanUp" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanDown" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToLeftSide" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToRightSide" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToTop" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToBottom" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Image  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuImage">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuRefresh" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReload" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReloadImageList" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuUnload" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem LangKey="Menu_MnuLoadingOrders">
                                     <ui:PhMenuItem
                                         Click="MainMenuItem_Click"
-                                        IsChecked="{CompiledBinding Config.EnableExplorerSortOrder}"
                                         IsVisible="{OnPlatform False,
                                                                Windows=True,
                                                                x:TypeArguments=x:Boolean}"
-                                        LangKey="Settings_EnableExplorerSortOrder"
-                                        ToggleType="CheckBox" />
-                                    <ui:PhMenuItem Header="-" IsVisible="{OnPlatform False, Windows=True, x:TypeArguments=x:Boolean}" />
+                                        LangKey="Menu_MnuOpenWith" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsVisible="{OnPlatform False,
+                                                               Windows=True,
+                                                               x:TypeArguments=x:Boolean}"
+                                        LangKey="Menu_MnuPrint" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsVisible="{OnPlatform False,
+                                                               Windows=True,
+                                                               x:TypeArguments=x:Boolean}"
+                                        LangKey="Menu_MnuShare" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuOpenLocation" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuRename" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuMoveToRecycleBin" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuDeleteFromHardDisk" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuImageProperties" />
+                                </ui:PhMenuItem>
+
+
+                                <!--  Navigation  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuNavigation">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuViewNext" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuViewPrevious" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoTo" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoToFirst" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuGoToLast" />
+                                    <ui:PhMenuItem Header="-" />
 
                                     <ui:PhMenuItem
+                                        x:Name="PART_MnuViewNextFrame"
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByName}"
-                                        LangKey="ImageOrderBy_Name"
-                                        ToggleType="Radio" />
+                                        LangKey="Menu_MnuViewNextFrame" />
                                     <ui:PhMenuItem
+                                        x:Name="PART_MnuViewPreviousFrame"
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByRandom}"
-                                        LangKey="ImageOrderBy_Random"
-                                        ToggleType="Radio" />
+                                        LangKey="Menu_MnuViewPreviousFrame" />
                                     <ui:PhMenuItem
+                                        x:Name="PART_MnuViewFirstFrame"
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByFileSize}"
-                                        LangKey="ImageOrderBy_FileSize"
-                                        ToggleType="Radio" />
+                                        LangKey="Menu_MnuViewFirstFrame" />
                                     <ui:PhMenuItem
+                                        x:Name="PART_MnuViewLastFrame"
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByExtension}"
-                                        LangKey="ImageOrderBy_Extension"
-                                        ToggleType="Radio" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByDateCreated}"
-                                        LangKey="ImageOrderBy_DateCreated"
-                                        ToggleType="Radio" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByDateAccessed}"
-                                        LangKey="ImageOrderBy_DateAccessed"
-                                        ToggleType="Radio" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByDateModified}"
-                                        LangKey="ImageOrderBy_DateModified"
-                                        ToggleType="Radio" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByExifDateTaken}"
-                                        LangKey="ImageOrderBy_ExifDateTaken"
-                                        ToggleType="Radio" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderBy"
-                                        IsChecked="{CompiledBinding IsLoadingByExifRating}"
-                                        LangKey="ImageOrderBy_ExifRating"
-                                        ToggleType="Radio" />
+                                        LangKey="Menu_MnuViewLastFrame" />
+                                </ui:PhMenuItem>
+
+
+                                <!--  Zoom  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuZoom">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuZoomIn" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuZoomOut" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCustomZoom" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuActualSize" />
                                     <ui:PhMenuItem Header="-" />
 
                                     <ui:PhMenuItem
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderType"
-                                        IsChecked="{CompiledBinding IsLoadingAsc}"
-                                        LangKey="ImageOrderType_Asc"
-                                        ToggleType="Radio" />
+                                        IsChecked="{CompiledBinding IsZoomModeAutoZoom}"
+                                        LangKey="Menu_MnuAutoZoom"
+                                        ToggleType="CheckBox" />
                                     <ui:PhMenuItem
                                         Click="MainMenuItem_Click"
-                                        GroupName="ImageOrderType"
-                                        IsChecked="{CompiledBinding IsLoadingDesc}"
-                                        LangKey="ImageOrderType_Desc"
-                                        ToggleType="Radio" />
+                                        IsChecked="{CompiledBinding IsZoomModeLockZoom}"
+                                        LangKey="Menu_MnuLockZoom"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding IsZoomModeScaleToWidth}"
+                                        LangKey="Menu_MnuScaleToWidth"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding IsZoomModeScaleToHeight}"
+                                        LangKey="Menu_MnuScaleToHeight"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding IsZoomModeScaleToFit}"
+                                        LangKey="Menu_MnuScaleToFit"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding IsZoomModeScaleToFill}"
+                                        LangKey="Menu_MnuScaleToFill"
+                                        ToggleType="CheckBox" />
                                 </ui:PhMenuItem>
 
-                                <ui:PhMenuItem x:Name="PART_MnuViewChannels" LangKey="Menu_MnuViewChannels">
-                                    <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="R"
-                                        Header="R"
-                                        IsChecked="{CompiledBinding IsColorChannelR}"
-                                        ToggleType="CheckBox" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="G"
-                                        Header="G"
-                                        IsChecked="{CompiledBinding IsColorChannelG}"
-                                        ToggleType="CheckBox" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="B"
-                                        Header="B"
-                                        IsChecked="{CompiledBinding IsColorChannelB}"
-                                        ToggleType="CheckBox" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="A"
-                                        Header="A"
-                                        IsChecked="{CompiledBinding IsColorChannelA}"
-                                        ToggleType="CheckBox" />
+
+                                <!--  Panning  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuPanning">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanLeft" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanRight" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanUp" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanDown" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToLeftSide" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToRightSide" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToTop" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPanToBottom" />
+                                </ui:PhMenuItem>
+
+
+                                <!--  Image  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuImage">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuRefresh" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReload" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReloadImageList" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuUnload" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem LangKey="Menu_MnuLoadingOrders">
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            IsChecked="{CompiledBinding Config.EnableExplorerSortOrder}"
+                                            IsVisible="{OnPlatform False,
+                                                                   Windows=True,
+                                                                   x:TypeArguments=x:Boolean}"
+                                            LangKey="Settings_EnableExplorerSortOrder"
+                                            ToggleType="CheckBox" />
+                                        <ui:PhMenuItem Header="-" IsVisible="{OnPlatform False, Windows=True, x:TypeArguments=x:Boolean}" />
+
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByName}"
+                                            LangKey="ImageOrderBy_Name"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByRandom}"
+                                            LangKey="ImageOrderBy_Random"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByFileSize}"
+                                            LangKey="ImageOrderBy_FileSize"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByExtension}"
+                                            LangKey="ImageOrderBy_Extension"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByDateCreated}"
+                                            LangKey="ImageOrderBy_DateCreated"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByDateAccessed}"
+                                            LangKey="ImageOrderBy_DateAccessed"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByDateModified}"
+                                            LangKey="ImageOrderBy_DateModified"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByExifDateTaken}"
+                                            LangKey="ImageOrderBy_ExifDateTaken"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderBy"
+                                            IsChecked="{CompiledBinding IsLoadingByExifRating}"
+                                            LangKey="ImageOrderBy_ExifRating"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem Header="-" />
+
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderType"
+                                            IsChecked="{CompiledBinding IsLoadingAsc}"
+                                            LangKey="ImageOrderType_Asc"
+                                            ToggleType="Radio" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenuItem_Click"
+                                            GroupName="ImageOrderType"
+                                            IsChecked="{CompiledBinding IsLoadingDesc}"
+                                            LangKey="ImageOrderType_Desc"
+                                            ToggleType="Radio" />
+                                    </ui:PhMenuItem>
+
+                                    <ui:PhMenuItem x:Name="PART_MnuViewChannels" LangKey="Menu_MnuViewChannels">
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="R"
+                                            Header="R"
+                                            IsChecked="{CompiledBinding IsColorChannelR}"
+                                            ToggleType="CheckBox" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="G"
+                                            Header="G"
+                                            IsChecked="{CompiledBinding IsColorChannelG}"
+                                            ToggleType="CheckBox" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="B"
+                                            Header="B"
+                                            IsChecked="{CompiledBinding IsColorChannelB}"
+                                            ToggleType="CheckBox" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="A"
+                                            Header="A"
+                                            IsChecked="{CompiledBinding IsColorChannelA}"
+                                            ToggleType="CheckBox" />
+                                        <ui:PhMenuItem Header="-" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="RGBA"
+                                            Header="RGBA" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="RGB"
+                                            Header="RGB" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="RA"
+                                            Header="R + A" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="GA"
+                                            Header="G + A" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="BA"
+                                            Header="B + A" />
+                                        <ui:PhMenuItem
+                                            Click="MainMenu_ViewChannelItem_Click"
+                                            CommandParameter="A"
+                                            Header="A" />
+                                    </ui:PhMenuItem>
                                     <ui:PhMenuItem Header="-" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="RGBA"
-                                        Header="RGBA" />
+                                        x:Name="PART_MnuEdit"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuEdit" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="RGB"
-                                        Header="RGB" />
+                                        x:Name="PART_MnuToggleImageAnimation"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuToggleImageAnimation" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="RA"
-                                        Header="R + A" />
+                                        x:Name="PART_MnuInvertColors"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuInvertColors" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="GA"
-                                        Header="G + A" />
+                                        x:Name="PART_MnuRotateLeft"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuRotateLeft" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="BA"
-                                        Header="B + A" />
+                                        x:Name="PART_MnuRotateRight"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuRotateRight" />
                                     <ui:PhMenuItem
-                                        Click="MainMenu_ViewChannelItem_Click"
-                                        CommandParameter="A"
-                                        Header="A" />
+                                        x:Name="PART_MnuFlipHorizontal"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuFlipHorizontal" />
+                                    <ui:PhMenuItem
+                                        x:Name="PART_MnuFlipVertical"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuFlipVertical" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSetDesktopBackground" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsVisible="{OnPlatform False,
+                                                               Windows=True,
+                                                               x:TypeArguments=x:Boolean}"
+                                        LangKey="Menu_MnuSetLockScreen" />
                                 </ui:PhMenuItem>
+
+
+                                <!--  Clipboard  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuClipboard">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPasteImage" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyImagePixels" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyPath" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyFile" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsVisible="{OnPlatform True,
+                                                               macOS=False,
+                                                               x:TypeArguments=x:Boolean}"
+                                        LangKey="Menu_MnuCutFile" />
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuClearClipboard" />
+                                </ui:PhMenuItem>
+
+
+                                <!--  Window modes  -->
                                 <ui:PhMenuItem Header="-" />
                                 <ui:PhMenuItem
-                                    x:Name="PART_MnuEdit"
                                     Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuEdit" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuToggleImageAnimation"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuToggleImageAnimation" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuInvertColors"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuInvertColors" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuRotateLeft"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuRotateLeft" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuRotateRight"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuRotateRight" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuFlipHorizontal"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuFlipHorizontal" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuFlipVertical"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuFlipVertical" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSetDesktopBackground" />
+                                    IsChecked="{CompiledBinding Config.EnableWindowFit}"
+                                    LangKey="Menu_MnuWindowFit"
+                                    ToggleType="CheckBox" />
                                 <ui:PhMenuItem
                                     Click="MainMenuItem_Click"
-                                    IsVisible="{OnPlatform False,
-                                                           Windows=True,
-                                                           x:TypeArguments=x:Boolean}"
-                                    LangKey="Menu_MnuSetLockScreen" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Clipboard  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuClipboard">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPasteImage" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyImagePixels" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyPath" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCopyFile" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
+                                    IsChecked="{CompiledBinding Config.EnableFrameless}"
                                     IsVisible="{OnPlatform True,
-                                                       macOS=False,
-                                                       x:TypeArguments=x:Boolean}"
-                                    LangKey="Menu_MnuCutFile" />
-                                <ui:PhMenuItem Header="-" />
-
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuClearClipboard" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Window modes  -->
-                            <ui:PhMenuItem Header="-" />
-                            <ui:PhMenuItem
-                                Click="MainMenuItem_Click"
-                                IsChecked="{CompiledBinding Config.EnableWindowFit}"
-                                LangKey="Menu_MnuWindowFit"
-                                ToggleType="CheckBox" />
-                            <ui:PhMenuItem
-                                Click="MainMenuItem_Click"
-                                IsChecked="{CompiledBinding Config.EnableFrameless}"
-                                IsVisible="{OnPlatform True,
-                                                       Linux=False,
-                                                       x:TypeArguments=x:Boolean}"
-                                LangKey="Menu_MnuFrameless"
-                                ToggleType="CheckBox" />
-                            <ui:PhMenuItem
-                                Click="MainMenuItem_Click"
-                                IsChecked="{CompiledBinding Config.EnableFullScreen}"
-                                LangKey="Menu_MnuFullScreen"
-                                ToggleType="CheckBox" />
-                            <ui:PhMenuItem
-                                Click="MainMenuItem_Click"
-                                IsChecked="{CompiledBinding Config.EnableSlideshow}"
-                                LangKey="Menu_MnuSlideshow"
-                                ToggleType="CheckBox" />
-                            <ui:PhMenuItem Header="-" />
-
-
-                            <!--  Layout  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuLayout">
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding Config.EnableWindowTopMost}"
-                                    LangKey="Menu_MnuToggleTopMost"
-                                    ToggleType="CheckBox" />
-                                <ui:PhMenuItem Header="-" />
-                                <ui:PhMenuItem
-                                    Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding Config.ShowToolbar}"
-                                    LangKey="Menu_MnuToggleToolbar"
+                                                           Linux=False,
+                                                           x:TypeArguments=x:Boolean}"
+                                    LangKey="Menu_MnuFrameless"
                                     ToggleType="CheckBox" />
                                 <ui:PhMenuItem
                                     Click="MainMenuItem_Click"
-                                    IsChecked="{CompiledBinding Config.ShowGallery}"
-                                    LangKey="Menu_MnuToggleGallery"
+                                    IsChecked="{CompiledBinding Config.EnableFullScreen}"
+                                    LangKey="Menu_MnuFullScreen"
+                                    ToggleType="CheckBox" />
+                                <ui:PhMenuItem
+                                    Click="MainMenuItem_Click"
+                                    IsChecked="{CompiledBinding Config.EnableSlideshow}"
+                                    LangKey="Menu_MnuSlideshow"
                                     ToggleType="CheckBox" />
                                 <ui:PhMenuItem Header="-" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuToggleCheckerboard" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuChangeBackgroundColor" />
-                            </ui:PhMenuItem>
 
 
-                            <!--  Tools  -->
-                            <ui:PhMenuItem x:Name="PART_MnuTools" LangKey="Menu_MnuTools">
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuColorPicker" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCropTool" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuFrameNav" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuHdrToneMapper" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuResizeTool" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuLosslessCompression" />
-                                <ui:PhMenuItem x:Name="PART_MnuExternalToolsBeginSeparator" Header="-" />
+                                <!--  Layout  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuLayout">
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding Config.EnableWindowTopMost}"
+                                        LangKey="Menu_MnuToggleTopMost"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem Header="-" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding Config.ShowToolbar}"
+                                        LangKey="Menu_MnuToggleToolbar"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IsChecked="{CompiledBinding Config.ShowGallery}"
+                                        LangKey="Menu_MnuToggleGallery"
+                                        ToggleType="CheckBox" />
+                                    <ui:PhMenuItem Header="-" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuToggleCheckerboard" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuChangeBackgroundColor" />
+                                </ui:PhMenuItem>
 
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuExternalToolsEndSeparator"
-                                    Header="-"
-                                    IsVisible="False" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuToolsSettings" />
-                            </ui:PhMenuItem>
+
+                                <!--  Tools  -->
+                                <ui:PhMenuItem x:Name="PART_MnuTools" LangKey="Menu_MnuTools">
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuColorPicker" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCropTool" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuFrameNav" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuHdrToneMapper" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuResizeTool" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuLosslessCompression" />
+                                    <ui:PhMenuItem x:Name="PART_MnuExternalToolsBeginSeparator" Header="-" />
+
+                                    <ui:PhMenuItem
+                                        x:Name="PART_MnuExternalToolsEndSeparator"
+                                        Header="-"
+                                        IsVisible="False" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuToolsSettings" />
+                                </ui:PhMenuItem>
 
 
-                            <!--  Settings  -->
-                            <ui:PhMenuItem Header="-" />
-                            <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSettings" />
-
-
-                            <!--  Help  -->
-                            <ui:PhMenuItem LangKey="Menu_MnuHelp">
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuUpgradeLicense"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuUpgradeLicense" />
-                                <ui:PhMenuItem
-                                    x:Name="PART_MnuManageLicense"
-                                    Click="MainMenuItem_Click"
-                                    LangKey="Menu_MnuManageLicense" />
-
+                                <!--  Settings  -->
                                 <ui:PhMenuItem Header="-" />
+                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuSettings" />
 
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="_CheckForUpdate" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuQuickSetup" />
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReportIssue" />
 
+                                <!--  Help  -->
+                                <ui:PhMenuItem LangKey="Menu_MnuHelp">
+                                    <ui:PhMenuItem
+                                        x:Name="PART_MnuUpgradeLicense"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuUpgradeLicense" />
+                                    <ui:PhMenuItem
+                                        x:Name="PART_MnuManageLicense"
+                                        Click="MainMenuItem_Click"
+                                        LangKey="Menu_MnuManageLicense" />
+
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="_CheckForUpdate" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuQuickSetup" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuReportIssue" />
+
+                                    <ui:PhMenuItem Header="-" />
+
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuAbout" />
+                                </ui:PhMenuItem>
+
+
+                                <!--  Exit  -->
                                 <ui:PhMenuItem Header="-" />
+                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuExit" />
 
-                                <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuAbout" />
-                            </ui:PhMenuItem>
-
-
-                            <!--  Exit  -->
-                            <ui:PhMenuItem Header="-" />
-                            <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuExit" />
-
-                        </ContextMenu>
-                    </ui:ToolbarButton.DropdownMenu>
-                </ui:ToolbarButton>
+                            </ContextMenu>
+                        </ui:ToolbarButton.DropdownMenu>
+                    </ui:ToolbarButton>
+                </Panel>
 
             </StackPanel>
 

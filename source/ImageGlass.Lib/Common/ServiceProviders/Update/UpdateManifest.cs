@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -26,6 +26,7 @@ namespace ImageGlass.Common.ServiceProviders.Update;
 /// Source-generated JSON context for AOT-safe serialization of update manifest.
 /// </summary>
 [JsonSerializable(typeof(UpdateManifest))]
+[JsonSerializable(typeof(UpdateReleaseInfo))]
 public partial class UpdateManifestJsonContext : JsonSerializerContext;
 
 
@@ -97,5 +98,24 @@ public sealed class UpdateArtifactInfo
 {
     [JsonPropertyName("url")]
     public string Url { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Lowercase hex SHA-256; required to auto-install, unverified bytes are never installed.
+    /// </summary>
+    [JsonPropertyName("sha256")]
+    public string Sha256 { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Artifact size in bytes; <c>0</c> when the manifest omits it.
+    /// </summary>
+    [JsonPropertyName("size")]
+    public long Size { get; set; }
+
+    /// <summary>
+    /// Whether this artifact carries everything an auto-install needs.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsInstallable => !string.IsNullOrWhiteSpace(Url)
+        && !string.IsNullOrWhiteSpace(Sha256);
 }
 

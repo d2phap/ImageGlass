@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -52,6 +52,48 @@ internal static class UpdateConstants
     /// Metadata fetch timeout.
     /// </summary>
     public static readonly TimeSpan MetadataTimeout = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// Cache subfolder for the downloaded update package; NOT under _temp, which is wiped on exit.
+    /// </summary>
+    public const string PackageCacheDir = "_update";
+
+    /// <summary>
+    /// Maximum update package size (1 GB).
+    /// </summary>
+    public const long MaxPackageSize = 1024L * 1024 * 1024;
+
+    /// <summary>
+    /// Whole-download timeout; generous, since this runs in the background.
+    /// </summary>
+    public static readonly TimeSpan DownloadTimeout = TimeSpan.FromMinutes(30);
+
+    /// <summary>
+    /// Lock file serializing the download across app instances.
+    /// </summary>
+    public const string DownloadLockFile = ".download.lock";
+
+    /// <summary>
+    /// Release notes of the pending update, cached so the install prompt works offline.
+    /// </summary>
+    public const string PendingReleaseFile = "release.json";
+
+
+    /// <summary>
+    /// Marker written just before an install; it survives only when that install did not land.
+    /// </summary>
+    public const string ApplyAttemptFile = ".apply-attempt";
+
+
+    /// <summary>
+    /// How many times to retry the download lock before giving up.
+    /// </summary>
+    public const int DownloadLockRetries = 60;
+
+    /// <summary>
+    /// Delay between download-lock attempts, in milliseconds.
+    /// </summary>
+    public const int DownloadLockRetryDelayMs = 500;
 
     /// <summary>
     /// Default background check interval (7 days).

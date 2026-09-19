@@ -53,4 +53,6 @@ GetNamedPipeClientProcessId
 GetCurrentPackageFullName
 
 
+RegisterApplicationRestart
+
 SetThreadExecutionState

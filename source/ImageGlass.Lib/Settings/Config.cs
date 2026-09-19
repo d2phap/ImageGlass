@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -452,6 +452,15 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Enables / Disables downloading app updates in the background so they are ready to install.
+    /// </summary>
+    public bool EnableAutoInstallUpdate
+    {
+        get => Get(ConfigId.EnableAutoInstallUpdate, false);
+        set => Set(ConfigId.EnableAutoInstallUpdate, value);
+    }
+
+    /// <summary>
     /// Enables, disables debug mode.
     /// </summary>
     public bool EnableDebug
@@ -662,7 +671,7 @@ public partial class Config : PhReactive
     /// </summary>
     public string AutoUpdate
     {
-        get => Get(ConfigId.AutoUpdate, DateTime.UtcNow.Subtract(TimeSpan.FromDays(30)).ToString());
+        get => Get(ConfigId.AutoUpdate, BHelper.FormatUtcRoundtrip(DateTime.UtcNow.AddDays(-30)));
         set => Set(ConfigId.AutoUpdate, value);
     }
 
@@ -673,6 +682,16 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.UpdateSkippedVersion, string.Empty);
         set => Set(ConfigId.UpdateSkippedVersion, value);
+    }
+
+
+    /// <summary>
+    /// Gets, sets the version of the verified update package waiting to be installed.
+    /// </summary>
+    public string UpdatePendingVersion
+    {
+        get => Get(ConfigId.UpdatePendingVersion, string.Empty);
+        set => Set(ConfigId.UpdatePendingVersion, value);
     }
 
     /// <summary>

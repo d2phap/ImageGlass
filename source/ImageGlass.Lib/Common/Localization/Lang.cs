@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -475,6 +475,8 @@ public class Lang
         new(LangId._ResetToDefault, "Reset to default"), //v9.0
         new(LangId._CheckForUpdate, "Check for update…"), //v5.0
         new(LangId._Update, "Update"), //v9.0
+        new(LangId._Download, "Download"), //v10.0
+        new(LangId._RestartNow, "Restart now"), //v10.0
         new(LangId._Website, "Website"), //v9.0
         new(LangId._TypeToFilter, "Type to filter…"),
         new(LangId._Delete, "Delete"),
@@ -869,6 +871,10 @@ public class Lang
         new(LangId.Menu_MnuCheckForUpdate_CurrentVersion, "Current version: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_LatestVersion, "The latest version: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_PublishedDate, "Published date: {0}" ), //v9.0
+        new(LangId.Menu_MnuCheckForUpdate_ReadyToInstall, "Update ready to install"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_Downloading, "Downloading the update…"), //v10.0
+        new(LangId.Menu_MnuInstallUpdate, "Install update…"), //v10.0
+        new(LangId.Menu_MnuInstallUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
         new(LangId.Menu_MnuCheckForUpdate_ProFromStore, "Get ImageGlass Pro from Store"), // v10.0
 
         new(LangId.Menu_MnuSetDefaultPhotoViewer, "Set default photo viewer"), //v9.0
@@ -935,6 +941,7 @@ public class Lang
         new(LangId.Settings_AppUpdate, "App update"),
         new(LangId.Settings_AutoUpdate_Description, "The update check also includes a short anonymous message that helps improve ImageGlass. It contains no name, no account, and no identifier, and nothing about your files. Turning this off stops it completely."),
         new(LangId.Settings_SeeWhatIsSent, "See exactly what is sent…"),
+        new(LangId.Settings_EnableAutoInstallUpdate, "Download and install updates automatically"), //v10.0
 
         // General > Others
         new(LangId.Settings_Others, "Others"),

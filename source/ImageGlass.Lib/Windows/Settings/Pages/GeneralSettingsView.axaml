@@ -75,6 +75,16 @@
             <CheckBox x:Name="PART_AutoUpdate">
                 <ui:PhTextBlock LangKey="Settings_AutoUpdate" TextWrapping="Wrap" />
             </CheckBox>
+            <StackPanel
+                x:Name="PART_AutoInstallUpdateRow"
+                Orientation="Horizontal"
+                Spacing="8">
+                <CheckBox x:Name="PART_AutoInstallUpdate">
+                    <ui:PhTextBlock LangKey="Settings_EnableAutoInstallUpdate" TextWrapping="Wrap" />
+                </CheckBox>
+                <ui:PhProBadge x:Name="PART_AutoInstallUpdateBadge" IsVisible="False" />
+            </StackPanel>
+
             <ui:PhTextBlock
                 Margin="0,8,0,0"
                 LangKey="Settings_AutoUpdate_Description"
@@ -82,8 +92,10 @@
                 TextWrapping="Wrap" />
             <ui:PhButton
                 x:Name="PART_SeeWhatIsSent"
+                Margin="0,8,0,0"
                 HorizontalAlignment="Left"
                 Variant="Link" />
+
             <ui:PhButton
                 x:Name="PART_CheckForUpdate"
                 MinWidth="100"

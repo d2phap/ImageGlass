@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -100,6 +100,7 @@ public partial class ToolbarControl : PhControl
 
         Core.Config.PropertyChanged += Config_PropertyChanged;
 
+        RefreshPendingUpdateState();
         ScheduleOverflowUpdate();
     }
 
@@ -178,6 +179,13 @@ public partial class ToolbarControl : PhControl
         else
         {
             UpdateButtonCheckState(e.PropertyName);
+        }
+
+
+        // the badge must appear the moment a download finishes, not on the next menu open
+        if (nameof(Core.Config.UpdatePendingVersion).Equals(e.PropertyName))
+        {
+            Avalonia.Threading.Dispatcher.UIThread.Post(RefreshPendingUpdateState);
         }
 
 
@@ -806,6 +814,21 @@ public partial class ToolbarControl : PhControl
         var isManagingLicense = Core.IsProEnabled || Core.ExpiredLicense is not null;
         PART_MnuUpgradeLicense.IsVisible = !isManagingLicense;
         PART_MnuManageLicense.IsVisible = isManagingLicense;
+
+        RefreshPendingUpdateState();
+    }
+
+
+    /// <summary>
+    /// Shows or hides the "Restart to update" item and the main-menu button badge.
+    /// </summary>
+    public void RefreshPendingUpdateState()
+    {
+        var hasUpdate = Core.UpdateProvider.CanApplyPendingUpdate;
+
+        PART_MnuInstallUpdate.IsVisible = hasUpdate;
+        PART_MnuInstallUpdateSeparator.IsVisible = hasUpdate;
+        PART_UpdateBadge.IsVisible = hasUpdate;
     }
 
 

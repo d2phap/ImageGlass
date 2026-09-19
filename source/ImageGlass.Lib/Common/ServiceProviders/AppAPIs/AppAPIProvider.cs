@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -3292,7 +3292,7 @@ public partial class AppAPIProvider
         }
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-        var result = await Core.Update.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
+        var result = await Core.UpdateProvider.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
 
         if (showUI)
         {
@@ -3304,6 +3304,10 @@ public partial class AppAPIProvider
         }
         else
         {
+            // auto-download when enabled; the ready package shows the menu affordance, not a popup
+            var download = await Core.UpdateProvider.TryDownloadUpdateAsync(result, CancellationToken.None);
+            if (download.IsSuccess) return;
+
             // silent mode: only show window for an update the user has not already checked for
             if (result.Status == Update.UpdateCheckStatus.UpdateAvailable && !_hasManualUpdateCheck)
             {
@@ -3312,6 +3316,103 @@ public partial class AppAPIProvider
                 _ = await updateWindow.ShowAsync(App.MainWindow);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_InstallUpdateAsync(string? boolStr = null)
+    {
+        var needsConfirm = BHelper.ConvertStringToBool(boolStr) ?? true;
+        await IG_InstallUpdateAsync(needsConfirm);
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_InstallUpdateAsync(bool needsConfirm)
+    {
+        var provider = Core.UpdateProvider;
+        var version = Core.Config.UpdatePendingVersion;
+        var title = Core.Lang[LangId._CheckForUpdate];
+
+        // self-guard: reachable without RunApiAsync, so the admin lock is enforced here too
+        if (FeatureManager.IsLocked(API.IG_InstallUpdate)) return;
+        if (string.IsNullOrWhiteSpace(version)) return;
+
+        var pkgPath = provider.GetPendingPackagePath();
+        if (pkgPath is null)
+        {
+            provider.DiscardPendingUpdate();
+            _ = await Core.Config.SaveAsync();
+
+            var cacheDir = BHelper.ConfigDir(Dir.Cache, Update.UpdateConstants.PackageCacheDir);
+            var realCacheDir = BHelper.GetRealPlatformPath(cacheDir);
+
+            await ShowUpdateFailedAsync(Update.UpdateOpResult.Fail(
+                $"IGE: The downloaded update package for {version} is no longer in the cache folder.", realCacheDir));
+            return;
+        }
+
+        // notes are cached with the package, so the prompt can show them with no network call
+        var pendingRelease = provider.GetPendingRelease();
+
+        // the menu entry is one click from killing the app; the dialog's [Restart now] already confirmed
+        if (needsConfirm)
+        {
+            // the update window already renders the release card, changelog link and skip link
+            if (pendingRelease is not null)
+            {
+                var updateWindow = new UpdateWindow();
+                updateWindow.SetResultState(Update.UpdateCheckResult.Available(pendingRelease));
+                _ = await updateWindow.ShowAsync(App.MainWindow);
+
+                // it installs through this same API, so this call is done either way
+                return;
+            }
+
+            var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
+            {
+                Title = title,
+                Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
+                Description = Core.Lang[LangId.Menu_MnuInstallUpdate_Confirm],
+                Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
+            }, ModalWindowButton.OK_Cancel);
+            if (confirm.ExitCode != DialogExitCode.OK) return;
+        }
+
+        // deployment terminates the process, so OnClosing never runs: persist window state now
+        if (App.MainWindow is { } mainWindow)
+        {
+            _ = await mainWindow.CaptureAndSaveConfigAsync();
+        }
+
+        var release = pendingRelease ?? new Update.UpdateReleaseInfo { Version = version };
+        var apply = await provider.ApplyAndRestartAsync(pkgPath, release);
+
+        // on success the process is already being torn down by the installer
+        if (!apply.IsSuccess && !apply.IsSkipped)
+        {
+            await ShowUpdateFailedAsync(apply);
+        }
+    }
+
+
+    /// <summary>
+    /// Reports the real reason a self-update failed and offers the download page instead.
+    /// </summary>
+    public static async Task ShowUpdateFailedAsync(Update.UpdateOpResult opResult, PhWindow? owner = null)
+    {
+        owner ??= App.MainWindow;
+
+        var result = await ModalWindow.ShowErrorAsync(owner, new ModalWindowOptions
+        {
+            Title = Core.Lang[LangId._CheckForUpdate],
+            Heading = opResult.ErrorMessage ?? Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed],
+            Details = opResult.ErrorDetails,
+        });
     }
 
 
