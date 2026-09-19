@@ -75,6 +75,15 @@ public partial class PhotoManager
 
 
     /// <summary>
+    /// Whether photo caching runs at all: zeroing any one budget turns it off.
+    /// </summary>
+    public bool IsCachingEnabled => Core.Config.CacheMaxFiles > 0
+        && Core.Config.CacheMaxMemoryInMb > 0
+        && Core.Config.CacheMaxFileSizeInMb > 0
+        && Core.Config.CacheMaxDimension > 0;
+
+
+    /// <summary>
     /// Starts a background cache pass around the given center index, cancelling any pass already running.
     /// </summary>
     public void RequestCacheAround(int centerIndex)
@@ -94,10 +103,7 @@ public partial class PhotoManager
         // a slideshow preloads its next image even when general caching is off (budget = 0)
         var isSlideshow = Core.Slideshow?.IsRunning == true;
 
-        if (!isSlideshow
-            && (Core.Config.CacheMaxMemoryInMb == 0
-            || Core.Config.CacheMaxFileSizeInMb == 0
-            || Core.Config.CacheMaxDimension == 0)) return;
+        if (!isSlideshow && !IsCachingEnabled) return;
 
         // run on a dedicated thread to avoid thread pool starvation
         _ = Task.Factory.StartNew(
@@ -215,6 +221,7 @@ public partial class PhotoManager
     {
         try
         {
+            var maxFiles = Core.Config.CacheMaxFiles;
             var maxMemoryBytes = (long)Core.Config.CacheMaxMemoryInMb * 1024L * 1024L;
             var maxFileSizeBytes = (long)(Core.Config.CacheMaxFileSizeInMb * 1024.0 * 1024.0);
             var maxDimension = Core.Config.CacheMaxDimension;
@@ -250,6 +257,9 @@ public partial class PhotoManager
                 if (photo is null) continue;
 
                 var isGuaranteed = idx == guaranteedIndex;
+
+                // the spiral is nearest-first, so everything past the cap is further from the viewer
+                if (!isGuaranteed && maxFiles > 0 && newCachedSet.Count >= maxFiles) break;
 
                 // already decoded, by an earlier pass or by the viewer
                 if (photo.State == PhotoState.Loaded)

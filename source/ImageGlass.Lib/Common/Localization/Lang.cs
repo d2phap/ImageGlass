@@ -972,6 +972,7 @@ public class Lang
 
         // Image > Caching
         new(LangId.Settings_Caching, "Caching"),
+        new(LangId.Settings_ImageBoosterCacheMaxFiles, "Maximum number of images to be cached: {0}"),
         new(LangId.Settings_ImageBoosterCacheMaxMemoryInMb, "Maximum memory used for caching images (in megabytes)"),
         new(LangId.Settings_ImageBoosterCacheMaxDimension, "Maximum image dimension to be cached (in pixels)"),
         new(LangId.Settings_ImageBoosterCacheMaxFileSizeInMb, "Maximum image file size to be cached (in megabytes)"),

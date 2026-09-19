@@ -183,6 +183,21 @@
         <!--  Caching  -->
         <ui:PhTextBlock Classes="group" LangKey="Settings_Caching" />
         <StackPanel Margin="{DynamicResource SettingsGroupIndent}" Spacing="10">
+            <!--  Maximum cached images (0 - 30)  -->
+            <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock
+                    x:Name="PART_CacheMaxFilesLabel"
+                    LangKey="Settings_ImageBoosterCacheMaxFiles"
+                    TextWrapping="Wrap" />
+                <Slider
+                    x:Name="PART_CacheMaxFiles"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    IsSnapToTickEnabled="True"
+                    Maximum="30"
+                    Minimum="0"
+                    TickFrequency="1" />
+            </StackPanel>
             <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
                 <ui:PhTextBlock LangKey="Settings_ImageBoosterCacheMaxMemoryInMb" TextWrapping="Wrap" />
                 <ui:PhTextBox

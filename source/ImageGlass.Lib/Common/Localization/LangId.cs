@@ -531,6 +531,7 @@ public enum LangId
 
     // Image > Caching
     Settings_Caching,
+    Settings_ImageBoosterCacheMaxFiles,
     Settings_ImageBoosterCacheMaxMemoryInMb,
     Settings_ImageBoosterCacheMaxDimension,
     Settings_ImageBoosterCacheMaxFileSizeInMb,

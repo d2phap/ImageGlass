@@ -558,6 +558,15 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets the maximum number of images to cache, excluding the viewing image.
+    /// </summary>
+    public uint CacheMaxFiles
+    {
+        get => Get(ConfigId.CacheMaxFiles, 10u);
+        set => Set(ConfigId.CacheMaxFiles, value);
+    }
+
+    /// <summary>
     /// Gets, sets the maximum memory for image caching (in MB).
     /// </summary>
     public uint CacheMaxMemoryInMb

@@ -92,6 +92,7 @@ public enum ConfigId
     ThumbnailSize,
     GalleryCacheSizeInMb,
     GalleryColumns,
+    CacheMaxFiles,
     CacheMaxMemoryInMb,
     CacheMaxDimension,
     CacheMaxFileSizeInMb,

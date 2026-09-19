@@ -104,6 +104,8 @@ public partial class ImageSettingsView : SettingsPageView
         BuildColorProfile();
 
         // Caching
+        BindUIntSlider(PART_CacheMaxFiles, ConfigId.CacheMaxFiles,
+            LangId.Settings_ImageBoosterCacheMaxFiles, LangId.Settings_Caching, 10u, PART_CacheMaxFilesLabel);
         BindUIntInput(PART_CacheMaxMemory, ConfigId.CacheMaxMemoryInMb,
             LangId.Settings_ImageBoosterCacheMaxMemoryInMb, LangId.Settings_Caching);
         BindUIntInput(PART_CacheMaxDimension, ConfigId.CacheMaxDimension,
