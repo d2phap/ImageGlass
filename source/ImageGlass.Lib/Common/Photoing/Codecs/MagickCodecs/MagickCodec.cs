@@ -557,7 +557,7 @@ public static partial class MagickCodec
                 if (meta.RawThumbnail != null
                     && meta.IsEmbeddedPreviewLargeEnough(options.PreviewMinWidth, options.PreviewMinHeight))
                 {
-                    imgM.Read(meta.RawThumbnail.ToReadOnlySpan(), settings);
+                    imgM.Read(meta.RawThumbnail.ToReadOnlySpan(), GetPreviewReadSettings__(options, settings));
                     hasRequestedThumbnail = true;
                 }
             }

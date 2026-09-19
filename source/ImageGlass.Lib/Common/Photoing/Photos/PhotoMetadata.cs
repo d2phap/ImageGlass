@@ -326,10 +326,17 @@ public partial class PhotoMetadata : PhDisposable
         MagickImage? thumbM = null;
 
 
-        // 1. try get from RAW format
-        if (RawThumbnail is not null)
+        // 1. try get from RAW format; a zero size means the metadata ping could not decode the blob
+        if (RawThumbnail is not null && PreviewWidth > 0)
         {
-            thumbM = new MagickImage(RawThumbnail.ToReadOnlySpan());
+            try
+            {
+                thumbM = new MagickImage(RawThumbnail.ToReadOnlySpan());
+            }
+            catch
+            {
+                thumbM = null;
+            }
         }
 
 

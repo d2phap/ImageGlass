@@ -338,7 +338,8 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
             output = imgFrameColored;
         }
 
-        return true;
+        // false keeps the caller's own image: neither step applied, so there is nothing to swap in
+        return output is not null;
     }
 
 }

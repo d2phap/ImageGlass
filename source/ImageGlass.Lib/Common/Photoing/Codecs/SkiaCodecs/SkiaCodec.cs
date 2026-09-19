@@ -227,6 +227,14 @@ public static partial class SkiaCodec
         // 2. read single-frame formats
         // images past Skia's pixel-buffer ceiling decode at the largest native reduction that fits
         var decodeInfo = GetDecodableImageInfo(codec, out var decodeScale);
+
+        // a caller that asked for a size gets a native reduced decode, like Magick's ApplySizeSettings
+        if (TryGetRequestedDecodeInfo(codec, decodeInfo, options, out var requestedInfo))
+        {
+            decodeScale *= (double)requestedInfo.Width / decodeInfo.Width;
+            decodeInfo = requestedInfo;
+        }
+
         result.DecodeScale = decodeScale;
         result.Size = new Size(decodeInfo.Width, decodeInfo.Height);
 
@@ -449,6 +457,26 @@ public static partial class SkiaCodec
         var isMultiFrames = meta.FrameCount > 1;
         if (isMultiFrames) return codec.FrameCount > 1;
 
+        return true;
+    }
+
+
+    /// <summary>
+    /// Narrows the decode to the size the caller asked for, using the codec's native scales.
+    /// </summary>
+    private static bool TryGetRequestedDecodeInfo(SKCodec codec, SKImageInfo currentInfo,
+        PhotoReadOptions options, out SKImageInfo output)
+    {
+        output = currentInfo;
+        if (options.Width == 0 || options.Height == 0) return false;
+        if (currentInfo.Width <= options.Width && currentInfo.Height <= options.Height) return false;
+
+        var scale = Math.Min((float)options.Width / currentInfo.Width,
+            (float)options.Height / currentInfo.Height);
+        var size = codec.GetScaledDimensions(scale);
+        if (size.Width <= 0 || size.Height <= 0 || size.Width >= currentInfo.Width) return false;
+
+        output = currentInfo.WithSize(size.Width, size.Height);
         return true;
     }
 
