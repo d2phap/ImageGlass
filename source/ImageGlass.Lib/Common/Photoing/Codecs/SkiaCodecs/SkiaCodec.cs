@@ -461,7 +461,7 @@ public static partial class SkiaCodec
         using var codec = SKCodec.Create(meta.FilePath);
         if (codec.IsDisposed()) return false;
 
-        return codec.Info.Width > minWidth && codec.Info.Height > minHeight;
+        return codec.Info.Width >= minWidth && codec.Info.Height >= minHeight;
     }
 
 

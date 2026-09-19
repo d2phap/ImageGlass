@@ -126,6 +126,19 @@ public partial class Photo : PhDisposable
     public double DecodeScale { get; private set; } = 1;
 
     /// <summary>
+    /// Whether a load will decode the embedded RAW preview instead of the full image.
+    /// </summary>
+    public bool WillDecodeEmbeddedPreview => ReadOptions.OnlyLoadRawPreview
+        && Metadata.IsEmbeddedPreviewLargeEnough(ReadOptions.PreviewMinWidth, ReadOptions.PreviewMinHeight);
+
+    /// <summary>
+    /// Size a load is expected to produce, before it runs.
+    /// </summary>
+    public (uint Width, uint Height) EstimatedDecodeSize => WillDecodeEmbeddedPreview
+        ? (Metadata.PreviewWidth, Metadata.PreviewHeight)
+        : (Metadata.Width, Metadata.Height);
+
+    /// <summary>
     /// Gets the current frame index of this photo.
     /// </summary>
     public int FrameIndex => _frameIndex;
