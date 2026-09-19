@@ -823,6 +823,7 @@ public class Lang
         new(LangId.Menu_MnuLosslessCompression_Error, "Could not compress the file."), // v10.0
         #endregion // Main Menu > Tools
 
+        new(LangId.Menu_MnuPlugins, "Plugins"), // v10.0
         new(LangId.Menu_MnuSettings, "Settings"), // v3.0
 
         #region Main Menu > Help

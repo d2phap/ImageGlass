@@ -177,7 +177,8 @@ public partial class AppAPIProvider
 
 
         // Settings
-        new(LangId.Menu_MnuSettings,            API.IG_OpenSettings,    Hotkey.Ctrl, Key.OemComma),
+        new(LangId.Menu_MnuPlugins,             API.IG_OpenSettings, nameof(SettingsNavId.Plugins)),
+        new(LangId.Menu_MnuSettings,            API.IG_OpenSettings,                                    Hotkey.Ctrl, Key.OemComma),
 
 
         // Help

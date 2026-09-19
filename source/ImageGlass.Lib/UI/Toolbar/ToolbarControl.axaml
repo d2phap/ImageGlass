@@ -487,6 +487,8 @@
                                     IsVisible="False" />
                                 <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuToolsSettings" />
                             </ui:PhMenuItem>
+                            <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPlugins" />
+
 
 
                             <!--  Settings  -->
