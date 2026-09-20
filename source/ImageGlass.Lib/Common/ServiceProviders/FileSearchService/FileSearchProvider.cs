@@ -36,6 +36,9 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 {
     protected CancellationTokenSource? _cancelSearching;
 
+    // Dolphin and Nautilus rank the base name above the extension; Explorer and Finder do not
+    private static readonly bool _compareExtensionLast = BHelper.OS == OSType.Linux;
+
 
     // Public Properties
     #region Public Properties
@@ -214,7 +217,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
     /// </summary>
     private static IOrderedEnumerable<FileSearchEntry> SortEntries(IEnumerable<FileSearchEntry> fileList, FileSearchOptions options)
     {
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
         var dirPathComparer = options.GroupByDir
             ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase)
             : (IComparer<string?>)Comparer<string>.Create((a, b) => 0);
@@ -252,7 +255,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 
 
         // Gets the file path comparer.
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
 
         // Gets the directory path comparer.
         var dirPathComparer = options.GroupByDir
