@@ -36,6 +36,9 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 {
     protected CancellationTokenSource? _cancelSearching;
 
+    // Dolphin and Nautilus rank the base name above the extension; Explorer and Finder do not
+    private static readonly bool _compareExtensionLast = BHelper.OS == OSType.Linux;
+
 
     // Public Properties
     #region Public Properties
@@ -214,7 +217,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
     /// </summary>
     private static IOrderedEnumerable<FileSearchEntry> SortEntries(IEnumerable<FileSearchEntry> fileList, FileSearchOptions options)
     {
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
         var dirPathComparer = options.GroupByDir
             ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase)
             : (IComparer<string?>)Comparer<string>.Create((a, b) => 0);
@@ -231,6 +234,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
             (ImageOrderBy.FileSize, _) => query.ThenBy(f => f.FileSizeInBytes),
             (ImageOrderBy.DateCreated, ImageOrderType.Desc) => query.ThenByDescending(f => f.FileCreationTimeUtc),
             (ImageOrderBy.DateCreated, _) => query.ThenBy(f => f.FileCreationTimeUtc),
+            (ImageOrderBy.Extension, ImageOrderType.Desc) => query.ThenByDescending(f => Path.GetExtension(f.FilePath), StringComparer.OrdinalIgnoreCase),
             (ImageOrderBy.Extension, _) => query.ThenBy(f => Path.GetExtension(f.FilePath), StringComparer.OrdinalIgnoreCase),
             (ImageOrderBy.DateAccessed, ImageOrderType.Desc) => query.ThenByDescending(f => f.FileLastAccessTimeUtc),
             (ImageOrderBy.DateAccessed, _) => query.ThenBy(f => f.FileLastAccessTimeUtc),
@@ -252,7 +256,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 
 
         // Gets the file path comparer.
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
 
         // Gets the directory path comparer.
         var dirPathComparer = options.GroupByDir
@@ -305,14 +309,14 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
             {
                 return query
                     .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
-                    .ThenBy(f => new FileInfo(f).Extension, StringComparer.OrdinalIgnoreCase)
+                    .ThenByDescending(f => Path.GetExtension(f), StringComparer.OrdinalIgnoreCase)
                     .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return query
                     .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
-                    .ThenBy(f => new FileInfo(f).Extension, StringComparer.OrdinalIgnoreCase)
+                    .ThenBy(f => Path.GetExtension(f), StringComparer.OrdinalIgnoreCase)
                     .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }

@@ -11,6 +11,8 @@
 #      against the HOST glibc, so a toolchain bump that raises it must be caught here.
 #   4. Builds __artifacts/bundle/ImageGlass_<version>_linux-x64.AppImage, optionally
 #      GPG-signed, fetching appimagetool if it is not already available.
+#   5. Embeds AppImage update information and emits the matching .zsync, so AppImage
+#      managers (AppImageUpdate, Gear Lever, AM/AppMan) can self-update the image.
 #
 # Run standalone; it publishes itself. Distribution: __assets/linux/appimage/README.md
 #
@@ -21,6 +23,9 @@
 #   APPIMAGETOOL_SHA256=<hex>  expected sha256 of that download (empty => warn, no check)
 #   COMP=zstd|xz|gzip          squashfs compression (default: zstd)
 #   NO_APPSTREAM=1             skip appimagetool's AppStream validation
+#   UPDATE_INFO=<string>       override the embedded update information verbatim
+#   NO_UPDATE_INFO=1           embed none (no self-update, no .zsync)
+#   GH_OWNER=/GH_REPO=<name>   the GitHub repo the update information points at
 #   SKIP_PUBLISH=1             reuse __artifacts/publish/linux-x64 -- DEBUG ONLY, it can
 #                              ship stale code under a new version number
 
@@ -60,6 +65,29 @@ REL_LABEL="$IG_VERSION"
 
 APPIMAGE_NAME="ImageGlass_${REL_LABEL}_linux-x64.AppImage"
 APPIMAGE_PATH="$DIST_DIR/$APPIMAGE_NAME"
+ZSYNC_PATH="$APPIMAGE_PATH.zsync"
+
+# --- Update information (self-update via .zsync) ---
+# The glob is derived from APPIMAGE_NAME so a rename of the asset cannot leave the
+# update information matching nothing; only the version part becomes the wildcard.
+ZSYNC_GLOB="${APPIMAGE_NAME/_${REL_LABEL}_/_*_}.zsync"
+GH_OWNER="${GH_OWNER:-d2phap}"
+GH_REPO="${GH_REPO:-ImageGlass}"
+IG_UPDATE_CHANNEL="$(sed -n 's:.*<IgUpdateChannel>\(.*\)</IgUpdateChannel>.*:\1:p' "$BUILD_PROPS_FILE" | head -n 1)"
+
+# "latest" is GET /releases/latest, which EXCLUDES prereleases; "latest-all" takes the
+# newest of any kind. Both signals, since IgReleaseType is what GitHub flags prerelease.
+if [[ -n "$IG_RELEASE_TYPE" || "${IG_UPDATE_CHANNEL:-stable}" != "stable" ]]; then
+	ZSYNC_TAG="latest-all"
+else
+	ZSYNC_TAG="latest"
+fi
+
+if [[ "${NO_UPDATE_INFO:-0}" == "1" ]]; then
+	UPDATE_INFO=""
+else
+	UPDATE_INFO="${UPDATE_INFO:-gh-releases-zsync|$GH_OWNER|$GH_REPO|$ZSYNC_TAG|$ZSYNC_GLOB}"
+fi
 
 # --- Publish a fresh self-contained AOT build ---
 if [[ "${SKIP_PUBLISH:-0}" == "1" ]]; then
@@ -279,6 +307,7 @@ fi
 
 BUILT=0
 SIGNED=0
+ZSYNC_BUILT=0
 
 if [[ -z "$TOOL" ]]; then
 	echo "==> appimagetool NOT available -- skipping the AppImage build."
@@ -316,15 +345,29 @@ else
 
 	APPSTREAM_ARGS=(); [[ "${NO_APPSTREAM:-0}" == "1" ]] && APPSTREAM_ARGS=(-n)
 
+	# -u both embeds the .upd_info ELF section AppImage managers read and, when the tool
+	# can reach a zsyncmake, writes "$APPIMAGE_PATH.zsync" beside the image.
+	UPDATE_ARGS=()
+	if [[ -n "$UPDATE_INFO" ]]; then
+		echo "==> Update information: $UPDATE_INFO"
+		UPDATE_ARGS=(-u "$UPDATE_INFO")
+	else
+		echo "==> NO_UPDATE_INFO -- building an image that cannot self-update."
+	fi
+
 	echo "==> Building AppImage: $APPIMAGE_NAME (comp=$COMP)"
-	rm -f "$APPIMAGE_PATH"
+	# Drop a stale .zsync too: same version re-run would otherwise look like a success.
+	rm -f "$APPIMAGE_PATH" "$ZSYNC_PATH"
 
 	# appimagetool is itself an AppImage. APPIMAGE_EXTRACT_AND_RUN makes it self-extract
 	# instead of FUSE-mounting, so this also works in containers and without libfuse2.
-	APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" \
+	#
+	# Run it from DIST_DIR: appimagetool shells out to `zsyncmake <abs path>`, which writes
+	# <basename>.zsync into the CWD, not beside its input -- otherwise it lands in the repo.
+	( cd "$DIST_DIR" && APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" \
 		--comp "$COMP" \
-		"${APPSTREAM_ARGS[@]}" "${SIGN_ARGS[@]}" \
-		"$APPDIR_STAGE" "$APPIMAGE_PATH"
+		"${APPSTREAM_ARGS[@]}" "${SIGN_ARGS[@]}" "${UPDATE_ARGS[@]}" \
+		"$APPDIR_STAGE" "$APPIMAGE_PATH" )
 
 	chmod +x "$APPIMAGE_PATH"
 	BUILT=1
@@ -337,6 +380,27 @@ else
 	else
 		echo "    WARNING: the embedded runtime could not read this image."
 		echo "             Most likely it lacks '$COMP' support -- retry with COMP=gzip."
+	fi
+
+	# --- Verify the update information round-trips, and that the .zsync exists ---
+	# An AppImage advertising an update it has no .zsync for is worse than one that
+	# advertises nothing: every check fails with "None of the artifacts matched".
+	if [[ -n "$UPDATE_INFO" ]]; then
+		EMBEDDED="$("$APPIMAGE_PATH" --appimage-updateinformation 2>/dev/null || true)"
+		if [[ "$EMBEDDED" != "$UPDATE_INFO" ]]; then
+			echo "    WARNING: embedded update information does not read back as written."
+			echo "             wrote: $UPDATE_INFO"
+			echo "             read : ${EMBEDDED:-<none>}"
+		fi
+
+		if [[ -f "$ZSYNC_PATH" ]]; then
+			ZSYNC_BUILT=1
+		else
+			echo "    WARNING: no .zsync next to the image, so it advertises an update it"
+			echo "             cannot serve. This appimagetool most likely has no zsyncmake on"
+			echo "             its PATH -- install zsync/zsyncmake, or drop the APPIMAGETOOL"
+			echo "             override so the bundled tool (which ships one) is used."
+		fi
 	fi
 fi
 
@@ -356,6 +420,14 @@ if [[ "$BUILT" == "1" ]]; then
 	echo "  Size        : $SIZE (squashfs, $COMP)"
 	echo "  sha256      : $SHA256"
 	echo "  glibc floor : ${GLIBC_FLOOR:-unknown}"
+	if [[ "$ZSYNC_BUILT" == "1" ]]; then
+		echo "  zsync       : $ZSYNC_PATH"
+		echo "  zsync sha256: $(sha256sum "$ZSYNC_PATH" | cut -d' ' -f1)"
+	fi
+	if [[ -n "$UPDATE_INFO" ]]; then
+		echo "  Update info : $UPDATE_INFO"
+		echo "                (channel ${IG_UPDATE_CHANNEL:-stable}, release type ${IG_RELEASE_TYPE:-<none>} -> tag '$ZSYNC_TAG')"
+	fi
 	if [[ "$SIGNED" == "1" ]]; then
 		echo "  Signed with GPG key : $GPG_KEY"
 		echo "  Publish the fingerprint so users can trust the key:"
@@ -371,5 +443,11 @@ else
 	echo "  AppDir (unpacked, runnable): $APPDIR_STAGE"
 fi
 echo ""
-echo "Next: upload the .AppImage to the '$REL_LABEL' GitHub release."
+if [[ "$ZSYNC_BUILT" == "1" ]]; then
+	echo "Next: upload BOTH the .AppImage AND the .zsync to the '$REL_LABEL' GitHub release."
+	echo "      The .zsync alone is what makes self-update work -- its URL: line is relative,"
+	echo "      so it only resolves while both assets sit in the same release."
+else
+	echo "Next: upload the .AppImage to the '$REL_LABEL' GitHub release."
+fi
 echo "      Desktop integration is offered on first run; see __assets/linux/appimage/README.md."
