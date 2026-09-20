@@ -234,6 +234,7 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
             (ImageOrderBy.FileSize, _) => query.ThenBy(f => f.FileSizeInBytes),
             (ImageOrderBy.DateCreated, ImageOrderType.Desc) => query.ThenByDescending(f => f.FileCreationTimeUtc),
             (ImageOrderBy.DateCreated, _) => query.ThenBy(f => f.FileCreationTimeUtc),
+            (ImageOrderBy.Extension, ImageOrderType.Desc) => query.ThenByDescending(f => Path.GetExtension(f.FilePath), StringComparer.OrdinalIgnoreCase),
             (ImageOrderBy.Extension, _) => query.ThenBy(f => Path.GetExtension(f.FilePath), StringComparer.OrdinalIgnoreCase),
             (ImageOrderBy.DateAccessed, ImageOrderType.Desc) => query.ThenByDescending(f => f.FileLastAccessTimeUtc),
             (ImageOrderBy.DateAccessed, _) => query.ThenBy(f => f.FileLastAccessTimeUtc),
@@ -308,14 +309,14 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
             {
                 return query
                     .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
-                    .ThenBy(f => new FileInfo(f).Extension, StringComparer.OrdinalIgnoreCase)
+                    .ThenByDescending(f => Path.GetExtension(f), StringComparer.OrdinalIgnoreCase)
                     .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
             else
             {
                 return query
                     .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
-                    .ThenBy(f => new FileInfo(f).Extension, StringComparer.OrdinalIgnoreCase)
+                    .ThenBy(f => Path.GetExtension(f), StringComparer.OrdinalIgnoreCase)
                     .ThenBy(f => Path.GetFileName(f), filePathComparer);
             }
         }
