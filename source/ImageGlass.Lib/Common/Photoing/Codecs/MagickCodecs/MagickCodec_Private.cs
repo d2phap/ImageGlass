@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using ImageGlass.Common.Loggers;
 using ImageMagick;
+using ImageMagick.Formats;
 using System;
 using System.Buffers.Binary;
 using System.IO;
@@ -30,6 +32,46 @@ public static partial class MagickCodec
     [GeneratedRegex(@"(^data\:(?<type>image\/[a-z\+\-]*);base64,)?(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled, "en-US")]
     private static partial Regex CreateBase64DataUriRegex__();
 
+
+
+    /// <summary>
+    /// Settings for reading an embedded preview, with a JPEG scale hint when a size was requested.
+    /// </summary>
+    private static MagickReadSettings GetPreviewReadSettings__(PhotoReadOptions options,
+        MagickReadSettings settings)
+    {
+        if (options.Width == 0 || options.Height == 0) return settings;
+
+        settings.SetDefines(new JpegReadDefines()
+        {
+            Size = new MagickGeometry(options.Width, options.Height),
+        });
+
+        return settings;
+    }
+
+
+    /// <summary>
+    /// Reads the size of the embedded RAW preview without decoding it.
+    /// </summary>
+    private static void ReadRawThumbnailSize__(PhotoMetadata meta)
+    {
+        meta.PreviewWidth = meta.PreviewHeight = 0;
+        if (meta.RawThumbnail is null) return;
+
+        try
+        {
+            using var probeM = new MagickImage();
+            probeM.Ping(meta.RawThumbnail.ToReadOnlySpan());
+
+            meta.PreviewWidth = probeM.Width;
+            meta.PreviewHeight = probeM.Height;
+        }
+        catch (Exception ex)
+        {
+            PhotoTrace.Mark("decode:raw-preview-unreadable", meta.FilePath, ex.Message);
+        }
+    }
 
 
     /// <summary>
@@ -53,8 +95,8 @@ public static partial class MagickCodec
             // Fetch the embedded thumbnail
             thumbM = meta.ExifProfile.CreateThumbnail();
             if (thumbM != null
-                && thumbM.Width > options.PreviewMinWidth
-                && thumbM.Height > options.PreviewMinHeight)
+                && thumbM.Width >= options.PreviewMinWidth
+                && thumbM.Height >= options.PreviewMinHeight)
             {
                 if (options.CorrectRotation) thumbM.AutoOrient();
 

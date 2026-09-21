@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using ImageGlass.Common;
@@ -158,6 +159,17 @@ public partial class FrameNavToolControl : PhControl, IToolControl
     }
 
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        if (e.Property == IsLivePhotoProperty)
+        {
+            UpdatePlayButtonTooltip();
+        }
+    }
+
+
     private void Viewer_PhotoFrameChanged(ViewerControl sender, PhotoFrameChangedEventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -253,30 +265,34 @@ public partial class FrameNavToolControl : PhControl, IToolControl
     /// </summary>
     private void UpdateHotkeyTooltip()
     {
-        PART_BtnViewFirstFrame.VM.Text = nameof(LangId.Menu_MnuViewFirstFrame);
-        PART_BtnViewFirstFrame.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuViewFirstFrame);
+        ToolTip.SetTip(PART_BtnViewFirstFrame,
+            AppAPIProvider.GetMenuTooltipText(LangId.Menu_MnuViewFirstFrame));
 
-        PART_BtnViewPreviousFrame.VM.Text = nameof(LangId.Menu_MnuViewPreviousFrame);
-        PART_BtnViewPreviousFrame.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuViewPreviousFrame);
+        ToolTip.SetTip(PART_BtnViewPreviousFrame,
+            AppAPIProvider.GetMenuTooltipText(LangId.Menu_MnuViewPreviousFrame));
 
-        PART_BtnToggleAnimation.VM.Text = nameof(LangId.Menu_MnuToggleImageAnimation);
-        PART_BtnToggleAnimation.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuToggleImageAnimation);
+        UpdatePlayButtonTooltip();
 
-        PART_BtnViewNextFrame.VM.Text = nameof(LangId.Menu_MnuViewNextFrame);
-        PART_BtnViewNextFrame.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuViewNextFrame);
+        ToolTip.SetTip(PART_BtnViewNextFrame,
+            AppAPIProvider.GetMenuTooltipText(LangId.Menu_MnuViewNextFrame));
 
-        PART_BtnViewLastFrame.VM.Text = nameof(LangId.Menu_MnuViewLastFrame);
-        PART_BtnViewLastFrame.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuViewLastFrame);
+        ToolTip.SetTip(PART_BtnViewLastFrame,
+            AppAPIProvider.GetMenuTooltipText(LangId.Menu_MnuViewLastFrame));
 
-        PART_BtnExportFrame.VM.Text = nameof(LangId.Menu_MnuExportFrames);
-        PART_BtnExportFrame.VM.HotkeyText
-            = AppAPIProvider.GetMenuHotkeyText(LangId.Menu_MnuExportFrames);
+        ToolTip.SetTip(PART_BtnExportFrame,
+            AppAPIProvider.GetMenuTooltipText(LangId.Menu_MnuExportFrames));
+    }
 
+
+    /// <summary>
+    /// Updates the play button tooltip, which reads as motion playback for a live photo.
+    /// </summary>
+    private void UpdatePlayButtonTooltip()
+    {
+        var textKey = IsLivePhoto ? LangId._PlayMotionVideo : LangId.Menu_MnuToggleImageAnimation;
+
+        ToolTip.SetTip(PART_BtnToggleAnimation,
+            AppAPIProvider.GetMenuTooltipText(textKey, LangId.Menu_MnuToggleImageAnimation));
     }
 
     #endregion // Control Methods

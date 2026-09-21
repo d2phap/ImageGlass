@@ -168,6 +168,21 @@ public partial class PhotoMetadata : PhDisposable
 
     public IImageProfile? RawThumbnail { get; set; } = null;
 
+    /// <summary>
+    /// Size of <see cref="RawThumbnail"/>; <c>0</c> when there is none.
+    /// </summary>
+    public uint PreviewWidth { get; set; } = 0;
+
+    /// <inheritdoc cref="PreviewWidth"/>
+    public uint PreviewHeight { get; set; } = 0;
+
+    /// <summary>
+    /// Whether the embedded preview may be shown in place of the full image at this minimum size.
+    /// </summary>
+    public bool IsEmbeddedPreviewLargeEnough(int minWidth, int minHeight) =>
+        PreviewWidth > 0 && PreviewHeight > 0
+        && PreviewWidth >= minWidth && PreviewHeight >= minHeight;
+
     #endregion // Color information
 
 
@@ -235,6 +250,7 @@ public partial class PhotoMetadata : PhDisposable
         MagickColorProfile = null;
 
         RawThumbnail = null;
+        PreviewWidth = PreviewHeight = 0;
         ExifProfile = null;
         FrameCount = 0;
         Frames.Clear();
@@ -310,10 +326,17 @@ public partial class PhotoMetadata : PhDisposable
         MagickImage? thumbM = null;
 
 
-        // 1. try get from RAW format
-        if (RawThumbnail is not null)
+        // 1. try get from RAW format; a zero size means the metadata ping could not decode the blob
+        if (RawThumbnail is not null && PreviewWidth > 0)
         {
-            thumbM = new MagickImage(RawThumbnail.ToReadOnlySpan());
+            try
+            {
+                thumbM = new MagickImage(RawThumbnail.ToReadOnlySpan());
+            }
+            catch
+            {
+                thumbM = null;
+            }
         }
 
 

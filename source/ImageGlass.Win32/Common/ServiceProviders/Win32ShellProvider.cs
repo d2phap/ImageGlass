@@ -103,9 +103,13 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
         var isFromSavedSearch = _foregroundShellPath.EndsWith(Win32SearchFileExtension, StringComparison.OrdinalIgnoreCase);
         var isFromSameDir = inputImageDirPath.Equals(_foregroundShellPath, StringComparison.OrdinalIgnoreCase);
 
+        // a search result lives only in the shell view, so it is the list source whatever the sort setting says
+        var isShellOnlyList = isFromSearchWindow || isFromSavedSearch;
+
         var useForegroundWindow = _foregroundShell is not null
             && !string.IsNullOrEmpty(Core.InputImagePathFromArgs)
-            && (isFromSearchWindow || isFromSavedSearch || isFromSameDir);
+            // a plain folder is enumerable without the shell, so it follows Explorer only when asked to
+            && (isShellOnlyList || (isFromSameDir && Core.Config.EnableExplorerSortOrder));
 
         return useForegroundWindow;
     }

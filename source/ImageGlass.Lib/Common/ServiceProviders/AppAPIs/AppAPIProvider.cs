@@ -879,11 +879,9 @@ public partial class AppAPIProvider
             await IG_UnloadAsync();
             BHelper.DeleteFile(filePath, moveToRecycleBin);
 
-            // manually update the change because FileWatcher is disabled when IsBusy = true
-            Core.Photos.Remove(Core.Photos.CurrentFilePath);
-            var nextIndex = (int)Math.Min(Core.Photos.Count - 1, Core.Photos.CurrentIndex);
-            var nextPhoto = Core.Photos.Select(nextIndex);
-            _ = App.MainWindow.PART_MainView.ViewPhotoAsync(nextPhoto);
+            // the watcher event may not have arrived yet, so update the list here
+            Core.Photos.Remove(filePath);
+            ViewPhotoAfterCurrentRemoved();
         }
         catch (Exception ex)
         {
@@ -1076,6 +1074,27 @@ public partial class AppAPIProvider
     public void IG_ViewPrevious()
     {
         IG_ViewByStep(-1);
+    }
+
+
+    /// <summary>
+    /// Views the photo taking over from the current one after it was deleted or moved out of the list.
+    /// </summary>
+    public static void ViewPhotoAfterCurrentRemoved()
+    {
+        var canLoopBack = Core.Config.EnableSlideshow
+            ? Core.Config.EnableLoopSlideshow
+            : Core.Config.EnableLoopBackNavigation;
+
+        var photo = Core.Photos.SelectReplacementOfCurrent(canLoopBack);
+
+        // an empty list leaves the slideshow ticking against nothing
+        if (photo is null && Core.Config.EnableSlideshow)
+        {
+            Core.API.IG_ToggleSlideshow(false);
+        }
+
+        _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo);
     }
 
 

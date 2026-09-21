@@ -76,28 +76,28 @@
     {
       "label": "publish-win-x64",
       "type": "shell",
-      "command": "dotnet publish '${workspaceFolder}/ImageGlass.Win32/ImageGlass.Win32.csproj' -c Release -r win-x64 -p:Platform=x64 -o '${workspaceFolder}/__artifacts/publish/win-x64'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Copy-Item -Path '${workspaceFolder}/__assets/__app/*' -Destination '${workspaceFolder}/__artifacts/publish/win-x64' -Recurse -Force",
+      "command": "Remove-Item '${workspaceFolder}/__artifacts/publish/win-x64' -Recurse -Force -ErrorAction SilentlyContinue; dotnet publish '${workspaceFolder}/ImageGlass.Win32/ImageGlass.Win32.csproj' -c Release -r win-x64 -p:Platform=x64 -o '${workspaceFolder}/__artifacts/publish/win-x64'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Copy-Item -Path '${workspaceFolder}/__assets/__app/*' -Destination '${workspaceFolder}/__artifacts/publish/win-x64' -Recurse -Force",
       "problemMatcher": "$msCompile",
       "group": "build"
     },
     {
       "label": "publish-win-arm64",
       "type": "shell",
-      "command": "dotnet publish '${workspaceFolder}/ImageGlass.Win32/ImageGlass.Win32.csproj' -c Release -r win-arm64 -p:Platform=ARM64 -o '${workspaceFolder}/__artifacts/publish/win-arm64'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Copy-Item -Path '${workspaceFolder}/__assets/__app/*' -Destination '${workspaceFolder}/__artifacts/publish/win-arm64' -Recurse -Force",
+      "command": "Remove-Item '${workspaceFolder}/__artifacts/publish/win-arm64' -Recurse -Force -ErrorAction SilentlyContinue; dotnet publish '${workspaceFolder}/ImageGlass.Win32/ImageGlass.Win32.csproj' -c Release -r win-arm64 -p:Platform=ARM64 -o '${workspaceFolder}/__artifacts/publish/win-arm64'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Copy-Item -Path '${workspaceFolder}/__assets/__app/*' -Destination '${workspaceFolder}/__artifacts/publish/win-arm64' -Recurse -Force",
       "problemMatcher": "$msCompile",
       "group": "build"
     },
     {
       "label": "publish-linux-x64",
       "type": "shell",
-      "command": "dotnet publish '${workspaceFolder}/ImageGlass.Linux/ImageGlass.Linux.csproj' -c Release -r linux-x64 -p:Platform=x64 -p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true -o '${workspaceFolder}/__artifacts/publish/linux-x64' --self-contained true && cp -r '${workspaceFolder}/__assets/__app/.' '${workspaceFolder}/__artifacts/publish/linux-x64/'",
+      "command": "rm -rf '${workspaceFolder}/__artifacts/publish/linux-x64' && dotnet publish '${workspaceFolder}/ImageGlass.Linux/ImageGlass.Linux.csproj' -c Release -r linux-x64 -p:Platform=x64 -p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true -o '${workspaceFolder}/__artifacts/publish/linux-x64' --self-contained true && cp -r '${workspaceFolder}/__assets/__app/.' '${workspaceFolder}/__artifacts/publish/linux-x64/'",
       "problemMatcher": "$msCompile",
       "group": "build"
     },
     {
       "label": "publish-mac-arm64",
       "type": "shell",
-      "command": "dotnet publish '${workspaceFolder}/ImageGlass.Mac/ImageGlass.Mac.csproj' -c Release -r osx-arm64 -p:Platform=ARM64 -p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true -o '${workspaceFolder}/__artifacts/publish/osx-arm64' --self-contained true && cp -r '${workspaceFolder}/__assets/__app/.' '${workspaceFolder}/__artifacts/publish/osx-arm64/'",
+      "command": "rm -rf '${workspaceFolder}/__artifacts/publish/osx-arm64' && dotnet publish '${workspaceFolder}/ImageGlass.Mac/ImageGlass.Mac.csproj' -c Release -r osx-arm64 -p:Platform=ARM64 -p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true -o '${workspaceFolder}/__artifacts/publish/osx-arm64' --self-contained true && cp -r '${workspaceFolder}/__assets/__app/.' '${workspaceFolder}/__artifacts/publish/osx-arm64/'",
       "problemMatcher": "$msCompile",
       "group": "build"
     },

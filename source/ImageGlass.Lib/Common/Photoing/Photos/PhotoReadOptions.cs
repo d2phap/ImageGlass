@@ -82,4 +82,17 @@ public record PhotoReadOptions
     public PhotoReadOptions()
     {
     }
+
+
+    /// <summary>
+    /// Builds the options from the current user settings; every decode of a listed photo must use these.
+    /// </summary>
+    public static PhotoReadOptions FromConfig(int frameIndex = 0) => new()
+    {
+        FrameIndex = frameIndex,
+        OnlyLoadRawPreview = Core.Config.EnableOnlyLoadRawPreview,
+        OnlyLoadNonRawPreview = Core.Config.EnableOnlyLoadNonRawPreview,
+        PreviewMinWidth = Core.Config.PreviewMinWidth,
+        PreviewMinHeight = Core.Config.PreviewMinHeight,
+    };
 }

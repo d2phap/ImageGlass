@@ -20,6 +20,7 @@ using ImageGlass.Common;
 using ImageGlass.Common.Types;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -52,6 +53,7 @@ public static class Win32DefaultAppApi
             if (enable)
             {
                 RegisterAppAndExtensions(root, extensions);
+                PurgeShadowingPerUserRegistration(scope, extensions);
             }
             else
             {
@@ -66,10 +68,39 @@ public static class Win32DefaultAppApi
             if (Win32AppIdentity.IsPackaged || IsProcessElevated()) throw;
 
             // per-machine (HKLM) writes need admin; relaunch elevated to finish the job
-            await RelaunchElevatedAsync(extensions, enable);
+            var exitCode = await RelaunchElevatedAsync(extensions, enable);
+
+            // over-the-shoulder UAC gives the child another account's hive, not the shadowing one
+            if (enable && exitCode == (int)IgExitCode.Done)
+            {
+                PurgeShadowingPerUserRegistration(scope, extensions);
+                NotifyShellAssocChanged();
+            }
         }
 
         return scope;
+    }
+
+
+    /// <summary>
+    /// Drops a per-user registration, which outranks HKLM and keeps its own (dead) icon path.
+    /// </summary>
+    private static void PurgeShadowingPerUserRegistration(DefaultAppScope scope, string[] extensions)
+    {
+        if (scope != DefaultAppScope.LocalMachine) return;
+
+        try
+        {
+            var root = Registry.CurrentUser;
+
+            // its own recorded list too, for formats this version no longer registers
+            var stale = new HashSet<string>(GetRegisteredExtensions(root), StringComparer.OrdinalIgnoreCase);
+            foreach (var ext in extensions) stale.Add(ext);
+            if (stale.Count == 0) return;
+
+            UnregisterAppAndExtensions(root, [.. stale]);
+        }
+        catch { }
     }
 
 
@@ -125,7 +156,7 @@ public static class Win32DefaultAppApi
 
 
     /// <summary>
-    /// Rewrites a registration whose launch path an app update deleted (an MSIX dir is versioned).
+    /// Rewrites a registration whose launch or icon path an app update deleted (an MSIX dir is versioned).
     /// </summary>
     public static void RepairDefaultViewerRegistration()
     {
@@ -141,8 +172,15 @@ public static class Win32DefaultAppApi
             var extensions = GetRegisteredExtensions(root);
             if (extensions.Length == 0) return;
 
-            // only a dead path is ours to fix, or a portable copy would steal a live registration
-            if (IsRegisteredCommandAlive(root, extensions[0])) return;
+            var registeredExe = GetRegisteredCommandExe(root, extensions[0]);
+            var isCommandAlive = registeredExe.Length > 0 && File.Exists(registeredExe);
+
+            if (isCommandAlive)
+            {
+                // only our own live registration is ours to rewrite for a dead icon
+                var isOurCommand = registeredExe.Equals(LaunchCommandExe, StringComparison.OrdinalIgnoreCase);
+                if (!isOurCommand || IsRegisteredIconAlive(root, extensions)) return;
+            }
 
             RefreshRegisteredPaths(root, extensions);
             NotifyShellAssocChanged();
@@ -185,19 +223,39 @@ public static class Win32DefaultAppApi
 
 
     /// <summary>
-    /// Whether the exe recorded in an extension's open command still exists.
+    /// Gets the exe recorded in an extension's registered open command.
     /// </summary>
-    private static bool IsRegisteredCommandAlive(RegistryKey root, string ext)
+    private static string GetRegisteredCommandExe(RegistryKey root, string ext)
     {
         var extNoDot = ext.TrimStart('.').ToUpperInvariant();
         var progId = GetProgId(extNoDot);
 
         using var cmdKey = root.OpenSubKey($@"Software\Classes\{progId}\shell\open\command");
-        if (cmdKey?.GetValue("") is not string command) return false;
+        if (cmdKey?.GetValue("") is not string command) return string.Empty;
 
-        var exePath = ExtractCommandExePath(command);
+        return ExtractCommandExePath(command);
+    }
 
-        return exePath.Length > 0 && File.Exists(exePath);
+
+    /// <summary>
+    /// Whether the first registered <c>DefaultIcon</c> still resolves to a file on disk.
+    /// </summary>
+    private static bool IsRegisteredIconAlive(RegistryKey root, string[] extensions)
+    {
+        foreach (var ext in extensions)
+        {
+            var extNoDot = ext.TrimStart('.').ToUpperInvariant();
+            var progId = GetProgId(extNoDot);
+
+            using var iconKey = root.OpenSubKey($@"Software\Classes\{progId}\DefaultIcon");
+
+            // no DefaultIcon falls back to the app icon, never to blank, so it is not a defect
+            if (iconKey?.GetValue("") is not string iconPath || iconPath.Length == 0) continue;
+
+            return File.Exists(iconPath);
+        }
+
+        return true;
     }
 
 
@@ -223,6 +281,11 @@ public static class Win32DefaultAppApi
         var capabilitiesPath = $@"Software\{BHelper.AppName}\Capabilities";
         var classesKey = root.OpenSubKey(@"Software\Classes", writable: true);
 
+        // 0. formats an earlier registration claimed but this one drops: nothing else rewrites them
+        var dropped = GetRegisteredExtensions(root).Except(extensions, StringComparer.OrdinalIgnoreCase).ToArray();
+        UnregisterExtensions(classesKey, dropped);
+
+
         // 1. register the application:
         // <root>\Software\RegisteredApplications
         using (var key = root.OpenSubKey(@"Software\RegisteredApplications", writable: true))
@@ -243,6 +306,10 @@ public static class Win32DefaultAppApi
             // register file type associations:
             // HKCU\Software\ImageGlass\Capabilities\FileAssociations
             using var faKey = key.CreateSubKey("FileAssociations", writable: true);
+
+            // an entry naming a ProgId that no longer exists invalidates the whole Capabilities key
+            foreach (var ext in dropped) faKey.DeleteValue(ext, throwOnMissingValue: false);
+
             foreach (var ext in extensions)
             {
                 var extNoDot = ext.TrimStart('.').ToUpperInvariant();
@@ -394,6 +461,15 @@ public static class Win32DefaultAppApi
         // 3. delete ProgIds and OpenWithProgids entries:
         // <root>\Software\Classes\...
         using var classesKey = root.OpenSubKey(@"Software\Classes", writable: true);
+        UnregisterExtensions(classesKey, extensions);
+    }
+
+
+    /// <summary>
+    /// Removes our ProgId, extension default and <c>OpenWithProgids</c> entry for each extension.
+    /// </summary>
+    private static void UnregisterExtensions(RegistryKey? classesKey, IEnumerable<string> extensions)
+    {
         if (classesKey is null) return;
 
         foreach (var ext in extensions)
@@ -436,10 +512,10 @@ public static class Win32DefaultAppApi
 
 
     /// <summary>
-    /// Re-launches the current process with admin elevation to perform
-    /// the file association change, then waits for it to finish.
+    /// Re-launches the current process with admin elevation to perform the file association change,
+    /// then waits for it to finish and returns its <see cref="IgExitCode"/>.
     /// </summary>
-    private static async Task RelaunchElevatedAsync(string[] extensions, bool enable)
+    private static async Task<int> RelaunchElevatedAsync(string[] extensions, bool enable)
     {
         var cmd = enable
             ? AppCmds.SET_DEFAULT_PHOTO_VIEWER
@@ -447,7 +523,7 @@ public static class Win32DefaultAppApi
         var extArg = string.Join(";", extensions);
 
         // reuse the shared elevating launcher (UAC prompt + cancellation handled there)
-        await BHelper.RunExeAsync(BHelper.AppExePath, [cmd, extArg], asAdmin: true, waitForExit: true);
+        return await BHelper.RunExeAsync(BHelper.AppExePath, [cmd, extArg], asAdmin: true, waitForExit: true);
     }
 
 }

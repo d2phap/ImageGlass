@@ -279,6 +279,9 @@ public partial class PhotoManager
                     continue;
                 }
 
+                // decode under the same policy the viewer uses, or a cache hit later serves it wrong
+                photo.ReadOptions = PhotoReadOptions.FromConfig();
+
                 if (!isSlideshow)
                 {
                     if (maxFileSizeBytes > 0 && !SatisfiesFileSizeLimit(photo.FilePath, maxFileSizeBytes))
@@ -292,7 +295,9 @@ public partial class PhotoManager
                         await photo.LoadMetadataAsync(useCache: true, token: token);
                         if (token.IsCancellationRequested) return;
 
-                        if (photo.Metadata.Width > maxDimension || photo.Metadata.Height > maxDimension)
+                        // cap what the decode will produce, not the sensor it came from
+                        var (decodeW, decodeH) = photo.EstimatedDecodeSize;
+                        if (decodeW > maxDimension || decodeH > maxDimension)
                         {
                             continue;
                         }
@@ -452,14 +457,13 @@ public partial class PhotoManager
     /// </summary>
     private static long EstimatePhotoMemoryFromMetadata(Photo photo)
     {
-        var w = photo.Metadata.Width;
-        var h = photo.Metadata.Height;
+        var (w, h) = photo.EstimatedDecodeSize;
         if (w == 0 || h == 0) return 8L * 1024 * 1024; // fallback estimate: 8 MB
 
-        // a floor, not the truth: Magick's HDR path really lands on RgbaF32, corrected after the decode
-        var bytesPerPixel = photo.Metadata.BitsPerChannel > 8 ? 8 : 4;
+        // an embedded preview is 8-bit whatever the sensor depth
+        var isDeep = !photo.WillDecodeEmbeddedPreview && photo.Metadata.BitsPerChannel > 8;
 
-        return (long)w * h * bytesPerPixel;
+        return (long)w * h * (isDeep ? 8 : 4);
     }
 
 

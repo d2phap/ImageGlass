@@ -123,6 +123,39 @@ public partial class PhotoManager : PhDisposable
     }
 
 
+    /// <summary>
+    /// Selects the photo that takes over from the current one after it left the list.
+    /// </summary>
+    public Photo? SelectReplacementOfCurrent(bool loopBackNavigation)
+    {
+        int targetIndex;
+
+        lock (_lock)
+        {
+            if (Count == 0)
+            {
+                _currentIndex = -1;
+                return null;
+            }
+
+            // the removal shifted the next photo into the slot the current one held
+            targetIndex = CurrentIndex;
+
+            if (targetIndex >= Count)
+            {
+                // the current photo was the last one: loop to the first, else step back
+                targetIndex = loopBackNavigation ? 0 : (int)Count - 1;
+            }
+            else if (targetIndex < 0)
+            {
+                targetIndex = 0;
+            }
+        }
+
+        return Select(targetIndex);
+    }
+
+
 }
 
 

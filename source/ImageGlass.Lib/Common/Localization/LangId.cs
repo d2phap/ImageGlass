@@ -130,6 +130,7 @@ public enum LangId
     _SwitchedToNextFolder,
     _SwitchedToPreviousFolder,
     _ClipboardImage,
+    _PlayMotionVideo,
 
     // about
     _Slogan,
@@ -384,6 +385,7 @@ public enum LangId
     Menu_MnuLosslessCompression_Error,
     #endregion // Main Menu > Tools
 
+    Menu_MnuPlugins,
     Menu_MnuSettings,
 
     #region Main Menu > Help

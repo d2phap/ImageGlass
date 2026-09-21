@@ -42,4 +42,14 @@ public sealed class CodecSelectionContext
     /// Gets or sets a value indicating whether a non-raw embedded preview should be used instead of the full image.
     /// </summary>
     public bool LoadOtherThumbnailOnly { get; init; }
+
+    /// <summary>
+    /// Gets or sets the minimum width an embedded preview must have to be used instead of the full image.
+    /// </summary>
+    public int PreviewMinWidth { get; init; }
+
+    /// <summary>
+    /// Gets or sets the minimum height an embedded preview must have to be used instead of the full image.
+    /// </summary>
+    public int PreviewMinHeight { get; init; }
 }

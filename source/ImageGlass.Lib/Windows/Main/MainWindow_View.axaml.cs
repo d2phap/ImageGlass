@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -28,6 +29,7 @@ using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.FileSearchService;
 using ImageGlass.Common.Types;
+using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using ImageGlass.UI.Viewer.ZoomAndPan;
@@ -97,6 +99,12 @@ public partial class MainWindowView : PhControl
         PART_Viewer.ViewerMouseWheel += PART_Viewer_ViewerMouseWheel;
         PART_Viewer.ContextMenu?.Opened += PART_Viewer_ContextMenu_Opened;
 
+        // motion/live photo overlay button
+        PART_ToolHost.PropertyChanged += PART_ToolHost_PropertyChanged;
+        PART_BtnMotionVideo.Click += PART_BtnMotionVideo_Click;
+        UpdateMotionButtonTooltip();
+        UpdateMotionButtonState();
+
         // hook viewer events for external tool broadcasting
         PART_Viewer.PhotoLoading += Core.Viewer_PhotoLoadingForPlugins;
         PART_Viewer.ViewerPointerMoved += Core.Viewer_PointerMovedForPlugins;
@@ -130,6 +138,10 @@ public partial class MainWindowView : PhControl
         PART_Viewer.ViewerMouseWheel -= PART_Viewer_ViewerMouseWheel;
         PART_Viewer.ContextMenu?.Opened -= PART_Viewer_ContextMenu_Opened;
 
+        // motion/live photo overlay button
+        PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
+        PART_BtnMotionVideo.Click -= PART_BtnMotionVideo_Click;
+
         // unhook viewer events for external tools
         PART_Viewer.PhotoLoading -= Core.Viewer_PhotoLoadingForPlugins;
         PART_Viewer.ViewerPointerMoved -= Core.Viewer_PointerMovedForPlugins;
@@ -144,6 +156,14 @@ public partial class MainWindowView : PhControl
         base.OnSizeChanged(e);
 
         UpdateGalleryWidth();
+    }
+
+
+    protected override void OnIgLanguageChanged()
+    {
+        base.OnIgLanguageChanged();
+
+        UpdateMotionButtonTooltip();
     }
 
 
@@ -200,11 +220,8 @@ public partial class MainWindowView : PhControl
 
 
         // 3. load single file path
-        // 3.1 get foreground shell
-        if (Core.Config.EnableExplorerSortOrder)
-        {
-            Core.ShellProvider?.ForegroundShell = Core.ShellProvider?.GetForegroundWindowView();
-        }
+        // 3.1 get foreground shell; always captured, since a search window is the only source of its own result list
+        Core.ShellProvider?.ForegroundShell = Core.ShellProvider?.GetForegroundWindowView();
         Core.UpdateInitImagePath(paths[0]);
 
         // 3.2 open the path
@@ -274,19 +291,7 @@ public partial class MainWindowView : PhControl
         // if the currently viewed photo was deleted
         if (!string.IsNullOrEmpty(e.AffectedCurrentFilePath))
         {
-            // navigate to the photo at the same index (or the last valid one)
-            if (Core.Photos.Count > 0)
-            {
-                if (Core.Photos.GetByStep(0, Core.Config.EnableLoopBackNavigation, out var photo))
-                {
-                    _ = ViewPhotoAsync(photo);
-                }
-            }
-            else
-            {
-                // no photos left – clear the viewer
-                _ = ViewPhotoAsync(null);
-            }
+            AppAPIProvider.ViewPhotoAfterCurrentRemoved();
         }
         else
         {
@@ -402,6 +407,23 @@ public partial class MainWindowView : PhControl
             // clear in-app message
             _ = PART_Message.ShowAsync(null);
         }
+
+        UpdateMotionButtonState();
+    }
+
+
+    private void PART_ToolHost_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        if (e.Property == ToolHostControl.PluginContentProperty)
+        {
+            UpdateMotionButtonState();
+        }
+    }
+
+
+    private async void PART_BtnMotionVideo_Click(object? sender, RoutedEventArgs e)
+    {
+        _ = await Core.API.RunApiAsync(API.IG_ToggleImageAnimation);
     }
 
 
@@ -930,19 +952,23 @@ public partial class MainWindowView : PhControl
             Core.Photos.InitPhoto = Core.Photos.Select(lastIndex);
             _ = ViewPhotoAsync(Core.Photos.InitPhoto, true, false);
         }
-        // if we haven't found current index for the init photo yet
-        else if (Core.Photos.InitPhoto is not null && Core.Photos.CurrentIndex == -1)
+        // the init photo owns the selection for every batch, incl. the later sub-dir ones
+        else if (Core.Photos.InitPhoto is not null)
         {
-            // find index of the init photo and select it
-            _ = Core.Photos.Select(Core.Photos.InitPhoto.FilePath);
-
-            // save the init photo to the list
-            var initIndex = Core.Photos.CurrentIndex;
-            if (initIndex >= 0 && initIndex < Core.Photos.Items.Count)
+            // if we haven't found current index for the init photo yet
+            if (Core.Photos.CurrentIndex == -1)
             {
-                Core.Photos.Items[initIndex]?.Dispose();
-                Core.Photos.Items[initIndex] = Core.Photos.InitPhoto;
-                Core.Photos.Items[initIndex].IsCurrent = true;
+                // find index of the init photo and select it
+                _ = Core.Photos.Select(Core.Photos.InitPhoto.FilePath);
+
+                // save the init photo to the list
+                var initIndex = Core.Photos.CurrentIndex;
+                if (initIndex >= 0 && initIndex < Core.Photos.Items.Count)
+                {
+                    Core.Photos.Items[initIndex]?.Dispose();
+                    Core.Photos.Items[initIndex] = Core.Photos.InitPhoto;
+                    Core.Photos.Items[initIndex].IsCurrent = true;
+                }
             }
         }
         // display the first file in a folder
@@ -984,14 +1010,7 @@ public partial class MainWindowView : PhControl
         // set read options for photo
         if (photo is not null)
         {
-            photo.ReadOptions = new()
-            {
-                FrameIndex = 0,
-                OnlyLoadRawPreview = Core.Config.EnableOnlyLoadRawPreview,
-                OnlyLoadNonRawPreview = Core.Config.EnableOnlyLoadNonRawPreview,
-                PreviewMinWidth = Core.Config.PreviewMinWidth,
-                PreviewMinHeight = Core.Config.PreviewMinHeight,
-            };
+            photo.ReadOptions = PhotoReadOptions.FromConfig();
         }
 
         Dispatcher.UIThread.Post(async () =>
@@ -1252,6 +1271,29 @@ public partial class MainWindowView : PhControl
             PART_Layout.ColumnDefinitions[galleryResizerColIndex].Width = new(5);
             PART_GalleryResizer.IsVisible = true;
         }
+    }
+
+
+    /// <summary>
+    /// Shows the motion-video button for a live photo while the Frame nav tool is closed.
+    /// </summary>
+    private void UpdateMotionButtonState()
+    {
+        var photo = PART_Viewer.Photo;
+        var isLivePhoto = photo?.Error is null && (photo?.Metadata?.IsLivePhoto ?? false);
+        var isFrameNavOpen = PART_ToolHost.Tool?.ToolId == FrameNavToolControl.TOOL_ID;
+
+        PART_MotionButtonHost.IsVisible = isLivePhoto && !isFrameNavOpen;
+    }
+
+
+    /// <summary>
+    /// Updates the motion-video button tooltip.
+    /// </summary>
+    private void UpdateMotionButtonTooltip()
+    {
+        ToolTip.SetTip(PART_BtnMotionVideo, AppAPIProvider.GetMenuTooltipText(
+            LangId._PlayMotionVideo, LangId.Menu_MnuToggleImageAnimation));
     }
 
 

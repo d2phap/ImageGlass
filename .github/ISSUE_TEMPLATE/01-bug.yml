@@ -5,15 +5,13 @@ body:
 - type: markdown
   attributes:
     value: |
-      Before you fill in this template,
-      **please search** open/closed issues and discussions before submitting.
-      It might be already known and fixed before.
+      Before you fill in this template, **please search** open/closed issues and discussions before submitting. It might be already known and fixed before.
 
 - type: input
   id: os-version
   attributes:
-    label: Windows OS version
-    description: e.g. Windows 11 24H2
+    label: OS version
+    description: e.g. Windows 11 24H2, macOS 26,...
   validations:
     required: true
 
@@ -22,7 +20,7 @@ body:
   attributes:
     label: ImageGlass version
     description: |
-      - ✅ Do provide full version number found in ImageGlass About dialog (press F1). E.g. v9.3.1.518
+      - ✅ Do provide full version number found in ImageGlass About dialog (press F1). E.g. 10.0.6.906
       - ❌ Do not use "latest"
   validations:
     required: true
@@ -32,11 +30,24 @@ body:
   attributes:
     label: ImageGlass release
     options:
-      - Classic
-      - Store
-    description: Select "Store" if you installed ImageGlass from [MS Store](https://apps.microsoft.com/detail/9N33VZK3C7TH?launch=true&cid=ig_github_bug_report&mode=full).
+      - MSIX
+      - MSI
+      - ZIP
+      - Microsoft Store
+      - DMG
+      - Flatpak
+      - AppImage
+      - Other
+    description: Select "Microsoft Store" if you installed ImageGlass from [Microsoft Store](https://apps.microsoft.com/detail/9N33VZK3C7TH?launch=true&cid=ig_github_bug_report&mode=full).
   validations:
     required: true
+
+- type: checkboxes
+  id: ig-edition
+  attributes:
+    label: Are you using Pro edition?
+    options:
+      - label: "YES – ⭐"
 
 - type: textarea
   id: reproduction-steps

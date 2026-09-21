@@ -112,6 +112,8 @@ The `develop` branch contains the latest commits, while the `prod` branch holds 
 **Version 10**: Located in `source` folder
 - Visual Studio 2026 for Windows build
 - VS Code for macOS, Linux build
+- Run a task from VS Code to build, publish, or pack the app
+  + Note: for debug builds, copy the contents of `source/__assets/__app/` into the build output folder, beside the ImageGlass executable, before launching it.
 
 **Version 9**: Located in `v9` folder
 - Visual Studio 2026 on Windows 11

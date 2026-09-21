@@ -32,9 +32,11 @@ namespace ImageGlass.Common.ServiceProviders.FileSearchService;
 /// </summary>
 /// <param name="orderByAsc">String order mode</param>
 /// <param name="compareMode">String comparison mode</param>
+/// <param name="compareExtensionLast">Whether the inputs are file names whose extension is only a tie-breaker</param>
 public sealed class StringNaturalComparer(
     bool orderByAsc = true,
-    StringComparison compareMode = StringComparison.Ordinal) : IComparer<string?>, IComparer<ReadOnlyMemory<char>>
+    StringComparison compareMode = StringComparison.Ordinal,
+    bool compareExtensionLast = false) : IComparer<string?>, IComparer<ReadOnlyMemory<char>>
 {
     /// <summary>
     /// Indicates whether the ordering should be in ascending order.
@@ -45,6 +47,11 @@ public sealed class StringNaturalComparer(
     /// Defines the mode of string comparison used.
     /// </summary>
     public StringComparison CompareMode { get; set; } = compareMode;
+
+    /// <summary>
+    /// Compares the inputs as file names, where the extension only breaks a tie on the base name.
+    /// </summary>
+    public bool CompareExtensionLast { get; set; } = compareExtensionLast;
 
 
     /// <summary>
@@ -59,13 +66,13 @@ public sealed class StringNaturalComparer(
             if (x is null) return -1;
             if (y is null) return 1;
 
-            return Compare(x.AsSpan(), y.AsSpan(), CompareMode);
+            return Compare__(x.AsSpan(), y.AsSpan());
         }
 
         if (x is null) return 1;
         if (y is null) return -1;
 
-        return Compare(y.AsSpan(), x.AsSpan(), CompareMode);
+        return Compare__(y.AsSpan(), x.AsSpan());
     }
 
 
@@ -76,10 +83,10 @@ public sealed class StringNaturalComparer(
     {
         if (OrderByAsc)
         {
-            return Compare(x, y, CompareMode);
+            return Compare__(x, y);
         }
 
-        return Compare(y, x, CompareMode);
+        return Compare__(y, x);
     }
 
 
@@ -90,10 +97,18 @@ public sealed class StringNaturalComparer(
     {
         if (OrderByAsc)
         {
-            return Compare(x.Span, y.Span, CompareMode);
+            return Compare__(x.Span, y.Span);
         }
 
-        return Compare(y.Span, x.Span, CompareMode);
+        return Compare__(y.Span, x.Span);
+    }
+
+
+    private int Compare__(ReadOnlySpan<char> x, ReadOnlySpan<char> y)
+    {
+        return CompareExtensionLast
+            ? CompareFileName(x, y, CompareMode)
+            : Compare(x, y, CompareMode);
     }
 
 
@@ -134,6 +149,48 @@ public sealed class StringNaturalComparer(
         }
 
         return x.Length.CompareTo(y.Length);
+    }
+
+
+    /// <summary>
+    /// Compares two file names, using the extension only to break a tie on the base name.
+    /// </summary>
+    public static int CompareFileName(ReadOnlySpan<char> x, ReadOnlySpan<char> y, StringComparison stringComparison)
+    {
+        var xDotIndex = FindExtensionSeparator(x);
+        var yDotIndex = FindExtensionSeparator(y);
+        var xBaseLength = xDotIndex < 0 ? x.Length : xDotIndex;
+        var yBaseLength = yDotIndex < 0 ? y.Length : yDotIndex;
+
+        var compareResult = Compare(x.Slice(0, xBaseLength), y.Slice(0, yBaseLength), stringComparison);
+        if (compareResult != 0 || (xDotIndex < 0 && yDotIndex < 0))
+        {
+            return compareResult;
+        }
+
+        return Compare(x.Slice(xBaseLength), y.Slice(yBaseLength), stringComparison);
+    }
+
+
+    /// <summary>
+    /// Finds the index of the dot that starts the extension, or <c>-1</c> if there is none.
+    /// </summary>
+    private static int FindExtensionSeparator(ReadOnlySpan<char> fileName)
+    {
+        // index 0 is excluded so a leading dot stays part of the name of a hidden file
+        for (var i = fileName.Length - 1; i > 0; i--)
+        {
+            if (fileName[i] != '.') continue;
+
+            // a dot between two digits belongs to a decimal number, not to the extension
+            if (char.IsAsciiDigit(fileName[i - 1])
+                && i + 1 < fileName.Length
+                && char.IsAsciiDigit(fileName[i + 1])) continue;
+
+            return i;
+        }
+
+        return -1;
     }
 
 

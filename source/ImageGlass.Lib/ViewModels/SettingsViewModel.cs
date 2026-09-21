@@ -139,9 +139,11 @@ public sealed class SettingsViewModel : PhReactive
             Core.UpdateDestColorProfile();
         }
 
-        // EnableVectorRenderer flips which codec decodes SVG (vector Svg.Skia vs raster Magick);
-        // drop the sticky per-extension selection cache so the reload re-promotes the eligible codec.
-        if (changedIds.Contains(ConfigId.EnableVectorRenderer))
+        // these flip which codec decodes an extension; drop the sticky per-extension selection cache
+        if (changedIds.Any(static id => id
+            is ConfigId.EnableVectorRenderer
+            or ConfigId.EnableOnlyLoadRawPreview
+            or ConfigId.EnableOnlyLoadNonRawPreview))
         {
             Core.CodecRegistry.InvalidateSelectionCaches();
         }

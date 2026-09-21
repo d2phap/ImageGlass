@@ -134,11 +134,8 @@ public partial class App : Application
             // set shutdown mode
             desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
 
-            // get foreground shell
-            if (Core.Config.EnableExplorerSortOrder)
-            {
-                Core.ShellProvider?.ForegroundShell = Core.ShellProvider.GetForegroundWindowView();
-            }
+            // get foreground shell; always captured, since a search window is the only source of its own result list
+            Core.ShellProvider?.ForegroundShell = Core.ShellProvider.GetForegroundWindowView();
 
             // set init image path
             Core.UpdateInitImagePath();

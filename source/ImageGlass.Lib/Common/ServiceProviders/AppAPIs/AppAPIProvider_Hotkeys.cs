@@ -177,7 +177,8 @@ public partial class AppAPIProvider
 
 
         // Settings
-        new(LangId.Menu_MnuSettings,            API.IG_OpenSettings,    Hotkey.Ctrl, Key.OemComma),
+        new(LangId.Menu_MnuPlugins,             API.IG_OpenSettings, nameof(SettingsNavId.Plugins)),
+        new(LangId.Menu_MnuSettings,            API.IG_OpenSettings,                                    Hotkey.Ctrl, Key.OemComma),
 
 
         // Help
@@ -512,6 +513,26 @@ public partial class AppAPIProvider
 
         var hotkeyText = String.Join(", ", action.Hotkeys);
         return hotkeyText;
+    }
+
+
+    /// <summary>
+    /// Gets the localized menu text with its hotkey appended, for use as a button tooltip.
+    /// </summary>
+    public static string GetMenuTooltipText(LangId? langKey)
+        => GetMenuTooltipText(langKey, langKey);
+
+
+    /// <summary>
+    /// Gets <paramref name="textKey"/>'s text with <paramref name="hotkeyKey"/>'s hotkey appended,
+    /// for a button that runs a menu action under its own label.
+    /// </summary>
+    public static string GetMenuTooltipText(LangId? textKey, LangId? hotkeyKey)
+    {
+        var text = Core.Lang[textKey];
+        var hotkeyText = GetMenuHotkeyText(hotkeyKey);
+
+        return string.IsNullOrEmpty(hotkeyText) ? text : $"{text} ({hotkeyText})";
     }
 
 

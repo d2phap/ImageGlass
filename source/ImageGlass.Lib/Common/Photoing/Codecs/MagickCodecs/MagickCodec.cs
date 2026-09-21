@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Cysharp.Collections;
+using ImageGlass.Common.Loggers;
 using ImageMagick;
 using ImageMagick.Formats;
 using SkiaSharp;
@@ -370,6 +371,7 @@ public static partial class MagickCodec
 
                 // get RAW thumbnail
                 meta.RawThumbnail = imgC[frameIndex].GetProfile("dng:thumbnail");
+                ReadRawThumbnailSize__(meta);
             }
             catch { }
 
@@ -551,24 +553,25 @@ public static partial class MagickCodec
         {
             try
             {
-                // try to get thumbnail
-                if (meta.RawThumbnail != null)
+                // the size came from the metadata ping, so no Ping-then-Read on this instance
+                if (meta.RawThumbnail != null
+                    && meta.IsEmbeddedPreviewLargeEnough(options.PreviewMinWidth, options.PreviewMinHeight))
                 {
-                    var thumbSpan = meta.RawThumbnail.ToReadOnlySpan();
-
-                    imgM.Dispose();
-                    imgM.Ping(thumbSpan);
-
-                    // check min size
-                    if (imgM.Width > options.PreviewMinWidth
-                        && imgM.Height > options.PreviewMinHeight)
-                    {
-                        imgM.Read(thumbSpan, settings);
-                        hasRequestedThumbnail = true;
-                    }
+                    imgM.Read(meta.RawThumbnail.ToReadOnlySpan(), GetPreviewReadSettings__(options, settings));
+                    hasRequestedThumbnail = true;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                PhotoTrace.Mark("decode:raw-preview-failed", meta.FilePath, ex.Message);
+            }
+
+            if (!hasRequestedThumbnail)
+            {
+                PhotoTrace.Mark("decode:raw-preview-rejected", meta.FilePath,
+                    $"preview={meta.PreviewWidth}x{meta.PreviewHeight}, "
+                    + $"min={options.PreviewMinWidth}x{options.PreviewMinHeight} -> full decode");
+            }
         }
 
 
