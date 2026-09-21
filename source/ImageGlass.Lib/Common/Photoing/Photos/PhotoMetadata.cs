@@ -366,8 +366,9 @@ public partial class PhotoMetadata : PhDisposable
     {
         if (!IsLivePhoto || EmbeddedVideoOffsetFromEnd == 0) return;
 
-        var videoPath = await Task.Run(() => LivePhotoDetector.ExtractEmbeddedVideoAsync(FilePath, EmbeddedVideoOffsetFromEnd))
-                .ConfigureAwait(false);
+        var videoPath = await Task
+            .Run(() => LivePhotoDetector.ExtractEmbeddedVideoAsync(FilePath, EmbeddedVideoOffsetFromEnd))
+            .ConfigureAwait(false);
 
         if (string.IsNullOrEmpty(videoPath)) return;
 

@@ -136,7 +136,7 @@ public static class LivePhotoDetector
 
     /// <summary>
     /// Extracts the embedded video to a temp .mp4 file.
-    /// Returns the temp file path, or <c>null</c> on failure.
+    /// Returns its real platform path for handing to an external player, or <c>null</c> on failure.
     /// </summary>
     public static async Task<string?> ExtractEmbeddedVideoAsync(
         string imagePath, long offsetFromEnd, CancellationToken ct = default)
@@ -189,8 +189,9 @@ public static class LivePhotoDetector
                 }
             }
 
+            // cleanup deletes through the path we wrote; the caller gets the form an external player sees
             RegisterTempFile(tempPath);
-            return tempPath;
+            return BHelper.GetRealPlatformPath(tempPath);
         }
         catch (OperationCanceledException)
         {
