@@ -294,19 +294,7 @@ public partial class MainWindowView : PhControl
         // if the currently viewed photo was deleted
         if (!string.IsNullOrEmpty(e.AffectedCurrentFilePath))
         {
-            // navigate to the photo at the same index (or the last valid one)
-            if (Core.Photos.Count > 0)
-            {
-                if (Core.Photos.GetByStep(0, Core.Config.EnableLoopBackNavigation, out var photo))
-                {
-                    _ = ViewPhotoAsync(photo);
-                }
-            }
-            else
-            {
-                // no photos left – clear the viewer
-                _ = ViewPhotoAsync(null);
-            }
+            AppAPIProvider.ViewPhotoAfterCurrentRemoved();
         }
         else
         {

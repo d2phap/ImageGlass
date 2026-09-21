@@ -477,19 +477,54 @@ public partial class PhotoManager
 
 
             string currentFilePath;
+            int currentIndex;
             lock (_lock)
             {
+                currentIndex = CurrentIndex;
                 currentFilePath = CurrentFilePath;
             }
 
             // check if the currently viewed photo was deleted
-            var currentWasDeleted = deletedList.Contains(currentFilePath, StringComparer.OrdinalIgnoreCase);
+            var currentWasDeleted = deletedSet.Contains(currentFilePath);
             var affectedCurrentFilePath = currentWasDeleted ? currentFilePath : null;
 
+            // deletions ahead of the current photo shift the slot its successor lands in
+            var deletedBeforeCurrent = 0;
+            if (currentWasDeleted)
+            {
+                foreach (var filePath in deletedList)
+                {
+                    var index = IndexOf(filePath);
+                    if (index >= 0 && index < currentIndex) deletedBeforeCurrent++;
+                }
+            }
+
             // remove from list
+            var removedAny = false;
             foreach (var filePath in deletedList)
             {
+                if (IndexOf(filePath) < 0) continue;
+
                 Remove(filePath);
+                removedAny = true;
+            }
+
+            if (removedAny)
+            {
+                // Remove() never touches the selection, so re-anchor it: the surviving current photo's
+                // new index, else the slot its successor shifted into (Count when it had none)
+                lock (_lock)
+                {
+                    _currentIndex = currentWasDeleted
+                        ? Math.Min(currentIndex - deletedBeforeCurrent, (int)Count)
+                        : IndexOf(currentFilePath);
+                }
+
+                // removals shifted indexes, so cache index tracking no longer maps to the right photos
+                lock (_cacheLock)
+                {
+                    _cachedIndexes.Clear();
+                }
             }
 
             FileWatcherChanged?.Invoke(this, new FileWatcherChangedEventArgs(
