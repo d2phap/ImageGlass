@@ -197,7 +197,7 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     public void ShowOpenWith(string filePath)
     {
         // Uses the system shell32.dll 'OpenAs_RunDLL' entry point
-        var args = $"shell32.dll,OpenAs_RunDLL {filePath}";
+        var args = $"shell32.dll,OpenAs_RunDLL {GetActualPath(filePath)}";
 
         _ = Process.Start(new ProcessStartInfo
         {
@@ -231,7 +231,7 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     /// </summary>
     public void SetWallpaper(string filePath)
     {
-        Win32DesktopApi.SetWallpaper(filePath, WallpaperStyle.Current);
+        Win32DesktopApi.SetWallpaper(GetActualPath(filePath), WallpaperStyle.Current);
     }
 
 
@@ -250,6 +250,8 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     /// </summary>
     public async Task OpenDefaultEditingAppAsync(string filePath, Action? callbackFn = null)
     {
+        filePath = GetActualPath(filePath);
+
         #region Windows 11
         if (Environment.OSVersion.Version.Major == 10
             && Environment.OSVersion.Version.Build >= 22000)
