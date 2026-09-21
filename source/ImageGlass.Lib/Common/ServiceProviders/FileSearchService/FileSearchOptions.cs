@@ -64,12 +64,13 @@ public class FileSearchOptions
     public bool IncludeHidden { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets option to use the sort order from explorer.
+    /// Gets, sets option to keep the order of the shell view instead of applying <see cref="OrderBy"/>.
     /// </summary>
     public bool UseExplorerSortOrder { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets the shell object of the foreground window.
+    /// Gets, sets the shell object of the foreground window, used as the file list source
+    /// (a Windows Search result has no other one) regardless of <see cref="UseExplorerSortOrder"/>.
     /// </summary>
     public object? ForegroundShell { get; set; } = null;
 

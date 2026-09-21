@@ -35,9 +35,7 @@ public partial class Win32FileSearchProvider : FileSearchProvider
 {
 
     /// <summary>
-    /// Searches files from the provided directories.
-    /// If <see cref="FileSearchOptions.UseExplorerSortOrder"/> is <c>true</c>,
-    /// it follows there steps:
+    /// Searches files from the provided directories, following these steps:
     /// 
     /// <list type="number">
     /// <item>
@@ -45,13 +43,16 @@ public partial class Win32FileSearchProvider : FileSearchProvider
     ///   ignoring the param <c><paramref name="dirs"/></c>.
     /// </item>
     /// <item>
-    ///   If not (or error), try to get the shell view
-    ///   from each param <c><paramref name="dirs"/></c> provided, then do step 1.
+    ///   If not (or error), and <see cref="FileSearchOptions.UseExplorerSortOrder"/> is <c>true</c>,
+    ///   try to get the shell view from each param <c><paramref name="dirs"/></c> provided, then do step 1.
     /// </item>
     /// <item>
     ///   If not shell view from step 2, use the normal searching process:
     /// </item>
     /// </list>
+    /// 
+    /// The shell view only decides <i>which</i> files are listed; their order still comes from
+    /// <see cref="FileSearchOptions.OrderBy"/> unless <see cref="FileSearchOptions.UseExplorerSortOrder"/> is <c>true</c>.
     /// 
     /// <inheritdoc/>
     /// </summary>
@@ -72,8 +73,9 @@ public partial class Win32FileSearchProvider : FileSearchProvider
             });
 
 
-        // 1. get files from the foreground window
-        if (options.ForegroundShell != null && options.UseExplorerSortOrder)
+        // 1. get files from the foreground window; a search result has no other source,
+        // so the shell is used whenever the caller supplies one
+        if (options.ForegroundShell != null)
         {
             Dispatcher.UIThread.Post(() =>
             {
@@ -219,8 +221,13 @@ public partial class Win32FileSearchProvider : FileSearchProvider
         // cancel if requested
         if (token.IsCancellationRequested) return;
 
+        // the shell only decided which files are listed; the user's own order still applies
+        var results = options.UseExplorerSortOrder
+            ? entries
+            : OnSorting(entries, options).ToList();
+
         // emit results
-        progressFn?.Invoke(new FileSearchingEventArgs(entries));
+        progressFn?.Invoke(new FileSearchingEventArgs(results));
 
 
         // cancel if requested

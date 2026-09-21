@@ -220,11 +220,8 @@ public partial class MainWindowView : PhControl
 
 
         // 3. load single file path
-        // 3.1 get foreground shell
-        if (Core.Config.EnableExplorerSortOrder)
-        {
-            Core.ShellProvider?.ForegroundShell = Core.ShellProvider?.GetForegroundWindowView();
-        }
+        // 3.1 get foreground shell; always captured, since a search window is the only source of its own result list
+        Core.ShellProvider?.ForegroundShell = Core.ShellProvider?.GetForegroundWindowView();
         Core.UpdateInitImagePath(paths[0]);
 
         // 3.2 open the path
