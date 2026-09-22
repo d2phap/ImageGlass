@@ -21,6 +21,7 @@ using ImageGlass.Common.Extensions;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace ImageGlass.Common.Photoing;
@@ -39,6 +40,17 @@ public class SkiaAnimator : AnimatorImpl
     /// </summary>
     private const int NO_FRAME = -1;
 
+    /// <summary>
+    /// Decode time the catch-up steps of one tick may spend, in microseconds.
+    /// </summary>
+    private const int CATCH_UP_BUDGET_US = 8_000;
+
+    /// <summary>
+    /// Bounds on the timer poll interval, in milliseconds.
+    /// </summary>
+    private const int MIN_POLL_INTERVAL_MS = 2;
+    private const int MAX_POLL_INTERVAL_MS = 16;
+
     private readonly SKCodec _codec;
     private readonly SKImage?[] _frameCache;
     private readonly Queue<uint> _cachedFramesQueue = new();
@@ -52,6 +64,11 @@ public class SkiaAnimator : AnimatorImpl
     private SKBitmap? _compositeBitmap;
 
     private int _lastRenderedFrameIndex = -1;
+
+    /// <summary>
+    /// Rolling cost of one chained decode in microseconds; 0 until one has been measured.
+    /// </summary>
+    private int _chainedDecodeUs;
     private DispatcherTimer _timer;
 
 
@@ -64,11 +81,27 @@ public class SkiaAnimator : AnimatorImpl
         _frameCache = new SKImage[frames.Length];
 
 
-        // Use DispatcherTimer to integrate with Avalonia's loop.
-        // We set a high resolution (16ms ~ 60fps) to poll the stopwatch in the base class.
+        // poll the base class clock; a fast animation needs a finer poll than a slow one
         _timer = new DispatcherTimer(DispatcherPriority.Render, Dispatcher.UIThread);
-        _timer.Interval = TimeSpan.FromMilliseconds(16);
+        _timer.Interval = TimeSpan.FromMilliseconds(GetPollIntervalMs(frames));
         _timer.Tick += Timer_Tick;
+    }
+
+
+    /// <summary>
+    /// Picks the poll interval; a fixed 16 ms beats at 16 to 31 ms and caps playback near 48 FPS.
+    /// </summary>
+    private static int GetPollIntervalMs(SKCodecFrameInfo[] frames)
+    {
+        var shortestDelayMs = int.MaxValue;
+        foreach (var frame in frames)
+        {
+            if (frame.Duration > 0 && frame.Duration < shortestDelayMs) shortestDelayMs = frame.Duration;
+        }
+
+        if (shortestDelayMs == int.MaxValue) return MAX_POLL_INTERVAL_MS;
+
+        return Math.Clamp(shortestDelayMs / 4, MIN_POLL_INTERVAL_MS, MAX_POLL_INTERVAL_MS);
     }
 
 
@@ -94,6 +127,20 @@ public class SkiaAnimator : AnimatorImpl
                 _frameCache[i] = null;
             }
             _cachedFramesQueue.Clear();
+        }
+    }
+
+
+    /// <summary>
+    /// <inheritdoc/> A skipped frame is still composed, so the budget bounds the skip.
+    /// </summary>
+    protected override int MaxFramesPerTick
+    {
+        get
+        {
+            if (_chainedDecodeUs <= 0) return MAX_FRAMES_PER_TICK;
+
+            return Math.Clamp(CATCH_UP_BUDGET_US / _chainedDecodeUs, 1, MAX_FRAMES_PER_TICK);
         }
     }
 
@@ -154,9 +201,8 @@ public class SkiaAnimator : AnimatorImpl
             }
 
 
-            // 3. Compose the requested frame. A seek needs no replay: the codec rebuilds
-            // any non-sequential frame from its own required-frame chain.
-            RenderFrame((int)frameIndex);
+            // 3. Compose the requested frame, walking any gap so every step stays chained.
+            ComposeUpTo((int)frameIndex);
 
 
             // 4. Return Snapshot
@@ -187,6 +233,42 @@ public class SkiaAnimator : AnimatorImpl
 
             return frameImage;
         }
+    }
+
+
+    /// <summary>
+    /// Replays any gap up to <paramref name="frameIndex"/> one chained frame at a time.
+    /// </summary>
+    private void ComposeUpTo(int frameIndex)
+    {
+        var from = _lastRenderedFrameIndex + 1;
+
+        if (frameIndex > from && CanChainRange(from, frameIndex))
+        {
+            for (var i = from; i < frameIndex; i++)
+            {
+                RenderFrame(i);
+
+                // a failed step leaves the buffer unusable, so hand the rest back to the codec
+                if (_lastRenderedFrameIndex != i) break;
+            }
+        }
+
+        RenderFrame(frameIndex);
+    }
+
+
+    /// <summary>
+    /// Whether every frame in the range composes onto its immediate predecessor.
+    /// </summary>
+    private bool CanChainRange(int from, int to)
+    {
+        for (var i = from; i <= to; i++)
+        {
+            if (!_codec.GetFrameInfo(i, out var meta) || meta.RequiredFrame != i - 1) return false;
+        }
+
+        return true;
     }
 
 
@@ -224,10 +306,18 @@ public class SkiaAnimator : AnimatorImpl
         if (!canChainFromPrevious) _compositeBitmap.Erase(SKColors.Transparent);
 
         var frameInfo = new SKImageInfo(info.Width, info.Height, info.ColorType, info.AlphaType);
+        var startedAt = Stopwatch.GetTimestamp();
         var result = _codec.GetPixels(frameInfo, _compositeBitmap.GetPixels(), _compositeBitmap.RowBytes, options);
 
         // a failed decode leaves the buffer in an unknown state, so the next frame must not chain onto it
         _lastRenderedFrameIndex = result == SKCodecResult.Success ? frameIndex : NO_FRAME;
+
+        // only a chained decode measures what one catch-up step actually costs
+        if (canChainFromPrevious && result == SKCodecResult.Success)
+        {
+            var costUs = (int)(Stopwatch.GetElapsedTime(startedAt).Ticks / TimeSpan.TicksPerMicrosecond);
+            _chainedDecodeUs = _chainedDecodeUs <= 0 ? costUs : ((_chainedDecodeUs * 3) + costUs) / 4;
+        }
     }
 
 
