@@ -234,12 +234,13 @@ internal sealed class ToolPipeServer : IDisposable
             var mmf = MemoryMappedFile.CreateFromFile(
                 tempPath, FileMode.Open, null,
                 byteCount, MemoryMappedFileAccess.Read);
-            _activeBuffers[tempPath] = (mmf, tempPath);
+            var toolPath = BHelper.GetRealPlatformPath(tempPath);
+            _activeBuffers[toolPath] = (mmf, tempPath);
 
             // Return the mapping metadata the tool needs to open and interpret the buffer.
             SendResponse(msg.RequestId, new GetPixelBufferResponse
             {
-                MmfPath = tempPath,
+                MmfPath = toolPath,
                 Width = bitmap.Width,
                 Height = bitmap.Height,
                 Stride = bitmap.RowBytes,

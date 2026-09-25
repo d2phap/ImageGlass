@@ -1737,7 +1737,8 @@ public partial class AppAPIProvider
         {
             try
             {
-                var args = BHelper.BuildExeArgList(app.Executable, app.Argument, filePath);
+                var args = BHelper.BuildExeArgList(app.Executable, app.Argument,
+                    BHelper.GetRealPlatformPath(filePath));
 
                 var result = await BHelper.RunExeCmd(args.Executable, args.Args, false, true);
                 if (result == IgExitCode.Done)

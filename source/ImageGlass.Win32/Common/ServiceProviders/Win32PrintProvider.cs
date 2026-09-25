@@ -68,6 +68,6 @@ public class Win32PrintProvider : IPrintProvider
         if (string.IsNullOrEmpty(fileToPrint)) return;
 
         // open Print dialog
-        Win32PrintApi.OpenPrintDialog(fileToPrint);
+        Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(fileToPrint));
     }
 }

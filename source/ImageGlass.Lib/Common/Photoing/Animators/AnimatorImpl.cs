@@ -48,6 +48,22 @@ public abstract class AnimatorImpl : PhDisposable
     /// </summary>
     private static readonly TimeSpan MAX_CATCH_UP = TimeSpan.FromSeconds(1);
 
+    /// <summary>
+    /// Hard ceiling on the frames a single tick may advance through.
+    /// </summary>
+    protected const int MAX_FRAMES_PER_TICK = 4;
+
+    /// <summary>
+    /// Backlog a tick absorbs before it starts skipping frames instead of just running late.
+    /// </summary>
+    private static readonly TimeSpan MAX_BACKLOG = TimeSpan.FromMilliseconds(100);
+
+
+    /// <summary>
+    /// How many frames one tick may advance through; a slow renderer narrows it.
+    /// </summary>
+    protected virtual int MaxFramesPerTick => MAX_FRAMES_PER_TICK;
+
 
     /// <summary>
     /// Occurs when the image frame is changed.
@@ -271,42 +287,59 @@ public abstract class AnimatorImpl : PhDisposable
         if (_isPaused || _frameCount == 0) return;
 
         var now = _stopwatch.Elapsed;
-        var frameDelay = GetFrameDelay(_currentFrame);
+        var maxFrames = Math.Max(1, MaxFramesPerTick);
+        var advanced = 0;
+        var hasFinishedLastLoop = false;
 
-        // the frame on screen has not reached its delay yet
-        if ((now - _lastFrameTime) < frameDelay) return;
+        // a coarse tick can own several deadlines; only the frame landed on is drawn
+        while (advanced < maxFrames)
+        {
+            var frameDelay = GetFrameDelay(_currentFrame);
 
-        // advance by the frame's own delay, never to the tick time: snapping there discards the
-        // sub-tick remainder, which rounds every frame up to a whole poll interval
-        _lastFrameTime += frameDelay;
+            // the frame on screen has not reached its delay yet
+            if (now - _lastFrameTime < frameDelay) break;
 
-        // a long UI stall would otherwise fast-forward a frame per tick until the backlog cleared
+            // running one frame behind is repaid on the next tick, so only skip past a real backlog
+            if (advanced > 0 && now - _lastFrameTime < MAX_BACKLOG) break;
+
+            // never snap to the tick time: that discards the sub-tick remainder
+            _lastFrameTime += frameDelay;
+            _currentFrame++;
+            advanced++;
+
+            // check for loop
+            if (_currentFrame >= _frameCount)
+            {
+                _currentFrame = 0;
+                _currentLoop++;
+
+                if (_loopCount > 0 && _currentLoop >= _loopCount)
+                {
+                    // hold the last frame rather than snapping back to the first one
+                    _currentFrame = _frameCount - 1;
+                    hasFinishedLastLoop = true;
+                    break;
+                }
+            }
+        }
+
+        if (advanced == 0) return;
+
+        // still behind after the whole per-tick allowance, so write the backlog off
         if (now - _lastFrameTime > MAX_CATCH_UP)
         {
             _lastFrameTime = now;
         }
 
-        _currentFrame++;
-
-        // check for loop
-        if (_currentFrame >= _frameCount)
-        {
-            _currentFrame = 0;
-            _currentLoop++;
-
-            if (_loopCount > 0 && _currentLoop >= _loopCount)
-            {
-                // hold the last frame rather than snapping back to the first one
-                _currentFrame = _frameCount - 1;
-                Pause();
-
-                // loop ended
-                OnStopped(EventArgs.Empty);
-                return;
-            }
-        }
-
         RaiseFrameChanged();
+
+        if (hasFinishedLastLoop)
+        {
+            Pause();
+
+            // loop ended
+            OnStopped(EventArgs.Empty);
+        }
     }
 
 
