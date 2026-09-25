@@ -42,12 +42,16 @@ body:
   validations:
     required: true
 
-- type: checkboxes
+- type: dropdown
   id: ig-edition
   attributes:
-    label: Are you using Pro edition?
+    label: ImageGlass edition
     options:
-      - label: "YES – ⭐"
+      - Classic
+      - Pro Individual
+      - Pro Business
+  validations:
+    required: true
 
 - type: textarea
   id: reproduction-steps
