@@ -1148,7 +1148,16 @@ public partial class ViewerControl : PhControl
                             _lockZoomSavedSrcPoint = null;
                         }
 
-                        Refresh(_loadingOptions.ResetZoom);
+                        // fit now: a posted Refresh runs after the next render pass, which would draw this source with the preview's rects
+                        if (_loadingOptions.ResetZoom)
+                        {
+                            SetZoomMode();
+                            InvalidateVisual();
+                        }
+                        else
+                        {
+                            Refresh(false);
+                        }
                     }
                 }
             }
