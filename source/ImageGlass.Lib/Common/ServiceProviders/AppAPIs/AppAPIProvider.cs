@@ -60,6 +60,9 @@ public partial class AppAPIProvider
     // windowed layout captured on entering full screen; null when not in full screen
     private WindowLayoutSnapshot? _preFullScreenLayout;
 
+    // shows the folder switch message once the new folder's photo loads; null when none is pending
+    private static TEventHandler<ViewerControl, PhotoLoadingEventArgs>? _siblingDirAnnouncer;
+
     // slideshow state backup
     private bool _isFullScreenBeforeSlideshow;
     private bool _isFramelessBeforeSlideshow;
@@ -985,7 +988,9 @@ public partial class AppAPIProvider
         if (reachedBoundary && autoSwitchDir)
         {
             // try the sibling directory; if none found, fall back to normal loop-back handling
-            if (TryOpenSiblingDir(step)) return;
+            var currentDir = Path.GetDirectoryName(Core.Photos.CurrentFilePath);
+            var isSiblingDirOpened = TryOpenSiblingDir(currentDir, isNext: step >= 0, selectLastPhoto: step < 0);
+            if (isSiblingDirOpened) return;
             reachedBoundary = !Core.Photos.GetByStep(step, canLoopBack, out photo);
         }
 
@@ -1003,31 +1008,47 @@ public partial class AppAPIProvider
         _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo);
 
         // reset slideshow interval on manual navigation
-        if (Core.Config.EnableSlideshow && !_slideshowIsAdvancing)
-        {
-            if (Core.Slideshow is { } slideshow)
-            {
-                // resume if auto-paused (e.g. at end of list)
-                if (slideshow.IsPaused)
-                {
-                    slideshow.Resume();
-                }
-
-                slideshow.ResetInterval();
-            }
-        }
+        if (!_slideshowIsAdvancing) ResetSlideshowInterval__();
     }
 
 
     /// <summary>
-    /// At a navigation boundary, opens the next/previous sibling directory that contains images.
-    /// Forward navigation lands on the first image; backward navigation lands on the last image.
+    /// Views the photos of the next (<c>"true"</c> or empty) or previous (<c>"false"</c>) sibling folder.
     /// </summary>
-    /// <returns><c>false</c> if no suitable sibling directory is found.</returns>
-    private static bool TryOpenSiblingDir(int step)
+    public static void IG_ViewSiblingDirPhotos(string? isNextStr)
     {
-        var direction = step >= 0 ? 1 : -1;
-        var currentDir = Path.GetDirectoryName(Core.Photos.CurrentFilePath);
+        var isNext = BHelper.ConvertStringToBool(isNextStr) ?? true;
+        IG_ViewSiblingDirPhotos(isNext);
+    }
+
+
+    /// <summary>
+    /// Views the first photo of the next or previous sibling folder with images, regardless of <see cref="Config.EnableAutoSwitchSiblingDir"/>.
+    /// </summary>
+    public static void IG_ViewSiblingDirPhotos(bool isNext)
+    {
+        // no current photo (an empty folder, or a switch still searching): use the folder being listed
+        var currentFilePath = Core.Photos.CurrentFilePath;
+        var hasCurrentPhoto = !string.IsNullOrEmpty(currentFilePath);
+        var currentDir = hasCurrentPhoto
+            ? Path.GetDirectoryName(currentFilePath)
+            : Core.Photos.DistinctDirs.FirstOrDefault();
+        if (string.IsNullOrEmpty(currentDir)) return;
+
+        // none left in that direction: stay on the first/last sibling folder
+        var isSiblingDirOpened = TryOpenSiblingDir(currentDir, isNext, selectLastPhoto: false);
+        if (!isSiblingDirOpened) return;
+
+        ResetSlideshowInterval__();
+    }
+
+
+    /// <summary>
+    /// Opens the next or previous sibling directory of <paramref name="currentDir"/> with images; <c>false</c> if none.
+    /// </summary>
+    private static bool TryOpenSiblingDir(string? currentDir, bool isNext, bool selectLastPhoto)
+    {
+        var direction = isNext ? 1 : -1;
         var supportedExts = Core.GetSupportedFileExtensions();
         var includeHidden = Core.Config.EnableHiddenImagesLoading;
 
@@ -1038,24 +1059,51 @@ public partial class AppAPIProvider
         // by the load pipeline, which clears the in-app message on PhotoState.Loaded
         void OnPhotoLoaded(ViewerControl s, PhotoLoadingEventArgs e)
         {
+            // a photo of the folder being left can still finish loading after the switch
+            var isSiblingDirPhoto = BHelper.IsPathContainedIn(e.Photo.FilePath, siblingDir);
+            if (!isSiblingDirPhoto) return;
             if (e.State != PhotoState.Loaded && e.Photo.Error is null) return;
 
             Viewer.PhotoLoading -= OnPhotoLoaded;
+            _siblingDirAnnouncer = null;
             if (e.Photo.Error is not null) return;
 
             _ = Message.ShowAsync(Core.Lang[direction < 0
                 ? LangId._SwitchedToPreviousFolder
                 : LangId._SwitchedToNextFolder, siblingDir]);
         }
-        Viewer.PhotoLoading += OnPhotoLoaded;
 
-        // forward -> first image, backward -> last image; resolved after the list is built, so it
-        // follows whatever order the search produced (Explorer view order included)
+        // a quicker switch drops the message of one whose folder never got to load
+        if (_siblingDirAnnouncer is not null) Viewer.PhotoLoading -= _siblingDirAnnouncer;
+        _siblingDirAnnouncer = OnPhotoLoaded;
+        Viewer.PhotoLoading += _siblingDirAnnouncer;
+
+        // the first/last photo is picked once the search builds the list, so it follows Explorer view order too
         App.MainWindow.PART_MainView.PrepareLoadPhotoList([siblingDir],
             currentFilePath: null, disposeForegroundShell: true, reloadInitPhoto: true,
-            selectLastPhoto: direction < 0);
+            selectLastPhoto);
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Resumes a paused slideshow and restarts its interval, after a manual navigation.
+    /// </summary>
+    private static void ResetSlideshowInterval__()
+    {
+        if (!Core.Config.EnableSlideshow) return;
+
+        var slideshow = Core.Slideshow;
+        if (slideshow is null) return;
+
+        // resume if auto-paused (e.g. at end of list)
+        if (slideshow.IsPaused)
+        {
+            slideshow.Resume();
+        }
+
+        slideshow.ResetInterval();
     }
 
 

@@ -70,6 +70,7 @@ public partial class AppAPIProvider
 
         { API.IG_ViewByStep,            PhCommands.Create(IG_ViewByStep) },
         { API.IG_ViewByIndex,           PhCommands.Create(IG_ViewByIndex) },
+        { API.IG_ViewSiblingDirPhotos,  PhCommands.Create(IG_ViewSiblingDirPhotos) },
 
 
         // Zoom

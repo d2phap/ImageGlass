@@ -25,6 +25,7 @@ public enum API
     IG_OpenPath,
     IG_ViewByStep,
     IG_ViewByIndex,
+    IG_ViewSiblingDirPhotos,
     IG_OpenSettings,
     IG_ApplySettings,
 
