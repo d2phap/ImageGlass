@@ -55,8 +55,11 @@ public static partial class GlTransitionsAdapter
     /// </summary>
     public static string ToSkSL(string glsl)
     {
+        // a multiline "$" matches only before "\n", so a CRLF file would silently keep every default at 0
+        var body = glsl.ReplaceLineEndings("\n");
+
         // SkSL uniforms take no initializer, so a parameter with a "// = default" comment becomes a constant
-        var body = UniformWithDefaultRegex().Replace(glsl, "const $1 $2 = $3;");
+        body = UniformWithDefaultRegex().Replace(body, "const $1 $2 = $3;");
 
         // "half" is a plain name in GLSL but a type in SkSL
         body = HalfIdentifierRegex().Replace(body, "glsl_half");

@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer.Transitions;
-using System.IO;
 
 namespace ImageGlass.Common.Windows;
 
@@ -50,11 +49,9 @@ public sealed class TransitionEffectOption : PhReactive
 
 
     /// <summary>
-    /// Gets the localized name of None / Random, or the file name of an effect file.
+    /// Gets the localized name of None / Random, or the id of an effect file (its name without the extension).
     /// </summary>
-    public string Name => _nameKey is { } key
-        ? Core.Lang[key]
-        : FilePath is null ? Id : Path.GetFileName(FilePath);
+    public string Name => _nameKey is { } key ? Core.Lang[key] : Id;
 
 
     /// <summary>
