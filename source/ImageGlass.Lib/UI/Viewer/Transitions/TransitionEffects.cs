@@ -28,7 +28,7 @@ namespace ImageGlass.UI.Viewer.Transitions;
 
 
 /// <summary>
-/// Registry of the photo transition effects: the built-in ones plus the files in the <see cref="Dir.Transitions"/> folders.
+/// Registry of the photo transition effects, which are the files in the <see cref="Dir.Transitions"/> folders.
 /// </summary>
 public static class TransitionEffects
 {
@@ -51,27 +51,21 @@ public static class TransitionEffects
     public const uint MAX_DURATION_MS = 10_000;
 
     // null until first read, so startup never touches the folders
-    private static volatile TransitionEffect[]? _fileEffects;
+    private static volatile TransitionEffect[]? _effects;
 
 
     /// <summary>
     /// Gets the effects read from the <see cref="Dir.Transitions"/> folders, loading them on first use.
     /// </summary>
-    public static IReadOnlyList<TransitionEffect> FileEffects => _fileEffects ??= LoadFileEffects();
-
-
-    /// <summary>
-    /// Gets the built-in effects followed by the file ones.
-    /// </summary>
-    public static IEnumerable<TransitionEffect> AllEffects => BuiltinTransitionEffects.All.Concat(FileEffects);
+    public static IReadOnlyList<TransitionEffect> All => _effects ??= LoadEffects();
 
 
     /// <summary>
     /// Re-reads the effect folders, picking up added, edited and removed files.
     /// </summary>
-    public static void ReloadFileEffects()
+    public static void Reload()
     {
-        _fileEffects = LoadFileEffects();
+        _effects = LoadEffects();
     }
 
 
@@ -85,11 +79,11 @@ public static class TransitionEffects
 
         if (effectId.Equals(RANDOM, StringComparison.OrdinalIgnoreCase))
         {
-            var usable = AllEffects.Where(e => e.GetEffect() is not null).ToArray();
+            var usable = All.Where(e => e.GetEffect() is not null).ToArray();
             return usable.Length > 0 ? usable[Random.Shared.Next(usable.Length)] : null;
         }
 
-        return AllEffects.FirstOrDefault(e => e.Id.Equals(effectId, StringComparison.OrdinalIgnoreCase));
+        return All.FirstOrDefault(e => e.Id.Equals(effectId, StringComparison.OrdinalIgnoreCase));
     }
 
 
@@ -110,10 +104,9 @@ public static class TransitionEffects
     /// <summary>
     /// Reads the effect files of the config folder, then of the app folder; the first file of an id wins.
     /// </summary>
-    private static TransitionEffect[] LoadFileEffects()
+    private static TransitionEffect[] LoadEffects()
     {
         var takenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { NONE, RANDOM };
-        takenIds.UnionWith(BuiltinTransitionEffects.All.Select(e => e.Id));
 
         var effects = new List<TransitionEffect>();
         var configDir = BHelper.ConfigDir(Dir.Transitions);

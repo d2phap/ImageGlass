@@ -24,7 +24,7 @@ using System.IO;
 namespace ImageGlass.Common.Windows;
 
 /// <summary>
-/// One item of a transition effect dropdown: a built-in effect, an effect file, or the divider between them.
+/// One item of a transition effect dropdown: None / Random, an effect file, or the divider between them.
 /// </summary>
 public sealed class TransitionEffectOption : PhReactive
 {
@@ -38,19 +38,19 @@ public sealed class TransitionEffectOption : PhReactive
 
 
     /// <summary>
-    /// Gets the file of an effect file, or <c>null</c> for a built-in effect.
+    /// Gets the file of an effect file, or <c>null</c> for None / Random.
     /// </summary>
     public string? FilePath { get; }
 
 
     /// <summary>
-    /// Gets whether this item is the divider between the built-in effects and the effect files.
+    /// Gets whether this item is the divider between None / Random and the effect files.
     /// </summary>
     public bool IsDivider { get; }
 
 
     /// <summary>
-    /// Gets the localized name of a built-in effect, or the file name of an effect file.
+    /// Gets the localized name of None / Random, or the file name of an effect file.
     /// </summary>
     public string Name => _nameKey is { } key
         ? Core.Lang[key]
@@ -64,7 +64,7 @@ public sealed class TransitionEffectOption : PhReactive
 
 
     /// <summary>
-    /// Gets the file path as the user sees it, or <c>null</c> for a built-in effect.
+    /// Gets the file path as the user sees it, or <c>null</c> for None / Random.
     /// </summary>
     public string? DisplayFilePath => FilePath is null ? null : BHelper.GetRealPlatformPath(FilePath);
 
@@ -79,9 +79,9 @@ public sealed class TransitionEffectOption : PhReactive
 
 
     /// <summary>
-    /// Creates the item of a built-in effect, or of <c>None</c> / <c>Random</c>.
+    /// Creates the item of <c>None</c> / <c>Random</c>, or of a saved effect whose file is gone.
     /// </summary>
-    public static TransitionEffectOption FromBuiltin(string id) => new(id, null, false);
+    public static TransitionEffectOption FromId(string id) => new(id, null, false);
 
 
     /// <summary>

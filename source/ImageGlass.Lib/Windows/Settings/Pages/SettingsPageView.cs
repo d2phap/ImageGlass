@@ -382,38 +382,43 @@ public abstract class SettingsPageView : PhControl
 
 
     /// <summary>
-    /// Binds a transition effect dropdown (built-in plus custom effects, re-read now) and its duration box.
+    /// Binds a transition effect dropdown (the effect files, re-read now) and its duration box.
     /// </summary>
     protected void BindTransitionEditor(ComboBox combo, PhTextBox durationBox, PhTextBlock errorText, PhButton openFolderBtn,
         ConfigId effectId, ConfigId durationId, uint defaultDuration, LangId section)
     {
         // picks up effect files added since the last time settings were opened
-        TransitionEffects.ReloadFileEffects();
+        TransitionEffects.Reload();
 
         var current = VM.GetValue(effectId, TransitionEffects.NONE);
-        var options = new List<TransitionEffectOption>
-        {
-            TransitionEffectOption.FromBuiltin(TransitionEffects.NONE),
-            TransitionEffectOption.FromBuiltin(TransitionEffects.RANDOM),
-        };
-        options.AddRange(BuiltinTransitionEffects.All.Select(e => TransitionEffectOption.FromBuiltin(e.Id)));
+        bool IsCurrent(string id) => id.Equals(current, StringComparison.OrdinalIgnoreCase);
 
-        var fileOptions = TransitionEffects.FileEffects
+        var effectOptions = TransitionEffects.All
             .Select(e => TransitionEffectOption.FromFile(e.Id, e.FilePath!))
             .ToList();
 
         // keep a saved id whose file is gone, rather than silently switching it to None
-        var isKnown = options.Concat(fileOptions).Any(o => o.Id.Equals(current, StringComparison.OrdinalIgnoreCase));
-        if (!isKnown) fileOptions.Add(TransitionEffectOption.FromBuiltin(current));
+        var isKnown = IsCurrent(TransitionEffects.NONE)
+            || IsCurrent(TransitionEffects.RANDOM)
+            || effectOptions.Any(o => IsCurrent(o.Id));
+        if (!isKnown) effectOptions.Add(TransitionEffectOption.FromId(current));
 
-        if (fileOptions.Count > 0)
+        var options = new List<TransitionEffectOption> { TransitionEffectOption.FromId(TransitionEffects.NONE) };
+
+        // picking at random needs at least two effects to pick from
+        if (TransitionEffects.All.Count >= 2 || IsCurrent(TransitionEffects.RANDOM))
+        {
+            options.Add(TransitionEffectOption.FromId(TransitionEffects.RANDOM));
+        }
+
+        if (effectOptions.Count > 0)
         {
             options.Add(TransitionEffectOption.CreateDivider());
-            options.AddRange(fileOptions);
+            options.AddRange(effectOptions);
         }
 
         combo.ItemsSource = options;
-        combo.SelectedItem = options.Find(o => o.Id.Equals(current, StringComparison.OrdinalIgnoreCase)) ?? options[0];
+        combo.SelectedItem = options.Find(o => IsCurrent(o.Id)) ?? options[0];
 
         // shows why the selected effect cannot play, and disables the duration of None
         void UpdateEffectState()

@@ -58,6 +58,9 @@ public static partial class GlTransitionsAdapter
         // SkSL uniforms take no initializer, so a parameter with a "// = default" comment becomes a constant
         var body = UniformWithDefaultRegex().Replace(glsl, "const $1 $2 = $3;");
 
+        // "half" is a plain name in GLSL but a type in SkSL
+        body = HalfIdentifierRegex().Replace(body, "glsl_half");
+
         return HEADER + body + FOOTER;
     }
 
@@ -70,5 +73,9 @@ public static partial class GlTransitionsAdapter
 
     [GeneratedRegex(@"^[ \t]*uniform[ \t]+(\w+)[ \t]+(\w+)[ \t]*;[ \t]*//[ \t]*=[ \t]*([^;\r\n]+?)[ \t]*;?[ \t]*$", RegexOptions.Multiline)]
     private static partial Regex UniformWithDefaultRegex();
+
+
+    [GeneratedRegex(@"\bhalf\b")]
+    private static partial Regex HalfIdentifierRegex();
 
 }
