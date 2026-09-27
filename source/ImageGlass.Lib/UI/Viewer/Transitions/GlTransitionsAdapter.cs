@@ -22,16 +22,18 @@ namespace ImageGlass.UI.Viewer.Transitions;
 
 
 /// <summary>
-/// Converts a transition written for gl-transitions (https://gl-transitions.com) to SkSL.
+/// Translates an effect in the gl-transitions GLSL format (https://gl-transitions.com), the only format effects are written in, to SkSL.
 /// </summary>
 public static partial class GlTransitionsAdapter
 {
+    // the authoring contract: never rename or remove an input here, only add, or existing effect files break
     private const string HEADER = """
         uniform shader fromImage;
         uniform shader toImage;
         uniform float progress;
-        uniform float2 resolution;
         uniform float ratio;
+        uniform float2 resolution;
+        uniform float navigationDirection;
 
         // gl-transitions samples in 0-1 coordinates with the y axis pointing up
         half4 getFromColor(float2 uv) { return fromImage.eval(float2(uv.x, 1.0 - uv.y) * resolution); }

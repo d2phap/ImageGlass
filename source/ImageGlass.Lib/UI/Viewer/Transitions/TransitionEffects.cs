@@ -28,7 +28,7 @@ namespace ImageGlass.UI.Viewer.Transitions;
 
 
 /// <summary>
-/// Registry of the photo transition effects: the built-in ones plus the custom ones in <see cref="Dir.Transitions"/>.
+/// Registry of the photo transition effects: the built-in ones plus the files in the <see cref="Dir.Transitions"/> folders.
 /// </summary>
 public static class TransitionEffects
 {
@@ -43,46 +43,35 @@ public static class TransitionEffects
     public const string RANDOM = "Random";
 
     /// <summary>
-    /// File extension of a custom effect written in SkSL against <see cref="TransitionEffect.SHADER_HEADER"/>.
-    /// </summary>
-    public const string SKSL_EXT = ".sksl";
-
-    /// <summary>
-    /// File extension of a custom effect written for gl-transitions.
+    /// File extension of an effect, written in the gl-transitions GLSL format.
     /// </summary>
     public const string GLSL_EXT = ".glsl";
 
     public const uint MIN_DURATION_MS = 50;
     public const uint MAX_DURATION_MS = 10_000;
 
-    // null until first read, so startup never touches the folder
-    private static volatile TransitionEffect[]? _customEffects;
+    // null until first read, so startup never touches the folders
+    private static volatile TransitionEffect[]? _fileEffects;
 
 
     /// <summary>
-    /// Gets the custom effects, loading them from <see cref="Dir.Transitions"/> on first use.
+    /// Gets the effects read from the <see cref="Dir.Transitions"/> folders, loading them on first use.
     /// </summary>
-    public static IReadOnlyList<TransitionEffect> CustomEffects => _customEffects ??= LoadCustomEffects();
+    public static IReadOnlyList<TransitionEffect> FileEffects => _fileEffects ??= LoadFileEffects();
 
 
     /// <summary>
-    /// Gets the built-in effects followed by the custom ones.
+    /// Gets the built-in effects followed by the file ones.
     /// </summary>
-    public static IEnumerable<TransitionEffect> AllEffects => BuiltinTransitionEffects.All.Concat(CustomEffects);
+    public static IEnumerable<TransitionEffect> AllEffects => BuiltinTransitionEffects.All.Concat(FileEffects);
 
 
     /// <summary>
-    /// Gets the folder of the custom effects.
+    /// Re-reads the effect folders, picking up added, edited and removed files.
     /// </summary>
-    public static string CustomEffectsDir => BHelper.ConfigDir(Dir.Transitions);
-
-
-    /// <summary>
-    /// Re-reads the custom effects folder, picking up added, edited and removed files.
-    /// </summary>
-    public static void ReloadCustomEffects()
+    public static void ReloadFileEffects()
     {
-        _customEffects = LoadCustomEffects();
+        _fileEffects = LoadFileEffects();
     }
 
 
@@ -119,50 +108,57 @@ public static class TransitionEffects
 
 
     /// <summary>
-    /// Reads the custom effects; a file whose id is already taken is skipped, and the files compile on first use.
+    /// Reads the effect files of the config folder, then of the app folder; the first file of an id wins.
     /// </summary>
-    private static TransitionEffect[] LoadCustomEffects()
+    private static TransitionEffect[] LoadFileEffects()
     {
-        var dir = CustomEffectsDir;
+        var takenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { NONE, RANDOM };
+        takenIds.UnionWith(BuiltinTransitionEffects.All.Select(e => e.Id));
+
+        var effects = new List<TransitionEffect>();
+        var configDir = BHelper.ConfigDir(Dir.Transitions);
+        var baseDir = BHelper.BaseDir(Dir.Transitions);
+
+        LoadEffectsFromDir(configDir, takenIds, effects);
+
+        // portable mode keeps both in the same folder
+        var isSameDir = string.Equals(Path.GetFullPath(configDir), Path.GetFullPath(baseDir), StringComparison.OrdinalIgnoreCase);
+        if (!isSameDir) LoadEffectsFromDir(baseDir, takenIds, effects);
+
+        return [.. effects];
+    }
+
+
+    /// <summary>
+    /// Adds the effects of one folder whose id is not taken yet; the files compile on first use.
+    /// </summary>
+    private static void LoadEffectsFromDir(string dir, HashSet<string> takenIds, List<TransitionEffect> effects)
+    {
         string[] files;
         try
         {
-            if (!Directory.Exists(dir)) return [];
+            if (!Directory.Exists(dir)) return;
             files = Directory.GetFiles(dir);
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"❌ Unable to list transition effects in '{dir}': {ex.Message}");
-            return [];
+            return;
         }
         Array.Sort(files, StringComparer.OrdinalIgnoreCase);
 
-        var takenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { NONE, RANDOM };
-        takenIds.UnionWith(BuiltinTransitionEffects.All.Select(e => e.Id));
-
-        var effects = new List<TransitionEffect>();
-
         foreach (var file in files)
         {
-            var ext = Path.GetExtension(file);
-            var isSkSL = ext.Equals(SKSL_EXT, StringComparison.OrdinalIgnoreCase);
-            var isGlsl = ext.Equals(GLSL_EXT, StringComparison.OrdinalIgnoreCase);
-            if (!isSkSL && !isGlsl) continue;
+            var isGlsl = Path.GetExtension(file).Equals(GLSL_EXT, StringComparison.OrdinalIgnoreCase);
+            if (!isGlsl) continue;
 
             var id = Path.GetFileNameWithoutExtension(file);
             if (!takenIds.Add(id)) continue;
 
             try
             {
-                var code = File.ReadAllText(file);
-                var source = isSkSL
-                    ? TransitionEffect.SHADER_HEADER + code
-                    : GlTransitionsAdapter.ToSkSL(code);
-                var lineOffset = isSkSL
-                    ? TransitionEffect.CountLines(TransitionEffect.SHADER_HEADER)
-                    : GlTransitionsAdapter.LineOffset;
-
-                effects.Add(new TransitionEffect(id, source, file, lineOffset));
+                var glsl = File.ReadAllText(file);
+                effects.Add(TransitionEffect.FromGlsl(id, glsl, file));
             }
             catch (Exception ex)
             {
@@ -170,8 +166,6 @@ public static class TransitionEffects
                 Debug.WriteLine($"❌ Unable to read transition effect '{file}': {ex.Message}");
             }
         }
-
-        return [.. effects];
     }
 
 }

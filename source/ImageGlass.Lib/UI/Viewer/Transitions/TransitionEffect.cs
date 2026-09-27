@@ -29,18 +29,6 @@ namespace ImageGlass.UI.Viewer.Transitions;
 /// </summary>
 public sealed partial class TransitionEffect
 {
-    /// <summary>
-    /// The inputs of a native effect, which then only has to define <c>half4 main(float2 p)</c>.
-    /// </summary>
-    public const string SHADER_HEADER = """
-        uniform shader fromImage;
-        uniform shader toImage;
-        uniform float progress;
-        uniform float2 resolution;
-        uniform float direction;
-
-        """;
-
     private readonly Lock _lock = new();
     private SKRuntimeEffect? _effect;
     private bool _isCompiled;
@@ -53,7 +41,7 @@ public sealed partial class TransitionEffect
 
 
     /// <summary>
-    /// Gets the complete SkSL source.
+    /// Gets the complete SkSL source, translated from the effect's GLSL.
     /// </summary>
     public string Source { get; }
 
@@ -76,12 +64,21 @@ public sealed partial class TransitionEffect
     public string? CompileError { get; private set; }
 
 
-    public TransitionEffect(string id, string source, string? filePath = null, int lineOffset = 0)
+    private TransitionEffect(string id, string source, string? filePath, int lineOffset)
     {
         Id = id;
         Source = source;
         FilePath = filePath;
         LineOffset = lineOffset;
+    }
+
+
+    /// <summary>
+    /// Creates an effect from its gl-transitions GLSL source.
+    /// </summary>
+    public static TransitionEffect FromGlsl(string id, string glsl, string? filePath = null)
+    {
+        return new TransitionEffect(id, GlTransitionsAdapter.ToSkSL(glsl), filePath, GlTransitionsAdapter.LineOffset);
     }
 
 

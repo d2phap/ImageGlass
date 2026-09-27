@@ -388,31 +388,37 @@ public abstract class SettingsPageView : PhControl
         ConfigId effectId, ConfigId durationId, uint defaultDuration, LangId section)
     {
         // picks up effect files added since the last time settings were opened
-        TransitionEffects.ReloadCustomEffects();
+        TransitionEffects.ReloadFileEffects();
 
         var current = VM.GetValue(effectId, TransitionEffects.NONE);
-        var ids = new List<string> { TransitionEffects.NONE, TransitionEffects.RANDOM };
-        ids.AddRange(TransitionEffects.AllEffects.Select(e => e.Id));
+        var options = new List<TransitionEffectOption>
+        {
+            TransitionEffectOption.FromBuiltin(TransitionEffects.NONE),
+            TransitionEffectOption.FromBuiltin(TransitionEffects.RANDOM),
+        };
+        options.AddRange(BuiltinTransitionEffects.All.Select(e => TransitionEffectOption.FromBuiltin(e.Id)));
+
+        var fileOptions = TransitionEffects.FileEffects
+            .Select(e => TransitionEffectOption.FromFile(e.Id, e.FilePath!))
+            .ToList();
 
         // keep a saved id whose file is gone, rather than silently switching it to None
-        if (!ids.Contains(current, StringComparer.OrdinalIgnoreCase)) ids.Add(current);
+        var isKnown = options.Concat(fileOptions).Any(o => o.Id.Equals(current, StringComparison.OrdinalIgnoreCase));
+        if (!isKnown) fileOptions.Add(TransitionEffectOption.FromBuiltin(current));
 
-        var selectedIndex = 0;
-        for (var i = 0; i < ids.Count; i++)
+        if (fileOptions.Count > 0)
         {
-            var id = ids[i];
-            var item = new ComboBoxItem { Tag = id };
-
-            BindComboItemText(item, Lang.GetKey($"TransitionEffect_{id}"), id);
-            combo.Items.Add(item);
-            if (id.Equals(current, StringComparison.OrdinalIgnoreCase)) selectedIndex = i;
+            options.Add(TransitionEffectOption.CreateDivider());
+            options.AddRange(fileOptions);
         }
-        combo.SelectedIndex = selectedIndex;
+
+        combo.ItemsSource = options;
+        combo.SelectedItem = options.Find(o => o.Id.Equals(current, StringComparison.OrdinalIgnoreCase)) ?? options[0];
 
         // shows why the selected effect cannot play, and disables the duration of None
         void UpdateEffectState()
         {
-            var id = (combo.SelectedItem as ComboBoxItem)?.Tag as string ?? TransitionEffects.NONE;
+            var id = (combo.SelectedItem as TransitionEffectOption)?.Id ?? TransitionEffects.NONE;
             var isNone = id.Equals(TransitionEffects.NONE, StringComparison.OrdinalIgnoreCase);
             var isRandom = id.Equals(TransitionEffects.RANDOM, StringComparison.OrdinalIgnoreCase);
 
@@ -428,10 +434,14 @@ public abstract class SettingsPageView : PhControl
 
         combo.SelectionChanged += (_, _) =>
         {
-            if (combo.SelectedItem is ComboBoxItem { Tag: string id }) VM.SetValue(effectId, id);
+            if (combo.SelectedItem is TransitionEffectOption { IsDivider: false } option) VM.SetValue(effectId, option.Id);
             UpdateEffectState();
         };
-        AddLangRefresher(UpdateEffectState);
+        AddLangRefresher(() =>
+        {
+            options.ForEach(o => o.RefreshLang());
+            UpdateEffectState();
+        });
         RegisterSearchKey(combo, LangId.Settings_TransitionEffect, effectId, section);
 
         BindUIntInput(durationBox, durationId, LangId.Settings_TransitionDuration, section, defaultDuration);

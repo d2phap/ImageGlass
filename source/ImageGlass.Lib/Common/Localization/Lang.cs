@@ -624,15 +624,6 @@ public class Lang
 
         new(LangId.TransitionEffect_None, "None"),
         new(LangId.TransitionEffect_Random, "Random"),
-        new(LangId.TransitionEffect_Fade, "Fade"),
-        new(LangId.TransitionEffect_FadeThroughBlack, "Fade through black"),
-        new(LangId.TransitionEffect_Dissolve, "Dissolve"),
-        new(LangId.TransitionEffect_Zoom, "Zoom"),
-        new(LangId.TransitionEffect_Push, "Push"),
-        new(LangId.TransitionEffect_Cover, "Cover"),
-        new(LangId.TransitionEffect_Wipe, "Wipe"),
-        new(LangId.TransitionEffect_Circle, "Circle"),
-        new(LangId.TransitionEffect_Blinds, "Blinds"),
 
         // AfterEditAppAction
         new(LangId.AfterEditAppAction_Nothing, "Nothing"), //v8.0
@@ -1028,8 +1019,7 @@ public class Lang
         new(LangId.Settings_TransitionEffect, "Transition effect"),
         new(LangId.Settings_TransitionDuration, "Duration (milliseconds)"),
         new(LangId.Settings_TransitionCompileError, "This effect cannot be used:"),
-        new(LangId.Settings_TransitionCustomEffectsNote, "Add your own effects as SkSL (.sksl) or gl-transitions (.glsl) files to the custom effects folder."),
-        new(LangId.Settings_OpenTransitionsFolder, "Open custom effects folder"),
+        new(LangId.Settings_OpenTransitionsFolder, "Open transition effects folder"),
         #endregion // Settings > Tab Slideshow
 
 

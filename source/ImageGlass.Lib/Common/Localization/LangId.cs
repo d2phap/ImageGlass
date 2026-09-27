@@ -180,15 +180,6 @@ public enum LangId
 
     TransitionEffect_None,
     TransitionEffect_Random,
-    TransitionEffect_Fade,
-    TransitionEffect_FadeThroughBlack,
-    TransitionEffect_Dissolve,
-    TransitionEffect_Zoom,
-    TransitionEffect_Push,
-    TransitionEffect_Cover,
-    TransitionEffect_Wipe,
-    TransitionEffect_Circle,
-    TransitionEffect_Blinds,
 
     AfterEditAppAction_Nothing,
     AfterEditAppAction_Minimize,
@@ -587,7 +578,6 @@ public enum LangId
     Settings_TransitionEffect,
     Settings_TransitionDuration,
     Settings_TransitionCompileError,
-    Settings_TransitionCustomEffectsNote,
     Settings_OpenTransitionsFolder,
     #endregion // Settings > Tab Slideshow
 

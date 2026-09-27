@@ -371,7 +371,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
         using var uniforms = new SKRuntimeEffectUniforms(effect);
         if (uniforms.Contains("progress")) uniforms["progress"] = transition.Progress;
         if (uniforms.Contains("resolution")) uniforms["resolution"] = new[] { area.Width, area.Height };
-        if (uniforms.Contains("direction")) uniforms["direction"] = (float)transition.Request.Direction;
+        if (uniforms.Contains("navigationDirection")) uniforms["navigationDirection"] = (float)transition.Request.Direction;
         if (uniforms.Contains("ratio")) uniforms["ratio"] = area.Width / area.Height;
 
         using var children = new SKRuntimeEffectChildren(effect);
