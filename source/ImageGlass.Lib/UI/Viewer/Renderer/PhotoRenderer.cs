@@ -73,9 +73,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
 
 
-    // 2x2 black/white cells, tiled to draw the checkerboard in Skia
-    private static readonly Lazy<SKImage> _checkerboardTile = new(CreateCheckerboardTile);
-
     private readonly Rect _bounds;
     private readonly Action<SKImage?>? _onDrawFirstTime;
     private readonly Lock _lock;
@@ -91,8 +88,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
     private readonly ViewerControl _viewer;
     private readonly float _dpi;
     private readonly SKRect _drawingArea;
-    private readonly CheckerboardType _checkerboardMode;
-    private readonly float _checkerboardTileSize;
 
 
     #region Public Properties
@@ -131,8 +126,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
             _viewer = viewer;
             _dpi = (float)viewer.Dpi;
             _drawingArea = viewer.DrawingArea.ToSKRect();
-            _checkerboardMode = viewer.CheckerboardMode;
-            _checkerboardTileSize = (int)(viewer._checkerboard.Size.Width * _dpi);
 
             // claim first-draw ownership atomically so concurrent paints cannot process it twice
             _isFirstDraw = processFirstDrawFn is not null && viewer._isFirstDraw;
@@ -210,7 +203,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
 
     /// <summary>
-    /// Records the photo as drawn now, including its checkerboard, into a picture in viewer coordinates.
+    /// Records the photo as drawn now into a picture in viewer coordinates; the checkerboard stays out of it.
     /// </summary>
     internal SKPicture RecordFrame()
     {
@@ -219,7 +212,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
             using var recorder = new SKPictureRecorder();
             var canvas = recorder.BeginRecording(_drawingArea);
 
-            DrawCheckerboard(canvas);
             DrawContent(canvas, null);
 
             return recorder.EndRecording();
@@ -345,7 +337,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
         // no effect to play: draw the new photo as usual
         if (effect is null || fromSurface is null || toSurface is null)
         {
-            DrawCheckerboard(canvas);
             DrawContent(canvas, grContext);
             return;
         }
@@ -355,7 +346,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
         PrepareTransitionCanvas(fromSurface.Canvas, area).DrawPicture(transition.FromFrame);
 
         var toCanvas = PrepareTransitionCanvas(toSurface.Canvas, area);
-        DrawCheckerboard(toCanvas);
         DrawContent(toCanvas, grContext);
 
         using var fromImage = fromSurface.Snapshot();
@@ -411,41 +401,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
         canvas.Translate(-area.Left, -area.Top);
 
         return canvas;
-    }
-
-
-    /// <summary>
-    /// Draws the checkerboard like <see cref="ViewerControl"/> does, for frames a transition draws itself.
-    /// </summary>
-    private void DrawCheckerboard(SKCanvas canvas)
-    {
-        if (_checkerboardMode == CheckerboardType.None || _checkerboardTileSize <= 0) return;
-
-        var region = _checkerboardMode == CheckerboardType.Image ? _destRect : _drawingArea;
-        if (region.IsEmpty) return;
-
-        // the tile image is 2 px wide and spans one tile; the brush tiles from the viewer origin too
-        var cellSize = _checkerboardTileSize / 2f;
-        var matrix = SKMatrix.CreateScale(cellSize, cellSize);
-
-        using var shader = _checkerboardTile.Value.ToShader(SKShaderTileMode.Repeat, SKShaderTileMode.Repeat,
-            new SKSamplingOptions(SKFilterMode.Nearest), matrix);
-        using var paint = new SKPaint { Shader = shader, Color = SKColors.White.WithAlpha(26) };
-
-        canvas.DrawRect(region, paint);
-    }
-
-
-    private static SKImage CreateCheckerboardTile()
-    {
-        using var bitmap = new SKBitmap(2, 2, SKColorType.Rgba8888, SKAlphaType.Premul);
-        bitmap.SetPixel(0, 0, SKColors.Black);
-        bitmap.SetPixel(1, 1, SKColors.Black);
-        bitmap.SetPixel(1, 0, SKColors.White);
-        bitmap.SetPixel(0, 1, SKColors.White);
-        bitmap.SetImmutable();
-
-        return SKImage.FromBitmap(bitmap);
     }
 
 

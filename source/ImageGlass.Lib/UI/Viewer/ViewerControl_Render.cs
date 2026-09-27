@@ -58,7 +58,7 @@ public partial class ViewerControl
     private int _hdrActive;
 
     private RenderTargetBitmap? _bmpCheckerboard;
-    internal readonly CheckerboardInfo _checkerboard = new();
+    private readonly CheckerboardInfo _checkerboard = new();
 
     internal readonly Lock _lock = new();
 
@@ -268,9 +268,6 @@ public partial class ViewerControl
     protected virtual void OnDrawCheckerboard(DrawingContext c)
     {
         if (CheckerboardMode == CheckerboardType.None) return;
-
-        // a transition draws the checkerboard of each side itself
-        if (_transition is not null) return;
 
         // region to draw
         Rect region;
