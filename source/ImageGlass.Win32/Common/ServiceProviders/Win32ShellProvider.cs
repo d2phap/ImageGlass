@@ -36,7 +36,7 @@ namespace ImageGlass.Win32.Common.ServiceProviders;
 public class Win32ShellProvider : PhDisposable, IShellProvider
 {
     private readonly EggShell _shell = new();
-    private static ExplorerView? _foregroundShell = null;
+    private static ShellAppView? _foregroundShell = null;
     private static string _foregroundShellPath = string.Empty;
 
     private static string Win32SearchFileExtension => ".search-ms";
@@ -62,7 +62,7 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
         set
         {
             _foregroundShell = null;
-            _foregroundShell = (ExplorerView?)value;
+            _foregroundShell = (ShellAppView?)value;
 
             try
             {
