@@ -16,15 +16,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Common;
+using ImageGlass.Common.Types;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace ImageGlass.UI.Viewer.Transitions;
 
 
 /// <summary>
-/// Registry of the photo transition effects.
+/// Registry of the photo transition effects: the built-in ones plus the custom ones in <see cref="Dir.Transitions"/>.
 /// </summary>
 public static class TransitionEffects
 {
@@ -38,57 +42,52 @@ public static class TransitionEffects
     /// </summary>
     public const string RANDOM = "Random";
 
+    /// <summary>
+    /// File extension of a custom effect written in SkSL against <see cref="TransitionEffect.SHADER_HEADER"/>.
+    /// </summary>
+    public const string SKSL_EXT = ".sksl";
+
+    /// <summary>
+    /// File extension of a custom effect written for gl-transitions.
+    /// </summary>
+    public const string GLSL_EXT = ".glsl";
+
     public const uint MIN_DURATION_MS = 50;
     public const uint MAX_DURATION_MS = 10_000;
 
-
-    /// <summary>
-    /// Gets the built-in effects.
-    /// </summary>
-    public static IReadOnlyList<TransitionEffect> BuiltIns { get; } =
-    [
-        new("Fade", """
-            half4 main(float2 p) {
-                return mix(fromImage.eval(p), toImage.eval(p), progress);
-            }
-            """),
-
-        // direction 1 pushes the old photo out to the left, -1 to the right
-        new("Push", """
-            half4 main(float2 p) {
-                float offset = resolution.x * progress * direction;
-                half4 oldColor = fromImage.eval(p + float2(offset, 0.0));
-                half4 newColor = toImage.eval(p + float2(offset - resolution.x * direction, 0.0));
-                return newColor + oldColor * (1.0 - newColor.a);
-            }
-            """),
-
-        // direction 1 reveals the new photo from the right edge, -1 from the left edge
-        new("Wipe", """
-            half4 main(float2 p) {
-                const float edge = 0.08;
-                float x = p.x / resolution.x;
-                if (direction < 0.0) x = 1.0 - x;
-
-                float t = progress * (1.0 + edge);
-                float amount = smoothstep(1.0 - t, 1.0 - t + edge, x);
-                return mix(fromImage.eval(p), toImage.eval(p), amount);
-            }
-            """),
-    ];
+    // null until first read, so startup never touches the folder
+    private static volatile TransitionEffect[]? _customEffects;
 
 
     /// <summary>
-    /// Gets the ids of all selectable effects, including <see cref="NONE"/> and <see cref="RANDOM"/>.
+    /// Gets the custom effects, loading them from <see cref="Dir.Transitions"/> on first use.
     /// </summary>
-    public static IEnumerable<string> GetEffectIds()
+    public static IReadOnlyList<TransitionEffect> CustomEffects => _customEffects ??= LoadCustomEffects();
+
+
+    /// <summary>
+    /// Gets the built-in effects followed by the custom ones.
+    /// </summary>
+    public static IEnumerable<TransitionEffect> AllEffects => BuiltinTransitionEffects.All.Concat(CustomEffects);
+
+
+    /// <summary>
+    /// Gets the folder of the custom effects.
+    /// </summary>
+    public static string CustomEffectsDir => BHelper.ConfigDir(Dir.Transitions);
+
+
+    /// <summary>
+    /// Re-reads the custom effects folder, picking up added, edited and removed files.
+    /// </summary>
+    public static void ReloadCustomEffects()
     {
-        return BuiltIns.Select(e => e.Id).Prepend(RANDOM).Prepend(NONE);
+        _customEffects = LoadCustomEffects();
     }
 
 
     /// <summary>
-    /// Finds an effect by id; <see cref="RANDOM"/> picks one of the built-in effects.
+    /// Finds an effect by id; <see cref="RANDOM"/> picks one of the effects that compile.
     /// </summary>
     public static TransitionEffect? Find(string? effectId)
     {
@@ -97,10 +96,11 @@ public static class TransitionEffects
 
         if (effectId.Equals(RANDOM, StringComparison.OrdinalIgnoreCase))
         {
-            return BuiltIns[Random.Shared.Next(BuiltIns.Count)];
+            var usable = AllEffects.Where(e => e.GetEffect() is not null).ToArray();
+            return usable.Length > 0 ? usable[Random.Shared.Next(usable.Length)] : null;
         }
 
-        return BuiltIns.FirstOrDefault(e => e.Id.Equals(effectId, StringComparison.OrdinalIgnoreCase));
+        return AllEffects.FirstOrDefault(e => e.Id.Equals(effectId, StringComparison.OrdinalIgnoreCase));
     }
 
 
@@ -115,6 +115,63 @@ public static class TransitionEffects
         return new TransitionRequest(effect,
             (int)Math.Clamp(durationMs, MIN_DURATION_MS, MAX_DURATION_MS),
             direction < 0 ? -1 : 1);
+    }
+
+
+    /// <summary>
+    /// Reads the custom effects; a file whose id is already taken is skipped, and the files compile on first use.
+    /// </summary>
+    private static TransitionEffect[] LoadCustomEffects()
+    {
+        var dir = CustomEffectsDir;
+        string[] files;
+        try
+        {
+            if (!Directory.Exists(dir)) return [];
+            files = Directory.GetFiles(dir);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"❌ Unable to list transition effects in '{dir}': {ex.Message}");
+            return [];
+        }
+        Array.Sort(files, StringComparer.OrdinalIgnoreCase);
+
+        var takenIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { NONE, RANDOM };
+        takenIds.UnionWith(BuiltinTransitionEffects.All.Select(e => e.Id));
+
+        var effects = new List<TransitionEffect>();
+
+        foreach (var file in files)
+        {
+            var ext = Path.GetExtension(file);
+            var isSkSL = ext.Equals(SKSL_EXT, StringComparison.OrdinalIgnoreCase);
+            var isGlsl = ext.Equals(GLSL_EXT, StringComparison.OrdinalIgnoreCase);
+            if (!isSkSL && !isGlsl) continue;
+
+            var id = Path.GetFileNameWithoutExtension(file);
+            if (!takenIds.Add(id)) continue;
+
+            try
+            {
+                var code = File.ReadAllText(file);
+                var source = isSkSL
+                    ? TransitionEffect.SHADER_HEADER + code
+                    : GlTransitionsAdapter.ToSkSL(code);
+                var lineOffset = isSkSL
+                    ? TransitionEffect.CountLines(TransitionEffect.SHADER_HEADER)
+                    : GlTransitionsAdapter.LineOffset;
+
+                effects.Add(new TransitionEffect(id, source, file, lineOffset));
+            }
+            catch (Exception ex)
+            {
+                // an unreadable file only loses its own effect
+                Debug.WriteLine($"❌ Unable to read transition effect '{file}': {ex.Message}");
+            }
+        }
+
+        return [.. effects];
     }
 
 }

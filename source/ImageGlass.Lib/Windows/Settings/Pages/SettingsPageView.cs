@@ -20,10 +20,14 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
+using ImageGlass.UI.Viewer.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace ImageGlass.Common.Windows;
 
@@ -374,6 +378,65 @@ public abstract class SettingsPageView : PhControl
         picker.DefaultColor = BHelper.ColorFromHex(defaultHex);
         picker.SelectedColor = BHelper.ColorFromHex(VM.GetValue(id, defaultHex));
         _suppressColorStaging = false;
+    }
+
+
+    /// <summary>
+    /// Binds a transition effect dropdown (built-in plus custom effects, re-read now) and its duration box.
+    /// </summary>
+    protected void BindTransitionEditor(ComboBox combo, PhTextBox durationBox, PhTextBlock errorText, PhButton openFolderBtn,
+        ConfigId effectId, ConfigId durationId, uint defaultDuration, LangId section)
+    {
+        // picks up effect files added since the last time settings were opened
+        TransitionEffects.ReloadCustomEffects();
+
+        var current = VM.GetValue(effectId, TransitionEffects.NONE);
+        var ids = new List<string> { TransitionEffects.NONE, TransitionEffects.RANDOM };
+        ids.AddRange(TransitionEffects.AllEffects.Select(e => e.Id));
+
+        // keep a saved id whose file is gone, rather than silently switching it to None
+        if (!ids.Contains(current, StringComparer.OrdinalIgnoreCase)) ids.Add(current);
+
+        var selectedIndex = 0;
+        for (var i = 0; i < ids.Count; i++)
+        {
+            var id = ids[i];
+            var item = new ComboBoxItem { Tag = id };
+
+            BindComboItemText(item, Lang.GetKey($"TransitionEffect_{id}"), id);
+            combo.Items.Add(item);
+            if (id.Equals(current, StringComparison.OrdinalIgnoreCase)) selectedIndex = i;
+        }
+        combo.SelectedIndex = selectedIndex;
+
+        // shows why the selected effect cannot play, and disables the duration of None
+        void UpdateEffectState()
+        {
+            var id = (combo.SelectedItem as ComboBoxItem)?.Tag as string ?? TransitionEffects.NONE;
+            var isNone = id.Equals(TransitionEffects.NONE, StringComparison.OrdinalIgnoreCase);
+            var isRandom = id.Equals(TransitionEffects.RANDOM, StringComparison.OrdinalIgnoreCase);
+
+            var effect = isNone || isRandom ? null : TransitionEffects.Find(id);
+            var hasError = effect is not null && effect.GetEffect() is null;
+
+            errorText.IsVisible = hasError;
+            errorText.Text = hasError
+                ? $"{Core.Lang[LangId.Settings_TransitionCompileError]} {Path.GetFileName(effect!.FilePath)}\n{effect.CompileError}"
+                : string.Empty;
+            durationBox.IsEnabled = !isNone && !Config.IsConfigLocked(durationId);
+        }
+
+        combo.SelectionChanged += (_, _) =>
+        {
+            if (combo.SelectedItem is ComboBoxItem { Tag: string id }) VM.SetValue(effectId, id);
+            UpdateEffectState();
+        };
+        AddLangRefresher(UpdateEffectState);
+        RegisterSearchKey(combo, LangId.Settings_TransitionEffect, effectId, section);
+
+        BindUIntInput(durationBox, durationId, LangId.Settings_TransitionDuration, section, defaultDuration);
+        BindLink(openFolderBtn, LangId.Settings_OpenTransitionsFolder,
+            () => BHelper.OpenFolderPath(BHelper.GetRealPlatformConfigDir(Dir.Transitions)));
     }
 
 

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="using:ImageGlass.Common.Types"
     xmlns:ui="using:ImageGlass.UI"
     xmlns:windows="using:ImageGlass.Common.Windows"
     mc:Ignorable="d"
@@ -71,6 +72,37 @@
                     HorizontalAlignment="Left"
                     AcceptValue="UnsignedIntValueOnly" />
             </StackPanel>
+        </StackPanel>
+
+
+        <!--  Transition effect  -->
+        <ui:PhTextBlock Classes="group" LangKey="Settings_TransitionEffect" />
+        <StackPanel Margin="{DynamicResource SettingsGroupIndent}" Spacing="{DynamicResource SettingsLabelInputGap}">
+            <ComboBox x:Name="PART_Transition" MinWidth="200" />
+
+            <ui:PhTextBlock Margin="0,8,0,0" LangKey="Settings_TransitionDuration" />
+            <ui:PhTextBox
+                x:Name="PART_TransitionDuration"
+                Width="200"
+                HorizontalAlignment="Left"
+                AcceptValue="UnsignedIntValueOnly" />
+
+            <ui:PhTextBlock
+                x:Name="PART_TransitionError"
+                Foreground="{DynamicResource IG_TextDangerBrush}"
+                IsVisible="False"
+                TextWrapping="Wrap" />
+            <ui:PhTextBlock
+                Margin="0,8,0,0"
+                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                FontStyle="Italic"
+                LangKey="Settings_TransitionCustomEffectsNote"
+                Opacity="0.6"
+                TextWrapping="Wrap" />
+            <ui:PhButton
+                x:Name="PART_OpenTransitionsFolder"
+                HorizontalAlignment="Left"
+                Variant="Link" />
         </StackPanel>
 
     </StackPanel>

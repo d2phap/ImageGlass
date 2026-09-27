@@ -78,6 +78,37 @@
             </StackPanel>
 
 
+            <!--  Sub-group: Transition effect  -->
+            <ui:PhTextBlock Classes="subgroup" LangKey="Settings_TransitionEffect" />
+            <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ComboBox x:Name="PART_Transition" MinWidth="200" />
+
+                <ui:PhTextBlock Margin="0,8,0,0" LangKey="Settings_TransitionDuration" />
+                <ui:PhTextBox
+                    x:Name="PART_TransitionDuration"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    AcceptValue="UnsignedIntValueOnly" />
+
+                <ui:PhTextBlock
+                    x:Name="PART_TransitionError"
+                    Foreground="{DynamicResource IG_TextDangerBrush}"
+                    IsVisible="False"
+                    TextWrapping="Wrap" />
+                <ui:PhTextBlock
+                    Margin="0,8,0,0"
+                    FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                    FontStyle="Italic"
+                    LangKey="Settings_TransitionCustomEffectsNote"
+                    Opacity="0.6"
+                    TextWrapping="Wrap" />
+                <ui:PhButton
+                    x:Name="PART_OpenTransitionsFolder"
+                    HorizontalAlignment="Left"
+                    Variant="Link" />
+            </StackPanel>
+
+
             <!--  Sub-group: Image preview  -->
             <ui:PhTextBlock Classes="subgroup" LangKey="Settings_ImagePreview" />
             <StackPanel Margin="{DynamicResource SettingsGroupIndent}">

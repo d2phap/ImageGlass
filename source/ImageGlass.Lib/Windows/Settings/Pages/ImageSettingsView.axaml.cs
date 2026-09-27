@@ -69,6 +69,8 @@ public partial class ImageSettingsView : SettingsPageView
         BindToggle(PART_AutoSwitchSiblingDir, ConfigId.EnableAutoSwitchSiblingDir,
             LangId.Settings_EnableAutoSwitchSiblingDir, LangId.Settings_Browsing);
         BuildBrowsingMode();
+        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError, PART_OpenTransitionsFolder,
+            ConfigId.NavigationTransition, ConfigId.NavigationTransitionDuration, 300u, LangId.Settings_Browsing);
 
         // Image preview
         BindToggle(PART_ImagePreview, ConfigId.EnableImagePreview,

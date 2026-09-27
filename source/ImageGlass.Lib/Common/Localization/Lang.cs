@@ -622,6 +622,18 @@ public class Lang
         new(LangId.BrowsingMode_Sequential, "Sequential"),
         new(LangId.BrowsingMode_Sequential_Description, "Never skips. Each image is fully shown before the next."),
 
+        new(LangId.TransitionEffect_None, "None"),
+        new(LangId.TransitionEffect_Random, "Random"),
+        new(LangId.TransitionEffect_Fade, "Fade"),
+        new(LangId.TransitionEffect_FadeThroughBlack, "Fade through black"),
+        new(LangId.TransitionEffect_Dissolve, "Dissolve"),
+        new(LangId.TransitionEffect_Zoom, "Zoom"),
+        new(LangId.TransitionEffect_Push, "Push"),
+        new(LangId.TransitionEffect_Cover, "Cover"),
+        new(LangId.TransitionEffect_Wipe, "Wipe"),
+        new(LangId.TransitionEffect_Circle, "Circle"),
+        new(LangId.TransitionEffect_Blinds, "Blinds"),
+
         // AfterEditAppAction
         new(LangId.AfterEditAppAction_Nothing, "Nothing"), //v8.0
         new(LangId.AfterEditAppAction_Minimize, "Minimize"), //v8.0
@@ -1011,6 +1023,13 @@ public class Lang
         new(LangId.Settings_SlideshowInterval_To, "To"),
 
         new(LangId.Settings_SlideshowImagesToNotifySound, "Number of images to trigger a notification sound"),
+
+        // Slideshow > Transition (shared with Image > Browsing)
+        new(LangId.Settings_TransitionEffect, "Transition effect"),
+        new(LangId.Settings_TransitionDuration, "Duration (milliseconds)"),
+        new(LangId.Settings_TransitionCompileError, "This effect cannot be used:"),
+        new(LangId.Settings_TransitionCustomEffectsNote, "Add your own effects as SkSL (.sksl) or gl-transitions (.glsl) files to the custom effects folder."),
+        new(LangId.Settings_OpenTransitionsFolder, "Open custom effects folder"),
         #endregion // Settings > Tab Slideshow
 
 

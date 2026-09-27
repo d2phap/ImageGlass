@@ -77,6 +77,10 @@ public partial class SlideshowSettingsView : SettingsPageView
         // Notification
         BindUIntInput(PART_NotifySound, ConfigId.SlideshowImagesToNotifySound,
             LangId.Settings_SlideshowImagesToNotifySound, LangId.Settings_Slideshow_Playback);
+
+        // Transition effect
+        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError, PART_OpenTransitionsFolder,
+            ConfigId.SlideshowTransition, ConfigId.SlideshowTransitionDuration, 1000u, LangId.Settings_TransitionEffect);
     }
 
 

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using SkiaSharp;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace ImageGlass.UI.Viewer.Transitions;
@@ -25,10 +27,10 @@ namespace ImageGlass.UI.Viewer.Transitions;
 /// <summary>
 /// A photo transition effect, drawn by an SkSL runtime shader.
 /// </summary>
-public sealed class TransitionEffect
+public sealed partial class TransitionEffect
 {
     /// <summary>
-    /// The inputs every effect receives; its source only has to define <c>half4 main(float2 p)</c>.
+    /// The inputs of a native effect, which then only has to define <c>half4 main(float2 p)</c>.
     /// </summary>
     public const string SHADER_HEADER = """
         uniform shader fromImage;
@@ -51,9 +53,21 @@ public sealed class TransitionEffect
 
 
     /// <summary>
-    /// Gets the SkSL source, without <see cref="SHADER_HEADER"/>.
+    /// Gets the complete SkSL source.
     /// </summary>
     public string Source { get; }
+
+
+    /// <summary>
+    /// Gets the file of a custom effect, or <c>null</c> for a built-in one.
+    /// </summary>
+    public string? FilePath { get; }
+
+
+    /// <summary>
+    /// Gets the number of lines wrapped around the author's code, so errors report the line of their file.
+    /// </summary>
+    public int LineOffset { get; }
 
 
     /// <summary>
@@ -62,10 +76,12 @@ public sealed class TransitionEffect
     public string? CompileError { get; private set; }
 
 
-    public TransitionEffect(string id, string source)
+    public TransitionEffect(string id, string source, string? filePath = null, int lineOffset = 0)
     {
         Id = id;
         Source = source;
+        FilePath = filePath;
+        LineOffset = lineOffset;
     }
 
 
@@ -79,10 +95,14 @@ public sealed class TransitionEffect
             if (_isCompiled) return _effect;
             _isCompiled = true;
 
-            var effect = SKRuntimeEffect.CreateShader(SHADER_HEADER + Source, out var errors);
+            var effect = SKRuntimeEffect.CreateShader(Source, out var errors);
             if (effect is null)
             {
-                CompileError = errors;
+                CompileError = ErrorLineRegex().Replace(errors, m =>
+                {
+                    var line = int.Parse(m.Groups[1].Value, CultureInfo.InvariantCulture) - LineOffset;
+                    return $"error: {line}:";
+                });
                 return null;
             }
 
@@ -90,5 +110,15 @@ public sealed class TransitionEffect
             return _effect;
         }
     }
+
+
+    /// <summary>
+    /// Counts the lines of a code prefix, for <see cref="LineOffset"/>.
+    /// </summary>
+    public static int CountLines(string prefix) => prefix.Split('\n').Length - 1;
+
+
+    [GeneratedRegex(@"^error: (\d+):", RegexOptions.Multiline)]
+    private static partial Regex ErrorLineRegex();
 
 }
