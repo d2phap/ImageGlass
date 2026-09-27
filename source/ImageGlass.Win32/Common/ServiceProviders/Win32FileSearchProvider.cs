@@ -83,8 +83,8 @@ public partial class Win32FileSearchProvider : FileSearchProvider
 
                 try
                 {
-                    var folderShell = GetShellFolderView(null, (ExplorerView?)options.ForegroundShell);
-                    FindFiles_WithShell(folderShell.View, folderShell.DirPath, options, publish, token);
+                    var foregroundView = (ShellAppView?)options.ForegroundShell;
+                    FindFiles_WithShell(foregroundView, null, options, publish, token);
                 }
                 catch (COMException) { }
             });
@@ -94,7 +94,7 @@ public partial class Win32FileSearchProvider : FileSearchProvider
 
 
         // 2. get files from the given directories
-        var fvMap = new ConcurrentDictionary<string, ExplorerFolderView?>();
+        var fvMap = new ConcurrentDictionary<string, ShellAppView?>();
         var dirList = dirs.ToList();
 
         if (options.UseExplorerSortOrder)
@@ -104,20 +104,19 @@ public partial class Win32FileSearchProvider : FileSearchProvider
             {
                 if (token.IsCancellationRequested) return;
 
-                ExplorerFolderView? fv = null;
+                ShellAppView? fv = null;
                 try
                 {
-                    var folderShell = await Dispatcher.UIThread.InvokeAsync(() =>
+                    // must run on the UI thread, where Explorer's COM objects live
+                    fv = await Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        var dirShell = GetShellFolderView(dirPath, null);
-                        return dirShell;
+                        var dirView = new EggShell().FindOpeningView(dirPath, true);
+                        return dirView;
                     });
-
-                    fv = folderShell.View;
                 }
                 catch
                 {
-                    // a failing shell (e.g. Tablacus Explorer) only costs the Explorer order, the dir is still searched below
+                    // a failing shell (e.g. a third-party file manager) only costs the Explorer order, the dir is still searched below
                 }
 
                 _ = fvMap.TryAdd(dirPath, fv);
@@ -160,15 +159,21 @@ public partial class Win32FileSearchProvider : FileSearchProvider
 
 
     /// <summary>
-    /// Finds files in the given <see cref="ExplorerFolderView"/>.
+    /// Finds files in the given <see cref="ShellAppView"/>.
     /// Use the <see cref="FilesEnumerated"/> event to get results.
     /// </summary>
-    private void FindFiles_WithShell(ExplorerFolderView? fv, string? rootDir,
+    private void FindFiles_WithShell(ShellAppView? fv, string? rootDir,
         FileSearchOptions options, Action<FileSearchingEventArgs>? progressFn,
         CancellationToken token)
     {
+        // shell determines which items are shown and in what order.
+        var shellPaths = fv?.GetTabViewItems();
+
+        // a null root means the view's own folder, read after its items so both come from the same navigation
+        rootDir ??= fv?.GetTabViewPath();
+
         // if no folder view
-        if (fv is null)
+        if (shellPaths is null)
         {
             // use .NET
             if (!string.IsNullOrWhiteSpace(rootDir))
@@ -178,9 +183,6 @@ public partial class Win32FileSearchProvider : FileSearchProvider
             return;
         }
 
-
-        // shell determines which items are shown and in what order.
-        var shellPaths = fv.GetItems(FolderItemViewOptions.SVGIO_FLAG_VIEWORDER).ToArray();
 
         // directory enumeration provides their filesystem metadata.
         var isFileSystemDirectory = !string.IsNullOrWhiteSpace(rootDir)
@@ -260,65 +262,6 @@ public partial class Win32FileSearchProvider : FileSearchProvider
                 FindFiles(dirPath, options, progressFn, token);
             }
         }
-    }
-
-
-    /// <summary>
-    /// Gets the <see cref="ExplorerFolderView"/> from the given dir path.
-    /// </summary>
-    /// <remarks>🔴 NOTE: Must run on UI thread.</remarks>
-    /// <exception cref="COMException"></exception>
-    private static (ExplorerFolderView? View, string DirPath) GetShellFolderView(string? rootDir, ExplorerView? foregroundShell)
-    {
-        var folderPath = string.Empty;
-        var shell = new EggShell();
-        ExplorerFolderView? folderView = null;
-
-
-        // if no dir path, get the explorer's folder view where the application opened from
-        if (string.IsNullOrWhiteSpace(rootDir))
-        {
-            if (foregroundShell?.GetTabFolderView() is ExplorerFolderView fv)
-            {
-                folderPath = foregroundShell.GetTabViewPath();
-                folderView = fv;
-            }
-        }
-        else if (!Path.EndsInDirectorySeparator(rootDir))
-        {
-            rootDir += Path.DirectorySeparatorChar;
-        }
-
-
-        rootDir ??= "";
-
-        // find the folder view from the opening explorer windows
-        if (folderView == null)
-        {
-            // find the explorer's folder view for each directory
-            shell.WithOpeningWindows(ev =>
-            {
-                var windowPath = ev.GetTabViewPath();
-                if (!Path.EndsInDirectorySeparator(windowPath))
-                {
-                    windowPath += Path.DirectorySeparatorChar;
-                }
-
-                // get the folder view for the input dir
-                if (rootDir.Equals(windowPath, StringComparison.InvariantCultureIgnoreCase)
-                    && ev.GetTabFolderView() is ExplorerFolderView fv)
-                {
-                    folderPath = windowPath;
-                    folderView = fv;
-                    return true;
-                }
-
-                return false;
-            }, true);
-        }
-
-
-        return (folderView, folderPath);
     }
 
 }
