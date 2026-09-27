@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.UI.Viewer.Transitions;
 using System;
 using System.Threading;
 
@@ -71,5 +72,10 @@ public class PhotoLoadingOptions
     public bool UseCache { get; set; } = true;
     public bool ResetZoom { get; set; } = true;
     public ColorChannels Channels { get; set; } = ColorChannels.RGBA;
+
+    /// <summary>
+    /// Gets, sets the transition to play from the current photo, or <c>null</c> for none.
+    /// </summary>
+    public TransitionRequest? Transition { get; set; }
 }
 

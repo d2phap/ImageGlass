@@ -32,6 +32,7 @@ using ImageGlass.Common.Types;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using ImageGlass.UI.Viewer.ZoomAndPan;
 using ImageGlass.ViewModels;
 using System;
@@ -994,7 +995,8 @@ public partial class MainWindowView : PhControl
     }
 
 
-    public async Task ViewPhotoAsync(Photo? photo, bool useCache = true, bool scrollToThumbnail = true, bool resetZoom = true)
+    public async Task ViewPhotoAsync(Photo? photo, bool useCache = true, bool scrollToThumbnail = true, bool resetZoom = true,
+        TransitionRequest? transition = null)
     {
         // Sequential mode: close the navigation gate here, not inside the post below,
         // so the next key repeat already sees a load in flight
@@ -1031,6 +1033,7 @@ public partial class MainWindowView : PhControl
                     UseCache = useCache,
                     ResetZoom = resetZoom,
                     Channels = Core.ColorChannels,
+                    Transition = transition,
                 });
 
                 // reopening the gate at decode time is too early: the next navigation would

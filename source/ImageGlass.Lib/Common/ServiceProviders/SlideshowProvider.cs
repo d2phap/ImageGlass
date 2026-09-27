@@ -35,6 +35,9 @@ public sealed class SlideshowProvider : PhDisposable
     /// </summary>
     public const double MIN_INTERVAL_MS = 50;
 
+    // longest transition plus the viewer's hold for a decoding photo, with room to spare
+    private const int MAX_ADVANCE_WAIT_MS = 20_000;
+
     private CancellationTokenSource? _cts;
     private CancellationTokenSource? _intervalCts;
     private SemaphoreSlim? _pauseGate;
@@ -53,9 +56,9 @@ public sealed class SlideshowProvider : PhDisposable
 
 
     /// <summary>
-    /// Raised on the UI thread when the slideshow should advance to the next photo.
+    /// Raised on the UI thread to advance to the next photo; the next interval starts once the returned task (its transition) completes.
     /// </summary>
-    public event Action? NextPhotoRequested;
+    public event Func<Task>? NextPhotoRequested;
 
 
 
@@ -221,6 +224,9 @@ public sealed class SlideshowProvider : PhDisposable
     {
         const int tickMs = 50; // update countdown ~20 times/sec
 
+        // an interval picked while the previous advance was still transitioning
+        var nextIntervalMs = 0d;
+
         try
         {
             while (!token.IsCancellationRequested)
@@ -246,10 +252,15 @@ public sealed class SlideshowProvider : PhDisposable
                         intervalMs = _remainingMsOnPause;
                         _remainingMsOnPause = 0;
                     }
+                    else if (nextIntervalMs > 0)
+                    {
+                        intervalMs = nextIntervalMs;
+                    }
                     else
                     {
                         intervalMs = GetNextIntervalMs();
                     }
+                    nextIntervalMs = 0;
                 }
                 SetCountdown(intervalMs / 1000.0);
 
@@ -300,7 +311,8 @@ public sealed class SlideshowProvider : PhDisposable
 
                 // 5. advance to next photo and update beep counter
                 _beepImageCount++;
-                Dispatcher.UIThread.Post(() => NextPhotoRequested?.Invoke());
+                var advanceTask = await Dispatcher.UIThread.InvokeAsync<Task>(
+                    () => NextPhotoRequested?.Invoke() ?? Task.CompletedTask);
 
 
                 // 6. check beep notification
@@ -310,6 +322,12 @@ public sealed class SlideshowProvider : PhDisposable
                     _beepImageCount = 0;
                     _ = Task.Run(BHelper.PlayNotificationSoundAsync, token);
                 }
+
+
+                // 7. the next interval counts only once the transition is done; show it in full meanwhile
+                nextIntervalMs = GetNextIntervalMs();
+                SetCountdown(nextIntervalMs / 1000.0);
+                await WaitForAdvanceAsync(advanceTask, token).ConfigureAwait(false);
             }
         }
         catch (OperationCanceledException)
@@ -321,6 +339,22 @@ public sealed class SlideshowProvider : PhDisposable
             _isRunning = false;
             _isPaused = false;
             SetCountdown(0);
+        }
+    }
+
+
+    /// <summary>
+    /// Waits for an advance to finish its transition, bounded so a stalled render loop cannot stop the slideshow.
+    /// </summary>
+    private static async Task WaitForAdvanceAsync(Task advanceTask, CancellationToken token)
+    {
+        try
+        {
+            await advanceTask.WaitAsync(TimeSpan.FromMilliseconds(MAX_ADVANCE_WAIT_MS), token).ConfigureAwait(false);
+        }
+        catch (TimeoutException)
+        {
+            // continue with the next interval
         }
     }
 

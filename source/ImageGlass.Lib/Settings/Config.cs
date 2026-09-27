@@ -25,6 +25,7 @@ using ImageGlass.Common.Types.JsonTypeConverters;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -540,6 +541,24 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets the slideshow transition duration in milliseconds.
+    /// </summary>
+    public uint SlideshowTransitionDuration
+    {
+        get => Get(ConfigId.SlideshowTransitionDuration, 1000u);
+        set => Set(ConfigId.SlideshowTransitionDuration, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the transition duration in milliseconds when navigating photos.
+    /// </summary>
+    public uint NavigationTransitionDuration
+    {
+        get => Get(ConfigId.NavigationTransitionDuration, 300u);
+        set => Set(ConfigId.NavigationTransitionDuration, value);
+    }
+
+    /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
     public uint ThumbnailSize
@@ -746,6 +765,24 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.SlideshowBackgroundColor, "#000000");
         set => Set(ConfigId.SlideshowBackgroundColor, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the transition effect id played when the slideshow advances.
+    /// </summary>
+    public string SlideshowTransition
+    {
+        get => Get(ConfigId.SlideshowTransition, TransitionEffects.NONE);
+        set => Set(ConfigId.SlideshowTransition, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the transition effect id played when navigating photos.
+    /// </summary>
+    public string NavigationTransition
+    {
+        get => Get(ConfigId.NavigationTransition, TransitionEffects.NONE);
+        set => Set(ConfigId.NavigationTransition, value);
     }
 
     /// <summary>

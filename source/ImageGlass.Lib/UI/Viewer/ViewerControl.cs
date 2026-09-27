@@ -682,6 +682,9 @@ public partial class ViewerControl : PhControl
             // save pan position for LockZoom before unloading
             _lockZoomSavedSrcPoint = ZoomMode == ZoomMode.LockZoom ? _logicalSrcPoint : null;
 
+            // capture the old frame for the transition while its images still exist
+            BeginTransition(options?.Transition);
+
             // unload current photo resources
             UnloadPhoto();
 

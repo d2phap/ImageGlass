@@ -32,6 +32,7 @@ using ImageGlass.Common.Windows;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using ImageGlass.UI.Windowing;
 using ImageGlass.Windows;
 using System;
@@ -72,7 +73,6 @@ public partial class AppAPIProvider
     private bool _windowMaximizedBeforeSlideshow;
     private DispatcherTimer? _slideshowCountdownTimer;
     private IdleCursorHider? _slideshowCursorHider;
-    private bool _slideshowIsAdvancing;
 
     // set once the user runs a check-for-update with UI; the startup silent check then completes
     // its work without popping its own window on top of what the user already asked for
@@ -961,6 +961,15 @@ public partial class AppAPIProvider
     /// </summary>
     public void IG_ViewByStep(int step)
     {
+        _ = ViewByStep__(step, isSlideshowAdvance: false);
+    }
+
+
+    /// <summary>
+    /// Views the photo <paramref name="step"/> away; the task completes when its transition finished.
+    /// </summary>
+    private Task ViewByStep__(int step, bool isSlideshowAdvance)
+    {
         // Sequential mode: ignore navigation until the current photo is painted, so holding
         // an arrow key advances one fully-drawn image at a time.
         // must run before GetByStep below, which advances CurrentIndex right away
@@ -971,7 +980,7 @@ public partial class AppAPIProvider
             if (isLoading)
             {
                 PhotoTrace.Mark("nav:blocked-sequential", Core.Photos.CurrentFilePath);
-                return;
+                return Task.CompletedTask;
             }
         }
 
@@ -990,7 +999,7 @@ public partial class AppAPIProvider
             // try the sibling directory; if none found, fall back to normal loop-back handling
             var currentDir = Path.GetDirectoryName(Core.Photos.CurrentFilePath);
             var isSiblingDirOpened = TryOpenSiblingDir(currentDir, isNext: step >= 0, selectLastPhoto: step < 0);
-            if (isSiblingDirOpened) return;
+            if (isSiblingDirOpened) return Task.CompletedTask;
             reachedBoundary = !Core.Photos.GetByStep(step, canLoopBack, out photo);
         }
 
@@ -1001,14 +1010,36 @@ public partial class AppAPIProvider
             _ = Message.ShowAsync(Core.Lang[isFirst
                 ? LangId._ReachedFirstImage
                 : LangId._ReachedLastImage]);
-            return;
+            return Task.CompletedTask;
         }
 
 
-        _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo);
+        var transition = CreateTransitionRequest__(step, isSlideshowAdvance);
+        _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo, transition: transition);
 
         // reset slideshow interval on manual navigation
-        if (!_slideshowIsAdvancing) ResetSlideshowInterval__();
+        if (!isSlideshowAdvance) ResetSlideshowInterval__();
+
+        return transition?.Completion ?? Task.CompletedTask;
+    }
+
+
+    /// <summary>
+    /// Creates the transition for a step navigation from the config; <c>null</c> for none.
+    /// </summary>
+    private TransitionRequest? CreateTransitionRequest__(int step, bool isSlideshowAdvance)
+    {
+        // holding an arrow key flips through photos, which a transition would only slow down
+        if (IsQuickBrowsing) return null;
+
+        var effectId = isSlideshowAdvance
+            ? Core.Config.SlideshowTransition
+            : Core.Config.NavigationTransition;
+        var durationMs = isSlideshowAdvance
+            ? Core.Config.SlideshowTransitionDuration
+            : Core.Config.NavigationTransitionDuration;
+
+        return TransitionEffects.CreateRequest(effectId, durationMs, step);
     }
 
 
@@ -2825,11 +2856,9 @@ public partial class AppAPIProvider
         if (_isWindowFitBeforeSlideshow) IG_ToggleWindowFit(true);
     }
 
-    private void OnSlideshowNextPhoto__()
+    private Task OnSlideshowNextPhoto__()
     {
-        _slideshowIsAdvancing = true;
-        IG_ViewNext();
-        _slideshowIsAdvancing = false;
+        return ViewByStep__(1, isSlideshowAdvance: true);
     }
 
 
