@@ -104,13 +104,22 @@ public partial class Win32FileSearchProvider : FileSearchProvider
             {
                 if (token.IsCancellationRequested) return;
 
-                var folderShell = await Dispatcher.UIThread.InvokeAsync(() =>
+                ExplorerFolderView? fv = null;
+                try
                 {
-                    var dirShell = GetShellFolderView(dirPath, null);
-                    return dirShell;
-                });
+                    var folderShell = await Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        var dirShell = GetShellFolderView(dirPath, null);
+                        return dirShell;
+                    });
 
-                var fv = folderShell.View;
+                    fv = folderShell.View;
+                }
+                catch
+                {
+                    // a failing shell (e.g. Tablacus Explorer) only costs the Explorer order, the dir is still searched below
+                }
+
                 _ = fvMap.TryAdd(dirPath, fv);
             }
         }
