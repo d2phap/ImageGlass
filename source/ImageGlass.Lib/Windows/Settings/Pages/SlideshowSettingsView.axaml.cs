@@ -78,7 +78,8 @@ public partial class SlideshowSettingsView : SettingsPageView
         BindUIntInput(PART_NotifySound, ConfigId.SlideshowImagesToNotifySound,
             LangId.Settings_SlideshowImagesToNotifySound, LangId.Settings_Slideshow_Playback);
 
-        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError, PART_OpenTransitionsFolder,
+        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError,
+            PART_OpenTransitionsFolder, PART_GetMoreTransitions,
             ConfigId.SlideshowTransition, ConfigId.SlideshowTransitionDuration, 1000u, LangId.Settings_Slideshow_Playback);
     }
 

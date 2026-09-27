@@ -36,6 +36,9 @@ namespace ImageGlass.Common.Windows;
 /// </summary>
 public abstract class SettingsPageView : PhControl
 {
+    private const string TRANSITIONS_URL = "https://imageglass.org/effects";
+
+
     /// <summary>
     /// Gets the staging working-copy view model the page binds to.
     /// </summary>
@@ -384,7 +387,8 @@ public abstract class SettingsPageView : PhControl
     /// <summary>
     /// Binds a transition effect dropdown (the effect files, re-read now) and its duration box.
     /// </summary>
-    protected void BindTransitionEditor(ComboBox combo, PhTextBox durationBox, PhTextBlock errorText, PhButton openFolderBtn,
+    protected void BindTransitionEditor(ComboBox combo, PhTextBox durationBox, PhTextBlock errorText,
+        PhButton openFolderBtn, PhButton getMoreBtn,
         ConfigId effectId, ConfigId durationId, uint defaultDuration, LangId section)
     {
         // picks up effect files added since the last time settings were opened
@@ -452,6 +456,8 @@ public abstract class SettingsPageView : PhControl
         BindUIntInput(durationBox, durationId, LangId.Settings_TransitionDuration, section, defaultDuration);
         BindLink(openFolderBtn, LangId.Settings_OpenTransitionsFolder,
             () => BHelper.OpenFolderPath(BHelper.GetRealPlatformConfigDir(Dir.Transitions)));
+        BindLink(getMoreBtn, LangId.Settings_GetMoreTransitionEffects, TRANSITIONS_URL,
+            () => _ = BHelper.OpenUrlAsync(this, TRANSITIONS_URL, "from_setting_transitions"));
     }
 
 

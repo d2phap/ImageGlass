@@ -43,9 +43,9 @@ public static class TransitionEffects
     public const string RANDOM = "Random";
 
     /// <summary>
-    /// File extension of an effect, written in the gl-transitions GLSL format.
+    /// File extension of an effect, written in the gl-transitions GLSL format; other files in the folders are ignored.
     /// </summary>
-    public const string GLSL_EXT = ".glsl";
+    public const string FILE_EXT = ".igtransition.glsl";
 
     public const uint MIN_DURATION_MS = 50;
     public const uint MAX_DURATION_MS = 10_000;
@@ -142,10 +142,11 @@ public static class TransitionEffects
 
         foreach (var file in files)
         {
-            var isGlsl = Path.GetExtension(file).Equals(GLSL_EXT, StringComparison.OrdinalIgnoreCase);
-            if (!isGlsl) continue;
+            var fileName = Path.GetFileName(file);
+            var isEffect = fileName.EndsWith(FILE_EXT, StringComparison.OrdinalIgnoreCase);
+            if (!isEffect || fileName.Length == FILE_EXT.Length) continue;
 
-            var id = Path.GetFileNameWithoutExtension(file);
+            var id = fileName[..^FILE_EXT.Length];
             if (!takenIds.Add(id)) continue;
 
             try

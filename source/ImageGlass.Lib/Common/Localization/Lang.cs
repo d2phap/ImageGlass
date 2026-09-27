@@ -1020,6 +1020,7 @@ public class Lang
         new(LangId.Settings_TransitionDuration, "Duration (milliseconds)"),
         new(LangId.Settings_TransitionCompileError, "This effect cannot be used:"),
         new(LangId.Settings_OpenTransitionsFolder, "Open transition effects folder"),
+        new(LangId.Settings_GetMoreTransitionEffects, "Get more effects…"),
         #endregion // Settings > Tab Slideshow
 
 

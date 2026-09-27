@@ -579,6 +579,7 @@ public enum LangId
     Settings_TransitionDuration,
     Settings_TransitionCompileError,
     Settings_OpenTransitionsFolder,
+    Settings_GetMoreTransitionEffects,
     #endregion // Settings > Tab Slideshow
 
 

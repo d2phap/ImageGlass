@@ -142,11 +142,13 @@
                     Foreground="{DynamicResource IG_TextDangerBrush}"
                     IsVisible="False"
                     TextWrapping="Wrap" />
-                <ui:PhButton
-                    x:Name="PART_OpenTransitionsFolder"
-                    Margin="0,0,0,8"
+                <StackPanel
+                    Margin="0,8,0,8"
                     HorizontalAlignment="Left"
-                    Variant="Link" />
+                    Spacing="8">
+                    <ui:PhButton x:Name="PART_OpenTransitionsFolder" Variant="Link" />
+                    <ui:PhButton x:Name="PART_GetMoreTransitions" Variant="Link" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
 
