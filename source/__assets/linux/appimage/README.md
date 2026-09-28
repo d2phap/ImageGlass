@@ -170,9 +170,11 @@ keep in sync by hand. `UPDATE_INFO=<string>` overrides the whole string, `GH_OWN
 `GH_REPO` repoint it at a fork, and `NO_UPDATE_INFO=1` builds an image that cannot
 self-update.
 
-This is separate from the app's own in-app update check (`UpdateProvider`), which reads a
-manifest and only *notifies*; AppImage update information is what lets an external manager
-actually replace the file.
+This is separate from the app's own updater (`LinuxUpdateProvider`, Pro). That one downloads the
+release's `linux-x64-appimage` artifact, checks its sha256, and swaps it in by rename beside the
+running image. The path stays the same, so launchers and file associations keep working. If the new
+image fails at startup (e.g. on an older host glibc), the old one is renamed back. It needs a
+writable folder; an image in a read-only location can only be updated externally.
 
 ## Distribute on GitHub Releases
 

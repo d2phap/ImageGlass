@@ -47,6 +47,7 @@ internal static class XdgPortal
     private const string PORTAL_PATH = "/org/freedesktop/portal/desktop";
     private const string FM_DEST = "org.freedesktop.FileManager1";
     private const string FM_PATH = "/org/freedesktop/FileManager1";
+    private const int QUERY_TIMEOUT_MS = 3_000;
 
 
     /// <summary>
@@ -120,6 +121,48 @@ internal static class XdgPortal
         Call(FM_DEST, FM_PATH, method,
             $"['{ToGVariantUri(filePath)}']",   // URIs
             "");                                // startup_id
+    }
+
+
+    /// <summary>
+    /// Whether the connection is metered, via <c>org.freedesktop.portal.NetworkMonitor</c>;
+    /// <c>false</c> when the portal cannot tell, so an unknown cost never blocks an update.
+    /// </summary>
+    public static bool IsNetworkMetered()
+    {
+        try
+        {
+            using var proc = new Process();
+            proc.StartInfo.FileName = "gdbus";
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
+
+            var args = proc.StartInfo.ArgumentList;
+            args.Add("call");
+            args.Add("--session");
+            args.Add("--dest"); args.Add(PORTAL_DEST);
+            args.Add("--object-path"); args.Add(PORTAL_PATH);
+            args.Add("--method"); args.Add("org.freedesktop.portal.NetworkMonitor.GetMetered");
+
+            proc.Start();
+            var output = proc.StandardOutput.ReadToEndAsync();
+            _ = proc.StandardError.ReadToEndAsync();
+
+            if (!proc.WaitForExit(QUERY_TIMEOUT_MS))
+            {
+                proc.Kill();
+                return false;
+            }
+
+            // the reply is "(true,)" or "(false,)"
+            return proc.ExitCode == 0 && output.Result.Contains("true", StringComparison.Ordinal);
+        }
+        catch
+        {
+            return false;
+        }
     }
 
 

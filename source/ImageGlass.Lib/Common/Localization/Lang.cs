@@ -878,6 +878,7 @@ public class Lang
         new(LangId.Menu_MnuCheckForUpdate_PublishedDate, "Published date: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_ReadyToInstall, "Update ready to install"), //v10.0
         new(LangId.Menu_MnuCheckForUpdate_Downloading, "Downloading the update…"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_Installing, "Installing the update…"), //v10.0
         new(LangId.Menu_MnuInstallUpdate, "Install update…"), //v10.0
         new(LangId.Menu_MnuInstallUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
         new(LangId.Menu_MnuCheckForUpdate_ProFromStore, "Get ImageGlass Pro from Store"), // v10.0

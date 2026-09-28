@@ -437,6 +437,7 @@ public enum LangId
     Menu_MnuCheckForUpdate_PublishedDate,
     Menu_MnuCheckForUpdate_ReadyToInstall,
     Menu_MnuCheckForUpdate_Downloading,
+    Menu_MnuCheckForUpdate_Installing,
     Menu_MnuInstallUpdate,
     Menu_MnuInstallUpdate_Confirm,
     Menu_MnuCheckForUpdate_ProFromStore,

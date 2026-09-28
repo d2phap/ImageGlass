@@ -34,6 +34,7 @@ public partial class UpdateWindow : ModalWindow
     private UpdateCheckResult? _result;
     private bool _isReadyToInstall;
     private bool _canDownloadAndInstall;
+    private bool _isClosed;
     private CancellationTokenSource? _cancelDownload;
 
     protected override int MIN_WIDTH => 550;
@@ -90,7 +91,7 @@ public partial class UpdateWindow : ModalWindow
         // restart to install
         if (_isReadyToInstall)
         {
-            _ = AppAPIProvider.IG_InstallUpdateAsync(false);
+            _ = InstallThenCloseAsync();
             return;
         }
 
@@ -123,6 +124,7 @@ public partial class UpdateWindow : ModalWindow
     {
         base.OnClosed(e);
 
+        _isClosed = true;
         _cancelDownload?.Cancel();
     }
 
@@ -258,12 +260,42 @@ public partial class UpdateWindow : ModalWindow
         }
         else
         {
+            SetInstallingState();
             await AppAPIProvider.IG_InstallUpdateAsync(false);
         }
 
 
+        if (_isClosed) return;
         DialogResult = DialogExitCode.Cancel;
         Close();
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded package, then closes; the installer reports a failure itself.
+    /// </summary>
+    private async Task InstallThenCloseAsync()
+    {
+        SetInstallingState();
+        await AppAPIProvider.IG_InstallUpdateAsync(false);
+
+        if (_isClosed) return;
+        DialogResult = DialogExitCode.Cancel;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Shows the install as in progress; an installer that does not end the process must not be clicked twice.
+    /// </summary>
+    private void SetInstallingState()
+    {
+        Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_Installing];
+        IsButton1Visible = false;
+        Button2Text = Core.Lang[LangId._Close];
+        IsProgressVisible = true;
+        IsProgressIndeterminate = true;
+        PART_BtnSkipVersion.IsVisible = false;
     }
 
     #endregion // Private Methods
