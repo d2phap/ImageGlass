@@ -263,6 +263,7 @@ public partial class ViewerControl
             DestRect = new();
             _logicalSrcPoint = new();
             UpdateScrollbars();
+            OnRenderStateChanged();
             return;
         }
 
@@ -644,6 +645,9 @@ public partial class ViewerControl
 
         // 6. Sync the scrollbars with the new viewport
         UpdateScrollbars();
+
+        // 7. Let mirrors follow the new viewport
+        OnRenderStateChanged();
     }
 
 

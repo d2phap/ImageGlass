@@ -110,6 +110,18 @@ public partial class ViewerControl : PhControl
     public bool IsColorInverted { get; protected set; } = false;
 
 
+    /// <summary>
+    /// Gets, sets whether the viewer takes pointer and touch input; off for a display-only viewer.
+    /// </summary>
+    public bool IsInteractive
+    {
+        get => GetValue(IsInteractiveProperty);
+        set => SetValue(IsInteractiveProperty, value);
+    }
+    public static readonly StyledProperty<bool> IsInteractiveProperty =
+        AvaloniaProperty.Register<ViewerControl, bool>(nameof(IsInteractive), true);
+
+
     #endregion // Public Properties
 
 
@@ -125,6 +137,8 @@ public partial class ViewerControl : PhControl
         // suppress the default way to open context menu
         AddHandler(ContextRequestedEvent, OnContextMenuRequested, RoutingStrategies.Tunnel);
         RegisterTouchGestures();
+
+        AttachMirrorSource(MirrorSource);
     }
 
 
@@ -139,6 +153,7 @@ public partial class ViewerControl : PhControl
         // suppress the default way to open context menu
         RemoveHandler(ContextRequestedEvent, OnContextMenuRequested);
 
+        DetachMirrorSource(MirrorSource);
         DisposeCheckerboard();
         DisposeNativePhotoResources();
     }
@@ -193,6 +208,9 @@ public partial class ViewerControl : PhControl
 
         DisposeCheckerboard();
         InvalidateVisual();
+
+        // the zoom factor is in device pixels, so a mirror re-fits
+        OnRenderStateChanged();
     }
 
 
@@ -203,6 +221,13 @@ public partial class ViewerControl : PhControl
         // update drawing area
         if (e.Property == PaddingProperty || e.Property == BoundsProperty)
         {
+            // a mirror takes its whole viewport from the source on render
+            if (MirrorSource is not null)
+            {
+                InvalidateVisual();
+                return;
+            }
+
             Dispatcher.UIThread.Post(() =>
             {
                 DrawingArea = Bounds.Deflate(Padding);
@@ -215,12 +240,37 @@ public partial class ViewerControl : PhControl
         }
         else if (e.Property == EnableNavButtonsProperty)
         {
-            _navButtons.IsEnabled = (bool)e.NewValue!;
+            _navButtons.IsEnabled = (bool)e.NewValue! && IsInteractive;
         }
         else if (e.Property == ScrollbarModeProperty)
         {
             ApplyScrollbarMode();
         }
+        else if (e.Property == IsInteractiveProperty)
+        {
+            ApplyInteractivity();
+        }
+        else if (e.Property == MirrorSourceProperty)
+        {
+            OnMirrorSourceChanged(e.OldValue as ViewerControl, e.NewValue as ViewerControl);
+        }
+        else if (e.Property == EnableMirrorSyncProperty)
+        {
+            InvalidateVisual();
+        }
+    }
+
+
+    /// <summary>
+    /// Turns input on or off; with hit testing off, no pointer, wheel or gesture reaches the viewer.
+    /// </summary>
+    private void ApplyInteractivity()
+    {
+        var isInteractive = IsInteractive;
+
+        IsHitTestVisible = isInteractive;
+        _navButtons.IsEnabled = isInteractive && EnableNavButtons;
+        ApplyScrollbarMode();
     }
 
 
@@ -596,6 +646,7 @@ public partial class ViewerControl : PhControl
             // also covers a source swapped in without a new drawing region, e.g. the full image after a zoomed preview
             UpdateScrollbars();
             InvalidateVisual();
+            OnRenderStateChanged();
         });
     }
 
@@ -637,6 +688,8 @@ public partial class ViewerControl : PhControl
             SKImageRef.Set(ref _imgRender, null);
             SKImageRef.Set(ref _imgHdrSource, null);
         }
+
+        OnRenderStateChanged();
     }
 
 
@@ -1259,6 +1312,7 @@ public partial class ViewerControl : PhControl
         }
 
         InvalidateVisual();
+        OnRenderStateChanged();
         OnPhotoFrameChanged(e);
     }
 

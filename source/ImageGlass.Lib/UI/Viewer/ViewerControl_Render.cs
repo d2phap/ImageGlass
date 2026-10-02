@@ -193,6 +193,9 @@ public partial class ViewerControl
 
     public override void Render(DrawingContext c)
     {
+        // right before drawing, so the mirror viewport matches the content it draws
+        if (MirrorSource is not null) SyncFromMirrorSource();
+
         base.Render(c);
 
         using (c.PushClip(DrawingArea))
@@ -332,8 +335,12 @@ public partial class ViewerControl
     /// </summary>
     protected virtual void OnDrawImage(DrawingContext c)
     {
-        // draw image
-        c.Custom(new PhotoRenderer(this, OnDrawnImageFirstTime));
+        // a mirror draws the photo of its source through its own viewport
+        var renderer = MirrorSource is { } source
+            ? new PhotoRenderer(this, source, EnableMirrorSync)
+            : new PhotoRenderer(this, OnDrawnImageFirstTime);
+
+        c.Custom(renderer);
     }
 
 
@@ -356,6 +363,7 @@ public partial class ViewerControl
             if (IsVectorSource())
             {
                 InvalidateVisual();
+                OnRenderStateChanged();
                 return;
             }
 
@@ -373,6 +381,7 @@ public partial class ViewerControl
 
             // draw again
             InvalidateVisual();
+            OnRenderStateChanged();
         }
     }
 

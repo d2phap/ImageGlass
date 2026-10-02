@@ -95,7 +95,7 @@ public partial class ViewerControl
     private void ApplyScrollbarMode()
     {
         var mode = ScrollbarMode;
-        var isVisible = mode != ScrollbarMode.Never;
+        var isVisible = AreScrollbarsShown();
         var allowAutoHide = mode == ScrollbarMode.AutoHide;
 
         _scrollbarHost.IsVisible = isVisible;
@@ -107,11 +107,22 @@ public partial class ViewerControl
 
 
     /// <summary>
+    /// Checks whether the scrollbars are shown at all; a display-only viewer takes no input to scroll with.
+    /// </summary>
+    private bool AreScrollbarsShown()
+    {
+        if (ScrollbarMode == ScrollbarMode.Never) return false;
+
+        return IsInteractive;
+    }
+
+
+    /// <summary>
     /// Syncs the scrollbars with the current image size, zoom and pan position.
     /// </summary>
     private void UpdateScrollbars()
     {
-        if (ScrollbarMode == ScrollbarMode.Never) return;
+        if (!AreScrollbarsShown()) return;
 
         // the pan position is in source pixels, so the viewport is measured in them too
         var zoomFactor = _zooming.Factor / Dpi;

@@ -26,6 +26,7 @@ using ImageGlass.Common.Photoing;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer.Transitions;
 using SkiaSharp;
+using Svg.Skia;
 using System;
 using System.Threading;
 
@@ -89,6 +90,10 @@ public partial class PhotoRenderer : ICustomDrawOperation
     private readonly float _dpi;
     private readonly SKRect _drawingArea;
 
+    // a mirror draws the photo of _viewer through the viewport of another viewer
+    private readonly bool _isMirror;
+    private readonly SKSvg? _mirrorSvgDocument;
+
 
     #region Public Properties
 
@@ -133,6 +138,43 @@ public partial class PhotoRenderer : ICustomDrawOperation
             {
                 viewer._isFirstDraw.SetFalse();
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Draws the photo of <paramref name="source"/>, transformed if <paramref name="showTransforms"/>, through the viewport of <paramref name="mirror"/>.
+    /// </summary>
+    internal PhotoRenderer(ViewerControl mirror, ViewerControl source, bool showTransforms)
+    {
+        // drawn under the source lock: the source frees its images under it
+        _lock = source._lock;
+        _viewer = source;
+        _isMirror = true;
+        _onDrawFirstTime = null;
+
+        // UI-thread state of the mirror, computed for what the source shows right now
+        _bounds = mirror.Bounds;
+        _srcRect = mirror.SrcRect.ToSKRect();
+        _destRect = mirror.DestRect.ToSKRect();
+        _samplingOptions = SkiaCodec.ToSamplingOptions(mirror.CurrentInterpolation);
+        _tileCache = mirror._mipmapCache;
+        _zoomFactor = mirror.ZoomFactor;
+        _dpi = (float)mirror.Dpi;
+        _drawingArea = mirror.DrawingArea.ToSKRect();
+        _mirrorSvgDocument = mirror._mirrorSvgDocument;
+
+        lock (_lock)
+        {
+            // a vector photo draws its live picture, never the rasterized fallback
+            if (_mirrorSvgDocument is not null) return;
+
+            _imgSource = source._imgSource;
+            _imgRender = showTransforms ? source._imgRender : null;
+
+            // keep images alive until this renderer is disposed
+            _imgSource?.KeepAlive();
+            _imgRender?.KeepAlive();
         }
     }
 
@@ -188,8 +230,8 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
         lock (_lock)
         {
-            // read live: the viewer finishes or replaces the transition under the same lock
-            var transition = _viewer._transition;
+            // read live under the same lock; a mirror skips it, as the old frame is in the source's viewport
+            var transition = _isMirror ? null : _viewer._transition;
             if (transition is null || transition.IsDisposed)
             {
                 DrawContent(lease.SkCanvas, lease.GrContext);
@@ -239,7 +281,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
             SKImage? imageRender;
 
             // read the SVG picture live: SvgAnimator replaces it between frames
-            var svgPicture = _viewer._svgPicture;
+            var svgPicture = GetVectorPicture();
             if (svgPicture is not null && !svgPicture.IsDisposed())
             {
                 RenderVector(canvas, svgPicture);
@@ -312,6 +354,20 @@ public partial class PhotoRenderer : ICustomDrawOperation
         }
     }
 
+
+
+    /// <summary>
+    /// Gets the SVG picture to draw; the caller holds <see cref="_lock"/>.
+    /// </summary>
+    private SKPicture? GetVectorPicture()
+    {
+        if (!_isMirror) return _viewer._svgPicture;
+        if (_mirrorSvgDocument is null) return null;
+
+        // a mirror viewport is computed for one document, so a newer one waits for the next draw
+        var isSameDocument = ReferenceEquals(_viewer._svgDocument, _mirrorSvgDocument);
+        return isSameDocument ? _viewer._svgPicture : null;
+    }
 
 
     /// <summary>
