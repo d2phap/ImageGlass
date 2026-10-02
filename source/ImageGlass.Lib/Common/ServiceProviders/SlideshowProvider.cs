@@ -38,6 +38,9 @@ public sealed class SlideshowProvider : PhDisposable
     // longest transition plus the viewer's hold for a decoding photo, with room to spare
     private const int MAX_ADVANCE_WAIT_MS = 20_000;
 
+    // owner key of the slideshow's request in SleepGuard
+    private const string SLEEP_GUARD_OWNER = "slideshow";
+
     private CancellationTokenSource? _cts;
     private CancellationTokenSource? _intervalCts;
     private SemaphoreSlim? _pauseGate;
@@ -104,7 +107,7 @@ public sealed class SlideshowProvider : PhDisposable
             SetCountdown(0);
 
             // playback is hands-off, so the OS must not blank the screen or suspend
-            Core.ShellProvider?.PreventSleep($"{BHelper.AppDisplayName} slideshow");
+            SleepGuard.Acquire(SLEEP_GUARD_OWNER, $"{BHelper.AppDisplayName} slideshow");
 
             var token = _cts.Token;
             _ = RunLoopAsync(token);
@@ -196,7 +199,7 @@ public sealed class SlideshowProvider : PhDisposable
 
     private void Stop_Locked()
     {
-        Core.ShellProvider?.AllowSleep();
+        SleepGuard.Release(SLEEP_GUARD_OWNER);
 
         _isRunning = false;
         _isPaused = false;

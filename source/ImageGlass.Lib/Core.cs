@@ -335,6 +335,8 @@ public static class Core
         Core.FileSearchProvider?.Dispose();
         Core.FileSearchProvider = null!;
 
+        // the request must reach the shell provider before it goes away
+        SleepGuard.ReleaseAll();
         Core.ShellProvider?.Dispose();
         Core.ShellProvider = null;
     }
