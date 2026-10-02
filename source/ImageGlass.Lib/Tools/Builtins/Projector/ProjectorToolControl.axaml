@@ -55,10 +55,9 @@
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Spacing="8">
-                <!--  A grid row per projector, so the columns line up whatever the names  -->
+                <!--  A grid row per projector, so the columns line up whatever the names; the columns are set in code  -->
                 <Grid
                     x:Name="PART_ProjectorList"
-                    ColumnDefinitions="Auto, Auto, Auto, Auto, Auto"
                     ColumnSpacing="6"
                     RowSpacing="6" />
 

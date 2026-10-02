@@ -43,9 +43,6 @@ public sealed class LayoutThumbnailControl : PhControl
     private const double FRAME_PADDING = 5;
     private const double CELL_GAP = 4;
 
-    // a cell this small shows its fill only
-    private const double MIN_LABEL_CELL_SIZE = 14;
-
     // room around the text of the default option
     private const double LABEL_PADDING_X = 10;
     private const double LABEL_PADDING_Y = 4;
@@ -197,14 +194,12 @@ public sealed class LayoutThumbnailControl : PhControl
             frame.Center.Y - labelSize.Height / 2 - LABEL_PADDING_Y,
             labelSize.Width + LABEL_PADDING_X * 2,
             labelSize.Height + LABEL_PADDING_Y * 2);
-        var fill = IsActive ? accent : foreground.WithAlpha(70);
-        c.DrawRectangleEx(box, CELL_RADIUS, null, fill);
+        c.DrawRectangleEx(box, CELL_RADIUS, null, GetCellFill(accent, foreground));
 
-        var labelColor = IsActive ? accent.InvertBlackOrWhite() : foreground.WithAlpha(230);
         c.DrawTextEx(label, FontFamily, fontSize,
             box.X + LABEL_PADDING_X,
             box.Y + LABEL_PADDING_Y,
-            labelColor);
+            foreground);
     }
 
 
@@ -213,22 +208,43 @@ public sealed class LayoutThumbnailControl : PhControl
     /// </summary>
     private void DrawFilledCell(DrawingContext c, Rect cellRect, int projectorNumber, Color accent, Color foreground)
     {
-        var fill = IsActive ? accent : foreground.WithAlpha(70);
-        c.DrawRectangleEx(cellRect, CELL_RADIUS, null, fill);
+        c.DrawRectangleEx(cellRect, CELL_RADIUS, null, GetCellFill(accent, foreground));
 
-        var hasRoom = cellRect.Width >= MIN_LABEL_CELL_SIZE && cellRect.Height >= MIN_LABEL_CELL_SIZE;
-        if (!hasRoom) return;
-
+        // the body size where it fits, else the small one, else no number
         var label = projectorNumber.ToString(CultureInfo.InvariantCulture);
-        var fontSize = Math.Min(Const.FONT_SIZE_BODY, cellRect.Height - 2);
-        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
-        var labelColor = IsActive ? accent.InvertBlackOrWhite() : foreground.WithAlpha(230);
+        var fontSize = Const.FONT_SIZE_BODY;
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
+        if (!IsFitting(labelSize, cellRect))
+        {
+            fontSize = Const.FONT_SIZE_SMALL;
+            labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
+            if (!IsFitting(labelSize, cellRect)) return;
+        }
 
         c.DrawTextEx(label, FontFamily, fontSize,
             cellRect.Center.X - labelSize.Width / 2,
             cellRect.Center.Y - labelSize.Height / 2,
-            labelColor, isBold: true);
+            foreground);
     }
+
+
+    /// <summary>
+    /// Gets the fill of a projector's cell: the soft accent of the tiles on the screen map while active, else the neutral background.
+    /// </summary>
+    private Color GetCellFill(Color accent, Color foreground)
+    {
+        if (IsActive) return accent.WithAlpha(110);
+
+        return Resx.Get<IBrush?>(ResxId.IG_BackgroundNeutralBrush) is ISolidColorBrush neutralBrush
+            ? neutralBrush.Color
+            : foreground.WithAlpha(70);
+    }
+
+
+    /// <summary>
+    /// Checks whether text of <paramref name="textSize"/> fits in <paramref name="rect"/>.
+    /// </summary>
+    private static bool IsFitting(Size textSize, Rect rect) => textSize.Width + 2 <= rect.Width && textSize.Height <= rect.Height;
 
 
     /// <summary>

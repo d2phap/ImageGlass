@@ -264,6 +264,18 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
+    /// Sets how <paramref name="window"/> fits the photo while it does not follow the main viewer.
+    /// </summary>
+    public void SetZoomMode(ProjectorWindow window, ZoomMode mode)
+    {
+        if (IsDisposed) return;
+
+        window.Viewer.ZoomMode = mode;
+        OnChanged();
+    }
+
+
+    /// <summary>
     /// Sets the background color of <paramref name="window"/>; <c>null</c> follows the slideshow background color.
     /// </summary>
     public void SetBackgroundColor(ProjectorWindow window, Color? color)

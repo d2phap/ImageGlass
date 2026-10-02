@@ -157,7 +157,7 @@ public sealed class ProjectorWindow : PhWindow
             IsInteractive = false,
             EnableNavButtons = false,
             PanMargin = 0,
-            ZoomMode = Core.Config.ZoomMode,
+            ZoomMode = GetStartZoomMode(),
             CheckerboardMode = Core.Config.CheckerboardMode,
             InterpolationScaleDown = Core.Config.ImageInterpolationScaleDown,
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
@@ -259,11 +259,6 @@ public sealed class ProjectorWindow : PhWindow
         else if (e.PropertyName == nameof(Config.CheckerboardMode))
         {
             Viewer.CheckerboardMode = Core.Config.CheckerboardMode;
-        }
-        else if (e.PropertyName == nameof(Config.ZoomMode))
-        {
-            // used while not syncing, so the photo still fits the way the main window does
-            Viewer.ZoomMode = Core.Config.ZoomMode;
         }
     }
 
@@ -407,6 +402,19 @@ public sealed class ProjectorWindow : PhWindow
 
         var isMacFullScreenExit = wasFullScreen && BHelper.OS == OSType.Mac;
         await Task.Delay(isMacFullScreenExit ? MAC_FULL_SCREEN_EXIT_MS : MOVE_SETTLE_MS);
+    }
+
+
+    /// <summary>
+    /// Gets the zoom mode a projector starts with, used while it does not follow the main viewer: that of the main window.
+    /// </summary>
+    private static ZoomMode GetStartZoomMode()
+    {
+        // a locked zoom keeps the zoom factor it has, which means nothing on a projector no one zooms
+        var mode = Core.Config.ZoomMode;
+        if (mode == ZoomMode.LockZoom) return ZoomMode.AutoZoom;
+
+        return mode;
     }
 
 

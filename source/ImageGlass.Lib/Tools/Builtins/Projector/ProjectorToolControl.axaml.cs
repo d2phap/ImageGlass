@@ -54,6 +54,16 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ProjectorWindowMode.Tiled,
     ];
 
+    // a locked zoom keeps whatever zoom factor a projector has, so it is no choice here
+    private static readonly ZoomMode[] _zoomModes =
+    [
+        ZoomMode.AutoZoom,
+        ZoomMode.ScaleToFit,
+        ZoomMode.ScaleToFill,
+        ZoomMode.ScaleToWidth,
+        ZoomMode.ScaleToHeight,
+    ];
+
     // next to the list, the map grows a little with each projector in it
     private const double MAP_HEIGHT = 96;
     private const double MAP_HEIGHT_STEP = 16;
@@ -72,7 +82,10 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     private const int MAX_LAYOUT_COLUMNS = 3;
 
     private readonly Dictionary<ProjectorWindow, ProjectorRow> _rows = [];
+
+    // how the rows are laid out now, so they are laid out again only when that changes
     private readonly List<ProjectorWindow> _rowOrder = [];
+    private bool? _isRowLayoutSynced;
     private readonly List<LayoutOption> _layoutOptions = [];
     private ProjectorManager? _manager;
 
@@ -252,8 +265,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             PART_Projectors.IsVisible = hasProjectors;
 
 
-            // 2. a row per projector: its monitor, how it covers it, and its color
-            SyncRows();
+            // 2. a row per projector: its monitor, how it covers it, its zoom while not syncing, and its color
+            var isSynced = _manager.Config.EnableViewSync;
+            SyncRows(isSynced);
 
             var screens = _manager.GetOrderedScreens();
             var defaultColor = ProjectorWindow.DefaultBackgroundColor;
@@ -262,6 +276,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
                 SyncMonitorItems(row.CmbMonitor, screens.Count);
                 row.CmbMonitor.SelectedIndex = IndexOfScreen(screens, row.Window.GetScreen());
                 row.CmbMode.SelectedIndex = Array.IndexOf(_windowModes, row.Window.Mode);
+                row.CmbZoom.SelectedIndex = Array.IndexOf(_zoomModes, row.Window.Viewer.ZoomMode);
                 row.ColorPicker.DefaultColor = defaultColor;
                 row.ColorPicker.SelectedColor = row.Window.BackgroundColor ?? defaultColor;
             }
@@ -274,7 +289,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
             // 4. the options
-            PART_ChkSync.IsChecked = _manager.Config.EnableViewSync;
+            PART_ChkSync.IsChecked = isSynced;
 
 
             // 5. an open layout menu follows the projectors on its monitor
@@ -288,9 +303,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
     /// <summary>
-    /// Adds and removes rows so the list matches the open projectors, in number order.
+    /// Adds and removes rows so the list matches the open projectors, in number order; the zoom column shows only while not syncing.
     /// </summary>
-    private void SyncRows()
+    private void SyncRows(bool isSynced)
     {
         var windows = _manager!.Windows;
 
@@ -309,18 +324,29 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         }
 
         // 3. lay them out in order, leaving rows in place when nothing changed, as an open dropdown would close
-        var isInOrder = _rowOrder.SequenceEqual(windows);
-        if (isInOrder) return;
+        var isLaidOut = _rowOrder.SequenceEqual(windows) && _isRowLayoutSynced == isSynced;
+        if (isLaidOut) return;
 
         _rowOrder.Clear();
         _rowOrder.AddRange(windows);
+        _isRowLayoutSynced = isSynced;
         PART_ProjectorList.Children.Clear();
         PART_ProjectorList.RowDefinitions.Clear();
+
+        // a hidden column would still take its spacing, so it is left out instead
+        var columnCount = isSynced ? 5 : 6;
+        PART_ProjectorList.ColumnDefinitions.Clear();
+        for (var column = 0; column < columnCount; column++)
+        {
+            PART_ProjectorList.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+        }
 
         for (var rowIndex = 0; rowIndex < windows.Count; rowIndex++)
         {
             var row = _rows[windows[rowIndex]];
-            Control[] cells = [row.Chip, row.CmbMonitor, row.CmbMode, row.ColorPicker, row.BtnClose];
+            Control[] cells = isSynced
+                ? [row.Chip, row.CmbMonitor, row.CmbMode, row.ColorPicker, row.BtnClose]
+                : [row.Chip, row.CmbMonitor, row.CmbMode, row.CmbZoom, row.ColorPicker, row.BtnClose];
 
             PART_ProjectorList.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             for (var column = 0; column < cells.Length; column++)
@@ -334,7 +360,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
     /// <summary>
-    /// Creates the controls of one projector: its name to drag onto a monitor, its monitor, how it covers it, its color, and closing it.
+    /// Creates the controls of one projector: its name to drag onto a monitor, its monitor, how it covers it, its zoom, its color, and closing it.
     /// </summary>
     private ProjectorRow CreateRow(ProjectorWindow window)
     {
@@ -443,7 +469,30 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         btnClose.Classes.Add("plugin_button");
         btnClose.Click += (_, _) => ProjectorManager.CloseProjector(window);
 
-        var row = new ProjectorRow(window, chip, cmbMonitor, cmbMode, colorPicker, btnClose);
+
+        // 6. how it fits the photo while it does not follow the main viewer, listed after how it covers the monitor
+        var cmbZoom = new ComboBox
+        {
+            MinWidth = 120,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+        foreach (var _ in _zoomModes)
+        {
+            cmbZoom.Items.Add(new ComboBoxItem());
+        }
+        cmbZoom.SelectionChanged += (_, _) =>
+        {
+            if (_isUpdatingUI) return;
+            if (_manager is null) return;
+
+            var index = cmbZoom.SelectedIndex;
+            if (index < 0) return;
+
+            _manager.SetZoomMode(window, _zoomModes[index]);
+        };
+
+        var row = new ProjectorRow(window, chip, cmbMonitor, cmbMode, cmbZoom, colorPicker, btnClose);
         RelocalizeRow(row);
 
         return row;
@@ -524,6 +573,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             if (row.CmbMode.Items[i] is not ComboBoxItem item) continue;
             item.Content = GetWindowModeText(_windowModes[i]);
         }
+
+        for (var i = 0; i < row.CmbZoom.ItemCount; i++)
+        {
+            if (row.CmbZoom.Items[i] is not ComboBoxItem item) continue;
+            item.Content = GetZoomModeText(_zoomModes[i]);
+        }
     }
 
 
@@ -533,6 +588,16 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ProjectorWindowMode.Maximized => Core.Lang[LangId.Tool_Projector_ModeMaximized],
         ProjectorWindowMode.Tiled => Core.Lang[LangId.Tool_Projector_ModeTiled],
         _ => Core.Lang[LangId.Tool_Projector_ModeNormal],
+    };
+
+
+    private static string GetZoomModeText(ZoomMode mode) => mode switch
+    {
+        ZoomMode.ScaleToFit => Core.Lang[LangId.Menu_MnuScaleToFit],
+        ZoomMode.ScaleToFill => Core.Lang[LangId.Menu_MnuScaleToFill],
+        ZoomMode.ScaleToWidth => Core.Lang[LangId.Menu_MnuScaleToWidth],
+        ZoomMode.ScaleToHeight => Core.Lang[LangId.Menu_MnuScaleToHeight],
+        _ => Core.Lang[LangId.Menu_MnuAutoZoom],
     };
 
 
@@ -803,7 +868,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// The controls of one open projector in the list.
     /// </summary>
     private sealed record ProjectorRow(ProjectorWindow Window, PhToolButton Chip, ComboBox CmbMonitor, ComboBox CmbMode,
-        PhColorPickerControl ColorPicker, PhToolButton BtnClose);
+        ComboBox CmbZoom, PhColorPickerControl ColorPicker, PhToolButton BtnClose);
 
 
     /// <summary>

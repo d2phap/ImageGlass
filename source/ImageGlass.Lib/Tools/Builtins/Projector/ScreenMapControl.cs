@@ -50,12 +50,13 @@ public sealed class ScreenMapControl : PhControl
     private const float SCREEN_CORNER_RADIUS = 5;
 
     // badges of the projectors on a screen
-    private const double BADGE_HEIGHT = 16;
-    private const double BADGE_PADDING = 5;
+    private const double BADGE_HEIGHT = 18;
+    private const double BADGE_PADDING = 6;
     private const double BADGE_MARGIN = 4;
 
-    // a screen this small has no room for a window glyph
+    // a screen this small has no room for a window glyph, or a title-sized number
     private const double MIN_GLYPH_SCREEN_WIDTH = 36;
+    private const double MIN_TITLE_SCREEN_HEIGHT = 40;
 
     // cells of the tiled projectors on a screen
     private const double TILE_INSET = 3;
@@ -289,7 +290,7 @@ public sealed class ScreenMapControl : PhControl
         if (!hasTiles)
         {
             var number = slot.Number.ToString(CultureInfo.InvariantCulture);
-            var numberSize = Math.Clamp(slot.Rect.Height * 0.32, Const.FONT_SIZE_SMALL, Const.FONT_SIZE_TITLE);
+            var numberSize = slot.Rect.Height >= MIN_TITLE_SCREEN_HEIGHT ? Const.FONT_SIZE_TITLE : Const.FONT_SIZE_BODY;
             var numberBounds = c.MeasureTextEx(number, FontFamily, numberSize, true);
             c.DrawTextEx(number, FontFamily, numberSize,
                 slot.Rect.Center.X - numberBounds.Width / 2,
@@ -334,8 +335,8 @@ public sealed class ScreenMapControl : PhControl
         c.DrawRectangleEx(cellRect, TILE_CORNER_RADIUS, null, fill);
 
         var label = $"P{projectorNumber}";
-        var fontSize = Const.FONT_SIZE_SMALL - 2;
-        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
+        var fontSize = Const.FONT_SIZE_BODY;
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
         var hasRoom = labelSize.Width + 2 <= cellRect.Width && labelSize.Height <= cellRect.Height;
         if (!hasRoom) return;
 
@@ -343,7 +344,7 @@ public sealed class ScreenMapControl : PhControl
         c.DrawTextEx(label, FontFamily, fontSize,
             cellRect.Center.X - labelSize.Width / 2,
             cellRect.Center.Y - labelSize.Height / 2,
-            labelColor, isBold: true);
+            labelColor);
     }
 
 
@@ -369,8 +370,8 @@ public sealed class ScreenMapControl : PhControl
     {
         var accent = Core.AccentColor;
         var label = $"P{projectorNumber}";
-        var fontSize = Const.FONT_SIZE_SMALL - 2;
-        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
+        var fontSize = Const.FONT_SIZE_SMALL;
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
 
         var badgeWidth = labelSize.Width + BADGE_PADDING * 2;
         var badge = new Rect(right - badgeWidth, top, badgeWidth, BADGE_HEIGHT);
@@ -380,7 +381,7 @@ public sealed class ScreenMapControl : PhControl
         c.DrawTextEx(label, FontFamily, fontSize,
             badge.X + BADGE_PADDING,
             badge.Y + (BADGE_HEIGHT - labelSize.Height) / 2,
-            labelColor, isBold: true);
+            labelColor);
 
         return badge.Left - BADGE_MARGIN;
     }
@@ -420,7 +421,7 @@ public sealed class ScreenMapControl : PhControl
 
             var projectors = _manager.Windows
                 .Where(w => w.GetScreen() == screen)
-                .Select(w => new ProjectorMark(w.Number, GetCellRect(w.Tile, screen, rect)))
+                .Select(w => new ProjectorMark(w.Number, GetCellRect(w.Tile, rect)))
                 .ToArray();
 
             _slots.Add(new ScreenSlot(screen, i + 1, rect, screen == mainScreen, projectors));
@@ -431,22 +432,13 @@ public sealed class ScreenMapControl : PhControl
     /// <summary>
     /// Gets where the cell of a tiled projector lies in the slot of its screen; <c>null</c> when it is not tiled.
     /// </summary>
-    private static Rect? GetCellRect(ProjectorTile? tile, Screen screen, Rect slotRect)
+    private static Rect? GetCellRect(ProjectorTile? tile, Rect slotRect)
     {
         if (tile is not { } cellTile) return null;
 
-        // the cells divide the work area, placed within the screen bounds the slot is drawn from
-        var bounds = screen.Bounds;
-        var cellBounds = cellTile.Layout.GetCellBounds(screen.WorkingArea, cellTile.Cell);
+        // the cells fill the whole slot; the taskbar the real ones leave out would only show as a gap
         var area = slotRect.Deflate(TILE_INSET);
-        var scaleX = area.Width / bounds.Width;
-        var scaleY = area.Height / bounds.Height;
-
-        var cellRect = new Rect(
-            area.X + (cellBounds.X - bounds.X) * scaleX,
-            area.Y + (cellBounds.Y - bounds.Y) * scaleY,
-            cellBounds.Width * scaleX,
-            cellBounds.Height * scaleY);
+        var cellRect = cellTile.Layout.GetCellBounds(area, cellTile.Cell);
 
         return cellRect.Deflate(TILE_GAP / 2);
     }
