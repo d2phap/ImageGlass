@@ -262,6 +262,7 @@ public partial class ViewerControl
             SrcRect = new();
             DestRect = new();
             _logicalSrcPoint = new();
+            UpdateScrollbars();
             return;
         }
 
@@ -640,6 +641,9 @@ public partial class ViewerControl
         DestRect = new(snappedDestX, snappedDestY, destWidth, destHeight);
 
         _zooming.OldFactor = _zooming.Factor;
+
+        // 6. Sync the scrollbars with the new viewport
+        UpdateScrollbars();
     }
 
 

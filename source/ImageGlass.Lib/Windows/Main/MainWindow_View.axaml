@@ -47,6 +47,7 @@
                     IsWindowFitMode="{CompiledBinding EnableWindowFit, Source={x:Static cm:Core.Config}}"
                     PanMargin="{CompiledBinding PanMargin, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.DoubleOrZero}}"
                     PanSpeed="{CompiledBinding PanSpeed, Source={x:Static cm:Core.Config}}"
+                    ScrollbarMode="{CompiledBinding ViewerScrollbarMode, Source={x:Static cm:Core.Config}}"
                     ZoomLevels="{CompiledBinding ZoomLevels, Source={x:Static cm:Core.Config}}"
                     ZoomMode="{CompiledBinding ZoomMode, Source={x:Static cm:Core.Config}}"
                     ZoomSpeed="{CompiledBinding ZoomSpeed, Source={x:Static cm:Core.Config}}">

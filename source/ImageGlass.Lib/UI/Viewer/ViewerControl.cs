@@ -60,6 +60,12 @@ public partial class ViewerControl : PhControl
     public event TEventHandler<ViewerControl, ViewerMouseWheelEventArgs>? ViewerMouseWheel;
 
 
+    public ViewerControl()
+    {
+        InitScrollbars();
+    }
+
+
     #region Public Properties
 
     /// <summary>
@@ -210,6 +216,10 @@ public partial class ViewerControl : PhControl
         else if (e.Property == EnableNavButtonsProperty)
         {
             _navButtons.IsEnabled = (bool)e.NewValue!;
+        }
+        else if (e.Property == ScrollbarModeProperty)
+        {
+            ApplyScrollbarMode();
         }
     }
 
@@ -583,6 +593,8 @@ public partial class ViewerControl : PhControl
                 }
             }
 
+            // also covers a source swapped in without a new drawing region, e.g. the full image after a zoomed preview
+            UpdateScrollbars();
             InvalidateVisual();
         });
     }
