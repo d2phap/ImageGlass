@@ -1299,7 +1299,6 @@ public class Lang
         new(LangId.Tool_Projector_BtnCloseAll, "Close all projectors"), //v10.0
         new(LangId.Tool_Projector_ChkSyncView, "Sync projectors with main window"), //v10.0
         new(LangId.Tool_Projector_ProLimit, "ImageGlass Pro is needed to open more than one projector."), //v10.0
-        new(LangId.Tool_Projector_LblZoomMode, "Zoom"), //v10.0
         new(LangId.Tool_Projector_ModeFullScreen, "Full screen"), //v10.0
         new(LangId.Tool_Projector_ModeMaximized, "Maximized"), //v10.0
         new(LangId.Tool_Projector_ModeNormal, "Window"), //v10.0

@@ -18,9 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Media;
 using Avalonia.Platform;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
@@ -51,14 +53,14 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ProjectorWindowMode.Normal,
         ProjectorWindowMode.Tiled,
     ];
-    private static readonly ZoomMode[] _zoomModes =
-    [
-        ZoomMode.AutoZoom,
-        ZoomMode.ScaleToFit,
-        ZoomMode.ScaleToFill,
-        ZoomMode.ScaleToWidth,
-        ZoomMode.ScaleToHeight,
-    ];
+
+    // next to the list, the map grows a little with each projector in it
+    private const double MAP_HEIGHT = 96;
+    private const double MAP_HEIGHT_STEP = 16;
+
+    // room on each side of the divider between the map and the list
+    private const double DIVIDER_MARGIN_ACROSS = 20;
+    private const double DIVIDER_MARGIN_DOWN = 12;
 
     // a press on a projector name turns into a drag once the pointer moves this far
     private const double DRAG_THRESHOLD = 4;
@@ -74,8 +76,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     private readonly List<LayoutOption> _layoutOptions = [];
     private ProjectorManager? _manager;
 
-    // the projector whose name is being dragged onto a monitor
+    // the projector whose name is being dragged onto a monitor, and the monitor it is on
     private ProjectorWindow? _dragWindow;
+    private Screen? _dragSourceScreen;
     private Point _dragStart;
     private bool _isDragging;
 
@@ -111,7 +114,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         _manager.Changed += Manager_Changed;
         PART_ScreenMap.Manager = _manager;
 
-        PopulateZoomModeItems();
         RefreshUI();
 
         PART_ScreenMap.ScreenClicked += PART_ScreenMap_ScreenClicked;
@@ -119,7 +121,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click += PART_BtnAdd_Click;
         PART_BtnAdd.Click += PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged += PART_ChkSync_IsCheckedChanged;
-        PART_CmbZoomMode.SelectionChanged += PART_CmbZoomMode_SelectionChanged;
     }
 
 
@@ -135,7 +136,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click -= PART_BtnAdd_Click;
         PART_BtnAdd.Click -= PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged -= PART_ChkSync_IsCheckedChanged;
-        PART_CmbZoomMode.SelectionChanged -= PART_CmbZoomMode_SelectionChanged;
 
         base.OnUnloaded(e);
     }
@@ -152,8 +152,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ToolTip.SetTip(PART_BtnAddFirst, addTooltip);
         ToolTip.SetTip(PART_BtnAdd, addTooltip);
 
-        // the rows and items carry text set in code
-        RelocalizeZoomModeItems();
+        // the rows carry text set in code
         foreach (var row in _rows.Values)
         {
             RelocalizeRow(row);
@@ -204,14 +203,11 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     }
 
 
-    private void PART_CmbZoomMode_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    protected override Size MeasureOverride(Size availableSize)
     {
-        if (_isUpdatingUI) return;
+        UpdateOrientation(availableSize.Width);
 
-        var index = PART_CmbZoomMode.SelectedIndex;
-        if (index < 0) return;
-
-        _manager?.SetZoomMode(_zoomModes[index]);
+        return base.MeasureOverride(availableSize);
     }
 
     #endregion // Control Events
@@ -277,11 +273,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             PART_ProBadge.IsVisible = _manager.IsLimitedByLicense;
 
 
-            // 4. the options; the zoom mode only applies while not syncing
-            var isSynced = _manager.Config.EnableViewSync;
-            PART_ChkSync.IsChecked = isSynced;
-            PART_ZoomModeGroup.IsVisible = !isSynced;
-            PART_CmbZoomMode.SelectedIndex = Array.IndexOf(_zoomModes, _manager.Config.ZoomMode);
+            // 4. the options
+            PART_ChkSync.IsChecked = _manager.Config.EnableViewSync;
 
 
             // 5. an open layout menu follows the projectors on its monitor
@@ -345,18 +338,26 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// </summary>
     private ProjectorRow CreateRow(ProjectorWindow window)
     {
-        // 1. the name: hovering shows its monitor on the map, dragging moves it to another one
+        // 1. the name: hovering shows its monitor on the map, a click brings it forward, dragging moves it to another monitor
         var chip = new PhToolButton
         {
             Padding = new Thickness(10, 5),
             Focusable = false,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Center,
+            Cursor = new Cursor(StandardCursorType.Hand),
+        };
+        chip.Click += (_, _) =>
+        {
+            // a press that turned into a drag is not a click
+            if (_isDragging) return;
+
+            window.RestoreAndActivate();
         };
         chip.PointerEntered += (_, _) => PART_ScreenMap.SelectedProjectorNumber = window.Number;
         chip.PointerExited += (_, _) =>
         {
-            if (_dragWindow is null) PART_ScreenMap.SelectedProjectorNumber = 0;
+            if (!_isDragging) PART_ScreenMap.SelectedProjectorNumber = 0;
         };
         chip.AddHandler(PointerPressedEvent, (_, e) => StartDrag(window, chip, e), RoutingStrategies.Bubble, true);
         chip.AddHandler(PointerMovedEvent, (_, e) => ContinueDrag(e), RoutingStrategies.Bubble, true);
@@ -418,19 +419,28 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         };
 
 
-        // 5. closing it
+        // 5. closing it, with the icon of the tool host's close button
+        var closeIcon = new Path
+        {
+            Width = 12,
+            Height = 12,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Data = Resx.GetIcon(ResxIconId.IconClose),
+            Stretch = Stretch.Uniform,
+        };
+        closeIcon[!Shape.FillProperty] = Resx.CreateBinding(ResxId.IG_ThemeForegroundBrush);
+
         var btnClose = new PhToolButton
         {
             Padding = new Thickness(6),
             Focusable = false,
             VerticalAlignment = VerticalAlignment.Center,
-            Content = new PathIcon
-            {
-                Width = 12,
-                Height = 12,
-                Data = Resx.GetIcon(ResxIconId.IconClose),
-            },
+            Content = closeIcon,
         };
+
+        // the tool host dims the icon of a button of this class until it is hovered
+        btnClose.Classes.Add("plugin_button");
         btnClose.Click += (_, _) => ProjectorManager.CloseProjector(window);
 
         var row = new ProjectorRow(window, chip, cmbMonitor, cmbMode, colorPicker, btnClose);
@@ -492,32 +502,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     }
 
 
-    /// <summary>
-    /// Fills the zoom mode ComboBox, in the order of <see cref="_zoomModes"/>.
-    /// </summary>
-    private void PopulateZoomModeItems()
-    {
-        if (PART_CmbZoomMode.ItemCount > 0) return;
-
-        foreach (var _ in _zoomModes)
-        {
-            PART_CmbZoomMode.Items.Add(new ComboBoxItem());
-        }
-
-        RelocalizeZoomModeItems();
-    }
-
-
-    private void RelocalizeZoomModeItems()
-    {
-        for (var i = 0; i < PART_CmbZoomMode.ItemCount; i++)
-        {
-            if (PART_CmbZoomMode.Items[i] is not ComboBoxItem item) continue;
-            item.Content = GetZoomModeText(_zoomModes[i]);
-        }
-    }
-
-
     private static void RelocalizeRow(ProjectorRow row)
     {
         var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
@@ -552,14 +536,38 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     };
 
 
-    private static string GetZoomModeText(ZoomMode mode) => mode switch
+    /// <summary>
+    /// Lays the content across while it fits in <paramref name="availableWidth"/>, else down: the map, the divider, the list.
+    /// </summary>
+    private void UpdateOrientation(double availableWidth)
     {
-        ZoomMode.ScaleToFit => Core.Lang[LangId.Menu_MnuScaleToFit],
-        ZoomMode.ScaleToFill => Core.Lang[LangId.Menu_MnuScaleToFill],
-        ZoomMode.ScaleToWidth => Core.Lang[LangId.Menu_MnuScaleToWidth],
-        ZoomMode.ScaleToHeight => Core.Lang[LangId.Menu_MnuScaleToHeight],
-        _ => Core.Lang[LangId.Menu_MnuAutoZoom],
-    };
+        if (!PART_Projectors.IsVisible) return;
+
+        // 1. the width across: the map at its size for the projectors, the divider, and the list
+        var projectorCount = _manager?.Windows.Count ?? 0;
+        var mapHeightAcross = MAP_HEIGHT + Math.Max(0, projectorCount - 1) * MAP_HEIGHT_STEP;
+        PART_ListPanel.Measure(Size.Infinity);
+
+        var widthAcross = PART_ScreenMap.GetWidthForHeight(mapHeightAcross)
+            + DIVIDER_MARGIN_ACROSS * 2 + 1
+            + PART_ListPanel.DesiredSize.Width
+            + Padding.Left + Padding.Right;
+        var isDown = double.IsFinite(availableWidth) && availableWidth < widthAcross;
+
+
+        // 2. down, the divider spans the column, and the map keeps its smallest size
+        Grid.SetRow(PART_Divider, isDown ? 1 : 0);
+        Grid.SetColumn(PART_Divider, isDown ? 0 : 1);
+        Grid.SetRow(PART_ListPanel, isDown ? 2 : 0);
+        Grid.SetColumn(PART_ListPanel, isDown ? 0 : 2);
+
+        PART_Divider.Width = isDown ? double.NaN : 1;
+        PART_Divider.Height = isDown ? 1 : double.NaN;
+        PART_Divider.Margin = isDown
+            ? new Thickness(0, DIVIDER_MARGIN_DOWN)
+            : new Thickness(DIVIDER_MARGIN_ACROSS, 0);
+        PART_ScreenMap.Height = isDown ? MAP_HEIGHT : mapHeightAcross;
+    }
 
     #endregion // Control Methods
 
@@ -576,6 +584,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         if (!isLeftButton) return;
 
         _dragWindow = window;
+        _dragSourceScreen = window.GetScreen();
         _dragStart = e.GetPosition(this);
         _isDragging = false;
 
@@ -607,8 +616,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         Canvas.SetLeft(PART_DragGhost, ghostPosition.X + DRAG_GHOST_OFFSET);
         Canvas.SetTop(PART_DragGhost, ghostPosition.Y + DRAG_GHOST_OFFSET);
 
+        // the monitor the projector is on already is no place to drop it
         var mapPosition = e.GetPosition(PART_ScreenMap);
-        PART_ScreenMap.DropTargetScreen = PART_ScreenMap.GetScreenAt(mapPosition);
+        var screen = PART_ScreenMap.GetScreenAt(mapPosition);
+        var isSourceScreen = screen is not null && screen == _dragSourceScreen;
+
+        PART_ScreenMap.DropTargetScreen = isSourceScreen ? null : screen;
     }
 
 
@@ -640,6 +653,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_DragGhostText.Foreground = accent.InvertBlackOrWhite().ToBrush();
         PART_DragGhostText.Text = Core.Lang[LangId.Tool_Projector_WindowTitle, window.Number];
         PART_DragGhost.IsVisible = true;
+
+        // only the monitors it can be dropped on light up while dragging
+        PART_ScreenMap.SelectedProjectorNumber = 0;
     }
 
 
@@ -648,9 +664,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// </summary>
     private void EndDrag()
     {
-        if (_isDragging) PART_ScreenMap.SelectedProjectorNumber = 0;
-
         _dragWindow = null;
+        _dragSourceScreen = null;
         _isDragging = false;
         PART_DragGhost.IsVisible = false;
         PART_ScreenMap.DropTargetScreen = null;

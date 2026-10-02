@@ -131,35 +131,27 @@ public sealed class ProjectorManager : PhDisposable
     #region Public Methods
 
     /// <summary>
-    /// Opens a projector on <paramref name="screen"/>, else where it was last shown, else on a free screen; <c>null</c> when none can open.
+    /// Opens a projector on <paramref name="screen"/>, else on a free screen; <c>null</c> when none can open.
     /// </summary>
     public async Task<ProjectorWindow?> AddProjectorAsync(Screen? screen = null)
     {
         if (IsDisposed) return null;
         if (!CanAddProjector) return null;
 
-        // 1. pick the number, screen and mode
+        // 1. pick the number and screen; a new projector covers its screen in full, unless the main window is there
         var number = GetFreeNumber();
-        var placement = GetPlacement(number);
-        var savedScreen = FindScreen(placement);
-        var target = screen ?? savedScreen ?? PickFreeScreen();
+        var target = screen ?? PickFreeScreen();
         if (target is null) return null;
 
-        // a saved screen comes with its saved mode, and the cell it was tiled in
-        var isSavedScreen = target == savedScreen;
-        var preferredMode = isSavedScreen ? GetPreferredMode(placement!) : ProjectorWindowMode.FullScreen;
-        var mode = GetModeForScreen(target, preferredMode);
-        var savedTile = isSavedScreen ? GetSavedTile(placement!) : null;
+        var mode = GetModeForScreen(target, ProjectorWindowMode.FullScreen);
 
 
-        // 2. open it
+        // 2. open it, in the background color the projector of that number had
         var window = new ProjectorWindow(number, GetMainViewer())
         {
-            PreferredMode = preferredMode,
-            BackgroundColor = GetBackgroundColor(placement),
+            BackgroundColor = GetSavedBackgroundColor(number),
         };
         window.Viewer.EnableMirrorSync = Config.EnableViewSync;
-        window.Viewer.ZoomMode = Config.ZoomMode;
         window.Closed += Window_Closed;
         window.LayoutChanged += Window_LayoutChanged;
 
@@ -169,12 +161,7 @@ public sealed class ProjectorManager : PhDisposable
         // an audience watches a projector hands-off, so the screens must stay on
         SleepGuard.Acquire(SLEEP_GUARD_OWNER, $"{BHelper.AppDisplayName} projector");
 
-        if (savedTile is { } tile) await window.ShowInTileAsync(target, tile);
-        else await window.ShowOnScreenAsync(target, mode);
-
-
-        // 3. remember where it is
-        SavePlacement(window, target);
+        await window.ShowOnScreenAsync(target, mode);
         OnChanged();
 
         return window;
@@ -214,7 +201,7 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Tiles the projectors on <paramref name="screen"/> into the cells of <paramref name="layout"/>, in number order.
+    /// Tiles the projectors on <paramref name="screen"/> into the used cells of <paramref name="layout"/>, in number order.
     /// </summary>
     public async Task ArrangeAsync(Screen screen, ProjectorLayout layout)
     {
@@ -222,16 +209,12 @@ public sealed class ProjectorManager : PhDisposable
 
         var windows = GetWindowsOnScreen(screen);
         if (windows.Count == 0) return;
-        if (windows.Count > layout.CellCount) return;
+        if (windows.Count > layout.UsedCells.Count) return;
 
         // the windows are independent, so they move into their cells together
-        var tileTasks = windows.Select((window, cell) => window.ShowInTileAsync(screen, new ProjectorTile(layout, cell)));
+        var tileTasks = windows.Select((window, i) => window.ShowInTileAsync(screen, new ProjectorTile(layout, layout.UsedCells[i])));
         await Task.WhenAll(tileTasks);
 
-        foreach (var window in windows)
-        {
-            SavePlacement(window, screen);
-        }
         OnChanged();
     }
 
@@ -289,8 +272,14 @@ public sealed class ProjectorManager : PhDisposable
 
         window.BackgroundColor = color;
 
-        var placement = GetOrAddPlacement(window.Number);
-        placement.BackgroundColor = color?.ToHex() ?? string.Empty;
+        // kept by projector number, so a projector opened later with that number has it again
+        var colors = Config.BackgroundColors;
+        var index = window.Number - 1;
+        while (colors.Count <= index)
+        {
+            colors.Add(string.Empty);
+        }
+        colors[index] = color?.ToHex() ?? string.Empty;
 
         SaveConfig();
         OnChanged();
@@ -328,22 +317,6 @@ public sealed class ProjectorManager : PhDisposable
         foreach (var window in _windows)
         {
             window.Viewer.EnableMirrorSync = enabled;
-        }
-
-        SaveConfig();
-        OnChanged();
-    }
-
-
-    /// <summary>
-    /// Sets how projectors fit the photo while they do not follow the main viewer.
-    /// </summary>
-    public void SetZoomMode(ZoomMode mode)
-    {
-        Config.ZoomMode = mode;
-        foreach (var window in _windows)
-        {
-            window.Viewer.ZoomMode = mode;
         }
 
         SaveConfig();
@@ -403,23 +376,7 @@ public sealed class ProjectorManager : PhDisposable
     private void Window_LayoutChanged(object? sender, EventArgs e)
     {
         // the user may have dragged it onto another screen, or maximized it by hand
-        if (sender is ProjectorWindow window) RememberPlacement(window);
-
         OnChanged();
-    }
-
-
-    /// <summary>
-    /// Remembers the screen and mode a shown projector has now.
-    /// </summary>
-    private void RememberPlacement(ProjectorWindow window)
-    {
-        if (!window.IsVisible) return;
-
-        var screen = window.GetScreen();
-        if (screen is null) return;
-
-        SavePlacement(window, screen);
     }
 
 
@@ -443,11 +400,11 @@ public sealed class ProjectorManager : PhDisposable
 
             // a projector the OS moved off an unplugged screen would cover another one
             var isOpen = _windows.Contains(window);
-            var savedScreen = FindScreen(GetPlacement(window.Number));
-            var isOnSavedScreen = savedScreen is not null && savedScreen == window.GetScreen();
-            if (!isOpen || !isOnSavedScreen) continue;
+            var screen = window.GetScreen();
+            var isOnTileScreen = screen is not null && screen == window.TileScreen;
+            if (!isOpen || !isOnTileScreen) continue;
 
-            await window.ShowInTileAsync(savedScreen!, tile);
+            await window.ShowInTileAsync(screen!, tile);
         }
     }
 
@@ -480,44 +437,6 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Gets where the projector of <paramref name="number"/> was last shown.
-    /// </summary>
-    private ProjectorPlacement? GetPlacement(int number)
-    {
-        var index = number - 1;
-        if (index < 0) return null;
-        if (index >= Config.Placements.Count) return null;
-
-        return Config.Placements[index];
-    }
-
-
-    /// <summary>
-    /// Finds the connected screen a placement was saved for.
-    /// </summary>
-    private Screen? FindScreen(ProjectorPlacement? placement)
-    {
-        if (placement is null) return null;
-
-        var screens = _screens.All;
-        var exactMatch = screens.FirstOrDefault(s => s.DisplayName == placement.ScreenName
-            && s.Bounds.X == placement.ScreenX
-            && s.Bounds.Y == placement.ScreenY);
-        if (exactMatch is not null) return exactMatch;
-
-        // the screens may have been rearranged; an OS may give no names, which match nothing alone
-        var hasName = !string.IsNullOrEmpty(placement.ScreenName);
-        var nameMatch = hasName
-            ? screens.FirstOrDefault(s => s.DisplayName == placement.ScreenName)
-            : null;
-        if (nameMatch is not null) return nameMatch;
-
-        return screens.FirstOrDefault(s => s.Bounds.X == placement.ScreenX
-            && s.Bounds.Y == placement.ScreenY);
-    }
-
-
-    /// <summary>
     /// Picks a screen showing neither a projector nor the main window, else one without a projector.
     /// </summary>
     private Screen? PickFreeScreen()
@@ -539,7 +458,7 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Shows <paramref name="window"/> on <paramref name="screen"/> as <paramref name="mode"/> says, and remembers it.
+    /// Shows <paramref name="window"/> on <paramref name="screen"/> as <paramref name="mode"/> says.
     /// </summary>
     private async Task PlaceProjectorAsync(ProjectorWindow window, Screen screen, ProjectorWindowMode mode)
     {
@@ -549,8 +468,6 @@ public sealed class ProjectorManager : PhDisposable
         if (!isOpen) return;
 
         await window.MoveToScreenAsync(screen, mode);
-
-        SavePlacement(window, screen);
         OnChanged();
     }
 
@@ -563,38 +480,6 @@ public sealed class ProjectorManager : PhDisposable
         var isMainScreen = screen == GetMainWindowScreen();
 
         return isMainScreen ? ProjectorWindowMode.Normal : preferredMode;
-    }
-
-
-    /// <summary>
-    /// Remembers the screen a projector is shown on and the mode it prefers, so it opens there again.
-    /// </summary>
-    private void SavePlacement(ProjectorWindow window, Screen screen)
-    {
-        var placement = GetOrAddPlacement(window.Number);
-        placement.ScreenName = screen.DisplayName ?? string.Empty;
-        placement.ScreenX = screen.Bounds.X;
-        placement.ScreenY = screen.Bounds.Y;
-        placement.WindowMode = window.PreferredMode;
-        placement.TileLayout = window.Tile?.Layout.Id ?? string.Empty;
-        placement.TileCell = window.Tile?.Cell ?? 0;
-
-        SaveConfig();
-    }
-
-
-    /// <summary>
-    /// Gets the cell a placement was tiled in; <c>null</c> when it was not, or its layout cannot be read.
-    /// </summary>
-    private static ProjectorTile? GetSavedTile(ProjectorPlacement placement)
-    {
-        var layout = ProjectorLayout.Parse(placement.TileLayout);
-        if (layout is null) return null;
-
-        var isCellInLayout = placement.TileCell >= 0 && placement.TileCell < layout.CellCount;
-        if (!isCellInLayout) return null;
-
-        return new ProjectorTile(layout, placement.TileCell);
     }
 
 
@@ -614,7 +499,7 @@ public sealed class ProjectorManager : PhDisposable
             .ToArray();
 
         var sharedLayout = tiledLayouts.Length == 1 ? tiledLayouts[0] : null;
-        var hasRoom = sharedLayout is not null && sharedLayout.CellCount >= windows.Count;
+        var hasRoom = sharedLayout is not null && sharedLayout.UsedCells.Count >= windows.Count;
         var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
         var layout = hasRoom ? sharedLayout! : ProjectorLayout.GetDefault(windows.Count, aspectRatio);
 
@@ -623,39 +508,15 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Gets how a placement prefers to cover a screen; a cell is not a preference, so it falls back to full screen.
+    /// Gets the background color saved for the projector of <paramref name="number"/>; <c>null</c> when it follows the slideshow background color.
     /// </summary>
-    private static ProjectorWindowMode GetPreferredMode(ProjectorPlacement placement)
-    {
-        var mode = placement.WindowMode;
-        if (mode == ProjectorWindowMode.Tiled) return ProjectorWindowMode.FullScreen;
-
-        return mode;
-    }
-
-
-    /// <summary>
-    /// Gets the saved settings of the projector of <paramref name="number"/>, adding them if missing.
-    /// </summary>
-    private ProjectorPlacement GetOrAddPlacement(int number)
+    private Color? GetSavedBackgroundColor(int number)
     {
         var index = number - 1;
-        while (Config.Placements.Count <= index)
-        {
-            Config.Placements.Add(new ProjectorPlacement());
-        }
+        var colors = Config.BackgroundColors;
+        if (index < 0 || index >= colors.Count) return null;
 
-        // a hand-edited config may hold a null entry
-        return Config.Placements[index] ??= new ProjectorPlacement();
-    }
-
-
-    /// <summary>
-    /// Gets the background color a placement keeps; <c>null</c> when it follows the slideshow background color.
-    /// </summary>
-    private static Color? GetBackgroundColor(ProjectorPlacement? placement)
-    {
-        var hex = placement?.BackgroundColor;
+        var hex = colors[index];
         if (string.IsNullOrWhiteSpace(hex)) return null;
 
         // an unreadable value parses as transparent, which no projector could show anyway

@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Common.Types.JsonTypeConverters;
-using ImageGlass.UI.Viewer;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -26,20 +24,6 @@ namespace ImageGlass.Tools;
 
 [JsonSerializable(typeof(ProjectorConfig))]
 public partial class ProjectorConfigJsonContext : JsonSerializerContext { }
-
-
-/// <summary>
-/// How a projector window covers its screen.
-/// </summary>
-public enum ProjectorWindowMode
-{
-    FullScreen,
-    Maximized,
-    Normal,
-
-    // frameless in one cell of a grid on its screen; never a preferred mode
-    Tiled,
-}
 
 
 /// <summary>
@@ -54,63 +38,7 @@ public sealed class ProjectorConfig
 
 
     /// <summary>
-    /// Gets, sets how projectors fit the photo while they do not follow the main viewer.
+    /// Gets, sets the background color of each projector in hex, by projector number; empty follows the slideshow background color.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<ZoomMode>))]
-    public ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
-
-
-    /// <summary>
-    /// Gets, sets where each projector was last shown, by projector number, so it opens there again.
-    /// </summary>
-    public List<ProjectorPlacement> Placements { get; set; } = [];
-}
-
-
-/// <summary>
-/// The screen, window mode and background a projector was last shown with.
-/// </summary>
-public sealed class ProjectorPlacement
-{
-    /// <summary>
-    /// Gets, sets the name the OS gives the screen.
-    /// </summary>
-    public string ScreenName { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets, sets the left edge of the screen in desktop pixels, telling apart screens of the same name.
-    /// </summary>
-    public int ScreenX { get; set; }
-
-
-    /// <summary>
-    /// Gets, sets the top edge of the screen in desktop pixels.
-    /// </summary>
-    public int ScreenY { get; set; }
-
-
-    /// <summary>
-    /// Gets, sets how the projector prefers to cover a screen; over the main window it opens as a normal window.
-    /// </summary>
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<ProjectorWindowMode>))]
-    public ProjectorWindowMode WindowMode { get; set; } = ProjectorWindowMode.FullScreen;
-
-
-    /// <summary>
-    /// Gets, sets the background color in hex; empty follows the slideshow background color.
-    /// </summary>
-    public string BackgroundColor { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets, sets the layout the projector was tiled in on the screen, as <see cref="ProjectorLayout.Id"/>; empty when it was not tiled.
-    /// </summary>
-    public string TileLayout { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Gets, sets the cell of <see cref="TileLayout"/> the projector filled, counted left to right, then top to bottom.
-    /// </summary>
-    public int TileCell { get; set; }
+    public List<string> BackgroundColors { get; set; } = [];
 }

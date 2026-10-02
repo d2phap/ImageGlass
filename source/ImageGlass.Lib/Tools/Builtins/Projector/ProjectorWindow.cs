@@ -35,6 +35,20 @@ namespace ImageGlass.Tools;
 
 
 /// <summary>
+/// How a projector window covers its screen.
+/// </summary>
+public enum ProjectorWindowMode
+{
+    FullScreen,
+    Maximized,
+    Normal,
+
+    // frameless in one cell of a layout on its screen; never a preferred mode
+    Tiled,
+}
+
+
+/// <summary>
 /// A display-only window that mirrors the main viewer, e.g. onto a projector or another screen.
 /// </summary>
 public sealed class ProjectorWindow : PhWindow
@@ -92,6 +106,12 @@ public sealed class ProjectorWindow : PhWindow
 
 
     /// <summary>
+    /// Gets the screen the window was tiled on, while <see cref="Tile"/> is set.
+    /// </summary>
+    public Screen? TileScreen { get; private set; }
+
+
+    /// <summary>
     /// Gets the background color of a projector that has none of its own.
     /// </summary>
     public static Color DefaultBackgroundColor
@@ -137,6 +157,7 @@ public sealed class ProjectorWindow : PhWindow
             IsInteractive = false,
             EnableNavButtons = false,
             PanMargin = 0,
+            ZoomMode = Core.Config.ZoomMode,
             CheckerboardMode = Core.Config.CheckerboardMode,
             InterpolationScaleDown = Core.Config.ImageInterpolationScaleDown,
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
@@ -239,6 +260,11 @@ public sealed class ProjectorWindow : PhWindow
         {
             Viewer.CheckerboardMode = Core.Config.CheckerboardMode;
         }
+        else if (e.PropertyName == nameof(Config.ZoomMode))
+        {
+            // used while not syncing, so the photo still fits the way the main window does
+            Viewer.ZoomMode = Core.Config.ZoomMode;
+        }
     }
 
     #endregion // Window Events
@@ -298,6 +324,7 @@ public sealed class ProjectorWindow : PhWindow
 
         // 2. drop the frame, so the window fills its cell edge to edge
         Tile = tile;
+        TileScreen = screen;
         Mode = ProjectorWindowMode.Tiled;
         WindowDecorations = WindowDecorations.None;
         PlaceInTile(screen, tile);
@@ -363,6 +390,7 @@ public sealed class ProjectorWindow : PhWindow
         if (Tile is null) return;
 
         Tile = null;
+        TileScreen = null;
         WindowDecorations = WindowDecorations.Full;
     }
 

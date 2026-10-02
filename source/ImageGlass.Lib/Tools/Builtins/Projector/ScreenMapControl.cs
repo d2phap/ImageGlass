@@ -222,11 +222,8 @@ public sealed class ScreenMapControl : PhControl
     {
         _ = base.MeasureOverride(availableSize);
 
-        // take the aspect ratio of the whole desktop
-        var desktop = GetDesktopBounds();
         var height = double.IsFinite(availableSize.Height) ? availableSize.Height : DEFAULT_MAP_HEIGHT;
-        var aspectRatio = desktop.Height > 0 ? (double)desktop.Width / desktop.Height : 16d / 9;
-        var width = Math.Clamp(height * aspectRatio, MIN_MAP_WIDTH, MAX_MAP_WIDTH);
+        var width = GetWidthForHeight(height);
 
         if (double.IsFinite(availableSize.Width))
         {
@@ -270,7 +267,10 @@ public sealed class ScreenMapControl : PhControl
         else fill = foreground.WithAlpha(14);
 
         var isHighlighted = isHovered || hasSelectedProjector;
-        var border = isHighlighted ? accent.WithAlpha(230) : foreground.WithAlpha(70);
+        var normalBorder = Resx.Get<IBrush?>(ResxId.IG_BorderControlBrush) is ISolidColorBrush controlBorder
+            ? controlBorder.Color
+            : foreground.WithAlpha(70);
+        var border = isHighlighted ? accent.WithAlpha(230) : normalBorder;
         var borderWidth = hasSelectedProjector ? 2f : 1f;
 
         c.DrawRectangleEx(slot.Rect, SCREEN_CORNER_RADIUS, border, fill, borderWidth);
@@ -305,9 +305,11 @@ public sealed class ScreenMapControl : PhControl
         }
 
 
-        // 4. the projectors not tiled, as badges in the top right corner, or the bottom one, where cells fill last
+        // 4. the projectors not tiled, as badges in the top right corner, or the bottom one when a cell covers the top
         var badgeRight = slot.Rect.Right - BADGE_MARGIN;
-        var badgeTop = hasTiles
+        var topCorner = new Point(badgeRight - 1, slot.Rect.Top + BADGE_MARGIN + 1);
+        var isTopCornerTiled = slot.Projectors.Any(p => p.CellRect?.Contains(topCorner) == true);
+        var badgeTop = isTopCornerTiled
             ? slot.Rect.Bottom - BADGE_MARGIN - BADGE_HEIGHT
             : slot.Rect.Top + BADGE_MARGIN;
         var untiledNumbers = slot.Projectors
@@ -472,6 +474,19 @@ public sealed class ScreenMapControl : PhControl
 
 
     #region Public Methods
+
+    /// <summary>
+    /// Gets how wide the map is at <paramref name="height"/>: the shape of the whole desktop, within limits that grow with the height.
+    /// </summary>
+    public double GetWidthForHeight(double height)
+    {
+        var desktop = GetDesktopBounds();
+        var aspectRatio = desktop.Height > 0 ? (double)desktop.Width / desktop.Height : 16d / 9;
+        var maxWidth = MAX_MAP_WIDTH * Math.Max(1, height / DEFAULT_MAP_HEIGHT);
+
+        return Math.Clamp(height * aspectRatio, MIN_MAP_WIDTH, maxWidth);
+    }
+
 
     /// <summary>
     /// Gets the screen drawn at <paramref name="position"/>, in the coordinates of this control.

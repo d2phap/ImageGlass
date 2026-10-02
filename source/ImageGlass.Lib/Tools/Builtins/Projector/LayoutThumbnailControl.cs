@@ -60,7 +60,7 @@ public sealed class LayoutThumbnailControl : PhControl
 
 
     /// <summary>
-    /// Gets the numbers of the projectors that would fill the cells, in cell order.
+    /// Gets the numbers of the projectors to tile, in the order of the used cells of the layout.
     /// </summary>
     public int[] ProjectorNumbers { get; }
 
@@ -145,9 +145,12 @@ public sealed class LayoutThumbnailControl : PhControl
         var foreground = Core.Theme.InvertedBaseColor;
 
 
-        // 1. the screen
+        // 1. the screen, bordered like the screens on the map
         var frame = new Rect(Bounds.Size).Deflate(0.5);
-        var frameBorder = IsActive ? accent.WithAlpha(230) : foreground.WithAlpha(90);
+        var normalBorder = Resx.Get<IBrush?>(ResxId.IG_BorderControlBrush) is ISolidColorBrush controlBorder
+            ? controlBorder.Color
+            : foreground.WithAlpha(90);
+        var frameBorder = IsActive ? accent.WithAlpha(230) : normalBorder;
         c.DrawRectangleEx(frame, FRAME_RADIUS, frameBorder, foreground.WithAlpha(14), IsActive ? 2f : 1f);
 
 
@@ -159,16 +162,18 @@ public sealed class LayoutThumbnailControl : PhControl
         }
 
 
-        // 3. the cells, filled in the order the projectors are tiled; the gaps between them stay even
+        // 3. the cells, with the projector each one gets; the gaps between them stay even
         var area = frame.Deflate(FRAME_PADDING - CELL_GAP / 2);
         for (var cell = 0; cell < Layout.CellCount; cell++)
         {
             var cellRect = Layout.GetCellBounds(area, cell).Deflate(CELL_GAP / 2);
             if (cellRect.Width <= 0 || cellRect.Height <= 0) continue;
 
-            if (cell < ProjectorNumbers.Length)
+            var projectorIndex = Layout.GetProjectorIndex(cell);
+            var hasProjector = projectorIndex >= 0 && projectorIndex < ProjectorNumbers.Length;
+            if (hasProjector)
             {
-                DrawFilledCell(c, cellRect, ProjectorNumbers[cell], accent, foreground);
+                DrawFilledCell(c, cellRect, ProjectorNumbers[projectorIndex], accent, foreground);
             }
             else
             {
@@ -185,7 +190,7 @@ public sealed class LayoutThumbnailControl : PhControl
     {
         var label = Core.Lang[LangId._Default];
         var fontSize = Const.FONT_SIZE_BODY;
-        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
 
         var box = new Rect(
             frame.Center.X - labelSize.Width / 2 - LABEL_PADDING_X,
@@ -199,7 +204,7 @@ public sealed class LayoutThumbnailControl : PhControl
         c.DrawTextEx(label, FontFamily, fontSize,
             box.X + LABEL_PADDING_X,
             box.Y + LABEL_PADDING_Y,
-            labelColor, isBold: true);
+            labelColor);
     }
 
 

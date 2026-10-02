@@ -24,27 +24,34 @@
             IconData="{StaticResource IconAdd}" />
 
 
-        <!--  Open projectors: the monitors on the left, a row per projector on the right  -->
+        <!--  Open projectors: the monitors, a divider, then a row per projector; across, or down in a narrow window  -->
         <Grid
             x:Name="PART_Projectors"
             HorizontalAlignment="Center"
             ColumnDefinitions="Auto, Auto, Auto"
-            IsVisible="False">
+            IsVisible="False"
+            RowDefinitions="Auto, Auto, Auto">
 
             <!--  A click opens the layouts of a monitor; a projector row dropped on one moves there  -->
             <tool:ScreenMapControl
                 x:Name="PART_ScreenMap"
+                Grid.Row="0"
                 Grid.Column="0"
                 Height="96"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
 
             <Border
+                x:Name="PART_Divider"
+                Grid.Row="0"
                 Grid.Column="1"
                 Width="1"
                 Margin="20,0"
-                Background="{DynamicResource IG_BorderNeutralBrush}" />
+                Background="{DynamicResource IG_BorderControlBrush}" />
 
             <StackPanel
+                x:Name="PART_ListPanel"
+                Grid.Row="0"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Spacing="8">
@@ -70,19 +77,6 @@
                     <CheckBox x:Name="PART_ChkSync" VerticalAlignment="Center">
                         <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
                     </CheckBox>
-
-                    <!--  How to fit the photo while not syncing  -->
-                    <StackPanel
-                        x:Name="PART_ZoomModeGroup"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <ui:PhTextBlock
-                            VerticalAlignment="Center"
-                            LangKey="Tool_Projector_LblZoomMode"
-                            Opacity="0.6" />
-                        <ComboBox x:Name="PART_CmbZoomMode" MinWidth="120" />
-                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Grid>
