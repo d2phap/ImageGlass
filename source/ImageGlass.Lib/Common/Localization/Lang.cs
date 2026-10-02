@@ -664,6 +664,11 @@ public class Lang
         new(LangId.CheckerboardType_Client, "Entire viewer"),
         new(LangId.CheckerboardType_Image, "Image region only"),
 
+        // ScrollbarMode
+        new(LangId.ScrollbarMode_Never, "Never"),
+        new(LangId.ScrollbarMode_AutoHide, "Auto-hide"),
+        new(LangId.ScrollbarMode_Always, "Always"),
+
         #endregion // Enums
 
 
@@ -1070,6 +1075,7 @@ public class Lang
         // Viewer > Appearance
         new(LangId.Settings_Appearance, "Appearance"),
         new(LangId.Settings_EnableNavigationButtons, "Show navigation arrow buttons"),
+        new(LangId.Settings_ViewerScrollbarMode, "Show scrollbars"),
         new(LangId.Settings_EnableCenterWindowFit, "Automatically center the window in Window Fit mode"),
         new(LangId.Settings_EnableVectorRenderer, "Use the vector renderer for SVG images"),
         new(LangId.Settings_CheckerboardMode, "Checkerboard background"),

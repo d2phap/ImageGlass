@@ -214,6 +214,11 @@ public enum LangId
     CheckerboardType_Client,
     CheckerboardType_Image,
 
+    // values match the ScrollbarMode enum members
+    ScrollbarMode_Never,
+    ScrollbarMode_AutoHide,
+    ScrollbarMode_Always,
+
     #endregion // Enums
 
 
@@ -628,6 +633,7 @@ public enum LangId
     // Viewer > Appearance
     Settings_Appearance,
     Settings_EnableNavigationButtons,
+    Settings_ViewerScrollbarMode,
     Settings_EnableCenterWindowFit,
     Settings_EnableVectorRenderer,
     Settings_CheckerboardMode,

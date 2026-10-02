@@ -833,7 +833,7 @@ public partial class Config : PhReactive
     [JsonConverter(typeof(JsonStringEnumSafeConverter<ScrollbarMode>))]
     public ScrollbarMode ViewerScrollbarMode
     {
-        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.Never);
+        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.AutoHide);
         set => Set(ConfigId.ViewerScrollbarMode, value);
     }
 

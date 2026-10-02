@@ -23,6 +23,15 @@
                 <ui:PhTextBlock LangKey="Settings_EnableVectorRenderer" TextWrapping="Wrap" />
             </CheckBox>
 
+            <!--  Scrollbar mode  -->
+            <StackPanel Margin="0,10,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock LangKey="Settings_ViewerScrollbarMode" />
+                <ComboBox
+                    x:Name="PART_ScrollbarMode"
+                    Width="200"
+                    HorizontalAlignment="Left" />
+            </StackPanel>
+
             <!--  Checkerboard background mode  -->
             <StackPanel Margin="0,10,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
                 <ui:PhTextBlock LangKey="Settings_CheckerboardMode" />

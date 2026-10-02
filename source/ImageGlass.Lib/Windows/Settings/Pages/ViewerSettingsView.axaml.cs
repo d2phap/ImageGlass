@@ -58,6 +58,8 @@ public partial class ViewerSettingsView : SettingsPageView
             LangId.Settings_EnableNavigationButtons, LangId.Settings_Appearance, true);
         BindToggle(PART_VectorRenderer, ConfigId.EnableVectorRenderer,
             LangId.Settings_EnableVectorRenderer, LangId.Settings_Appearance, true);
+        BindEnumDropdown(PART_ScrollbarMode, ConfigId.ViewerScrollbarMode, ScrollbarMode.Never,
+            LangId.Settings_ViewerScrollbarMode, LangId.Settings_Appearance);
         BindEnumDropdown(PART_CheckerboardMode, ConfigId.CheckerboardMode, CheckerboardType.None,
             LangId.Settings_CheckerboardMode, LangId.Settings_Appearance);
 
