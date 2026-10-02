@@ -21,6 +21,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
@@ -49,13 +50,16 @@ public sealed class ScreenMapControl : PhControl
     private const double SCREEN_GAP = 6;
     private const float SCREEN_CORNER_RADIUS = 5;
 
-    // badges of the projectors on a screen
+    // badges of the projectors on a screen, shaped like the chips of the projector list
     private const double BADGE_HEIGHT = 18;
-    private const double BADGE_PADDING = 6;
     private const double BADGE_MARGIN = 4;
 
-    // a screen this small has no room for a window glyph, or a title-sized number
-    private const double MIN_GLYPH_SCREEN_WIDTH = 36;
+    // the main window, as the app logo in the bottom left corner of its screen
+    private const double LOGO_SIZE = 16;
+    private const double LOGO_INSET = 5;
+
+    // a screen this small has no room for the app logo, or a title-sized number
+    private const double MIN_LOGO_SCREEN_WIDTH = 36;
     private const double MIN_TITLE_SCREEN_HEIGHT = 40;
 
     // cells of the tiled projectors on a screen
@@ -68,6 +72,7 @@ public sealed class ScreenMapControl : PhControl
     private ProjectorManager? _manager;
     private Screen? _hoveredScreen;
     private Screen? _dropTargetScreen;
+    private IImage? _appLogo = PhLogo.LoadLogoImage();
 
 
     /// <summary>
@@ -160,6 +165,8 @@ public sealed class ScreenMapControl : PhControl
     protected override void OnIgThemeChanged(ThemePackChangedEventArgs e)
     {
         base.OnIgThemeChanged(e);
+
+        _appLogo = PhLogo.LoadLogoImage();
         InvalidateVisual();
     }
 
@@ -249,7 +256,7 @@ public sealed class ScreenMapControl : PhControl
 
 
     /// <summary>
-    /// Draws one screen with its number, the main window glyph and the projectors: their cells if tiled, else badges.
+    /// Draws one screen with its number, the app logo for the main window, and the projectors: their cells if tiled, else badges.
     /// </summary>
     private void DrawScreen(DrawingContext c, ScreenSlot slot)
     {
@@ -298,10 +305,10 @@ public sealed class ScreenMapControl : PhControl
         }
 
 
-        // 3. the main window, as a small window glyph in the bottom left corner
+        // 3. the main window, as the app logo in the bottom left corner
         if (slot.HasMainWindow)
         {
-            DrawWindowGlyph(c, slot.Rect, foreground);
+            DrawAppLogo(c, slot.Rect);
         }
 
 
@@ -333,7 +340,7 @@ public sealed class ScreenMapControl : PhControl
         var fill = isSelected ? accent : accent.WithAlpha(TILE_FILL_ALPHA);
         c.DrawRectangleEx(cellRect, TILE_CORNER_RADIUS, null, fill);
 
-        var label = $"P{projectorNumber}";
+        var label = GetBadgeText(projectorNumber);
         var fontSize = Const.FONT_SIZE_BODY;
         var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
         var isNarrowEnough = labelSize.Width + 2 <= cellRect.Width;
@@ -351,17 +358,26 @@ public sealed class ScreenMapControl : PhControl
 
 
     /// <summary>
-    /// Draws a window glyph: a frame with a title bar.
+    /// Draws the app logo of the theme pack in the bottom left corner of <paramref name="screenRect"/>.
     /// </summary>
-    private static void DrawWindowGlyph(DrawingContext c, Rect screenRect, Color color)
+    private void DrawAppLogo(DrawingContext c, Rect screenRect)
     {
-        var hasRoom = screenRect.Width >= MIN_GLYPH_SCREEN_WIDTH;
+        if (_appLogo is null) return;
+
+        var hasRoom = screenRect.Width >= MIN_LOGO_SCREEN_WIDTH;
         if (!hasRoom) return;
 
-        var glyph = new Rect(screenRect.Left + 6, screenRect.Bottom - 6 - 10, 14, 10);
+        var logoRect = new Rect(
+            screenRect.Left + LOGO_INSET,
+            screenRect.Bottom - LOGO_INSET - LOGO_SIZE,
+            LOGO_SIZE,
+            LOGO_SIZE);
 
-        c.DrawRectangleEx(glyph, 1.5f, color, null, 1.2f);
-        c.DrawLineEx(glyph.Left, glyph.Top + 3, glyph.Right, glyph.Top + 3, color, 1.2f);
+        // the bundled fallback logo is a large bitmap, which turns jagged at this size unless scaled smoothly
+        using (c.PushRenderOptions(new RenderOptions { BitmapInterpolationMode = BitmapInterpolationMode.HighQuality }))
+        {
+            c.DrawImage(_appLogo, logoRect);
+        }
     }
 
 
@@ -371,22 +387,29 @@ public sealed class ScreenMapControl : PhControl
     private double DrawProjectorBadge(DrawingContext c, int projectorNumber, double right, double top)
     {
         var accent = Core.AccentColor;
-        var label = $"P{projectorNumber}";
+        var label = GetBadgeText(projectorNumber);
         var fontSize = Const.FONT_SIZE_SMALL;
         var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
 
-        var badgeWidth = labelSize.Width + BADGE_PADDING * 2;
+        var padding = PhChip.CHIP_PADDING;
+        var badgeWidth = labelSize.Width + padding.Left + padding.Right;
         var badge = new Rect(right - badgeWidth, top, badgeWidth, BADGE_HEIGHT);
-        c.DrawRectangleEx(badge, (float)(BADGE_HEIGHT / 2), null, accent);
+        c.DrawRectangleEx(badge, (float)PhChip.CHIP_CORNER_RADIUS, null, accent);
 
         var labelColor = accent.InvertBlackOrWhite();
         c.DrawTextEx(label, FontFamily, fontSize,
-            badge.X + BADGE_PADDING,
+            badge.X + padding.Left,
             badge.Y + (BADGE_HEIGHT - labelSize.Height) / 2,
             labelColor);
 
         return badge.Left - BADGE_MARGIN;
     }
+
+
+    /// <summary>
+    /// Gets the short name of a projector on its badge, which its row in the projector list shows too.
+    /// </summary>
+    internal static string GetBadgeText(int projectorNumber) => $"P{projectorNumber}";
 
 
     /// <summary>

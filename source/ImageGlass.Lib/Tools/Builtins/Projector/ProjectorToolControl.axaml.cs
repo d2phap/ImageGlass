@@ -345,8 +345,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         {
             var row = _rows[windows[rowIndex]];
             Control[] cells = isSynced
-                ? [row.Chip, row.CmbMonitor, row.CmbMode, row.ColorPicker, row.BtnClose]
-                : [row.Chip, row.CmbMonitor, row.CmbMode, row.CmbZoom, row.ColorPicker, row.BtnClose];
+                ? [row.BtnName, row.CmbMonitor, row.CmbMode, row.ColorPicker, row.BtnClose]
+                : [row.BtnName, row.CmbMonitor, row.CmbMode, row.CmbZoom, row.ColorPicker, row.BtnClose];
 
             PART_ProjectorList.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             for (var column = 0; column < cells.Length; column++)
@@ -364,30 +364,48 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// </summary>
     private ProjectorRow CreateRow(ProjectorWindow window)
     {
-        // 1. the name: hovering shows its monitor on the map, a click brings it forward, dragging moves it to another monitor
-        var chip = new PhButton
+        // 1. the name after its badge on the map: hovering shows its monitor on the map, a click brings it forward, dragging moves it to another monitor
+        var badge = new PhChip
+        {
+            Text = ScreenMapControl.GetBadgeText(window.Number),
+            Variant = PhChipVariant.Accent,
+        };
+        var lblName = new PhTextBlock
+        {
+            LangKey = LangId.Tool_Projector_WindowTitle,
+            LangParams = window.Number,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+        var btnName = new PhButton
         {
             Focusable = false,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Center,
             Cursor = new Cursor(StandardCursorType.Hand),
+            Content = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Spacing = 8,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Children = { badge, lblName },
+            },
         };
-        chip.Click += (_, _) =>
+        btnName.Click += (_, _) =>
         {
             // a press that turned into a drag is not a click
             if (_isDragging) return;
 
             window.RestoreAndActivate();
         };
-        chip.PointerEntered += (_, _) => PART_ScreenMap.SelectedProjectorNumber = window.Number;
-        chip.PointerExited += (_, _) =>
+        btnName.PointerEntered += (_, _) => PART_ScreenMap.SelectedProjectorNumber = window.Number;
+        btnName.PointerExited += (_, _) =>
         {
             if (!_isDragging) PART_ScreenMap.SelectedProjectorNumber = 0;
         };
-        chip.AddHandler(PointerPressedEvent, (_, e) => StartDrag(window, chip, e), RoutingStrategies.Bubble, true);
-        chip.AddHandler(PointerMovedEvent, (_, e) => ContinueDrag(e), RoutingStrategies.Bubble, true);
-        chip.AddHandler(PointerReleasedEvent, (_, _) => DropDraggedProjector(), RoutingStrategies.Bubble, true);
-        chip.PointerCaptureLost += (_, _) => EndDrag();
+        btnName.AddHandler(PointerPressedEvent, (_, e) => StartDrag(window, btnName, e), RoutingStrategies.Bubble, true);
+        btnName.AddHandler(PointerMovedEvent, (_, e) => ContinueDrag(e), RoutingStrategies.Bubble, true);
+        btnName.AddHandler(PointerReleasedEvent, (_, _) => DropDraggedProjector(), RoutingStrategies.Bubble, true);
+        btnName.PointerCaptureLost += (_, _) => EndDrag();
 
 
         // 2. the monitor it is on
@@ -491,7 +509,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             _manager.SetZoomMode(window, _zoomModes[index]);
         };
 
-        var row = new ProjectorRow(window, chip, cmbMonitor, cmbMode, cmbZoom, colorPicker, btnClose);
+        var row = new ProjectorRow(window, btnName, cmbMonitor, cmbMode, cmbZoom, colorPicker, btnClose);
         RelocalizeRow(row);
 
         return row;
@@ -555,9 +573,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
         var colorText = Core.Lang[LangId._BackgroundColor];
 
-        row.Chip.Text = projectorName;
         row.ColorPicker.Title = $"{projectorName} - {colorText}";
-        ToolTip.SetTip(row.Chip, Core.Lang[LangId.Tool_Projector_DragHint]);
+        ToolTip.SetTip(row.BtnName, Core.Lang[LangId.Tool_Projector_DragHint]);
         ToolTip.SetTip(row.ColorPicker, colorText);
         ToolTip.SetTip(row.BtnClose, Core.Lang[LangId._Close]);
 
@@ -642,9 +659,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// Starts tracking a press on the name of <paramref name="window"/>, which turns into a drag once the pointer moves.
     /// </summary>
-    private void StartDrag(ProjectorWindow window, Control chip, PointerPressedEventArgs e)
+    private void StartDrag(ProjectorWindow window, Control btnName, PointerPressedEventArgs e)
     {
-        var isLeftButton = e.GetCurrentPoint(chip).Properties.IsLeftButtonPressed;
+        var isLeftButton = e.GetCurrentPoint(btnName).Properties.IsLeftButtonPressed;
         if (!isLeftButton) return;
 
         _dragWindow = window;
@@ -653,7 +670,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         _isDragging = false;
 
         // the moves keep coming once the pointer leaves the name
-        e.Pointer.Capture(chip);
+        e.Pointer.Capture(btnName);
     }
 
 
@@ -866,7 +883,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// The controls of one open projector in the list.
     /// </summary>
-    private sealed record ProjectorRow(ProjectorWindow Window, PhButton Chip, ComboBox CmbMonitor, ComboBox CmbMode,
+    private sealed record ProjectorRow(ProjectorWindow Window, PhButton BtnName, ComboBox CmbMonitor, ComboBox CmbMode,
         ComboBox CmbZoom, PhColorPickerControl ColorPicker, PhToolButton BtnClose);
 
 

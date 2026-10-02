@@ -898,6 +898,7 @@ public static class Core
         Resx.Set(ResxId.SystemAccentColorDark1, accentDark1);
         Resx.Set(ResxId.SystemAccentColorDark2, accentDark2);
         Resx.Set(ResxId.SystemAccentColorDark3, accentDark3);
+        Resx.Set(ResxId.IG_AccentBrush, accent.ToBrush());
 
         // accent-colored text: the raw accent is too dark on a dark background,
         // so lighten it in dark mode and darken it in light mode for contrast

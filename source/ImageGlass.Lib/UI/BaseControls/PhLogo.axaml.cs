@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Svg.Skia;
 using ImageGlass.Common;
@@ -103,34 +104,42 @@ public partial class PhLogo : PhControl
 
 
     /// <summary>
-    /// Loads the theme pack logo, falling back to the bundled app icon.
+    /// Shows the theme pack logo, falling back to the bundled app icon.
     /// </summary>
     private void UpdateLogo()
     {
         if (PART_Logo is null) return;
 
+        PART_Logo.Source = LoadLogoImage();
+    }
+
+    #endregion // Private Methods
+
+
+
+    #region Public Methods
+
+    /// <summary>
+    /// Loads the theme pack logo, falling back to the bundled app icon; <c>null</c> when neither loads.
+    /// </summary>
+    public static IImage? LoadLogoImage()
+    {
         // 1. try load theme logo
         try
         {
             var iconPath = Core.Theme.GetIconPath(IgThemeIcon.AppLogo);
-            PART_Logo.Source = new SvgImage
-            {
-                Source = SvgSource.Load(iconPath),
-            };
+            var svgSource = SvgSource.Load(iconPath);
+            if (svgSource is not null) return new SvgImage { Source = svgSource };
         }
         catch { }
 
         // 2. load the default logo
-        if (PART_Logo.Source is null)
-        {
-            using var stream = Resx.GetDefaultWindowIconAsStream();
-            if (stream is not null)
-            {
-                PART_Logo.Source = Bitmap.DecodeToHeight(stream, 256);
-            }
-        }
+        using var stream = Resx.GetDefaultWindowIconAsStream();
+        if (stream is null) return null;
+
+        return Bitmap.DecodeToHeight(stream, 256);
     }
 
-    #endregion // Private Methods
+    #endregion // Public Methods
 
 }

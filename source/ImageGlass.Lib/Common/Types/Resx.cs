@@ -188,6 +188,7 @@ public enum ResxId
     SystemAccentColorDark1,
     SystemAccentColorDark2,
     SystemAccentColorDark3,
+    IG_AccentBrush, // the accent color itself as a brush, for a fill the accent covers whole
 
 
     // accent button text (contrasts with the accent background)
