@@ -24,7 +24,7 @@ namespace ImageGlass.UI.Viewer.Transitions;
 
 
 /// <summary>
-/// State of the transition the viewer is playing; guarded by the viewer's lock.
+/// State of the transition the viewer is playing; guarded by its transition lock, which is that of the source for a mirror.
 /// </summary>
 internal sealed class ViewerTransition(TransitionRequest request, SKPicture fromFrame) : PhDisposable
 {

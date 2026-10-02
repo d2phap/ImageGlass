@@ -20,6 +20,8 @@ using Avalonia;
 using Avalonia.Threading;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Types;
+using ImageGlass.UI.Viewer.Transitions;
+using SkiaSharp;
 using Svg.Skia;
 using System;
 
@@ -44,6 +46,12 @@ public partial class ViewerControl
     /// Occurs when what the viewer draws, or where it draws it, may have changed.
     /// </summary>
     internal event TEventHandler<ViewerControl, EventArgs>? RenderStateChanged;
+
+
+    /// <summary>
+    /// Occurs inside the viewer lock right before its photo unloads for another, with the transition it plays or <c>null</c>.
+    /// </summary>
+    internal event TEventHandler<ViewerControl, TransitionRequest?>? TransitionStarting;
 
 
 
@@ -135,6 +143,8 @@ public partial class ViewerControl
 
         source.RenderStateChanged -= MirrorSource_RenderStateChanged;
         source.RenderStateChanged += MirrorSource_RenderStateChanged;
+        source.TransitionStarting -= MirrorSource_TransitionStarting;
+        source.TransitionStarting += MirrorSource_TransitionStarting;
     }
 
 
@@ -144,6 +154,10 @@ public partial class ViewerControl
     private void DetachMirrorSource(ViewerControl? source)
     {
         source?.RenderStateChanged -= MirrorSource_RenderStateChanged;
+        source?.TransitionStarting -= MirrorSource_TransitionStarting;
+
+        // under the lock of that source, which the renderer read it with, not of a new one
+        CompleteTransition(source?._lock ?? _lock);
 
         SetSharedTileCache(null);
         DisposeOwnTileCache();
@@ -162,6 +176,38 @@ public partial class ViewerControl
         else
         {
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Render);
+        }
+    }
+
+
+    private void MirrorSource_TransitionStarting(ViewerControl sender, TransitionRequest? request)
+    {
+        // a copy, as only the request of the source tells the slideshow when its effect ended
+        var ownRequest = request is null
+            ? null
+            : new TransitionRequest(request.Effect, request.DurationMs, request.Direction);
+
+        BeginTransition(ownRequest);
+    }
+
+
+    /// <summary>
+    /// Records the photo of <paramref name="source"/> as the mirror shows it now; <c>null</c> if there is nothing to transition from.
+    /// </summary>
+    private SKPicture? CaptureMirrorFrame(ViewerControl source)
+    {
+        // the last draw may have taken its viewport from an image the source replaced since
+        SyncFromMirrorSource();
+
+        lock (source._lock)
+        {
+            var hasImage = source._imgRender is not null || source._imgSource is not null;
+            var hasVector = _mirrorSvgDocument is not null;
+            if (!hasImage && !hasVector) return null;
+            if (DrawingArea.Width < 1 || DrawingArea.Height < 1) return null;
+
+            using var renderer = new PhotoRenderer(this, source, EnableMirrorSync);
+            return renderer.RecordFrame();
         }
     }
 

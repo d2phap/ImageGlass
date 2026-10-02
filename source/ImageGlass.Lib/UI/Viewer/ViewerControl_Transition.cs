@@ -21,6 +21,7 @@ using ImageGlass.Common.Extensions;
 using ImageGlass.UI.Viewer.Transitions;
 using SkiaSharp;
 using System;
+using System.Threading;
 
 namespace ImageGlass.UI.Viewer;
 
@@ -29,8 +30,14 @@ public partial class ViewerControl
     // the old frame stays on screen at most this long while the new photo decodes
     private const int MAX_TRANSITION_HOLD_MS = 3000;
 
-    // read by PhotoRenderer under _lock
+    // read by PhotoRenderer under TransitionLock
     internal ViewerTransition? _transition;
+
+
+    /// <summary>
+    /// Gets the lock guarding <see cref="_transition"/>: that of the source for a mirror, whose renderer draws under it.
+    /// </summary>
+    private Lock TransitionLock => MirrorSource?._lock ?? _lock;
 
 
     /// <summary>
@@ -38,8 +45,17 @@ public partial class ViewerControl
     /// </summary>
     public void CompleteTransition()
     {
+        CompleteTransition(TransitionLock);
+    }
+
+
+    /// <summary>
+    /// Finishes the playing transition at once, taking it out from under <paramref name="transitionLock"/>.
+    /// </summary>
+    private void CompleteTransition(Lock transitionLock)
+    {
         ViewerTransition? transition;
-        lock (_lock)
+        lock (transitionLock)
         {
             transition = _transition;
             _transition = null;
@@ -58,9 +74,12 @@ public partial class ViewerControl
     /// </summary>
     private void BeginTransition(TransitionRequest? request)
     {
+        // the mirrors record their own old frames now, as the old images go right after this
+        TransitionStarting?.Invoke(this, request);
+
         // a transition still holding its old frame keeps showing it, so the next one starts from it too
         SKPicture? heldFrame = null;
-        lock (_lock)
+        lock (TransitionLock)
         {
             if (request is not null && _transition is { StartTime: null } holding)
             {
@@ -86,7 +105,7 @@ public partial class ViewerControl
         }
 
         var transition = new ViewerTransition(request, fromFrame);
-        lock (_lock)
+        lock (TransitionLock)
         {
             _transition = transition;
         }
@@ -100,6 +119,8 @@ public partial class ViewerControl
     /// </summary>
     private SKPicture? CaptureTransitionFrame()
     {
+        if (MirrorSource is { } source) return CaptureMirrorFrame(source);
+
         lock (_lock)
         {
             var hasImage = _imgRender is not null || _imgSource is not null;
@@ -119,7 +140,7 @@ public partial class ViewerControl
     private void OnTransitionFrame(TimeSpan ts, ViewerTransition transition)
     {
         bool hasTarget;
-        lock (_lock)
+        lock (TransitionLock)
         {
             // superseded or finished
             if (!ReferenceEquals(_transition, transition)) return;
@@ -150,7 +171,7 @@ public partial class ViewerControl
         var elapsedMs = (ts - transition.StartTime.Value).TotalMilliseconds;
         var linear = Math.Clamp(elapsedMs / transition.Request.DurationMs, 0, 1);
 
-        lock (_lock)
+        lock (TransitionLock)
         {
             transition.Progress = (float)EaseInOutCubic(linear);
         }
@@ -171,6 +192,9 @@ public partial class ViewerControl
     /// </summary>
     private bool HasTransitionTarget()
     {
+        // a mirror draws the photo of its source
+        if (MirrorSource is { } source) return source.HasTransitionTarget();
+
         if (Photo is null || Photo.Error is not null) return true;
 
         return _imgSource is not null || _svgPicture is not null;

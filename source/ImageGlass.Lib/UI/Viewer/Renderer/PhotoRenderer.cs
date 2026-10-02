@@ -92,6 +92,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
     // a mirror draws the photo of _viewer through the viewport of another viewer
     private readonly bool _isMirror;
+    private readonly ViewerControl? _mirror;
     private readonly SKSvg? _mirrorSvgDocument;
 
 
@@ -151,6 +152,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
         _lock = source._lock;
         _viewer = source;
         _isMirror = true;
+        _mirror = mirror;
         _onDrawFirstTime = null;
 
         // UI-thread state of the mirror, computed for what the source shows right now
@@ -230,8 +232,8 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
         lock (_lock)
         {
-            // read live under the same lock; a mirror skips it, as the old frame is in the source's viewport
-            var transition = _isMirror ? null : _viewer._transition;
+            // read live under the same lock, which guards the transition a mirror plays in its own viewport too
+            var transition = (_mirror ?? _viewer)._transition;
             if (transition is null || transition.IsDisposed)
             {
                 DrawContent(lease.SkCanvas, lease.GrContext);
