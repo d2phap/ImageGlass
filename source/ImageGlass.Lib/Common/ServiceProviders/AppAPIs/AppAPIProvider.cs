@@ -3259,6 +3259,57 @@ public partial class AppAPIProvider
 
 
     /// <summary>
+    /// Opens a projector window on the next free screen.
+    /// </summary>
+    public static async Task IG_AddProjectorAsync()
+    {
+        var projectors = Core.GetProjectors();
+
+        // the limit is only worth explaining when Pro would lift it
+        if (projectors.IsLimitedByLicense)
+        {
+            _ = Message.ShowAsync(
+                Core.Lang[LangId.Tool_Projector_ProLimit],
+                Core.Lang[LangId.Menu_MnuProjector]);
+            return;
+        }
+
+        _ = await projectors.AddProjectorAsync();
+    }
+
+
+    /// <summary>
+    /// Closes all projector windows.
+    /// </summary>
+    public static void IG_CloseAllProjectors()
+    {
+        Core.Projectors?.CloseAll();
+    }
+
+
+    /// <summary>
+    /// Toggles whether projectors follow the zoom, pan and transforms of the viewer; <c>"true"</c>, <c>"false"</c> or empty.
+    /// </summary>
+    public static void IG_ToggleProjectorSync(string? boolStr = null)
+    {
+        var enabled = BHelper.ConvertStringToBool(boolStr);
+        IG_ToggleProjectorSync(enabled);
+    }
+
+
+    /// <summary>
+    /// Toggles whether projectors follow the zoom, pan and transforms of the viewer.
+    /// </summary>
+    public static void IG_ToggleProjectorSync(bool? enabled = null)
+    {
+        var projectors = Core.GetProjectors();
+        enabled ??= !projectors.Config.EnableViewSync;
+
+        projectors.SetViewSync(enabled.Value);
+    }
+
+
+    /// <summary>
     /// Launches an external tool; if it can't be started, offers to fix it in Settings > Tools.
     /// </summary>
     private static async Task LaunchExternalToolAsync(ExternalToolProxy proxy)

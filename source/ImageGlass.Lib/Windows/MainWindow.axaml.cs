@@ -169,6 +169,9 @@ public partial class MainWindow : PhWindow
             // stop slideshow so pre-slideshow config values are restored before saving
             Core.API?.IG_ToggleSlideshow(false);
 
+            // the projectors mirror this window; their settings are already in the config
+            Core.Projectors?.CloseAll();
+
             // stop all external tool processes before saving config
             await Core.ToolRegistry.ExternalTools.StopAllAsync();
 

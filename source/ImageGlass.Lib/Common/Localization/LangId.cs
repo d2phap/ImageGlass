@@ -383,6 +383,7 @@ public enum LangId
     Menu_MnuResizeTool,
     Menu_MnuFrameNav,
     Menu_MnuHdrToneMapper,
+    Menu_MnuProjector,
     Menu_MnuToolsSettings,
 
     Menu_MnuLosslessCompression,
@@ -850,6 +851,15 @@ public enum LangId
     Tool_Hdr_LblSaturation,
     Tool_Hdr_BtnReset,
     #endregion // Tool: HDR tone mapper
+
+
+    #region Tool: Projector
+    Tool_Projector_WindowTitle,
+    Tool_Projector_BtnAdd,
+    Tool_Projector_BtnCloseAll,
+    Tool_Projector_ChkSyncView,
+    Tool_Projector_ProLimit,
+    #endregion // Tool: Projector
 
 
     #region Tool: Color picker

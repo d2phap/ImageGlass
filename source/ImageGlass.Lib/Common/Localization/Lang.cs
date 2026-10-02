@@ -823,6 +823,7 @@ public class Lang
         new(LangId.Menu_MnuResizeTool, "Resize image"), // v9.2
         new(LangId.Menu_MnuFrameNav, "Frame navigation"), // v7.5
         new(LangId.Menu_MnuHdrToneMapper, "HDR tone mapper"), // v10.0
+        new(LangId.Menu_MnuProjector, "Projector"), // v10.0
         new(LangId.Menu_MnuToolsSettings, "Tools settings…"),
 
         new(LangId.Menu_MnuLosslessCompression, "Magick.NET Lossless Compression"), // v9.1
@@ -1290,6 +1291,15 @@ public class Lang
         new(LangId.Tool_Hdr_LblSaturation, "Saturation: {0}"), //v10.0
         new(LangId.Tool_Hdr_BtnReset, "Reset"), //v10.0
         #endregion // Tool: HDR tone mapper
+
+
+        #region Tool: Projector
+        new(LangId.Tool_Projector_WindowTitle, "Projector {0}"), //v10.0
+        new(LangId.Tool_Projector_BtnAdd, "Add projector"), //v10.0
+        new(LangId.Tool_Projector_BtnCloseAll, "Close all projectors"), //v10.0
+        new(LangId.Tool_Projector_ChkSyncView, "Sync projectors with main window"), //v10.0
+        new(LangId.Tool_Projector_ProLimit, "ImageGlass Pro is needed to open more than one projector."), //v10.0
+        #endregion // Tool: Projector
 
 
         #region Tool: Color picker

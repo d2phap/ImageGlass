@@ -132,6 +132,18 @@ public static class Core
 
 
     /// <summary>
+    /// Gets the projector windows, or <c>null</c> until a projector is first used.
+    /// </summary>
+    public static ProjectorManager? Projectors { get; private set; } = null;
+
+
+    /// <summary>
+    /// Gets the projector windows, set up on first use.
+    /// </summary>
+    public static ProjectorManager GetProjectors() => Projectors ??= new ProjectorManager();
+
+
+    /// <summary>
     /// Checks for app updates and, where the packaging format allows, installs them in place.
     /// </summary>
     public static IUpdateProvider UpdateProvider { get; set; } = new UpdateProvider();
@@ -327,6 +339,9 @@ public static class Core
 
         Core.Slideshow?.Dispose();
         Core.Slideshow = null;
+
+        Core.Projectors?.Dispose();
+        Core.Projectors = null;
 
         Core.Photos.Dispose();
         Core.ColorProfileProvider?.Dispose();
@@ -847,6 +862,13 @@ public static class Core
         }
 
         Resx.Set(ResxId.IG_ToolHostBackgroundBrush, toolHostBg.ToBrush());
+
+
+        // 5. a projector presents the photo to an audience, like a slideshow does
+        var projectorBg = BHelper.ColorFromHex(Config.SlideshowBackgroundColor, AccentColor);
+        if (projectorBg.IsEmpty) projectorBg = bgColor;
+
+        Resx.Set(ResxId.IG_ProjectorBackgroundBrush, projectorBg.ToBrush());
     }
 
 

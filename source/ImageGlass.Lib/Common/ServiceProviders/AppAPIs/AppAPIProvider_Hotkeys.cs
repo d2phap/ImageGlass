@@ -174,6 +174,9 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuResizeTool,          API.IG_OpenTool, ImageResizerTool.TOOL_ID,              [new(Key.R)]),
         new(LangId.Menu_MnuLosslessCompression, API.IG_OpenTool, LosslessCompressionTool.TOOL_ID,       [new(Key.M)]),
         new(LangId.Menu_MnuToolsSettings,       API.IG_OpenSettings, nameof(SettingsNavId.Tools)),
+        new(LangId.Tool_Projector_BtnAdd,       API.IG_AddProjector),
+        new(LangId.Tool_Projector_BtnCloseAll,  API.IG_CloseAllProjectors),
+        new(LangId.Tool_Projector_ChkSyncView,  API.IG_ToggleProjectorSync),
 
 
         // Settings
