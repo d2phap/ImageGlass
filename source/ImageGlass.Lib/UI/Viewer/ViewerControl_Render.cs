@@ -477,10 +477,20 @@ public partial class ViewerControl
         if (_animator is not null) return;
 
         // use the processed (color-managed) image if available, otherwise the source
-        _mipmapCache = MipmapTileCache.Create(_imgRender ?? _imgSource, InvalidateVisual);
+        _mipmapCache = MipmapTileCache.Create(_imgRender ?? _imgSource, InvalidateTiledFrame);
 
         PhotoTrace.Mark("render:mipmap-cache", Photo?.FilePath,
             _mipmapCache is null ? "not created (image too small)" : "created");
+    }
+
+
+    /// <summary>
+    /// Redraws a tile that landed, here and in the mirrors that share the tiles.
+    /// </summary>
+    private void InvalidateTiledFrame()
+    {
+        InvalidateVisual();
+        OnRenderStateChanged();
     }
 
 

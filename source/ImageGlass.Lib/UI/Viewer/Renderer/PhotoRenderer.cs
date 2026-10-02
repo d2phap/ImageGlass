@@ -158,7 +158,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
         _srcRect = mirror.SrcRect.ToSKRect();
         _destRect = mirror.DestRect.ToSKRect();
         _samplingOptions = SkiaCodec.ToSamplingOptions(mirror.CurrentInterpolation);
-        _tileCache = mirror._mipmapCache;
+        _tileCache = mirror._mirrorSharedTileCache ?? mirror._mipmapCache;
         _zoomFactor = mirror.ZoomFactor;
         _dpi = (float)mirror.Dpi;
         _drawingArea = mirror.DrawingArea.ToSKRect();

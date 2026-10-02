@@ -30,6 +30,12 @@ public partial class ViewerControl
     // the source image the mirror's own tile cache was built from; the cache holds it alive
     private SKImageRef? _mirrorTileSource;
 
+    // the tile cache of the source, drawn from while both tile the same image; read by PhotoRenderer
+    internal MipmapTileCache? _mirrorSharedTileCache;
+
+    // an image the source did not tile yet, which the mirror tiles itself if it still does not on the next draw
+    private SKImageRef? _pendingTileSource;
+
     // the vector document the mirror's viewport was computed for; read by PhotoRenderer
     internal SKSvg? _mirrorSvgDocument;
 
@@ -139,9 +145,9 @@ public partial class ViewerControl
     {
         source?.RenderStateChanged -= MirrorSource_RenderStateChanged;
 
-        _mipmapCache?.Dispose();
-        _mipmapCache = null;
-        _mirrorTileSource = null;
+        SetSharedTileCache(null);
+        DisposeOwnTileCache();
+        _pendingTileSource = null;
         _mirrorSvgDocument = null;
     }
 
@@ -199,7 +205,7 @@ public partial class ViewerControl
 
             // vector and animated photos are never tiled
             var canTile = svgDocument is null && source._animator is null;
-            UpdateMirrorTileCache(canTile ? drawnImage : null);
+            UpdateMirrorTileCache(source, canTile ? drawnImage : null);
         }
 
         _mirrorSvgDocument = svgDocument;
@@ -257,18 +263,79 @@ public partial class ViewerControl
 
 
     /// <summary>
-    /// Rebuilds the mirror's own tile cache when the image it draws changes.
+    /// Picks the tiles the mirror draws: those of the source when it tiles the same image, else its own; the caller holds the source lock.
     /// </summary>
-    private void UpdateMirrorTileCache(SKImageRef? tileSource)
+    private void UpdateMirrorTileCache(ViewerControl source, SKImageRef? tileSource)
     {
-        var isSameSource = ReferenceEquals(_mirrorTileSource, tileSource);
-        if (isSameSource) return;
+        // 1. nothing to tile: no photo, or one too small to need tiles
+        var needsTiles = MipmapTileCache.NeedsTiles(tileSource?.Image);
+        if (!needsTiles)
+        {
+            SetSharedTileCache(null);
+            DisposeOwnTileCache();
+            _pendingTileSource = null;
+            return;
+        }
 
+
+        // 2. one proxy, one set of tiles and of their GPU textures for both viewers
+        var sourceCache = source._mipmapCache;
+        var isSourceTilingIt = ReferenceEquals(sourceCache?.SourceRef, tileSource);
+        if (isSourceTilingIt)
+        {
+            SetSharedTileCache(sourceCache);
+            DisposeOwnTileCache();
+            _pendingTileSource = null;
+            return;
+        }
+
+        SetSharedTileCache(null);
+
+        var hasOwnTiles = ReferenceEquals(_mirrorTileSource, tileSource);
+        if (hasOwnTiles) return;
+
+
+        // 3. the source tiles a new image right after its first draw, so give it a moment rather than tile twice
+        var isFirstSeen = !ReferenceEquals(_pendingTileSource, tileSource);
+        if (isFirstSeen)
+        {
+            DisposeOwnTileCache();
+            _pendingTileSource = tileSource;
+            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+            return;
+        }
+
+
+        // 4. its own tiles, e.g. of the decoded image while the source shows a rotated one, or is minimized
+        _pendingTileSource = null;
         _mirrorTileSource = tileSource;
-
-        // only this UI thread writes a mirror's cache, and the renderer reads it here too
-        _mipmapCache?.Dispose();
         _mipmapCache = MipmapTileCache.Create(tileSource, InvalidateVisual);
+    }
+
+
+    /// <summary>
+    /// Starts or stops drawing from the tile cache of the source.
+    /// </summary>
+    private void SetSharedTileCache(MipmapTileCache? cache)
+    {
+        var isSameCache = ReferenceEquals(_mirrorSharedTileCache, cache);
+        if (isSameCache) return;
+
+        // the source disposes its cache by itself; a disposed one just ignores this
+        _mirrorSharedTileCache?.RemoveViewer();
+        cache?.AddViewer();
+        _mirrorSharedTileCache = cache;
+    }
+
+
+    /// <summary>
+    /// Disposes the tile cache the mirror built for itself.
+    /// </summary>
+    private void DisposeOwnTileCache()
+    {
+        _mipmapCache?.Dispose();
+        _mipmapCache = null;
+        _mirrorTileSource = null;
     }
 
 

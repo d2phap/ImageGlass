@@ -104,10 +104,14 @@ internal sealed class MipmapTileCache : PhDisposable
     private readonly Action _tileReady;
 
     /// <summary>
-    /// Maximum number of tiles to cache, scaled down for high-bit-depth formats
-    /// to stay within a constant memory budget.
+    /// Maximum number of tiles to cache for one viewport, fewer for high-bit-depth formats to keep the memory budget.
     /// </summary>
-    private readonly int _maxCachedTiles;
+    private readonly int _maxTilesPerViewer;
+
+    // one budget per viewer drawing from the cache, or two viewports would evict each other's tiles
+    private int _maxCachedTiles;
+    private int _viewerCount = 1;
+
     private SKImageRef? _proxy;
     private bool _workerRunning;
     private bool _isStopping;
@@ -123,6 +127,11 @@ internal sealed class MipmapTileCache : PhDisposable
     /// </summary>
     public int SourceHeight { get; }
 
+    /// <summary>
+    /// Gets the image the tiles are made from.
+    /// </summary>
+    public SKImageRef SourceRef => _sourceRef;
+
 
     private MipmapTileCache(SKImageRef sourceRef, int width, int height,
         SKColorType colorType, SKColorSpace? colorSpace, Action tileReady)
@@ -135,12 +144,12 @@ internal sealed class MipmapTileCache : PhDisposable
         _colorSpace = colorSpace;
         _tileReady = tileReady;
 
-        // Scale max tiles inversely with bytes-per-pixel to keep a constant memory budget.
-        // Budget baseline: MAX_CACHED_TILES tiles of Rgba8888 (4 bpp).
+        // scale inversely with bytes-per-pixel from a baseline of MAX_CACHED_TILES Rgba8888 tiles
         var bpp = new SKImageInfo(1, 1, colorType).BytesPerPixel;
-        _maxCachedTiles = bpp <= 4
+        _maxTilesPerViewer = bpp <= 4
             ? MAX_CACHED_TILES
             : Math.Max(10, MAX_CACHED_TILES * 4 / bpp);
+        _maxCachedTiles = _maxTilesPerViewer;
     }
 
 
@@ -154,15 +163,25 @@ internal sealed class MipmapTileCache : PhDisposable
     public static MipmapTileCache? Create(SKImageRef? sourceRef, Action tileReady)
     {
         var img = sourceRef?.Image;
-        if (img is null || img.IsDisposed()) return null;
+        var needsTiles = NeedsTiles(img);
+        if (!needsTiles) return null;
 
-        var pixels = (long)img.Width * img.Height;
-        if (pixels < MIN_PIXELS_FOR_TILING) return null;
-
-        var cache = new MipmapTileCache(sourceRef!, img.Width, img.Height,
+        var cache = new MipmapTileCache(sourceRef!, img!.Width, img.Height,
             img.ColorType, img.ColorSpace, tileReady);
         _ = Task.Run(cache.GenerateProxy);
         return cache;
+    }
+
+
+    /// <summary>
+    /// Checks whether <paramref name="img"/> is large enough to be drawn from tiles.
+    /// </summary>
+    public static bool NeedsTiles(SKImage? img)
+    {
+        if (img is null || img.IsDisposed()) return false;
+
+        var pixels = (long)img.Width * img.Height;
+        return pixels >= MIN_PIXELS_FOR_TILING;
     }
 
 
@@ -194,6 +213,32 @@ internal sealed class MipmapTileCache : PhDisposable
 
 
     #region Instance Methods
+
+    /// <summary>
+    /// Adds a viewer that draws its own viewport from these tiles; the cache then holds a budget for it too.
+    /// </summary>
+    public void AddViewer()
+    {
+        lock (_lock)
+        {
+            _viewerCount++;
+            _maxCachedTiles = _maxTilesPerViewer * _viewerCount;
+        }
+    }
+
+
+    /// <summary>
+    /// Removes a viewer added by <see cref="AddViewer"/>; extra tiles are evicted with the next one.
+    /// </summary>
+    public void RemoveViewer()
+    {
+        lock (_lock)
+        {
+            _viewerCount = Math.Max(1, _viewerCount - 1);
+            _maxCachedTiles = _maxTilesPerViewer * _viewerCount;
+        }
+    }
+
 
     /// <summary>
     /// Acquires the downscaled full-image proxy, if it is ready.
