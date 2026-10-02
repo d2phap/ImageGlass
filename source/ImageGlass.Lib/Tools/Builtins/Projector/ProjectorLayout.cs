@@ -29,6 +29,11 @@ namespace ImageGlass.Tools;
 /// </summary>
 public sealed class ProjectorLayout : IEquatable<ProjectorLayout>
 {
+    /// <summary>
+    /// The most projectors a layout tiles on one screen; a screen may hold more, untiled.
+    /// </summary>
+    public const int MAX_TILED_PROJECTORS = 4;
+
     private readonly int[] _usedCells;
 
 
@@ -80,10 +85,12 @@ public sealed class ProjectorLayout : IEquatable<ProjectorLayout>
     #region Factory Methods
 
     /// <summary>
-    /// Gets the layouts offered for a screen of <paramref name="windowCount"/> projectors, in menu order.
+    /// Gets the layouts offered for tiling <paramref name="windowCount"/> projectors, in menu order; no more than <see cref="MAX_TILED_PROJECTORS"/> are tiled.
     /// </summary>
     public static IReadOnlyList<ProjectorLayout> GetLayouts(int windowCount, double aspectRatio)
     {
+        windowCount = Math.Min(windowCount, MAX_TILED_PROJECTORS);
+
         // a lone projector takes a half, side by side or stacked, or a quarter
         if (windowCount == 1)
         {
@@ -113,10 +120,12 @@ public sealed class ProjectorLayout : IEquatable<ProjectorLayout>
 
 
     /// <summary>
-    /// Gets the layout for <paramref name="windowCount"/> projectors set to tiled: the first half for one, both for two, else a grid.
+    /// Gets the layout for <paramref name="windowCount"/> projectors set to tiled: the first half for one, both for two, else a grid of up to <see cref="MAX_TILED_PROJECTORS"/>.
     /// </summary>
     public static ProjectorLayout GetDefault(int windowCount, double aspectRatio)
     {
+        windowCount = Math.Min(windowCount, MAX_TILED_PROJECTORS);
+
         var isLandscape = aspectRatio >= 1;
         if (windowCount <= 1) return Halves(isLandscape, 0);
         if (windowCount == 2) return Halves(isLandscape, 0, 1);

@@ -45,11 +45,6 @@ public sealed class ProjectorManager : PhDisposable
     public const string TOOL_ID = "Tool_Projector";
 
     /// <summary>
-    /// The most projectors that can be open at once with ImageGlass Pro.
-    /// </summary>
-    public const int MAX_PRO_PROJECTORS = 4;
-
-    /// <summary>
     /// The most projectors that can be open at once without ImageGlass Pro.
     /// </summary>
     public const int MAX_CLASSIC_PROJECTORS = 1;
@@ -89,21 +84,23 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Gets the most projectors that can be open at once.
+    /// Gets whether another projector can be opened: always with ImageGlass Pro, else up to <see cref="MAX_CLASSIC_PROJECTORS"/>.
     /// </summary>
-    public static int MaxProjectors => Core.IsProEnabled ? MAX_PRO_PROJECTORS : MAX_CLASSIC_PROJECTORS;
+    public bool CanAddProjector
+    {
+        get
+        {
+            if (Core.IsProEnabled) return true;
 
-
-    /// <summary>
-    /// Gets whether another projector can be opened.
-    /// </summary>
-    public bool CanAddProjector => _windows.Count < MaxProjectors;
+            return _windows.Count < MAX_CLASSIC_PROJECTORS;
+        }
+    }
 
 
     /// <summary>
     /// Gets whether only ImageGlass Pro could open another projector.
     /// </summary>
-    public bool IsLimitedByLicense => !CanAddProjector && _windows.Count < MAX_PRO_PROJECTORS;
+    public bool IsLimitedByLicense => !CanAddProjector;
 
     #endregion // Public Properties
 
@@ -201,20 +198,26 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Tiles the projectors on <paramref name="screen"/> into the used cells of <paramref name="layout"/>, in number order.
+    /// Tiles the projectors of <see cref="GetTileSet"/> on <paramref name="screen"/> into the used cells of <paramref name="layout"/>, in number order.
     /// </summary>
-    public async Task ArrangeAsync(Screen screen, ProjectorLayout layout)
+    public async Task ArrangeAsync(Screen screen, ProjectorLayout layout, ProjectorWindow? window = null)
     {
         if (IsDisposed) return;
 
-        var windows = GetWindowsOnScreen(screen);
-        if (windows.Count == 0) return;
-        if (windows.Count > layout.UsedCells.Count) return;
+        var tileSet = GetTileSet(screen, window);
+        if (tileSet.Count == 0) return;
+        if (tileSet.Count > layout.UsedCells.Count) return;
 
-        // the windows are independent, so they move into their cells together
-        var tileTasks = windows.Select((window, i) => window.ShowInTileAsync(screen, new ProjectorTile(layout, layout.UsedCells[i])));
-        await Task.WhenAll(tileTasks);
+        // 1. the windows are independent, so they move into their cells together
+        var tileTasks = tileSet.Select((w, i) => w.ShowInTileAsync(screen, new ProjectorTile(layout, layout.UsedCells[i])));
 
+        // 2. the tiled ones left out would overlap the new cells, so they cover the screen as they prefer
+        var untileTasks = GetWindowsOnScreen(screen)
+            .Where(w => w.Tile is not null)
+            .Where(w => !tileSet.Contains(w))
+            .Select(w => PlaceProjectorAsync(w, screen, GetModeForScreen(screen, w.PreferredMode)));
+
+        await Task.WhenAll(tileTasks.Concat(untileTasks));
         OnChanged();
     }
 
@@ -246,17 +249,36 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Gets the grid all projectors on <paramref name="screen"/> are tiled into; <c>null</c> when they are not.
+    /// Gets the projectors on <paramref name="screen"/> a layout tiles, by number: <paramref name="window"/>, those tiled already, then the others, up to <see cref="ProjectorLayout.MAX_TILED_PROJECTORS"/>.
+    /// </summary>
+    public IReadOnlyList<ProjectorWindow> GetTileSet(Screen screen, ProjectorWindow? window = null)
+    {
+        // the tiled ones go first, so a new layout keeps the projectors the user put in cells
+        var picked = GetWindowsOnScreen(screen)
+            .OrderBy(w => w != window)
+            .ThenBy(w => w.Tile is null)
+            .ThenBy(w => w.Number)
+            .Take(ProjectorLayout.MAX_TILED_PROJECTORS);
+
+        return picked
+            .OrderBy(w => w.Number)
+            .ToArray();
+    }
+
+
+    /// <summary>
+    /// Gets the grid the tiled projectors on <paramref name="screen"/> share; <c>null</c> when none is tiled, or they are in different grids.
     /// </summary>
     public ProjectorLayout? GetActiveLayout(Screen screen)
     {
-        var windows = GetWindowsOnScreen(screen);
-        if (windows.Count == 0) return null;
+        var tiledWindows = GetWindowsOnScreen(screen)
+            .Where(w => w.Tile is not null)
+            .ToArray();
 
-        var layout = windows[0].Tile?.Layout;
+        var layout = tiledWindows.FirstOrDefault()?.Tile?.Layout;
         if (layout is null) return null;
 
-        var isSameGrid = windows.All(w => w.Tile?.Layout == layout);
+        var isSameGrid = tiledWindows.All(w => w.Tile?.Layout == layout);
         if (!isSameGrid) return null;
 
         return layout;
@@ -496,26 +518,26 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Tiles <paramref name="window"/> with the other projectors on its screen: in the layout the tiled ones share if it has room, else a fitting one.
+    /// Tiles <paramref name="window"/> with the other projectors of <see cref="GetTileSet"/>: in the layout the tiled ones share if it has room, else a fitting one.
     /// </summary>
     private async Task TileProjectorAsync(ProjectorWindow window)
     {
         var screen = window.GetScreen();
         if (screen is null) return;
 
-        var windows = GetWindowsOnScreen(screen);
-        var tiledLayouts = windows
+        var tileSet = GetTileSet(screen, window);
+        var tiledLayouts = tileSet
             .Select(w => w.Tile?.Layout)
             .OfType<ProjectorLayout>()
             .Distinct()
             .ToArray();
 
         var sharedLayout = tiledLayouts.Length == 1 ? tiledLayouts[0] : null;
-        var hasRoom = sharedLayout is not null && sharedLayout.UsedCells.Count >= windows.Count;
+        var hasRoom = sharedLayout?.UsedCells.Count >= tileSet.Count;
         var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
-        var layout = hasRoom ? sharedLayout! : ProjectorLayout.GetDefault(windows.Count, aspectRatio);
+        var layout = hasRoom ? sharedLayout! : ProjectorLayout.GetDefault(tileSet.Count, aspectRatio);
 
-        await ArrangeAsync(screen, layout);
+        await ArrangeAsync(screen, layout, window);
     }
 
 

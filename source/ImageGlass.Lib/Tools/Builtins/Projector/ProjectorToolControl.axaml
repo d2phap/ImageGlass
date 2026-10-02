@@ -55,10 +55,16 @@
                 VerticalAlignment="Center"
                 Spacing="8">
                 <!--  A grid row per projector  -->
-                <Grid
-                    x:Name="PART_ProjectorList"
-                    ColumnSpacing="6"
-                    RowSpacing="6" />
+                <ScrollViewer
+                    x:Name="PART_ProjectorScroller"
+                    MaxHeight="160"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <Grid
+                        x:Name="PART_ProjectorList"
+                        ColumnSpacing="6"
+                        RowSpacing="6" />
+                </ScrollViewer>
 
                 <StackPanel Orientation="Horizontal" Spacing="16">
                     <StackPanel Orientation="Horizontal" Spacing="6">

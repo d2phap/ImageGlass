@@ -64,13 +64,17 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ZoomMode.ScaleToHeight,
     ];
 
-    // next to the list, the map grows a little with each projector in it
+    // next to the list, the map grows a little with each projector in it, up to a few steps
     private const double MAP_HEIGHT = 96;
     private const double MAP_HEIGHT_STEP = 16;
+    private const int MAX_MAP_HEIGHT_STEPS = 3;
 
     // room on each side of the divider between the map and the list
     private const double DIVIDER_MARGIN_ACROSS = 20;
     private const double DIVIDER_MARGIN_DOWN = 14;
+
+    // room at the right of a scrolling list, so its scroll bar does not cover the close buttons
+    private const double SCROLL_BAR_ROOM = 14;
 
     // a press on a projector name turns into a drag once the pointer moves this far
     private const double DRAG_THRESHOLD = 4;
@@ -134,6 +138,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click += PART_BtnAdd_Click;
         PART_BtnAdd.Click += PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged += PART_ChkSync_IsCheckedChanged;
+        PART_ProjectorScroller.ScrollChanged += PART_ProjectorScroller_ScrollChanged;
     }
 
 
@@ -149,6 +154,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click -= PART_BtnAdd_Click;
         PART_BtnAdd.Click -= PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged -= PART_ChkSync_IsCheckedChanged;
+        PART_ProjectorScroller.ScrollChanged -= PART_ProjectorScroller_ScrollChanged;
 
         base.OnUnloaded(e);
     }
@@ -213,6 +219,16 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
         var isChecked = PART_ChkSync.IsChecked == true;
         _ = await Core.API.RunApiAsync(API.IG_ToggleProjectorSync, isChecked.ToString());
+    }
+
+
+    private void PART_ProjectorScroller_ScrollChanged(object? sender, ScrollChangedEventArgs e)
+    {
+        // only a list that scrolls shows the bar, so a short one keeps its edge
+        var canScroll = PART_ProjectorScroller.Extent.Height > PART_ProjectorScroller.Viewport.Height;
+        PART_ProjectorList.Margin = canScroll
+            ? new Thickness(0, 0, SCROLL_BAR_ROOM, 0)
+            : default;
     }
 
 
@@ -283,8 +299,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
             // 3. the actions; Classic still gets the button, which explains the Pro limit
-            var isAtProLimit = windows.Count >= ProjectorManager.MAX_PRO_PROJECTORS;
-            PART_BtnAdd.IsEnabled = !isAtProLimit;
             PART_ProBadge.IsVisible = _manager.IsLimitedByLicense;
 
 
@@ -626,7 +640,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
         // 1. the width across: the map at its size for the projectors, the divider, and the list
         var projectorCount = _manager?.Windows.Count ?? 0;
-        var mapHeightAcross = MAP_HEIGHT + Math.Max(0, projectorCount - 1) * MAP_HEIGHT_STEP;
+        var heightSteps = Math.Clamp(projectorCount - 1, 0, MAX_MAP_HEIGHT_STEPS);
+        var mapHeightAcross = MAP_HEIGHT + heightSteps * MAP_HEIGHT_STEP;
         PART_ListPanel.Measure(Size.Infinity);
 
         var widthAcross = PART_ScreenMap.GetWidthForHeight(mapHeightAcross)
@@ -769,7 +784,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         if (windows.Count == 0) return;
 
         _layoutScreen = screen;
-        BuildLayoutOptions(screen, windows);
+        BuildLayoutOptions(screen);
 
         PART_LayoutPopup.PlacementRect = PART_ScreenMap.GetScreenBounds(screen);
         PART_LayoutPopup.IsOpen = true;
@@ -777,9 +792,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
     /// <summary>
-    /// Fills the menu with the default, then each layout the projectors on <paramref name="screen"/> fit in.
+    /// Fills the menu with the default, then each layout for the projectors on <paramref name="screen"/> a layout tiles.
     /// </summary>
-    private void BuildLayoutOptions(Screen screen, IReadOnlyList<ProjectorWindow> windows)
+    private void BuildLayoutOptions(Screen screen)
     {
         PART_LayoutOptions.Children.Clear();
         _layoutOptions.Clear();
@@ -787,7 +802,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         var screens = _manager!.GetOrderedScreens();
         PART_LblLayout.LangParams = IndexOfScreen(screens, screen) + 1;
 
-        _layoutNumbers = windows.Select(w => w.Number).ToArray();
+        _layoutNumbers = GetTileNumbers(screen);
         var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
 
         AddLayoutOption(null, aspectRatio);
@@ -851,10 +866,21 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             return;
         }
 
-        var projectorNumbers = windows.Select(w => w.Number).ToArray();
+        var projectorNumbers = GetTileNumbers(screen);
         var isSameProjectors = projectorNumbers.SequenceEqual(_layoutNumbers);
         if (isSameProjectors) UpdateLayoutOptionStates();
-        else BuildLayoutOptions(screen, windows);
+        else BuildLayoutOptions(screen);
+    }
+
+
+    /// <summary>
+    /// Gets the numbers of the projectors on <paramref name="screen"/> a layout tiles, as the layouts show them.
+    /// </summary>
+    private int[] GetTileNumbers(Screen screen)
+    {
+        return _manager!.GetTileSet(screen)
+            .Select(w => w.Number)
+            .ToArray();
     }
 
 

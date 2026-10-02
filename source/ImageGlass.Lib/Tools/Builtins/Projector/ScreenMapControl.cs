@@ -328,10 +328,14 @@ public sealed class ScreenMapControl : PhControl
         var untiledNumbers = slot.Projectors
             .Where(p => p.CellRect is null)
             .Select(p => p.Number)
-            .OrderDescending();
-        foreach (var projectorNumber in untiledNumbers)
+            .Order()
+            .ToArray();
+
+        // drawn from the right, so the row reads in number order
+        var labels = GetBadgeLabels(c, untiledNumbers, slot.Rect.Width - BADGE_MARGIN);
+        for (var i = labels.Length - 1; i >= 0; i--)
         {
-            badgeRight = DrawProjectorBadge(c, projectorNumber, badgeRight, badgeTop);
+            badgeRight = DrawBadge(c, labels[i], badgeRight, badgeTop);
         }
     }
 
@@ -388,12 +392,51 @@ public sealed class ScreenMapControl : PhControl
 
 
     /// <summary>
-    /// Draws the badge of a projector ending at <paramref name="right"/>; returns where the next badge ends.
+    /// Gets the badges of <paramref name="projectorNumbers"/> that fit in <paramref name="rowWidth"/>; a last "+N" badge counts those with no room.
     /// </summary>
-    private double DrawProjectorBadge(DrawingContext c, int projectorNumber, double right, double top)
+    private string[] GetBadgeLabels(DrawingContext c, int[] projectorNumbers, double rowWidth)
+    {
+        var labels = projectorNumbers.Select(GetBadgeText).ToArray();
+        var widths = labels.Select(label => GetBadgeWidth(c, label) + BADGE_MARGIN).ToArray();
+
+        // 1. all of them, when they fit
+        var totalWidth = widths.Sum();
+        if (totalWidth <= rowWidth) return labels;
+
+        // 2. else as many as leave room for the count of the rest
+        var shownCount = labels.Length;
+        while (shownCount > 0)
+        {
+            shownCount--;
+
+            var overflowWidth = GetBadgeWidth(c, $"+{labels.Length - shownCount}") + BADGE_MARGIN;
+            var shownWidth = widths.Take(shownCount).Sum();
+            var isFitting = shownWidth + overflowWidth <= rowWidth;
+            if (isFitting) break;
+        }
+
+        return [.. labels.Take(shownCount), $"+{labels.Length - shownCount}"];
+    }
+
+
+    /// <summary>
+    /// Gets the width of the badge of <paramref name="label"/>, shaped like a chip of the projector list.
+    /// </summary>
+    private double GetBadgeWidth(DrawingContext c, string label)
+    {
+        var labelSize = c.MeasureTextEx(label, FontFamily, Const.FONT_SIZE_SMALL);
+        var padding = PhChip.CHIP_PADDING;
+
+        return labelSize.Width + padding.Left + padding.Right;
+    }
+
+
+    /// <summary>
+    /// Draws the badge of <paramref name="label"/> ending at <paramref name="right"/>; returns where the next badge ends.
+    /// </summary>
+    private double DrawBadge(DrawingContext c, string label, double right, double top)
     {
         var accent = Core.AccentColor;
-        var label = GetBadgeText(projectorNumber);
         var fontSize = Const.FONT_SIZE_SMALL;
         var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
 
