@@ -99,6 +99,7 @@ public sealed class ProjectorWindow : PhWindow
             IsInteractive = false,
             EnableNavButtons = false,
             PanMargin = 0,
+            CheckerboardMode = Core.Config.CheckerboardMode,
             InterpolationScaleDown = Core.Config.ImageInterpolationScaleDown,
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
         };
@@ -193,6 +194,10 @@ public sealed class ProjectorWindow : PhWindow
         else if (e.PropertyName == nameof(Config.ImageInterpolationScaleUp))
         {
             Viewer.InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp;
+        }
+        else if (e.PropertyName == nameof(Config.CheckerboardMode))
+        {
+            Viewer.CheckerboardMode = Core.Config.CheckerboardMode;
         }
     }
 
