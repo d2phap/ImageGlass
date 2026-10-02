@@ -50,6 +50,12 @@ public sealed class ScreenMapControl : PhControl
     private const double SCREEN_GAP = 6;
     private const float SCREEN_CORNER_RADIUS = 5;
 
+    // room at the edges of the control for the thick border of a highlighted screen, and no more
+    private const double EDGE_ROOM = 1;
+
+    // how far the desktop reaches past the edges, as each screen gives up half a gap all around
+    private const double DESKTOP_OVERHANG = SCREEN_GAP / 2 - EDGE_ROOM;
+
     // badges of the projectors on a screen, shaped like the chips of the projector list
     private const double BADGE_HEIGHT = 18;
     private const double BADGE_MARGIN = 4;
@@ -425,7 +431,7 @@ public sealed class ScreenMapControl : PhControl
 
         // fit the desktop in the control, centered
         var desktop = GetDesktopBounds();
-        var area = new Rect(Bounds.Size).Deflate(SCREEN_GAP / 2);
+        var area = new Rect(Bounds.Size).Inflate(DESKTOP_OVERHANG);
         if (area.Width <= 0) return;
         if (area.Height <= 0) return;
 
@@ -501,7 +507,10 @@ public sealed class ScreenMapControl : PhControl
         var aspectRatio = desktop.Height > 0 ? (double)desktop.Width / desktop.Height : 16d / 9;
         var maxWidth = MAX_MAP_WIDTH * Math.Max(1, height / DEFAULT_MAP_HEIGHT);
 
-        return Math.Clamp(height * aspectRatio, MIN_MAP_WIDTH, maxWidth);
+        // the width at which the desktop fills the height with no room left at the sides
+        var width = (height + DESKTOP_OVERHANG * 2) * aspectRatio - DESKTOP_OVERHANG * 2;
+
+        return Math.Clamp(width, MIN_MAP_WIDTH, maxWidth);
     }
 
 

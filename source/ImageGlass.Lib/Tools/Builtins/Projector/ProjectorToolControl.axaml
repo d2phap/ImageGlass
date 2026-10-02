@@ -46,7 +46,6 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Width="1"
-                Margin="20,0"
                 Background="{DynamicResource IG_BorderControlBrush}" />
 
             <StackPanel

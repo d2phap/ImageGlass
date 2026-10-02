@@ -70,7 +70,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
     // room on each side of the divider between the map and the list
     private const double DIVIDER_MARGIN_ACROSS = 20;
-    private const double DIVIDER_MARGIN_DOWN = 12;
+    private const double DIVIDER_MARGIN_DOWN = 14;
 
     // a press on a projector name turns into a drag once the pointer moves this far
     private const double DRAG_THRESHOLD = 4;
