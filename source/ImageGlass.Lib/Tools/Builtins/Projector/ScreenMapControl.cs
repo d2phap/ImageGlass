@@ -62,6 +62,7 @@ public sealed class ScreenMapControl : PhControl
     private const double TILE_INSET = 3;
     private const double TILE_GAP = 3;
     private const float TILE_CORNER_RADIUS = 3;
+    internal const int TILE_FILL_ALPHA = 110;
 
     private readonly List<ScreenSlot> _slots = [];
     private ProjectorManager? _manager;
@@ -253,7 +254,7 @@ public sealed class ScreenMapControl : PhControl
     private void DrawScreen(DrawingContext c, ScreenSlot slot)
     {
         var accent = Core.AccentColor;
-        var foreground = Core.Theme.InvertedBaseColor;
+        var foreground = Resx.GetBrushColor(ResxId.IG_ThemeForegroundBrush, Core.Theme.InvertedBaseColor);
         var hasSelectedProjector = slot.Projectors.Any(p => p.Number == SelectedProjectorNumber);
 
         // only a screen with a projector opens a layout menu, while a drag can drop on any
@@ -265,12 +266,10 @@ public sealed class ScreenMapControl : PhControl
         Color fill;
         if (isHovered) fill = accent.WithAlpha(70);
         else if (hasSelectedProjector) fill = accent.WithAlpha(40);
-        else fill = foreground.WithAlpha(14);
+        else fill = Resx.GetBrushColor(ResxId.IG_BackgroundNeutralBrush, foreground.WithAlpha(14));
 
         var isHighlighted = isHovered || hasSelectedProjector;
-        var normalBorder = Resx.Get<IBrush?>(ResxId.IG_BorderControlBrush) is ISolidColorBrush controlBorder
-            ? controlBorder.Color
-            : foreground.WithAlpha(70);
+        var normalBorder = Resx.GetBrushColor(ResxId.IG_BorderControlBrush, foreground.WithAlpha(70));
         var border = isHighlighted ? accent.WithAlpha(230) : normalBorder;
         var borderWidth = hasSelectedProjector ? 2f : 1f;
 
@@ -281,7 +280,7 @@ public sealed class ScreenMapControl : PhControl
         {
             if (projector.CellRect is not { } cellRect) continue;
 
-            DrawTile(c, cellRect, projector.Number);
+            DrawTile(c, cellRect, projector.Number, foreground);
             hasTiles = true;
         }
 
@@ -295,14 +294,14 @@ public sealed class ScreenMapControl : PhControl
             c.DrawTextEx(number, FontFamily, numberSize,
                 slot.Rect.Center.X - numberBounds.Width / 2,
                 slot.Rect.Center.Y - numberBounds.Height / 2,
-                foreground.WithAlpha(150), isBold: true);
+                foreground, isBold: true);
         }
 
 
         // 3. the main window, as a small window glyph in the bottom left corner
         if (slot.HasMainWindow)
         {
-            DrawWindowGlyph(c, slot.Rect, foreground.WithAlpha(190));
+            DrawWindowGlyph(c, slot.Rect, foreground);
         }
 
 
@@ -327,20 +326,23 @@ public sealed class ScreenMapControl : PhControl
     /// <summary>
     /// Draws the cell a tiled projector fills, labelled with the projector where it fits.
     /// </summary>
-    private void DrawTile(DrawingContext c, Rect cellRect, int projectorNumber)
+    private void DrawTile(DrawingContext c, Rect cellRect, int projectorNumber, Color foreground)
     {
         var accent = Core.AccentColor;
         var isSelected = projectorNumber == SelectedProjectorNumber;
-        var fill = isSelected ? accent : accent.WithAlpha(110);
+        var fill = isSelected ? accent : accent.WithAlpha(TILE_FILL_ALPHA);
         c.DrawRectangleEx(cellRect, TILE_CORNER_RADIUS, null, fill);
 
         var label = $"P{projectorNumber}";
         var fontSize = Const.FONT_SIZE_BODY;
         var labelSize = c.MeasureTextEx(label, FontFamily, fontSize);
-        var hasRoom = labelSize.Width + 2 <= cellRect.Width && labelSize.Height <= cellRect.Height;
-        if (!hasRoom) return;
+        var isNarrowEnough = labelSize.Width + 2 <= cellRect.Width;
+        if (!isNarrowEnough) return;
 
-        var labelColor = isSelected ? accent.InvertBlackOrWhite() : Core.Theme.InvertedBaseColor;
+        var isShortEnough = labelSize.Height <= cellRect.Height;
+        if (!isShortEnough) return;
+
+        var labelColor = isSelected ? accent.InvertBlackOrWhite() : foreground;
         c.DrawTextEx(label, FontFamily, fontSize,
             cellRect.Center.X - labelSize.Width / 2,
             cellRect.Center.Y - labelSize.Height / 2,

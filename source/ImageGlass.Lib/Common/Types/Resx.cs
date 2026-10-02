@@ -53,6 +53,17 @@ public static class Resx
 
 
     /// <summary>
+    /// Gets the color of a solid brush resource; <paramref name="fallback"/> when it is missing or not solid.
+    /// </summary>
+    public static Color GetBrushColor(ResxId resxId, Color fallback)
+    {
+        var brush = Get<IBrush?>(resxId) as ISolidColorBrush;
+
+        return brush?.Color ?? fallback;
+    }
+
+
+    /// <summary>
     /// Sets resource.
     /// </summary>
     public static void Set(ResxId resxId, object resValue)

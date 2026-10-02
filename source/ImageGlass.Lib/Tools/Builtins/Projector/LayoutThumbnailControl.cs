@@ -43,6 +43,9 @@ public sealed class LayoutThumbnailControl : PhControl
     private const double FRAME_PADDING = 5;
     private const double CELL_GAP = 4;
 
+    // the projector cells of an option not in use: a tint of the text color, clearer than the neutral screen
+    private const int CELL_FILL_ALPHA = 50;
+
     // room around the text of the default option
     private const double LABEL_PADDING_X = 10;
     private const double LABEL_PADDING_Y = 4;
@@ -139,16 +142,15 @@ public sealed class LayoutThumbnailControl : PhControl
         base.Render(c);
 
         var accent = Core.AccentColor;
-        var foreground = Core.Theme.InvertedBaseColor;
+        var foreground = Resx.GetBrushColor(ResxId.IG_ThemeForegroundBrush, Core.Theme.InvertedBaseColor);
 
 
-        // 1. the screen, bordered like the screens on the map
+        // 1. the screen, bordered and filled like the screens on the map
         var frame = new Rect(Bounds.Size).Deflate(0.5);
-        var normalBorder = Resx.Get<IBrush?>(ResxId.IG_BorderControlBrush) is ISolidColorBrush controlBorder
-            ? controlBorder.Color
-            : foreground.WithAlpha(90);
+        var normalBorder = Resx.GetBrushColor(ResxId.IG_BorderControlBrush, foreground.WithAlpha(90));
         var frameBorder = IsActive ? accent.WithAlpha(230) : normalBorder;
-        c.DrawRectangleEx(frame, FRAME_RADIUS, frameBorder, foreground.WithAlpha(14), IsActive ? 2f : 1f);
+        var frameFill = Resx.GetBrushColor(ResxId.IG_BackgroundNeutralBrush, foreground.WithAlpha(14));
+        c.DrawRectangleEx(frame, FRAME_RADIUS, frameBorder, frameFill, IsActive ? 2f : 1f);
 
 
         // 2. the default: a label in the middle
@@ -229,22 +231,27 @@ public sealed class LayoutThumbnailControl : PhControl
 
 
     /// <summary>
-    /// Gets the fill of a projector's cell: the soft accent of the tiles on the screen map while active, else the neutral background.
+    /// Gets the fill of a projector's cell: the soft accent of the tiles on the screen map while active, else a tint of the text color.
     /// </summary>
     private Color GetCellFill(Color accent, Color foreground)
     {
-        if (IsActive) return accent.WithAlpha(110);
+        if (IsActive) return accent.WithAlpha(ScreenMapControl.TILE_FILL_ALPHA);
 
-        return Resx.Get<IBrush?>(ResxId.IG_BackgroundNeutralBrush) is ISolidColorBrush neutralBrush
-            ? neutralBrush.Color
-            : foreground.WithAlpha(70);
+        return foreground.WithAlpha(CELL_FILL_ALPHA);
     }
 
 
     /// <summary>
     /// Checks whether text of <paramref name="textSize"/> fits in <paramref name="rect"/>.
     /// </summary>
-    private static bool IsFitting(Size textSize, Rect rect) => textSize.Width + 2 <= rect.Width && textSize.Height <= rect.Height;
+    private static bool IsFitting(Size textSize, Rect rect)
+    {
+        var isNarrowEnough = textSize.Width + 2 <= rect.Width;
+        if (!isNarrowEnough) return false;
+
+        var isShortEnough = textSize.Height <= rect.Height;
+        return isShortEnough;
+    }
 
 
     /// <summary>

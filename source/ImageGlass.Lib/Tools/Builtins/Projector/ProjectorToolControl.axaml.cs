@@ -365,9 +365,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     private ProjectorRow CreateRow(ProjectorWindow window)
     {
         // 1. the name: hovering shows its monitor on the map, a click brings it forward, dragging moves it to another monitor
-        var chip = new PhToolButton
+        var chip = new PhButton
         {
-            Padding = new Thickness(10, 5),
             Focusable = false,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Center,
@@ -556,7 +555,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
         var colorText = Core.Lang[LangId._BackgroundColor];
 
-        row.Chip.Content = projectorName;
+        row.Chip.Text = projectorName;
         row.ColorPicker.Title = $"{projectorName} - {colorText}";
         ToolTip.SetTip(row.Chip, Core.Lang[LangId.Tool_Projector_DragHint]);
         ToolTip.SetTip(row.ColorPicker, colorText);
@@ -867,7 +866,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// The controls of one open projector in the list.
     /// </summary>
-    private sealed record ProjectorRow(ProjectorWindow Window, PhToolButton Chip, ComboBox CmbMonitor, ComboBox CmbMode,
+    private sealed record ProjectorRow(ProjectorWindow Window, PhButton Chip, ComboBox CmbMonitor, ComboBox CmbMode,
         ComboBox CmbZoom, PhColorPickerControl ColorPicker, PhToolButton BtnClose);
 
 
