@@ -1305,6 +1305,9 @@ public class Lang
         new(LangId.Tool_Projector_ModeFullScreen, "Full screen"), //v10.0
         new(LangId.Tool_Projector_ModeMaximized, "Maximized"), //v10.0
         new(LangId.Tool_Projector_ModeNormal, "Window"), //v10.0
+        new(LangId.Tool_Projector_ModeTiled, "Tiled"), //v10.0
+        new(LangId.Tool_Projector_LblLayout, "Layout on screen {0}"), //v10.0
+        new(LangId.Tool_Projector_LayoutGrid, "{0} × {1} grid"), //v10.0
         new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1} × {2} pixels, {3}% scale"), //v10.0
         new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
         new(LangId.Tool_Projector_BackgroundColor, "Background color"), //v10.0

@@ -36,6 +36,9 @@ public enum ProjectorWindowMode
     FullScreen,
     Maximized,
     Normal,
+
+    // frameless in one cell of a grid on its screen; never a preferred mode
+    Tiled,
 }
 
 
@@ -98,4 +101,51 @@ public sealed class ProjectorPlacement
     /// Gets, sets the background color in hex; empty follows the slideshow background color.
     /// </summary>
     public string BackgroundColor { get; set; } = string.Empty;
+
+
+    /// <summary>
+    /// Gets, sets the grid cell the projector filled on the screen; <c>null</c> when it was not tiled.
+    /// </summary>
+    public ProjectorTile? Tile { get; set; }
+}
+
+
+/// <summary>
+/// The grid cell a tiled projector fills on its screen.
+/// </summary>
+public sealed record ProjectorTile
+{
+    /// <summary>
+    /// Gets the rows of the grid.
+    /// </summary>
+    public int Rows { get; init; } = 1;
+
+
+    /// <summary>
+    /// Gets the columns of the grid.
+    /// </summary>
+    public int Columns { get; init; } = 1;
+
+
+    /// <summary>
+    /// Gets the cell, counted left to right, then top to bottom.
+    /// </summary>
+    public int Cell { get; init; }
+
+
+    /// <summary>
+    /// Gets the grid of the cell.
+    /// </summary>
+    [JsonIgnore]
+    public ProjectorLayout Layout => new(Rows, Columns);
+
+
+    /// <summary>
+    /// Gets whether the cell lies in a grid that projectors can be tiled into.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsValid => Rows is >= 1 and <= ProjectorManager.MAX_PRO_PROJECTORS
+        && Columns is >= 1 and <= ProjectorManager.MAX_PRO_PROJECTORS
+        && Cell >= 0
+        && Cell < Rows * Columns;
 }

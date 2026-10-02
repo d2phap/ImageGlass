@@ -57,6 +57,11 @@ public sealed class ScreenMapControl : PhControl
     // a screen this small has no room for a window glyph
     private const double MIN_GLYPH_SCREEN_WIDTH = 36;
 
+    // cells of the tiled projectors on a screen
+    private const double TILE_INSET = 3;
+    private const double TILE_GAP = 3;
+    private const float TILE_CORNER_RADIUS = 3;
+
     private readonly List<ScreenSlot> _slots = [];
     private ProjectorManager? _manager;
     private Screen? _hoveredScreen;
@@ -226,17 +231,17 @@ public sealed class ScreenMapControl : PhControl
 
 
     /// <summary>
-    /// Draws one screen with its number, the main window glyph and the projector badges.
+    /// Draws one screen with its number, the main window glyph and the projectors: their cells if tiled, else badges.
     /// </summary>
     private void DrawScreen(DrawingContext c, ScreenSlot slot)
     {
         var accent = Core.AccentColor;
         var foreground = Core.Theme.InvertedBaseColor;
         var isHovered = slot.Screen == _hoveredScreen;
-        var hasSelectedProjector = slot.ProjectorNumbers.Contains(SelectedProjectorNumber);
+        var hasSelectedProjector = slot.Projectors.Any(p => p.Number == SelectedProjectorNumber);
 
 
-        // 1. the screen
+        // 1. the screen, with the cells of its tiled projectors
         Color fill;
         if (isHovered) fill = accent.WithAlpha(70);
         else if (hasSelectedProjector) fill = accent.WithAlpha(40);
@@ -248,15 +253,27 @@ public sealed class ScreenMapControl : PhControl
 
         c.DrawRectangleEx(slot.Rect, SCREEN_CORNER_RADIUS, border, fill, borderWidth);
 
+        var hasTiles = false;
+        foreach (var projector in slot.Projectors)
+        {
+            if (projector.CellRect is not { } cellRect) continue;
 
-        // 2. its number, as the user counts screens: left to right
-        var number = slot.Number.ToString(CultureInfo.InvariantCulture);
-        var numberSize = Math.Clamp(slot.Rect.Height * 0.32, Const.FONT_SIZE_SMALL, Const.FONT_SIZE_TITLE);
-        var numberBounds = c.MeasureTextEx(number, FontFamily, numberSize, true);
-        c.DrawTextEx(number, FontFamily, numberSize,
-            slot.Rect.Center.X - numberBounds.Width / 2,
-            slot.Rect.Center.Y - numberBounds.Height / 2,
-            foreground.WithAlpha(150), isBold: true);
+            DrawTile(c, cellRect, projector.Number);
+            hasTiles = true;
+        }
+
+
+        // 2. its number, as the user counts screens: left to right; tiles carry their own labels instead
+        if (!hasTiles)
+        {
+            var number = slot.Number.ToString(CultureInfo.InvariantCulture);
+            var numberSize = Math.Clamp(slot.Rect.Height * 0.32, Const.FONT_SIZE_SMALL, Const.FONT_SIZE_TITLE);
+            var numberBounds = c.MeasureTextEx(number, FontFamily, numberSize, true);
+            c.DrawTextEx(number, FontFamily, numberSize,
+                slot.Rect.Center.X - numberBounds.Width / 2,
+                slot.Rect.Center.Y - numberBounds.Height / 2,
+                foreground.WithAlpha(150), isBold: true);
+        }
 
 
         // 3. the main window, as a small window glyph in the bottom left corner
@@ -266,12 +283,43 @@ public sealed class ScreenMapControl : PhControl
         }
 
 
-        // 4. the projectors, as badges along the top right corner
+        // 4. the projectors not tiled, as badges in the top right corner, or the bottom one, where cells fill last
         var badgeRight = slot.Rect.Right - BADGE_MARGIN;
-        foreach (var projectorNumber in slot.ProjectorNumbers.OrderDescending())
+        var badgeTop = hasTiles
+            ? slot.Rect.Bottom - BADGE_MARGIN - BADGE_HEIGHT
+            : slot.Rect.Top + BADGE_MARGIN;
+        var untiledNumbers = slot.Projectors
+            .Where(p => p.CellRect is null)
+            .Select(p => p.Number)
+            .OrderDescending();
+        foreach (var projectorNumber in untiledNumbers)
         {
-            badgeRight = DrawProjectorBadge(c, projectorNumber, badgeRight, slot.Rect.Top + BADGE_MARGIN);
+            badgeRight = DrawProjectorBadge(c, projectorNumber, badgeRight, badgeTop);
         }
+    }
+
+
+    /// <summary>
+    /// Draws the cell a tiled projector fills, labelled with the projector where it fits.
+    /// </summary>
+    private void DrawTile(DrawingContext c, Rect cellRect, int projectorNumber)
+    {
+        var accent = Core.AccentColor;
+        var isSelected = projectorNumber == SelectedProjectorNumber;
+        var fill = isSelected ? accent : accent.WithAlpha(110);
+        c.DrawRectangleEx(cellRect, TILE_CORNER_RADIUS, null, fill);
+
+        var label = $"P{projectorNumber}";
+        var fontSize = Const.FONT_SIZE_SMALL - 2;
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
+        var hasRoom = labelSize.Width + 2 <= cellRect.Width && labelSize.Height <= cellRect.Height;
+        if (!hasRoom) return;
+
+        var labelColor = isSelected ? accent.InvertBlackOrWhite() : Core.Theme.InvertedBaseColor;
+        c.DrawTextEx(label, FontFamily, fontSize,
+            cellRect.Center.X - labelSize.Width / 2,
+            cellRect.Center.Y - labelSize.Height / 2,
+            labelColor, isBold: true);
     }
 
 
@@ -346,13 +394,37 @@ public sealed class ScreenMapControl : PhControl
                 bounds.Width * scale,
                 bounds.Height * scale).Deflate(SCREEN_GAP / 2);
 
-            var projectorNumbers = _manager.Windows
+            var projectors = _manager.Windows
                 .Where(w => w.GetScreen() == screen)
-                .Select(w => w.Number)
+                .Select(w => new ProjectorMark(w.Number, GetCellRect(w.Tile, screen, rect)))
                 .ToArray();
 
-            _slots.Add(new ScreenSlot(screen, i + 1, rect, screen == mainScreen, projectorNumbers));
+            _slots.Add(new ScreenSlot(screen, i + 1, rect, screen == mainScreen, projectors));
         }
+    }
+
+
+    /// <summary>
+    /// Gets where the cell of a tiled projector lies in the slot of its screen; <c>null</c> when it is not tiled.
+    /// </summary>
+    private static Rect? GetCellRect(ProjectorTile? tile, Screen screen, Rect slotRect)
+    {
+        if (tile is null) return null;
+
+        // the cells divide the work area, placed within the screen bounds the slot is drawn from
+        var bounds = screen.Bounds;
+        var cellBounds = tile.Layout.GetCellBounds(screen.WorkingArea, tile.Cell);
+        var area = slotRect.Deflate(TILE_INSET);
+        var scaleX = area.Width / bounds.Width;
+        var scaleY = area.Height / bounds.Height;
+
+        var cellRect = new Rect(
+            area.X + (cellBounds.X - bounds.X) * scaleX,
+            area.Y + (cellBounds.Y - bounds.Y) * scaleY,
+            cellBounds.Width * scaleX,
+            cellBounds.Height * scaleY);
+
+        return cellRect.Deflate(TILE_GAP / 2);
     }
 
 
@@ -459,7 +531,7 @@ public sealed class ScreenMapControl : PhControl
         if (!string.IsNullOrWhiteSpace(slot.Screen.DisplayName)) lines.Add(slot.Screen.DisplayName);
         if (slot.HasMainWindow) lines.Add(Core.Lang[LangId.Tool_Projector_MainWindow]);
 
-        foreach (var projectorNumber in slot.ProjectorNumbers.Order())
+        foreach (var projectorNumber in slot.Projectors.Select(p => p.Number).Order())
         {
             lines.Add(Core.Lang[LangId.Tool_Projector_WindowTitle, projectorNumber]);
         }
@@ -474,6 +546,12 @@ public sealed class ScreenMapControl : PhControl
     /// <summary>
     /// A screen as laid out in the map, with what is on it.
     /// </summary>
-    private sealed record ScreenSlot(Screen Screen, int Number, Rect Rect, bool HasMainWindow, int[] ProjectorNumbers);
+    private sealed record ScreenSlot(Screen Screen, int Number, Rect Rect, bool HasMainWindow, ProjectorMark[] Projectors);
+
+
+    /// <summary>
+    /// A projector on a screen of the map, with the cell it fills there if tiled.
+    /// </summary>
+    private sealed record ProjectorMark(int Number, Rect? CellRect);
 
 }

@@ -46,7 +46,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ProjectorWindowMode.FullScreen,
         ProjectorWindowMode.Maximized,
         ProjectorWindowMode.Normal,
+        ProjectorWindowMode.Tiled,
     ];
+    private static readonly int TILED_MODE_INDEX = Array.IndexOf(_windowModes, ProjectorWindowMode.Tiled);
     private static readonly ZoomMode[] _zoomModes =
     [
         ZoomMode.AutoZoom,
@@ -57,7 +59,11 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     ];
 
     private readonly Dictionary<ProjectorWindow, ProjectorRow> _rows = [];
+    private readonly List<LayoutOption> _layoutOptions = [];
     private ProjectorManager? _manager;
+
+    // what the layout groups show, so they are rebuilt only when it changes
+    private string _layoutGroupsKey = string.Empty;
 
     // the projector a click on the screen map moves
     private ProjectorWindow? _selectedWindow;
@@ -133,6 +139,10 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         }
 
         UpdateHint();
+
+        // the layout buttons carry tooltips set in code too, so build them again
+        _layoutGroupsKey = string.Empty;
+        RefreshUI(selectNewProjectors: false);
     }
 
 
@@ -244,6 +254,10 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             var defaultColor = ProjectorWindow.DefaultBackgroundColor;
             foreach (var row in _rows.Values)
             {
+                // a window is tiled through a layout, so the mode only shows while it is
+                var isTiled = row.Window.Mode == ProjectorWindowMode.Tiled;
+                if (row.CmbMode.Items[TILED_MODE_INDEX] is ComboBoxItem tiledItem) tiledItem.IsVisible = isTiled;
+
                 row.BtnSelect.IsChecked = ReferenceEquals(row.Window, _selectedWindow);
                 row.CmbMode.SelectedIndex = Array.IndexOf(_windowModes, row.Window.Mode);
                 row.ColorPicker.DefaultColor = defaultColor;
@@ -252,6 +266,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
             PART_ScreenMap.SelectedProjectorNumber = _selectedWindow?.Number ?? 0;
             UpdateHint();
+            SyncLayoutGroups();
 
 
             // 2. the actions; Classic still gets the button, which explains the Pro limit
@@ -310,6 +325,102 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
     /// <summary>
+    /// Shows the layouts of each screen two or more projectors share, marking the one they are tiled in.
+    /// </summary>
+    private void SyncLayoutGroups()
+    {
+        // 1. the screens to tile, numbered as on the screen map
+        var screens = _manager!.GetOrderedScreens();
+        var groups = new List<LayoutGroup>();
+        for (var i = 0; i < screens.Count; i++)
+        {
+            var projectorNumbers = _manager.GetWindowsOnScreen(screens[i])
+                .Select(w => w.Number)
+                .ToArray();
+
+            if (projectorNumbers.Length >= 2) groups.Add(new LayoutGroup(screens[i], i + 1, projectorNumbers));
+        }
+
+
+        // 2. rebuild the groups only when that changes, so a hovered button keeps its state
+        var groupsKey = string.Join(';', groups.Select(g => $"{g.ScreenNumber}:{string.Join(',', g.ProjectorNumbers)}:{g.Screen.WorkingArea}"));
+        if (groupsKey != _layoutGroupsKey)
+        {
+            _layoutGroupsKey = groupsKey;
+            RebuildLayoutGroups(groups);
+        }
+
+
+        // 3. mark the layout each screen is tiled in
+        foreach (var option in _layoutOptions)
+        {
+            var activeLayout = _manager.GetActiveLayout(option.Screen);
+            option.Thumbnail.IsActive = activeLayout == option.Thumbnail.Layout;
+        }
+    }
+
+
+    /// <summary>
+    /// Creates a group of layout buttons for each screen in <paramref name="groups"/>.
+    /// </summary>
+    private void RebuildLayoutGroups(IReadOnlyList<LayoutGroup> groups)
+    {
+        PART_LayoutGroups.Children.Clear();
+        _layoutOptions.Clear();
+
+        foreach (var group in groups)
+        {
+            var label = new PhTextBlock
+            {
+                LangKey = LangId.Tool_Projector_LblLayout,
+                LangParams = group.ScreenNumber,
+                FontSize = Const.FONT_SIZE_SMALL,
+                Opacity = 0.6,
+            };
+
+            // the thumbnails take the shape of the area the projectors are tiled in
+            var workArea = group.Screen.WorkingArea;
+            var aspectRatio = (double)workArea.Width / workArea.Height;
+            var buttons = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Spacing = 4,
+            };
+
+            foreach (var layout in ProjectorLayout.GetLayouts(group.ProjectorNumbers.Length))
+            {
+                var thumbnail = new LayoutThumbnailControl(layout, group.ProjectorNumbers, aspectRatio);
+                var button = new PhToolButton
+                {
+                    Padding = new Thickness(5),
+                    Focusable = false,
+                    Content = thumbnail,
+                };
+                ToolTip.SetTip(button, Core.Lang[LangId.Tool_Projector_LayoutGrid, layout.Rows, layout.Columns]);
+
+                var screen = group.Screen;
+                button.Click += async (_, _) =>
+                {
+                    if (_manager is null) return;
+                    await _manager.ArrangeAsync(screen, layout);
+                };
+
+                buttons.Children.Add(button);
+                _layoutOptions.Add(new LayoutOption(screen, thumbnail));
+            }
+
+            PART_LayoutGroups.Children.Add(new StackPanel
+            {
+                Spacing = 4,
+                Children = { label, buttons },
+            });
+        }
+
+        PART_LayoutGroups.IsVisible = groups.Count > 0;
+    }
+
+
+    /// <summary>
     /// Creates the controls of one projector: select it, change how it covers its screen, close it.
     /// </summary>
     private ProjectorRow CreateRow(ProjectorWindow window)
@@ -338,6 +449,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
             var index = cmbMode.SelectedIndex;
             if (index < 0) return;
+            if (index == TILED_MODE_INDEX) return;
 
             await _manager.SetWindowModeAsync(window, _windowModes[index]);
         };
@@ -476,6 +588,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     {
         ProjectorWindowMode.FullScreen => Core.Lang[LangId.Tool_Projector_ModeFullScreen],
         ProjectorWindowMode.Maximized => Core.Lang[LangId.Tool_Projector_ModeMaximized],
+        ProjectorWindowMode.Tiled => Core.Lang[LangId.Tool_Projector_ModeTiled],
         _ => Core.Lang[LangId.Tool_Projector_ModeNormal],
     };
 
@@ -498,5 +611,17 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// </summary>
     private sealed record ProjectorRow(ProjectorWindow Window, StackPanel Root, PhToolButton BtnSelect, ComboBox CmbMode,
         PhColorPickerControl ColorPicker, PhToolButton BtnClose);
+
+
+    /// <summary>
+    /// A screen two or more projectors share, numbered as on the screen map.
+    /// </summary>
+    private sealed record LayoutGroup(Screen Screen, int ScreenNumber, int[] ProjectorNumbers);
+
+
+    /// <summary>
+    /// A layout button of a screen, by its thumbnail.
+    /// </summary>
+    private sealed record LayoutOption(Screen Screen, LayoutThumbnailControl Thumbnail);
 
 }

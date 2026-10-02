@@ -145,10 +145,12 @@ public sealed class ProjectorManager : PhDisposable
         var target = screen ?? savedScreen ?? PickFreeScreen();
         if (target is null) return null;
 
-        // a saved screen comes with its saved mode
+        // a saved screen comes with its saved mode, and the cell it was tiled in
         var isSavedScreen = target == savedScreen;
-        var preferredMode = isSavedScreen ? placement!.WindowMode : ProjectorWindowMode.FullScreen;
+        var preferredMode = isSavedScreen ? GetPreferredMode(placement!) : ProjectorWindowMode.FullScreen;
         var mode = GetModeForScreen(target, preferredMode);
+        var savedTile = isSavedScreen ? placement!.Tile : null;
+        var hasSavedTile = savedTile?.IsValid == true;
 
 
         // 2. open it
@@ -168,7 +170,8 @@ public sealed class ProjectorManager : PhDisposable
         // an audience watches a projector hands-off, so the screens must stay on
         SleepGuard.Acquire(SLEEP_GUARD_OWNER, $"{BHelper.AppDisplayName} projector");
 
-        await window.ShowOnScreenAsync(target, mode);
+        if (hasSavedTile) await window.ShowInTileAsync(target, savedTile!);
+        else await window.ShowOnScreenAsync(target, mode);
 
 
         // 3. remember where it is
@@ -195,12 +198,72 @@ public sealed class ProjectorManager : PhDisposable
     /// </summary>
     public async Task SetWindowModeAsync(ProjectorWindow window, ProjectorWindowMode mode)
     {
+        // a window is tiled through a layout, which picks its cell
+        if (mode == ProjectorWindowMode.Tiled) return;
+
         var screen = window.GetScreen() ?? PickFreeScreen();
         if (screen is null) return;
 
         // an explicit choice applies even over the main window
         window.PreferredMode = mode;
         await PlaceProjectorAsync(window, screen, mode);
+    }
+
+
+    /// <summary>
+    /// Tiles the projectors on <paramref name="screen"/> into the cells of <paramref name="layout"/>, in number order.
+    /// </summary>
+    public async Task ArrangeAsync(Screen screen, ProjectorLayout layout)
+    {
+        if (IsDisposed) return;
+
+        var windows = GetWindowsOnScreen(screen);
+        if (windows.Count == 0) return;
+        if (windows.Count > layout.CellCount) return;
+
+        // the windows are independent, so they move into their cells together
+        var tileTasks = windows.Select((window, cell) => window.ShowInTileAsync(screen, new ProjectorTile
+        {
+            Rows = layout.Rows,
+            Columns = layout.Columns,
+            Cell = cell,
+        }));
+        await Task.WhenAll(tileTasks);
+
+        foreach (var window in windows)
+        {
+            SavePlacement(window, screen);
+        }
+        OnChanged();
+    }
+
+
+    /// <summary>
+    /// Gets the projectors on <paramref name="screen"/>, by number.
+    /// </summary>
+    public IReadOnlyList<ProjectorWindow> GetWindowsOnScreen(Screen screen)
+    {
+        return _windows
+            .Where(w => w.GetScreen() == screen)
+            .ToArray();
+    }
+
+
+    /// <summary>
+    /// Gets the grid all projectors on <paramref name="screen"/> are tiled into; <c>null</c> when they are not.
+    /// </summary>
+    public ProjectorLayout? GetActiveLayout(Screen screen)
+    {
+        var windows = GetWindowsOnScreen(screen);
+        if (windows.Count == 0) return null;
+
+        var layout = windows[0].Tile?.Layout;
+        if (layout is null) return null;
+
+        var isSameGrid = windows.All(w => w.Tile?.Layout == layout);
+        if (!isSameGrid) return null;
+
+        return layout;
     }
 
 
@@ -349,7 +412,30 @@ public sealed class ProjectorManager : PhDisposable
 
     private void Screens_Changed(object? sender, EventArgs e)
     {
+        // a new resolution, scale or work area leaves the tiled projectors off their cells
+        _ = RetileAsync();
         OnChanged();
+    }
+
+
+    /// <summary>
+    /// Puts each tiled projector still on its screen back into its cell.
+    /// </summary>
+    private async Task RetileAsync()
+    {
+        foreach (var window in _windows.ToArray())
+        {
+            if (IsDisposed) return;
+            if (window.Tile is not { } tile) continue;
+
+            // a projector the OS moved off an unplugged screen would cover another one
+            var isOpen = _windows.Contains(window);
+            var savedScreen = FindScreen(GetPlacement(window.Number));
+            var isOnSavedScreen = savedScreen is not null && savedScreen == window.GetScreen();
+            if (!isOpen || !isOnSavedScreen) continue;
+
+            await window.ShowInTileAsync(savedScreen!, tile);
+        }
     }
 
 
@@ -477,8 +563,21 @@ public sealed class ProjectorManager : PhDisposable
         placement.ScreenX = screen.Bounds.X;
         placement.ScreenY = screen.Bounds.Y;
         placement.WindowMode = window.PreferredMode;
+        placement.Tile = window.Tile;
 
         SaveConfig();
+    }
+
+
+    /// <summary>
+    /// Gets how a placement prefers to cover a screen; a cell is not a preference, so it falls back to full screen.
+    /// </summary>
+    private static ProjectorWindowMode GetPreferredMode(ProjectorPlacement placement)
+    {
+        var mode = placement.WindowMode;
+        if (mode == ProjectorWindowMode.Tiled) return ProjectorWindowMode.FullScreen;
+
+        return mode;
     }
 
 

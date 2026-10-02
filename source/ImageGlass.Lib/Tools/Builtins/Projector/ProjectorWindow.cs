@@ -86,6 +86,12 @@ public sealed class ProjectorWindow : PhWindow
 
 
     /// <summary>
+    /// Gets the grid cell the window fills while <see cref="Mode"/> is <see cref="ProjectorWindowMode.Tiled"/>.
+    /// </summary>
+    public ProjectorTile? Tile { get; private set; }
+
+
+    /// <summary>
     /// Gets the background color of a projector that has none of its own.
     /// </summary>
     public static Color DefaultBackgroundColor
@@ -177,9 +183,11 @@ public sealed class ProjectorWindow : PhWindow
 
         // the user can maximize or restore the window too; a minimized one keeps its mode
         var state = (WindowState)e.NewValue!;
+        if (state is WindowState.FullScreen or WindowState.Maximized) LeaveTile();
+
         if (state == WindowState.FullScreen) Mode = ProjectorWindowMode.FullScreen;
         else if (state == WindowState.Maximized) Mode = ProjectorWindowMode.Maximized;
-        else if (state == WindowState.Normal) Mode = ProjectorWindowMode.Normal;
+        else if (state == WindowState.Normal) Mode = Tile is null ? ProjectorWindowMode.Normal : ProjectorWindowMode.Tiled;
 
         LayoutChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -257,15 +265,9 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     public async Task MoveToScreenAsync(Screen screen, ProjectorWindowMode mode)
     {
-        // 1. only a normal window moves between screens
-        if (WindowState != WindowState.Normal)
-        {
-            var wasFullScreen = WindowState == WindowState.FullScreen;
-            WindowState = WindowState.Normal;
-
-            var isMacFullScreenExit = wasFullScreen && BHelper.OS == OSType.Mac;
-            await Task.Delay(isMacFullScreenExit ? MAC_FULL_SCREEN_EXIT_MS : MOVE_SETTLE_MS);
-        }
+        // 1. only a normal window with its frame moves between screens
+        LeaveTile();
+        await RestoreNormalStateAsync();
 
 
         // 2. place it inside the target screen, again if the OS put it elsewhere
@@ -282,6 +284,30 @@ public sealed class ProjectorWindow : PhWindow
 
         // 3. cover the screen it is on now
         ApplyMode(mode);
+    }
+
+
+    /// <summary>
+    /// Shows the window frameless in <paramref name="tile"/> of a grid on <paramref name="screen"/>, moving it there if shown.
+    /// </summary>
+    public async Task ShowInTileAsync(Screen screen, ProjectorTile tile)
+    {
+        // 1. only a normal window takes an exact size
+        await RestoreNormalStateAsync();
+
+
+        // 2. drop the frame, so the window fills its cell edge to edge
+        Tile = tile;
+        Mode = ProjectorWindowMode.Tiled;
+        WindowDecorations = WindowDecorations.None;
+        PlaceInTile(screen, tile);
+        if (!IsVisible) Show();
+
+
+        // 3. again once it is on that screen, as moving onto another scale resizes the window
+        await Task.Delay(MOVE_SETTLE_MS);
+        PlaceInTile(screen, tile);
+        LayoutChanged?.Invoke(this, EventArgs.Empty);
     }
 
 
@@ -311,6 +337,48 @@ public sealed class ProjectorWindow : PhWindow
             workArea.Y + (workArea.Height - pixelHeight) / 2);
         Width = pixelWidth / screen.Scaling;
         Height = pixelHeight / screen.Scaling;
+    }
+
+
+    /// <summary>
+    /// Gives a frameless window the exact pixel bounds of <paramref name="tile"/> in the work area of <paramref name="screen"/>.
+    /// </summary>
+    private void PlaceInTile(Screen screen, ProjectorTile tile)
+    {
+        var bounds = tile.Layout.GetCellBounds(screen.WorkingArea, tile.Cell);
+        Position = bounds.Position;
+
+        // the exact quotient, as Avalonia rounds a DIP size up to whole pixels, so any extra adds one
+        var scaling = RenderScaling;
+        Width = bounds.Width / scaling;
+        Height = bounds.Height / scaling;
+    }
+
+
+    /// <summary>
+    /// Brings back the frame of a tiled window, which then covers its screen as a normal window.
+    /// </summary>
+    private void LeaveTile()
+    {
+        if (Tile is null) return;
+
+        Tile = null;
+        WindowDecorations = WindowDecorations.Full;
+    }
+
+
+    /// <summary>
+    /// Takes the window out of full screen or maximized, as only a normal window moves and sizes freely.
+    /// </summary>
+    private async Task RestoreNormalStateAsync()
+    {
+        if (WindowState == WindowState.Normal) return;
+
+        var wasFullScreen = WindowState == WindowState.FullScreen;
+        WindowState = WindowState.Normal;
+
+        var isMacFullScreenExit = wasFullScreen && BHelper.OS == OSType.Mac;
+        await Task.Delay(isMacFullScreenExit ? MAC_FULL_SCREEN_EXIT_MS : MOVE_SETTLE_MS);
     }
 
 

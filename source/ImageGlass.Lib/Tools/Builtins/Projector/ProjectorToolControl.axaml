@@ -44,6 +44,14 @@
             Spacing="6" />
 
 
+        <!--  Layouts: tile the projectors that share a screen, one group per screen  -->
+        <StackPanel
+            x:Name="PART_LayoutGroups"
+            VerticalAlignment="Center"
+            IsVisible="False"
+            Spacing="10" />
+
+
         <!--  Actions and options  -->
         <StackPanel VerticalAlignment="Center" Spacing="8">
             <StackPanel Orientation="Horizontal" Spacing="6">
