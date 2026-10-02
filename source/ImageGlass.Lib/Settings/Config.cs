@@ -828,6 +828,16 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets how the viewer shows scrollbars when the image does not fit in it.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumSafeConverter<ScrollbarMode>))]
+    public ScrollbarMode ViewerScrollbarMode
+    {
+        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.Never);
+        set => Set(ConfigId.ViewerScrollbarMode, value);
+    }
+
+    /// <summary>
     /// Gets, sets how the app behaves while browsing photos.
     /// <see cref="BrowsingMode.Sequential"/> ignores navigation until the current photo
     /// is fully loaded and rendered.

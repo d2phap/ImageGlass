@@ -51,6 +51,28 @@ public enum CheckerboardType
 }
 
 
+/// <summary>
+/// Specifies how the viewer shows its scrollbars when the image does not fit in it.
+/// </summary>
+public enum ScrollbarMode
+{
+    /// <summary>
+    /// No scrollbars.
+    /// </summary>
+    Never = 0,
+
+    /// <summary>
+    /// Thin scrollbars that expand while the pointer is over them.
+    /// </summary>
+    AutoHide = 1,
+
+    /// <summary>
+    /// Full scrollbars at all times.
+    /// </summary>
+    Always = 2,
+}
+
+
 public enum ZoomMode
 {
     AutoZoom,

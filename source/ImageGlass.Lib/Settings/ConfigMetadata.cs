@@ -132,6 +132,7 @@ public enum ConfigId
     #region Enum settings
 
     CheckerboardMode,
+    ViewerScrollbarMode,
     BrowsingMode,
     ImageLoadingOrder,
     ImageLoadingOrderType,
