@@ -54,7 +54,7 @@ public partial class SlideshowSettingsView : SettingsPageView
         BindToggle(PART_SlideshowCountdown, ConfigId.EnableSlideshowCountdown,
             LangId.Settings_EnableSlideshowCountdown, LangId.Settings_Slideshow_Appearance, true);
         BindColorPicker(PART_BgColor, ConfigId.SlideshowBackgroundColor, "#000000",
-            LangId.Settings_SlideshowBackgroundColor, LangId.Settings_Slideshow_Appearance);
+            LangId._BackgroundColor, LangId.Settings_Slideshow_Appearance);
 
         // Playback
         BindToggle(PART_LoopSlideshow, ConfigId.EnableLoopSlideshow,

@@ -473,6 +473,7 @@ public class Lang
         new(LangId._Browse, "Browse…"), //v9.0
         new(LangId._Reset, "Reset"), //v9.0
         new(LangId._ResetToDefault, "Reset to default"), //v9.0
+        new(LangId._BackgroundColor, "Background color"), //v10.0
         new(LangId._CheckForUpdate, "Check for update…"), //v5.0
         new(LangId._Update, "Update"), //v9.0
         new(LangId._Download, "Download"), //v10.0
@@ -1010,7 +1011,6 @@ public class Lang
         new(LangId.Settings_Slideshow_Appearance, "Appearance"),
         new(LangId.Settings_EnableSlideshowCountdown, "Show slideshow countdown"),
         new(LangId.Settings_EnableFullscreenSlideshow, "Start slideshow in Full Screen mode"),
-        new(LangId.Settings_SlideshowBackgroundColor, "Slideshow background color"),
 
         // Slideshow > Playback
         new(LangId.Settings_Slideshow_Playback, "Playback"),
@@ -1236,7 +1236,6 @@ public class Lang
         #region Settings > Tab Appearance
         // Appearance > Appearance
         new(LangId.Settings_WindowBackdrop, "Window backdrop"),
-        new(LangId.Settings_BackgroundColor, "Viewer background color"),
 
         // Appearance > Theme
         new(LangId.Settings_Theme, "Theme"),
@@ -1310,7 +1309,6 @@ public class Lang
         new(LangId.Tool_Projector_LayoutGrid, "{0} × {1} grid"), //v10.0
         new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1} × {2} pixels, {3}% scale"), //v10.0
         new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
-        new(LangId.Tool_Projector_BackgroundColor, "Background color"), //v10.0
         #endregion // Tool: Projector
 
 

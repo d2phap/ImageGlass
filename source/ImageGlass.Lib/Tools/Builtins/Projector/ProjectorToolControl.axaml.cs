@@ -569,7 +569,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     private static void RelocalizeRow(ProjectorRow row)
     {
         var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
-        var colorText = Core.Lang[LangId.Tool_Projector_BackgroundColor];
+        var colorText = Core.Lang[LangId._BackgroundColor];
 
         row.BtnSelect.Content = projectorName;
         row.ColorPicker.Title = $"{projectorName} - {colorText}";

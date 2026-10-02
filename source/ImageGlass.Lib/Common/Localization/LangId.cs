@@ -38,6 +38,7 @@ public enum LangId
     _Browse,
     _Reset,
     _ResetToDefault,
+    _BackgroundColor,
     _CheckForUpdate,
     _Update,
     _Download,
@@ -569,7 +570,6 @@ public enum LangId
     Settings_Slideshow_Appearance,
     Settings_EnableSlideshowCountdown,
     Settings_EnableFullscreenSlideshow,
-    Settings_SlideshowBackgroundColor,
 
     // Slideshow > Playback
     Settings_Slideshow_Playback,
@@ -792,7 +792,6 @@ public enum LangId
     #region Settings > Tab Appearance
     // Appearance > Appearance
     Settings_WindowBackdrop,
-    Settings_BackgroundColor,
 
     // Appearance > Theme
     Settings_Theme,
@@ -870,7 +869,6 @@ public enum LangId
     Tool_Projector_LayoutGrid,
     Tool_Projector_ScreenInfo,
     Tool_Projector_MainWindow,
-    Tool_Projector_BackgroundColor,
     #endregion // Tool: Projector
 
 

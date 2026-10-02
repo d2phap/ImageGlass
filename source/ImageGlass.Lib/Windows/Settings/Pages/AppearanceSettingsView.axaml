@@ -49,7 +49,7 @@
 
             <!--  Viewer background color  -->
             <StackPanel Margin="0,14,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
-                <ui:PhTextBlock LangKey="Settings_BackgroundColor" />
+                <ui:PhTextBlock LangKey="_BackgroundColor" />
                 <ui:PhColorPickerControl x:Name="PART_BgColor" HorizontalAlignment="Left" />
             </StackPanel>
 
