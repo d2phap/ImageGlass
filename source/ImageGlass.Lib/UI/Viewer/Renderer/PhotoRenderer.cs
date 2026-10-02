@@ -284,13 +284,12 @@ public partial class PhotoRenderer : ICustomDrawOperation
             var svgPicture = GetVectorPicture();
             if (svgPicture is not null && !svgPicture.IsDisposed())
             {
+                if (_isFirstDraw) PurgeEarlierGpuResources(grContext);
+
                 RenderVector(canvas, svgPicture);
 
                 if (_isFirstDraw)
                 {
-                    // clear old cache
-                    grContext?.PurgeResources();
-
                     _isFirstDraw = false;
 
                     // no raster image to process for vector; pass null
@@ -312,6 +311,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
                 // set the image to draw
                 imageRender = srcImage;
+                PurgeEarlierGpuResources(grContext);
 
 
                 // draw the full image for first frame
@@ -319,9 +319,6 @@ public partial class PhotoRenderer : ICustomDrawOperation
                 canvas.DrawImage(imageRender, _srcRect, _destRect, _samplingOptions);
                 canvas.Restore();
 
-
-                // clear old cache
-                grContext?.PurgeResources();
 
                 // process after first time drawing
                 _isFirstDraw = false;
@@ -354,6 +351,16 @@ public partial class PhotoRenderer : ICustomDrawOperation
         }
     }
 
+
+
+    /// <summary>
+    /// Frees the GPU resources of earlier photos, which the unlimited cache budget would keep forever; call before a new photo's first draw.
+    /// </summary>
+    private static void PurgeEarlierGpuResources(GRContext? grContext)
+    {
+        // not PurgeResources(): it flushes first, so it frees what this frame already drew, and every text atlas too
+        grContext?.PurgeUnlockedResources(false);
+    }
 
 
     /// <summary>
