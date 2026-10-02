@@ -1,0 +1,79 @@
+<ui:PhControl
+    x:Class="ImageGlass.Tools.ProjectorToolControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tool="using:ImageGlass.Tools"
+    xmlns:types="using:ImageGlass.Common.Types"
+    xmlns:ui="using:ImageGlass.UI"
+    mc:Ignorable="d"
+    d:DesignHeight="160"
+    d:DesignWidth="800"
+    x:Name="Root"
+    Padding="6,12,36,12">
+
+    <!--  Right padding keeps the content clear of the tool host's floating close button  -->
+    <WrapPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        ItemSpacing="28"
+        ItemsAlignment="Center"
+        LineSpacing="10"
+        Orientation="Horizontal">
+
+        <!--  Screens: a click shows the selected projector there  -->
+        <StackPanel Spacing="4">
+            <tool:ScreenMapControl
+                x:Name="PART_ScreenMap"
+                Height="96"
+                HorizontalAlignment="Center" />
+            <ui:PhTextBlock
+                x:Name="PART_LblHint"
+                HorizontalAlignment="Center"
+                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                LangKey="Tool_Projector_HintOpen"
+                Opacity="0.6" />
+        </StackPanel>
+
+
+        <!--  Open projectors: pick one to place, change how it covers its screen, or close it  -->
+        <StackPanel
+            x:Name="PART_ProjectorList"
+            VerticalAlignment="Center"
+            Spacing="6" />
+
+
+        <!--  Actions and options  -->
+        <StackPanel VerticalAlignment="Center" Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <ui:PhButton
+                    x:Name="PART_BtnAdd"
+                    HorizontalContentAlignment="Center"
+                    IconData="{StaticResource IconAdd}" />
+                <ui:PhProBadge x:Name="PART_ProBadge" IsVisible="False" />
+                <ui:PhButton
+                    x:Name="PART_BtnCloseAll"
+                    HorizontalContentAlignment="Center"
+                    IconData="{StaticResource IconClose}" />
+            </StackPanel>
+
+            <CheckBox x:Name="PART_ChkSync">
+                <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
+            </CheckBox>
+
+            <!--  How to fit the photo while not syncing  -->
+            <StackPanel
+                x:Name="PART_ZoomModeGroup"
+                Orientation="Horizontal"
+                Spacing="6">
+                <ui:PhTextBlock
+                    VerticalAlignment="Center"
+                    LangKey="Tool_Projector_LblZoomMode"
+                    Opacity="0.6" />
+                <ComboBox x:Name="PART_CmbZoomMode" MinWidth="120" />
+            </StackPanel>
+        </StackPanel>
+
+    </WrapPanel>
+</ui:PhControl>

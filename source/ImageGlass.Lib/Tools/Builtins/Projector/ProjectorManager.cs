@@ -145,11 +145,15 @@ public sealed class ProjectorManager : PhDisposable
 
         // a saved screen comes with its saved mode
         var isSavedScreen = target == savedScreen;
-        var mode = isSavedScreen ? placement!.WindowMode : GetDefaultMode(target);
+        var preferredMode = isSavedScreen ? placement!.WindowMode : ProjectorWindowMode.FullScreen;
+        var mode = GetModeForScreen(target, preferredMode);
 
 
         // 2. open it
-        var window = new ProjectorWindow(number, GetMainViewer());
+        var window = new ProjectorWindow(number, GetMainViewer())
+        {
+            PreferredMode = preferredMode,
+        };
         window.Viewer.EnableMirrorSync = Config.EnableViewSync;
         window.Viewer.ZoomMode = Config.ZoomMode;
         window.Closed += Window_Closed;
@@ -165,7 +169,7 @@ public sealed class ProjectorManager : PhDisposable
 
 
         // 3. remember where it is
-        SavePlacement(window, target, mode);
+        SavePlacement(window, target);
         OnChanged();
 
         return window;
@@ -173,32 +177,27 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Moves <paramref name="window"/> onto <paramref name="screen"/>, covering it as <paramref name="mode"/> says, or as it does now.
+    /// Moves <paramref name="window"/> onto <paramref name="screen"/>, covering it as the window prefers.
     /// </summary>
-    public async Task MoveProjectorAsync(ProjectorWindow window, Screen screen, ProjectorWindowMode? mode = null)
+    public async Task MoveProjectorAsync(ProjectorWindow window, Screen screen)
     {
-        if (IsDisposed) return;
+        var mode = GetModeForScreen(screen, window.PreferredMode);
 
-        var isOpen = _windows.Contains(window);
-        if (!isOpen) return;
-
-        var newMode = mode ?? window.Mode;
-        await window.MoveToScreenAsync(screen, newMode);
-
-        SavePlacement(window, screen, newMode);
-        OnChanged();
+        await PlaceProjectorAsync(window, screen, mode);
     }
 
 
     /// <summary>
-    /// Changes how <paramref name="window"/> covers the screen it is on.
+    /// Changes how <paramref name="window"/> covers the screen it is on, and wherever it moves next.
     /// </summary>
     public async Task SetWindowModeAsync(ProjectorWindow window, ProjectorWindowMode mode)
     {
         var screen = window.GetScreen() ?? PickFreeScreen();
         if (screen is null) return;
 
-        await MoveProjectorAsync(window, screen, mode);
+        // an explicit choice applies even over the main window
+        window.PreferredMode = mode;
+        await PlaceProjectorAsync(window, screen, mode);
     }
 
 
@@ -324,7 +323,7 @@ public sealed class ProjectorManager : PhDisposable
         var screen = window.GetScreen();
         if (screen is null) return;
 
-        SavePlacement(window, screen, window.Mode);
+        SavePlacement(window, screen);
     }
 
 
@@ -387,8 +386,11 @@ public sealed class ProjectorManager : PhDisposable
             && s.Bounds.Y == placement.ScreenY);
         if (exactMatch is not null) return exactMatch;
 
-        // the screens may have been rearranged, or another screen may have the name now
-        var nameMatch = screens.FirstOrDefault(s => s.DisplayName == placement.ScreenName);
+        // the screens may have been rearranged; an OS may give no names, which match nothing alone
+        var hasName = !string.IsNullOrEmpty(placement.ScreenName);
+        var nameMatch = hasName
+            ? screens.FirstOrDefault(s => s.DisplayName == placement.ScreenName)
+            : null;
         if (nameMatch is not null) return nameMatch;
 
         return screens.FirstOrDefault(s => s.Bounds.X == placement.ScreenX
@@ -418,20 +420,37 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Gets how a new projector covers <paramref name="screen"/>: never over the main window by default.
+    /// Shows <paramref name="window"/> on <paramref name="screen"/> as <paramref name="mode"/> says, and remembers it.
     /// </summary>
-    private ProjectorWindowMode GetDefaultMode(Screen screen)
+    private async Task PlaceProjectorAsync(ProjectorWindow window, Screen screen, ProjectorWindowMode mode)
     {
-        var isMainScreen = screen == GetMainWindowScreen();
+        if (IsDisposed) return;
 
-        return isMainScreen ? ProjectorWindowMode.Normal : ProjectorWindowMode.FullScreen;
+        var isOpen = _windows.Contains(window);
+        if (!isOpen) return;
+
+        await window.MoveToScreenAsync(screen, mode);
+
+        SavePlacement(window, screen);
+        OnChanged();
     }
 
 
     /// <summary>
-    /// Remembers where a projector is shown, so it opens there again.
+    /// Gets how a projector covers <paramref name="screen"/>: as a normal window over the main window, else as preferred.
     /// </summary>
-    private void SavePlacement(ProjectorWindow window, Screen screen, ProjectorWindowMode mode)
+    private ProjectorWindowMode GetModeForScreen(Screen screen, ProjectorWindowMode preferredMode)
+    {
+        var isMainScreen = screen == GetMainWindowScreen();
+
+        return isMainScreen ? ProjectorWindowMode.Normal : preferredMode;
+    }
+
+
+    /// <summary>
+    /// Remembers the screen a projector is shown on and the mode it prefers, so it opens there again.
+    /// </summary>
+    private void SavePlacement(ProjectorWindow window, Screen screen)
     {
         var index = window.Number - 1;
         while (Config.Placements.Count <= index)
@@ -444,7 +463,7 @@ public sealed class ProjectorManager : PhDisposable
             ScreenName = screen.DisplayName ?? string.Empty,
             ScreenX = screen.Bounds.X,
             ScreenY = screen.Bounds.Y,
-            WindowMode = mode,
+            WindowMode = window.PreferredMode,
         };
 
         SaveConfig();
@@ -477,7 +496,7 @@ public sealed class ProjectorManager : PhDisposable
     /// </summary>
     private void SaveConfig()
     {
-        Core.Config.ToolSettings[TOOL_ID] = SaveSettings();
+        ToolRegistry.SetToolSettings(TOOL_ID, SaveSettings());
     }
 
     #endregion // Private Methods

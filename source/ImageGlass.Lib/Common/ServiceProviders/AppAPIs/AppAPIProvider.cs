@@ -112,6 +112,8 @@ public partial class AppAPIProvider
             new ToolControlAdapter(FrameNavToolControl.TOOL_ID, v => new FrameNavToolControl { Viewer = v }));
         Core.ToolRegistry.Register(HdrToneMapperToolControl.TOOL_ID,
             new ToolControlAdapter(HdrToneMapperToolControl.TOOL_ID, v => new HdrToneMapperToolControl { Viewer = v }));
+        Core.ToolRegistry.Register(ProjectorToolControl.TOOL_ID,
+            new ToolControlAdapter(ProjectorToolControl.TOOL_ID, v => new ProjectorToolControl { Viewer = v }));
 
         // Register built-in non-hosted plugins
         Core.ToolRegistry.Register(ImageResizerTool.TOOL_ID, new ImageResizerTool());

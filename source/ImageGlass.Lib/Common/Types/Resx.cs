@@ -309,6 +309,7 @@ public enum ResxIconId
 {
     IconEllipsis,
     IconClose,
+    IconAdd,
     IconSearch,
     IconSettings,
     IconSave,

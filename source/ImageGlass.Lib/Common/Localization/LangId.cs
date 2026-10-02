@@ -859,6 +859,14 @@ public enum LangId
     Tool_Projector_BtnCloseAll,
     Tool_Projector_ChkSyncView,
     Tool_Projector_ProLimit,
+    Tool_Projector_HintOpen,
+    Tool_Projector_HintMove,
+    Tool_Projector_LblZoomMode,
+    Tool_Projector_ModeFullScreen,
+    Tool_Projector_ModeMaximized,
+    Tool_Projector_ModeNormal,
+    Tool_Projector_ScreenInfo,
+    Tool_Projector_MainWindow,
     #endregion // Tool: Projector
 
 

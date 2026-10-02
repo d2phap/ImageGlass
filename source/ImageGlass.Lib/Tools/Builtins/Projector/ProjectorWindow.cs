@@ -75,6 +75,12 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     public ProjectorWindowMode Mode { get; private set; } = ProjectorWindowMode.Normal;
 
+
+    /// <summary>
+    /// Gets, sets how the window covers a screen it is moved onto, unless the main window is there.
+    /// </summary>
+    public ProjectorWindowMode PreferredMode { get; set; } = ProjectorWindowMode.FullScreen;
+
     #endregion // Public Properties
 
 

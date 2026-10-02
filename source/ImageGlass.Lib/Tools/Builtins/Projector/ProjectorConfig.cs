@@ -88,7 +88,7 @@ public sealed class ProjectorPlacement
 
 
     /// <summary>
-    /// Gets, sets how the projector covers the screen.
+    /// Gets, sets how the projector prefers to cover a screen; over the main window it opens as a normal window.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumSafeConverter<ProjectorWindowMode>))]
     public ProjectorWindowMode WindowMode { get; set; } = ProjectorWindowMode.FullScreen;

@@ -73,6 +73,9 @@
     <Compile Update="Tools\Builtins\FrameNav\FrameNavToolControl.axaml.cs">
       <DependentUpon>FrameNavToolControl.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Tools\Builtins\Projector\ProjectorToolControl.axaml.cs">
+      <DependentUpon>ProjectorToolControl.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Tools\ToolHostControl.axaml.cs">
       <DependentUpon>ToolHostControl.axaml</DependentUpon>
     </Compile>

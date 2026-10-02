@@ -171,6 +171,7 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuCropTool,            API.IG_ToggleTool, CropImageToolControl.TOOL_ID,        [new(Key.C)]),
         new(LangId.Menu_MnuFrameNav,            API.IG_ToggleTool, FrameNavToolControl.TOOL_ID,         [new(Key.P)]),
         new(LangId.Menu_MnuHdrToneMapper,       API.IG_ToggleTool, HdrToneMapperToolControl.TOOL_ID,    [new(Key.H)]),
+        new(LangId.Menu_MnuProjector,           API.IG_ToggleTool, ProjectorToolControl.TOOL_ID),
         new(LangId.Menu_MnuResizeTool,          API.IG_OpenTool, ImageResizerTool.TOOL_ID,              [new(Key.R)]),
         new(LangId.Menu_MnuLosslessCompression, API.IG_OpenTool, LosslessCompressionTool.TOOL_ID,       [new(Key.M)]),
         new(LangId.Menu_MnuToolsSettings,       API.IG_OpenSettings, nameof(SettingsNavId.Tools)),

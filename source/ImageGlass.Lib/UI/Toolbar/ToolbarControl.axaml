@@ -510,6 +510,7 @@
                                     <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuCropTool" />
                                     <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuFrameNav" />
                                     <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuHdrToneMapper" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuProjector" />
                                     <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuResizeTool" />
                                     <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuLosslessCompression" />
                                     <ui:PhMenuItem x:Name="PART_MnuExternalToolsBeginSeparator" Header="-" />
