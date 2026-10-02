@@ -17,8 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Platform;
 using ImageGlass.Common;
+using ImageGlass.Common.Extensions;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer;
@@ -153,6 +155,7 @@ public sealed class ProjectorManager : PhDisposable
         var window = new ProjectorWindow(number, GetMainViewer())
         {
             PreferredMode = preferredMode,
+            BackgroundColor = GetBackgroundColor(placement),
         };
         window.Viewer.EnableMirrorSync = Config.EnableViewSync;
         window.Viewer.ZoomMode = Config.ZoomMode;
@@ -198,6 +201,23 @@ public sealed class ProjectorManager : PhDisposable
         // an explicit choice applies even over the main window
         window.PreferredMode = mode;
         await PlaceProjectorAsync(window, screen, mode);
+    }
+
+
+    /// <summary>
+    /// Sets the background color of <paramref name="window"/>; <c>null</c> follows the slideshow background color.
+    /// </summary>
+    public void SetBackgroundColor(ProjectorWindow window, Color? color)
+    {
+        if (IsDisposed) return;
+
+        window.BackgroundColor = color;
+
+        var placement = GetOrAddPlacement(window.Number);
+        placement.BackgroundColor = color?.ToHex() ?? string.Empty;
+
+        SaveConfig();
+        OnChanged();
     }
 
 
@@ -452,21 +472,45 @@ public sealed class ProjectorManager : PhDisposable
     /// </summary>
     private void SavePlacement(ProjectorWindow window, Screen screen)
     {
-        var index = window.Number - 1;
+        var placement = GetOrAddPlacement(window.Number);
+        placement.ScreenName = screen.DisplayName ?? string.Empty;
+        placement.ScreenX = screen.Bounds.X;
+        placement.ScreenY = screen.Bounds.Y;
+        placement.WindowMode = window.PreferredMode;
+
+        SaveConfig();
+    }
+
+
+    /// <summary>
+    /// Gets the saved settings of the projector of <paramref name="number"/>, adding them if missing.
+    /// </summary>
+    private ProjectorPlacement GetOrAddPlacement(int number)
+    {
+        var index = number - 1;
         while (Config.Placements.Count <= index)
         {
             Config.Placements.Add(new ProjectorPlacement());
         }
 
-        Config.Placements[index] = new ProjectorPlacement
-        {
-            ScreenName = screen.DisplayName ?? string.Empty,
-            ScreenX = screen.Bounds.X,
-            ScreenY = screen.Bounds.Y,
-            WindowMode = window.PreferredMode,
-        };
+        // a hand-edited config may hold a null entry
+        return Config.Placements[index] ??= new ProjectorPlacement();
+    }
 
-        SaveConfig();
+
+    /// <summary>
+    /// Gets the background color a placement keeps; <c>null</c> when it follows the slideshow background color.
+    /// </summary>
+    private static Color? GetBackgroundColor(ProjectorPlacement? placement)
+    {
+        var hex = placement?.BackgroundColor;
+        if (string.IsNullOrWhiteSpace(hex)) return null;
+
+        // an unreadable value parses as transparent, which no projector could show anyway
+        var color = BHelper.ColorFromHex(hex, Core.AccentColor);
+        if (color.A == 0) return null;
+
+        return color;
     }
 
 

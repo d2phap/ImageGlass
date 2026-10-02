@@ -867,6 +867,7 @@ public enum LangId
     Tool_Projector_ModeNormal,
     Tool_Projector_ScreenInfo,
     Tool_Projector_MainWindow,
+    Tool_Projector_BackgroundColor,
     #endregion // Tool: Projector
 
 

@@ -1307,6 +1307,7 @@ public class Lang
         new(LangId.Tool_Projector_ModeNormal, "Window"), //v10.0
         new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1} × {2} pixels, {3}% scale"), //v10.0
         new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
+        new(LangId.Tool_Projector_BackgroundColor, "Background color"), //v10.0
         #endregion // Tool: Projector
 
 

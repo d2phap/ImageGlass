@@ -65,7 +65,7 @@ public sealed class ProjectorConfig
 
 
 /// <summary>
-/// The screen and window mode a projector was last shown with.
+/// The screen, window mode and background a projector was last shown with.
 /// </summary>
 public sealed class ProjectorPlacement
 {
@@ -92,4 +92,10 @@ public sealed class ProjectorPlacement
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumSafeConverter<ProjectorWindowMode>))]
     public ProjectorWindowMode WindowMode { get; set; } = ProjectorWindowMode.FullScreen;
+
+
+    /// <summary>
+    /// Gets, sets the background color in hex; empty follows the slideshow background color.
+    /// </summary>
+    public string BackgroundColor { get; set; } = string.Empty;
 }

@@ -136,6 +136,15 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     }
 
 
+    protected override void OnIgThemeChanged(ThemePackChangedEventArgs e)
+    {
+        base.OnIgThemeChanged(e);
+
+        // the default background color comes from the theme
+        RefreshUI(selectNewProjectors: false);
+    }
+
+
     private void Manager_Changed(object? sender, EventArgs e)
     {
         RefreshUI(selectNewProjectors: true);
@@ -232,10 +241,13 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             var isSelectionOpen = IsOpen(_selectedWindow);
             if (!isSelectionOpen) _selectedWindow = _manager.Windows.FirstOrDefault();
 
+            var defaultColor = ProjectorWindow.DefaultBackgroundColor;
             foreach (var row in _rows.Values)
             {
                 row.BtnSelect.IsChecked = ReferenceEquals(row.Window, _selectedWindow);
                 row.CmbMode.SelectedIndex = Array.IndexOf(_windowModes, row.Window.Mode);
+                row.ColorPicker.DefaultColor = defaultColor;
+                row.ColorPicker.SelectedColor = row.Window.BackgroundColor ?? defaultColor;
             }
 
             PART_ScreenMap.SelectedProjectorNumber = _selectedWindow?.Number ?? 0;
@@ -330,6 +342,25 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             await _manager.SetWindowModeAsync(window, _windowModes[index]);
         };
 
+        var colorPicker = new PhColorPickerControl
+        {
+            ShowHexLabel = false,
+            ShowResetButton = false,
+            SwatchWidth = 24,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+        colorPicker.ColorChanged += (_, _) =>
+        {
+            if (_isUpdatingUI) return;
+            if (_manager is null) return;
+
+            // the default color is kept as no color, so it follows the slideshow background color
+            var color = colorPicker.SelectedColor;
+            var isDefaultColor = color == colorPicker.DefaultColor;
+
+            _manager.SetBackgroundColor(window, isDefaultColor ? null : color);
+        };
+
         var btnClose = new PhToolButton
         {
             Padding = new Thickness(6),
@@ -348,10 +379,10 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         {
             Orientation = Orientation.Horizontal,
             Spacing = 6,
-            Children = { btnSelect, cmbMode, btnClose },
+            Children = { btnSelect, cmbMode, colorPicker, btnClose },
         };
 
-        var row = new ProjectorRow(window, root, btnSelect, cmbMode, btnClose);
+        var row = new ProjectorRow(window, root, btnSelect, cmbMode, colorPicker, btnClose);
         RelocalizeRow(row);
 
         return row;
@@ -425,7 +456,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
     private static void RelocalizeRow(ProjectorRow row)
     {
-        row.BtnSelect.Content = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
+        var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
+        var colorText = Core.Lang[LangId.Tool_Projector_BackgroundColor];
+
+        row.BtnSelect.Content = projectorName;
+        row.ColorPicker.Title = $"{projectorName} - {colorText}";
+        ToolTip.SetTip(row.ColorPicker, colorText);
         ToolTip.SetTip(row.BtnClose, Core.Lang[LangId._Close]);
 
         for (var i = 0; i < row.CmbMode.ItemCount; i++)
@@ -460,6 +496,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// The controls of one open projector in the list.
     /// </summary>
-    private sealed record ProjectorRow(ProjectorWindow Window, StackPanel Root, PhToolButton BtnSelect, ComboBox CmbMode, PhToolButton BtnClose);
+    private sealed record ProjectorRow(ProjectorWindow Window, StackPanel Root, PhToolButton BtnSelect, ComboBox CmbMode,
+        PhColorPickerControl ColorPicker, PhToolButton BtnClose);
 
 }

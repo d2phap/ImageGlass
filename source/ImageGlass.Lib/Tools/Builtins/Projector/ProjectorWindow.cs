@@ -18,9 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using ImageGlass.Common;
+using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer;
@@ -47,6 +49,7 @@ public sealed class ProjectorWindow : PhWindow
     private const int MAC_FULL_SCREEN_EXIT_MS = 800;
 
     private readonly IdleCursorHider _cursorHider;
+    private readonly Border _host;
 
 
     /// <summary>
@@ -81,6 +84,35 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     public ProjectorWindowMode PreferredMode { get; set; } = ProjectorWindowMode.FullScreen;
 
+
+    /// <summary>
+    /// Gets the background color of a projector that has none of its own.
+    /// </summary>
+    public static Color DefaultBackgroundColor
+    {
+        get
+        {
+            var brush = Resx.Get<IBrush?>(ResxId.IG_ProjectorBackgroundBrush);
+            if (brush is ISolidColorBrush solidBrush) return solidBrush.Color;
+
+            return Colors.Black;
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the background color; <c>null</c> follows the slideshow background color.
+    /// </summary>
+    public Color? BackgroundColor
+    {
+        get;
+        set
+        {
+            field = value;
+            ApplyBackground();
+        }
+    }
+
     #endregion // Public Properties
 
 
@@ -104,9 +136,9 @@ public sealed class ProjectorWindow : PhWindow
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
         };
 
-        var host = new Border { Child = Viewer };
-        host[!Border.BackgroundProperty] = Resx.CreateBinding(ResxId.IG_ProjectorBackgroundBrush);
-        Content = host;
+        _host = new Border { Child = Viewer };
+        ApplyBackground();
+        Content = _host;
 
         // nothing to point at on an audience screen
         _cursorHider = new IdleCursorHider(this, Viewer);
@@ -279,6 +311,24 @@ public sealed class ProjectorWindow : PhWindow
             workArea.Y + (workArea.Height - pixelHeight) / 2);
         Width = pixelWidth / screen.Scaling;
         Height = pixelHeight / screen.Scaling;
+    }
+
+
+    /// <summary>
+    /// Paints the window in <see cref="BackgroundColor"/>, else in the projector color of the theme.
+    /// </summary>
+    private void ApplyBackground()
+    {
+        // the theme binding and a picked color take the same slot, so drop the old one first
+        _host.ClearValue(Border.BackgroundProperty);
+
+        if (BackgroundColor is { } color)
+        {
+            _host.Background = color.ToBrush();
+            return;
+        }
+
+        _host[!Border.BackgroundProperty] = Resx.CreateBinding(ResxId.IG_ProjectorBackgroundBrush);
     }
 
 

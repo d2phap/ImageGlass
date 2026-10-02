@@ -39,6 +39,7 @@ namespace ImageGlass.UI;
 /// </summary>
 public class PhColorPickerControl : PhControl
 {
+    private Border _swatchBox = null!;
     private Border _swatch = null!;
     private SelectableTextBlock _hexLabel = null!;
     private PhButton _resetButton = null!;
@@ -99,6 +100,30 @@ public class PhColorPickerControl : PhControl
     public static readonly StyledProperty<bool> ShowResetButtonProperty =
         AvaloniaProperty.Register<PhColorPickerControl, bool>(nameof(ShowResetButton), true);
 
+
+    /// <summary>
+    /// Gets, sets the value indicates that the hex code of the color is shown next to the swatch.
+    /// </summary>
+    public bool ShowHexLabel
+    {
+        get => GetValue(ShowHexLabelProperty);
+        set => SetValue(ShowHexLabelProperty, value);
+    }
+    public static readonly StyledProperty<bool> ShowHexLabelProperty =
+        AvaloniaProperty.Register<PhColorPickerControl, bool>(nameof(ShowHexLabel), true);
+
+
+    /// <summary>
+    /// Gets, sets the width of the color swatch.
+    /// </summary>
+    public double SwatchWidth
+    {
+        get => GetValue(SwatchWidthProperty);
+        set => SetValue(SwatchWidthProperty, value);
+    }
+    public static readonly StyledProperty<double> SwatchWidthProperty =
+        AvaloniaProperty.Register<PhColorPickerControl, double>(nameof(SwatchWidth), 80);
+
     #endregion // Public Properties
 
 
@@ -133,6 +158,14 @@ public class PhColorPickerControl : PhControl
         {
             _resetButton.IsVisible = ShowResetButton;
         }
+        else if (e.Property == ShowHexLabelProperty)
+        {
+            _hexLabel.IsVisible = ShowHexLabel;
+        }
+        else if (e.Property == SwatchWidthProperty)
+        {
+            _swatchBox.Width = SwatchWidth;
+        }
     }
 
     #endregion // Control Events
@@ -152,9 +185,9 @@ public class PhColorPickerControl : PhControl
 
         _swatch = new Border { CornerRadius = new CornerRadius(3) };
 
-        var swatchBox = new Border
+        _swatchBox = new Border
         {
-            Width = 80,
+            Width = SwatchWidth,
             Height = 20,
             CornerRadius = new CornerRadius(4),
             Child = new Grid { Children = { checker, _swatch } },
@@ -163,7 +196,7 @@ public class PhColorPickerControl : PhControl
         var swatchButton = new PhButton
         {
             Padding = new Thickness(6),
-            Content = swatchBox,
+            Content = _swatchBox,
         };
         swatchButton[!CornerRadiusProperty] = Resx.CreateBinding(ResxId.ControlCornerRadius);
         swatchButton.Click += async (_, _) => await PickColorAsync();
@@ -172,6 +205,7 @@ public class PhColorPickerControl : PhControl
         {
             VerticalAlignment = VerticalAlignment.Center,
             FontFamily = new FontFamily(Const.FONT_CODE),
+            IsVisible = ShowHexLabel,
         };
 
         _resetButton = new PhButton
