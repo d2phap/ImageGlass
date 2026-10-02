@@ -24,15 +24,15 @@
             IconData="{StaticResource IconAdd}" />
 
 
-        <!--  Open projectors: the monitors, a divider, then a row per projector; across, or down in a narrow window  -->
+        <!--  Open projectors: the monitors, a divider, then a row per projector  -->
         <Grid
             x:Name="PART_Projectors"
-            HorizontalAlignment="Center"
+            RowDefinitions="Auto, Auto, Auto"
             ColumnDefinitions="Auto, Auto, Auto"
-            IsVisible="False"
-            RowDefinitions="Auto, Auto, Auto">
+            HorizontalAlignment="Center"
+            IsVisible="False">
 
-            <!--  A click opens the layouts of a monitor; a projector row dropped on one moves there  -->
+            <!--  screen map  -->
             <tool:ScreenMapControl
                 x:Name="PART_ScreenMap"
                 Grid.Row="0"
@@ -55,7 +55,7 @@
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Spacing="8">
-                <!--  A grid row per projector, so the columns line up whatever the names; the columns are set in code  -->
+                <!--  A grid row per projector  -->
                 <Grid
                     x:Name="PART_ProjectorList"
                     ColumnSpacing="6"
@@ -81,27 +81,28 @@
         </Grid>
 
 
-        <!--  The layouts of the clicked monitor, dropping down from it  -->
+        <!--  Screen layout dropdown  -->
         <Popup
             x:Name="PART_LayoutPopup"
             IsLightDismissEnabled="True"
             Placement="BottomEdgeAlignedLeft"
             PlacementTarget="{CompiledBinding #PART_ScreenMap}">
             <Border
-                Padding="14"
+                Padding="14,10"
                 Background="{DynamicResource MenuFlyoutPresenterBackground}"
                 BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{DynamicResource OverlayCornerRadius}">
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="10">
                     <ui:PhTextBlock
                         x:Name="PART_LblLayout"
                         FontWeight="SemiBold"
                         LangKey="Tool_Projector_LblLayout" />
                     <UniformGrid
                         x:Name="PART_LayoutOptions"
-                        ColumnSpacing="8"
-                        RowSpacing="8" />
+                        Margin="-5,0"
+                        ColumnSpacing="4"
+                        RowSpacing="4" />
                 </StackPanel>
             </Border>
         </Popup>

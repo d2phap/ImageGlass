@@ -147,6 +147,8 @@ public sealed class ProjectorWindow : PhWindow
     {
         Number = number;
         WindowStartupLocation = WindowStartupLocation.Manual;
+
+        // activated once it covers its screen, see ShowOnScreenAsync
         ShowActivated = false;
         MinWidth = 160;
         MinHeight = 90;
@@ -278,6 +280,9 @@ public sealed class ProjectorWindow : PhWindow
 
         await Task.Delay(MOVE_SETTLE_MS);
         ApplyMode(mode);
+
+        // only now, so a projector covering its screen hands the keyboard back to the main window
+        Activate();
     }
 
 
