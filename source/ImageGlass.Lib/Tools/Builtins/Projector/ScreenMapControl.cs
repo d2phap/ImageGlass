@@ -65,10 +65,27 @@ public sealed class ScreenMapControl : PhControl
     private readonly List<ScreenSlot> _slots = [];
     private ProjectorManager? _manager;
     private Screen? _hoveredScreen;
+    private Screen? _dropTargetScreen;
 
 
     /// <summary>
-    /// Occurs when a screen is clicked.
+    /// Gets, sets the screen a dragged projector would be dropped on, highlighted like a hovered one.
+    /// </summary>
+    public Screen? DropTargetScreen
+    {
+        get => _dropTargetScreen;
+        set
+        {
+            if (value == _dropTargetScreen) return;
+
+            _dropTargetScreen = value;
+            InvalidateVisual();
+        }
+    }
+
+
+    /// <summary>
+    /// Occurs when a screen with a projector on it is clicked.
     /// </summary>
     public event TEventHandler<ScreenMapControl, Screen>? ScreenClicked;
 
@@ -157,7 +174,7 @@ public sealed class ScreenMapControl : PhControl
         base.OnPointerMoved(e);
 
         var position = e.GetPosition(this);
-        var screen = HitTestScreen(position);
+        var screen = GetScreenAt(position);
         SetHoveredScreen(screen);
     }
 
@@ -174,11 +191,13 @@ public sealed class ScreenMapControl : PhControl
         base.OnPointerReleased(e);
         if (e.InitialPressMouseButton != MouseButton.Left) return;
 
+        // a screen with no projector has no layout to pick
         var position = e.GetPosition(this);
-        var screen = HitTestScreen(position);
-        if (screen is null) return;
+        var slot = GetSlotAt(position);
+        if (slot is null) return;
+        if (slot.Projectors.Length == 0) return;
 
-        ScreenClicked?.Invoke(this, screen);
+        ScreenClicked?.Invoke(this, slot.Screen);
     }
 
 
@@ -237,8 +256,11 @@ public sealed class ScreenMapControl : PhControl
     {
         var accent = Core.AccentColor;
         var foreground = Core.Theme.InvertedBaseColor;
-        var isHovered = slot.Screen == _hoveredScreen;
         var hasSelectedProjector = slot.Projectors.Any(p => p.Number == SelectedProjectorNumber);
+
+        // only a screen with a projector opens a layout menu, while a drag can drop on any
+        var isClickable = slot.Projectors.Length > 0;
+        var isHovered = (slot.Screen == _hoveredScreen && isClickable) || slot.Screen == _dropTargetScreen;
 
 
         // 1. the screen, with the cells of its tiled projectors
@@ -409,11 +431,11 @@ public sealed class ScreenMapControl : PhControl
     /// </summary>
     private static Rect? GetCellRect(ProjectorTile? tile, Screen screen, Rect slotRect)
     {
-        if (tile is null) return null;
+        if (tile is not { } cellTile) return null;
 
         // the cells divide the work area, placed within the screen bounds the slot is drawn from
         var bounds = screen.Bounds;
-        var cellBounds = tile.Layout.GetCellBounds(screen.WorkingArea, tile.Cell);
+        var cellBounds = cellTile.Layout.GetCellBounds(screen.WorkingArea, cellTile.Cell);
         var area = slotRect.Deflate(TILE_INSET);
         var scaleX = area.Width / bounds.Width;
         var scaleY = area.Height / bounds.Height;
@@ -449,6 +471,28 @@ public sealed class ScreenMapControl : PhControl
 
 
 
+    #region Public Methods
+
+    /// <summary>
+    /// Gets the screen drawn at <paramref name="position"/>, in the coordinates of this control.
+    /// </summary>
+    public Screen? GetScreenAt(Point position) => GetSlotAt(position)?.Screen;
+
+
+    /// <summary>
+    /// Gets where <paramref name="screen"/> is drawn, in the coordinates of this control.
+    /// </summary>
+    public Rect GetScreenBounds(Screen screen)
+    {
+        var slot = _slots.FirstOrDefault(s => s.Screen == screen);
+
+        return slot?.Rect ?? new Rect(Bounds.Size);
+    }
+
+    #endregion // Public Methods
+
+
+
     #region Private Methods
 
     private void AttachManager()
@@ -480,13 +524,13 @@ public sealed class ScreenMapControl : PhControl
 
 
     /// <summary>
-    /// Gets the screen at <paramref name="position"/>.
+    /// Gets the slot of the screen at <paramref name="position"/>.
     /// </summary>
-    private Screen? HitTestScreen(Point position)
+    private ScreenSlot? GetSlotAt(Point position)
     {
         foreach (var slot in _slots)
         {
-            if (slot.Rect.Contains(position)) return slot.Screen;
+            if (slot.Rect.Contains(position)) return slot;
         }
 
         return null;
@@ -502,7 +546,6 @@ public sealed class ScreenMapControl : PhControl
         if (isSameScreen) return;
 
         _hoveredScreen = screen;
-        Cursor = screen is null ? Cursor.Default : new Cursor(StandardCursorType.Hand);
 
         InvalidateVisual();
         UpdateTooltip();

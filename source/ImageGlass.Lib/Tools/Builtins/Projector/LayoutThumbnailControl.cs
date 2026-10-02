@@ -20,6 +20,7 @@ using Avalonia;
 using Avalonia.Media;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
+using ImageGlass.Common.Localization;
 using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using System;
@@ -33,25 +34,29 @@ namespace ImageGlass.Tools;
 /// </summary>
 public sealed class LayoutThumbnailControl : PhControl
 {
-    private const double THUMBNAIL_HEIGHT = 34;
-    private const double MIN_THUMBNAIL_WIDTH = 24;
-    private const double MAX_THUMBNAIL_WIDTH = 80;
+    // the thumbnail takes the shape of its screen within this box, large enough to read the layout
+    private const double BOX_WIDTH = 120;
+    private const double BOX_HEIGHT = 80;
 
-    private const float FRAME_RADIUS = 4;
-    private const float CELL_RADIUS = 2;
-    private const double FRAME_PADDING = 3;
-    private const double CELL_GAP = 2;
+    private const float FRAME_RADIUS = 6;
+    private const float CELL_RADIUS = 3;
+    private const double FRAME_PADDING = 5;
+    private const double CELL_GAP = 4;
 
     // a cell this small shows its fill only
-    private const double MIN_LABEL_CELL_SIZE = 11;
+    private const double MIN_LABEL_CELL_SIZE = 14;
+
+    // room around the text of the default option
+    private const double LABEL_PADDING_X = 10;
+    private const double LABEL_PADDING_Y = 4;
 
 
     #region Public Properties
 
     /// <summary>
-    /// Gets the grid to draw.
+    /// Gets the layout to draw; <c>null</c> for the default, where each projector covers its screen as it prefers.
     /// </summary>
-    public ProjectorLayout Layout { get; }
+    public ProjectorLayout? Layout { get; }
 
 
     /// <summary>
@@ -67,7 +72,7 @@ public sealed class LayoutThumbnailControl : PhControl
 
 
     /// <summary>
-    /// Gets, sets whether the projectors are tiled in this grid now.
+    /// Gets, sets whether the projectors are laid out like this now.
     /// </summary>
     public bool IsActive
     {
@@ -87,7 +92,7 @@ public sealed class LayoutThumbnailControl : PhControl
     }
 
 
-    public LayoutThumbnailControl(ProjectorLayout layout, int[] projectorNumbers, double aspectRatio)
+    public LayoutThumbnailControl(ProjectorLayout? layout, int[] projectorNumbers, double aspectRatio)
     {
         Layout = layout;
         ProjectorNumbers = projectorNumbers;
@@ -106,14 +111,29 @@ public sealed class LayoutThumbnailControl : PhControl
     }
 
 
+    protected override void OnIgLanguageChanged()
+    {
+        base.OnIgLanguageChanged();
+
+        // the default option draws its text
+        InvalidateVisual();
+    }
+
+
     protected override Size MeasureOverride(Size availableSize)
     {
         _ = base.MeasureOverride(availableSize);
 
-        // take the shape of the screen
-        var width = Math.Clamp(THUMBNAIL_HEIGHT * AspectRatio, MIN_THUMBNAIL_WIDTH, MAX_THUMBNAIL_WIDTH);
+        // the shape of the screen, as large as the box allows
+        var width = BOX_WIDTH;
+        var height = width / AspectRatio;
+        if (height > BOX_HEIGHT)
+        {
+            height = BOX_HEIGHT;
+            width = height * AspectRatio;
+        }
 
-        return new Size(width, THUMBNAIL_HEIGHT);
+        return new Size(width, height);
     }
 
 
@@ -128,24 +148,23 @@ public sealed class LayoutThumbnailControl : PhControl
         // 1. the screen
         var frame = new Rect(Bounds.Size).Deflate(0.5);
         var frameBorder = IsActive ? accent.WithAlpha(230) : foreground.WithAlpha(90);
-        c.DrawRectangleEx(frame, FRAME_RADIUS, frameBorder, foreground.WithAlpha(14));
+        c.DrawRectangleEx(frame, FRAME_RADIUS, frameBorder, foreground.WithAlpha(14), IsActive ? 2f : 1f);
 
 
-        // 2. the cells, filled in the order the projectors are tiled
-        var area = frame.Deflate(FRAME_PADDING);
-        var cellWidth = (area.Width - CELL_GAP * (Layout.Columns - 1)) / Layout.Columns;
-        var cellHeight = (area.Height - CELL_GAP * (Layout.Rows - 1)) / Layout.Rows;
-        if (cellWidth <= 0 || cellHeight <= 0) return;
+        // 2. the default: a label in the middle
+        if (Layout is null)
+        {
+            DrawDefaultLabel(c, frame, accent, foreground);
+            return;
+        }
 
+
+        // 3. the cells, filled in the order the projectors are tiled; the gaps between them stay even
+        var area = frame.Deflate(FRAME_PADDING - CELL_GAP / 2);
         for (var cell = 0; cell < Layout.CellCount; cell++)
         {
-            var row = cell / Layout.Columns;
-            var column = cell % Layout.Columns;
-            var cellRect = new Rect(
-                area.X + column * (cellWidth + CELL_GAP),
-                area.Y + row * (cellHeight + CELL_GAP),
-                cellWidth,
-                cellHeight);
+            var cellRect = Layout.GetCellBounds(area, cell).Deflate(CELL_GAP / 2);
+            if (cellRect.Width <= 0 || cellRect.Height <= 0) continue;
 
             if (cell < ProjectorNumbers.Length)
             {
@@ -156,6 +175,31 @@ public sealed class LayoutThumbnailControl : PhControl
                 DrawEmptyCell(c, cellRect, foreground);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Draws the name of the default option in the middle of the screen.
+    /// </summary>
+    private void DrawDefaultLabel(DrawingContext c, Rect frame, Color accent, Color foreground)
+    {
+        var label = Core.Lang[LangId._Default];
+        var fontSize = Const.FONT_SIZE_BODY;
+        var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
+
+        var box = new Rect(
+            frame.Center.X - labelSize.Width / 2 - LABEL_PADDING_X,
+            frame.Center.Y - labelSize.Height / 2 - LABEL_PADDING_Y,
+            labelSize.Width + LABEL_PADDING_X * 2,
+            labelSize.Height + LABEL_PADDING_Y * 2);
+        var fill = IsActive ? accent : foreground.WithAlpha(70);
+        c.DrawRectangleEx(box, CELL_RADIUS, null, fill);
+
+        var labelColor = IsActive ? accent.InvertBlackOrWhite() : foreground.WithAlpha(230);
+        c.DrawTextEx(label, FontFamily, fontSize,
+            box.X + LABEL_PADDING_X,
+            box.Y + LABEL_PADDING_Y,
+            labelColor, isBold: true);
     }
 
 
@@ -171,7 +215,7 @@ public sealed class LayoutThumbnailControl : PhControl
         if (!hasRoom) return;
 
         var label = projectorNumber.ToString(CultureInfo.InvariantCulture);
-        var fontSize = Math.Min(Const.FONT_SIZE_SMALL - 3, cellRect.Height - 1);
+        var fontSize = Math.Min(Const.FONT_SIZE_BODY, cellRect.Height - 2);
         var labelSize = c.MeasureTextEx(label, FontFamily, fontSize, true);
         var labelColor = IsActive ? accent.InvertBlackOrWhite() : foreground.WithAlpha(230);
 

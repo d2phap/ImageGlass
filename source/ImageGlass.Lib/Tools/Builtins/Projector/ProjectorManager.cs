@@ -149,8 +149,7 @@ public sealed class ProjectorManager : PhDisposable
         var isSavedScreen = target == savedScreen;
         var preferredMode = isSavedScreen ? GetPreferredMode(placement!) : ProjectorWindowMode.FullScreen;
         var mode = GetModeForScreen(target, preferredMode);
-        var savedTile = isSavedScreen ? placement!.Tile : null;
-        var hasSavedTile = savedTile?.IsValid == true;
+        var savedTile = isSavedScreen ? GetSavedTile(placement!) : null;
 
 
         // 2. open it
@@ -170,7 +169,7 @@ public sealed class ProjectorManager : PhDisposable
         // an audience watches a projector hands-off, so the screens must stay on
         SleepGuard.Acquire(SLEEP_GUARD_OWNER, $"{BHelper.AppDisplayName} projector");
 
-        if (hasSavedTile) await window.ShowInTileAsync(target, savedTile!);
+        if (savedTile is { } tile) await window.ShowInTileAsync(target, tile);
         else await window.ShowOnScreenAsync(target, mode);
 
 
@@ -198,8 +197,12 @@ public sealed class ProjectorManager : PhDisposable
     /// </summary>
     public async Task SetWindowModeAsync(ProjectorWindow window, ProjectorWindowMode mode)
     {
-        // a window is tiled through a layout, which picks its cell
-        if (mode == ProjectorWindowMode.Tiled) return;
+        // a cell is part of a layout of the whole screen
+        if (mode == ProjectorWindowMode.Tiled)
+        {
+            await TileProjectorAsync(window);
+            return;
+        }
 
         var screen = window.GetScreen() ?? PickFreeScreen();
         if (screen is null) return;
@@ -222,12 +225,7 @@ public sealed class ProjectorManager : PhDisposable
         if (windows.Count > layout.CellCount) return;
 
         // the windows are independent, so they move into their cells together
-        var tileTasks = windows.Select((window, cell) => window.ShowInTileAsync(screen, new ProjectorTile
-        {
-            Rows = layout.Rows,
-            Columns = layout.Columns,
-            Cell = cell,
-        }));
+        var tileTasks = windows.Select((window, cell) => window.ShowInTileAsync(screen, new ProjectorTile(layout, cell)));
         await Task.WhenAll(tileTasks);
 
         foreach (var window in windows)
@@ -235,6 +233,21 @@ public sealed class ProjectorManager : PhDisposable
             SavePlacement(window, screen);
         }
         OnChanged();
+    }
+
+
+    /// <summary>
+    /// Puts each tiled projector on <paramref name="screen"/> back to covering it as the projector prefers.
+    /// </summary>
+    public async Task RestoreDefaultAsync(Screen screen)
+    {
+        if (IsDisposed) return;
+
+        var restoreTasks = GetWindowsOnScreen(screen)
+            .Where(w => w.Tile is not null)
+            .Select(w => PlaceProjectorAsync(w, screen, GetModeForScreen(screen, w.PreferredMode)));
+
+        await Task.WhenAll(restoreTasks);
     }
 
 
@@ -563,9 +576,49 @@ public sealed class ProjectorManager : PhDisposable
         placement.ScreenX = screen.Bounds.X;
         placement.ScreenY = screen.Bounds.Y;
         placement.WindowMode = window.PreferredMode;
-        placement.Tile = window.Tile;
+        placement.TileLayout = window.Tile?.Layout.Id ?? string.Empty;
+        placement.TileCell = window.Tile?.Cell ?? 0;
 
         SaveConfig();
+    }
+
+
+    /// <summary>
+    /// Gets the cell a placement was tiled in; <c>null</c> when it was not, or its layout cannot be read.
+    /// </summary>
+    private static ProjectorTile? GetSavedTile(ProjectorPlacement placement)
+    {
+        var layout = ProjectorLayout.Parse(placement.TileLayout);
+        if (layout is null) return null;
+
+        var isCellInLayout = placement.TileCell >= 0 && placement.TileCell < layout.CellCount;
+        if (!isCellInLayout) return null;
+
+        return new ProjectorTile(layout, placement.TileCell);
+    }
+
+
+    /// <summary>
+    /// Tiles <paramref name="window"/> with the other projectors on its screen: in the layout the tiled ones share if it has room, else a fitting one.
+    /// </summary>
+    private async Task TileProjectorAsync(ProjectorWindow window)
+    {
+        var screen = window.GetScreen();
+        if (screen is null) return;
+
+        var windows = GetWindowsOnScreen(screen);
+        var tiledLayouts = windows
+            .Select(w => w.Tile?.Layout)
+            .OfType<ProjectorLayout>()
+            .Distinct()
+            .ToArray();
+
+        var sharedLayout = tiledLayouts.Length == 1 ? tiledLayouts[0] : null;
+        var hasRoom = sharedLayout is not null && sharedLayout.CellCount >= windows.Count;
+        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
+        var layout = hasRoom ? sharedLayout! : ProjectorLayout.GetDefault(windows.Count, aspectRatio);
+
+        await ArrangeAsync(screen, layout);
     }
 
 

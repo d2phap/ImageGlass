@@ -104,48 +104,13 @@ public sealed class ProjectorPlacement
 
 
     /// <summary>
-    /// Gets, sets the grid cell the projector filled on the screen; <c>null</c> when it was not tiled.
+    /// Gets, sets the layout the projector was tiled in on the screen, as <see cref="ProjectorLayout.Id"/>; empty when it was not tiled.
     /// </summary>
-    public ProjectorTile? Tile { get; set; }
-}
-
-
-/// <summary>
-/// The grid cell a tiled projector fills on its screen.
-/// </summary>
-public sealed record ProjectorTile
-{
-    /// <summary>
-    /// Gets the rows of the grid.
-    /// </summary>
-    public int Rows { get; init; } = 1;
+    public string TileLayout { get; set; } = string.Empty;
 
 
     /// <summary>
-    /// Gets the columns of the grid.
+    /// Gets, sets the cell of <see cref="TileLayout"/> the projector filled, counted left to right, then top to bottom.
     /// </summary>
-    public int Columns { get; init; } = 1;
-
-
-    /// <summary>
-    /// Gets the cell, counted left to right, then top to bottom.
-    /// </summary>
-    public int Cell { get; init; }
-
-
-    /// <summary>
-    /// Gets the grid of the cell.
-    /// </summary>
-    [JsonIgnore]
-    public ProjectorLayout Layout => new(Rows, Columns);
-
-
-    /// <summary>
-    /// Gets whether the cell lies in a grid that projectors can be tiled into.
-    /// </summary>
-    [JsonIgnore]
-    public bool IsValid => Rows is >= 1 and <= ProjectorManager.MAX_PRO_PROJECTORS
-        && Columns is >= 1 and <= ProjectorManager.MAX_PRO_PROJECTORS
-        && Cell >= 0
-        && Cell < Rows * Columns;
+    public int TileCell { get; set; }
 }

@@ -473,6 +473,7 @@ public class Lang
         new(LangId._Browse, "Browse…"), //v9.0
         new(LangId._Reset, "Reset"), //v9.0
         new(LangId._ResetToDefault, "Reset to default"), //v9.0
+        new(LangId._Default, "Default"), //v10.0
         new(LangId._BackgroundColor, "Background color"), //v10.0
         new(LangId._CheckForUpdate, "Check for update…"), //v5.0
         new(LangId._Update, "Update"), //v9.0
@@ -1298,15 +1299,14 @@ public class Lang
         new(LangId.Tool_Projector_BtnCloseAll, "Close all projectors"), //v10.0
         new(LangId.Tool_Projector_ChkSyncView, "Sync projectors with main window"), //v10.0
         new(LangId.Tool_Projector_ProLimit, "ImageGlass Pro is needed to open more than one projector."), //v10.0
-        new(LangId.Tool_Projector_HintOpen, "Click a screen to open a projector on it"), //v10.0
-        new(LangId.Tool_Projector_HintMove, "Click a screen to move {0} there"), //v10.0
         new(LangId.Tool_Projector_LblZoomMode, "Zoom"), //v10.0
         new(LangId.Tool_Projector_ModeFullScreen, "Full screen"), //v10.0
         new(LangId.Tool_Projector_ModeMaximized, "Maximized"), //v10.0
         new(LangId.Tool_Projector_ModeNormal, "Window"), //v10.0
         new(LangId.Tool_Projector_ModeTiled, "Tiled"), //v10.0
         new(LangId.Tool_Projector_LblLayout, "Layout on screen {0}"), //v10.0
-        new(LangId.Tool_Projector_LayoutGrid, "{0} × {1} grid"), //v10.0
+        new(LangId.Tool_Projector_Monitor, "Monitor {0}"), //v10.0
+        new(LangId.Tool_Projector_DragHint, "Drag onto a monitor to move the projector there"), //v10.0
         new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1} × {2} pixels, {3}% scale"), //v10.0
         new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
         #endregion // Tool: Projector

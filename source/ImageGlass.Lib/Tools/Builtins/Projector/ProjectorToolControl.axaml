@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tool="using:ImageGlass.Tools"
-    xmlns:types="using:ImageGlass.Common.Types"
     xmlns:ui="using:ImageGlass.UI"
     mc:Ignorable="d"
     d:DesignHeight="160"
@@ -14,74 +13,118 @@
     Padding="6,12,36,12">
 
     <!--  Right padding keeps the content clear of the tool host's floating close button  -->
-    <WrapPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        ItemSpacing="28"
-        ItemsAlignment="Center"
-        LineSpacing="10"
-        Orientation="Horizontal">
+    <Panel>
 
-        <!--  Screens: a click shows the selected projector there  -->
-        <StackPanel Spacing="4">
+        <!--  Empty state: only the button to open the first projector  -->
+        <ui:PhButton
+            x:Name="PART_BtnAddFirst"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            IconData="{StaticResource IconAdd}" />
+
+
+        <!--  Open projectors: the monitors on the left, a row per projector on the right  -->
+        <Grid
+            x:Name="PART_Projectors"
+            HorizontalAlignment="Center"
+            ColumnDefinitions="Auto, Auto, Auto"
+            IsVisible="False">
+
+            <!--  A click opens the layouts of a monitor; a projector row dropped on one moves there  -->
             <tool:ScreenMapControl
                 x:Name="PART_ScreenMap"
+                Grid.Column="0"
                 Height="96"
-                HorizontalAlignment="Center" />
-            <ui:PhTextBlock
-                x:Name="PART_LblHint"
-                HorizontalAlignment="Center"
-                FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
-                LangKey="Tool_Projector_HintOpen"
-                Opacity="0.6" />
-        </StackPanel>
+                VerticalAlignment="Center" />
 
+            <Border
+                Grid.Column="1"
+                Width="1"
+                Margin="20,0"
+                Background="{DynamicResource IG_BorderNeutralBrush}" />
 
-        <!--  Open projectors: pick one to place, change how it covers its screen, or close it  -->
-        <StackPanel
-            x:Name="PART_ProjectorList"
-            VerticalAlignment="Center"
-            Spacing="6" />
-
-
-        <!--  Layouts: tile the projectors that share a screen, one group per screen  -->
-        <StackPanel
-            x:Name="PART_LayoutGroups"
-            VerticalAlignment="Center"
-            IsVisible="False"
-            Spacing="10" />
-
-
-        <!--  Actions and options  -->
-        <StackPanel VerticalAlignment="Center" Spacing="8">
-            <StackPanel Orientation="Horizontal" Spacing="6">
-                <ui:PhButton
-                    x:Name="PART_BtnAdd"
-                    HorizontalContentAlignment="Center"
-                    IconData="{StaticResource IconAdd}" />
-                <ui:PhProBadge x:Name="PART_ProBadge" IsVisible="False" />
-                <ui:PhButton
-                    x:Name="PART_BtnCloseAll"
-                    HorizontalContentAlignment="Center"
-                    IconData="{StaticResource IconClose}" />
-            </StackPanel>
-
-            <CheckBox x:Name="PART_ChkSync">
-                <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
-            </CheckBox>
-
-            <!--  How to fit the photo while not syncing  -->
             <StackPanel
-                x:Name="PART_ZoomModeGroup"
-                Orientation="Horizontal"
-                Spacing="6">
-                <ui:PhTextBlock
-                    VerticalAlignment="Center"
-                    LangKey="Tool_Projector_LblZoomMode"
-                    Opacity="0.6" />
-                <ComboBox x:Name="PART_CmbZoomMode" MinWidth="120" />
-            </StackPanel>
-        </StackPanel>
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Spacing="8">
+                <!--  A grid row per projector, so the columns line up whatever the names  -->
+                <Grid
+                    x:Name="PART_ProjectorList"
+                    ColumnDefinitions="Auto, Auto, Auto, Auto, Auto"
+                    ColumnSpacing="6"
+                    RowSpacing="6" />
 
-    </WrapPanel>
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <ui:PhButton
+                            x:Name="PART_BtnAdd"
+                            HorizontalContentAlignment="Center"
+                            IconData="{StaticResource IconAdd}" />
+                        <ui:PhProBadge
+                            x:Name="PART_ProBadge"
+                            VerticalAlignment="Center"
+                            IsVisible="False" />
+                    </StackPanel>
+
+                    <CheckBox x:Name="PART_ChkSync" VerticalAlignment="Center">
+                        <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
+                    </CheckBox>
+
+                    <!--  How to fit the photo while not syncing  -->
+                    <StackPanel
+                        x:Name="PART_ZoomModeGroup"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <ui:PhTextBlock
+                            VerticalAlignment="Center"
+                            LangKey="Tool_Projector_LblZoomMode"
+                            Opacity="0.6" />
+                        <ComboBox x:Name="PART_CmbZoomMode" MinWidth="120" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+
+        <!--  The layouts of the clicked monitor, dropping down from it  -->
+        <Popup
+            x:Name="PART_LayoutPopup"
+            IsLightDismissEnabled="True"
+            Placement="BottomEdgeAlignedLeft"
+            PlacementTarget="{CompiledBinding #PART_ScreenMap}">
+            <Border
+                Padding="14"
+                Background="{DynamicResource MenuFlyoutPresenterBackground}"
+                BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="{DynamicResource OverlayCornerRadius}">
+                <StackPanel Spacing="12">
+                    <ui:PhTextBlock
+                        x:Name="PART_LblLayout"
+                        FontWeight="SemiBold"
+                        LangKey="Tool_Projector_LblLayout" />
+                    <UniformGrid
+                        x:Name="PART_LayoutOptions"
+                        ColumnSpacing="8"
+                        RowSpacing="8" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+
+        <!--  The projector being dragged onto a monitor  -->
+        <Canvas x:Name="PART_DragLayer" IsHitTestVisible="False">
+            <Border
+                x:Name="PART_DragGhost"
+                Padding="10,5"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                IsVisible="False"
+                Opacity="0.9">
+                <ui:PhTextBlock x:Name="PART_DragGhostText" FontWeight="SemiBold" />
+            </Border>
+        </Canvas>
+
+    </Panel>
 </ui:PhControl>

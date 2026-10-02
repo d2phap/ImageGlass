@@ -18,10 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Platform;
 using ImageGlass.Common;
+using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
@@ -31,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Tools;
 
@@ -48,7 +51,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ProjectorWindowMode.Normal,
         ProjectorWindowMode.Tiled,
     ];
-    private static readonly int TILED_MODE_INDEX = Array.IndexOf(_windowModes, ProjectorWindowMode.Tiled);
     private static readonly ZoomMode[] _zoomModes =
     [
         ZoomMode.AutoZoom,
@@ -58,15 +60,28 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         ZoomMode.ScaleToHeight,
     ];
 
+    // a press on a projector name turns into a drag once the pointer moves this far
+    private const double DRAG_THRESHOLD = 4;
+
+    // where the dragged name sits from the pointer, clear of the cursor
+    private const double DRAG_GHOST_OFFSET = 14;
+
+    // the most layouts in a row of the layout menu
+    private const int MAX_LAYOUT_COLUMNS = 3;
+
     private readonly Dictionary<ProjectorWindow, ProjectorRow> _rows = [];
+    private readonly List<ProjectorWindow> _rowOrder = [];
     private readonly List<LayoutOption> _layoutOptions = [];
     private ProjectorManager? _manager;
 
-    // what the layout groups show, so they are rebuilt only when it changes
-    private string _layoutGroupsKey = string.Empty;
+    // the projector whose name is being dragged onto a monitor
+    private ProjectorWindow? _dragWindow;
+    private Point _dragStart;
+    private bool _isDragging;
 
-    // the projector a click on the screen map moves
-    private ProjectorWindow? _selectedWindow;
+    // the monitor the layout menu is open for, and the projectors it shows
+    private Screen? _layoutScreen;
+    private int[] _layoutNumbers = [];
 
     // prevents feedback loops while the controls are filled from the projectors
     private bool _isUpdatingUI;
@@ -97,11 +112,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_ScreenMap.Manager = _manager;
 
         PopulateZoomModeItems();
-        RefreshUI(selectNewProjectors: false);
+        RefreshUI();
 
         PART_ScreenMap.ScreenClicked += PART_ScreenMap_ScreenClicked;
+        PART_LayoutPopup.Closed += PART_LayoutPopup_Closed;
+        PART_BtnAddFirst.Click += PART_BtnAdd_Click;
         PART_BtnAdd.Click += PART_BtnAdd_Click;
-        PART_BtnCloseAll.Click += PART_BtnCloseAll_Click;
         PART_ChkSync.IsCheckedChanged += PART_ChkSync_IsCheckedChanged;
         PART_CmbZoomMode.SelectionChanged += PART_CmbZoomMode_SelectionChanged;
     }
@@ -111,10 +127,13 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     {
         _manager?.Changed -= Manager_Changed;
         PART_ScreenMap.Manager = null;
+        PART_LayoutPopup.IsOpen = false;
+        EndDrag();
 
         PART_ScreenMap.ScreenClicked -= PART_ScreenMap_ScreenClicked;
+        PART_LayoutPopup.Closed -= PART_LayoutPopup_Closed;
+        PART_BtnAddFirst.Click -= PART_BtnAdd_Click;
         PART_BtnAdd.Click -= PART_BtnAdd_Click;
-        PART_BtnCloseAll.Click -= PART_BtnCloseAll_Click;
         PART_ChkSync.IsCheckedChanged -= PART_ChkSync_IsCheckedChanged;
         PART_CmbZoomMode.SelectionChanged -= PART_CmbZoomMode_SelectionChanged;
 
@@ -126,10 +145,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     {
         base.OnIgLanguageChanged();
 
-        PART_BtnAdd.Text = Core.Lang[LangId.Tool_Projector_BtnAdd];
-        PART_BtnCloseAll.Text = Core.Lang[LangId.Tool_Projector_BtnCloseAll];
-        ToolTip.SetTip(PART_BtnAdd, AppAPIProvider.GetMenuTooltipText(LangId.Tool_Projector_BtnAdd));
-        ToolTip.SetTip(PART_BtnCloseAll, AppAPIProvider.GetMenuTooltipText(LangId.Tool_Projector_BtnCloseAll));
+        var addText = Core.Lang[LangId.Tool_Projector_BtnAdd];
+        var addTooltip = AppAPIProvider.GetMenuTooltipText(LangId.Tool_Projector_BtnAdd);
+        PART_BtnAddFirst.Text = addText;
+        PART_BtnAdd.Text = addText;
+        ToolTip.SetTip(PART_BtnAddFirst, addTooltip);
+        ToolTip.SetTip(PART_BtnAdd, addTooltip);
 
         // the rows and items carry text set in code
         RelocalizeZoomModeItems();
@@ -137,12 +158,6 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         {
             RelocalizeRow(row);
         }
-
-        UpdateHint();
-
-        // the layout buttons carry tooltips set in code too, so build them again
-        _layoutGroupsKey = string.Empty;
-        RefreshUI(selectNewProjectors: false);
     }
 
 
@@ -151,43 +166,32 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         base.OnIgThemeChanged(e);
 
         // the default background color comes from the theme
-        RefreshUI(selectNewProjectors: false);
+        RefreshUI();
     }
 
 
     private void Manager_Changed(object? sender, EventArgs e)
     {
-        RefreshUI(selectNewProjectors: true);
+        RefreshUI();
     }
 
 
-    private async void PART_ScreenMap_ScreenClicked(ScreenMapControl sender, Screen screen)
+    private void PART_ScreenMap_ScreenClicked(ScreenMapControl sender, Screen screen)
     {
-        if (_manager is null) return;
+        OpenLayoutMenu(screen);
+    }
 
-        // nothing to move yet: open a projector on that screen
-        if (_selectedWindow is null)
-        {
-            var isLocked = FeatureManager.IsLocked(API.IG_AddProjector);
-            if (isLocked) return;
 
-            _ = await _manager.AddProjectorAsync(screen);
-            return;
-        }
-
-        await _manager.MoveProjectorAsync(_selectedWindow, screen);
+    private void PART_LayoutPopup_Closed(object? sender, EventArgs e)
+    {
+        _layoutScreen = null;
+        _layoutNumbers = [];
     }
 
 
     private async void PART_BtnAdd_Click(object? sender, RoutedEventArgs e)
     {
         _ = await Core.API.RunApiAsync(API.IG_AddProjector);
-    }
-
-
-    private async void PART_BtnCloseAll_Click(object? sender, RoutedEventArgs e)
-    {
-        _ = await Core.API.RunApiAsync(API.IG_CloseAllProjectors);
     }
 
 
@@ -238,49 +242,50 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// Fills the controls from the open projectors and their settings.
     /// </summary>
-    private void RefreshUI(bool selectNewProjectors)
+    private void RefreshUI()
     {
         if (_manager is null) return;
 
         _isUpdatingUI = true;
         try
         {
-            // 1. the projector list, and which one the map moves
-            SyncRows(selectNewProjectors);
+            // 1. with nothing open, only the button to open one
+            var windows = _manager.Windows;
+            var hasProjectors = windows.Count > 0;
+            PART_BtnAddFirst.IsVisible = !hasProjectors;
+            PART_Projectors.IsVisible = hasProjectors;
 
-            var isSelectionOpen = IsOpen(_selectedWindow);
-            if (!isSelectionOpen) _selectedWindow = _manager.Windows.FirstOrDefault();
 
+            // 2. a row per projector: its monitor, how it covers it, and its color
+            SyncRows();
+
+            var screens = _manager.GetOrderedScreens();
             var defaultColor = ProjectorWindow.DefaultBackgroundColor;
             foreach (var row in _rows.Values)
             {
-                // a window is tiled through a layout, so the mode only shows while it is
-                var isTiled = row.Window.Mode == ProjectorWindowMode.Tiled;
-                if (row.CmbMode.Items[TILED_MODE_INDEX] is ComboBoxItem tiledItem) tiledItem.IsVisible = isTiled;
-
-                row.BtnSelect.IsChecked = ReferenceEquals(row.Window, _selectedWindow);
+                SyncMonitorItems(row.CmbMonitor, screens.Count);
+                row.CmbMonitor.SelectedIndex = IndexOfScreen(screens, row.Window.GetScreen());
                 row.CmbMode.SelectedIndex = Array.IndexOf(_windowModes, row.Window.Mode);
                 row.ColorPicker.DefaultColor = defaultColor;
                 row.ColorPicker.SelectedColor = row.Window.BackgroundColor ?? defaultColor;
             }
 
-            PART_ScreenMap.SelectedProjectorNumber = _selectedWindow?.Number ?? 0;
-            UpdateHint();
-            SyncLayoutGroups();
 
-
-            // 2. the actions; Classic still gets the button, which explains the Pro limit
-            var isAtProLimit = _manager.Windows.Count >= ProjectorManager.MAX_PRO_PROJECTORS;
+            // 3. the actions; Classic still gets the button, which explains the Pro limit
+            var isAtProLimit = windows.Count >= ProjectorManager.MAX_PRO_PROJECTORS;
             PART_BtnAdd.IsEnabled = !isAtProLimit;
             PART_ProBadge.IsVisible = _manager.IsLimitedByLicense;
-            PART_BtnCloseAll.IsEnabled = _manager.Windows.Count > 0;
 
 
-            // 3. the options; the zoom mode only applies while not syncing
+            // 4. the options; the zoom mode only applies while not syncing
             var isSynced = _manager.Config.EnableViewSync;
             PART_ChkSync.IsChecked = isSynced;
             PART_ZoomModeGroup.IsVisible = !isSynced;
             PART_CmbZoomMode.SelectedIndex = Array.IndexOf(_zoomModes, _manager.Config.ZoomMode);
+
+
+            // 5. an open layout menu follows the projectors on its monitor
+            SyncLayoutMenu();
         }
         finally
         {
@@ -292,7 +297,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// <summary>
     /// Adds and removes rows so the list matches the open projectors, in number order.
     /// </summary>
-    private void SyncRows(bool selectNewProjectors)
+    private void SyncRows()
     {
         var windows = _manager!.Windows;
 
@@ -303,139 +308,77 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             _ = _rows.Remove(window);
         }
 
-        // 2. add rows for new ones; a new one is selected, so a click on the map places it
+        // 2. add rows for new ones
         foreach (var window in windows)
         {
             var hasRow = _rows.ContainsKey(window);
-            if (hasRow) continue;
-
-            _rows[window] = CreateRow(window);
-            if (selectNewProjectors) _selectedWindow = window;
+            if (!hasRow) _rows[window] = CreateRow(window);
         }
 
-        // 3. lay them out in order
+        // 3. lay them out in order, leaving rows in place when nothing changed, as an open dropdown would close
+        var isInOrder = _rowOrder.SequenceEqual(windows);
+        if (isInOrder) return;
+
+        _rowOrder.Clear();
+        _rowOrder.AddRange(windows);
         PART_ProjectorList.Children.Clear();
-        foreach (var window in windows)
+        PART_ProjectorList.RowDefinitions.Clear();
+
+        for (var rowIndex = 0; rowIndex < windows.Count; rowIndex++)
         {
-            PART_ProjectorList.Children.Add(_rows[window].Root);
-        }
+            var row = _rows[windows[rowIndex]];
+            Control[] cells = [row.Chip, row.CmbMonitor, row.CmbMode, row.ColorPicker, row.BtnClose];
 
-        PART_ProjectorList.IsVisible = windows.Count > 0;
-    }
-
-
-    /// <summary>
-    /// Shows the layouts of each screen two or more projectors share, marking the one they are tiled in.
-    /// </summary>
-    private void SyncLayoutGroups()
-    {
-        // 1. the screens to tile, numbered as on the screen map
-        var screens = _manager!.GetOrderedScreens();
-        var groups = new List<LayoutGroup>();
-        for (var i = 0; i < screens.Count; i++)
-        {
-            var projectorNumbers = _manager.GetWindowsOnScreen(screens[i])
-                .Select(w => w.Number)
-                .ToArray();
-
-            if (projectorNumbers.Length >= 2) groups.Add(new LayoutGroup(screens[i], i + 1, projectorNumbers));
-        }
-
-
-        // 2. rebuild the groups only when that changes, so a hovered button keeps its state
-        var groupsKey = string.Join(';', groups.Select(g => $"{g.ScreenNumber}:{string.Join(',', g.ProjectorNumbers)}:{g.Screen.WorkingArea}"));
-        if (groupsKey != _layoutGroupsKey)
-        {
-            _layoutGroupsKey = groupsKey;
-            RebuildLayoutGroups(groups);
-        }
-
-
-        // 3. mark the layout each screen is tiled in
-        foreach (var option in _layoutOptions)
-        {
-            var activeLayout = _manager.GetActiveLayout(option.Screen);
-            option.Thumbnail.IsActive = activeLayout == option.Thumbnail.Layout;
-        }
-    }
-
-
-    /// <summary>
-    /// Creates a group of layout buttons for each screen in <paramref name="groups"/>.
-    /// </summary>
-    private void RebuildLayoutGroups(IReadOnlyList<LayoutGroup> groups)
-    {
-        PART_LayoutGroups.Children.Clear();
-        _layoutOptions.Clear();
-
-        foreach (var group in groups)
-        {
-            var label = new PhTextBlock
+            PART_ProjectorList.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            for (var column = 0; column < cells.Length; column++)
             {
-                LangKey = LangId.Tool_Projector_LblLayout,
-                LangParams = group.ScreenNumber,
-                FontSize = Const.FONT_SIZE_SMALL,
-                Opacity = 0.6,
-            };
-
-            // the thumbnails take the shape of the area the projectors are tiled in
-            var workArea = group.Screen.WorkingArea;
-            var aspectRatio = (double)workArea.Width / workArea.Height;
-            var buttons = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                Spacing = 4,
-            };
-
-            foreach (var layout in ProjectorLayout.GetLayouts(group.ProjectorNumbers.Length))
-            {
-                var thumbnail = new LayoutThumbnailControl(layout, group.ProjectorNumbers, aspectRatio);
-                var button = new PhToolButton
-                {
-                    Padding = new Thickness(5),
-                    Focusable = false,
-                    Content = thumbnail,
-                };
-                ToolTip.SetTip(button, Core.Lang[LangId.Tool_Projector_LayoutGrid, layout.Rows, layout.Columns]);
-
-                var screen = group.Screen;
-                button.Click += async (_, _) =>
-                {
-                    if (_manager is null) return;
-                    await _manager.ArrangeAsync(screen, layout);
-                };
-
-                buttons.Children.Add(button);
-                _layoutOptions.Add(new LayoutOption(screen, thumbnail));
+                Grid.SetRow(cells[column], rowIndex);
+                Grid.SetColumn(cells[column], column);
+                PART_ProjectorList.Children.Add(cells[column]);
             }
-
-            PART_LayoutGroups.Children.Add(new StackPanel
-            {
-                Spacing = 4,
-                Children = { label, buttons },
-            });
         }
-
-        PART_LayoutGroups.IsVisible = groups.Count > 0;
     }
 
 
     /// <summary>
-    /// Creates the controls of one projector: select it, change how it covers its screen, close it.
+    /// Creates the controls of one projector: its name to drag onto a monitor, its monitor, how it covers it, its color, and closing it.
     /// </summary>
     private ProjectorRow CreateRow(ProjectorWindow window)
     {
-        var btnSelect = new PhToolButton
+        // 1. the name: hovering shows its monitor on the map, dragging moves it to another one
+        var chip = new PhToolButton
         {
             Padding = new Thickness(10, 5),
             Focusable = false,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Center,
         };
-        btnSelect.Click += (_, _) => SelectProjector(window);
+        chip.PointerEntered += (_, _) => PART_ScreenMap.SelectedProjectorNumber = window.Number;
+        chip.PointerExited += (_, _) =>
+        {
+            if (_dragWindow is null) PART_ScreenMap.SelectedProjectorNumber = 0;
+        };
+        chip.AddHandler(PointerPressedEvent, (_, e) => StartDrag(window, chip, e), RoutingStrategies.Bubble, true);
+        chip.AddHandler(PointerMovedEvent, (_, e) => ContinueDrag(e), RoutingStrategies.Bubble, true);
+        chip.AddHandler(PointerReleasedEvent, (_, _) => DropDraggedProjector(), RoutingStrategies.Bubble, true);
+        chip.PointerCaptureLost += (_, _) => EndDrag();
 
+
+        // 2. the monitor it is on
+        var cmbMonitor = new ComboBox
+        {
+            MinWidth = 120,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+        cmbMonitor.SelectionChanged += async (_, _) => await MoveToMonitorAsync(window, cmbMonitor.SelectedIndex);
+
+
+        // 3. how it covers the monitor
         var cmbMode = new ComboBox
         {
             MinWidth = 120,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Center,
         };
         foreach (var _ in _windowModes)
@@ -449,11 +392,12 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
             var index = cmbMode.SelectedIndex;
             if (index < 0) return;
-            if (index == TILED_MODE_INDEX) return;
 
             await _manager.SetWindowModeAsync(window, _windowModes[index]);
         };
 
+
+        // 4. its background color
         var colorPicker = new PhColorPickerControl
         {
             ShowHexLabel = false,
@@ -473,6 +417,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             _manager.SetBackgroundColor(window, isDefaultColor ? null : color);
         };
 
+
+        // 5. closing it
         var btnClose = new PhToolButton
         {
             Padding = new Thickness(6),
@@ -487,14 +433,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         };
         btnClose.Click += (_, _) => ProjectorManager.CloseProjector(window);
 
-        var root = new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            Spacing = 6,
-            Children = { btnSelect, cmbMode, colorPicker, btnClose },
-        };
-
-        var row = new ProjectorRow(window, root, btnSelect, cmbMode, colorPicker, btnClose);
+        var row = new ProjectorRow(window, chip, cmbMonitor, cmbMode, colorPicker, btnClose);
         RelocalizeRow(row);
 
         return row;
@@ -502,41 +441,54 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
     /// <summary>
-    /// Checks whether <paramref name="window"/> is an open projector.
+    /// Moves <paramref name="window"/> to the monitor picked in its row.
     /// </summary>
-    private bool IsOpen(ProjectorWindow? window)
+    private async Task MoveToMonitorAsync(ProjectorWindow window, int monitorIndex)
     {
-        if (window is null) return false;
-        if (_manager is null) return false;
+        if (_isUpdatingUI) return;
+        if (_manager is null) return;
 
-        return _manager.Windows.Contains(window);
+        var screens = _manager.GetOrderedScreens();
+        if (monitorIndex < 0 || monitorIndex >= screens.Count) return;
+
+        var screen = screens[monitorIndex];
+        if (screen == window.GetScreen()) return;
+
+        await _manager.MoveProjectorAsync(window, screen);
     }
 
 
     /// <summary>
-    /// Makes <paramref name="window"/> the projector a click on the screen map moves.
+    /// Gives <paramref name="combo"/> an item per monitor, numbered as on the screen map.
     /// </summary>
-    private void SelectProjector(ProjectorWindow window)
+    private static void SyncMonitorItems(ComboBox combo, int monitorCount)
     {
-        _selectedWindow = window;
-        RefreshUI(selectNewProjectors: false);
-    }
-
-
-    /// <summary>
-    /// Tells what a click on the screen map does.
-    /// </summary>
-    private void UpdateHint()
-    {
-        if (_selectedWindow is null)
+        while (combo.ItemCount > monitorCount)
         {
-            PART_LblHint.LangKey = LangId.Tool_Projector_HintOpen;
-            PART_LblHint.LangParams = null;
-            return;
+            combo.Items.RemoveAt(combo.ItemCount - 1);
         }
 
-        PART_LblHint.LangKey = LangId.Tool_Projector_HintMove;
-        PART_LblHint.LangParams = Core.Lang[LangId.Tool_Projector_WindowTitle, _selectedWindow.Number];
+        while (combo.ItemCount < monitorCount)
+        {
+            var monitorNumber = combo.ItemCount + 1;
+            combo.Items.Add(new ComboBoxItem { Content = Core.Lang[LangId.Tool_Projector_Monitor, monitorNumber] });
+        }
+    }
+
+
+    /// <summary>
+    /// Gets where <paramref name="screen"/> is in <paramref name="screens"/>; <c>-1</c> when it is not there.
+    /// </summary>
+    private static int IndexOfScreen(IReadOnlyList<Screen> screens, Screen? screen)
+    {
+        if (screen is null) return -1;
+
+        for (var i = 0; i < screens.Count; i++)
+        {
+            if (screens[i] == screen) return i;
+        }
+
+        return -1;
     }
 
 
@@ -571,10 +523,17 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         var projectorName = Core.Lang[LangId.Tool_Projector_WindowTitle, row.Window.Number];
         var colorText = Core.Lang[LangId._BackgroundColor];
 
-        row.BtnSelect.Content = projectorName;
+        row.Chip.Content = projectorName;
         row.ColorPicker.Title = $"{projectorName} - {colorText}";
+        ToolTip.SetTip(row.Chip, Core.Lang[LangId.Tool_Projector_DragHint]);
         ToolTip.SetTip(row.ColorPicker, colorText);
         ToolTip.SetTip(row.BtnClose, Core.Lang[LangId._Close]);
+
+        for (var i = 0; i < row.CmbMonitor.ItemCount; i++)
+        {
+            if (row.CmbMonitor.Items[i] is not ComboBoxItem item) continue;
+            item.Content = Core.Lang[LangId.Tool_Projector_Monitor, i + 1];
+        }
 
         for (var i = 0; i < row.CmbMode.ItemCount; i++)
         {
@@ -606,22 +565,235 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
 
+    #region Dragging A Projector
+
+    /// <summary>
+    /// Starts tracking a press on the name of <paramref name="window"/>, which turns into a drag once the pointer moves.
+    /// </summary>
+    private void StartDrag(ProjectorWindow window, Control chip, PointerPressedEventArgs e)
+    {
+        var isLeftButton = e.GetCurrentPoint(chip).Properties.IsLeftButtonPressed;
+        if (!isLeftButton) return;
+
+        _dragWindow = window;
+        _dragStart = e.GetPosition(this);
+        _isDragging = false;
+
+        // the moves keep coming once the pointer leaves the name
+        e.Pointer.Capture(chip);
+    }
+
+
+    /// <summary>
+    /// Moves the dragged name with the pointer, and marks the monitor it would drop on.
+    /// </summary>
+    private void ContinueDrag(PointerEventArgs e)
+    {
+        if (_dragWindow is null) return;
+
+        // 1. a small slip of the pointer is still a click
+        if (!_isDragging)
+        {
+            var moved = e.GetPosition(this) - _dragStart;
+            var isFarEnough = Math.Abs(moved.X) > DRAG_THRESHOLD || Math.Abs(moved.Y) > DRAG_THRESHOLD;
+            if (!isFarEnough) return;
+
+            _isDragging = true;
+            ShowDragGhost(_dragWindow);
+        }
+
+        // 2. follow the pointer
+        var ghostPosition = e.GetPosition(PART_DragLayer);
+        Canvas.SetLeft(PART_DragGhost, ghostPosition.X + DRAG_GHOST_OFFSET);
+        Canvas.SetTop(PART_DragGhost, ghostPosition.Y + DRAG_GHOST_OFFSET);
+
+        var mapPosition = e.GetPosition(PART_ScreenMap);
+        PART_ScreenMap.DropTargetScreen = PART_ScreenMap.GetScreenAt(mapPosition);
+    }
+
+
+    /// <summary>
+    /// Moves the dragged projector to the monitor it was dropped on.
+    /// </summary>
+    private async void DropDraggedProjector()
+    {
+        var window = _dragWindow;
+        var target = _isDragging ? PART_ScreenMap.DropTargetScreen : null;
+        EndDrag();
+
+        if (_manager is null) return;
+        if (window is null || target is null) return;
+        if (target == window.GetScreen()) return;
+
+        await _manager.MoveProjectorAsync(window, target);
+    }
+
+
+    /// <summary>
+    /// Shows the name of <paramref name="window"/> following the pointer, colored like its badge on the map.
+    /// </summary>
+    private void ShowDragGhost(ProjectorWindow window)
+    {
+        var accent = Core.AccentColor;
+
+        PART_DragGhost.Background = accent.ToBrush();
+        PART_DragGhostText.Foreground = accent.InvertBlackOrWhite().ToBrush();
+        PART_DragGhostText.Text = Core.Lang[LangId.Tool_Projector_WindowTitle, window.Number];
+        PART_DragGhost.IsVisible = true;
+    }
+
+
+    /// <summary>
+    /// Ends a drag, dropped or not.
+    /// </summary>
+    private void EndDrag()
+    {
+        if (_isDragging) PART_ScreenMap.SelectedProjectorNumber = 0;
+
+        _dragWindow = null;
+        _isDragging = false;
+        PART_DragGhost.IsVisible = false;
+        PART_ScreenMap.DropTargetScreen = null;
+    }
+
+    #endregion // Dragging A Projector
+
+
+
+    #region Layout Menu
+
+    /// <summary>
+    /// Opens the layouts of <paramref name="screen"/>, dropping down from it on the screen map.
+    /// </summary>
+    private void OpenLayoutMenu(Screen screen)
+    {
+        if (_manager is null) return;
+
+        var windows = _manager.GetWindowsOnScreen(screen);
+        if (windows.Count == 0) return;
+
+        _layoutScreen = screen;
+        BuildLayoutOptions(screen, windows);
+
+        PART_LayoutPopup.PlacementRect = PART_ScreenMap.GetScreenBounds(screen);
+        PART_LayoutPopup.IsOpen = true;
+    }
+
+
+    /// <summary>
+    /// Fills the menu with the default, then each layout the projectors on <paramref name="screen"/> fit in.
+    /// </summary>
+    private void BuildLayoutOptions(Screen screen, IReadOnlyList<ProjectorWindow> windows)
+    {
+        PART_LayoutOptions.Children.Clear();
+        _layoutOptions.Clear();
+
+        var screens = _manager!.GetOrderedScreens();
+        PART_LblLayout.LangParams = IndexOfScreen(screens, screen) + 1;
+
+        _layoutNumbers = windows.Select(w => w.Number).ToArray();
+        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
+
+        AddLayoutOption(null, aspectRatio);
+        foreach (var layout in ProjectorLayout.GetLayouts(_layoutNumbers.Length, aspectRatio))
+        {
+            AddLayoutOption(layout, aspectRatio);
+        }
+
+        PART_LayoutOptions.Columns = Math.Min(MAX_LAYOUT_COLUMNS, _layoutOptions.Count);
+        UpdateLayoutOptionStates();
+    }
+
+
+    /// <summary>
+    /// Adds a button that lays the projectors out as <paramref name="layout"/>; <c>null</c> for the default.
+    /// </summary>
+    private void AddLayoutOption(ProjectorLayout? layout, double aspectRatio)
+    {
+        var thumbnail = new LayoutThumbnailControl(layout, _layoutNumbers, aspectRatio);
+        var button = new PhToolButton
+        {
+            Padding = new Thickness(6),
+            Focusable = false,
+            Content = thumbnail,
+        };
+        button.Click += async (_, _) => await ApplyLayoutAsync(layout);
+
+        PART_LayoutOptions.Children.Add(button);
+        _layoutOptions.Add(new LayoutOption(layout, thumbnail));
+    }
+
+
+    /// <summary>
+    /// Lays out the projectors of the menu's monitor as <paramref name="layout"/>; <c>null</c> restores the default.
+    /// </summary>
+    private async Task ApplyLayoutAsync(ProjectorLayout? layout)
+    {
+        var screen = _layoutScreen;
+        PART_LayoutPopup.IsOpen = false;
+
+        if (_manager is null) return;
+        if (screen is null) return;
+
+        if (layout is null) await _manager.RestoreDefaultAsync(screen);
+        else await _manager.ArrangeAsync(screen, layout);
+    }
+
+
+    /// <summary>
+    /// Keeps an open menu in step with the projectors on its monitor: closed when none is left, rebuilt when they change.
+    /// </summary>
+    private void SyncLayoutMenu()
+    {
+        if (!PART_LayoutPopup.IsOpen) return;
+        if (_layoutScreen is not { } screen) return;
+
+        var windows = _manager!.GetWindowsOnScreen(screen);
+        if (windows.Count == 0)
+        {
+            PART_LayoutPopup.IsOpen = false;
+            return;
+        }
+
+        var projectorNumbers = windows.Select(w => w.Number).ToArray();
+        var isSameProjectors = projectorNumbers.SequenceEqual(_layoutNumbers);
+        if (isSameProjectors) UpdateLayoutOptionStates();
+        else BuildLayoutOptions(screen, windows);
+    }
+
+
+    /// <summary>
+    /// Marks the option the projectors on the menu's monitor are laid out in now.
+    /// </summary>
+    private void UpdateLayoutOptionStates()
+    {
+        if (_manager is null) return;
+        if (_layoutScreen is not { } screen) return;
+
+        var windows = _manager.GetWindowsOnScreen(screen);
+        var activeLayout = _manager.GetActiveLayout(screen);
+        var isDefault = windows.All(w => w.Tile is null);
+
+        foreach (var option in _layoutOptions)
+        {
+            option.Thumbnail.IsActive = option.Layout is null ? isDefault : option.Layout == activeLayout;
+        }
+    }
+
+    #endregion // Layout Menu
+
+
+
     /// <summary>
     /// The controls of one open projector in the list.
     /// </summary>
-    private sealed record ProjectorRow(ProjectorWindow Window, StackPanel Root, PhToolButton BtnSelect, ComboBox CmbMode,
+    private sealed record ProjectorRow(ProjectorWindow Window, PhToolButton Chip, ComboBox CmbMonitor, ComboBox CmbMode,
         PhColorPickerControl ColorPicker, PhToolButton BtnClose);
 
 
     /// <summary>
-    /// A screen two or more projectors share, numbered as on the screen map.
+    /// A layout in the menu, by its thumbnail; <c>null</c> for the default.
     /// </summary>
-    private sealed record LayoutGroup(Screen Screen, int ScreenNumber, int[] ProjectorNumbers);
-
-
-    /// <summary>
-    /// A layout button of a screen, by its thumbnail.
-    /// </summary>
-    private sealed record LayoutOption(Screen Screen, LayoutThumbnailControl Thumbnail);
+    private sealed record LayoutOption(ProjectorLayout? Layout, LayoutThumbnailControl Thumbnail);
 
 }
