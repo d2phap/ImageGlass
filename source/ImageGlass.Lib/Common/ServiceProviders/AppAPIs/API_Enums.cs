@@ -123,6 +123,7 @@ public enum API
     IG_AddProjector,
     IG_CloseAllProjectors,
     IG_ToggleProjectorSync,
+    IG_ToggleProjectorPointer,
 
     // Menu > Settings
 

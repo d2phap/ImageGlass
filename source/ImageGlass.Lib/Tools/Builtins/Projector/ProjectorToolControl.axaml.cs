@@ -138,6 +138,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click += PART_BtnAdd_Click;
         PART_BtnAdd.Click += PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged += PART_ChkSync_IsCheckedChanged;
+        PART_ChkPointer.IsCheckedChanged += PART_ChkPointer_IsCheckedChanged;
         PART_ProjectorScroller.ScrollChanged += PART_ProjectorScroller_ScrollChanged;
     }
 
@@ -154,6 +155,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_BtnAddFirst.Click -= PART_BtnAdd_Click;
         PART_BtnAdd.Click -= PART_BtnAdd_Click;
         PART_ChkSync.IsCheckedChanged -= PART_ChkSync_IsCheckedChanged;
+        PART_ChkPointer.IsCheckedChanged -= PART_ChkPointer_IsCheckedChanged;
         PART_ProjectorScroller.ScrollChanged -= PART_ProjectorScroller_ScrollChanged;
 
         base.OnUnloaded(e);
@@ -219,6 +221,15 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
         var isChecked = PART_ChkSync.IsChecked == true;
         _ = await Core.API.RunApiAsync(API.IG_ToggleProjectorSync, isChecked.ToString());
+    }
+
+
+    private async void PART_ChkPointer_IsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (_isUpdatingUI) return;
+
+        var isChecked = PART_ChkPointer.IsChecked == true;
+        _ = await Core.API.RunApiAsync(API.IG_ToggleProjectorPointer, isChecked.ToString());
     }
 
 
@@ -304,6 +315,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
             // 4. the options
             PART_ChkSync.IsChecked = isSynced;
+            PART_ChkPointer.IsChecked = _manager.Config.ShowPointer;
 
 
             // 5. an open layout menu follows the projectors on its monitor

@@ -16,11 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
+using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer;
@@ -54,6 +58,7 @@ public sealed class ProjectorManager : PhDisposable
 
     private readonly List<ProjectorWindow> _windows = [];
     private readonly Screens _screens;
+    private bool _isTrackingPointer;
 
 
     /// <summary>
@@ -112,6 +117,8 @@ public sealed class ProjectorManager : PhDisposable
 
         _screens = App.MainWindow.Screens;
         _screens.Changed += Screens_Changed;
+
+        if (Config.ShowPointer) AttachPointerTracking();
     }
 
 
@@ -120,6 +127,7 @@ public sealed class ProjectorManager : PhDisposable
         base.OnDisposing();
 
         _screens.Changed -= Screens_Changed;
+        DetachPointerTracking();
         CloseAll();
     }
 
@@ -359,6 +367,20 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
+    /// Sets whether projectors highlight where the cursor is on the main viewer.
+    /// </summary>
+    public void SetShowPointer(bool enabled)
+    {
+        Config.ShowPointer = enabled;
+        if (enabled) AttachPointerTracking();
+        else DetachPointerTracking();
+
+        SaveConfig();
+        OnChanged();
+    }
+
+
+    /// <summary>
     /// Gets the screens ordered left to right, then top to bottom, the order the user numbers them by.
     /// </summary>
     public IReadOnlyList<Screen> GetOrderedScreens()
@@ -419,6 +441,122 @@ public sealed class ProjectorManager : PhDisposable
         // a new resolution, scale or work area leaves the tiled projectors off their cells
         _ = RetileAsync();
         OnChanged();
+    }
+
+
+    private void MainViewer_PointerMoved(object? sender, PointerEventArgs e)
+    {
+        var viewer = GetMainViewer();
+        var clientPoint = e.GetPosition(viewer);
+
+        UpdatePointers(viewer, clientPoint);
+    }
+
+
+    private void MainViewer_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        var viewer = GetMainViewer();
+        var isLeftButton = e.GetCurrentPoint(viewer).Properties.IsLeftButtonPressed;
+        if (!isLeftButton) return;
+
+        foreach (var window in _windows)
+        {
+            window.PlayPointerClick();
+        }
+    }
+
+
+    private void MainViewer_PointerExited(object? sender, PointerEventArgs e)
+    {
+        HidePointers();
+    }
+
+
+    /// <summary>
+    /// Starts following the cursor on the main viewer, for the pointers of the projectors.
+    /// </summary>
+    private void AttachPointerTracking()
+    {
+        if (_isTrackingPointer) return;
+        _isTrackingPointer = true;
+
+        // handled ones too, as the viewer takes presses and moves for panning
+        var viewer = GetMainViewer();
+        viewer.AddHandler(InputElement.PointerMovedEvent, MainViewer_PointerMoved, RoutingStrategies.Bubble, true);
+        viewer.AddHandler(InputElement.PointerPressedEvent, MainViewer_PointerPressed, RoutingStrategies.Bubble, true);
+        viewer.PointerExited += MainViewer_PointerExited;
+    }
+
+
+    /// <summary>
+    /// Stops following the cursor, and hides the pointers.
+    /// </summary>
+    private void DetachPointerTracking()
+    {
+        if (!_isTrackingPointer) return;
+        _isTrackingPointer = false;
+
+        var viewer = GetMainViewer();
+        viewer.RemoveHandler(InputElement.PointerMovedEvent, MainViewer_PointerMoved);
+        viewer.RemoveHandler(InputElement.PointerPressedEvent, MainViewer_PointerPressed);
+        viewer.PointerExited -= MainViewer_PointerExited;
+
+        HidePointers();
+    }
+
+
+    /// <summary>
+    /// Shows the pointer of each projector at the point under <paramref name="clientPoint"/> of <paramref name="viewer"/>, placed relative to the photo.
+    /// </summary>
+    private void UpdatePointers(ViewerControl viewer, Point clientPoint)
+    {
+        // 1. the point where 0 to 1 spans the photo on each axis, so off the photo it keeps its place beside it
+        var bitmapSize = viewer.BitmapSize;
+        if (bitmapSize.IsEmpty)
+        {
+            HidePointers();
+            return;
+        }
+
+        var sourcePoint = viewer.PointClientToSource(clientPoint);
+        var relativePoint = new Point(sourcePoint.X / bitmapSize.Width, sourcePoint.Y / bitmapSize.Height);
+
+
+        // 2. a projector off sync shows the photo neither turned nor flipped, so the point is elsewhere on it
+        var transform = Core.ImageTransform;
+        var hasFlips = transform.Flips != FlipOptions.None;
+        var hasRotation = transform.Rotation % 360 != 0;
+        var isTurned = hasFlips || hasRotation;
+
+        foreach (var window in _windows)
+        {
+            var canPoint = CanPointOn(window, isTurned);
+            if (canPoint) window.ShowPointer(relativePoint);
+            else window.HidePointer();
+        }
+    }
+
+
+    /// <summary>
+    /// Checks whether <paramref name="window"/> can show the pointer: in the same view of the photo as the main viewer.
+    /// </summary>
+    private static bool CanPointOn(ProjectorWindow window, bool isTurned)
+    {
+        if (window.Viewer.EnableMirrorSync) return true;
+
+        return !isTurned;
+    }
+
+
+    /// <summary>
+    /// Hides the pointer of every projector.
+    /// </summary>
+    private void HidePointers()
+    {
+        foreach (var window in _windows)
+        {
+            window.HidePointer();
+        }
     }
 
 

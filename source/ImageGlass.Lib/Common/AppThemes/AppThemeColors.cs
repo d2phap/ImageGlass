@@ -70,6 +70,11 @@ public static class AppThemeColors
     public static Color TextDangerDark { get; } = BHelper.ColorFromHex("#FF99A4");
 
 
+    // the cursor highlight on projectors, alike in every theme: a yellow circle and a red dot, which few photos blend with
+    public static Color ProjectorPointerCircle { get; } = BHelper.ColorFromHex("#FFCC00");
+    public static Color ProjectorPointerDot { get; } = BHelper.ColorFromHex("#FF3B30");
+
+
 
     /// <summary>
     /// Computes colors from the color strings.

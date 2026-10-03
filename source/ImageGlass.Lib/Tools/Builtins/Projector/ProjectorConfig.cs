@@ -38,6 +38,12 @@ public sealed class ProjectorConfig
 
 
     /// <summary>
+    /// Gets, sets whether projectors highlight where the cursor is on the main viewer.
+    /// </summary>
+    public bool ShowPointer { get; set; }
+
+
+    /// <summary>
     /// Gets, sets the background color of each projector in hex, by projector number; empty follows the slideshow background color.
     /// </summary>
     public List<string> BackgroundColors { get; set; } = [];

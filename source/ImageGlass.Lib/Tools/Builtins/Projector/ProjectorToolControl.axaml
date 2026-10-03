@@ -57,7 +57,7 @@
                 <!--  A grid row per projector  -->
                 <ScrollViewer
                     x:Name="PART_ProjectorScroller"
-                    MaxHeight="160"
+                    MaxHeight="120"
                     HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">
                     <Grid
@@ -67,7 +67,10 @@
                 </ScrollViewer>
 
                 <StackPanel Orientation="Horizontal" Spacing="16">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                    <StackPanel
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal"
+                        Spacing="6">
                         <ui:PhButton
                             x:Name="PART_BtnAdd"
                             HorizontalContentAlignment="Center"
@@ -78,9 +81,14 @@
                             IsVisible="False" />
                     </StackPanel>
 
-                    <CheckBox x:Name="PART_ChkSync" VerticalAlignment="Center">
-                        <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
-                    </CheckBox>
+                    <StackPanel>
+                        <CheckBox x:Name="PART_ChkSync">
+                            <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
+                        </CheckBox>
+                        <CheckBox x:Name="PART_ChkPointer">
+                            <ui:PhTextBlock LangKey="Tool_Projector_ChkShowPointer" />
+                        </CheckBox>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Grid>

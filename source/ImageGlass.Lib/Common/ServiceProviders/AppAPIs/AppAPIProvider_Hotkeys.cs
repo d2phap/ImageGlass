@@ -178,6 +178,7 @@ public partial class AppAPIProvider
         new(LangId.Tool_Projector_BtnAdd,       API.IG_AddProjector),
         new(LangId.Tool_Projector_BtnCloseAll,  API.IG_CloseAllProjectors),
         new(LangId.Tool_Projector_ChkSyncView,  API.IG_ToggleProjectorSync),
+        new(LangId.Tool_Projector_ChkShowPointer, API.IG_ToggleProjectorPointer),
 
 
         // Settings

@@ -3312,6 +3312,28 @@ public partial class AppAPIProvider
 
 
     /// <summary>
+    /// Toggles whether projectors highlight the cursor of the viewer; <c>"true"</c>, <c>"false"</c> or empty.
+    /// </summary>
+    public static void IG_ToggleProjectorPointer(string? boolStr = null)
+    {
+        var enabled = BHelper.ConvertStringToBool(boolStr);
+        IG_ToggleProjectorPointer(enabled);
+    }
+
+
+    /// <summary>
+    /// Toggles whether projectors highlight the cursor of the viewer.
+    /// </summary>
+    public static void IG_ToggleProjectorPointer(bool? enabled = null)
+    {
+        var projectors = Core.GetProjectors();
+        enabled ??= !projectors.Config.ShowPointer;
+
+        projectors.SetShowPointer(enabled.Value);
+    }
+
+
+    /// <summary>
     /// Launches an external tool; if it can't be started, offers to fix it in Settings > Tools.
     /// </summary>
     private static async Task LaunchExternalToolAsync(ExternalToolProxy proxy)

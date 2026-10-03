@@ -64,6 +64,10 @@ public sealed class ProjectorWindow : PhWindow
 
     private readonly IdleCursorHider _cursorHider;
     private readonly Border _host;
+    private readonly ProjectorPointerControl _pointer = new();
+
+    // the point the pointer marks, where 0 to 1 spans the photo on each axis; null while it is hidden
+    private Point? _pointerPoint;
 
 
     /// <summary>
@@ -165,7 +169,17 @@ public sealed class ProjectorWindow : PhWindow
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
         };
 
-        _host = new Border { Child = Viewer };
+        // the pointer layer takes no input, so the viewer under it stays display-only
+        var pointerLayer = new Canvas
+        {
+            IsHitTestVisible = false,
+            ClipToBounds = true,
+            Children = { _pointer },
+        };
+        _host = new Border
+        {
+            Child = new Panel { Children = { Viewer, pointerLayer } },
+        };
         ApplyBackground();
         Content = _host;
 
@@ -173,6 +187,7 @@ public sealed class ProjectorWindow : PhWindow
         _cursorHider = new IdleCursorHider(this, Viewer);
 
         PositionChanged += ProjectorWindow_PositionChanged;
+        Viewer.RenderStateChanged += Viewer_RenderStateChanged;
         Core.Config.PropertyChanged += Config_PropertyChanged;
         _ = UpdateWindowIconAsync();
     }
@@ -193,6 +208,7 @@ public sealed class ProjectorWindow : PhWindow
         base.OnClosed(e);
 
         PositionChanged -= ProjectorWindow_PositionChanged;
+        Viewer.RenderStateChanged -= Viewer_RenderStateChanged;
         Core.Config.PropertyChanged -= Config_PropertyChanged;
         _cursorHider.Dispose();
         Viewer.MirrorSource = null;
@@ -219,6 +235,15 @@ public sealed class ProjectorWindow : PhWindow
     private void ProjectorWindow_PositionChanged(object? sender, PixelPointEventArgs e)
     {
         LayoutChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+
+    private void Viewer_RenderStateChanged(ViewerControl sender, EventArgs e)
+    {
+        // the photo moves under a still cursor while the main viewer zooms; placed after the draw, which a moved visual would upset
+        if (_pointerPoint is null) return;
+
+        Dispatcher.UIThread.Post(PlacePointer, DispatcherPriority.Background);
     }
 
 
@@ -343,11 +368,66 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     public Screen? GetScreen() => Screens.ScreenFromWindow(this);
 
+
+    /// <summary>
+    /// Shows the pointer at <paramref name="relativePoint"/>, where 0 to 1 spans the photo on each axis.
+    /// </summary>
+    public void ShowPointer(Point relativePoint)
+    {
+        _pointerPoint = relativePoint;
+        PlacePointer();
+    }
+
+
+    /// <summary>
+    /// Hides the pointer.
+    /// </summary>
+    public void HidePointer()
+    {
+        _pointerPoint = null;
+        _pointer.Hide();
+    }
+
+
+    /// <summary>
+    /// Plays a click on the pointer.
+    /// </summary>
+    public void PlayPointerClick() => _pointer.PlayClick();
+
     #endregion // Public Methods
 
 
 
     #region Private Methods
+
+    /// <summary>
+    /// Puts the pointer over its point on the photo as the viewer shows the photo now; hidden where the viewer does not show that point.
+    /// </summary>
+    private void PlacePointer()
+    {
+        if (_pointerPoint is not { } relativePoint) return;
+
+        // 1. no photo to point at yet
+        var bitmapSize = Viewer.BitmapSize;
+        if (bitmapSize.IsEmpty)
+        {
+            _pointer.Hide();
+            return;
+        }
+
+        // 2. a point this projector crops away, zoomed in further than the main viewer
+        var sourcePoint = new Point(relativePoint.X * bitmapSize.Width, relativePoint.Y * bitmapSize.Height);
+        var clientPoint = Viewer.PointSourceToClient(sourcePoint);
+        var isInView = Viewer.DrawingArea.Contains(clientPoint);
+        if (!isInView)
+        {
+            _pointer.Hide();
+            return;
+        }
+
+        _pointer.MoveTo(clientPoint, Viewer.DrawingArea.Size);
+    }
+
 
     /// <summary>
     /// Centers a normal window in the work area of <paramref name="screen"/>.
