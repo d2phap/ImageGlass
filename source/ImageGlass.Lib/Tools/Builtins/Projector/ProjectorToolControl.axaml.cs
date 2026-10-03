@@ -109,6 +109,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
     public static string TOOL_ID => ProjectorManager.TOOL_ID;
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuProjector];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolProjector;
     public bool HasSettingsUI => false;
     public object? Settings => Core.Projectors?.Config;
     public ViewerControl Viewer { get; set; } = null!;

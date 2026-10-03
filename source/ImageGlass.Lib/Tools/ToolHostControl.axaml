@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="using:ImageGlass.Common.Types"
     xmlns:ui="using:ImageGlass.UI"
     mc:Ignorable="d"
     d:DesignHeight="450"
@@ -24,13 +25,44 @@
         <Style Selector=".plugin_button:pointerover Path">
             <Setter Property="Opacity" Value="1" />
         </Style>
+
+        <!--  The watermark steps aside when the tool content needs its room  -->
+        <Style Selector="StackPanel.watermark">
+            <Setter Property="Opacity" Value="0.15" />
+        </Style>
+        <Style Selector="StackPanel.watermark.crowded">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
     </ui:PhControl.Styles>
 
 
     <ui:PhControl.Content>
         <Grid ColumnDefinitions="*,Auto">
+            <!--  Watermark: the tool icon and name, faint beside the tool content  -->
+            <StackPanel
+                x:Name="PART_Watermark"
+                Grid.Column="0"
+                Margin="8"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="watermark"
+                IsHitTestVisible="False"
+                Orientation="Horizontal"
+                Spacing="6">
+                <PathIcon
+                    Width="18"
+                    Height="18"
+                    Data="{CompiledBinding #Root.ToolIcon}"
+                    IsVisible="{CompiledBinding #Root.ToolIcon, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                <ui:PhTextBlock
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold"
+                    Text="{CompiledBinding #Root.ToolName}" />
+            </StackPanel>
+
             <!--  The slot for hosted tool content  -->
             <ContentControl
+                x:Name="PART_ToolSlot"
                 Grid.Column="0"
                 BorderThickness="0,1"
                 Content="{CompiledBinding #Root.Tool}" />

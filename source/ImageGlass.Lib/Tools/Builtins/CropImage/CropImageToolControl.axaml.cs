@@ -25,6 +25,7 @@ using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using ImageGlass.UI.Windowing;
@@ -43,6 +44,8 @@ public partial class CropImageToolControl : PhControl, IToolControl
 
     public static string TOOL_ID => "Tool_CropImage";
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuCropTool];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolCropImage;
     public bool HasSettingsUI => true;
     public object? Settings { get; private set; } = new CropImageConfig();
     public CropImageConfig Options => (CropImageConfig)Settings!;
