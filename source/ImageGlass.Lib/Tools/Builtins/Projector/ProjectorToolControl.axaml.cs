@@ -852,7 +852,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         PART_LblLayout.LangParams = IndexOfScreen(screens, screen) + 1;
 
         _layoutNumbers = GetTileNumbers(screen);
-        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
+        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.GetActualWorkingArea());
 
         AddLayoutOption(null, aspectRatio);
         foreach (var layout in ProjectorLayout.GetLayouts(_layoutNumbers.Length, aspectRatio))

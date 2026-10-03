@@ -722,7 +722,7 @@ public sealed class ProjectorManager : PhDisposable
 
         var sharedLayout = tiledLayouts.Length == 1 ? tiledLayouts[0] : null;
         var hasRoom = sharedLayout?.UsedCells.Count >= tileSet.Count;
-        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.WorkingArea);
+        var aspectRatio = ProjectorLayout.GetAspectRatio(screen.GetActualWorkingArea());
         var layout = hasRoom ? sharedLayout! : ProjectorLayout.GetDefault(tileSet.Count, aspectRatio);
 
         await ArrangeAsync(screen, layout, window);

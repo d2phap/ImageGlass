@@ -687,7 +687,7 @@ public partial class PhWindow : Window
         // 3. off-screen (unplugged monitor, hand-edited config): center on the nearest live screen,
         // shrinking to its work area since the saved size may come from a bigger monitor
         var screen = screens.ScreenFromPoint(pos) ?? screens.Primary ?? screens.All[0];
-        var workArea = screen.WorkingArea;
+        var workArea = screen.GetActualWorkingArea();
         var maxSize = workArea.Size.ToSize(screen.Scaling);
 
         size = new Size(Math.Min(size.Width, maxSize.Width), Math.Min(size.Height, maxSize.Height));
@@ -707,7 +707,7 @@ public partial class PhWindow : Window
         {
             // Position shares the screen coordinate space while the size is in DIP, so scale it
             var winRect = new PixelRect(pos, PixelSize.FromSize(size, screen.Scaling));
-            var visible = screen.WorkingArea.Intersect(winRect);
+            var visible = screen.GetActualWorkingArea().Intersect(winRect);
             var minVisible = PixelSize.FromSize(new Size(
                 Math.Min(MIN_VISIBLE_SIZE, size.Width),
                 Math.Min(MIN_VISIBLE_SIZE, size.Height)), screen.Scaling);

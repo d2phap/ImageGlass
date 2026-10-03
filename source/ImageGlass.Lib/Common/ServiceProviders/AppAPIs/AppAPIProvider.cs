@@ -2477,7 +2477,7 @@ public partial class AppAPIProvider
 
         // get current screen workarea
         var screen = App.MainWindow.Screens.ScreenFromWindow(App.MainWindow)!;
-        var workArea = screen.WorkingArea.ToRect(dpi);
+        var workArea = screen.GetActualWorkingArea().ToRect(dpi);
 
         // get source image size
         var srcImgW = Viewer.BitmapSize.Width;

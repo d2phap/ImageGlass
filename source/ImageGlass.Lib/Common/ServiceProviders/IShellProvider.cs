@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
+using Avalonia.Platform;
 using ImageGlass.Common.Types;
 using System;
 using System.Threading.Tasks;
@@ -172,6 +174,13 @@ public interface IShellProvider : IDisposable
     /// unpackaged): returns <paramref name="path"/> unchanged.
     /// </summary>
     string GetActualPath(string path) => path;
+
+
+    /// <summary>
+    /// Gets the work area the window manager keeps for <paramref name="screen"/> alone, in desktop pixels.
+    /// Default: <see cref="Screen.WorkingArea"/>; read it through <c>Screen.GetActualWorkingArea()</c>.
+    /// </summary>
+    PixelRect GetScreenWorkingArea(Screen screen) => screen.WorkingArea;
 
 
     /// <summary>

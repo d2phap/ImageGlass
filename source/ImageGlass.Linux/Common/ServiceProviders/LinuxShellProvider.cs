@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
+using Avalonia.Platform;
 using ImageGlass.Common;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
@@ -99,6 +101,7 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
     {
         base.OnDisposing();
         AllowSleep();
+        LinuxScreenApi.Close();
         ForegroundShell = null;
     }
 
@@ -309,6 +312,15 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
     /// <inheritdoc/>
     /// </summary>
     public void AllowSleep() => LinuxPowerApi.AllowSleep();
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public PixelRect GetScreenWorkingArea(Screen screen)
+    {
+        return LinuxScreenApi.GetWorkingArea(screen.Bounds) ?? screen.WorkingArea;
+    }
 
 
 

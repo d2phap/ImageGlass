@@ -429,7 +429,7 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     private void PlaceOnScreen(Screen screen)
     {
-        var workArea = screen.WorkingArea;
+        var workArea = screen.GetActualWorkingArea();
         var pixelWidth = (int)(workArea.Width * NORMAL_SIZE_RATIO);
         var pixelHeight = (int)(workArea.Height * NORMAL_SIZE_RATIO);
 
@@ -447,7 +447,7 @@ public sealed class ProjectorWindow : PhWindow
     /// </summary>
     private void PlaceInTile(Screen screen, ProjectorTile tile)
     {
-        var bounds = tile.Layout.GetCellBounds(screen.WorkingArea, tile.Cell);
+        var bounds = tile.Layout.GetCellBounds(screen.GetActualWorkingArea(), tile.Cell);
         Position = bounds.Position;
 
         // the exact quotient, as Avalonia rounds a DIP size up to whole pixels, so any extra adds one
