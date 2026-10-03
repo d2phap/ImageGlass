@@ -76,7 +76,7 @@ public partial class AppAPIProvider
         // Navigation
         new(LangId.Menu_MnuViewNext,             API.IG_ViewNext,            Key.Right),
         new(LangId.Menu_MnuViewPrevious,         API.IG_ViewPrevious,        Key.Left),
-        new(LangId.Menu_MnuGoTo,                 API.IG_Goto,                Key.F),
+        new(LangId.Menu_MnuGoTo,                 API.IG_Goto,                Hotkey.Ctrl, Key.F),
         new(LangId.Menu_MnuGoToFirst,            API.IG_GotoFirst,           Key.Home),
         new(LangId.Menu_MnuGoToLast,             API.IG_GotoLast,            Key.End),
         new(LangId.Menu_MnuViewNextFrame,        API.IG_ViewNextFrame,       Hotkey.Ctrl, Key.Right),
@@ -169,7 +169,7 @@ public partial class AppAPIProvider
         // Tools
         new(LangId.Menu_MnuColorPicker,         API.IG_ToggleTool, ColorPickerToolControl.TOOL_ID,      [new(Key.K)]),
         new(LangId.Menu_MnuCropTool,            API.IG_ToggleTool, CropImageToolControl.TOOL_ID,        [new(Key.C)]),
-        new(LangId.Menu_MnuFrameNav,            API.IG_ToggleTool, FrameNavToolControl.TOOL_ID,         [new(Key.P)]),
+        new(LangId.Menu_MnuFrameNav,            API.IG_ToggleTool, FrameNavToolControl.TOOL_ID,         [new(Key.F)]),
         new(LangId.Menu_MnuHdrToneMapper,       API.IG_ToggleTool, HdrToneMapperToolControl.TOOL_ID,    [new(Key.H)]),
         new(LangId.Menu_MnuResizeTool,          API.IG_OpenTool, ImageResizerTool.TOOL_ID,              [new(Key.R)]),
         new(LangId.Menu_MnuLosslessCompression, API.IG_OpenTool, LosslessCompressionTool.TOOL_ID,       [new(Key.M)]),
