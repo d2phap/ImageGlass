@@ -77,6 +77,18 @@ public class PhMenuItem : MenuItem
         AvaloniaProperty.Register<PhMenuItem, string?>(nameof(HotkeyText));
 
 
+    /// <summary>
+    /// Gets, sets the icon geometry, shown as a <see cref="PathIcon"/> in <see cref="MenuItem.Icon"/>.
+    /// </summary>
+    public Geometry? IconData
+    {
+        get => GetValue(IconDataProperty);
+        set => SetValue(IconDataProperty, value);
+    }
+    public static readonly StyledProperty<Geometry?> IconDataProperty =
+        AvaloniaProperty.Register<PhMenuItem, Geometry?>(nameof(IconData));
+
+
     #endregion // Public properties
 
 
@@ -132,6 +144,10 @@ public class PhMenuItem : MenuItem
         if (e.Property == LangKeyProperty || e.Property == LangParamsProperty)
         {
             LocalizeText();
+        }
+        else if (e.Property == IconDataProperty)
+        {
+            Icon = IconData is null ? null : new PathIcon { Data = IconData };
         }
     }
 

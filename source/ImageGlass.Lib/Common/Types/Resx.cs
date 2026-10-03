@@ -346,6 +346,12 @@ public enum ResxIconId
     IconWeatherMoon,
     IconWeatherSunny,
     IconProStar,
+    IconToolColorPicker,
+    IconToolCropImage,
+    IconToolFrameNav,
+    IconToolHdrToneMapper,
+    IconToolImageResizer,
+    IconToolLosslessCompression,
 }
 
 
