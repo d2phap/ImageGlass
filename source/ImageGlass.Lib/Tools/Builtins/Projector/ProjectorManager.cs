@@ -22,6 +22,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform;
+using Avalonia.Threading;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Photoing;
@@ -59,6 +60,12 @@ public sealed class ProjectorManager : PhDisposable
     private readonly List<ProjectorWindow> _windows = [];
     private readonly Screens _screens;
     private bool _isTrackingPointer;
+
+    // where the cursor is on the main viewer, in its coordinates, while it is over it
+    private Point? _mainPointerPoint;
+
+    // set while a refresh of the pointers waits, so a burst of viewport changes runs one
+    private InterlockedBool _isPointerRefreshPosted;
 
 
     /// <summary>
@@ -448,6 +455,7 @@ public sealed class ProjectorManager : PhDisposable
     {
         var viewer = GetMainViewer();
         var clientPoint = e.GetPosition(viewer);
+        _mainPointerPoint = clientPoint;
 
         UpdatePointers(viewer, clientPoint);
     }
@@ -468,7 +476,18 @@ public sealed class ProjectorManager : PhDisposable
 
     private void MainViewer_PointerExited(object? sender, PointerEventArgs e)
     {
+        _mainPointerPoint = null;
         HidePointers();
+    }
+
+
+    private void MainViewer_RenderStateChanged(ViewerControl sender, EventArgs e)
+    {
+        // the photo moves under a still cursor as the main viewer zooms by key or shows another photo; raised on any thread
+        var isFirstRequest = _isPointerRefreshPosted.SetTrue();
+        if (!isFirstRequest) return;
+
+        Dispatcher.UIThread.Post(RefreshPointers, DispatcherPriority.Background);
     }
 
 
@@ -485,6 +504,7 @@ public sealed class ProjectorManager : PhDisposable
         viewer.AddHandler(InputElement.PointerMovedEvent, MainViewer_PointerMoved, RoutingStrategies.Bubble, true);
         viewer.AddHandler(InputElement.PointerPressedEvent, MainViewer_PointerPressed, RoutingStrategies.Bubble, true);
         viewer.PointerExited += MainViewer_PointerExited;
+        viewer.RenderStateChanged += MainViewer_RenderStateChanged;
     }
 
 
@@ -500,7 +520,9 @@ public sealed class ProjectorManager : PhDisposable
         viewer.RemoveHandler(InputElement.PointerMovedEvent, MainViewer_PointerMoved);
         viewer.RemoveHandler(InputElement.PointerPressedEvent, MainViewer_PointerPressed);
         viewer.PointerExited -= MainViewer_PointerExited;
+        viewer.RenderStateChanged -= MainViewer_RenderStateChanged;
 
+        _mainPointerPoint = null;
         HidePointers();
     }
 
@@ -534,6 +556,18 @@ public sealed class ProjectorManager : PhDisposable
             if (canPoint) window.ShowPointer(relativePoint);
             else window.HidePointer();
         }
+    }
+
+
+    /// <summary>
+    /// Places the pointers again for where the cursor last was on the main viewer, as the photo may have moved under it.
+    /// </summary>
+    private void RefreshPointers()
+    {
+        _ = _isPointerRefreshPosted.SetFalse();
+        if (_mainPointerPoint is not { } clientPoint) return;
+
+        UpdatePointers(GetMainViewer(), clientPoint);
     }
 
 

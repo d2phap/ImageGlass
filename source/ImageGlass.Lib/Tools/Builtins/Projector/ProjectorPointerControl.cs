@@ -20,7 +20,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using ImageGlass.Common;
-using ImageGlass.Common.AppThemes;
 using ImageGlass.Common.Extensions;
 using ImageGlass.UI;
 using System;
@@ -30,28 +29,27 @@ namespace ImageGlass.Tools;
 
 
 /// <summary>
-/// Marks where the cursor is on the main viewer, on a projector: a see-through circle with a dot, which ripples on a click.
+/// Marks where the cursor is on the main viewer, on a projector: a glow like a torch beam with a dot, which ripples on a click.
 /// </summary>
 public sealed class ProjectorPointerControl : PhControl
 {
-    // the circle takes this share of the shorter side of the projector, within these sizes
-    private const double RADIUS_RATIO = 0.025;
-    private const double MIN_RADIUS = 12;
-    private const double MAX_RADIUS = 36;
-    private const double DOT_RATIO = 0.2;
+    // the same size on every projector and through a click, so the audience always knows it
+    private const double RADIUS = 30;
+    private const double DOT_RATIO = 0.15;
 
-    // the circle lets the photo show through, while the dot marks the exact point
-    private const int CIRCLE_ALPHA = 165;
-    private const int DOT_ALPHA = 255;
+    // the glow is brightest in the middle and fades toward its rim, where it still shows so it keeps its round shape
+    private const double GLOW_CENTER_OPACITY = 0.6;
+    private const double GLOW_EDGE_OPACITY = 0.2;
 
-    // a soft shadow keeps the circle apart from bright photos, where yellow alone fades
-    private const double SHADOW_BLUR = 10;
-    private const double SHADOW_OPACITY = 0.6;
+    // a pale core warming to yellow, like a torch beam, and a red dot, alike in every theme as few photos blend with them
+    private static readonly Color GLOW_CORE_COLOR = Color.FromRgb(0xFF, 0xF5, 0xC2);
+    private static readonly Color GLOW_COLOR = Color.FromRgb(0xFF, 0xCC, 0x00);
+    private static readonly Color DOT_COLOR = Color.FromRgb(0xFF, 0x3B, 0x30);
 
-    // a click sends a ring out to this many times the circle, while the circle dips by this share
+    // a click sends a ring out to this many times the circle, which the extent of the control makes room for
     private const double RIPPLE_SCALE = 2.4;
     private const float RIPPLE_WIDTH = 3f;
-    private const double PRESS_DEPTH = 0.2;
+    private const double EXTENT = (RADIUS * RIPPLE_SCALE + RIPPLE_WIDTH) * 2;
 
     private const double CLICK_MS = 450;
     private const double FADE_MS = 150;
@@ -62,7 +60,6 @@ public sealed class ProjectorPointerControl : PhControl
     // the start of each click playing; null until its first frame
     private readonly List<TimeSpan?> _clicks = [];
 
-    private double _radius = MIN_RADIUS;
     private double _opacity;
     private bool _isShown;
     private bool _isAnimating;
@@ -74,17 +71,8 @@ public sealed class ProjectorPointerControl : PhControl
     {
         IsHitTestVisible = false;
         RenderTransform = _offset;
-        Width = GetExtent();
-        Height = Width;
-
-        Effect = new DropShadowEffect
-        {
-            Color = Colors.Black,
-            BlurRadius = SHADOW_BLUR,
-            Opacity = SHADOW_OPACITY,
-            OffsetX = 0,
-            OffsetY = 0,
-        };
+        Width = EXTENT;
+        Height = EXTENT;
     }
 
 
@@ -92,28 +80,15 @@ public sealed class ProjectorPointerControl : PhControl
     #region Public Methods
 
     /// <summary>
-    /// Moves the pointer to <paramref name="center"/> in an area of <paramref name="areaSize"/>, showing it.
+    /// Moves the pointer to <paramref name="center"/>, showing it.
     /// </summary>
-    public void MoveTo(Point center, Size areaSize)
+    public void MoveTo(Point center)
     {
-        // 1. sized for its projector, so a tile gets a smaller circle than a whole screen
-        var shorterSide = Math.Min(areaSize.Width, areaSize.Height);
-        var radius = Math.Clamp(shorterSide * RADIUS_RATIO, MIN_RADIUS, MAX_RADIUS);
-        var isNewSize = Math.Abs(radius - _radius) > 0.01;
-        if (isNewSize)
-        {
-            _radius = radius;
-            Width = GetExtent();
-            Height = Width;
-            InvalidateVisual();
-        }
+        // its middle on the point
+        _offset.X = center.X - EXTENT / 2;
+        _offset.Y = center.Y - EXTENT / 2;
 
-        // 2. its middle on the point
-        var halfExtent = GetExtent() / 2;
-        _offset.X = center.X - halfExtent;
-        _offset.Y = center.Y - halfExtent;
-
-        // 3. fading in where it was hidden
+        // fading in where it was hidden
         if (_isShown) return;
 
         _isShown = true;
@@ -134,7 +109,7 @@ public sealed class ProjectorPointerControl : PhControl
 
 
     /// <summary>
-    /// Plays a click: a ring that spreads out from the circle while the circle dips.
+    /// Plays a click: a ring that spreads out from the circle.
     /// </summary>
     public void PlayClick()
     {
@@ -166,11 +141,7 @@ public sealed class ProjectorPointerControl : PhControl
         var isFadedOut = _opacity <= 0;
         if (isFadedOut && !hasClicks) return;
 
-        var circleColor = AppThemeColors.ProjectorPointerCircle;
-        var dotColor = AppThemeColors.ProjectorPointerDot;
-        var centerX = Bounds.Width / 2;
-        var centerY = Bounds.Height / 2;
-        var pressScale = 1d;
+        var center = new Point(Bounds.Width / 2, Bounds.Height / 2);
 
 
         // 1. each click sends a ring out, slowing as it fades
@@ -180,20 +151,36 @@ public sealed class ProjectorPointerControl : PhControl
 
             var progress = Math.Clamp((_frameTime - startTime).TotalMilliseconds / CLICK_MS, 0, 1);
             var eased = 1 - Math.Pow(1 - progress, 3);
-            var ringRadius = _radius * (1 + (RIPPLE_SCALE - 1) * eased);
-            var ringAlpha = (int)(DOT_ALPHA * (1 - progress) * _opacity);
-            c.DrawEllipseEx(centerX, centerY, (float)ringRadius, circleColor.WithAlpha(ringAlpha), null, RIPPLE_WIDTH);
-
-            // the latest click decides the dip of the circle
-            pressScale = 1 - PRESS_DEPTH * Math.Sin(Math.PI * progress);
+            var ringRadius = RADIUS * (1 + (RIPPLE_SCALE - 1) * eased);
+            var ringAlpha = (int)(DOT_COLOR.A * (1 - progress) * _opacity);
+            c.DrawEllipseEx(center.X, center.Y, (float)ringRadius, DOT_COLOR.WithAlpha(ringAlpha), null, RIPPLE_WIDTH);
         }
 
 
-        // 2. the see-through circle, and the dot on the exact point
-        var circleRadius = _radius * pressScale;
-        var dotRadius = _radius * DOT_RATIO;
-        c.DrawEllipseEx(centerX, centerY, (float)circleRadius, null, circleColor.WithAlpha((int)(CIRCLE_ALPHA * _opacity)), 0);
-        c.DrawEllipseEx(centerX, centerY, (float)dotRadius, null, dotColor.WithAlpha((int)(DOT_ALPHA * _opacity)), 0);
+        // 2. the glow, and the dot on the exact point
+        c.DrawEllipse(CreateGlowBrush(_opacity), null, center, RADIUS, RADIUS);
+
+        var dotRadius = RADIUS * DOT_RATIO;
+        c.DrawEllipseEx(center.X, center.Y, (float)dotRadius, null, DOT_COLOR.WithAlpha((int)(DOT_COLOR.A * _opacity)), 0);
+    }
+
+
+    /// <summary>
+    /// Creates the glow at <paramref name="opacity"/>: brightest in the middle, fading toward the rim.
+    /// </summary>
+    private static RadialGradientBrush CreateGlowBrush(double opacity)
+    {
+        var centerAlpha = (int)(255 * GLOW_CENTER_OPACITY * opacity);
+        var edgeAlpha = (int)(255 * GLOW_EDGE_OPACITY * opacity);
+
+        return new RadialGradientBrush
+        {
+            GradientStops =
+            {
+                new GradientStop(GLOW_CORE_COLOR.WithAlpha(centerAlpha), 0),
+                new GradientStop(GLOW_COLOR.WithAlpha(edgeAlpha), 1),
+            },
+        };
     }
 
 
@@ -264,12 +251,6 @@ public sealed class ProjectorPointerControl : PhControl
 
         topLevel.RequestAnimationFrame(OnAnimationFrame);
     }
-
-
-    /// <summary>
-    /// Gets the width and height the pointer takes: room for the widest ring of a click.
-    /// </summary>
-    private double GetExtent() => (_radius * RIPPLE_SCALE + RIPPLE_WIDTH) * 2;
 
     #endregion // Render & Animation
 

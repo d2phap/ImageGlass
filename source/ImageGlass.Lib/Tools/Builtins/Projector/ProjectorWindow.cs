@@ -370,11 +370,12 @@ public sealed class ProjectorWindow : PhWindow
 
 
     /// <summary>
-    /// Shows the pointer at <paramref name="relativePoint"/>, where 0 to 1 spans the photo on each axis.
+    /// Shows the pointer at <paramref name="relativePoint"/>, where 0 to 1 spans the photo on each axis, panning to it where the projector crops it away.
     /// </summary>
     public void ShowPointer(Point relativePoint)
     {
         _pointerPoint = relativePoint;
+        Viewer.MirrorRevealPoint = relativePoint;
         PlacePointer();
     }
 
@@ -385,6 +386,7 @@ public sealed class ProjectorWindow : PhWindow
     public void HidePointer()
     {
         _pointerPoint = null;
+        Viewer.MirrorRevealPoint = null;
         _pointer.Hide();
     }
 
@@ -401,7 +403,7 @@ public sealed class ProjectorWindow : PhWindow
     #region Private Methods
 
     /// <summary>
-    /// Puts the pointer over its point on the photo as the viewer shows the photo now; hidden where the viewer does not show that point.
+    /// Puts the pointer over its point on the photo as the viewer shows the photo now; the layer clips it where the viewer does not show that point.
     /// </summary>
     private void PlacePointer()
     {
@@ -415,17 +417,10 @@ public sealed class ProjectorWindow : PhWindow
             return;
         }
 
-        // 2. a point this projector crops away, zoomed in further than the main viewer
+        // 2. kept shown off the view too, so it slides in with the pan that reveals it rather than fading in late
         var sourcePoint = new Point(relativePoint.X * bitmapSize.Width, relativePoint.Y * bitmapSize.Height);
         var clientPoint = Viewer.PointSourceToClient(sourcePoint);
-        var isInView = Viewer.DrawingArea.Contains(clientPoint);
-        if (!isInView)
-        {
-            _pointer.Hide();
-            return;
-        }
-
-        _pointer.MoveTo(clientPoint, Viewer.DrawingArea.Size);
+        _pointer.MoveTo(clientPoint);
     }
 
 

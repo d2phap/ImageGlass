@@ -57,7 +57,7 @@
                 <!--  A grid row per projector  -->
                 <ScrollViewer
                     x:Name="PART_ProjectorScroller"
-                    MaxHeight="120"
+                    MaxHeight="115"
                     HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">
                     <Grid
@@ -66,7 +66,7 @@
                         RowSpacing="6" />
                 </ScrollViewer>
 
-                <StackPanel Orientation="Horizontal" Spacing="16">
+                <StackPanel Orientation="Horizontal" Spacing="8">
                     <StackPanel
                         VerticalAlignment="Top"
                         Orientation="Horizontal"

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Types;
@@ -40,6 +41,21 @@ public partial class ViewerControl
 
     // the vector document the mirror's viewport was computed for; read by PhotoRenderer
     internal SKSvg? _mirrorSvgDocument;
+
+    // the mirror pans just enough to keep the reveal point this share of its shorter side inside its edges
+    private const double REVEAL_MARGIN_RATIO = 0.1;
+
+    // the pan eases this long as the reveal point shows up or goes away
+    private const double REVEAL_EASE_MS = 200;
+
+    // how far the mirror is panned past the source as last drawn, as a share of the photo on each axis
+    private Vector _revealOffset;
+
+    // an ease from this offset to the live one, done at 1, from which the pan follows the point exactly
+    private Vector _revealEaseFrom;
+    private double _revealEase = 1;
+    private TimeSpan? _revealEaseStart;
+    private bool _isRevealEasing;
 
 
     /// <summary>
@@ -79,6 +95,29 @@ public partial class ViewerControl
     }
     public static readonly StyledProperty<bool> EnableMirrorSyncProperty =
         AvaloniaProperty.Register<ViewerControl, bool>(nameof(EnableMirrorSync), true);
+
+
+    /// <summary>
+    /// Gets, sets the point a mirror pans to keep in view, where 0 to 1 spans the photo on each axis; <c>null</c> for none.
+    /// </summary>
+    internal Point? MirrorRevealPoint
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+
+            var isToggled = field.HasValue != value.HasValue;
+            field = value;
+
+            // only redrawn when the view moves: eased as the point shows up or goes away, then followed exactly
+            var mustPan = MustPanForReveal(value);
+            if (!mustPan) return;
+
+            if (isToggled) StartRevealEase();
+            InvalidateVisual();
+        }
+    }
 
     #endregion // Public Properties
 
@@ -404,13 +443,163 @@ public partial class ViewerControl
         // CalculateDrawingRegion centers an axis that fits, and keeps an overflowing one inside the photo
         var zoomFactor = _zooming.Factor / Dpi;
         var viewport = DrawingArea.Size / zoomFactor;
+        var center = GetRevealedCenter(imageCenter, viewport);
         _logicalSrcPoint = new Point(
-            imageCenter.X - viewport.Width / 2,
-            imageCenter.Y - viewport.Height / 2);
+            center.X - viewport.Width / 2,
+            center.Y - viewport.Height / 2);
 
         CalculateDrawingRegion();
     }
 
     #endregion // Mirror Side
+
+
+
+    #region Reveal Pan
+
+    /// <summary>
+    /// Gets <paramref name="center"/> moved just enough for a viewport of <paramref name="viewport"/> to show <see cref="MirrorRevealPoint"/>.
+    /// </summary>
+    private Point GetRevealedCenter(Point center, Size viewport)
+    {
+        // 1. the center as drawn, as CalculateDrawingRegion keeps the viewport inside the photo
+        var bitmapSize = BitmapSize;
+        var drawnCenter = new Point(
+            GetDrawnCenter(center.X, viewport.Width, bitmapSize.Width),
+            GetDrawnCenter(center.Y, viewport.Height, bitmapSize.Height));
+
+
+        // 2. eased toward the pan that shows the point
+        var targetOffset = MirrorRevealPoint is { } point
+            ? GetRevealOffset(drawnCenter, viewport, point)
+            : new Vector();
+        _revealOffset = _revealEaseFrom + (targetOffset - _revealEaseFrom) * _revealEase;
+
+        return new Point(
+            drawnCenter.X + _revealOffset.X * bitmapSize.Width,
+            drawnCenter.Y + _revealOffset.Y * bitmapSize.Height);
+    }
+
+
+    /// <summary>
+    /// Gets the least pan of a viewport of <paramref name="viewport"/> around <paramref name="center"/> that shows <paramref name="relativePoint"/> inside its margins.
+    /// </summary>
+    private Vector GetRevealOffset(Point center, Size viewport, Point relativePoint)
+    {
+        var bitmapSize = BitmapSize;
+        var margin = Math.Min(viewport.Width, viewport.Height) * REVEAL_MARGIN_RATIO;
+        var shiftX = GetRevealShift(center.X, viewport.Width, bitmapSize.Width, relativePoint.X * bitmapSize.Width, margin);
+        var shiftY = GetRevealShift(center.Y, viewport.Height, bitmapSize.Height, relativePoint.Y * bitmapSize.Height, margin);
+
+        // as a share of the photo, so it holds when the full image replaces its preview
+        return new Vector(shiftX / bitmapSize.Width, shiftY / bitmapSize.Height);
+    }
+
+
+    /// <summary>
+    /// Checks whether the view must move for <paramref name="relativePoint"/>: it is panned past the source, or the point is out of view.
+    /// </summary>
+    private bool MustPanForReveal(Point? relativePoint)
+    {
+        // a pan past the source shrinks or grows as the point moves
+        var isPanned = _revealOffset != default;
+        if (isPanned) return true;
+        if (relativePoint is not { } point) return false;
+
+        var zoomFactor = _zooming.Factor / Dpi;
+        var hasView = zoomFactor > 0 && !BitmapSize.IsEmpty && !DrawingArea.IsEmpty;
+        if (!hasView) return false;
+
+        var viewport = DrawingArea.Size / zoomFactor;
+        var offset = GetRevealOffset(SrcRect.Center, viewport, point);
+
+        return offset != default;
+    }
+
+
+    /// <summary>
+    /// Gets the center of a viewport of <paramref name="viewportLength"/> around <paramref name="center"/> once kept inside an image of <paramref name="imageLength"/>, on one axis.
+    /// </summary>
+    private static double GetDrawnCenter(double center, double viewportLength, double imageLength)
+    {
+        // the whole axis is in view, and centered
+        var maxStart = imageLength - viewportLength;
+        if (maxStart <= 0) return imageLength / 2;
+
+        var start = Math.Clamp(center - viewportLength / 2, 0, maxStart);
+        return start + viewportLength / 2;
+    }
+
+
+    /// <summary>
+    /// Gets the least pan of a viewport around <paramref name="center"/> that puts <paramref name="point"/> at least <paramref name="margin"/> inside it, on one axis.
+    /// </summary>
+    private static double GetRevealShift(double center, double viewportLength, double imageLength, double point, double margin)
+    {
+        // the whole axis is in view, so there is nowhere to pan
+        var maxStart = imageLength - viewportLength;
+        if (maxStart <= 0) return 0;
+
+        // the starts that keep the point inside the margins, then those that keep the viewport inside the photo
+        var start = center - viewportLength / 2;
+        var revealedStart = Math.Clamp(start, point + margin - viewportLength, point - margin);
+        revealedStart = Math.Clamp(revealedStart, 0, maxStart);
+
+        return revealedStart - start;
+    }
+
+
+    /// <summary>
+    /// Eases the pan from where it is drawn to where <see cref="MirrorRevealPoint"/> wants it.
+    /// </summary>
+    private void StartRevealEase()
+    {
+        _revealEaseFrom = _revealOffset;
+        _revealEase = 0;
+        _revealEaseStart = null;
+        if (_isRevealEasing) return;
+
+        // off screen there is nothing to see move, so it lands at once
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel is null)
+        {
+            _revealEase = 1;
+            return;
+        }
+
+        _isRevealEasing = true;
+        topLevel.RequestAnimationFrame(OnRevealEaseFrame);
+    }
+
+
+    private void OnRevealEaseFrame(TimeSpan time)
+    {
+        _revealEaseStart ??= time;
+
+        var progress = Math.Clamp((time - _revealEaseStart.Value).TotalMilliseconds / REVEAL_EASE_MS, 0, 1);
+        _revealEase = 1 - Math.Pow(1 - progress, 3);
+        InvalidateVisual();
+
+        // on to the next frame until it lands
+        var isLanded = progress >= 1;
+        if (isLanded)
+        {
+            _isRevealEasing = false;
+            return;
+        }
+
+        // taken off screen while easing, so it lands at once
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel is null)
+        {
+            _revealEase = 1;
+            _isRevealEasing = false;
+            return;
+        }
+
+        topLevel.RequestAnimationFrame(OnRevealEaseFrame);
+    }
+
+    #endregion // Reveal Pan
 
 }
