@@ -450,10 +450,9 @@ public sealed class ProjectorWindow : PhWindow
         var bounds = tile.Layout.GetCellBounds(screen.GetActualWorkingArea(), tile.Cell);
         Position = bounds.Position;
 
-        // the exact quotient, as Avalonia rounds a DIP size up to whole pixels, so any extra adds one
-        var scaling = RenderScaling;
-        Width = bounds.Width / scaling;
-        Height = bounds.Height / scaling;
+        // apply screen scaling
+        Width = bounds.Width / screen.Scaling;
+        Height = bounds.Height / screen.Scaling;
     }
 
 
