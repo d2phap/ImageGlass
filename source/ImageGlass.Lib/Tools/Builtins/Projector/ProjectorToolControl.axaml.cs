@@ -27,8 +27,8 @@ using Avalonia.Platform;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
-using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
+using ImageGlass.Common.Windows;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using System;
@@ -91,7 +91,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     private readonly List<ProjectorWindow> _rowOrder = [];
     private bool? _isRowLayoutSynced;
     private readonly List<LayoutOption> _layoutOptions = [];
-    private ProjectorManager? _manager;
+
+    // static, as the projector windows outlive any one panel; null until the tool is first used
+    private static ProjectorManager? _manager;
 
     // the projector whose name is being dragged onto a monitor, and the monitor it is on
     private ProjectorWindow? _dragWindow;
@@ -112,8 +114,14 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     public string ToolName => Core.Lang[LangId.Menu_MnuProjector];
     public ResxIconId? ToolIcon => ResxIconId.IconToolProjector;
     public bool HasSettingsUI => false;
-    public object? Settings => Core.Projectors?.Config;
+    public object? Settings => _manager?.Config;
     public ViewerControl Viewer { get; set; } = null!;
+
+
+    /// <summary>
+    /// Gets the manager of the projector windows, which outlive this panel; <c>null</c> until the tool is first used.
+    /// </summary>
+    internal static ProjectorManager? Manager => _manager;
 
 
     public ProjectorToolControl()
@@ -129,9 +137,9 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     {
         base.OnLoaded(e);
 
-        _manager = Core.GetProjectors();
-        _manager.Changed += Manager_Changed;
-        PART_ScreenMap.Manager = _manager;
+        var manager = GetManager();
+        manager.Changed += Manager_Changed;
+        PART_ScreenMap.Manager = manager;
 
         RefreshUI();
 
@@ -210,25 +218,35 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
     private async void PART_BtnAdd_Click(object? sender, RoutedEventArgs e)
     {
-        _ = await Core.API.RunApiAsync(API.IG_AddProjector);
+        if (_manager is null) return;
+
+        // Classic opens one projector, so a second one leads to the upgrade
+        if (_manager.IsLimitedByLicense)
+        {
+            var licenseWindow = new ManageLicenseWindow();
+            _ = await licenseWindow.ShowAsync(App.MainWindow);
+            return;
+        }
+
+        _ = await _manager.AddProjectorAsync();
     }
 
 
-    private async void PART_ChkSync_IsCheckedChanged(object? sender, RoutedEventArgs e)
+    private void PART_ChkSync_IsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (_isUpdatingUI) return;
 
         var isChecked = PART_ChkSync.IsChecked == true;
-        _ = await Core.API.RunApiAsync(API.IG_ToggleProjectorSync, isChecked.ToString());
+        _manager?.SetViewSync(isChecked);
     }
 
 
-    private async void PART_ChkPointer_IsCheckedChanged(object? sender, RoutedEventArgs e)
+    private void PART_ChkPointer_IsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (_isUpdatingUI) return;
 
         var isChecked = PART_ChkPointer.IsChecked == true;
-        _ = await Core.API.RunApiAsync(API.IG_ToggleProjectorPointer, isChecked.ToString());
+        _manager?.SetShowPointer(isChecked);
     }
 
 
@@ -256,12 +274,28 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     #region Control Methods
 
     /// <summary>
+    /// Gets the manager of the projector windows, set up on first use.
+    /// </summary>
+    private static ProjectorManager GetManager() => _manager ??= new ProjectorManager();
+
+
+    /// <summary>
+    /// Closes the projector windows and lets their manager go, on app exit.
+    /// </summary>
+    internal static void DisposeManager()
+    {
+        _manager?.Dispose();
+        _manager = null;
+    }
+
+
+    /// <summary>
     /// <inheritdoc/>
     /// </summary>
     public void LoadSettings(JsonElement? jsonEl)
     {
         // the projectors read their own settings when first used, and stay open without this panel
-        _ = Core.GetProjectors();
+        _ = GetManager();
     }
 
 
@@ -270,7 +304,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
     /// </summary>
     public JsonElement? SaveSettings()
     {
-        return Core.GetProjectors().SaveSettings();
+        return GetManager().SaveSettings();
     }
 
 

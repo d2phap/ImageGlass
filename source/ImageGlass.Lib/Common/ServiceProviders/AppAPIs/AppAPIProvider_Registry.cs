@@ -142,10 +142,6 @@ public partial class AppAPIProvider
         { API.IG_ToggleTool,              PhCommands.Create(IG_ToggleTool) },
         { API.IG_OpenTool,                PhCommands.Create(IG_OpenTool) },
         { API.IG_CloseTool,               PhCommands.Create(IG_CloseTool) },
-        { API.IG_AddProjector,            PhCommands.Create(IG_AddProjectorAsync) },
-        { API.IG_CloseAllProjectors,      PhCommands.Create(IG_CloseAllProjectors) },
-        { API.IG_ToggleProjectorSync,     PhCommands.Create(IG_ToggleProjectorSync) },
-        { API.IG_ToggleProjectorPointer,  PhCommands.Create(IG_ToggleProjectorPointer) },
 
 
         // Settings

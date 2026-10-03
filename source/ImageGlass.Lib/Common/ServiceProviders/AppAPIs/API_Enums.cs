@@ -120,10 +120,6 @@ public enum API
     IG_ToggleTool,
     IG_OpenTool,
     IG_CloseTool,
-    IG_AddProjector,
-    IG_CloseAllProjectors,
-    IG_ToggleProjectorSync,
-    IG_ToggleProjectorPointer,
 
     // Menu > Settings
 
