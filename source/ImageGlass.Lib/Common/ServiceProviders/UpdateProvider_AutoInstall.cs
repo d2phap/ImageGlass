@@ -16,9 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia.Threading;
 using ImageGlass.Common.Loggers;
 using ImageGlass.Common.ServiceProviders.Update;
+using ImageGlass.Common.Types;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,6 +64,169 @@ public partial class UpdateProvider
         => Task.FromResult(UpdateOpResult.Fail("IGE: This ImageGlass build cannot install its own updates."));
 
     #endregion // Platform install surface
+
+
+
+    #region Installer helpers (for installs that keep this process alive)
+
+    /// <summary>
+    /// How long the relaunched build must stay up before this instance exits for it.
+    /// </summary>
+    protected const int RELAUNCH_PROBE_MS = 2_000;
+
+    private InterlockedBool _isApplying;
+
+
+    /// <summary>
+    /// Runs <paramref name="install"/> off the UI thread, then exits for the build it relaunched.
+    /// </summary>
+    protected async Task<UpdateOpResult> RunInstallThenExitAsync(string version,
+        Func<Task<UpdateOpResult>> install, CancellationToken ct)
+    {
+        // nothing kills this process mid-install as MSIX deployment does, so refuse a second click
+        if (!_isApplying.SetTrue()) return UpdateOpResult.Skip();
+
+        UpdateOpResult result;
+        try
+        {
+            UpdateTrace.Mark($"apply:begin {version}");
+
+            // file copies and external commands, none of which may block the UI thread
+            result = await Task.Run(install, ct).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            UpdateTrace.Mark($"apply:exception {ex}");
+            result = UpdateOpResult.Fail(ex);
+        }
+
+        if (!result.IsSuccess)
+        {
+            UpdateTrace.Mark($"apply:failed {result.ErrorMessage}");
+            _isApplying.SetFalse();
+            return result;
+        }
+
+        // the new build already runs and holds the instance lock, so this one only has to leave
+        UpdateTrace.Mark("apply:ok");
+        Dispatcher.UIThread.Post(() => BHelper.ExitApp(false));
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Forgets the installed update before relaunching, or this instance's close-time save re-arms it.
+    /// </summary>
+    protected async Task ForgetInstalledUpdateAsync()
+    {
+        // config change handlers touch controls, so raise it where they live
+        await Dispatcher.UIThread.InvokeAsync(DiscardPendingUpdate);
+        _ = await Core.Config.SaveAsync().ConfigureAwait(false);
+    }
+
+
+    /// <summary>
+    /// Starts the updated build; fails when it quits with an error within <see cref="RELAUNCH_PROBE_MS"/>.
+    /// </summary>
+    protected static async Task<UpdateOpResult> RelaunchAsync(ProcessStartInfo psi)
+    {
+        // otherwise the new process hands its launch over to this exiting one, then quits
+        Core.AppInstance.Dispose();
+
+        try
+        {
+            using var proc = Process.Start(psi);
+            if (proc is null)
+            {
+                return UpdateOpResult.Fail("IGE: The updated ImageGlass could not be started.", DescribeCommand(psi));
+            }
+
+            UpdateTrace.Mark($"apply:relaunched pid={proc.Id}");
+
+            try
+            {
+                using var probe = new CancellationTokenSource(RELAUNCH_PROBE_MS);
+                await proc.WaitForExitAsync(probe.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                return UpdateOpResult.Ok();
+            }
+
+            // exit code 0 is not a failed start, e.g. the launch was handed to another instance
+            if (proc.ExitCode == 0) return UpdateOpResult.Ok();
+
+            UpdateTrace.Mark($"apply:relaunchFailed exit={proc.ExitCode}");
+            return UpdateOpResult.Fail($"IGE: The updated ImageGlass quit at startup with exit code {proc.ExitCode}.",
+                DescribeCommand(psi));
+        }
+        catch (Exception ex)
+        {
+            UpdateTrace.Mark($"apply:relaunchFailed {ex.Message}");
+            return UpdateOpResult.Fail($"IGE: The updated ImageGlass could not be started: {ex.Message}",
+                $"{DescribeCommand(psi)}{Environment.NewLine}{BHelper.GetExceptionDetails(ex)}");
+        }
+    }
+
+
+    /// <summary>
+    /// Runs a command to completion and captures its output; never throws.
+    /// </summary>
+    protected static async Task<(int ExitCode, string StdOut, string StdErr)> RunCommandAsync(
+        ProcessStartInfo psi, TimeSpan timeout)
+    {
+        psi.RedirectStandardOutput = true;
+        psi.RedirectStandardError = true;
+        using var proc = new Process { StartInfo = psi };
+
+        using var cts = new CancellationTokenSource(timeout);
+        try
+        {
+            proc.Start();
+
+            var stdout = proc.StandardOutput.ReadToEndAsync(cts.Token);
+            var stderr = proc.StandardError.ReadToEndAsync(cts.Token);
+            await proc.WaitForExitAsync(cts.Token).ConfigureAwait(false);
+
+            return (proc.ExitCode, await stdout.ConfigureAwait(false), await stderr.ConfigureAwait(false));
+        }
+        catch (OperationCanceledException)
+        {
+            try { proc.Kill(); } catch { }
+            return (-1, string.Empty, $"Timed out after {timeout.TotalSeconds:0} seconds.");
+        }
+        catch (Exception ex)
+        {
+            return (-1, string.Empty, ex.Message);
+        }
+    }
+
+
+    /// <summary>
+    /// The command line of <paramref name="psi"/>, for an error's details.
+    /// </summary>
+    protected static string DescribeCommand(ProcessStartInfo psi)
+    {
+        return $"Command: {psi.FileName} {string.Join(' ', psi.ArgumentList)}";
+    }
+
+
+    /// <summary>
+    /// The last non-empty line of the first stream that has one, i.e. a command's error line.
+    /// </summary>
+    protected static string GetLastLine(params string[] outputs)
+    {
+        foreach (var output in outputs)
+        {
+            var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (lines.Length > 0) return lines[^1];
+        }
+
+        return string.Empty;
+    }
+
+    #endregion // Installer helpers
 
 
 

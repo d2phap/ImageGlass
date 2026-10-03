@@ -84,7 +84,7 @@ public sealed class UpdateReleaseInfo
 
     /// <summary>
     /// Per-platform artifacts (v2.0 schema). Null for v1.1.
-    /// Key is platform identifier, e.g. "win-x64", "linux-x64", "osx-arm64".
+    /// Key is <c>&lt;platform&gt;-&lt;arch&gt;-&lt;ext&gt;</c>, e.g. "win-x64-msix", "mac-arm64-dmg".
     /// </summary>
     [JsonPropertyName("artifacts")]
     public Dictionary<string, UpdateArtifactInfo>? Artifacts { get; set; }

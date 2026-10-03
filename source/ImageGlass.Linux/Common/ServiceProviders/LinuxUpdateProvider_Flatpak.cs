@@ -22,7 +22,6 @@ using ImageGlass.Common.ServiceProviders.Update;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Linux.Common.ServiceProviders;
@@ -231,33 +230,10 @@ public partial class LinuxUpdateProvider
     /// <summary>
     /// Runs the host <c>flatpak</c> CLI against the running app's installation; never throws.
     /// </summary>
-    private static async Task<(int ExitCode, string StdOut, string StdErr)> RunHostFlatpakAsync(
+    private static Task<(int ExitCode, string StdOut, string StdErr)> RunHostFlatpakAsync(
         FlatpakInstall install, TimeSpan timeout, string command, params string[] args)
     {
-        using var proc = new Process { StartInfo = CreateHostFlatpakStartInfo(install, command, args) };
-        proc.StartInfo.RedirectStandardOutput = true;
-        proc.StartInfo.RedirectStandardError = true;
-
-        using var cts = new CancellationTokenSource(timeout);
-        try
-        {
-            proc.Start();
-
-            var stdout = proc.StandardOutput.ReadToEndAsync(cts.Token);
-            var stderr = proc.StandardError.ReadToEndAsync(cts.Token);
-            await proc.WaitForExitAsync(cts.Token).ConfigureAwait(false);
-
-            return (proc.ExitCode, await stdout.ConfigureAwait(false), await stderr.ConfigureAwait(false));
-        }
-        catch (OperationCanceledException)
-        {
-            try { proc.Kill(); } catch { }
-            return (-1, string.Empty, $"Timed out after {timeout.TotalSeconds:0} seconds.");
-        }
-        catch (Exception ex)
-        {
-            return (-1, string.Empty, ex.Message);
-        }
+        return RunCommandAsync(CreateHostFlatpakStartInfo(install, command, args), timeout);
     }
 
 
@@ -291,21 +267,6 @@ public partial class LinuxUpdateProvider
 
         BHelper.ApplyFlatpakHostSpawn(psi);
         return psi;
-    }
-
-
-    /// <summary>
-    /// The last non-empty line of the first stream that has one, i.e. flatpak's error line.
-    /// </summary>
-    private static string GetLastLine(params string[] outputs)
-    {
-        foreach (var output in outputs)
-        {
-            var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            if (lines.Length > 0) return lines[^1];
-        }
-
-        return string.Empty;
     }
 
 

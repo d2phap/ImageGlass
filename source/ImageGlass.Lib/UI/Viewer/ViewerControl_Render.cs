@@ -240,7 +240,7 @@ public partial class ViewerControl
             Cached indexes = [{cacheIndexStr}]
             """;
 
-        var textLayout = new TextLayout(text, new Typeface("Consolas"), FontSize, Brushes.HotPink);
+        var textLayout = new TextLayout(text, new Typeface(Const.FONT_CODE), FontSize, Brushes.HotPink);
         var textOrigin = new Point(DrawingArea.X + 20, DrawingArea.Y + 20);
         for (int i = 0; i < textLayout.TextLines.Count; i++)
         {

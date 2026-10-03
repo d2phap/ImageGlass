@@ -16,14 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using Avalonia.Threading;
 using ImageGlass.Common;
-using ImageGlass.Common.Loggers;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Update;
-using ImageGlass.Common.Types;
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,14 +31,6 @@ namespace ImageGlass.Linux.Common.ServiceProviders;
 /// </summary>
 public partial class LinuxUpdateProvider : UpdateProvider
 {
-    /// <summary>
-    /// How long the relaunched build must stay up before this instance exits for it.
-    /// </summary>
-    private const int RELAUNCH_PROBE_MS = 2_000;
-
-    private InterlockedBool _isApplying;
-
-
     public LinuxUpdateProvider()
     {
         // eligibility needs two host round trips, so answer them before anything asks
@@ -94,37 +81,9 @@ public partial class LinuxUpdateProvider : UpdateProvider
             return UpdateOpResult.Fail($"IGE: The downloaded update package is missing: {packageFilePath}");
         }
 
-        // nothing kills this process mid-install as MSIX deployment does, so refuse a second click
-        if (!_isApplying.SetTrue()) return UpdateOpResult.Skip();
-
-        UpdateOpResult result;
-        try
-        {
-            UpdateTrace.Mark($"apply:begin {release.Version}");
-
-            // file copies and host commands, none of which may block the UI thread
-            result = await Task.Run(() => BHelper.IsAppImage
-                ? ApplyAppImageAsync(packageFilePath, release, ct)
-                : ApplyFlatpakBundleAsync(packageFilePath, release), ct).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            UpdateTrace.Mark($"apply:exception {ex}");
-            result = UpdateOpResult.Fail(ex);
-        }
-
-        if (!result.IsSuccess)
-        {
-            UpdateTrace.Mark($"apply:failed {result.ErrorMessage}");
-            _isApplying.SetFalse();
-            return result;
-        }
-
-        // the new build already runs and holds the instance lock, so this one only has to leave
-        UpdateTrace.Mark("apply:ok");
-        Dispatcher.UIThread.Post(() => BHelper.ExitApp(false));
-
-        return result;
+        return await RunInstallThenExitAsync(release.Version, () => BHelper.IsAppImage
+            ? ApplyAppImageAsync(packageFilePath, release, ct)
+            : ApplyFlatpakBundleAsync(packageFilePath, release), ct).ConfigureAwait(false);
     }
 
     #endregion // Platform surface
@@ -132,70 +91,6 @@ public partial class LinuxUpdateProvider : UpdateProvider
 
 
     #region Private Methods
-
-    /// <summary>
-    /// Forgets the installed update before relaunching, or this instance's close-time save re-arms it.
-    /// </summary>
-    private async Task ForgetInstalledUpdateAsync()
-    {
-        // config change handlers touch controls, so raise it where they live
-        await Dispatcher.UIThread.InvokeAsync(DiscardPendingUpdate);
-        _ = await Core.Config.SaveAsync().ConfigureAwait(false);
-    }
-
-
-    /// <summary>
-    /// Starts the updated build; fails when it quits with an error within <see cref="RELAUNCH_PROBE_MS"/>.
-    /// </summary>
-    private static async Task<UpdateOpResult> RelaunchAsync(ProcessStartInfo psi)
-    {
-        // otherwise the new process hands its launch over to this exiting one, then quits
-        Core.AppInstance.Dispose();
-
-        try
-        {
-            using var proc = Process.Start(psi);
-            if (proc is null)
-            {
-                return UpdateOpResult.Fail("IGE: The updated ImageGlass could not be started.", DescribeCommand(psi));
-            }
-
-            UpdateTrace.Mark($"apply:relaunched pid={proc.Id}");
-
-            try
-            {
-                using var probe = new CancellationTokenSource(RELAUNCH_PROBE_MS);
-                await proc.WaitForExitAsync(probe.Token).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                return UpdateOpResult.Ok();
-            }
-
-            // exit code 0 is not a failed start, e.g. the launch was handed to another instance
-            if (proc.ExitCode == 0) return UpdateOpResult.Ok();
-
-            UpdateTrace.Mark($"apply:relaunchFailed exit={proc.ExitCode}");
-            return UpdateOpResult.Fail($"IGE: The updated ImageGlass quit at startup with exit code {proc.ExitCode}.",
-                DescribeCommand(psi));
-        }
-        catch (Exception ex)
-        {
-            UpdateTrace.Mark($"apply:relaunchFailed {ex.Message}");
-            return UpdateOpResult.Fail($"IGE: The updated ImageGlass could not be started: {ex.Message}",
-                $"{DescribeCommand(psi)}{Environment.NewLine}{BHelper.GetExceptionDetails(ex)}");
-        }
-    }
-
-
-    /// <summary>
-    /// The command line of <paramref name="psi"/>, for an error's details.
-    /// </summary>
-    private static string DescribeCommand(ProcessStartInfo psi)
-    {
-        return $"Command: {psi.FileName} {string.Join(' ', psi.ArgumentList)}";
-    }
-
 
     private static void TryDeleteFile(string path)
     {
