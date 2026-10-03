@@ -292,7 +292,7 @@ public partial class ProjectorToolControl : PhControl, IToolControl
 
 
             // 2. a row per projector: its monitor, how it covers it, its zoom while not syncing, and its color
-            var isSynced = _manager.Config.EnableViewSync;
+            var isSynced = _manager.IsViewSynced;
             SyncRows(isSynced);
 
             var screens = _manager.GetOrderedScreens();
@@ -308,13 +308,17 @@ public partial class ProjectorToolControl : PhControl, IToolControl
             }
 
 
-            // 3. the actions; Classic still gets the button, which explains the Pro limit
-            PART_ProBadge.IsVisible = _manager.IsLimitedByLicense;
+            // 3. following the main viewer and its cursor are Pro features; Classic still gets the add button, which explains its limit of one
+            var isPro = Core.IsProEnabled;
+            PART_SyncProBadge.IsVisible = !isPro;
+            PART_PointerProBadge.IsVisible = !isPro;
+            PART_ChkSync.IsEnabled = isPro;
+            PART_ChkPointer.IsEnabled = isPro;
 
 
             // 4. the options
             PART_ChkSync.IsChecked = isSynced;
-            PART_ChkPointer.IsChecked = _manager.Config.ShowPointer;
+            PART_ChkPointer.IsChecked = _manager.IsPointerShown;
 
 
             // 5. an open layout menu follows the projectors on its monitor

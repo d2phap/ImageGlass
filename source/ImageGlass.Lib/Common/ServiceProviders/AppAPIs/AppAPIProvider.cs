@@ -3270,9 +3270,8 @@ public partial class AppAPIProvider
         // the limit is only worth explaining when Pro would lift it
         if (projectors.IsLimitedByLicense)
         {
-            _ = Message.ShowAsync(
-                Core.Lang[LangId.Tool_Projector_ProLimit],
-                Core.Lang[LangId.Menu_MnuProjector]);
+            var licenseWindow = new ManageLicenseWindow();
+            _ = await licenseWindow.ShowAsync(App.MainWindow);
             return;
         }
 

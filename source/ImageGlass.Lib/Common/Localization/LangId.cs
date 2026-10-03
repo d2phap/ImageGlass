@@ -858,7 +858,6 @@ public enum LangId
     Tool_Projector_BtnAdd,
     Tool_Projector_ChkSyncView,
     Tool_Projector_ChkShowPointer,
-    Tool_Projector_ProLimit,
     Tool_Projector_ModeFullScreen,
     Tool_Projector_ModeMaximized,
     Tool_Projector_ModeNormal,

@@ -67,27 +67,25 @@
                 </ScrollViewer>
 
                 <StackPanel Orientation="Horizontal" Spacing="8">
-                    <StackPanel
+                    <ui:PhButton
+                        x:Name="PART_BtnAdd"
                         VerticalAlignment="Top"
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <ui:PhButton
-                            x:Name="PART_BtnAdd"
-                            HorizontalContentAlignment="Center"
-                            IconData="{StaticResource IconAdd}" />
-                        <ui:PhProBadge
-                            x:Name="PART_ProBadge"
-                            VerticalAlignment="Center"
-                            IsVisible="False" />
-                    </StackPanel>
+                        HorizontalContentAlignment="Center"
+                        IconData="{StaticResource IconAdd}" />
 
                     <StackPanel>
-                        <CheckBox x:Name="PART_ChkSync">
-                            <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
-                        </CheckBox>
-                        <CheckBox x:Name="PART_ChkPointer">
-                            <ui:PhTextBlock LangKey="Tool_Projector_ChkShowPointer" />
-                        </CheckBox>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <CheckBox x:Name="PART_ChkSync">
+                                <ui:PhTextBlock LangKey="Tool_Projector_ChkSyncView" />
+                            </CheckBox>
+                            <ui:PhProBadge x:Name="PART_SyncProBadge" IsVisible="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <CheckBox x:Name="PART_ChkPointer">
+                                <ui:PhTextBlock LangKey="Tool_Projector_ChkShowPointer" />
+                            </CheckBox>
+                            <ui:PhProBadge x:Name="PART_PointerProBadge" IsVisible="False" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

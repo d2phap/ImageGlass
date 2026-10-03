@@ -114,6 +114,18 @@ public sealed class ProjectorManager : PhDisposable
     /// </summary>
     public bool IsLimitedByLicense => !CanAddProjector;
 
+
+    /// <summary>
+    /// Gets whether projectors follow the zoom, pan and transforms of the main viewer: an ImageGlass Pro feature, so never in Classic.
+    /// </summary>
+    public bool IsViewSynced => Config.EnableViewSync && Core.IsProEnabled;
+
+
+    /// <summary>
+    /// Gets whether projectors highlight where the cursor is on the main viewer: an ImageGlass Pro feature, so never in Classic.
+    /// </summary>
+    public bool IsPointerShown => Config.ShowPointer && Core.IsProEnabled;
+
     #endregion // Public Properties
 
 
@@ -125,7 +137,7 @@ public sealed class ProjectorManager : PhDisposable
         _screens = App.MainWindow.Screens;
         _screens.Changed += Screens_Changed;
 
-        if (Config.ShowPointer) AttachPointerTracking();
+        if (IsPointerShown) AttachPointerTracking();
     }
 
 
@@ -163,7 +175,7 @@ public sealed class ProjectorManager : PhDisposable
         {
             BackgroundColor = GetSavedBackgroundColor(number),
         };
-        window.Viewer.EnableMirrorSync = Config.EnableViewSync;
+        window.Viewer.EnableMirrorSync = IsViewSynced;
         window.Closed += Window_Closed;
         window.LayoutChanged += Window_LayoutChanged;
 
@@ -358,10 +370,12 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Sets whether projectors follow the zoom, pan and transforms of the main viewer.
+    /// Sets whether projectors follow the zoom, pan and transforms of the main viewer; Classic keeps the stored choice for when Pro is active.
     /// </summary>
     public void SetViewSync(bool enabled)
     {
+        if (!Core.IsProEnabled) return;
+
         Config.EnableViewSync = enabled;
         foreach (var window in _windows)
         {
@@ -374,10 +388,12 @@ public sealed class ProjectorManager : PhDisposable
 
 
     /// <summary>
-    /// Sets whether projectors highlight where the cursor is on the main viewer.
+    /// Sets whether projectors highlight where the cursor is on the main viewer; Classic keeps the stored choice for when Pro is active.
     /// </summary>
     public void SetShowPointer(bool enabled)
     {
+        if (!Core.IsProEnabled) return;
+
         Config.ShowPointer = enabled;
         if (enabled) AttachPointerTracking();
         else DetachPointerTracking();
