@@ -50,9 +50,12 @@ if ! security find-identity -v -p codesigning | grep -qF "$SIGN_IDENTITY"; then
 	echo "Error: signing identity not found in keychain: $SIGN_IDENTITY" >&2
 	exit 1
 fi
-if ! xcrun notarytool history --keychain-profile "$NOTARY_PROFILE" >/dev/null 2>&1; then
-	echo "Error: notarytool keychain profile '$NOTARY_PROFILE' not found or invalid." >&2
-	echo "       Create it with: xcrun notarytool store-credentials \"$NOTARY_PROFILE\" ..." >&2
+# Show notarytool's own reason: a missing profile and an unaccepted Apple agreement (HTTP 403) need different fixes.
+if ! notary_out="$(xcrun notarytool history --keychain-profile "$NOTARY_PROFILE" 2>&1)"; then
+	echo "Error: notarytool check failed for keychain profile '$NOTARY_PROFILE':" >&2
+	echo "$notary_out" | sed 's:^:       :' >&2
+	echo "       No such profile? Create it with: xcrun notarytool store-credentials \"$NOTARY_PROFILE\" ..." >&2
+	echo "       HTTP 403? The Account Holder must accept the latest agreement at https://developer.apple.com/account" >&2
 	exit 1
 fi
 
