@@ -123,6 +123,7 @@ codesign --verify --deep --strict --verbose=2 "$APP_DIR"
 echo "==> Building DMG"
 rm -rf "$DMG_STAGING_DIR"
 mkdir -p "$DMG_STAGING_DIR" "$OUTPUT_DIR"
+# The in-app updater (MacUpdateProvider) installs the .app at the volume root, so keep it the only one.
 cp -R "$APP_DIR" "$DMG_STAGING_DIR/"
 ln -s /Applications "$DMG_STAGING_DIR/Applications"
 
