@@ -167,11 +167,8 @@ public partial class ProjectorToolControl : PhControl, IToolControl
         base.OnIgLanguageChanged();
 
         var addText = Core.Lang[LangId.Tool_Projector_BtnAdd];
-        var addTooltip = AppAPIProvider.GetMenuTooltipText(LangId.Tool_Projector_BtnAdd);
         PART_BtnAddFirst.Text = addText;
         PART_BtnAdd.Text = addText;
-        ToolTip.SetTip(PART_BtnAddFirst, addTooltip);
-        ToolTip.SetTip(PART_BtnAdd, addTooltip);
 
         // the rows carry text set in code
         foreach (var row in _rows.Values)

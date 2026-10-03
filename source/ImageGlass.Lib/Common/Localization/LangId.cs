@@ -856,7 +856,6 @@ public enum LangId
     #region Tool: Projector
     Tool_Projector_WindowTitle,
     Tool_Projector_BtnAdd,
-    Tool_Projector_BtnCloseAll,
     Tool_Projector_ChkSyncView,
     Tool_Projector_ChkShowPointer,
     Tool_Projector_ProLimit,

@@ -350,6 +350,7 @@ public enum ResxIconId
     IconToolCropImage,
     IconToolFrameNav,
     IconToolHdrToneMapper,
+    IconToolProjector,
     IconToolImageResizer,
     IconToolLosslessCompression,
 }

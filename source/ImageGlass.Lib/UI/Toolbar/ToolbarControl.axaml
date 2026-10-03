@@ -522,7 +522,10 @@
                                         Click="MainMenuItem_Click"
                                         IconData="{StaticResource IconToolHdrToneMapper}"
                                         LangKey="Menu_MnuHdrToneMapper" />
-                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuProjector" />
+                                    <ui:PhMenuItem
+                                        Click="MainMenuItem_Click"
+                                        IconData="{StaticResource IconToolProjector}"
+                                        LangKey="Menu_MnuProjector" />
                                     <ui:PhMenuItem
                                         Click="MainMenuItem_Click"
                                         IconData="{StaticResource IconToolImageResizer}"
