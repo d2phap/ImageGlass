@@ -107,7 +107,8 @@ public partial class GalleryItem : PhToolButton
         e.Cancel = true;
         await photo.LoadMetadataAsync(true);
 
-        if (!ReferenceEquals(DataContext, photo) || !IsPointerOver) return;
+        // the gallery suspends the tooltip service while scrolling
+        if (!ReferenceEquals(DataContext, photo) || !IsPointerOver || !ToolTip.GetServiceEnabled(this)) return;
 
         _tooltipReadyPhoto = photo;
         ToolTip.SetIsOpen(this, true);
