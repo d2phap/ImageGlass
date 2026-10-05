@@ -385,26 +385,31 @@ public partial class AppAPIProvider
             }
         }
 
+        // the last Save As wins; until there is one, start from the source format
+        var suggestedExt = SavingExts.LastSavedExtension ?? srcExt;
         var destFileName = string.IsNullOrEmpty(srcFilePath)
-            ? $"untitle{srcExt}"
+            ? $"untitle{suggestedExt}"
             : Path.GetFileNameWithoutExtension(srcFilePath);
 
 
-        // 2. create file save picker
+        // 2. create file save picker; it matches SuggestedFileType by reference, so take it from this list
+        var fileTypeChoices = SavingExts.FilePickerFileTypeChoices;
+        var suggestedFileType = SavingExts.FindChoice(fileTypeChoices, suggestedExt);
+
         var result = await App.MainWindow.StorageProvider.SaveFilePickerWithResultAsync(new FilePickerSaveOptions
         {
             Title = Core.Lang[LangId.Menu_MnuSaveAs],
-            FileTypeChoices = SavingExts.FilePickerFileTypeChoices,
+            FileTypeChoices = fileTypeChoices,
             ShowOverwritePrompt = !Core.Config.EnableSaveConfirmation, // only show 1 prompt
             SuggestedStartLocation = initSaveDir,
             SuggestedFileName = destFileName,
-            SuggestedFileType = SavingExts.LastSavedFileType,
+            SuggestedFileType = suggestedFileType,
         });
-
-        SavingExts.LastSavedFileType = result.SelectedFileType;
 
         var destFilePath = result.File?.TryGetLocalPath() ?? string.Empty;
         if (string.IsNullOrEmpty(destFilePath)) return;
+
+        SavingExts.LastSavedExtension = Path.GetExtension(destFilePath).ToLowerInvariant();
 
 
         // 3. show override warning

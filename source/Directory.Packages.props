@@ -23,7 +23,7 @@
     <PackageVersion Include="Magick.NET-Q16-HDRI-arm64" Version="14.17.2" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="14.17.2" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="14.17.2" />
-    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.335" />
+    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.346" />
     <PackageVersion Include="NativeMemoryArray" Version="1.2.2" />
     <PackageVersion Include="NetCoreAudio" Version="2.0.1" />
     <PackageVersion Include="SkiaSharp" Version="4.152.0" />
