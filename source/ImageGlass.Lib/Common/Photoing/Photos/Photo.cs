@@ -61,6 +61,9 @@ public partial class Photo : PhDisposable
     private CancellationTokenSource? _cancelThumbnailLoading;
     private double _galleryThumbnailRequestSize;
 
+    // the frame handed to the viewer by ReleaseFrame still counts against the cache budget
+    private int _releasedBytesPerPixel;
+
     /// <summary>
     /// Prevents duplicate concurrent loads of the same photo's thumbnail.
     /// </summary>
@@ -117,7 +120,7 @@ public partial class Photo : PhDisposable
     /// </summary>
     public int BytesPerPixel => Bitmap is SKImage img && !img.IsDisposed()
         ? Math.Max(1, img.ColorType.GetBytesPerPixel())
-        : 4;
+        : _releasedBytesPerPixel > 0 ? _releasedBytesPerPixel : 4;
 
     /// <summary>
     /// Gets the linear scale this photo was decoded at. Below 1 when the full resolution
@@ -675,15 +678,40 @@ public partial class Photo : PhDisposable
     /// </summary>
     public void UnloadBitmap()
     {
-        if (Bitmap is AnimatorImpl animator)
+        // same lock as ReleaseFrame, so a frame is either handed over or disposed, never both
+        IDisposable? bitmap;
+        lock (_lock)
+        {
+            bitmap = Bitmap;
+            Bitmap = null;
+            _frameIndex = -1;
+            _releasedBytesPerPixel = 0;
+        }
+
+        if (bitmap is AnimatorImpl animator)
         {
             animator.FrameChanged -= OnAnimatorFrameChanged;
         }
 
-        Bitmap?.Dispose();
-        Bitmap = null;
+        bitmap?.Dispose();
+    }
 
-        _frameIndex = -1;
+
+    /// <summary>
+    /// Hands <paramref name="frame"/> over to the caller, who must dispose it.
+    /// Returns <see langword="false"/> if this photo no longer holds that frame.
+    /// </summary>
+    public bool ReleaseFrame(SKImage frame)
+    {
+        lock (_lock)
+        {
+            if (!ReferenceEquals(Bitmap, frame)) return false;
+
+            // FrameIndex stays: it is the frame on screen, and GetFrameAsync re-decodes without a Bitmap
+            _releasedBytesPerPixel = frame.IsDisposed() ? 0 : Math.Max(1, frame.ColorType.GetBytesPerPixel());
+            Bitmap = null;
+            return true;
+        }
     }
 
 

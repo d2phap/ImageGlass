@@ -351,16 +351,17 @@ public partial class ViewerControl
     {
         lock (_lock)
         {
-            // img may be disposed after the render posted this callback; ?. only guards null
-            var imgSize = img.IsDisposed() ? "0x0" : $"{img.Width}x{img.Height}";
+            // a source swapped in since the draw (e.g. an HDR pass) may already have freed img
+            var isCurrent = img is not null && ReferenceEquals(img, _imgSource?.Image);
+            var imgSize = isCurrent && !img.IsDisposed() ? $"{img.Width}x{img.Height}" : "0x0";
             PhotoTrace.Mark("render:first-draw", Photo?.FilePath,
                 $"{imgSize}, vector={IsVectorSource()}");
 
             // the photo is now on screen; release anyone waiting on the first paint
             _firstDrawTcs?.TrySetResult();
 
-            // vector images don't need raster caching
-            if (IsVectorSource())
+            // vector images don't need raster caching; a stale img would get a second owner
+            if (IsVectorSource() || !isCurrent)
             {
                 InvalidateVisual();
                 OnRenderStateChanged();

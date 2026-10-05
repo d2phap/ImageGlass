@@ -1092,18 +1092,21 @@ public partial class ViewerControl : PhControl
                         imgFrameColored = await ApplySkiaColorSpaceAsync(imgFrame, e.Photo.Metadata);
                     }
 
+                    // take the frame from the photo, or Photo.Unload frees it under our leases (the clipboard keeps its own)
+                    var ownsFrame = imgFrame is not null && !e.Photo.IsClipboard
+                        && e.Photo.ReleaseFrame(imgFrame);
+
                     if (imgFrameColored is not null)
                     {
                         PhotoTrace.Mark("viewer:color-managed", e.Photo.FilePath,
                             $"applied (hdrToneMap={Core.Config.EnableHdrToneMapping && e.Photo.Metadata.IsHdr}, srcProfile={(string.IsNullOrEmpty(e.Photo.Metadata.ColorProfileName) ? "none" : e.Photo.Metadata.ColorProfileName)})");
 
                         // retain the pre-tone-map HDR frame for live re-tone-mapping, else free it
-                        // (never dispose the clipboard photo's frame)
-                        if (_liveHdrToneMapping && e.Photo.Metadata.IsHdr && !e.Photo.IsClipboard)
+                        if (ownsFrame && _liveHdrToneMapping && e.Photo.Metadata.IsHdr)
                         {
                             hdrRawToRetain = imgFrame;
                         }
-                        else if (!e.Photo.IsClipboard)
+                        else if (ownsFrame)
                         {
                             imgFrame?.Dispose();
                         }
@@ -1113,6 +1116,9 @@ public partial class ViewerControl : PhControl
                     else
                     {
                         PhotoTrace.Mark("viewer:color-managed", e.Photo.FilePath, "skipped");
+
+                        // the photo dropped it during the pass (unload or reload), so it is not ours to show
+                        if (!ownsFrame && !e.Photo.IsClipboard) imgFrame = null;
                     }
 
                     // IsDisposed, not null: a dead frame renders nothing yet claims the photo is shown
@@ -1356,25 +1362,47 @@ public partial class ViewerControl : PhControl
     /// </summary>
     public async Task ViewFrameAsync(uint frameIndex)
     {
-        if (Photo is null) return;
+        var photo = Photo;
+        if (photo is null) return;
 
         // pause the animator if it's running
         if (IsImageAnimating) StopAnimator();
 
-        var imgFrame = await Photo.GetFrameAsync(frameIndex);
+        // the page on screen is already ours, so asking for it again needs no decode
+        if (photo.Bitmap is not AnimatorImpl && photo.FrameIndex == (int)frameIndex)
+        {
+            lock (_lock)
+            {
+                if (_imgSource?.Image.IsDisposed() == false) return;
+            }
+        }
+
+        var imgFrame = await photo.GetFrameAsync(frameIndex);
         if (imgFrame is null) return;
+
+        // take a decoded frame before the pass, as the next frame switch disposes the photo's (animator frames stay the animator's)
+        var ownsFrame = photo.Bitmap is not AnimatorImpl && !photo.IsClipboard;
+        if (ownsFrame && !photo.ReleaseFrame(imgFrame)) return;
 
         // apply color space off the UI thread
         SKImage? colored;
-        using (Photo.PinBitmap())
+        using (photo.PinBitmap())
         {
-            colored = await ApplySkiaColorSpaceAsync(imgFrame, Photo.Metadata);
+            colored = await ApplySkiaColorSpaceAsync(imgFrame, photo.Metadata);
         }
 
+        if (colored is not null && ownsFrame) imgFrame.Dispose();
         var sourceImg = colored ?? imgFrame;
 
         lock (_lock)
         {
+            // another photo took over during the pass, so nothing here is shown
+            if (!ReferenceEquals(Photo, photo))
+            {
+                if (ownsFrame || colored is not null) sourceImg.Dispose();
+                return;
+            }
+
             _mipmapCache?.Dispose();
             _mipmapCache = null;
 
@@ -1386,7 +1414,7 @@ public partial class ViewerControl : PhControl
         // variable-size frames: each frame is its own canvas. Photo.Size still reports
         // the metadata size for animated sources, so measure the decoded frame itself.
         var frameSize = sourceImg.IsDisposed()
-            ? Photo.Size
+            ? photo.Size
             : new Size(sourceImg.Width, sourceImg.Height);
 
         if (frameSize != BitmapSize)
