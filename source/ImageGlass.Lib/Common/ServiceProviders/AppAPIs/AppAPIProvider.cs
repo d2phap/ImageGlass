@@ -2834,11 +2834,10 @@ public partial class AppAPIProvider
             Core.Slideshow = null;
         }
 
-        // release the forced look-ahead image the slideshow preloaded; with caching off
-        // a normal cache pass would early-return without unloading it
+        // free the look-ahead no later pass would unload, but spare the shown photo: its Bitmap may be a live animator
         if (!Core.Photos.IsCachingEnabled)
         {
-            Core.Photos.ClearCache();
+            Core.Photos.ClearCache(Viewer.Photo);
         }
 
 
