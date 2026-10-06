@@ -106,8 +106,6 @@ public partial class MainWindowView : PhControl
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged += PART_ToolHost_PropertyChanged;
-        PART_BtnMotionVideo.Click += PART_BtnMotionVideo_Click;
-        UpdateMotionButtonTooltip();
         UpdateMotionButtonState();
 
         // the in-app message keeps clear of the image info bar
@@ -150,7 +148,6 @@ public partial class MainWindowView : PhControl
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
-        PART_BtnMotionVideo.Click -= PART_BtnMotionVideo_Click;
 
         PART_ImageInfoOverlay.PropertyChanged -= PART_ImageInfoOverlay_PropertyChanged;
 
@@ -168,14 +165,6 @@ public partial class MainWindowView : PhControl
         base.OnSizeChanged(e);
 
         UpdateGalleryWidth();
-    }
-
-
-    protected override void OnIgLanguageChanged()
-    {
-        base.OnIgLanguageChanged();
-
-        UpdateMotionButtonTooltip();
     }
 
 
@@ -433,16 +422,10 @@ public partial class MainWindowView : PhControl
     }
 
 
-    private async void PART_BtnMotionVideo_Click(object? sender, RoutedEventArgs e)
-    {
-        _ = await Core.API.RunApiAsync(API.IG_ToggleImageAnimation);
-    }
-
-
     private void PART_ImageInfoOverlay_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
         // the bar's reach, or the edge it sits on
-        var isPlacementChanged = e.Property == ImageInfoOverlay.CoveredHeightProperty
+        var isPlacementChanged = e.Property == ImageInfoOverlayControl.CoveredHeightProperty
             || e.Property == VerticalAlignmentProperty;
         if (!isPlacementChanged) return;
 
@@ -1308,7 +1291,7 @@ public partial class MainWindowView : PhControl
         var isLivePhoto = photo?.Error is null && (photo?.Metadata?.IsLivePhoto ?? false);
         var isFrameNavOpen = PART_ToolHost.Tool?.ToolId == FrameNavToolControl.TOOL_ID;
 
-        PART_MotionButtonHost.IsVisible = isLivePhoto && !isFrameNavOpen;
+        PART_MotionOverlay.IsShown = isLivePhoto && !isFrameNavOpen;
     }
 
 
@@ -1327,16 +1310,6 @@ public partial class MainWindowView : PhControl
             _messageMargin.Top + topInset,
             _messageMargin.Right,
             _messageMargin.Bottom + bottomInset);
-    }
-
-
-    /// <summary>
-    /// Updates the motion-video button tooltip.
-    /// </summary>
-    private void UpdateMotionButtonTooltip()
-    {
-        ToolTip.SetTip(PART_BtnMotionVideo, AppAPIProvider.GetMenuTooltipText(
-            LangId._PlayMotionVideo, LangId.Menu_MnuToggleImageAnimation));
     }
 
 

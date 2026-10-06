@@ -52,30 +52,11 @@
                     ZoomMode="{CompiledBinding ZoomMode, Source={x:Static cm:Core.Config}}"
                     ZoomSpeed="{CompiledBinding ZoomSpeed, Source={x:Static cm:Core.Config}}">
                     <Panel>
-                        <viewer:ImageInfoOverlay x:Name="PART_ImageInfoOverlay" />
-                        <ui:MessageControl x:Name="PART_Message" />
+                        <ui:ImageInfoOverlayControl x:Name="PART_ImageInfoOverlay" />
+                        <ui:MessageOverlayControl x:Name="PART_Message" />
                         <viewer:SlideshowCountdownOverlay x:Name="PART_SlideshowCountdown" IsHitTestVisible="False" />
                         <viewer:NavButtonsOverlay IsVisible="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}" />
-
-                        <!--  Motion photo playback  -->
-                        <Border
-                            x:Name="PART_MotionButtonHost"
-                            Margin="0,0,0,14"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            Background="{DynamicResource IG_OverlayBackgroundBrush}"
-                            CornerRadius="{DynamicResource ControlCornerRadius}"
-                            IsVisible="False">
-                            <ui:PhToolButton
-                                x:Name="PART_BtnMotionVideo"
-                                Padding="8"
-                                Focusable="False">
-                                <PathIcon
-                                    Width="25"
-                                    Height="25"
-                                    Data="{StaticResource IconLivePhoto}" />
-                            </ui:PhToolButton>
-                        </Border>
+                        <ui:MotionPhotoOverlayControl x:Name="PART_MotionOverlay" />
                     </Panel>
                 </viewer:ViewerControl>
             </Border>

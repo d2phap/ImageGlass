@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.UI;
 
-public class MessageControl : PhOverlay
+public class MessageOverlayControl : PhOverlay
 {
     private CancellationTokenSource? _cancelMessage;
     private readonly Lock _lock = new();
@@ -53,7 +53,7 @@ public class MessageControl : PhOverlay
         set => SetValue(HeadingProperty, value);
     }
     public static readonly StyledProperty<string?> HeadingProperty =
-        AvaloniaProperty.Register<MessageControl, string?>(nameof(Heading));
+        AvaloniaProperty.Register<MessageOverlayControl, string?>(nameof(Heading));
 
 
     /// <summary>
@@ -65,7 +65,7 @@ public class MessageControl : PhOverlay
         set => SetValue(DescriptionProperty, value);
     }
     public static readonly StyledProperty<string?> DescriptionProperty =
-        AvaloniaProperty.Register<MessageControl, string?>(nameof(Description));
+        AvaloniaProperty.Register<MessageOverlayControl, string?>(nameof(Description));
 
 
     /// <summary>
@@ -77,55 +77,55 @@ public class MessageControl : PhOverlay
         set => SetValue(DetailsProperty, value);
     }
     public static readonly StyledProperty<string?> DetailsProperty =
-        AvaloniaProperty.Register<MessageControl, string?>(nameof(Details));
+        AvaloniaProperty.Register<MessageOverlayControl, string?>(nameof(Details));
 
 
     /// <summary>
     /// Gets the visibility of heading control.
     /// </summary>
     public bool IsHeadingVisible => !string.IsNullOrWhiteSpace(Heading);
-    public static readonly DirectProperty<MessageControl, bool> IsHeadingVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MessageControl, bool>(nameof(IsHeadingVisible), i => i.IsHeadingVisible);
+    public static readonly DirectProperty<MessageOverlayControl, bool> IsHeadingVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MessageOverlayControl, bool>(nameof(IsHeadingVisible), i => i.IsHeadingVisible);
 
 
     /// <summary>
     /// Gets the visibility of description control.
     /// </summary>
     public bool IsDescriptionVisible => !string.IsNullOrWhiteSpace(Description);
-    public static readonly DirectProperty<MessageControl, bool> IsDescriptionVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MessageControl, bool>(nameof(IsDescriptionVisible), i => i.IsDescriptionVisible);
+    public static readonly DirectProperty<MessageOverlayControl, bool> IsDescriptionVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MessageOverlayControl, bool>(nameof(IsDescriptionVisible), i => i.IsDescriptionVisible);
 
 
     /// <summary>
     /// Gets the visibility of details control.
     /// </summary>
     public bool IsDetailsVisible => !string.IsNullOrWhiteSpace(Details);
-    public static readonly DirectProperty<MessageControl, bool> IsDetailsVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MessageControl, bool>(nameof(IsDetailsVisible), i => i.IsDetailsVisible);
+    public static readonly DirectProperty<MessageOverlayControl, bool> IsDetailsVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MessageOverlayControl, bool>(nameof(IsDetailsVisible), i => i.IsDetailsVisible);
 
 
     /// <summary>
     /// Gets the visibility of this control.
     /// </summary>
     public bool IsMessageVisible => IsHeadingVisible || IsDescriptionVisible || IsDetailsVisible;
-    public static readonly DirectProperty<MessageControl, bool> IsMessageVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MessageControl, bool>(nameof(IsMessageVisible), i => i.IsMessageVisible);
+    public static readonly DirectProperty<MessageOverlayControl, bool> IsMessageVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MessageOverlayControl, bool>(nameof(IsMessageVisible), i => i.IsMessageVisible);
 
     #endregion // Public Properties
 
 
 
-    static MessageControl()
+    static MessageOverlayControl()
     {
         // a box in the middle of the viewer, fading in place
-        HorizontalAlignmentProperty.OverrideDefaultValue<MessageControl>(HorizontalAlignment.Center);
-        VerticalAlignmentProperty.OverrideDefaultValue<MessageControl>(VerticalAlignment.Center);
-        MarginProperty.OverrideDefaultValue<MessageControl>(new Thickness(20));
-        PaddingProperty.OverrideDefaultValue<MessageControl>(new Thickness(10));
+        HorizontalAlignmentProperty.OverrideDefaultValue<MessageOverlayControl>(HorizontalAlignment.Center);
+        VerticalAlignmentProperty.OverrideDefaultValue<MessageOverlayControl>(VerticalAlignment.Center);
+        MarginProperty.OverrideDefaultValue<MessageOverlayControl>(new Thickness(20));
+        PaddingProperty.OverrideDefaultValue<MessageOverlayControl>(new Thickness(10));
     }
 
 
-    public MessageControl()
+    public MessageOverlayControl()
     {
         _lblHeading = new TextBlock
         {

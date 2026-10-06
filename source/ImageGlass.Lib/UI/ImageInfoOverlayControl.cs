@@ -34,12 +34,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace ImageGlass.UI.Viewer;
+namespace ImageGlass.UI;
 
 /// <summary>
 /// Shows the image info in a floating bar on the viewer, where <see cref="Config.ImageInfoOverlayMode"/> allows it.
 /// </summary>
-public class ImageInfoOverlay : PhOverlay
+public class ImageInfoOverlayControl : PhOverlay
 {
     // auto-hide shows it while the pointer is within this distance of the bar, more once shown so it cannot flicker
     private const double REVEAL_ZONE_EXTRA = 10;
@@ -62,21 +62,21 @@ public class ImageInfoOverlay : PhOverlay
     private double _coveredHeight;
 
 
-    static ImageInfoOverlay()
+    static ImageInfoOverlayControl()
     {
         // a bar a little below the top edge, centered and clear of the sides
-        HorizontalAlignmentProperty.OverrideDefaultValue<ImageInfoOverlay>(HorizontalAlignment.Center);
-        VerticalAlignmentProperty.OverrideDefaultValue<ImageInfoOverlay>(VerticalAlignment.Top);
-        MarginProperty.OverrideDefaultValue<ImageInfoOverlay>(new Thickness(20, 8, 20, 0));
-        PaddingProperty.OverrideDefaultValue<ImageInfoOverlay>(new Thickness(12, 4));
-        TransitionDirectionProperty.OverrideDefaultValue<ImageInfoOverlay>(PhOverlayDirection.Top);
+        HorizontalAlignmentProperty.OverrideDefaultValue<ImageInfoOverlayControl>(HorizontalAlignment.Center);
+        VerticalAlignmentProperty.OverrideDefaultValue<ImageInfoOverlayControl>(VerticalAlignment.Top);
+        MarginProperty.OverrideDefaultValue<ImageInfoOverlayControl>(new Thickness(20, 8, 20, 0));
+        PaddingProperty.OverrideDefaultValue<ImageInfoOverlayControl>(new Thickness(12, 4));
+        TransitionDirectionProperty.OverrideDefaultValue<ImageInfoOverlayControl>(PhOverlayDirection.Top);
 
         // never in the way of the viewer's own input
-        IsHitTestVisibleProperty.OverrideDefaultValue<ImageInfoOverlay>(false);
+        IsHitTestVisibleProperty.OverrideDefaultValue<ImageInfoOverlayControl>(false);
     }
 
 
-    public ImageInfoOverlay()
+    public ImageInfoOverlayControl()
     {
         _textBlock = new TextBlock
         {
@@ -119,8 +119,8 @@ public class ImageInfoOverlay : PhOverlay
         get => _coveredHeight;
         private set => SetAndRaise(CoveredHeightProperty, ref _coveredHeight, value);
     }
-    public static readonly DirectProperty<ImageInfoOverlay, double> CoveredHeightProperty =
-        AvaloniaProperty.RegisterDirect<ImageInfoOverlay, double>(nameof(CoveredHeight), o => o.CoveredHeight);
+    public static readonly DirectProperty<ImageInfoOverlayControl, double> CoveredHeightProperty =
+        AvaloniaProperty.RegisterDirect<ImageInfoOverlayControl, double>(nameof(CoveredHeight), o => o.CoveredHeight);
 
 
     /// <summary>

@@ -90,7 +90,7 @@ public partial class AppAPIProvider
     private static ToolbarControl Toolbar => App.MainWindow.PART_MainView.PART_Toolbar;
     private static GalleryControl Gallery => App.MainWindow.PART_MainView.PART_Gallery;
     private static PhGridSplitter GalleryResizer => App.MainWindow.PART_MainView.PART_GalleryResizer;
-    private static MessageControl Message => App.MainWindow.PART_MainView.PART_Message;
+    private static MessageOverlayControl Message => App.MainWindow.PART_MainView.PART_Message;
     private static ToolHostControl ToolHost => App.MainWindow.PART_MainView.PART_ToolHost;
     private static SlideshowCountdownOverlay SlideshowCountdown => App.MainWindow.PART_MainView.PART_SlideshowCountdown;
 
