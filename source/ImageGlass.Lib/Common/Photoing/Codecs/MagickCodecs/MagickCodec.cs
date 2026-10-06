@@ -1410,7 +1410,8 @@ public static partial class MagickCodec
             nameof(ColorProfiles.AppleRGB) => ColorProfiles.AppleRGB,
             nameof(ColorProfiles.CoatedFOGRA39) => ColorProfiles.CoatedFOGRA39,
             nameof(ColorProfiles.ColorMatchRGB) => ColorProfiles.ColorMatchRGB,
-            nameof(ColorProfiles.SRGB) => ColorProfiles.SRGB,
+            // the settings store ColorProfileOption.sRGB, spelled differently from Magick's
+            nameof(ColorProfiles.SRGB) or nameof(ColorProfileOption.sRGB) => ColorProfiles.SRGB,
             nameof(ColorProfiles.USWebCoatedSWOP) => ColorProfiles.USWebCoatedSWOP,
             _ => null,
         };
