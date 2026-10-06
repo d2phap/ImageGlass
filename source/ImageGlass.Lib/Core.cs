@@ -745,7 +745,7 @@ public static class Core
         Resx.Set(ResxId.IG_BackgroundNeutralBrush, bgNeutral.ToBrush());
         Resx.Set(ResxId.IG_BorderNeutralBrush, borderNeutral.ToBrush());
         Resx.Set(ResxId.IG_BorderControlBrush, borderControl.ToBrush());
-        Resx.Set(ResxId.IG_MessageBackgroundBrush, bgColor.A(200).ToBrush());
+        Resx.Set(ResxId.IG_OverlayBackgroundBrush, bgColor.A(200).ToBrush());
 
 
         // update text color

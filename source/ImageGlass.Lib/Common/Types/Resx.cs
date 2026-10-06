@@ -200,6 +200,7 @@ public enum ResxId
 
     // control styles
     ControlCornerRadius,
+    OverlayCornerRadius,
     ContentControlThemeFontFamily,
 
 
@@ -295,7 +296,7 @@ public enum ResxId
     IG_BackgroundNeutralBrush,
     IG_BorderNeutralBrush,
     IG_BorderControlBrush,
-    IG_MessageBackgroundBrush,
+    IG_OverlayBackgroundBrush,
 
     IG_TextSuccessBrush,
     IG_TextWarningBrush,

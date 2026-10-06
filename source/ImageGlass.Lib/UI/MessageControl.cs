@@ -28,10 +28,18 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.UI;
 
-public class MessageControl : PhControl
+public class MessageControl : PhOverlay
 {
     private CancellationTokenSource? _cancelMessage;
     private readonly Lock _lock = new();
+
+    private readonly TextBlock _lblHeading;
+    private readonly TextBlock _lblDescription;
+    private readonly SelectableTextBlock _lblDetails;
+    private readonly Border _detailsBox;
+
+    // set while a message replaces its three parts, so they show together
+    private bool _isSettingMessage;
 
 
     #region Public Properties
@@ -107,8 +115,52 @@ public class MessageControl : PhControl
 
 
 
+    static MessageControl()
+    {
+        // a box in the middle of the viewer, fading in place
+        HorizontalAlignmentProperty.OverrideDefaultValue<MessageControl>(HorizontalAlignment.Center);
+        VerticalAlignmentProperty.OverrideDefaultValue<MessageControl>(VerticalAlignment.Center);
+        MarginProperty.OverrideDefaultValue<MessageControl>(new Thickness(20));
+        PaddingProperty.OverrideDefaultValue<MessageControl>(new Thickness(10));
+    }
+
+
     public MessageControl()
     {
+        _lblHeading = new TextBlock
+        {
+            FontSize = Const.FONT_SIZE_SUBTITLE,
+            TextAlignment = Avalonia.Media.TextAlignment.Center,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            [!TextBlock.ForegroundProperty] = Resx.CreateBinding(ResxId.SystemAccentColor),
+        };
+        _lblDescription = new TextBlock
+        {
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            TextAlignment = Avalonia.Media.TextAlignment.Center,
+        };
+        _lblDetails = new SelectableTextBlock
+        {
+            Padding = new Thickness(5),
+            FontSize = Const.FONT_SIZE_SMALL,
+            FontFamily = Const.FONT_CODE,
+            FontWeight = Avalonia.Media.FontWeight.SemiLight,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+        };
+        _detailsBox = new Border
+        {
+            Margin = new Thickness(0, 12, 0, 0),
+            BorderThickness = new Thickness(1),
+            ClipToBounds = true,
+            [!Border.CornerRadiusProperty] = Resx.CreateBinding(ResxId.ControlCornerRadius),
+            [!Border.BorderBrushProperty] = Resx.CreateBinding(ResxId.TextControlForeground),
+            Child = new ScrollViewer
+            {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                Content = _lblDetails,
+            },
+        };
+
         Content = CreateContentElement();
     }
 
@@ -135,6 +187,13 @@ public class MessageControl : PhControl
             RaisePropertyChanged(IsDetailsVisibleProperty, default, IsDetailsVisible);
             RaisePropertyChanged(IsMessageVisibleProperty, default, IsMessageVisible);
         }
+        else
+        {
+            return;
+        }
+
+        if (_isSettingMessage) return;
+        ApplyMessage();
     }
 
     #endregion // Override Methods
@@ -144,9 +203,9 @@ public class MessageControl : PhControl
     #region Private methods
 
     /// <summary>
-    /// Creates content element.
+    /// Creates content element: the heading and description above the scrollable details.
     /// </summary>
-    private Border CreateContentElement()
+    private Grid CreateContentElement()
     {
         // top section
         var topEl = new StackPanel
@@ -155,75 +214,42 @@ public class MessageControl : PhControl
             Orientation = Orientation.Vertical,
             Spacing = 12,
         };
-        var lblHeading = new TextBlock
-        {
-            FontSize = Const.FONT_SIZE_SUBTITLE,
-            TextAlignment = Avalonia.Media.TextAlignment.Center,
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
-            [!TextBlock.ForegroundProperty] = Resx.CreateBinding(ResxId.SystemAccentColor),
-            [!TextBlock.TextProperty] = this[!HeadingProperty],
-            [!TextBlock.IsVisibleProperty] = this[!IsHeadingVisibleProperty],
-        };
-        var lblDescription = new TextBlock
-        {
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
-            TextAlignment = Avalonia.Media.TextAlignment.Center,
-            [!TextBlock.TextProperty] = this[!DescriptionProperty],
-            [!TextBlock.IsVisibleProperty] = this[!IsDescriptionVisibleProperty],
-        };
-        topEl.Children.Add(lblHeading);
-        topEl.Children.Add(lblDescription);
-
-
-        // bottom section
-        var bottomEl = new Border
-        {
-            Margin = new Thickness(0, 12, 0, 0),
-            BorderThickness = new Thickness(1),
-            ClipToBounds = true,
-            [!ScrollViewer.CornerRadiusProperty] = Resx.CreateBinding(ResxId.ControlCornerRadius),
-            [!ScrollViewer.BorderBrushProperty] = Resx.CreateBinding(ResxId.TextControlForeground),
-            [!ScrollViewer.IsVisibleProperty] = this[!IsDetailsVisibleProperty],
-            Child = new ScrollViewer
-            {
-                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-                Content = new SelectableTextBlock
-                {
-                    Padding = new Thickness(5),
-                    FontSize = Const.FONT_SIZE_SMALL,
-                    FontFamily = Const.FONT_CODE,
-                    FontWeight = Avalonia.Media.FontWeight.SemiLight,
-                    TextWrapping = Avalonia.Media.TextWrapping.Wrap,
-                    [!TextBlock.TextProperty] = this[!DetailsProperty],
-                },
-            },
-        };
+        topEl.Children.Add(_lblHeading);
+        topEl.Children.Add(_lblDescription);
 
 
         // root grid
         Grid.SetRow(topEl, 0);
-        Grid.SetRow(bottomEl, 1);
+        Grid.SetRow(_detailsBox, 1);
 
-        var rootWrapperEl = new Grid
+        var rootEl = new Grid
         {
             RowDefinitions = new RowDefinitions("Auto, *"),
         };
-        rootWrapperEl.Children.Add(topEl);
-        rootWrapperEl.Children.Add(bottomEl);
-
-        var rootEl = new Border
-        {
-            Margin = new Thickness(20),
-            Padding = new Thickness(10),
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Child = rootWrapperEl,
-            [!Border.CornerRadiusProperty] = Resx.CreateBinding(ResxId.ControlCornerRadius),
-            [!Border.BackgroundProperty] = Resx.CreateBinding(ResxId.IG_MessageBackgroundBrush),
-            [!Border.IsVisibleProperty] = this[!IsMessageVisibleProperty],
-        };
+        rootEl.Children.Add(topEl);
+        rootEl.Children.Add(_detailsBox);
 
         return rootEl;
+    }
+
+
+    /// <summary>
+    /// Shows the current message, or fades the box out with its last one, so it never empties while visible.
+    /// </summary>
+    private void ApplyMessage()
+    {
+        var isVisible = IsMessageVisible;
+        if (isVisible)
+        {
+            _lblHeading.Text = Heading;
+            _lblHeading.IsVisible = IsHeadingVisible;
+            _lblDescription.Text = Description;
+            _lblDescription.IsVisible = IsDescriptionVisible;
+            _lblDetails.Text = Details;
+            _detailsBox.IsVisible = IsDetailsVisible;
+        }
+
+        IsShown = isVisible;
     }
 
 
@@ -234,9 +260,19 @@ public class MessageControl : PhControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            Heading = heading;
-            Description = message;
-            Details = details;
+            _isSettingMessage = true;
+            try
+            {
+                Heading = heading;
+                Description = message;
+                Details = details;
+            }
+            finally
+            {
+                _isSettingMessage = false;
+            }
+
+            ApplyMessage();
         }, DispatcherPriority.Render);
     }
 

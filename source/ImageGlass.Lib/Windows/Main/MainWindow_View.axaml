@@ -62,7 +62,7 @@
                             Margin="0,0,0,14"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Background="{DynamicResource IG_MessageBackgroundBrush}"
+                            Background="{DynamicResource IG_OverlayBackgroundBrush}"
                             CornerRadius="{DynamicResource ControlCornerRadius}"
                             IsVisible="False">
                             <ui:PhToolButton
