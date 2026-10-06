@@ -1047,9 +1047,11 @@ public static class Core
         // (a codec chosen while Skia was ineligible must not stay stuck decoding).
         Core.CodecRegistry.InvalidateSelectionCaches();
 
-        // apply the new profile and notify
-        Core.DestColorProfile?.Dispose();
+        // apply the new profile and notify; Skia can hand back the same object, which must stay alive
+        var oldProfile = Core.DestColorProfile;
         Core.DestColorProfile = results.ColorSpace;
+        if (!ReferenceEquals(oldProfile, results.ColorSpace)) oldProfile?.Dispose();
+
         Core.OnColorProfileChanged(requiresPhotoReload);
     }
 

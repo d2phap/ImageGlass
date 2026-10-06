@@ -1098,6 +1098,11 @@ public static partial class SkiaCodec
                 cs?.Dispose();
                 cs = null;
             }
+            else if (cs?.IsSrgb == true)
+            {
+                // every sRGB profile is one shared wrapper, so any holder's Dispose would kill it; this one ignores Dispose
+                cs = SKColorSpace.CreateSrgb();
+            }
 
             return (cs, cs is not null); // Skia does not support all profiles
         }
