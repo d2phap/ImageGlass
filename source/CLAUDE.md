@@ -88,6 +88,7 @@ ImageGlass v10 is a complete rewrite in **C# with .NET 10**, using **Avalonia 12
    - Gesture recognizers: `PhPanGestureRecognizer`, `PhPinchGestureRecognizer` accumulate points for smooth interaction
    - SkiaSharp rendering in `ViewerControl_Render.cs` + `PhotoRenderer.cs`
    - **Navigation buttons**: `NavButtonsOverlay` (separate `PhControl` overlay) renders left/right arrow buttons on hover; uses `RequestAnimationFrame` for frame-rate-independent slide+fade animation; click detection on pointer release (does not interfere with panning); config-bound via `EnableNavButtonsProperty` StyledProperty
+   - **Image info overlay**: `ImageInfoOverlay` (a non-hit-testable `PhOverlay` in the viewer panel) shows the `Config.ImageInfoTags` items in a bar at the top. `MainWindow.Status_Changed` pushes `AppStatusInfo.GetItems()` into it (the app name is left out). One setting, `ImageInfoOverlayMode`: `Hidden`, `Always`/`AlwaysAutoHide` (every window), `Borderless`/`BorderlessAutoHide` (only while the title bar is hidden, `ImageInfoOverlay.IsTitleBarHidden`: full screen or frameless); auto-hide tracks the pointer on the window with a hysteresis zone and a delayed hide, and a running slideshow (`Config.EnableSlideshow`) makes every visible mode auto-hide. It is set in Settings > Layout only, with no menu item or hotkey. `CoveredHeight` is how far the bar reaches, which `MainWindowView` insets the in-app message by
 
 ---
 
@@ -207,7 +208,7 @@ AOT-safe converters for `Config` serialization. Reuse an existing one, or add a 
 When building or restyling UI, reuse the app's existing controls, design tokens, styles, icons, and fonts instead of raw Avalonia controls or hardcoded values.
 
 ### 1. Controls: prefer `UI/` over raw Avalonia
-- **Base controls** (`UI/BaseControls/`, all inherit `PhControl`): `PhButton`, `PhTextBox`, `PhTextBlock`, `PhToolButton`, `PhMenuItem`, `PhHotkeyPicker`, `PhGridSplitter`, `PhVirtualizingUniformPanel`, `PhCommandPreview`, `PhTableControl` (read-only data table: aligned auto-fit columns + hover/focus-revealed icon-button actions; use for settings tables).
+- **Base controls** (`UI/BaseControls/`, all inherit `PhControl`): `PhButton`, `PhTextBox`, `PhTextBlock`, `PhToolButton`, `PhMenuItem`, `PhHotkeyPicker`, `PhGridSplitter`, `PhVirtualizingUniformPanel`, `PhCommandPreview`, `PhTableControl` (read-only data table: aligned auto-fit columns + hover/focus-revealed icon-button actions; use for settings tables), `PhOverlay` (floating surface in the in-app message style: set `IsShown` to fade it in or out, `TransitionDirection` picks the side it slides in from, `Auto` fades in place; place it with `Margin`/`Padding`/alignment; `MessageControl` and `ImageInfoOverlay` derive from it).
 - **Windows & dialogs** (`UI/Windowing/`): inherit `PhWindow`; for modal/dialog flows use `ModalWindow` / `DialogWindow`; use `PhColorPickerDialog` for color picking.
 - **Feature controls**: `ViewerControl` (`UI/Viewer/`), `GalleryControl` (`UI/Gallery/`), `ToolbarControl` (`UI/Toolbar/`).
 

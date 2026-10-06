@@ -24,6 +24,7 @@ using ImageGlass.Common.Types;
 using ImageGlass.UI.Viewer;
 using ImageGlass.UI.Viewer.ZoomAndPan;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
@@ -31,6 +32,16 @@ namespace ImageGlass.Common;
 
 public partial class AppStatusInfo : PhDisposable
 {
+    /// <summary>
+    /// Gets the tag of the item naming a clipboard image, which no image info tag stands for.
+    /// </summary>
+    public const string CLIPBOARD_TAG = "ClipboardImage";
+
+    /// <summary>
+    /// Gets the separator between the items of the status text.
+    /// </summary>
+    public const string TEXT_SEPARATOR = "  ︱  ";
+
     private ViewerControl _viewer;
     private string? _filePath = null;
 
@@ -404,61 +415,77 @@ public partial class AppStatusInfo : PhDisposable
 
 
     /// <summary>
-    /// Gets the status text.
+    /// Gets the values of the image info tags in their configured order, skipping the empty ones.
     /// </summary>
-    public string Text
+    public List<ImageInfoItem> GetItems()
     {
-        get
+        var items = new List<ImageInfoItem>(Core.Config.ImageInfoTags.Count + 1);
+
+        if (Core.ClipboardImage is not null)
         {
-            var strBuilder = new StringBuilder();
-            int count = 0;
-
-            if (Core.ClipboardImage is not null)
-            {
-                strBuilder.Append(Core.Lang[LangId._ClipboardImage]);
-                count++;
-            }
-
-            foreach (var tag in Core.Config.ImageInfoTags)
-            {
-                var tagValue = tag switch
-                {
-                    nameof(AppName) => AppName,
-                    nameof(Name) => Name,
-                    nameof(Path) => Path,
-                    nameof(FileSize) => FileSize,
-                    nameof(ModifiedDateTime) => ModifiedDateTime,
-
-                    nameof(Dimension) => Dimension,
-                    nameof(FrameCount) => FrameCount,
-                    nameof(ListCount) => ListCount,
-                    nameof(Zoom) => Zoom,
-
-                    nameof(ExifRating) => ExifRating,
-                    nameof(ExifDateTime) => ExifDateTime,
-                    nameof(ExifDateTimeOriginal) => ExifDateTimeOriginal,
-                    nameof(DateTimeAuto) => DateTimeAuto,
-                    nameof(HdrInfo) => HdrInfo,
-                    nameof(ColorSpace) => ColorSpace,
-                    nameof(DPI) => DPI,
-                    _ => null,
-                };
-
-                if (!string.IsNullOrWhiteSpace(tagValue))
-                {
-                    if (count > 0)
-                    {
-                        strBuilder.Append("  ︱  ");
-                    }
-
-                    strBuilder.Append(tagValue);
-                    count++;
-                }
-            }
-
-            return strBuilder.ToString();
+            items.Add(new(CLIPBOARD_TAG, Core.Lang[LangId._ClipboardImage]));
         }
+
+        foreach (var tag in Core.Config.ImageInfoTags)
+        {
+            var tagValue = GetTagValue(tag);
+
+            if (!string.IsNullOrWhiteSpace(tagValue))
+            {
+                items.Add(new(tag, tagValue));
+            }
+        }
+
+        return items;
     }
+
+
+    /// <summary>
+    /// Joins the items into the status text.
+    /// </summary>
+    public static string ToText(IReadOnlyList<ImageInfoItem> items)
+    {
+        var strBuilder = new StringBuilder();
+
+        for (var i = 0; i < items.Count; i++)
+        {
+            if (i > 0)
+            {
+                strBuilder.Append(TEXT_SEPARATOR);
+            }
+
+            strBuilder.Append(items[i].Value);
+        }
+
+        return strBuilder.ToString();
+    }
+
+
+    /// <summary>
+    /// Gets the value of an image info tag; <c>null</c> when it has none or the tag is unknown.
+    /// </summary>
+    private string? GetTagValue(string tag) => tag switch
+    {
+        nameof(AppName) => AppName,
+        nameof(Name) => Name,
+        nameof(Path) => Path,
+        nameof(FileSize) => FileSize,
+        nameof(ModifiedDateTime) => ModifiedDateTime,
+
+        nameof(Dimension) => Dimension,
+        nameof(FrameCount) => FrameCount,
+        nameof(ListCount) => ListCount,
+        nameof(Zoom) => Zoom,
+
+        nameof(ExifRating) => ExifRating,
+        nameof(ExifDateTime) => ExifDateTime,
+        nameof(ExifDateTimeOriginal) => ExifDateTimeOriginal,
+        nameof(DateTimeAuto) => DateTimeAuto,
+        nameof(HdrInfo) => HdrInfo,
+        nameof(ColorSpace) => ColorSpace,
+        nameof(DPI) => DPI,
+        _ => null,
+    };
 
 
     public AppStatusInfo(ViewerControl viewer)
@@ -468,6 +495,7 @@ public partial class AppStatusInfo : PhDisposable
         Core.Photos.PropertyChanged += Photos_PropertyChanged;
         Core.ImageTransform.Changed += ImageTransform_Changed;
         Core.Config.PropertyChanged += Config_PropertyChanged;
+        Core.LanguageChanged += Core_LanguageChanged;
         _viewer.ZoomChanged += Viewer_ZoomChanged;
         _viewer.PhotoFrameChanged += Viewer_PhotoFrameChanged;
     }
@@ -480,8 +508,16 @@ public partial class AppStatusInfo : PhDisposable
         Core.Photos.PropertyChanged -= Photos_PropertyChanged;
         Core.ImageTransform.Changed -= ImageTransform_Changed;
         Core.Config.PropertyChanged -= Config_PropertyChanged;
+        Core.LanguageChanged -= Core_LanguageChanged;
         _viewer.ZoomChanged -= Viewer_ZoomChanged;
         _viewer.PhotoFrameChanged -= Viewer_PhotoFrameChanged;
+    }
+
+
+    private void Core_LanguageChanged(object? sender, EventArgs e)
+    {
+        // some values are localized, e.g. the file count
+        Changed?.Invoke(this, EventArgs.Empty);
     }
 
 
@@ -542,3 +578,9 @@ public partial class AppStatusInfo : PhDisposable
 
 
 }
+
+
+/// <summary>
+/// The formatted value of one image info tag (see <see cref="Config.ImageInfoTags"/>), e.g. the file size.
+/// </summary>
+public readonly record struct ImageInfoItem(string Tag, string Value);

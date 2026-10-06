@@ -671,6 +671,13 @@ public class Lang
         new(LangId.ScrollbarMode_AutoHide, "Auto-hide"),
         new(LangId.ScrollbarMode_Always, "Always"),
 
+        // ImageInfoOverlayMode
+        new(LangId.ImageInfoOverlayMode_Hidden, "Hidden"),
+        new(LangId.ImageInfoOverlayMode_Always, "Always visible"),
+        new(LangId.ImageInfoOverlayMode_AlwaysAutoHide, "Auto-hide"),
+        new(LangId.ImageInfoOverlayMode_Borderless, "Borderless window only"),
+        new(LangId.ImageInfoOverlayMode_BorderlessAutoHide, "Borderless window only, auto-hide"),
+
         #endregion // Enums
 
 
@@ -1070,6 +1077,10 @@ public class Lang
         new(LangId.Settings_Layout_Gallery, "Gallery"),
         new(LangId.Settings_Layout_ToolbarPosition, "Toolbar position"),
         new(LangId.Settings_Layout_GalleryPosition, "Gallery position"),
+
+        // Layout > Image information
+        new(LangId.Settings_ImageInfo, "Image information"),
+        new(LangId.Settings_ImageInfoOverlay, "Image information overlay"),
         #endregion // Settings > Tab Layout
 
 

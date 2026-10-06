@@ -271,7 +271,10 @@ public partial class MainWindow : PhWindow
 
     private void Status_Changed(object? sender, EventArgs e)
     {
-        VM.Title = _status.Text;
+        var items = _status.GetItems();
+
+        VM.Title = AppStatusInfo.ToText(items);
+        PART_MainView.PART_ImageInfoOverlay.SetItems(items);
     }
 
 

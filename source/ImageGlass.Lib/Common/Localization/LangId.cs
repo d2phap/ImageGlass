@@ -221,6 +221,13 @@ public enum LangId
     ScrollbarMode_AutoHide,
     ScrollbarMode_Always,
 
+    // values match the ImageInfoOverlayMode enum members
+    ImageInfoOverlayMode_Hidden,
+    ImageInfoOverlayMode_Always,
+    ImageInfoOverlayMode_AlwaysAutoHide,
+    ImageInfoOverlayMode_Borderless,
+    ImageInfoOverlayMode_BorderlessAutoHide,
+
     #endregion // Enums
 
 
@@ -628,6 +635,10 @@ public enum LangId
     Settings_Layout_Gallery,
     Settings_Layout_ToolbarPosition,
     Settings_Layout_GalleryPosition,
+
+    // Layout > Image information
+    Settings_ImageInfo,
+    Settings_ImageInfoOverlay,
     #endregion // Settings > Tab Layout
 
 

@@ -838,6 +838,16 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets where and how the image info tags are shown on top of the image.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumSafeConverter<ImageInfoOverlayMode>))]
+    public ImageInfoOverlayMode ImageInfoOverlayMode
+    {
+        get => Get(ConfigId.ImageInfoOverlayMode, ImageInfoOverlayMode.BorderlessAutoHide);
+        set => Set(ConfigId.ImageInfoOverlayMode, value);
+    }
+
+    /// <summary>
     /// Gets, sets how the app behaves while browsing photos.
     /// <see cref="BrowsingMode.Sequential"/> ignores navigation until the current photo
     /// is fully loaded and rendered.
@@ -963,10 +973,6 @@ public partial class Config : PhReactive
         get => Get(ConfigId.EditApps, new Dictionary<string, EditingApp?>());
         set => Set(ConfigId.EditApps, value);
     }
-
-    /// <summary>
-    /// Gets, sets the list of formats that always use native codec to decode.
-    /// </summary>
 
     /// <summary>
     /// Gets, sets the list of supported image formats

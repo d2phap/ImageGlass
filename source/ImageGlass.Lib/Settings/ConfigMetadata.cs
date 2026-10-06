@@ -133,6 +133,7 @@ public enum ConfigId
 
     CheckerboardMode,
     ViewerScrollbarMode,
+    ImageInfoOverlayMode,
     BrowsingMode,
     ImageLoadingOrder,
     ImageLoadingOrderType,

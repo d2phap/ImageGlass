@@ -20,6 +20,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using D2Phap.FileWatcherEx;
@@ -56,6 +57,9 @@ public partial class MainWindowView : PhControl
 
     // land on the last photo of the list being searched (backward folder switch)
     private bool _selectLastOnSearch;
+
+    // the message's own margin, before it is inset to keep clear of the image info bar
+    private Thickness _messageMargin;
 
 
     public MainWindowViewModel VM => (MainWindowViewModel)DataContext!;
@@ -106,6 +110,11 @@ public partial class MainWindowView : PhControl
         UpdateMotionButtonTooltip();
         UpdateMotionButtonState();
 
+        // the in-app message keeps clear of the image info bar
+        _messageMargin = PART_Message.Margin;
+        PART_ImageInfoOverlay.PropertyChanged += PART_ImageInfoOverlay_PropertyChanged;
+        UpdateMessageMargin();
+
         // hook viewer events for external tool broadcasting
         PART_Viewer.PhotoLoading += Core.Viewer_PhotoLoadingForPlugins;
         PART_Viewer.ViewerPointerMoved += Core.Viewer_PointerMovedForPlugins;
@@ -142,6 +151,8 @@ public partial class MainWindowView : PhControl
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
         PART_BtnMotionVideo.Click -= PART_BtnMotionVideo_Click;
+
+        PART_ImageInfoOverlay.PropertyChanged -= PART_ImageInfoOverlay_PropertyChanged;
 
         // unhook viewer events for external tools
         PART_Viewer.PhotoLoading -= Core.Viewer_PhotoLoadingForPlugins;
@@ -425,6 +436,17 @@ public partial class MainWindowView : PhControl
     private async void PART_BtnMotionVideo_Click(object? sender, RoutedEventArgs e)
     {
         _ = await Core.API.RunApiAsync(API.IG_ToggleImageAnimation);
+    }
+
+
+    private void PART_ImageInfoOverlay_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        // the bar's reach, or the edge it sits on
+        var isPlacementChanged = e.Property == ImageInfoOverlay.CoveredHeightProperty
+            || e.Property == VerticalAlignmentProperty;
+        if (!isPlacementChanged) return;
+
+        UpdateMessageMargin();
     }
 
 
@@ -1287,6 +1309,24 @@ public partial class MainWindowView : PhControl
         var isFrameNavOpen = PART_ToolHost.Tool?.ToolId == FrameNavToolControl.TOOL_ID;
 
         PART_MotionButtonHost.IsVisible = isLivePhoto && !isFrameNavOpen;
+    }
+
+
+    /// <summary>
+    /// Insets the message from the edge the image info bar sits on by the bar's reach, so they never overlap.
+    /// </summary>
+    private void UpdateMessageMargin()
+    {
+        var inset = PART_ImageInfoOverlay.CoveredHeight;
+        var isBarAtBottom = PART_ImageInfoOverlay.VerticalAlignment == VerticalAlignment.Bottom;
+        var topInset = isBarAtBottom ? 0 : inset;
+        var bottomInset = isBarAtBottom ? inset : 0;
+
+        PART_Message.Margin = new Thickness(
+            _messageMargin.Left,
+            _messageMargin.Top + topInset,
+            _messageMargin.Right,
+            _messageMargin.Bottom + bottomInset);
     }
 
 

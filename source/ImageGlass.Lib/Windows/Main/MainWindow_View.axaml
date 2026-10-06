@@ -52,6 +52,7 @@
                     ZoomMode="{CompiledBinding ZoomMode, Source={x:Static cm:Core.Config}}"
                     ZoomSpeed="{CompiledBinding ZoomSpeed, Source={x:Static cm:Core.Config}}">
                     <Panel>
+                        <viewer:ImageInfoOverlay x:Name="PART_ImageInfoOverlay" />
                         <ui:MessageControl x:Name="PART_Message" />
                         <viewer:SlideshowCountdownOverlay x:Name="PART_SlideshowCountdown" IsHitTestVisible="False" />
                         <viewer:NavButtonsOverlay IsVisible="{CompiledBinding EnableNavigationButtons, Source={x:Static cm:Core.Config}}" />
