@@ -34,15 +34,15 @@
                 <!--  View first frame  -->
                 <ui:PhToolButton
                     x:Name="PART_BtnViewFirstFrame"
-                    Padding="6"
+                    Padding="8"
                     BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="24"
-                        Height="24"
+                        Width="20"
+                        Height="20"
                         Data="{StaticResource IconArrowPrevious}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -51,15 +51,15 @@
                 <!--  View previous frame  -->
                 <ui:PhToolButton
                     x:Name="PART_BtnViewPreviousFrame"
-                    Padding="6"
+                    Padding="8"
                     BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="24"
-                        Height="24"
+                        Width="20"
+                        Height="20"
                         Data="{StaticResource IconArrowLeft}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -68,7 +68,7 @@
                 <!--  Play/Pause animation  -->
                 <ui:PhToolButton
                     x:Name="PART_BtnToggleAnimation"
-                    Padding="6"
+                    Padding="8"
                     BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.CanPlay}"
@@ -77,21 +77,21 @@
                     <Panel IsHitTestVisible="False">
                         <!--  Live Photo  -->
                         <PathIcon
-                            Width="24"
-                            Height="24"
+                            Width="20"
+                            Height="20"
                             Data="{StaticResource IconLivePhoto}"
                             IsVisible="{CompiledBinding #Root.IsLivePhoto}" />
 
                         <!--  Animated Photo  -->
                         <StackPanel IsVisible="{CompiledBinding !#Root.IsLivePhoto}">
                             <PathIcon
-                                Width="24"
-                                Height="24"
+                                Width="20"
+                                Height="20"
                                 Data="{StaticResource IconPlay}"
                                 IsVisible="{CompiledBinding !#Root.IsPlaying}" />
                             <PathIcon
-                                Width="24"
-                                Height="24"
+                                Width="20"
+                                Height="20"
                                 Data="{StaticResource IconPause}"
                                 IsVisible="{CompiledBinding #Root.IsPlaying}" />
                         </StackPanel>
@@ -102,15 +102,15 @@
                 <!--  View next frame  -->
                 <ui:PhToolButton
                     x:Name="PART_BtnViewNextFrame"
-                    Padding="6"
+                    Padding="8"
                     BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="24"
-                        Height="24"
+                        Width="20"
+                        Height="20"
                         Data="{StaticResource IconArrowRight}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -119,15 +119,15 @@
                 <!--  View last frame  -->
                 <ui:PhToolButton
                     x:Name="PART_BtnViewLastFrame"
-                    Padding="6"
+                    Padding="8"
                     BorderThickness="1"
                     Focusable="False"
                     IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="24"
-                        Height="24"
+                        Width="20"
+                        Height="20"
                         Data="{StaticResource IconArrowNext}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -142,15 +142,15 @@
             <!--  Export current frame  -->
             <ui:PhToolButton
                 x:Name="PART_BtnExportFrame"
-                Padding="6"
+                Padding="8"
                 BorderThickness="1"
                 Focusable="False"
                 IsEnabled="{CompiledBinding #Root.HasMultiFrames}"
                 ToolTip.Placement="Top"
                 ToolTip.VerticalOffset="0">
                 <PathIcon
-                    Width="24"
-                    Height="24"
+                    Width="20"
+                    Height="20"
                     Data="{StaticResource IconImageForward}"
                     IsHitTestVisible="False" />
             </ui:PhToolButton>
