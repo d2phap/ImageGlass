@@ -199,10 +199,26 @@
             <CheckBox x:Name="PART_EnableCenterWindowFit">
                 <ui:PhTextBlock LangKey="Settings_EnableCenterWindowFit" TextWrapping="Wrap" />
             </CheckBox>
+        </StackPanel>
 
-            <!--  Image information tags  -->
-            <StackPanel Margin="0,10,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
-                <ui:PhTextBlock FontWeight="SemiBold" LangKey="Settings_ImageInfoTags" />
+
+
+        <!--  Image information  -->
+        <ui:PhTextBlock Classes="group" LangKey="Settings_ImageInfo" />
+        <StackPanel Margin="{DynamicResource SettingsGroupIndent}" Spacing="10">
+
+            <!--  Overlay  -->
+            <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock LangKey="Settings_ImageInfoOverlay" />
+                <ComboBox
+                    x:Name="PART_ImageInfoOverlayMode"
+                    MinWidth="200"
+                    HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <!--  Tags  -->
+            <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock LangKey="Settings_ImageInfoTags" />
                 <ui:PhTextBox
                     x:Name="PART_ImageInfoTags"
                     Width="{StaticResource LayoutSectionWidth}"
@@ -226,6 +242,7 @@
                     Opacity="0.7"
                     TextWrapping="Wrap" />
             </StackPanel>
+
         </StackPanel>
 
 
