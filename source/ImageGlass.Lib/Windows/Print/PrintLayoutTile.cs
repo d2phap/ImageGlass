@@ -38,6 +38,9 @@ public sealed class PrintLayoutTile : PhControl
     private const double BOX_SIZE = 44;
     private const float CELL_RADIUS = 1.5f;
 
+    // a layout's gutter shrinks to a hairline in a tile, so the cells get a gap of their own
+    private const double CELL_GAP = 2;
+
     private SKSize _pageSizePt = new(595, 842);
     private IReadOnlyList<SKRect> _cellRectsPt = [];
 
@@ -106,11 +109,16 @@ public sealed class PrintLayoutTile : PhControl
         var scaleY = page.Height / _pageSizePt.Height;
         foreach (var cell in _cellRectsPt)
         {
+            var w = cell.Width * scaleX;
+            var h = cell.Height * scaleY;
+            var gapX = Math.Min(CELL_GAP, w - 1) / 2;
+            var gapY = Math.Min(CELL_GAP, h - 1) / 2;
+
             var rect = new Rect(
-                page.X + cell.Left * scaleX,
-                page.Y + cell.Top * scaleY,
-                Math.Max(1, cell.Width * scaleX),
-                Math.Max(1, cell.Height * scaleY));
+                page.X + cell.Left * scaleX + Math.Max(0, gapX),
+                page.Y + cell.Top * scaleY + Math.Max(0, gapY),
+                Math.Max(1, w - 2 * Math.Max(0, gapX)),
+                Math.Max(1, h - 2 * Math.Max(0, gapY)));
 
             c.DrawRectangleEx(rect, CELL_RADIUS, null, accent.WithAlpha(150));
         }
