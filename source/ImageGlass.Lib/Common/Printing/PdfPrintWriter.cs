@@ -38,9 +38,9 @@ public sealed record PdfWriteOptions
     public float Dpi { get; init; } = 300;
 
     /// <summary>
-    /// Gets the JPEG quality for opaque images; above 100 keeps every image lossless.
+    /// Gets the JPEG quality for opaque images, above 100 for lossless; 95 keeps a photo's PDF near its own file size, not four times it.
     /// </summary>
-    public int EncodingQuality { get; init; } = 101;
+    public int EncodingQuality { get; init; } = 95;
 
     /// <summary>
     /// Gets whether a landscape page is turned onto portrait paper, for print systems that would otherwise rotate or scale it on their own.

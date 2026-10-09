@@ -471,13 +471,14 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
         var w = Math.Max(1, (int)Math.Round(rect.Width * scale));
         var h = Math.Max(1, (int)Math.Round(rect.Height * scale));
 
-        // printing goes through 8-bit sRGB on every backend, and int.MaxValue bytes is the ceiling of any surface
-        var info = new SKImageInfo(w, h, SKColorType.Rgba8888, SKAlphaType.Premul, SKColorSpace.CreateSrgb());
+        // 8-bit sRGB, opaque on the white of the paper so a PDF may store it as JPEG; int.MaxValue bytes caps any surface
+        var info = new SKImageInfo(w, h, SKColorType.Rgba8888, SKAlphaType.Opaque, SKColorSpace.CreateSrgb());
         if (info.BytesSize64 > int.MaxValue) return null;
 
         using var surface = SKSurface.Create(info);
         if (surface is null) return null;
 
+        surface.Canvas.Clear(SKColors.White);
         var sampling = scale < 1 ? new SKSamplingOptions(SKCubicResampler.Mitchell) : new SKSamplingOptions(SKFilterMode.Linear);
         surface.Canvas.DrawImage(src, SKRect.Create(rect.Left, rect.Top, rect.Width, rect.Height), SKRect.Create(w, h), sampling);
 
