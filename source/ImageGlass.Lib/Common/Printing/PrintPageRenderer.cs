@@ -19,6 +19,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Common.Extensions;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -210,59 +214,119 @@ public static class PrintPageRenderer
 
 
     /// <summary>
-    /// Draws the caption of a print centered in its band, cut short with an ellipsis when too long.
+    /// Draws the caption of a print centered in its band, each script in a font that has it, cut short with an ellipsis when too long.
     /// </summary>
     private static void DrawCaption(SKCanvas canvas, SKRect rect, string text)
     {
         if (string.IsNullOrEmpty(text) || rect.Width <= 0) return;
 
-        // a name in a script the default font lacks falls back to a font that has it
-        var typeface = SKTypeface.Default;
-        using var font = new SKFont(typeface, CAPTION_FONT_PT);
-        if (!font.ContainsGlyphs(text))
-        {
-            var missing = FindMissingCodepoint(font, text);
-            if (missing > 0 && SKFontManager.Default.MatchCharacter(missing) is { } fallback) font.Typeface = fallback;
-        }
+        using var fonts = new CaptionFonts();
+        var runs = fonts.Split(Ellipsize(fonts, text, rect.Width - 4));
+        var width = runs.Sum(i => i.Font.MeasureText(i.Text));
 
-        var caption = Ellipsize(font, text, rect.Width - 4);
         using var paint = new SKPaint { Color = new SKColor(0x40, 0x40, 0x40), IsAntialias = true };
-        var origin = new SKPoint(rect.MidX - font.MeasureText(caption) / 2, rect.MidY + CAPTION_FONT_PT * 0.35f);
+        var x = rect.MidX - width / 2;
+        var y = rect.MidY + CAPTION_FONT_PT * 0.35f;
 
         // as outlines, a PDF embeds no font: the whole font would otherwise weigh more than the photos
-        using var path = font.GetTextPath(caption, origin);
-        canvas.DrawPath(path, paint);
-    }
-
-
-    private static int FindMissingCodepoint(SKFont font, string text)
-    {
-        for (var i = 0; i < text.Length; i++)
+        foreach (var (runText, font) in runs)
         {
-            var codepoint = char.ConvertToUtf32(text, i);
-            if (char.IsSurrogatePair(text, i)) i++;
-            if (font.GetGlyph(codepoint) == 0) return codepoint;
+            using var path = font.GetTextPath(runText, new SKPoint(x, y));
+            canvas.DrawPath(path, paint);
+            x += font.MeasureText(runText);
         }
-
-        return 0;
     }
 
 
-    private static string Ellipsize(SKFont font, string text, float maxWidth)
+    /// <summary>
+    /// Cuts the text at the longest start of whole characters that fits with an ellipsis.
+    /// </summary>
+    private static string Ellipsize(CaptionFonts fonts, string text, float maxWidth)
     {
-        if (font.MeasureText(text) <= maxWidth) return text;
+        if (fonts.Measure(text) <= maxWidth) return text;
 
-        // the longest start that still fits with the ellipsis
+        // the starts of whole characters, so neither a surrogate pair nor a combining mark is cut
+        var starts = StringInfo.ParseCombiningCharacters(text);
         var low = 0;
-        var high = text.Length;
+        var high = starts.Length - 1;
         while (low < high)
         {
             var mid = (low + high + 1) / 2;
-            if (font.MeasureText(text[..mid] + "…") <= maxWidth) low = mid;
+            if (fonts.Measure(text[..starts[mid]] + "…") <= maxWidth) low = mid;
             else high = mid - 1;
         }
 
-        return low == 0 ? "…" : text[..low] + "…";
+        return low == 0 ? "…" : text[..starts[low]] + "…";
+    }
+
+
+    /// <summary>
+    /// The fonts of a caption: the default one, and for a character it lacks, a font of the system that has it.
+    /// </summary>
+    private sealed class CaptionFonts : IDisposable
+    {
+        private readonly SKFont _default = new(SKTypeface.Default, CAPTION_FONT_PT);
+        private readonly List<(SKTypeface Typeface, SKFont Font)> _fallbacks = [];
+
+
+        /// <summary>
+        /// Splits the text into runs that each draw in one font.
+        /// </summary>
+        public List<(string Text, SKFont Font)> Split(string text)
+        {
+            var runs = new List<(string, SKFont)>();
+            var run = new StringBuilder();
+            SKFont? runFont = null;
+
+            foreach (var rune in text.EnumerateRunes())
+            {
+                var font = GetFont(rune.Value);
+                if (runFont is not null && !ReferenceEquals(font, runFont))
+                {
+                    runs.Add((run.ToString(), runFont));
+                    run.Clear();
+                }
+
+                runFont = font;
+                run.Append(rune.ToString());
+            }
+
+            if (runFont is not null && run.Length > 0) runs.Add((run.ToString(), runFont));
+            return runs;
+        }
+
+
+        public float Measure(string text) => Split(text).Sum(i => i.Font.MeasureText(i.Text));
+
+
+        private SKFont GetFont(int codepoint)
+        {
+            if (_default.GetGlyph(codepoint) != 0) return _default;
+
+            foreach (var (_, font) in _fallbacks)
+            {
+                if (font.GetGlyph(codepoint) != 0) return font;
+            }
+
+            // a character no font has stays in the default one, as a box
+            var typeface = SKFontManager.Default.MatchCharacter(codepoint);
+            if (typeface is null) return _default;
+
+            var fallback = new SKFont(typeface, CAPTION_FONT_PT);
+            _fallbacks.Add((typeface, fallback));
+            return fallback;
+        }
+
+
+        public void Dispose()
+        {
+            _default.Dispose();
+            foreach (var (typeface, font) in _fallbacks)
+            {
+                font.Dispose();
+                typeface.Dispose();
+            }
+        }
     }
 
 
