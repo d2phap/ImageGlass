@@ -39,7 +39,7 @@ namespace ImageGlass.Linux.Common;
 /// the host backend can resolve the real paths. Trashing is handled separately
 /// (see <see cref="FreeDesktopTrash"/>) because the Trash portal is unreliable on
 /// some desktops; the OpenURI, Email and Print portals are not used because they
-/// require FD passing for local files (see <see cref="OpenPath"/>).
+/// require FD passing for local files (see <see cref="OpenPath"/>), which only <see cref="XdgPrintPortal"/> does, for printing.
 /// </remarks>
 internal static class XdgPortal
 {
