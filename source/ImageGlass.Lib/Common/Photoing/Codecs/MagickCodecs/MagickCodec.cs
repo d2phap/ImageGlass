@@ -360,10 +360,10 @@ public static partial class MagickCodec
                     meta.Height = meta.OriginalWidth;
                 }
 
-                // DPI: Convert units to inch
-                var density = imgC[frameIndex].Density;
-                meta.DpiX = density.X * 2.54d;
-                meta.DpiY = density.Y * 2.54d;
+                // DPI: only a density per centimeter converts; one per inch or of no unit is already right
+                var density = imgC[frameIndex].Density.ChangeUnits(DensityUnit.PixelsPerInch);
+                meta.DpiX = density.X;
+                meta.DpiY = density.Y;
 
                 // image color
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
