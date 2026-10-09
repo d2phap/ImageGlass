@@ -983,8 +983,11 @@ public static class Core
     /// </summary>
     public static async Task<string?> SavePhotoAsTempFileAsync(string ext = ".png")
     {
-        // 1. check if we can use the current clipboard image path
-        if (File.Exists(Core.TempImagePath))
+        var photo = Core.ClipboardImage ?? Core.Photos.Current;
+        var state = new TempImageState(photo, Core.ImageTransform.Orientation, Core.ImageTransform.IsColorInverted);
+
+        // 1. reuse the temp file only when it was written for this photo in this exact state
+        if (File.Exists(Core.TempImagePath) && state == _tempImageState)
         {
             var extension = Path.GetExtension(Core.TempImagePath);
 
@@ -1000,7 +1003,6 @@ public static class Core
 
 
         // 3. save the photo to file
-        var photo = Core.ClipboardImage ?? Core.Photos.Current;
         if (photo is not null)
         {
             try
@@ -1012,6 +1014,7 @@ public static class Core
                 await photo.SaveAsAsync(tempFilePath, Core.ImageTransform, quality);
 
                 Core.TempImagePath = tempFilePath;
+                _tempImageState = state;
             }
             catch
             {
@@ -1021,6 +1024,11 @@ public static class Core
 
         return Core.TempImagePath;
     }
+
+
+    // the photo and transform the temp file was written with
+    private static TempImageState _tempImageState;
+    private readonly record struct TempImageState(Photo? Photo, ImageOrientation Orientation, bool IsColorInverted);
 
 
     /// <summary>

@@ -527,7 +527,8 @@ public static partial class MagickCodec
             var i = 0;
             foreach (var imgFrameM in imgColl)
             {
-                ProcessMagickImage__((MagickImage)imgFrameM, options, meta, false);
+                ProcessMagickImage__((MagickImage)imgFrameM, options, meta, false, out var frameConversion);
+                if (i == 0) result.ColorConversion = frameConversion;
 
                 // apply transformation
                 if (i == transform?.FrameIndex || transform?.FrameIndex == -1)
@@ -608,9 +609,14 @@ public static partial class MagickCodec
         }
 
 
-        // 2.3 process image
-        var thumbM = ProcessMagickImage__(imgM, options, meta, true);
-        if (thumbM != null) imgM = thumbM;
+        // 2.3 process image; an embedded thumbnail replaces the full image, which is freed now
+        var thumbM = ProcessMagickImage__(imgM, options, meta, true, out var conversion);
+        if (thumbM != null)
+        {
+            imgM.Dispose();
+            imgM = thumbM;
+        }
+        result.ColorConversion = conversion;
 
 
         // 2.4 apply final changes
@@ -1378,9 +1384,32 @@ public static partial class MagickCodec
 
 
     /// <summary>
-    /// Get Magick color profile.
+    /// Gets the color space the decoded pixels are in, so their tag describes the conversion the decode applied.
     /// </summary>
-    /// <param name="name">Name or Full path of color profile</param>
+    public static SKColorSpace? GetDecodedColorSpace(MagickDecoderOutput output, PhotoMetadata meta)
+    {
+        return output.ColorConversion switch
+        {
+            MagickColorConversion.ToDisplayProfile => Core.IsDestColorProfileSupported ? Core.DestColorProfile : null,
+            MagickColorConversion.ToSrgb => null,
+            _ => meta.SkiaColorSpace,
+        };
+    }
+
+
+    /// <summary>
+    /// Checks whether the decoded pixels carry a display profile their tag cannot describe, such as a CMYK soft-proof.
+    /// </summary>
+    public static bool HasBakedDisplayProfile(MagickDecoderOutput output, PhotoMetadata meta)
+    {
+        return output.ColorConversion == MagickColorConversion.ToDisplayProfile
+            && GetDecodedColorSpace(output, meta) is null;
+    }
+
+
+    /// <summary>
+    /// Gets the Magick color profile from its name or the full path of its file.
+    /// </summary>
     public static ColorProfile? GetColorProfileByName(string name)
     {
         // 1. don't use color profile

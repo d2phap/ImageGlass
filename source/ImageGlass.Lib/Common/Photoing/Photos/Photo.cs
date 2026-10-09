@@ -129,6 +129,11 @@ public partial class Photo : PhDisposable
     public double DecodeScale { get; private set; } = 1;
 
     /// <summary>
+    /// Gets whether the decoded pixels carry a display profile their color tag cannot describe, as a CMYK soft-proof does.
+    /// </summary>
+    public bool HasBakedDisplayProfile { get; private set; }
+
+    /// <summary>
     /// Whether a load will decode the embedded RAW preview instead of the full image.
     /// </summary>
     public bool WillDecodeEmbeddedPreview => ReadOptions.OnlyLoadRawPreview
@@ -472,6 +477,7 @@ public partial class Photo : PhDisposable
         _width = (uint)Metadata.Width;
         _height = (uint)Metadata.Height;
         DecodeScale = 1;
+        HasBakedDisplayProfile = false;
 
         State = state;
     }
@@ -499,6 +505,7 @@ public partial class Photo : PhDisposable
         _width = (uint)result.Size.Width;
         _height = (uint)result.Size.Height;
         DecodeScale = result.DecodeScale;
+        HasBakedDisplayProfile = result.HasBakedDisplayProfile;
 
         if (result.VectorSource is not null)
         {
@@ -1023,6 +1030,7 @@ public partial class Photo : PhDisposable
                 {
                     // update decoder codec
                     CodecId = result.CodecId;
+                    HasBakedDisplayProfile = result.HasBakedDisplayProfile;
 
                     // Detach the frame from the result so its dispose doesn't free our image.
                     var detached = sf;
@@ -1034,7 +1042,8 @@ public partial class Photo : PhDisposable
             // Fallback: legacy direct-Magick path (e.g. SVG vector codec returned no raster).
             using var data = await MagickCodec.DecodeImageAsync(Metadata,
                 options, GetOrCreateMagickReadSettings(), null, CancellationToken.None);
-            return SkiaCodec.FromMagick(data.SingleFrame, Metadata.SkiaColorSpace, Metadata.IsHdr);
+            HasBakedDisplayProfile = MagickCodec.HasBakedDisplayProfile(data, Metadata);
+            return SkiaCodec.FromMagick(data.SingleFrame, MagickCodec.GetDecodedColorSpace(data, Metadata), Metadata.IsHdr);
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
 
 
@@ -1058,18 +1067,24 @@ public partial class Photo : PhDisposable
 
 
     /// <summary>
-    /// Decodes a fresh copy of the given frame directly from the source, WITHOUT touching the cached
-    /// <see cref="Bitmap"/> or the current frame index. The caller owns the returned image. Used by
-    /// the viewer to (re)capture the pre-tone-map HDR frame for live re-tone-mapping without a full,
-    /// display-disrupting reload.
+    /// Decodes a fresh copy of a frame without touching <see cref="Bitmap"/> or the frame index; the caller owns the image.
     /// </summary>
-    public async Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, CancellationToken token = default)
+    public Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, CancellationToken token = default)
+    {
+        return DecodeStaticFrameAsync(frameIndex, null, token);
+    }
+
+
+    /// <summary>
+    /// Decodes a fresh copy of a frame like the overload above, reading with <paramref name="readOptions"/> instead of <see cref="ReadOptions"/> when given.
+    /// </summary>
+    public async Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, PhotoReadOptions? readOptions, CancellationToken token = default)
     {
         var newFrameIndex = (int)frameIndex;
 
         return await Task.Factory.StartNew(async () =>
         {
-            var options = ReadOptions with { FrameIndex = newFrameIndex };
+            var options = (readOptions ?? ReadOptions) with { FrameIndex = newFrameIndex };
             var context = CreateCodecSelectionContext(Metadata);
             var codec = Core.CodecRegistry.SelectDecodeCodec(Metadata, context);
             if (codec is not null)
@@ -1087,7 +1102,7 @@ public partial class Photo : PhDisposable
             // fallback: direct Magick decode
             using var data = await MagickCodec.DecodeImageAsync(Metadata, options,
                 GetOrCreateMagickReadSettings(), null, token);
-            return SkiaCodec.FromMagick(data.SingleFrame, Metadata.SkiaColorSpace, Metadata.IsHdr);
+            return SkiaCodec.FromMagick(data.SingleFrame, MagickCodec.GetDecodedColorSpace(data, Metadata), Metadata.IsHdr);
         }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
     }
 

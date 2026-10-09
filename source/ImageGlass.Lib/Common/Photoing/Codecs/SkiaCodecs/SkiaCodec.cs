@@ -582,23 +582,8 @@ public static partial class SkiaCodec
     {
         if (imgSrc.IsDisposed() || transform is null || !transform.HasChanges) return null;
 
-        SKImage? result = null;
-
-        // flip
-        if (transform.Flips != FlipOptions.None)
-        {
-            var flipped = FlipImage(result ?? imgSrc, transform.Flips);
-            result?.Dispose();
-            result = flipped;
-        }
-
-        // rotation
-        if (transform.Rotation != 0)
-        {
-            var rotated = RotateImage(result ?? imgSrc, transform.Rotation);
-            result?.Dispose();
-            result = rotated;
-        }
+        // flips then rotation, as one exact right-angle orientation
+        var result = OrientImage(imgSrc, transform.Orientation);
 
         // invert color
         if (transform.IsColorInverted)
@@ -606,6 +591,68 @@ public static partial class SkiaCodec
             var inverted = InvertImageColors(result ?? imgSrc);
             result?.Dispose();
             result = inverted;
+        }
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Returns a new image mirrored and turned by <paramref name="orientation"/>, or <c>null</c> for the identity.
+    /// </summary>
+    public static SKImage? OrientImage(SKImage? imgSrc, ImageOrientation orientation)
+    {
+        if (imgSrc.IsDisposed() || orientation.IsIdentity) return null;
+
+        // the exact swapped size: a bounding box from sin/cos can gain a pixel on a long panorama
+        var (w, h) = (imgSrc.Width, imgSrc.Height);
+        var (outW, outH) = orientation.GetSize(w, h);
+
+        var info = new SKImageInfo(outW, outH, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
+        using var surface = SKSurface.Create(info);
+        if (surface.IsDisposed()) return null;
+
+        // canvas transforms apply last-first: mirror about the source center, then turn about the output center
+        var canvas = surface.Canvas;
+        canvas.Translate(outW / 2f, outH / 2f);
+        canvas.RotateDegrees(orientation.Rotation);
+        if (orientation.IsMirrored) canvas.Scale(-1, 1);
+        canvas.Translate(-w / 2f, -h / 2f);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
+
+        return surface.Snapshot();
+    }
+
+
+    /// <summary>
+    /// Returns a new image with the viewer edits in their one order (channels, invert, orientation), or <c>null</c> when there are none.
+    /// </summary>
+    public static SKImage? ApplyImageEdits(SKImage? imgSrc, ColorChannels channels, bool isColorInverted, ImageOrientation orientation)
+    {
+        if (imgSrc.IsDisposed()) return null;
+
+        SKImage? result = null;
+
+        // 1. color channels: pixel ops first, as geometry commutes with them
+        if (!channels.HasFlag(ColorChannels.RGBA))
+        {
+            result = FilterImageColorChannels(imgSrc, channels);
+        }
+
+        // 2. invert
+        if (isColorInverted)
+        {
+            var inverted = InvertImageColors(result ?? imgSrc);
+            result?.Dispose();
+            result = inverted;
+        }
+
+        // 3. orientation
+        var oriented = OrientImage(result ?? imgSrc, orientation);
+        if (oriented is not null)
+        {
+            result?.Dispose();
+            result = oriented;
         }
 
         return result;
@@ -725,12 +772,12 @@ public static partial class SkiaCodec
         var w = imgSrc.Width;
         var h = imgSrc.Height;
 
-        // compute the bounding box of the rotated image
+        // compute the bounding box of the rotated image; cos(90) is not exactly 0, so ignore a sliver past a whole pixel
         var rad = degree * Math.PI / 180.0;
         var cos = Math.Abs(Math.Cos(rad));
         var sin = Math.Abs(Math.Sin(rad));
-        var outW = (int)Math.Ceiling(w * cos + h * sin);
-        var outH = (int)Math.Ceiling(w * sin + h * cos);
+        var outW = (int)Math.Ceiling(w * cos + h * sin - 1e-6);
+        var outH = (int)Math.Ceiling(w * sin + h * cos - 1e-6);
 
         var info = new SKImageInfo(outW, outH, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
         using var surface = SKSurface.Create(info);
@@ -1407,8 +1454,22 @@ public static partial class SkiaCodec
 
 
     /// <summary>
-    /// Converts a finished bitmap to an image without copying its pixels; the image keeps
-    /// the buffer alive. Only call once nothing will draw into <paramref name="bmp"/> again.
+    /// Returns an independent raster copy of the image, keeping its color type, alpha type and color space.
+    /// </summary>
+    public static SKImage? CopyImage(SKImage? imgSrc)
+    {
+        if (imgSrc.IsDisposed()) return null;
+
+        var info = new SKImageInfo(imgSrc.Width, imgSrc.Height, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
+        using var bmp = new SKBitmap(info);
+        if (!imgSrc.ReadPixels(info, bmp.GetPixels(), bmp.RowBytes, 0, 0)) return null;
+
+        return ToSKImageNoCopy(bmp);
+    }
+
+
+    /// <summary>
+    /// Converts a finished bitmap to an image sharing its pixels; only call once nothing draws into <paramref name="bmp"/> again.
     /// </summary>
     public static SKImage? ToSKImageNoCopy(SKBitmap? bmp)
     {

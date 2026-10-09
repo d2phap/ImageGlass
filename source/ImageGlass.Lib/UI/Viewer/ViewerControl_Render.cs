@@ -349,6 +349,8 @@ public partial class ViewerControl
     /// </summary>
     protected void OnDrawnImageFirstTime(SKImage? img)
     {
+        Size? refitSize = null;
+
         lock (_lock)
         {
             // a source swapped in since the draw (e.g. an HDR pass) may already have freed img
@@ -368,13 +370,14 @@ public partial class ViewerControl
                 return;
             }
 
-            // cache the proccessed image for next draw
-            SKImageRef.Set(ref _imgRender, img, _imgSource);
-
-            // apply color channel filter
-            if (_loadingOptions.Channels != ColorChannels.RGBA)
+            // a frame prepared with its edits keeps them; otherwise share the source and apply the edits now
+            if (_imgRender is null)
             {
-                _ = FilterColorChannels(_loadingOptions.Channels, false);
+                SKImageRef.Set(ref _imgRender, img, _imgSource);
+                if (HasImageEdits() && RebuildEditedImage())
+                {
+                    refitSize = GetShownImageSize(BitmapSize);
+                }
             }
 
             // build mipmap tile cache for non-animated photos
@@ -384,6 +387,9 @@ public partial class ViewerControl
             InvalidateVisual();
             OnRenderStateChanged();
         }
+
+        // outside the lock, as a refit raises ZoomChanged
+        if (refitSize is { } size) RefitForFrameSize(size);
     }
 
 

@@ -250,8 +250,10 @@ public partial class CropImageToolControl : PhControl, IToolControl
 
     private async void PART_BtnCrop_Click(object? sender, RoutedEventArgs e)
     {
-        var bitmap = Viewer.GetRenderedBitmap(true);
-        var photo = new Photo(bitmap);
+        // the copy becomes the photo's own image, so it is not copied a second time
+        using var shownState = Viewer.CaptureImageState();
+        using var bitmap = shownState?.CopyPixels(ViewerImageRegion.Selection);
+        var photo = new Photo(SkiaCodec.ToSKImageNoCopy(bitmap));
 
         await AppAPIProvider.LoadClipboardPhotoAsync(photo);
     }

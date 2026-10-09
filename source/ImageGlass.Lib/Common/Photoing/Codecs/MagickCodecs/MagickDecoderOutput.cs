@@ -23,12 +23,29 @@ namespace ImageGlass.Common.Photoing;
 
 
 /// <summary>
+/// The color conversion a Magick decode applied to its pixels.
+/// </summary>
+public enum MagickColorConversion
+{
+    None,
+    ToDisplayProfile,
+    ToSrgb,
+}
+
+
+/// <summary>
 /// The output of decoding with Magick.NET.
 /// </summary>
 public partial class MagickDecoderOutput : PhDisposable
 {
     public MagickImageCollection? MultiFrames { get; set; } = null;
     public MagickImage? SingleFrame { get; set; } = null;
+
+
+    /// <summary>
+    /// Gets, sets the color conversion applied to the decoded pixels.
+    /// </summary>
+    public MagickColorConversion ColorConversion { get; set; } = MagickColorConversion.None;
 
 
     /// <summary>

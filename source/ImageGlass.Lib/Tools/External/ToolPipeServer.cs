@@ -21,6 +21,7 @@ using ImageGlass.Common;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
 using ImageGlass.SDK.Tools;
+using ImageGlass.UI.Viewer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -201,12 +202,9 @@ internal sealed class ToolPipeServer : IDisposable
         var req = DeserializePayload<GetPixelBufferRequest>(msg);
         var selectionOnly = req?.SelectionOnly ?? false;
 
-        // Capture the current bitmap on the UI thread.
-        var bitmap = await Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            if (AppAPIProvider.GetViewer() is not { } viewer) return null;
-            return viewer.GetRenderedBitmap(selectionOnly);
-        });
+        // capture on the UI thread, which copies nothing, then copy the pixels off it
+        using var shownState = await Dispatcher.UIThread.InvokeAsync(() => AppAPIProvider.GetViewer()?.CaptureImageState());
+        var bitmap = shownState?.CopyPixels(selectionOnly ? ViewerImageRegion.Selection : ViewerImageRegion.WholeImage);
 
         if (bitmap is null)
         {

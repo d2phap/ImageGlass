@@ -74,6 +74,16 @@ public class PhotoLoadingOptions
     public ColorChannels Channels { get; set; } = ColorChannels.RGBA;
 
     /// <summary>
+    /// Gets, sets the orientation the viewer shows the photo in, kept across a reload of the same photo.
+    /// </summary>
+    public ImageOrientation Orientation { get; set; } = ImageOrientation.Identity;
+
+    /// <summary>
+    /// Gets, sets whether the viewer shows the photo with inverted colors, kept across a reload of the same photo.
+    /// </summary>
+    public bool IsColorInverted { get; set; }
+
+    /// <summary>
     /// Gets, sets the transition to play from the current photo, or <c>null</c> for none.
     /// </summary>
     public TransitionRequest? Transition { get; set; }

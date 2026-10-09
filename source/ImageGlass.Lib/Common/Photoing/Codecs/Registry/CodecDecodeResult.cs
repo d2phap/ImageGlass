@@ -73,6 +73,11 @@ public sealed class CodecDecodeResult : PhDisposable
     public bool HasEmbeddedColorProfile { get; set; } = false;
 
     /// <summary>
+    /// Gets or sets a value indicating whether the pixels carry a display profile their tag cannot describe (a CMYK soft-proof).
+    /// </summary>
+    public bool HasBakedDisplayProfile { get; set; } = false;
+
+    /// <summary>
     /// Gets or sets a value indicating whether the viewer should prefer direct rendering for the result.
     /// </summary>
     public bool PreferDirectRender { get; set; } = false;

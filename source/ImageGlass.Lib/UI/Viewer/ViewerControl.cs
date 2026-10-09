@@ -182,6 +182,8 @@ public partial class ViewerControl : PhControl
             ResetZoom = false,
             UseCache = false,
             Channels = Core.ColorChannels,
+            Orientation = PhotoOrientation,
+            IsColorInverted = IsColorInverted,
         });
     }
 
@@ -731,6 +733,7 @@ public partial class ViewerControl : PhControl
     public void ClearPhotoTransforms()
     {
         IsColorInverted = false;
+        PhotoOrientation = ImageOrientation.Identity;
     }
 
 
@@ -765,6 +768,10 @@ public partial class ViewerControl : PhControl
             _loadingOptions = options ?? new();
             _enablePanningVelocity = true;
             Photo = inputPhoto;
+
+            // a reload of the same photo keeps its edits
+            IsColorInverted = _loadingOptions.IsColorInverted;
+            PhotoOrientation = _loadingOptions.Orientation;
         }
 
 
@@ -1034,6 +1041,9 @@ public partial class ViewerControl : PhControl
         // raw pre-tone-map HDR frame to keep for live re-tone-mapping (null = don't retain)
         SKImage? hdrRawToRetain = null;
 
+        // the frame with the edits a reload keeps, drawn from the first frame on
+        SKImage? editedFrame = null;
+
         try
         {
             // 2. check if photo error
@@ -1123,6 +1133,7 @@ public partial class ViewerControl : PhControl
 
                     // IsDisposed, not null: a dead frame renders nothing yet claims the photo is shown
                     hasSource = !imgFrame.IsDisposed();
+                    if (hasSource) editedFrame = await BuildEditedFrameAsync(imgFrame);
                 }
             }
 
@@ -1142,7 +1153,10 @@ public partial class ViewerControl : PhControl
             lock (_lock)
             {
                 // update bitmap size after the preview is cancelled
-                BitmapSize = e.Photo.Size;
+                BitmapSize = editedFrame is not null ? new Size(editedFrame.Width, editedFrame.Height) : e.Photo.Size;
+
+                // the preview shows the photo unturned
+                if (editedFrame is not null && PhotoOrientation.SwapsAxes) prevSize = new Size(prevSize.Height, prevSize.Width);
 
                 // 5. calculate the source viewport to match with the preview
                 if (hasSource)
@@ -1159,6 +1173,8 @@ public partial class ViewerControl : PhControl
                     {
                         _isFirstDraw.SetTrue();
                         SKImageRef.Set(ref _imgSource, imgFrame);
+                        SKImageRef.Set(ref _imgRender, editedFrame);
+                        editedFrame = null;
 
                         // keep (or clear) the retained raw HDR frame for live re-tone-mapping
                         SKImageRef.Set(ref _imgHdrSource, hdrRawToRetain);
@@ -1268,9 +1284,11 @@ public partial class ViewerControl : PhControl
             imgFrame?.Dispose();
             imgFrame = null;
 
-            // free the retained raw HDR frame if we hadn't stored it yet
+            // free the retained raw HDR frame and the edited frame if we hadn't stored them yet
             hdrRawToRetain?.Dispose();
             hdrRawToRetain = null;
+            editedFrame?.Dispose();
+            editedFrame = null;
 
             animator?.Dispose();
             animator = null;
@@ -1394,28 +1412,32 @@ public partial class ViewerControl : PhControl
         if (colored is not null && ownsFrame) imgFrame.Dispose();
         var sourceImg = colored ?? imgFrame;
 
+        // a turned or filtered page keeps its edits, applied before its first draw so it never flashes without them
+        var editedImg = await BuildEditedFrameAsync(sourceImg);
+
         lock (_lock)
         {
             // another photo took over during the pass, so nothing here is shown
             if (!ReferenceEquals(Photo, photo))
             {
                 if (ownsFrame || colored is not null) sourceImg.Dispose();
+                editedImg?.Dispose();
                 return;
             }
 
             _mipmapCache?.Dispose();
             _mipmapCache = null;
 
-            SKImageRef.Set(ref _imgRender, null);
+            SKImageRef.Set(ref _imgRender, editedImg);
             SKImageRef.Set(ref _imgSource, sourceImg);
             _isFirstDraw.SetTrue();
         }
 
-        // variable-size frames: each frame is its own canvas. Photo.Size still reports
-        // the metadata size for animated sources, so measure the decoded frame itself.
-        var frameSize = sourceImg.IsDisposed()
+        // each frame is its own canvas, and Photo.Size reports the metadata size, so measure the shown frame
+        var shownImg = editedImg ?? sourceImg;
+        var frameSize = shownImg.IsDisposed()
             ? photo.Size
-            : new Size(sourceImg.Width, sourceImg.Height);
+            : new Size(shownImg.Width, shownImg.Height);
 
         if (frameSize != BitmapSize)
         {

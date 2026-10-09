@@ -47,7 +47,8 @@ public sealed class ImageResizerTool : ITool
         try
         {
             // get current bitmap
-            using var srcBmp = Viewer.GetRenderedBitmap();
+            using var shownState = Viewer.CaptureImageState();
+            using var srcBmp = shownState?.CopyPixels();
             if (srcBmp.IsDisposed()) return;
 
             // show resizer window

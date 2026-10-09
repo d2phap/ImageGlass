@@ -80,9 +80,10 @@ public static partial class MagickCodec
     /// </summary>
     /// <param name="refImgM">Input Magick image to process</param>
     private static MagickImage? ProcessMagickImage__(MagickImage refImgM,
-        PhotoReadOptions options, PhotoMetadata meta, bool requestThumbnail)
+        PhotoReadOptions options, PhotoMetadata meta, bool requestThumbnail, out MagickColorConversion conversion)
     {
         IMagickImage? thumbM = null;
+        conversion = MagickColorConversion.None;
 
         // Ping exposes no ICC for JXL, so metadata can arrive marked SDR for a PQ image; correct
         // it from this fully-read copy before the transform below, which keys off meta.IsHdr.
@@ -120,19 +121,27 @@ public static partial class MagickCodec
             if (options.CorrectRotation) refImgM.AutoOrient();
 
 
-            // if always apply color profile
-            // or only apply color profile if there is an embedded profile.
-            // Skip for HDR images: tone mapping handles color space conversion;
-            // applying the monitor profile here would cause a double transform.
-            if (!meta.IsHdr
+            // HDR skips both: tone mapping converts its color space itself
+            if (!meta.IsHdr && options.SkipDisplayProfile)
+            {
+                // print wants true colors, which the display profile would bend toward one monitor
+                if (meta.MagickColorProfile is not null)
+                {
+                    refImgM.TransformColorSpace(meta.MagickColorProfile, ColorProfiles.SRGB);
+                    conversion = MagickColorConversion.ToSrgb;
+                }
+            }
+            else if (!meta.IsHdr
                 && (Core.Config.EnableAlwaysApplyColorProfile || meta.MagickColorProfile is not null))
             {
+                // the display profile applies when always on, or when the file embeds a profile
                 if (GetColorProfileByName(Core.Config.ColorProfile) is { } destIccProfile)
                 {
                     refImgM.TransformColorSpace(
                         //set default color profile to sRGB
                         meta.MagickColorProfile ?? ColorProfiles.SRGB,
                         destIccProfile);
+                    conversion = MagickColorConversion.ToDisplayProfile;
                 }
             }
 
@@ -173,12 +182,6 @@ public static partial class MagickCodec
     {
         if (transform == null) return;
 
-        // rotate
-        if (transform.Rotation != 0)
-        {
-            imgM.Rotate(transform.Rotation);
-        }
-
         // flip
         if (transform.Flips.HasFlag(FlipOptions.Horizontal))
         {
@@ -187,6 +190,12 @@ public static partial class MagickCodec
         if (transform.Flips.HasFlag(FlipOptions.Vertical))
         {
             imgM.Flip();
+        }
+
+        // rotate after flipping, the order ImageOrientation and SkiaCodec.TransformImage use
+        if (transform.Rotation != 0)
+        {
+            imgM.Rotate(transform.Rotation);
         }
 
         // invert color

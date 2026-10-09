@@ -469,8 +469,9 @@ public partial class AppAPIProvider
         {
             try
             {
-                using var selectedBmp = Viewer.GetRenderedBitmap(true);
-                var selectedImg = SkiaCodec.ToSKImage(selectedBmp)!;
+                using var shownState = Viewer.CaptureImageState();
+                using var selectedBmp = shownState?.CopyPixels(ViewerImageRegion.Selection);
+                var selectedImg = SkiaCodec.ToSKImageNoCopy(selectedBmp)!;
                 using var photo = new Photo(selectedImg);
 
                 await photo.SaveAsAsync(destFilePath, new PhotoTransform(),
@@ -1765,14 +1766,6 @@ public partial class AppAPIProvider
         if (Viewer.FilterColorChannels(channels, false))
         {
             Core.ColorChannels = channels;
-
-            // apply transforms
-            if (Core.ImageTransform.HasChanges)
-            {
-                _ = Viewer.RotateImage(Core.ImageTransform.Rotation, false);
-                _ = Viewer.FlipImage(Core.ImageTransform.Flips, false);
-            }
-
             Viewer.Refresh(resetZoom: false);
         }
         else
@@ -1945,16 +1938,10 @@ public partial class AppAPIProvider
 
         var degree = options == RotateOption.Left ? -90 : 90;
 
-        // update rotation changes
+        // the viewer composed the click onto its orientation, which Save applies as is
         if (Viewer.RotateImage(degree))
         {
-            var currentRotation = Core.ImageTransform.Rotation + degree;
-            if (Math.Abs(currentRotation) >= 360)
-            {
-                currentRotation %= 360;
-            }
-
-            Core.ImageTransform.Rotation = currentRotation;
+            Core.ImageTransform.Orientation = Viewer.PhotoOrientation;
         }
         else
         {
@@ -1992,32 +1979,10 @@ public partial class AppAPIProvider
     {
         if (Viewer.SourceKind == PhotoSource.None || Core.IsBusy) return;
 
-        // update flip changes
+        // the viewer composed the click onto its orientation, which Save applies as is
         if (Viewer.FlipImage(options))
         {
-            if (options.HasFlag(FlipOptions.Horizontal))
-            {
-                if (Core.ImageTransform.Flips.HasFlag(FlipOptions.Horizontal))
-                {
-                    Core.ImageTransform.Flips ^= FlipOptions.Horizontal;
-                }
-                else
-                {
-                    Core.ImageTransform.Flips |= FlipOptions.Horizontal;
-                }
-            }
-
-            if (options.HasFlag(FlipOptions.Vertical))
-            {
-                if (Core.ImageTransform.Flips.HasFlag(FlipOptions.Vertical))
-                {
-                    Core.ImageTransform.Flips ^= FlipOptions.Vertical;
-                }
-                else
-                {
-                    Core.ImageTransform.Flips |= FlipOptions.Vertical;
-                }
-            }
+            Core.ImageTransform.Orientation = Viewer.PhotoOrientation;
         }
         else
         {
@@ -2223,7 +2188,10 @@ public partial class AppAPIProvider
         if (Viewer.SourceKind == PhotoSource.None || App.MainWindow.Clipboard is null) return;
 
         // 1. get rendered bitmap
-        var bmp = Viewer.GetRenderedBitmap(!Viewer.SourceSelection.IsEmpty);
+        using var shownState = Viewer.CaptureImageState();
+        using var bmp = shownState?.CopyPixels(Viewer.SourceSelection.IsEmpty
+            ? ViewerImageRegion.WholeImage
+            : ViewerImageRegion.Selection);
         if (bmp.IsDisposed()) return;
 
 

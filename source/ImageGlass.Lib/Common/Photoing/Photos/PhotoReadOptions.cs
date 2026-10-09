@@ -77,6 +77,12 @@ public record PhotoReadOptions
 
 
     /// <summary>
+    /// Gets, sets whether a decode converts an embedded profile to sRGB instead of applying the display profile, as printing needs.
+    /// </summary>
+    public bool SkipDisplayProfile { get; set; } = false;
+
+
+    /// <summary>
     /// Initializes <see cref="PhotoReadOptions"/> instance.
     /// </summary>
     public PhotoReadOptions()

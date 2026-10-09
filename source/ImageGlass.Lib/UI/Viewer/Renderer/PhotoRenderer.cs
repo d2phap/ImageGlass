@@ -311,8 +311,9 @@ public partial class PhotoRenderer : ICustomDrawOperation
                 }
 
 
-                // set the image to draw
-                imageRender = srcImage;
+                // set the image to draw: a frame prepared with its edits draws them from the start
+                imageLease = _imgRender?.Acquire();
+                imageRender = imageLease?.Image ?? srcImage;
                 PurgeEarlierGpuResources(grContext);
 
 
@@ -322,9 +323,9 @@ public partial class PhotoRenderer : ICustomDrawOperation
                 canvas.Restore();
 
 
-                // process after first time drawing
+                // process after first time drawing; the source identifies the frame this draw was for
                 _isFirstDraw = false;
-                Dispatcher.UIThread.Post(() => _onDrawFirstTime!(imageRender), DispatcherPriority.Send);
+                Dispatcher.UIThread.Post(() => _onDrawFirstTime!(srcImage), DispatcherPriority.Send);
             }
             else if (_tileCache?.AcquireProxy() is { } proxyLease)
             {
