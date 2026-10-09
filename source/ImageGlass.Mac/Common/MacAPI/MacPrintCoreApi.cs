@@ -20,6 +20,7 @@ using ImageGlass.Common.Printing;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -31,7 +32,7 @@ namespace ImageGlass.Mac.Common;
 /// <summary>
 /// The options of a PrintCore job, as the Print window chose them.
 /// </summary>
-internal sealed record MacPrintJobOptions(string PaperId, int Copies, bool Collate, PrintDuplex Duplex);
+internal sealed record MacPrintJobOptions(string PaperId, int Copies, bool Collate, PrintDuplex Duplex, PrintColorMode ColorMode);
 
 
 /// <summary>
@@ -40,13 +41,17 @@ internal sealed record MacPrintJobOptions(string PaperId, int Copies, bool Colla
 internal static unsafe partial class MacPrintCoreApi
 {
     private const string PRINT_CORE = "/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices";
+    private const string LIB_CUPS = "/usr/lib/libcups.2.dylib";
+
+    // CUPS_HTTP_DEFAULT: the calling thread's connection to the local scheduler
+    private const nint CUPS_HTTP_DEFAULT = 0;
 
     private const ushort PRINTER_PROCESSING = 4;
     private const ushort PRINTER_STOPPED = 5;
     private const ushort ORIENTATION_PORTRAIT = 1;
-    private const uint DUPLEX_NONE = 1;
-    private const uint DUPLEX_NO_TUMBLE = 2;
-    private const uint DUPLEX_TUMBLE = 3;
+
+    // kPMPPDDescriptionType; any other string, "PPD" included, fails with paramErr
+    private const string PPD_DESCRIPTION_TYPE = "PMPPDDescriptionType";
 
 
     #region Printers
@@ -86,9 +91,36 @@ internal static unsafe partial class MacPrintCoreApi
 
 
     /// <summary>
-    /// Gets the state of a printer.
+    /// Gets the state of a printer from CUPS, since PrintCore reports an offline printer as idle.
     /// </summary>
     public static PrinterStatus GetStatus(string id)
+    {
+        var dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, id, null);
+        if (dest == null) return GetPrintCoreStatus(id);
+
+        try
+        {
+            var reasons = GetCupsOption(dest, "printer-state-reasons") ?? string.Empty;
+            var message = GetCupsOption(dest, "printer-state-message");
+            _ = int.TryParse(GetCupsOption(dest, "printer-state"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var state);
+
+            PrinterState result;
+            if (reasons.Contains("offline", StringComparison.OrdinalIgnoreCase)) result = PrinterState.Offline;
+            else if (reasons.Contains("paused", StringComparison.OrdinalIgnoreCase)) result = PrinterState.Paused;
+            else if (state == PRINTER_STOPPED) result = PrinterState.Error;
+            else if (state == PRINTER_PROCESSING) result = PrinterState.Busy;
+            else result = state > 0 ? PrinterState.Ready : PrinterState.Unknown;
+
+            return new PrinterStatus(result, string.IsNullOrWhiteSpace(message) ? null : message);
+        }
+        finally
+        {
+            cupsFreeDests(1, dest);
+        }
+    }
+
+
+    private static PrinterStatus GetPrintCoreStatus(string id)
     {
         var printer = CreatePrinter(id);
         if (printer == 0) return new PrinterStatus(PrinterState.Unknown);
@@ -254,7 +286,7 @@ internal static unsafe partial class MacPrintCoreApi
     /// </summary>
     private static (bool SupportsColor, bool SupportsDuplex) ReadPpdFeatures(nint printer)
     {
-        var type = MacCoreFoundation.CreateString("PPD");
+        var type = MacCoreFoundation.CreateString(PPD_DESCRIPTION_TYPE);
         nint url = 0;
 
         try
@@ -308,12 +340,15 @@ internal static unsafe partial class MacPrintCoreApi
             _ = PMPrintSettingsSetJobName(settings, jobName);
             _ = PMSetCopies(settings, (uint)Math.Max(1, options.Copies), 0);
             _ = PMSetCollate(settings, (byte)(options.Collate ? 1 : 0));
-            _ = PMSetDuplex(settings, options.Duplex switch
+
+            // as CUPS options: PMSetDuplex never reaches the job, and a queue may default to two-sided
+            SetJobOption(settings, "sides", options.Duplex switch
             {
-                PrintDuplex.LongEdge => DUPLEX_NO_TUMBLE,
-                PrintDuplex.ShortEdge => DUPLEX_TUMBLE,
-                _ => DUPLEX_NONE,
+                PrintDuplex.LongEdge => "two-sided-long-edge",
+                PrintDuplex.ShortEdge => "two-sided-short-edge",
+                _ => "one-sided",
             });
+            if (options.ColorMode == PrintColorMode.Grayscale) SetJobOption(settings, "print-color-mode", "monochrome");
 
             // 2. the paper, portrait, since a landscape page is already turned onto it
             format = CreatePageFormat(printer, options.PaperId);
@@ -390,6 +425,32 @@ internal static unsafe partial class MacPrintCoreApi
     private static void ThrowIfFailed(int status, string step)
     {
         if (status != 0) throw new IOException($"{step} failed (OSStatus {status}).");
+    }
+
+
+    /// <summary>
+    /// Sets an option PrintCore hands to CUPS with the job, such as <c>sides</c>.
+    /// </summary>
+    private static void SetJobOption(nint settings, string name, string value)
+    {
+        var key = MacCoreFoundation.CreateString(name);
+        var text = MacCoreFoundation.CreateString(value);
+        try
+        {
+            ThrowIfFailed(PMPrintSettingsSetValue(settings, key, text, 0), nameof(PMPrintSettingsSetValue));
+        }
+        finally
+        {
+            MacCoreFoundation.Release(text);
+            MacCoreFoundation.Release(key);
+        }
+    }
+
+
+    private static string? GetCupsOption(CupsDest* dest, string name)
+    {
+        var value = cupsGetOption(name, dest->NumOptions, dest->Options);
+        return value == null ? null : Marshal.PtrToStringUTF8((nint)value);
     }
 
     #endregion // Helpers
@@ -488,7 +549,7 @@ internal static unsafe partial class MacPrintCoreApi
     private static partial int PMSetCollate(nint settings, byte collate);
 
     [LibraryImport(PRINT_CORE)]
-    private static partial int PMSetDuplex(nint settings, uint duplex);
+    private static partial int PMPrintSettingsSetValue(nint settings, nint key, nint value, byte locked);
 
     [LibraryImport(PRINT_CORE)]
     private static partial int PMCreatePageFormat(nint* format);
@@ -515,4 +576,37 @@ internal static unsafe partial class MacPrintCoreApi
     private static partial int PMRelease(nint pmObject);
 
     #endregion // PrintCore interop
+
+
+    #region CUPS interop
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct CupsOption
+    {
+        public byte* Name;
+        public byte* Value;
+    }
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct CupsDest
+    {
+        public byte* Name;
+        public byte* Instance;
+        public int IsDefault;
+        public int NumOptions;
+        public CupsOption* Options;
+    }
+
+
+    [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial CupsDest* cupsGetNamedDest(nint http, string name, string? instance);
+
+    [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial byte* cupsGetOption(string name, int numOptions, CupsOption* options);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial void cupsFreeDests(int numDests, CupsDest* dests);
+
+    #endregion // CUPS interop
 }

@@ -95,12 +95,13 @@ public class Win32PrintProvider : PrintProviderBase
     /// <summary>
     /// Opens Print Pictures with the shown frame, every edit applied.
     /// </summary>
-    public override async Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
+    public override async Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
     {
         var path = await WriteShownImagePngAsync(job, token);
-        if (string.IsNullOrEmpty(path)) return;
+        if (string.IsNullOrEmpty(path)) return false;
 
         Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(path));
+        return true;
     }
 
 

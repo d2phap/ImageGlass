@@ -119,7 +119,36 @@ public static partial class PaperCatalog
 
         // a driver's own size, such as "4 x 6in", is written the app's way: "4×6 in"
         var size = DimensionRegex().Replace(name, "$1×$2");
-        return UnitRegex().Replace(size, "$1 $2");
+        size = UnitRegex().Replace(size, "$1 $2");
+
+        // a size without its unit, such as macOS's "4 x 6", takes the unit its numbers match
+        var match = SizeRegex().Match(size);
+        if (match.Success && !match.Groups[3].Success && GetUnit(match.Groups[1].Value, match.Groups[2].Value, sizePt) is { } unit)
+        {
+            size = size.Insert(match.Index + match.Length, " " + unit);
+        }
+
+        return size;
+    }
+
+
+    /// <summary>
+    /// Gets the unit in which two numbers give the paper's size; <c>null</c> when none does.
+    /// </summary>
+    private static string? GetUnit(string a, string b, SKSize sizePt)
+    {
+        if (!double.TryParse(a.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out var x)
+            || !double.TryParse(b.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out var y)) return null;
+
+        var (small, large) = (Math.Min(x, y), Math.Max(x, y));
+        var (w, h) = (Math.Min(sizePt.Width, sizePt.Height), Math.Max(sizePt.Width, sizePt.Height));
+
+        bool Matches(double perPoint, double tolerance) => Math.Abs(small - w * perPoint) <= tolerance && Math.Abs(large - h * perPoint) <= tolerance;
+
+        if (Matches(1 / PrintUnits.POINTS_PER_INCH, 0.06)) return "in";
+        if (Matches(PrintUnits.MM_PER_INCH / PrintUnits.POINTS_PER_INCH, 1.5)) return "mm";
+        if (Matches(PrintUnits.MM_PER_INCH / PrintUnits.POINTS_PER_INCH / 10, 0.15)) return "cm";
+        return null;
     }
 
 
@@ -130,6 +159,10 @@ public static partial class PaperCatalog
     // a unit written against its number, such as "6in"
     [GeneratedRegex(@"(\d)\s*(mm|cm|in)\b", RegexOptions.IgnoreCase)]
     private static partial Regex UnitRegex();
+
+    // a whole size once normalized, its unit when it has one
+    [GeneratedRegex(@"(\d+(?:[.,]\d+)?)×(\d+(?:[.,]\d+)?)(\s(?:mm|cm|in)\b)?", RegexOptions.IgnoreCase)]
+    private static partial Regex SizeRegex();
 
 
     private static PaperInfo Iso(string name, double widthMm, double heightMm, string? id = null)

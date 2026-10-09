@@ -68,7 +68,7 @@ internal class MacPrintProvider : PrintProviderBase
             token.ThrowIfCancellationRequested();
 
             var settings = job.Settings;
-            var options = new MacPrintJobOptions(settings.Paper.Id, settings.Copies, settings.Collate, settings.Duplex);
+            var options = new MacPrintJobOptions(settings.Paper.Id, settings.Copies, settings.Collate, settings.Duplex, settings.ColorMode);
             await Task.Run(() => MacPrintCoreApi.PrintFile(settings.Printer.Id, path, job.Title, options), CancellationToken.None).ConfigureAwait(false);
         }
         finally
@@ -85,14 +85,23 @@ internal class MacPrintProvider : PrintProviderBase
     /// <summary>
     /// Shows the macOS print panel for the pages as a PDF, landscape pages kept, since the panel turns them to its paper.
     /// </summary>
-    public override async Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
+    public override async Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
     {
         var path = await WriteTempPdfAsync(job, false, null, token).ConfigureAwait(false);
+
+        // the panel starts from the window's printer and paper; Save as PDF has neither in PrintCore
+        var settings = job.Settings;
+        var isSystemPrinter = !settings.Printer.IsVirtual;
+        var options = new MacPrintPanelOptions(
+            isSystemPrinter ? settings.Printer.DisplayName : null,
+            isSystemPrinter ? settings.Paper.Id : null,
+            settings.IsLandscape,
+            settings.Copies);
 
         try
         {
             // AppKit runs the panel on the main thread
-            await Dispatcher.UIThread.InvokeAsync(() => MacPrintPanelApi.ShowPrintPanel(path));
+            return await Dispatcher.UIThread.InvokeAsync(() => MacPrintPanelApi.ShowPrintPanel(path, options));
         }
         finally
         {
@@ -111,7 +120,7 @@ internal class MacPrintProvider : PrintProviderBase
     public override Task OpenAddPrinterSettingsAsync(PhWindow owner)
     {
         var url = OperatingSystem.IsMacOSVersionAtLeast(13)
-            ? "x-apple.systempreferences:com.apple.Print-Scanner-Settings.extension"
+            ? "x-apple.systempreferences:com.apple.Print-Scan-Settings.extension"
             : "x-apple.systempreferences:com.apple.preference.printfax";
 
         return BHelper.OpenUrlAsync(owner, url);

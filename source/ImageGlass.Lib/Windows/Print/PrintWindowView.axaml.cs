@@ -1025,7 +1025,7 @@ public partial class PrintWindowView : PhControl
 
 
     /// <summary>
-    /// Hands the job to the platform's own print dialog; returns whether it opened.
+    /// Hands the job to the platform's own print dialog; returns whether it took the job, so a cancelled one keeps this window.
     /// </summary>
     public async Task<bool> ShowSystemDialogAsync(PhWindow owner)
     {
@@ -1034,11 +1034,16 @@ public partial class PrintWindowView : PhControl
 
         try
         {
-            await Core.PrintProvider.ShowSystemDialogAsync(owner, BuildJob(settings), _closing.Token);
+            if (!await Core.PrintProvider.ShowSystemDialogAsync(owner, BuildJob(settings), _closing.Token)) return false;
+
             SaveConfig();
             return true;
         }
-        catch (Exception ex) when (ex is not OperationCanceledException)
+        catch (OperationCanceledException)
+        {
+            return false;
+        }
+        catch (Exception ex)
         {
             await ModalWindow.ShowErrorAsync(owner, new ModalWindowOptions
             {

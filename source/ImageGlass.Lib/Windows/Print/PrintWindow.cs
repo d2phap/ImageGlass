@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Printing;
@@ -105,6 +106,9 @@ public sealed class PrintWindow : DialogWindow
             Spacing = 24,
             Children = { _systemDialogLink, _summary },
         };
+
+        // before the settings column, which scrolls on these keys once anything in it has focus
+        AddHandler(KeyDownEvent, Window_PreviewKeyDown, RoutingStrategies.Tunnel);
     }
 
 
@@ -174,20 +178,6 @@ public sealed class PrintWindow : DialogWindow
     }
 
 
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        if (e.Handled) return;
-
-        // turn the pages of the preview
-        if (e.Key == Key.PageDown || e.Key == Key.PageUp)
-        {
-            _view.GoToPage(e.Key == Key.PageDown ? 1 : -1);
-            e.Handled = true;
-        }
-    }
-
-
     protected override void OnClosing(WindowClosingEventArgs e)
     {
         // a closing window cannot leave a job behind
@@ -214,6 +204,19 @@ public sealed class PrintWindow : DialogWindow
     }
 
     #endregion // Overrides
+
+
+    /// <summary>
+    /// Turns the pages of the preview on PageUp and PageDown, unless a text box or an open dropdown takes them.
+    /// </summary>
+    private void Window_PreviewKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key is not (Key.PageDown or Key.PageUp) || e.KeyModifiers != KeyModifiers.None) return;
+        if (FocusManager?.GetFocusedElement() is TextBox or ComboBox { IsDropDownOpen: true }) return;
+
+        _view.GoToPage(e.Key == Key.PageDown ? 1 : -1);
+        e.Handled = true;
+    }
 
 
     private void View_StateChanged()

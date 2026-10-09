@@ -142,7 +142,7 @@ public abstract class PrintProviderBase : IPrintProvider
 
 
     /// <inheritdoc/>
-    public virtual Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token) => Task.CompletedTask;
+    public virtual Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token) => Task.FromResult(false);
 
 
     /// <inheritdoc/>

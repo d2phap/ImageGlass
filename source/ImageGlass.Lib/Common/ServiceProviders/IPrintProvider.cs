@@ -69,9 +69,9 @@ public interface IPrintProvider
     bool CanShowSystemDialog { get; }
 
     /// <summary>
-    /// Hands the job to the platform's own print dialog.
+    /// Hands the job to the platform's own print dialog; <c>false</c> when the user cancelled it there.
     /// </summary>
-    Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token);
+    Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token);
 
     /// <summary>
     /// Gets whether the platform has a settings page to add a printer on.
