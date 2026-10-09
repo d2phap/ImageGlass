@@ -36,7 +36,6 @@ namespace ImageGlass.Common.Windows;
 public sealed class PrintLayoutTile : PhControl
 {
     private const double BOX_SIZE = 44;
-    private const float CELL_RADIUS = 1.5f;
 
     // a layout's gutter shrinks to a hairline in a tile, so the cells get a gap of their own
     private const double CELL_GAP = 2;
@@ -120,7 +119,7 @@ public sealed class PrintLayoutTile : PhControl
                 Math.Max(1, w - 2 * Math.Max(0, gapX)),
                 Math.Max(1, h - 2 * Math.Max(0, gapY)));
 
-            c.DrawRectangleEx(rect, CELL_RADIUS, null, accent.WithAlpha(150));
+            c.DrawRectangleEx(rect, 0, null, accent.WithAlpha(150));
         }
     }
 }

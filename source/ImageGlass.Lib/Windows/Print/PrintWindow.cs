@@ -216,7 +216,8 @@ public sealed class PrintWindow : DialogWindow
 
     private void View_StateChanged()
     {
-        Button1Text = _view.Printer?.OutputFileExtension is not null
+        // a printer prints, even one that writes a file; only the app's own PDF is a save
+        Button1Text = _view.Printer?.Id == PrintProviderBase.PDF_PRINTER_ID
             ? Core.Lang[LangId.Print_BtnSave]
             : Core.Lang[LangId.Print_BtnPrint];
 

@@ -61,13 +61,13 @@ public static class PrintUnits
 
 
     /// <summary>
-    /// Formats a size in points as "210 × 297 mm" or "8.5 × 11 in".
+    /// Formats a size in points as "210×297 mm" or "8.5×11 in", the app's one way of writing a size.
     /// </summary>
     public static string FormatSize(SKSize sizePt, bool metric)
     {
         return metric
-            ? $"{FormatNumber(PtToMm(sizePt.Width), 0)} × {FormatNumber(PtToMm(sizePt.Height), 0)} mm"
-            : $"{FormatNumber(PtToIn(sizePt.Width), 2)} × {FormatNumber(PtToIn(sizePt.Height), 2)} in";
+            ? $"{FormatNumber(PtToMm(sizePt.Width), 0)}×{FormatNumber(PtToMm(sizePt.Height), 0)} mm"
+            : $"{FormatNumber(PtToIn(sizePt.Width), 2)}×{FormatNumber(PtToIn(sizePt.Height), 2)} in";
     }
 
 
@@ -96,11 +96,11 @@ public static partial class PaperCatalog
         Us("Letter", 8.5, 11),
         Us("Legal", 8.5, 14),
         Us("Tabloid", 11, 17),
-        Us("4 × 6 in", 4, 6, "photo-4x6in"),
-        Us("5 × 7 in", 5, 7, "photo-5x7in"),
-        Us("8 × 10 in", 8, 10, "photo-8x10in"),
-        Iso("10 × 15 cm", 100, 150, "photo-10x15cm"),
-        Iso("13 × 18 cm", 130, 180, "photo-13x18cm"),
+        Us("4×6 in", 4, 6, "photo-4x6in"),
+        Us("5×7 in", 5, 7, "photo-5x7in"),
+        Us("8×10 in", 8, 10, "photo-8x10in"),
+        Iso("10×15 cm", 100, 150, "photo-10x15cm"),
+        Iso("13×18 cm", 130, 180, "photo-13x18cm"),
     ];
 
 
@@ -115,15 +115,21 @@ public static partial class PaperCatalog
     /// </summary>
     public static string GetDisplayName(string name, SKSize sizePt)
     {
-        if (DimensionRegex().IsMatch(name)) return name;
+        if (!DimensionRegex().IsMatch(name)) return $"{name} ({PrintUnits.FormatSize(sizePt, PrintUnits.IsMetricRegion)})";
 
-        return $"{name} ({PrintUnits.FormatSize(sizePt, PrintUnits.IsMetricRegion)})";
+        // a driver's own size, such as "4 x 6in", is written the app's way: "4×6 in"
+        var size = DimensionRegex().Replace(name, "$1×$2");
+        return UnitRegex().Replace(size, "$1 $2");
     }
 
 
-    // a size such as "4 × 6 in" or a driver's "4x6"
-    [GeneratedRegex(@"\d\s*[x×]\s*\d", RegexOptions.IgnoreCase)]
+    // a size such as "4×6 in" or a driver's "4 x 6"
+    [GeneratedRegex(@"(\d)\s*[x×]\s*(\d)", RegexOptions.IgnoreCase)]
     private static partial Regex DimensionRegex();
+
+    // a unit written against its number, such as "6in"
+    [GeneratedRegex(@"(\d)\s*(mm|cm|in)\b", RegexOptions.IgnoreCase)]
+    private static partial Regex UnitRegex();
 
 
     private static PaperInfo Iso(string name, double widthMm, double heightMm, string? id = null)
