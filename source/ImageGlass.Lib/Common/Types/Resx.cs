@@ -334,6 +334,8 @@ public enum ResxIconId
     IconArrowNext,
     IconArrowLeft,
     IconArrowRight,
+    IconChevronRight,
+    IconChevronDown,
     IconPlay,
     IconPause,
     IconImageForward,

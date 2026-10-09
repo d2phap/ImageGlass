@@ -34,6 +34,11 @@ public interface IPrintProvider
     Task<IReadOnlyList<PrinterInfo>> GetPrintersAsync(CancellationToken token);
 
     /// <summary>
+    /// Gets why the system's printers cannot be listed at all, such as a missing print system; <c>null</c> when they can.
+    /// </summary>
+    string? SystemPrintersUnavailableReason { get; }
+
+    /// <summary>
     /// Gets what a printer can do: its papers, resolutions, color and two-sided support.
     /// </summary>
     Task<PrinterCapabilities> GetCapabilitiesAsync(PrinterInfo printer, CancellationToken token);

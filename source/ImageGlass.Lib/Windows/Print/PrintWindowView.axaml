@@ -27,9 +27,15 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
         <Style Selector="ui|PhToolButton.layout">
-            <Setter Property="Padding" Value="4,6,4,4" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Padding" Value="4" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="NumericUpDown">
+            <Setter Property="ShowButtonSpinner" Value="False" />
         </Style>
     </ui:PhControl.Styles>
 
@@ -44,15 +50,23 @@
             HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="24,16,16,24" Spacing="14">
 
-                <!--  Printer  -->
+                <!--  Printer, its state at the right of the label  -->
                 <StackPanel Classes="row">
-                    <ui:PhTextBlock LangKey="Print_LblPrinter" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <ui:PhTextBlock VerticalAlignment="Bottom" LangKey="Print_LblPrinter" />
+                        <TextBlock
+                            x:Name="PART_PrinterStatus"
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            Classes="hint"
+                            IsVisible="False"
+                            TextAlignment="Right" />
+                    </Grid>
                     <ComboBox x:Name="PART_Printer" />
-                    <TextBlock x:Name="PART_PrinterStatus" Classes="hint" IsVisible="False" />
                 </StackPanel>
 
-                <!--  Copies  -->
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <!--  Copies; the gap is the checkbox's own, so the box takes the whole row while it is hidden  -->
+                <Grid ColumnDefinitions="*,Auto">
                     <StackPanel Classes="row">
                         <ui:PhTextBlock LangKey="Print_LblCopies" />
                         <NumericUpDown
@@ -67,7 +81,7 @@
                     <CheckBox
                         x:Name="PART_Collate"
                         Grid.Column="1"
-                        Margin="0,0,0,2"
+                        Margin="12,0,0,2"
                         VerticalAlignment="Bottom">
                         <ui:PhTextBlock LangKey="Print_ChkCollate" />
                     </CheckBox>
@@ -86,7 +100,10 @@
                 <!--  Layout  -->
                 <StackPanel Classes="row">
                     <ui:PhTextBlock LangKey="Print_LblLayout" />
-                    <UniformGrid x:Name="PART_Layouts" Columns="3" />
+                    <UniformGrid
+                        x:Name="PART_Layouts"
+                        Margin="-2,0"
+                        Columns="3" />
                 </StackPanel>
                 <StackPanel Classes="row">
                     <ui:PhTextBlock LangKey="Print_LblFit" />
@@ -99,10 +116,7 @@
                     <ui:PhTextBlock LangKey="Print_LblMargins" />
                     <ComboBox x:Name="PART_Margins" />
                 </StackPanel>
-                <Grid
-                    x:Name="PART_PrintsEachRow"
-                    ColumnDefinitions="*,Auto"
-                    ColumnSpacing="12">
+                <Grid x:Name="PART_PrintsEachRow" ColumnDefinitions="*,Auto">
                     <StackPanel Classes="row">
                         <ui:PhTextBlock LangKey="Print_LblPrintsEach" />
                         <NumericUpDown
@@ -117,7 +131,7 @@
                     <CheckBox
                         x:Name="PART_FillPage"
                         Grid.Column="1"
-                        Margin="0,0,0,2"
+                        Margin="12,0,0,2"
                         VerticalAlignment="Bottom">
                         <ui:PhTextBlock LangKey="Print_ChkFillPage" />
                     </CheckBox>
@@ -140,6 +154,7 @@
                     x:Name="PART_BtnMore"
                     Padding="0"
                     HorizontalAlignment="Left"
+                    IconData="{StaticResource IconChevronRight}"
                     Variant="Link" />
                 <StackPanel
                     x:Name="PART_MorePanel"

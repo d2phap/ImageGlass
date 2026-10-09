@@ -80,9 +80,8 @@ public sealed class PrintLayoutTile : PhControl
     {
         _ = base.MeasureOverride(availableSize);
 
-        // the shape of the page inside the box
-        var scale = BOX_SIZE / Math.Max(_pageSizePt.Width, _pageSizePt.Height);
-        return new Size(_pageSizePt.Width * scale, _pageSizePt.Height * scale);
+        // a square whatever the page's orientation, so the labels of a row line up
+        return new Size(BOX_SIZE, BOX_SIZE);
     }
 
 
@@ -92,8 +91,13 @@ public sealed class PrintLayoutTile : PhControl
 
         var foreground = Resx.GetBrushColor(ResxId.IG_ThemeForegroundBrush, Core.Theme.InvertedBaseColor);
         var accent = Core.AccentColor;
-        var page = new Rect(Bounds.Size).Deflate(0.5);
         var border = Resx.GetBrushColor(ResxId.IG_BorderControlBrush, foreground.WithAlpha(90));
+
+        // the shape of the page, centered in the square
+        var scale = Math.Min(Bounds.Width, Bounds.Height) / Math.Max(_pageSizePt.Width, _pageSizePt.Height);
+        var pageW = _pageSizePt.Width * scale;
+        var pageH = _pageSizePt.Height * scale;
+        var page = new Rect((Bounds.Width - pageW) / 2, (Bounds.Height - pageH) / 2, pageW, pageH).Deflate(0.5);
 
         // the paper, white like the preview so the tile reads as a page
         c.DrawRectangleEx(page, 2, border, Colors.White);

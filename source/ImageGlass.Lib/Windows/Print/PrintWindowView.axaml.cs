@@ -62,6 +62,7 @@ public partial class PrintWindowView : PhControl
     private PrintLayout _layout = PrintLayouts.FullPage;
     private PrintDocumentLayout? _doc;
     private byte[]? _platformState;
+    private string? _noPrintersText;
     private CancellationTokenSource? _capsCancel;
     private CancellationTokenSource? _printCancel;
     private int _pageIndex;
@@ -140,7 +141,7 @@ public partial class PrintWindowView : PhControl
         FillQualityItems();
         _isUpdatingControls = false;
 
-        PART_BtnMore.Text = (_isMoreVisible ? "▾  " : "▸  ") + Core.Lang[LangId.Print_LblMoreSettings];
+        PART_BtnMore.Text = Core.Lang[LangId.Print_LblMoreSettings];
         PART_BtnProperties.Text = Core.Lang[LangId.Print_BtnProperties];
         ToolTip.SetTip(PART_BtnPrevPage, Core.Lang[LangId.Print_PreviousPage]);
         ToolTip.SetTip(PART_BtnNextPage, Core.Lang[LangId.Print_NextPage]);
@@ -345,7 +346,7 @@ public partial class PrintWindowView : PhControl
             };
             var button = new PhToolButton
             {
-                Content = new StackPanel { Spacing = 4, Children = { tile, label } },
+                Content = new StackPanel { Spacing = 4, VerticalAlignment = VerticalAlignment.Center, Children = { tile, label } },
             };
             button.Classes.Add("layout");
             button.Click += (_, _) => SelectLayout(layout);
@@ -397,7 +398,7 @@ public partial class PrintWindowView : PhControl
     {
         _isMoreVisible = !_isMoreVisible;
         PART_MorePanel.IsVisible = _isMoreVisible;
-        PART_BtnMore.Text = (_isMoreVisible ? "▾  " : "▸  ") + Core.Lang[LangId.Print_LblMoreSettings];
+        PART_BtnMore.IconData = Resx.GetIcon(_isMoreVisible ? ResxIconId.IconChevronDown : ResxIconId.IconChevronRight);
     }
 
     #endregion // Controls
@@ -443,11 +444,10 @@ public partial class PrintWindowView : PhControl
         PART_Printer.IsEnabled = true;
         _isUpdatingControls = false;
 
-        // only the app's own destination: say why
-        if (printers.All(i => i.IsVirtual))
-        {
-            ShowPrinterStatus(Core.Lang[LangId.Print_NoPrinters]);
-        }
+        // only the app's own destination: say why, under it
+        _noPrintersText = printers.All(i => i.IsVirtual)
+            ? Core.PrintProvider.SystemPrintersUnavailableReason ?? Core.Lang[LangId.Print_NoPrinters]
+            : null;
 
         await SelectPrinterAsync(choice);
     }
@@ -510,9 +510,9 @@ public partial class PrintWindowView : PhControl
             var status = await Core.PrintProvider.GetStatusAsync(printer, timeout.Token);
             if (!ReferenceEquals(_printer, printer)) return;
 
-            if (status.State == PrinterState.Unknown || printer.IsVirtual)
+            if (printer.IsVirtual || status.State == PrinterState.Unknown)
             {
-                PART_PrinterStatus.IsVisible = false;
+                ShowPrinterStatus(printer.IsVirtual ? _noPrintersText ?? string.Empty : string.Empty);
                 return;
             }
 
@@ -758,6 +758,10 @@ public partial class PrintWindowView : PhControl
     {
         var count = _doc?.Pages.Count ?? 0;
         PART_PageText.Text = count == 0 ? string.Empty : Core.Lang[LangId.Print_PageOf, _pageIndex + 1, count];
+
+        // a single page has nowhere to go
+        PART_BtnPrevPage.IsVisible = count > 1;
+        PART_BtnNextPage.IsVisible = count > 1;
         PART_BtnPrevPage.IsEnabled = _pageIndex > 0;
         PART_BtnNextPage.IsEnabled = _pageIndex < count - 1;
     }

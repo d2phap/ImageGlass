@@ -86,6 +86,10 @@ public abstract class PrintProviderBase : IPrintProvider
 
 
     /// <inheritdoc/>
+    public virtual string? SystemPrintersUnavailableReason => null;
+
+
+    /// <inheritdoc/>
     public Task<PrinterCapabilities> GetCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
     {
         return printer.Id == PDF_PRINTER_ID
