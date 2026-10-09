@@ -113,6 +113,7 @@ ImageGlass.Lib/
 │   │   │   └── SvgCodecs/         # SVG (vector) codec
 │   │   ├── Manager/               # PhotoManager & PhotoManager_*.cs (search, watcher, caching)
 │   │   └── Photos/                # Photo, PhotoMetadata, PhotoColorProfile, etc.
+│   ├── Printing/                  # Print layouts, layout engine, page renderer, PDF writer, PrintSession (see "Printing")
 │   ├── ServiceProviders/          # Interface contracts + shared providers
 │   │   ├── AppAPIs/               # App API provider interfaces
 │   │   ├── FileSearchService/     # File search service abstractions
@@ -143,6 +144,7 @@ ImageGlass.Lib/
 ├── ViewModels/                    # MainWindowViewModel, MainWindowModel, SettingsViewModel
 └── Windows/                       # Top-level windows: MainWindow, AboutWindow, SettingsWindow, UpdateWindow, ExportFramesWindow
     ├── Main/                      # MainWindow_View partial
+    ├── Print/                     # PrintWindow, its view, preview and layout tiles
     └── Settings/                  # Settings UI: Controls/, Pages/, Windows/
 
 ImageGlass.Win32/
@@ -359,7 +361,7 @@ App.Initialize()
 Occurs in `Program.cs` before Avalonia app setup (Linux/Mac have equivalent registrations):
 - `FileSearchProvider` (shell enumeration in the view order of File Explorer or a supported third-party file manager; see "Explorer sort order & the foreground shell")
 - `ShellProvider` (context menu, file properties, Windows Share API)
-- `PrintProvider` (Windows Print API)
+- `PrintProvider` (GDI printing through the spooler; Print Pictures as the system dialog; see "Printing")
 - `ColorProfileProvider` (Monitor color profile retrieval via Win32 APIs)
 - `PreviewProvider` (thumbnail cache via Windows shell)
 
@@ -473,6 +475,16 @@ Occurs in `Program.cs` before Avalonia app setup (Linux/Mac have equivalent regi
 - **`ReferenceWhiteNits` rising makes the image darker, and that is correct, not inverted.** It is the normalization *divisor* (`ComputeNormScale`), i.e. source-side HDR reference white per BT.2408, so declaring a brighter level as white necessarily renders everything below it darker. The confusion is that "paper white" at the *display* end (Windows SDR content brightness) brightens as it rises. Do not "fix" the direction; the label says `Reference white` and the tooltip states the direction.
 - **Avalonia presents SDR only**, so a desktop in HDR mode makes MS Photos structurally better looking than any tone-map setting can be. Check `advancedColorEnabled` via `DisplayConfigGetDeviceInfo` before chasing it, and never use a GDI screen capture of an HDR desktop as ground truth for another app (it is faithful for ImageGlass's own SDR output).
 
+### 8. Printing (`Common/Printing/`, `Windows/Print/`)
+- **One renderer for everything that prints.** `PrintPageRenderer.DrawPageAsync` draws a page in points (1/72 in) onto any canvas: the preview bitmap, a PDF page (`PdfPrintWriter`, `SKDocument.CreatePdf`), and each Windows GDI cell raster. Never draw a print any other way, or the preview stops being what prints.
+- **Layout is pure and in points** (`PrintLayoutEngine.Paginate`). Auto orientation breaks ties by prints per page, then paper per print, then prints that stand upright; without the last key, landscape photos on "4 per page" went onto a turned portrait page. **Every quarter turn is counter-clockwise** (auto-rotate in a cell, and a landscape page turned onto portrait paper), as IPP "landscape" turns.
+- **"Current state" is the viewer's.** `ViewerControl.CaptureImageState()` leases the shown image with its edits recipe (orientation, invert, channels, HDR tone mapping); `PrintSession` uses those pixels for the shown frame when `HasExactColorTag` and not a preview, and `PhotoFrameReader` with `SkipDisplayProfile` for every other frame. Output is always 8-bit sRGB; the display profile applies only to the preview bitmap.
+- **`PrintSession` images are opaque on white**, the paper they print on, so a PDF stores them as JPEG q95 (`PdfWriteOptions.EncodingQuality`); lossless made a 1.5 MB photo a 5.8 MB PDF. They come in power-of-two buckets under a 256 MB LRU, and every surface checks the `int.MaxValue` byte ceiling.
+- **Providers never lay out.** `IPrintProvider` + `PrintProviderBase` own Save as PDF (`ig:pdf`) on every OS. Windows prints through GDI (`Win32GdiPrintJob`): each cell a raster at its image's own density (150 dpi floor, 300 for photos, 600 for vectors), sent in 32 MB bands by an STA thread that owns the DC. Linux sends a PDF job to CUPS (`CupsApi`, `print-scaling=none`, portrait pages only) and "system dialog" is the XDG print portal (`XdgPrintPortal`, the PDF as a descriptor). macOS sends the PDF through `PMPrinterPrintWithFile` (`MacPrintCoreApi`) and opens PDFKit's print panel.
+- **Windows measures printable areas lazily** (`IPrintProvider.MeasurePaperAsync`): a `CreateIC` per paper costs ~20 ms and Microsoft Print to PDF lists 84 papers, so capabilities measure only the default paper and mark the rest `IsPrintableAreaMeasured = false`. The GDI job places everything by the real device geometry, so an estimate never misplaces output.
+- **Completion says "Sent to {printer}" for every system printer**, a file printer included: the spooler writes the file after `EndDoc`, so only the app's own Save as PDF may say "Saved". A cancelled job's output file is deleted after `AbortDoc` with retries, since the spooler opens it with the first page and still holds it, and only after `StartDoc` succeeded, so a failed open never deletes a file the user chose to overwrite.
+- **Captions are outlines** (`SKFont.GetTextPath`), so a PDF embeds no font, and they are split into per-script runs (`CaptionFonts`): one fallback font for a whole caption printed Hangul as boxes next to Japanese.
+
 ---
 
 ## Code Style & Best Practices
@@ -538,6 +550,7 @@ A cancelled gallery scroll has crashed the app twice, as `0xc0000374` (`BlockNot
 | `ViewerControl.cs` + `ViewerControl_*.cs` | Image rendering, zoom/pan, selection, animation, nav buttons |
 | `UI/Viewer/Renderer/MipmapTileCache.cs` | Tiled mipmap cache with LRU eviction |
 | `Common/Photoing/Codecs/SkiaCodecs/HdrToneMapper.cs` | HDR-to-SDR tone mapping; per-transfer-function `1.0` anchors in `EncodingWhiteNits` (PQ/HLG = 203 nits, scRGB = 80 nits) |
+| `Common/Printing/` + `Windows/Print/` | Printing: layout engine, page renderer, PDF writer, `PrintSession`, and the Print window; each platform's `PrintProvider` spools (see "Printing") |
 | `Common/ServiceProviders/` | Interface contracts + shared providers for cross-platform features |
 | `ImageGlass.Win32/Common/ServiceProviders/` | Win32 implementations of service providers |
 | `ImageGlass.Linux/Common/ServiceProviders/` | Linux implementations of service providers |
