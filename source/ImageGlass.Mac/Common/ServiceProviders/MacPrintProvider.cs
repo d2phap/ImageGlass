@@ -16,8 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia.Threading;
 using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
+using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,25 +27,75 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Mac.Common.ServiceProviders;
 
+
+/// <summary>
+/// Prints through PrintCore as PDF jobs, and opens the macOS print panel for the system dialog.
+/// </summary>
 internal class MacPrintProvider : PrintProviderBase
 {
     /// <inheritdoc/>
     protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
     {
-        return Task.FromResult<IReadOnlyList<PrinterInfo>>([]);
+        return Task.Run<IReadOnlyList<PrinterInfo>>(MacPrintCoreApi.GetPrinters, token).WaitAsync(token);
     }
 
 
     /// <inheritdoc/>
     protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
     {
-        return Task.FromResult(PdfCapabilities);
+        return Task.Run(() => MacPrintCoreApi.GetCapabilities(printer.Id, token), token).WaitAsync(token);
     }
 
 
     /// <inheritdoc/>
-    protected override Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    protected override Task<PrinterStatus> GetSystemStatusAsync(PrinterInfo printer, CancellationToken token)
     {
-        throw new NotSupportedException();
+        return Task.Run(() => MacPrintCoreApi.GetStatus(printer.Id), token).WaitAsync(token);
+    }
+
+
+    /// <summary>
+    /// Writes the job as a PDF of portrait pages, a landscape one turned onto its sheet, and hands it to the print system.
+    /// </summary>
+    protected override async Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    {
+        var path = await WriteTempPdfAsync(job, true, progress, token).ConfigureAwait(false);
+
+        try
+        {
+            // past this point the job goes whole, so a cancel never leaves half a document on the printer
+            token.ThrowIfCancellationRequested();
+
+            var settings = job.Settings;
+            var options = new MacPrintJobOptions(settings.Paper.Id, settings.Copies, settings.Collate, settings.Duplex);
+            await Task.Run(() => MacPrintCoreApi.PrintFile(settings.Printer.Id, path, job.Title, options), CancellationToken.None).ConfigureAwait(false);
+        }
+        finally
+        {
+            TryDelete(path);
+        }
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanShowSystemDialog => true;
+
+
+    /// <summary>
+    /// Shows the macOS print panel for the pages as a PDF, landscape pages kept, since the panel turns them to its paper.
+    /// </summary>
+    public override async Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
+    {
+        var path = await WriteTempPdfAsync(job, false, null, token).ConfigureAwait(false);
+
+        try
+        {
+            // AppKit runs the panel on the main thread
+            await Dispatcher.UIThread.InvokeAsync(() => MacPrintPanelApi.ShowPrintPanel(path));
+        }
+        finally
+        {
+            TryDelete(path);
+        }
     }
 }
