@@ -658,17 +658,10 @@ public partial class AppAPIProvider
 
 
     /// <summary>
-    /// Opens Print dialog to print the current photo.
+    /// Opens the Print window for the photo as it is shown, every frame and edit included.
     /// </summary>
     public static async Task IG_PrintAsync()
     {
-        if (BHelper.OS != OSType.Windows)
-        {
-            throw new NotSupportedException($"IGE: This feature is not supported on {BHelper.OS}.");
-        }
-
-        _ = Message.ShowAsync(Core.Lang[LangId._CreatingFile], delayMs: 500);
-
         // the shown image, every edit applied, rather than the file on disk
         var state = Viewer.CaptureImageState();
         if (state is null)
@@ -676,40 +669,32 @@ public partial class AppAPIProvider
             _ = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
             {
                 Title = Core.Lang[LangId.Menu_MnuPrint],
-                Description = Core.Lang[LangId._CreatingFileError],
+                Description = Core.Lang[LangId.Menu_MnuPrint_Error],
             });
+            return;
         }
-        else
+
+        using var session = new PrintSession(state);
+        var window = new PrintWindow(session);
+
+        // a running slideshow would move on to the next photo behind the window
+        var slideshow = Core.Slideshow;
+        var isSlideshowPaused = slideshow is { IsRunning: true, IsPaused: false };
+        if (isSlideshowPaused) slideshow!.Pause();
+
+        // a busy app holds the animation still and refuses edits while the window is open
+        Core.IsBusy = true;
+        try
         {
-            using var session = new PrintSession(state);
-
-            try
-            {
-                var paper = PaperCatalog.Papers.First(i => i.Id == PaperCatalog.DefaultPaperId);
-                var job = new PrintJob
-                {
-                    Settings = new PrintJobSettings { Printer = PrintProviderBase.SaveAsPdfPrinter, Paper = paper },
-                    Title = session.GetCaption(0),
-                    Layout = PrintLayoutEngine.Paginate(new PrintLayoutInput { Layout = PrintLayouts.FullPage, Paper = paper, ItemCount = 1 }),
-                    Session = session,
-                    Render = new PrintRenderOptions(),
-                };
-
-                await Core.PrintProvider.ShowSystemDialogAsync(App.MainWindow, job, CancellationToken.None);
-            }
-            catch (Exception ex)
-            {
-                _ = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
-                {
-                    Title = Core.Lang[LangId.Menu_MnuPrint],
-                    Heading = Core.Lang[LangId.Menu_MnuPrint_Error],
-                    Description = ex.Message,
-                    Details = BHelper.GetExceptionDetails(ex),
-                });
-            }
+            await window.ShowAsync(App.MainWindow);
+        }
+        finally
+        {
+            Core.IsBusy = false;
+            if (isSlideshowPaused) slideshow!.Resume();
         }
 
-        _ = Message.ClearAsync();
+        if (window.CompletedMessage is { } message) _ = Message.ShowAsync(message);
     }
 
 

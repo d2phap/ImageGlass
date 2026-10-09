@@ -39,6 +39,7 @@ public enum ConfigId
     ShowAppIcon,
     EnableMainWindowMaximized,
     EnableSettingsWindowMaximized,
+    EnablePrintWindowMaximized,
     EnableSlideshow,
     EnableSlideshowCountdown,
     EnableSlideshowRandomInterval,
@@ -150,6 +151,7 @@ public enum ConfigId
 
     MainWindowBounds,
     SettingsWindowBounds,
+    PrintWindowBounds,
     ZoomLevels,
     EditApps,
     SingleFrameFormats,

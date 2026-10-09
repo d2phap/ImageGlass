@@ -141,12 +141,7 @@
                                                                Windows=True,
                                                                x:TypeArguments=x:Boolean}"
                                         LangKey="Menu_MnuOpenWith" />
-                                    <ui:PhMenuItem
-                                        Click="MainMenuItem_Click"
-                                        IsVisible="{OnPlatform False,
-                                                               Windows=True,
-                                                               x:TypeArguments=x:Boolean}"
-                                        LangKey="Menu_MnuPrint" />
+                                    <ui:PhMenuItem Click="MainMenuItem_Click" LangKey="Menu_MnuPrint" />
                                     <ui:PhMenuItem
                                         Click="MainMenuItem_Click"
                                         IsVisible="{OnPlatform False,

@@ -32,7 +32,7 @@ public partial class PrintConfigJsonContext : JsonSerializerContext { }
 
 
 /// <summary>
-/// The Print window's last choices, saved in the tool settings of the config.
+/// The Print window's last choices, saved in the tool settings of the config; counts such as copies always start at 1.
 /// </summary>
 public sealed class PrintConfig
 {
@@ -67,7 +67,6 @@ public sealed class PrintConfig
 
     public bool AutoRotate { get; set; } = true;
     public bool ShowCaptions { get; set; }
-    public int PrintsPerItem { get; set; } = 1;
     public bool FillPage { get; set; }
     public bool Collate { get; set; } = true;
 

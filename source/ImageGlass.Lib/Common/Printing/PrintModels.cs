@@ -148,6 +148,11 @@ public sealed record PrinterInfo(string Id, string DisplayName)
     /// Gets where the printer is, when the OS knows.
     /// </summary>
     public string? Location { get; init; }
+
+    /// <summary>
+    /// Gets the extension of the file a printer writes instead of paper, such as ".pdf"; <c>null</c> for paper.
+    /// </summary>
+    public string? OutputFileExtension { get; init; }
 }
 
 

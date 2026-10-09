@@ -47,7 +47,7 @@ public abstract class PrintProviderBase : IPrintProvider
     /// <summary>
     /// Gets the built-in destination that writes a PDF file.
     /// </summary>
-    public static PrinterInfo SaveAsPdfPrinter => new(PDF_PRINTER_ID, Core.Lang[LangId.Print_SaveAsPdf]) { IsVirtual = true };
+    public static PrinterInfo SaveAsPdfPrinter => new(PDF_PRINTER_ID, Core.Lang[LangId.Print_SaveAsPdf]) { IsVirtual = true, OutputFileExtension = ".pdf" };
 
 
     /// <summary>

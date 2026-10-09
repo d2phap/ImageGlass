@@ -125,6 +125,15 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets maximized state of the print window.
+    /// </summary>
+    public bool EnablePrintWindowMaximized
+    {
+        get => Get(ConfigId.EnablePrintWindowMaximized, false);
+        set => Set(ConfigId.EnablePrintWindowMaximized, value);
+    }
+
+    /// <summary>
     /// Gets, sets value indicating whether the slideshow mode is enabled or not.
     /// </summary>
     [JsonIgnore]
@@ -953,6 +962,16 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.SettingsWindowBounds, new Rect(200, 200, 900, 580));
         set => Set(ConfigId.SettingsWindowBounds, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the bounds of the print window.
+    /// </summary>
+    [JsonConverter(typeof(JsonArrayToRectConverter))]
+    public Rect PrintWindowBounds
+    {
+        get => Get(ConfigId.PrintWindowBounds, new Rect(200, 200, 1000, 680));
+        set => Set(ConfigId.PrintWindowBounds, value);
     }
 
     /// <summary>

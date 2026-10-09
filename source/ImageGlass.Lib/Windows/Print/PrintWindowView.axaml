@@ -1,0 +1,236 @@
+<ui:PhControl
+    x:Class="ImageGlass.Common.Windows.PrintWindowView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="using:ImageGlass.Common.Types"
+    xmlns:ui="using:ImageGlass.UI"
+    xmlns:windows="using:ImageGlass.Common.Windows"
+    mc:Ignorable="d"
+    d:DesignHeight="680"
+    d:DesignWidth="1000"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
+
+    <ui:PhControl.Styles>
+        <!--  A label above its input  -->
+        <Style Selector="StackPanel.row">
+            <Setter Property="Spacing" Value="5" />
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="TextBlock.hint">
+            <Setter Property="FontSize" Value="{x:Static types:Const.FONT_SIZE_SMALL}" />
+            <Setter Property="Opacity" Value="0.75" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="ui|PhToolButton.layout">
+            <Setter Property="Padding" Value="4,6,4,4" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </ui:PhControl.Styles>
+
+
+    <!--  settings | preview  -->
+    <Grid ColumnDefinitions="340,*">
+
+        <!--  Settings  -->
+        <ScrollViewer
+            x:Name="PART_Settings"
+            Grid.Column="0"
+            HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="24,16,16,24" Spacing="14">
+
+                <!--  Printer  -->
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblPrinter" />
+                    <ComboBox x:Name="PART_Printer" />
+                    <TextBlock x:Name="PART_PrinterStatus" Classes="hint" IsVisible="False" />
+                </StackPanel>
+
+                <!--  Copies  -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <StackPanel Classes="row">
+                        <ui:PhTextBlock LangKey="Print_LblCopies" />
+                        <NumericUpDown
+                            x:Name="PART_Copies"
+                            HorizontalAlignment="Stretch"
+                            FormatString="0"
+                            Increment="1"
+                            Maximum="999"
+                            Minimum="1"
+                            Value="1" />
+                    </StackPanel>
+                    <CheckBox
+                        x:Name="PART_Collate"
+                        Grid.Column="1"
+                        Margin="0,0,0,2"
+                        VerticalAlignment="Bottom">
+                        <ui:PhTextBlock LangKey="Print_ChkCollate" />
+                    </CheckBox>
+                </Grid>
+
+                <!--  Paper and orientation  -->
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblPaper" />
+                    <ComboBox x:Name="PART_Paper" />
+                </StackPanel>
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblOrientation" />
+                    <ComboBox x:Name="PART_Orientation" />
+                </StackPanel>
+
+                <!--  Layout  -->
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblLayout" />
+                    <UniformGrid x:Name="PART_Layouts" Columns="3" />
+                </StackPanel>
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblFit" />
+                    <ComboBox x:Name="PART_Fit" />
+                    <CheckBox x:Name="PART_AutoRotate">
+                        <ui:PhTextBlock LangKey="Print_ChkAutoRotate" />
+                    </CheckBox>
+                </StackPanel>
+                <StackPanel Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblMargins" />
+                    <ComboBox x:Name="PART_Margins" />
+                </StackPanel>
+                <Grid
+                    x:Name="PART_PrintsEachRow"
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="12">
+                    <StackPanel Classes="row">
+                        <ui:PhTextBlock LangKey="Print_LblPrintsEach" />
+                        <NumericUpDown
+                            x:Name="PART_PrintsEach"
+                            HorizontalAlignment="Stretch"
+                            FormatString="0"
+                            Increment="1"
+                            Maximum="99"
+                            Minimum="1"
+                            Value="1" />
+                    </StackPanel>
+                    <CheckBox
+                        x:Name="PART_FillPage"
+                        Grid.Column="1"
+                        Margin="0,0,0,2"
+                        VerticalAlignment="Bottom">
+                        <ui:PhTextBlock LangKey="Print_ChkFillPage" />
+                    </CheckBox>
+                </Grid>
+
+                <!--  What to print  -->
+                <StackPanel x:Name="PART_RegionRow" Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblRegion" />
+                    <ComboBox x:Name="PART_Region" />
+                </StackPanel>
+                <StackPanel x:Name="PART_FramesRow" Classes="row">
+                    <ui:PhTextBlock LangKey="Print_LblFrames" />
+                    <ComboBox x:Name="PART_FrameScope" />
+                    <TextBox x:Name="PART_FrameRange" IsVisible="False" />
+                    <TextBlock x:Name="PART_FrameRangeHint" Classes="hint" IsVisible="False" />
+                </StackPanel>
+
+                <!--  More settings  -->
+                <ui:PhButton
+                    x:Name="PART_BtnMore"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    Variant="Link" />
+                <StackPanel
+                    x:Name="PART_MorePanel"
+                    IsVisible="False"
+                    Spacing="14">
+                    <StackPanel x:Name="PART_ColorRow" Classes="row">
+                        <ui:PhTextBlock LangKey="Print_LblColor" />
+                        <ComboBox x:Name="PART_Color" />
+                    </StackPanel>
+                    <StackPanel x:Name="PART_QualityRow" Classes="row">
+                        <ui:PhTextBlock LangKey="Print_LblQuality" />
+                        <ComboBox x:Name="PART_Quality" />
+                    </StackPanel>
+                    <StackPanel x:Name="PART_DuplexRow" Classes="row">
+                        <ui:PhTextBlock LangKey="Print_LblTwoSided" />
+                        <ComboBox x:Name="PART_Duplex" />
+                    </StackPanel>
+                    <CheckBox x:Name="PART_Captions">
+                        <ui:PhTextBlock LangKey="Print_ChkCaptions" />
+                    </CheckBox>
+                    <ui:PhButton
+                        x:Name="PART_BtnProperties"
+                        Padding="0"
+                        HorizontalAlignment="Left"
+                        Variant="Link" />
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <!--  Preview  -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto">
+            <StackPanel
+                Margin="0,12,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="6">
+                <ui:PhToolButton x:Name="PART_BtnPrevPage" Padding="6">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource IconArrowLeft}"
+                        IsHitTestVisible="False" />
+                </ui:PhToolButton>
+                <TextBlock
+                    x:Name="PART_PageText"
+                    MinWidth="90"
+                    VerticalAlignment="Center"
+                    TextAlignment="Center" />
+                <ui:PhToolButton x:Name="PART_BtnNextPage" Padding="6">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource IconArrowRight}"
+                        IsHitTestVisible="False" />
+                </ui:PhToolButton>
+            </StackPanel>
+
+            <windows:PrintPreviewControl
+                x:Name="PART_Preview"
+                Grid.Row="1"
+                Margin="8,8,24,8" />
+
+            <TextBlock
+                x:Name="PART_Warning"
+                Grid.Row="2"
+                Margin="8,0,24,12"
+                HorizontalAlignment="Center"
+                Classes="hint"
+                Foreground="{DynamicResource IG_TextWarningBrush}"
+                IsVisible="False" />
+
+            <!--  Printing progress, over the preview  -->
+            <Border
+                x:Name="PART_Progress"
+                Grid.Row="1"
+                Padding="24,16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{DynamicResource IG_OverlayBackgroundBrush}"
+                CornerRadius="{DynamicResource OverlayCornerRadius}"
+                IsVisible="False">
+                <StackPanel MinWidth="260" Spacing="10">
+                    <TextBlock x:Name="PART_ProgressText" />
+                    <ProgressBar
+                        x:Name="PART_ProgressBar"
+                        Maximum="1"
+                        Minimum="0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</ui:PhControl>

@@ -160,7 +160,7 @@ public static class PrintPageRenderer
 
 
     /// <summary>
-    /// Maps content of <paramref name="size"/> at the origin onto <paramref name="dest"/>, turned 90 degrees when asked.
+    /// Maps content of <paramref name="size"/> at the origin onto <paramref name="dest"/>, turned a quarter counter-clockwise when asked, as printing turns landscape.
     /// </summary>
     private static void ApplyPlacement(SKCanvas canvas, SKRect dest, bool rotate, SKSize size)
     {
@@ -168,7 +168,7 @@ public static class PrintPageRenderer
         var drawH = rotate ? dest.Width : dest.Height;
 
         canvas.Translate(dest.MidX, dest.MidY);
-        if (rotate) canvas.RotateDegrees(90);
+        if (rotate) canvas.RotateDegrees(-90);
         canvas.Translate(-drawW / 2, -drawH / 2);
         canvas.Scale(drawW / size.Width, drawH / size.Height);
     }
@@ -238,10 +238,6 @@ public static class PrintPageRenderer
     {
         if (printable.Contains(page) || printable.IsEmpty) return;
 
-        using var path = new SKPath { FillType = SKPathFillType.EvenOdd };
-        path.AddRect(page);
-        path.AddRect(printable);
-
         using var paint = new SKPaint
         {
             Color = new SKColor(0, 0, 0, 28),
@@ -251,7 +247,8 @@ public static class PrintPageRenderer
         };
 
         canvas.Save();
-        canvas.ClipPath(path);
+        canvas.ClipRect(page);
+        canvas.ClipRect(printable, SKClipOperation.Difference);
         for (var x = page.Left - page.Height; x < page.Right; x += 6)
         {
             canvas.DrawLine(x, page.Bottom, x + page.Height, page.Top, paint);

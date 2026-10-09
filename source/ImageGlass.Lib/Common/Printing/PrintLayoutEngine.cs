@@ -215,10 +215,14 @@ public static class PrintLayoutEngine
         var portraitCells = ComputeCellRects(input.Layout, portraitContent, input.FirstItemAspect, out _);
         var landscapeCells = ComputeCellRects(input.Layout, landscapeContent, input.FirstItemAspect, out _);
 
-        // more prints per page wins; at a tie the one that gives each print more paper
+        // more prints per page wins, then more paper for each print, then more prints that need no turn
         if (portraitCells.Count != landscapeCells.Count) return landscapeCells.Count > portraitCells.Count;
 
-        return GetFittedArea(landscapeCells, input.FirstItemAspect) > GetFittedArea(portraitCells, input.FirstItemAspect) * 1.01f;
+        var landscapeArea = GetFittedArea(landscapeCells, input.FirstItemAspect);
+        var portraitArea = GetFittedArea(portraitCells, input.FirstItemAspect);
+        if (Math.Abs(landscapeArea - portraitArea) > Math.Max(landscapeArea, portraitArea) * 0.01f) return landscapeArea > portraitArea;
+
+        return CountUpright(landscapeCells, input.FirstItemAspect) > CountUpright(portraitCells, input.FirstItemAspect);
     }
 
 
@@ -409,6 +413,16 @@ public static class PrintLayoutEngine
     {
         var w = Math.Min(cell.Width, cell.Height * aspect);
         return w * (w / aspect);
+    }
+
+
+    /// <summary>
+    /// Counts the cells a print of the given aspect fits without turning, as <see cref="PlaceImage"/> decides it.
+    /// </summary>
+    private static int CountUpright(IReadOnlyList<SKRect> cells, float aspect)
+    {
+        var isLandscapePrint = aspect > 1;
+        return cells.Count(cell => aspect == 1 || cell.Width == cell.Height || cell.Width > cell.Height == isLandscapePrint);
     }
 
 

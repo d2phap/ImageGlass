@@ -89,11 +89,11 @@ public static class PdfPrintWriter
             var canvas = doc.BeginPage(turn ? size.Height : size.Width, turn ? size.Width : size.Height);
             try
             {
-                // landscape content turned a quarter clockwise onto the portrait sheet
+                // landscape content turned a quarter counter-clockwise onto the portrait sheet, as IPP's "landscape" does
                 if (turn)
                 {
-                    canvas.Translate(size.Height, 0);
-                    canvas.RotateDegrees(90);
+                    canvas.Translate(0, size.Width);
+                    canvas.RotateDegrees(-90);
                 }
 
                 await PrintPageRenderer.DrawPageAsync(canvas, layout, i, images, render, token).ConfigureAwait(false);

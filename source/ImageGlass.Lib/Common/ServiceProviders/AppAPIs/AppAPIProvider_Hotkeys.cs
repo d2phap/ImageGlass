@@ -61,8 +61,8 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuSave,                 API.IG_Save,                Hotkey.Ctrl, Key.S),
         new(LangId.Menu_MnuSaveAs,               API.IG_SaveAs,              Hotkey.Ctrl | MKeys.Shift, Key.S),
         new(LangId.Menu_MnuExportFrames,         API.IG_ExportImageFrames,   Hotkey.Ctrl, Key.J),
+        new(LangId.Menu_MnuPrint,                API.IG_Print,               Hotkey.Ctrl, Key.P),
         .. SupportedOn(BHelper.OS == OSType.Windows, [
-            new(LangId.Menu_MnuPrint,            API.IG_Print,               Hotkey.Ctrl, Key.P),
             new(LangId.Menu_MnuOpenWith,         API.IG_OpenWith,            Key.D),
             new(LangId.Menu_MnuShare,            API.IG_Share,               Key.S),
         ]),
