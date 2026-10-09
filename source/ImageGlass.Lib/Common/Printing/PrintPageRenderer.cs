@@ -58,6 +58,10 @@ public static class PrintPageRenderer
 {
     private const float CAPTION_FONT_PT = 7.5f;
 
+    // a raster print stays sharp from 150 dpi, and photo printers take no more than about 300
+    private const float MIN_RASTER_DPI = 150;
+    private const float MAX_PHOTO_RASTER_DPI = 300;
+
     // Rec. 709 luminance, the same weights the HDR code uses
     private static readonly float[] _grayscaleMatrix =
     [
@@ -108,6 +112,42 @@ public static class PrintPageRenderer
 
 
     /// <summary>
+    /// Gets the resolution a raster backend draws a cell at: the image's own density, kept between a floor and <paramref name="maxDpi"/>.
+    /// </summary>
+    public static async Task<float> GetCellRasterDpiAsync(PrintCell cell, IPrintImageSource images,
+        PrintRenderOptions options, float maxDpi, CancellationToken token)
+    {
+        // a vector print has no pixels of its own
+        var picture = images.GetPicture(cell.ItemIndex);
+        if (picture is not null && !picture.IsDisposed()) return maxDpi;
+
+        using var lease = await images.GetImageAsync(cell.ItemIndex, GetRequestLongSide(cell, options), token).ConfigureAwait(false);
+        var img = lease?.Image;
+        var ceiling = Math.Min(maxDpi, MAX_PHOTO_RASTER_DPI);
+        if (img.IsDisposed()) return ceiling;
+
+        var (dest, _) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, new SKSize(img.Width, img.Height), options.Fit, options.AutoRotate, options.ImageDpi);
+        var destLongSidePt = Math.Max(dest.Width, dest.Height);
+        if (destLongSidePt <= 0) return ceiling;
+
+        var imageDpi = Math.Max(img.Width, img.Height) / destLongSidePt * PrintUnits.POINTS_PER_INCH;
+        return Math.Clamp(imageDpi, Math.Min(MIN_RASTER_DPI, ceiling), ceiling);
+    }
+
+
+    /// <summary>
+    /// Gets the length of the long side of the image a cell asks for: the pixels it covers at the target resolution, every pixel for actual size.
+    /// </summary>
+    private static int GetRequestLongSide(PrintCell cell, PrintRenderOptions options)
+    {
+        if (options.Fit == PrintFitMode.ActualSize) return int.MaxValue;
+
+        var longSidePt = Math.Max(cell.ImageRectPt.Width, cell.ImageRectPt.Height);
+        return (int)Math.Ceiling(PrintUnits.PtToPx(longSidePt, options.TargetDpi) * (options.Fit == PrintFitMode.Fill ? 1.5f : 1f));
+    }
+
+
+    /// <summary>
     /// Draws the image of one print, placed and clipped to its cell.
     /// </summary>
     private static async Task DrawCellAsync(SKCanvas canvas, PrintCell cell, IPrintImageSource images,
@@ -131,12 +171,7 @@ public static class PrintPageRenderer
             return;
         }
 
-        // the pixels the print covers at the target resolution; actual size asks for every pixel
-        var longSidePt = Math.Max(cell.ImageRectPt.Width, cell.ImageRectPt.Height);
-        var longSide = options.Fit == PrintFitMode.ActualSize
-            ? int.MaxValue
-            : (int)Math.Ceiling(PrintUnits.PtToPx(longSidePt, options.TargetDpi) * (options.Fit == PrintFitMode.Fill ? 1.5f : 1f));
-
+        var longSide = GetRequestLongSide(cell, options);
         using var lease = options.IsPreview
             ? images.TryGetImage(cell.ItemIndex, longSide)
             : await images.GetImageAsync(cell.ItemIndex, longSide, token).ConfigureAwait(false);

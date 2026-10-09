@@ -44,6 +44,11 @@ public interface IPrintProvider
     Task<PrinterStatus> GetStatusAsync(PrinterInfo printer, CancellationToken token);
 
     /// <summary>
+    /// Measures the printable area of a paper the capabilities only estimated, as it is chosen.
+    /// </summary>
+    Task<PaperInfo> MeasurePaperAsync(PrinterInfo printer, PaperInfo paper, CancellationToken token);
+
+    /// <summary>
     /// Shows the printer's own settings dialog and reads its choices back into <paramref name="settings"/>; <c>false</c> when cancelled or there is none.
     /// </summary>
     Task<bool> ShowPropertiesDialogAsync(PhWindow owner, PrintJobSettings settings);

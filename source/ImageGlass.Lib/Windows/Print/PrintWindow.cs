@@ -22,6 +22,7 @@ using Avalonia.Input;
 using Avalonia.Layout;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Printing;
+using ImageGlass.Common.ServiceProviders;
 using ImageGlass.UI;
 using ImageGlass.UI.Windowing;
 using System;
@@ -127,7 +128,8 @@ public sealed class PrintWindow : DialogWindow
             var printer = _view.Printer;
             if (!await _view.PrintAsync(this)) return;
 
-            CompletedMessage = printer?.OutputFileExtension is not null
+            // a printer's driver writes even a file after the job is handed over, so only the app's own PDF is already saved
+            CompletedMessage = printer?.Id == PrintProviderBase.PDF_PRINTER_ID
                 ? Core.Lang[LangId.Print_Saved]
                 : Core.Lang[LangId.Print_Sent, printer?.DisplayName];
 

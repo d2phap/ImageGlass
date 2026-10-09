@@ -171,6 +171,11 @@ public sealed record PaperInfo(string Id, string DisplayName, SKSize SizePt)
     /// Gets the margins the printer cannot print on, in points, portrait.
     /// </summary>
     public PrintMargins HardwareMarginsPt { get; init; } = PrintMargins.Zero;
+
+    /// <summary>
+    /// Gets whether <see cref="HardwareMarginsPt"/> was measured for this paper, not estimated from the printer's default paper.
+    /// </summary>
+    public bool IsPrintableAreaMeasured { get; init; } = true;
 }
 
 

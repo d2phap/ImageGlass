@@ -104,6 +104,15 @@ public abstract class PrintProviderBase : IPrintProvider
 
 
     /// <inheritdoc/>
+    public Task<PaperInfo> MeasurePaperAsync(PrinterInfo printer, PaperInfo paper, CancellationToken token)
+    {
+        return paper.IsPrintableAreaMeasured || printer.Id == PDF_PRINTER_ID
+            ? Task.FromResult(paper)
+            : MeasureSystemPaperAsync(printer, paper, token);
+    }
+
+
+    /// <inheritdoc/>
     public Task<bool> ShowPropertiesDialogAsync(PhWindow owner, PrintJobSettings settings)
     {
         return settings.Printer.Id == PDF_PRINTER_ID
@@ -150,6 +159,14 @@ public abstract class PrintProviderBase : IPrintProvider
     protected virtual Task<PrinterStatus> GetSystemStatusAsync(PrinterInfo printer, CancellationToken token)
     {
         return Task.FromResult(new PrinterStatus(PrinterState.Unknown));
+    }
+
+    /// <summary>
+    /// Measures the printable area of a system printer's paper; a backend that measures every paper up front keeps the estimate.
+    /// </summary>
+    protected virtual Task<PaperInfo> MeasureSystemPaperAsync(PrinterInfo printer, PaperInfo paper, CancellationToken token)
+    {
+        return Task.FromResult(paper with { IsPrintableAreaMeasured = true });
     }
 
     /// <summary>

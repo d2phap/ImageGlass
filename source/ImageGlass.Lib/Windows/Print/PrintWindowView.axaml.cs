@@ -229,6 +229,9 @@ public partial class PrintWindowView : PhControl
             box.SelectionChanged += (_, _) => OnSettingChanged();
         }
 
+        // a paper chosen in code is measured too, so this runs while the controls update
+        PART_Paper.SelectionChanged += (_, _) => _ = MeasureSelectedPaperAsync();
+
         foreach (var check in new[] { PART_AutoRotate, PART_Captions, PART_FillPage, PART_Collate })
         {
             check.IsCheckedChanged += (_, _) => OnSettingChanged();
@@ -547,6 +550,34 @@ public partial class PrintWindowView : PhControl
             ?? _caps.Papers.FirstOrDefault();
 
         if (choice is not null) SelectTag(PART_Paper, choice);
+    }
+
+
+    /// <summary>
+    /// Measures the printable area of the chosen paper when the printer only estimated it, then lays the pages out on it.
+    /// </summary>
+    private async Task MeasureSelectedPaperAsync()
+    {
+        if (_printer is not { } printer) return;
+        if (PART_Paper.SelectedItem is not ComboBoxItem { Tag: PaperInfo { IsPrintableAreaMeasured: false } paper } item) return;
+
+        try
+        {
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(_closing.Token);
+            timeout.CancelAfter(PRINTER_TIMEOUT_MS);
+
+            var measured = await Core.PrintProvider.MeasurePaperAsync(printer, paper, timeout.Token);
+            if (!ReferenceEquals(_printer, printer)) return;
+
+            // the measured paper replaces its estimate for good; the layout follows only while it is still chosen
+            item.Tag = measured;
+            _caps = _caps with { Papers = _caps.Papers.Select(i => i.Id == measured.Id ? measured : i).ToList() };
+            if (ReferenceEquals(PART_Paper.SelectedItem, item)) Relayout();
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            Debug.WriteLine($"❌❌❌ {nameof(PrintWindowView)}.{nameof(MeasureSelectedPaperAsync)}: {ex.Message}");
+        }
     }
 
 

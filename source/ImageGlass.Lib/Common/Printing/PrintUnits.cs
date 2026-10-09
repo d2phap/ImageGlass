@@ -20,6 +20,7 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ImageGlass.Common.Printing;
 
@@ -80,7 +81,7 @@ public static class PrintUnits
 /// <summary>
 /// The paper sizes of the app's own destinations, such as Save as PDF, and the default among them.
 /// </summary>
-public static class PaperCatalog
+public static partial class PaperCatalog
 {
     /// <summary>
     /// Gets the built-in paper sizes, ISO and US office sizes, then photo sizes.
@@ -114,10 +115,15 @@ public static class PaperCatalog
     /// </summary>
     public static string GetDisplayName(string name, SKSize sizePt)
     {
-        if (name.Contains('×')) return name;
+        if (DimensionRegex().IsMatch(name)) return name;
 
         return $"{name} ({PrintUnits.FormatSize(sizePt, PrintUnits.IsMetricRegion)})";
     }
+
+
+    // a size such as "4 × 6 in" or a driver's "4x6"
+    [GeneratedRegex(@"\d\s*[x×]\s*\d", RegexOptions.IgnoreCase)]
+    private static partial Regex DimensionRegex();
 
 
     private static PaperInfo Iso(string name, double widthMm, double heightMm, string? id = null)

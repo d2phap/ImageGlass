@@ -27,26 +27,64 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Win32.Common.ServiceProviders;
 
+
+/// <summary>
+/// Prints through the Windows spooler with GDI, and opens Print Pictures as the system dialog.
+/// </summary>
 public class Win32PrintProvider : PrintProviderBase
 {
     /// <inheritdoc/>
     protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
     {
-        return Task.FromResult<IReadOnlyList<PrinterInfo>>([]);
+        return Task.Run<IReadOnlyList<PrinterInfo>>(Win32PrinterApi.GetPrinters, token).WaitAsync(token);
     }
 
 
     /// <inheritdoc/>
     protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
     {
-        return Task.FromResult(PdfCapabilities);
+        return Task.Run(() => Win32PrinterApi.GetCapabilities(printer.Id, token), token).WaitAsync(token);
     }
 
 
     /// <inheritdoc/>
-    protected override Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    protected override Task<PrinterStatus> GetSystemStatusAsync(PrinterInfo printer, CancellationToken token)
     {
-        throw new NotSupportedException();
+        return Task.Run(() => Win32PrinterApi.GetStatus(printer.Id), token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PaperInfo> MeasureSystemPaperAsync(PrinterInfo printer, PaperInfo paper, CancellationToken token)
+    {
+        return Task.Run(() => Win32PrinterApi.MeasurePaper(printer.Id, paper), token).WaitAsync(token);
+    }
+
+
+    /// <summary>
+    /// Shows the driver's own settings dialog, owned by the Print window, on the UI thread.
+    /// </summary>
+    protected override Task<bool> ShowSystemPropertiesDialogAsync(PhWindow owner, PrintJobSettings settings)
+    {
+        var handle = owner.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
+
+        return Task.FromResult(Win32PrinterApi.ShowPropertiesDialog(handle, settings));
+    }
+
+
+    /// <inheritdoc/>
+    protected override async Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    {
+        var settings = job.Settings;
+        var name = settings.Printer.Id;
+
+        // copies go to the driver when it can make them in the order asked, else the app prints each one
+        var copies = Math.Max(1, settings.Copies);
+        var (maxCopies, canCollate) = Win32PrinterApi.GetCopySupport(name);
+        var isDriverCopies = copies <= maxCopies && (!settings.Collate || canCollate || job.Layout.Pages.Count == 1);
+
+        var devMode = Win32PrinterApi.BuildDevMode(name, settings, isDriverCopies ? copies : 1);
+        await Win32GdiPrintJob.RunAsync(job, devMode, isDriverCopies ? 1 : copies, progress, token).ConfigureAwait(false);
     }
 
 

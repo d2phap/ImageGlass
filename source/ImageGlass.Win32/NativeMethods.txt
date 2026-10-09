@@ -56,3 +56,25 @@ GetCurrentPackageFullName
 RegisterApplicationRestart
 
 SetThreadExecutionState
+
+
+EnumPrinters
+PRINTER_INFO_2W
+PRINTER_INFO_4W
+GetDefaultPrinter
+OpenPrinter
+ClosePrinter
+GetPrinter
+DocumentProperties
+DeviceCapabilities
+CreateIC
+GetDeviceCaps
+StartDoc
+DOCINFOW
+StartPage
+EndPage
+EndDoc
+AbortDoc
+StretchDIBits
+SetStretchBltMode
+SetBrushOrgEx
