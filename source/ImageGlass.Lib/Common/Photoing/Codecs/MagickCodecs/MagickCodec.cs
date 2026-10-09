@@ -911,6 +911,7 @@ public static partial class MagickCodec
             else if (result.SingleFrame is not null)
             {
                 result.SingleFrame.Quality = ResolveHdrSafeQuality__(meta, destExt, quality);
+                SetPngCompressionLevel(result.SingleFrame, destFilePath, quality);
 
                 // resize ICO file if it's larger than 256
                 if (destExt.Equals(".ICO", StringComparison.OrdinalIgnoreCase))
@@ -947,6 +948,21 @@ public static partial class MagickCodec
 
 
     /// <summary>
+    /// Derives the zlib level of a PNG write from <paramref name="quality"/>, never above the default 6.
+    /// </summary>
+    public static void SetPngCompressionLevel(MagickImage imgM, string destFilePath, uint quality)
+    {
+        if (MagickFormatInfo.Create(destFilePath)?.ModuleFormat != MagickFormat.Png) return;
+
+        // the PNG writer reads quality as zlib level * 10, and 7-9 cost up to 7x the time of 6 for a few percent
+        const uint MAX_LEVEL = 6;
+        var level = Math.Clamp(quality / 10, 1, MAX_LEVEL);
+
+        imgM.Settings.SetDefines(new PngWriteDefines { CompressionLevel = level });
+    }
+
+
+    /// <summary>
     /// Exports image frames to files, using Magick.NET
     /// </summary>
     /// <param name="srcFilePath">The full path of source file</param>
@@ -979,6 +995,7 @@ public static partial class MagickCodec
                     + ".png";
                 var destFilePath = Path.Combine(destFolder, newFilename);
 
+                SetPngCompressionLevel((MagickImage)imgM, destFilePath, imgM.Quality);
                 await imgM.WriteAsync(destFilePath, MagickFormat.Png, token);
             }
             catch (OperationCanceledException) { break; }

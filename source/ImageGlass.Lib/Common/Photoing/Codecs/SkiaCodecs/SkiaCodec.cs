@@ -407,6 +407,7 @@ public static partial class SkiaCodec
 
                 // write image data to file
                 imgM.Quality = quality;
+                MagickCodec.SetPngCompressionLevel(imgM, destFilePath, quality);
                 await imgM.WriteAsync(destFilePath, token);
             }
             else

@@ -522,6 +522,7 @@ A cancelled gallery scroll has crashed the app twice, as `0xc0000374` (`BlockNot
 - **Gesture recognizers**: Accumulate points in `PhPanGestureRecognizer` and `PhPinchGestureRecognizer` before expensive math
 - **File searching**: Async + debounce in `PhotoManager_FileWatcher.cs`; use `IFileSearchProvider` for platform-specific optimizations
 - **Photo preloading**: Use spiral pattern in `PhotoManager_Caching.RunCacheAroundAsync()` to balance memory and responsiveness
+- **PNG writes through Magick**: call `MagickCodec.SetPngCompressionLevel` next to every `Quality` assignment. Magick's PNG writer reads `Quality` as the zlib level (`quality / 10`), so the usual 80-100 meant level 8-9: ~9-18 s for a 12 MP photo, against ~2.5 s at the capped level 6, for files only ~5% smaller.
 
 ---
 

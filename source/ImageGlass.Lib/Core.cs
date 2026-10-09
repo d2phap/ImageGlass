@@ -1005,8 +1005,11 @@ public static class Core
         {
             try
             {
+                // SetPngCompressionLevel turns quality 10 into zlib level 1, ~4x faster than the default 6
+                var quality = ext.Equals(".png", StringComparison.OrdinalIgnoreCase) ? 10u : 85u;
+
                 // save photo as file
-                await photo.SaveAsAsync(tempFilePath, Core.ImageTransform, 85);
+                await photo.SaveAsAsync(tempFilePath, Core.ImageTransform, quality);
 
                 Core.TempImagePath = tempFilePath;
             }
