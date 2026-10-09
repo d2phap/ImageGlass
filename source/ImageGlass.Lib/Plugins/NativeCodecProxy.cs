@@ -551,9 +551,7 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
     private static void ReadPixelsInto(SKImage image, ref byte* pixels, ref nuint capacity,
         out IGPixelBuffer buffer, bool keepPrecision)
     {
-        // Unpremul because that is what every IGPixelFormat means to a plugin. Do NOT copy
-        // SkiaCodec.ToMagick, which uses Premul: handing premultiplied bytes over is a silent
-        // dark-halo bug on any image with alpha.
+        // Unpremul because that is what every IGPixelFormat means to a plugin; premultiplied bytes leave dark halos
         var (colorType, pixelFormat, bytesPerPixel) = keepPrecision
             ? ResolveEncodeFormat(image.ColorType)
             : (SKColorType.Bgra8888, IGPixelFormat.Bgra8Unorm, 4);

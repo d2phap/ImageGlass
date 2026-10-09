@@ -1124,10 +1124,14 @@ public partial class Photo : PhDisposable
             // 2. save photo to file
             else if (!handled)
             {
+                // a single-image format writes one numbered file per frame, leaving nothing at the staged path
+                var saveAllFrames = Metadata.FrameCount > 1
+                    && MagickFormatInfo.Create(destFilePath)?.SupportsMultipleFrames == true;
+
                 // update read options
                 var readOptions = ReadOptions with
                 {
-                    FrameIndex = Metadata.FrameCount > 1
+                    FrameIndex = saveAllFrames
                         ? -1 // save all frame
                         : ReadOptions.FrameIndex, // save only current frame
                 };

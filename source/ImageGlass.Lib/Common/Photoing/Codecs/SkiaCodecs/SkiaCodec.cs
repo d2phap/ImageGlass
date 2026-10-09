@@ -1438,7 +1438,8 @@ public static partial class SkiaCodec
     {
         if (skImg.IsDisposed()) return null;
 
-        var info = new SKImageInfo(skImg.Width, skImg.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+        // Magick imports straight alpha, so premultiplied bytes would darken every semi-transparent pixel
+        var info = new SKImageInfo(skImg.Width, skImg.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul);
         var rowBytes = info.Width * info.BytesPerPixel;
         var pixelBuffer = new byte[rowBytes * info.Height];
 
