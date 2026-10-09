@@ -72,6 +72,16 @@ public interface IPrintProvider
     /// Hands the job to the platform's own print dialog.
     /// </summary>
     Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token);
+
+    /// <summary>
+    /// Gets whether the platform has a settings page to add a printer on.
+    /// </summary>
+    bool CanAddPrinter { get; }
+
+    /// <summary>
+    /// Opens the platform's settings page to add a printer.
+    /// </summary>
+    Task OpenAddPrinterSettingsAsync(PhWindow owner);
 }
 
 

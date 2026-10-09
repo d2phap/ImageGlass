@@ -63,7 +63,7 @@ public enum PrintDuplex
 }
 
 
-public enum PrintFrameScope
+public enum PrintPageScope
 {
     Current,
     All,

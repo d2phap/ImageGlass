@@ -102,4 +102,17 @@ public class Win32PrintProvider : PrintProviderBase
 
         Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(path));
     }
+
+
+    /// <inheritdoc/>
+    public override bool CanAddPrinter => true;
+
+
+    /// <summary>
+    /// Opens Settings at Printers &amp; scanners, where "Add device" adds a printer.
+    /// </summary>
+    public override Task OpenAddPrinterSettingsAsync(PhWindow owner)
+    {
+        return BHelper.OpenUrlAsync(owner, "ms-settings:printers");
+    }
 }

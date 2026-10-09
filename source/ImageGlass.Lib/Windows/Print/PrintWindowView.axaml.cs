@@ -20,8 +20,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using ImageGlass.Common.AppThemes;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
@@ -69,6 +71,9 @@ public partial class PrintWindowView : PhControl
     private int _renderVersion;
     private bool _isUpdatingControls;
     private bool _isMoreVisible;
+    private bool _isLoadingPrinters;
+    private bool _refreshPrintersOnActivate;
+    private WindowBase? _window;
 
 
     /// <summary>
@@ -117,6 +122,8 @@ public partial class PrintWindowView : PhControl
 
         InitializeControls();
         WireEvents();
+        PART_PreviewPane.Background = new SolidColorBrush(PrintPreviewControl.GetDeskColor());
+        PART_BtnAddPrinter.IsVisible = Core.PrintProvider.CanAddPrinter;
 
         _session.ImageReady += Session_ImageReady;
     }
@@ -127,7 +134,34 @@ public partial class PrintWindowView : PhControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
+
+        _window = TopLevel.GetTopLevel(this) as WindowBase;
+        if (_window is not null) _window.Activated += Window_Activated;
+
         _ = LoadPrintersAsync();
+    }
+
+
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+
+        if (_window is not null) _window.Activated -= Window_Activated;
+        _window = null;
+    }
+
+
+    private void Window_Activated(object? sender, EventArgs e)
+    {
+        // back from the system's printer settings: a printer added there is listed and chosen
+        if (_refreshPrintersOnActivate && !IsPrinting) _ = LoadPrintersAsync(true);
+    }
+
+
+    protected override void OnIgThemeChanged(ThemePackChangedEventArgs e)
+    {
+        base.OnIgThemeChanged(e);
+        PART_PreviewPane.Background = new SolidColorBrush(PrintPreviewControl.GetDeskColor());
     }
 
 
@@ -141,11 +175,12 @@ public partial class PrintWindowView : PhControl
         FillQualityItems();
         _isUpdatingControls = false;
 
+        PART_BtnAddPrinter.Text = Core.Lang[LangId.Print_BtnAddPrinter];
         PART_BtnMore.Text = Core.Lang[LangId.Print_LblMoreSettings];
         PART_BtnProperties.Text = Core.Lang[LangId.Print_BtnProperties];
         ToolTip.SetTip(PART_BtnPrevPage, Core.Lang[LangId.Print_PreviousPage]);
         ToolTip.SetTip(PART_BtnNextPage, Core.Lang[LangId.Print_NextPage]);
-        PART_FrameRangeHint.Text = Core.Lang[LangId.Print_RangeInvalid];
+        PART_PageRangeHint.Text = Core.Lang[LangId.Print_RangeInvalid];
 
         Relayout();
     }
@@ -190,8 +225,8 @@ public partial class PrintWindowView : PhControl
 
         // a document prints all its pages, an animation the frame on screen
         var state = _session.State;
-        PART_FramesRow.IsVisible = _session.FrameCount > 1;
-        SelectTag(PART_FrameScope, _session.FrameCount > 1 && !state.IsAnimated ? PrintFrameScope.All : PrintFrameScope.Current);
+        PART_PagesRow.IsVisible = _session.FrameCount > 1;
+        SelectTag(PART_PageScope, _session.FrameCount > 1 && !state.IsAnimated ? PrintPageScope.All : PrintPageScope.Current);
 
         // the part to print: offered with a selection, or a view zoomed into the photo
         var whole = state.GetRegionRect(ViewerImageRegion.WholeImage);
@@ -242,9 +277,10 @@ public partial class PrintWindowView : PhControl
         PART_PrintsEach.ValueChanged += (_, _) => OnSettingChanged();
 
         PART_Region.SelectionChanged += (_, _) => OnItemsChanged();
-        PART_FrameScope.SelectionChanged += (_, _) => OnItemsChanged();
-        PART_FrameRange.TextChanged += (_, _) => OnItemsChanged();
+        PART_PageScope.SelectionChanged += (_, _) => OnItemsChanged();
+        PART_PageRange.TextChanged += (_, _) => OnItemsChanged();
 
+        PART_BtnAddPrinter.Click += async (_, _) => await OpenAddPrinterSettingsAsync();
         PART_BtnMore.Click += (_, _) => ToggleMore();
         PART_BtnProperties.Click += async (_, _) => await ShowPropertiesAsync();
         PART_BtnPrevPage.Click += (_, _) => GoToPage(-1);
@@ -263,7 +299,7 @@ public partial class PrintWindowView : PhControl
         FillItems(PART_Margins, Enum.GetValues<PrintMarginPreset>());
         FillItems(PART_Color, Enum.GetValues<PrintColorMode>());
         FillItems(PART_Duplex, Enum.GetValues<PrintDuplex>());
-        FillItems(PART_FrameScope, Enum.GetValues<PrintFrameScope>(), _session.FrameCount);
+        FillItems(PART_PageScope, Enum.GetValues<PrintPageScope>(), _session.FrameCount);
 
         if (PART_Region.Items.Count > 0)
         {
@@ -407,10 +443,13 @@ public partial class PrintWindowView : PhControl
     #region Printers
 
     /// <summary>
-    /// Lists the printers in the background, a slow network printer bounded by a timeout, then picks the last used or the default.
+    /// Lists the printers, a slow network printer bounded by a timeout; a refresh keeps the chosen one unless a printer was just added.
     /// </summary>
-    private async Task LoadPrintersAsync()
+    private async Task LoadPrintersAsync(bool isRefresh = false)
     {
+        if (_isLoadingPrinters) return;
+        _isLoadingPrinters = true;
+
         IReadOnlyList<PrinterInfo> printers;
         try
         {
@@ -421,16 +460,31 @@ public partial class PrintWindowView : PhControl
         catch (Exception ex) when (!_closing.IsCancellationRequested)
         {
             Debug.WriteLine($"❌❌❌ {nameof(PrintWindowView)}.{nameof(LoadPrintersAsync)}: {ex.Message}");
+
+            // a failed refresh keeps the list there is
+            if (isRefresh) return;
             printers = [PrintProviderBase.SaveAsPdfPrinter];
         }
         catch (OperationCanceledException)
         {
             return;
         }
+        finally
+        {
+            _isLoadingPrinters = false;
+        }
 
         if (_closing.IsCancellationRequested) return;
 
-        var choice = printers.FirstOrDefault(i => i.Id == _config.LastPrinterId)
+        // the chosen printer keeps its instance, so the requests in flight for it still match
+        var listed = PART_Printer.Items.OfType<ComboBoxItem>().Select(i => i.Tag).OfType<PrinterInfo>().ToList();
+        printers = printers.Select(i => _printer is { } chosen && i.Id == chosen.Id ? chosen : i).ToList();
+
+        var added = isRefresh ? printers.FirstOrDefault(i => !i.IsVirtual && listed.All(k => k.Id != i.Id)) : null;
+        var current = isRefresh ? printers.FirstOrDefault(i => ReferenceEquals(i, _printer)) : null;
+        var choice = added
+            ?? current
+            ?? printers.FirstOrDefault(i => i.Id == _config.LastPrinterId)
             ?? printers.FirstOrDefault(i => i.IsDefault)
             ?? printers[0];
 
@@ -449,7 +503,33 @@ public partial class PrintWindowView : PhControl
             ? Core.PrintProvider.SystemPrintersUnavailableReason ?? Core.Lang[LangId.Print_NoPrinters]
             : null;
 
+        // the same printer keeps its settings, the driver's included; only its state is read again
+        if (ReferenceEquals(choice, current))
+        {
+            _ = ShowPrinterStateAsync(choice);
+            return;
+        }
+
         await SelectPrinterAsync(choice);
+    }
+
+
+    /// <summary>
+    /// Opens the system's settings to add a printer; from then on, the printers are listed again whenever the window is activated.
+    /// </summary>
+    private async Task OpenAddPrinterSettingsAsync()
+    {
+        if (TopLevel.GetTopLevel(this) is not PhWindow owner) return;
+
+        _refreshPrintersOnActivate = true;
+        try
+        {
+            await Core.PrintProvider.OpenAddPrinterSettingsAsync(owner);
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            Debug.WriteLine($"❌❌❌ {nameof(PrintWindowView)}.{nameof(OpenAddPrinterSettingsAsync)}: {ex.Message}");
+        }
     }
 
 
@@ -480,7 +560,7 @@ public partial class PrintWindowView : PhControl
         catch (Exception ex)
         {
             Debug.WriteLine($"❌❌❌ {nameof(PrintWindowView)}.{nameof(SelectPrinterAsync)}: {ex.Message}");
-            ShowPrinterStatus(Core.Lang[LangId.Print_PrinterUnavailable]);
+            ShowPrinterStatus(Core.Lang[LangId.Print_PrinterUnavailable], ResxId.IG_TextDangerBrush);
             caps = PrintProviderBase.PdfCapabilities;
         }
 
@@ -512,24 +592,33 @@ public partial class PrintWindowView : PhControl
 
             if (printer.IsVirtual || status.State == PrinterState.Unknown)
             {
-                ShowPrinterStatus(printer.IsVirtual ? _noPrintersText ?? string.Empty : string.Empty);
+                ShowPrinterStatus(printer.IsVirtual ? _noPrintersText ?? string.Empty : string.Empty, ResxId.IG_TextWarningBrush);
                 return;
             }
 
             var text = Core.Lang[Lang.GetKey($"{nameof(PrinterState)}_{status.State}")];
-            ShowPrinterStatus(string.IsNullOrWhiteSpace(status.Message) ? text : $"{text}: {status.Message}");
+            ShowPrinterStatus(string.IsNullOrWhiteSpace(status.Message) ? text : $"{text}: {status.Message}", status.State switch
+            {
+                PrinterState.Ready => ResxId.IG_TextSuccessBrush,
+                PrinterState.Busy or PrinterState.Paused => ResxId.IG_TextWarningBrush,
+                _ => ResxId.IG_TextDangerBrush,
+            });
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            if (ReferenceEquals(_printer, printer)) PART_PrinterStatus.IsVisible = false;
+            if (ReferenceEquals(_printer, printer)) PART_PrinterStatusRow.IsVisible = false;
         }
     }
 
 
-    private void ShowPrinterStatus(string text)
+    /// <summary>
+    /// Shows a printer's state or a notice right of the Printer label, behind a dot in the given color.
+    /// </summary>
+    private void ShowPrinterStatus(string text, ResxId dotBrush)
     {
         PART_PrinterStatus.Text = text;
-        PART_PrinterStatus.IsVisible = !string.IsNullOrWhiteSpace(text);
+        PART_PrinterStatusDot[!Avalonia.Controls.Shapes.Shape.FillProperty] = Resx.CreateBinding(dotBrush);
+        PART_PrinterStatusRow.IsVisible = !string.IsNullOrWhiteSpace(text);
     }
 
 
@@ -676,29 +765,29 @@ public partial class PrintWindowView : PhControl
 
 
     /// <summary>
-    /// Sets the prints from the frames and the part to print.
+    /// Sets the prints from the pages and the part to print.
     /// </summary>
     private void ApplyItems()
     {
         var region = GetTag(PART_Region, PrintRegion.WholeImage);
-        var scope = GetTag(PART_FrameScope, PrintFrameScope.Current);
+        var scope = GetTag(PART_PageScope, PrintPageScope.Current);
 
-        IReadOnlyList<int> frames = scope switch
+        IReadOnlyList<int> pages = scope switch
         {
-            PrintFrameScope.All => Enumerable.Range(0, _session.FrameCount).ToList(),
-            PrintFrameScope.Range => PrintPageRange.Parse(PART_FrameRange.Text, _session.FrameCount) ?? [],
+            PrintPageScope.All => Enumerable.Range(0, _session.FrameCount).ToList(),
+            PrintPageScope.Range => PrintPageRange.Parse(PART_PageRange.Text, _session.FrameCount) ?? [],
             _ => [_session.State.FrameIndex],
         };
 
-        PART_FrameRange.IsVisible = scope == PrintFrameScope.Range;
-        PART_FrameRangeHint.IsVisible = scope == PrintFrameScope.Range && frames.Count == 0;
-        PART_FrameRangeHint.Text = Core.Lang[LangId.Print_RangeInvalid];
+        PART_PageRange.IsVisible = scope == PrintPageScope.Range;
+        PART_PageRangeHint.IsVisible = scope == PrintPageScope.Range && pages.Count == 0;
+        PART_PageRangeHint.Text = Core.Lang[LangId.Print_RangeInvalid];
 
-        // a part of the image prints the frame on screen only
-        PART_FrameScope.IsEnabled = region == PrintRegion.WholeImage;
-        PART_FrameRange.IsEnabled = region == PrintRegion.WholeImage;
+        // a part of the image prints the page on screen only
+        PART_PageScope.IsEnabled = region == PrintRegion.WholeImage;
+        PART_PageRange.IsEnabled = region == PrintRegion.WholeImage;
 
-        _session.SetItems(frames, region);
+        _session.SetItems(pages, region);
     }
 
 

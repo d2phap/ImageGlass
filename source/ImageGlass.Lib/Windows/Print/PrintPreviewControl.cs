@@ -34,7 +34,8 @@ namespace ImageGlass.Common.Windows;
 /// </summary>
 public sealed class PrintPreviewControl : PhControl
 {
-    private const double PAPER_PADDING = 18;
+    // room for the paper's shadow, which blurs past its edge and falls a little lower
+    private const double PAPER_PADDING = 32;
 
     private Bitmap? _page;
     private SKSize _pageSizePt = new(595, 842);
@@ -83,26 +84,30 @@ public sealed class PrintPreviewControl : PhControl
     }
 
 
+    /// <summary>
+    /// Gets the color of the desk the paper lies on, a little darker or lighter than the window; the preview's pane paints it.
+    /// </summary>
+    public static Color GetDeskColor()
+    {
+        var isDark = Core.Theme.Settings.IsDarkMode;
+        return AppThemeColors.BgBrush.Color.NoAlpha().WithBrightness(isDark ? 0.06f : -0.06f);
+    }
+
+
     public override void Render(DrawingContext c)
     {
         base.Render(c);
 
-        // the desk the paper lies on, a little darker or lighter than the window
-        var isDark = Core.Theme.Settings.IsDarkMode;
-        var desk = AppThemeColors.BgBrush.Color.NoAlpha().WithBrightness(isDark ? 0.06f : -0.06f);
-        c.FillRectangle(desk.ToBrush(), new Rect(Bounds.Size));
-
         var paper = GetPaperRect(_pageSizePt);
         if (paper.Width <= 0 || paper.Height <= 0) return;
 
-        // a soft shadow under the paper
-        for (var i = 1; i <= 4; i++)
-        {
-            var shadow = paper.Translate(new Vector(0, i)).Inflate(i);
-            c.FillRectangle(new SolidColorBrush(Colors.Black, isDark ? 0.10 : 0.05), shadow);
-        }
+        // the paper lifted off the desk: a close contact shadow and a wide soft one
+        var isDark = Core.Theme.Settings.IsDarkMode;
+        var shadows = new BoxShadows(
+            new BoxShadow { OffsetY = 1, Blur = 3, Color = Color.FromArgb((byte)(isDark ? 90 : 40), 0, 0, 0) },
+            [new BoxShadow { OffsetY = 6, Blur = 20, Color = Color.FromArgb((byte)(isDark ? 110 : 45), 0, 0, 0) }]);
 
-        c.FillRectangle(Brushes.White, paper);
+        c.DrawRectangle(Brushes.White, null, new RoundedRect(paper), shadows);
         if (_page is not null)
         {
             using (c.PushRenderOptions(new() { BitmapInterpolationMode = BitmapInterpolationMode.HighQuality }))

@@ -66,7 +66,7 @@ public sealed record PrintLayout
     public (int Columns, int Rows) Grid { get; init; } = (1, 1);
 
     /// <summary>
-    /// Gets a name that needs no translation, such as "10×15 cm"; <c>null</c> when the UI names the layout.
+    /// Gets a name that needs no translation, such as "10×15 cm", the unit held to its number by a no-break space; <c>null</c> when the UI names the layout.
     /// </summary>
     public string? FixedName { get; init; }
 }
@@ -110,8 +110,8 @@ public static class PrintLayouts
         // wallet prints are 2.5 x 3.5 in everywhere; passport photos differ by region
         list.Add(new() { Id = "wallet", Kind = PrintLayoutKind.Wallet, PrintSizePt = new(PrintUnits.InToPt(2.5), PrintUnits.InToPt(3.5)) });
         list.Add(metric
-            ? new() { Id = "passport-35x45mm", Kind = PrintLayoutKind.Passport, PrintSizePt = new(PrintUnits.MmToPt(35), PrintUnits.MmToPt(45)), FixedName = "35×45 mm" }
-            : new() { Id = "passport-2x2in", Kind = PrintLayoutKind.Passport, PrintSizePt = new(PrintUnits.InToPt(2), PrintUnits.InToPt(2)), FixedName = "2×2 in" });
+            ? new() { Id = "passport-35x45mm", Kind = PrintLayoutKind.Passport, PrintSizePt = new(PrintUnits.MmToPt(35), PrintUnits.MmToPt(45)), FixedName = "35×45\u00A0mm" }
+            : new() { Id = "passport-2x2in", Kind = PrintLayoutKind.Passport, PrintSizePt = new(PrintUnits.InToPt(2), PrintUnits.InToPt(2)), FixedName = "2×2\u00A0in" });
 
         list.Add(new() { Id = "contact", Kind = PrintLayoutKind.ContactSheet, Grid = (5, 7) });
         return list;
@@ -137,7 +137,7 @@ public static class PrintLayouts
         Id = string.Create(CultureInfo.InvariantCulture, $"fixed-{w}x{h}cm"),
         Kind = PrintLayoutKind.FixedSize,
         PrintSizePt = new(PrintUnits.MmToPt(w * 10), PrintUnits.MmToPt(h * 10)),
-        FixedName = $"{w}×{h} cm",
+        FixedName = $"{w}×{h}\u00A0cm",
     };
 
 
@@ -146,6 +146,6 @@ public static class PrintLayouts
         Id = string.Create(CultureInfo.InvariantCulture, $"fixed-{w}x{h}in"),
         Kind = PrintLayoutKind.FixedSize,
         PrintSizePt = new(PrintUnits.InToPt(w), PrintUnits.InToPt(h)),
-        FixedName = $"{w}×{h} in",
+        FixedName = $"{w}×{h}\u00A0in",
     };
 }

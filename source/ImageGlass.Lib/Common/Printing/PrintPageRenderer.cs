@@ -61,6 +61,8 @@ public sealed record PrintRenderOptions
 public static class PrintPageRenderer
 {
     private const float CAPTION_FONT_PT = 7.5f;
+    private const float EMPTY_CELL_DASH = 4;
+    private const float EMPTY_CELL_GAP = 3;
 
     // a raster print stays sharp from 150 dpi, and photo printers take no more than about 300
     private const float MIN_RASTER_DPI = 150;
@@ -363,19 +365,35 @@ public static class PrintPageRenderer
     {
         if (page.Cells.Count >= layout.CellRectsPt.Count) return;
 
-        using var dash = SKPathEffect.CreateDash([4, 3], 0);
+        // cells without a gutter share edges, and two rects dash them out of step, so each edge is drawn once
+        var edges = new HashSet<(float X0, float Y0, float X1, float Y1)>();
+        for (var i = page.Cells.Count; i < layout.CellRectsPt.Count; i++)
+        {
+            var r = layout.CellRectsPt[i];
+            var (left, top, right, bottom) = (MathF.Round(r.Left, 2), MathF.Round(r.Top, 2), MathF.Round(r.Right, 2), MathF.Round(r.Bottom, 2));
+
+            edges.Add((left, top, right, top));
+            edges.Add((left, bottom, right, bottom));
+            edges.Add((left, top, left, bottom));
+            edges.Add((right, top, right, bottom));
+        }
+
         using var paint = new SKPaint
         {
             Color = new SKColor(0, 0, 0, 60),
             Style = SKPaintStyle.Stroke,
             StrokeWidth = 0.75f,
-            PathEffect = dash,
             IsAntialias = true,
         };
 
-        for (var i = page.Cells.Count; i < layout.CellRectsPt.Count; i++)
+        foreach (var (x0, y0, x1, y1) in edges)
         {
-            canvas.DrawRect(layout.CellRectsPt[i], paint);
+            // the dash is anchored to the page, so edges in one line continue each other's pattern
+            var start = y0 == y1 ? x0 : y0;
+            using var dash = SKPathEffect.CreateDash([EMPTY_CELL_DASH, EMPTY_CELL_GAP], start % (EMPTY_CELL_DASH + EMPTY_CELL_GAP));
+
+            paint.PathEffect = dash;
+            canvas.DrawLine(x0, y0, x1, y1, paint);
         }
     }
 

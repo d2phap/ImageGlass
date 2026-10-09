@@ -1358,10 +1358,10 @@ public class Lang
         new(LangId.Print_LblFit, "Fit" ), //v10.0
         new(LangId.Print_ChkAutoRotate, "Rotate photos to fit" ), //v10.0
         new(LangId.Print_LblMargins, "Margins" ), //v10.0
-        new(LangId.Print_LblPrintsEach, "Prints of each photo" ), //v10.0
+        new(LangId.Print_LblPrintsEach, "Prints of each page" ), //v10.0
         new(LangId.Print_ChkFillPage, "Fill each page" ), //v10.0
         new(LangId.Print_LblRegion, "What to print" ), //v10.0
-        new(LangId.Print_LblFrames, "Frames" ), //v10.0
+        new(LangId.Print_LblPages, "Pages" ), //v10.0
         new(LangId.Print_LblMoreSettings, "More settings" ), //v10.0
         new(LangId.Print_LblColor, "Color" ), //v10.0
         new(LangId.Print_LblQuality, "Quality" ), //v10.0
@@ -1369,6 +1369,7 @@ public class Lang
         new(LangId.Print_ChkCaptions, "Show file names" ), //v10.0
         new(LangId.Print_BtnProperties, "Printer properties…" ), //v10.0
         new(LangId.Print_BtnSystemDialog, "Use the system dialog…" ), //v10.0
+        new(LangId.Print_BtnAddPrinter, "Add a printer" ), //v10.0
         new(LangId.Print_BtnPrint, "Print" ), //v10.0
         new(LangId.Print_BtnSave, "Save" ), //v10.0
         new(LangId.Print_SaveAsPdf, "Save as PDF" ), //v10.0
@@ -1383,7 +1384,7 @@ public class Lang
         new(LangId.Print_PrinterUnavailable, "This printer is not responding." ), //v10.0
         new(LangId.Print_WarnPrintShrunk, "The print size is larger than the paper, so it was scaled down." ), //v10.0
         new(LangId.Print_WarnManyPages, "This will print {0} pages. Do you want to continue?" ), //v10.0
-        new(LangId.Print_RangeInvalid, "Enter frames like 1-3, 5" ), //v10.0
+        new(LangId.Print_RangeInvalid, "Enter pages like 1-3, 5" ), //v10.0
         new(LangId.Print_PreviousPage, "Previous page" ), //v10.0
         new(LangId.Print_NextPage, "Next page" ), //v10.0
         new(LangId.Print_Dpi, "{0} dpi" ), //v10.0
@@ -1408,9 +1409,9 @@ public class Lang
         new(LangId.PrintDuplex_None, "Off" ), //v10.0
         new(LangId.PrintDuplex_LongEdge, "Flip on long edge" ), //v10.0
         new(LangId.PrintDuplex_ShortEdge, "Flip on short edge" ), //v10.0
-        new(LangId.PrintFrameScope_Current, "Current" ), //v10.0
-        new(LangId.PrintFrameScope_All, "All ({0})" ), //v10.0
-        new(LangId.PrintFrameScope_Range, "Range" ), //v10.0
+        new(LangId.PrintPageScope_Current, "Current" ), //v10.0
+        new(LangId.PrintPageScope_All, "All ({0})" ), //v10.0
+        new(LangId.PrintPageScope_Range, "Range" ), //v10.0
         new(LangId.PrintRegion_WholeImage, "Whole image" ), //v10.0
         new(LangId.PrintRegion_Selection, "Selection" ), //v10.0
         new(LangId.PrintRegion_VisibleArea, "Visible area" ), //v10.0

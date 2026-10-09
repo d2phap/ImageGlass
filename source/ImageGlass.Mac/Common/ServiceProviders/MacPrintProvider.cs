@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia.Threading;
+using ImageGlass.Common;
 using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.UI.Windowing;
@@ -97,5 +98,22 @@ internal class MacPrintProvider : PrintProviderBase
         {
             TryDelete(path);
         }
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanAddPrinter => true;
+
+
+    /// <summary>
+    /// Opens Printers &amp; Scanners, whose id changed when System Preferences became System Settings in macOS 13.
+    /// </summary>
+    public override Task OpenAddPrinterSettingsAsync(PhWindow owner)
+    {
+        var url = OperatingSystem.IsMacOSVersionAtLeast(13)
+            ? "x-apple.systempreferences:com.apple.Print-Scanner-Settings.extension"
+            : "x-apple.systempreferences:com.apple.preference.printfax";
+
+        return BHelper.OpenUrlAsync(owner, url);
     }
 }

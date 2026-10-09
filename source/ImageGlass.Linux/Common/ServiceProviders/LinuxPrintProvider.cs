@@ -23,6 +23,9 @@ using ImageGlass.Common.ServiceProviders;
 using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +37,18 @@ namespace ImageGlass.Linux.Common.ServiceProviders;
 /// </summary>
 internal class LinuxPrintProvider : PrintProviderBase
 {
+    // each desktop's printer settings, tried only under that desktop, since the GNOME panel exits elsewhere; then the desktop-neutral tool
+    private static readonly (string Desktop, string Command, string[] Args)[] _printerSettingsApps =
+    [
+        ("GNOME", "gnome-control-center", ["printers"]),
+        ("Unity", "gnome-control-center", ["printers"]),
+        ("Budgie", "budgie-control-center", ["printers"]),
+        ("KDE", "systemsettings", ["kcm_printer_manager"]),
+        ("KDE", "systemsettings5", ["kcm_printer_manager"]),
+        ("", "system-config-printer", []),
+    ];
+
+
     /// <inheritdoc/>
     public override string? SystemPrintersUnavailableReason => CupsApi.IsAvailable ? null : Core.Lang[LangId.Print_CupsMissing];
 
@@ -103,6 +118,70 @@ internal class LinuxPrintProvider : PrintProviderBase
         {
             // the portal holds its own descriptor of the file, so its name can go
             TryDelete(path);
+        }
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanAddPrinter => CupsApi.IsAvailable;
+
+
+    /// <summary>
+    /// Opens the desktop's printer settings, else the CUPS web interface.
+    /// </summary>
+    public override async Task OpenAddPrinterSettingsAsync(PhWindow owner)
+    {
+        var desktops = (Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? string.Empty)
+            .Split(':', StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var (desktop, command, args) in _printerSettingsApps)
+        {
+            if (desktop.Length > 0 && !desktops.Contains(desktop, StringComparer.OrdinalIgnoreCase)) continue;
+            if (!await HasHostCommandAsync(command)) continue;
+
+            var psi = new ProcessStartInfo(command) { UseShellExecute = false };
+            foreach (var arg in args) psi.ArgumentList.Add(arg);
+            BHelper.ApplyFlatpakHostSpawn(psi);
+
+            try
+            {
+                using var _ = Process.Start(psi);
+                return;
+            }
+            catch (Exception ex) when (ex is Win32Exception or InvalidOperationException)
+            {
+                Debug.WriteLine($"❌❌❌ {nameof(LinuxPrintProvider)}.{nameof(OpenAddPrinterSettingsAsync)}: {ex.Message}");
+            }
+        }
+
+        await BHelper.OpenUrlAsync(owner, "http://localhost:631/admin");
+    }
+
+
+
+    /// <summary>
+    /// Gets whether a command is on the host's PATH, which a Flatpak asks the host for.
+    /// </summary>
+    private static async Task<bool> HasHostCommandAsync(string command)
+    {
+        var psi = new ProcessStartInfo("sh") { UseShellExecute = false };
+        psi.ArgumentList.Add("-c");
+        psi.ArgumentList.Add("command -v \"$1\" >/dev/null 2>&1");
+        psi.ArgumentList.Add("sh");
+        psi.ArgumentList.Add(command);
+        BHelper.ApplyFlatpakHostSpawn(psi);
+
+        try
+        {
+            using var proc = Process.Start(psi);
+            if (proc is null) return false;
+
+            await proc.WaitForExitAsync();
+            return proc.ExitCode == 0;
+        }
+        catch (Exception ex) when (ex is Win32Exception or InvalidOperationException)
+        {
+            return false;
         }
     }
 }
