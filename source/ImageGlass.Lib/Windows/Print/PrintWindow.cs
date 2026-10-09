@@ -68,9 +68,11 @@ public sealed class PrintWindow : DialogWindow
         CanResize = true;
         CanMaximize = true;
         CanMinimize = false;
+        ShowInTaskbar = true;
         SizeToContent = SizeToContent.Manual;
         MinWidth = MIN_RESTORE_WIDTH;
         MinHeight = MIN_RESTORE_HEIGHT;
+
 
         RestoreWindowBounds(Core.Config.PrintWindowBounds,
             new(DEFAULT_WIDTH, DEFAULT_HEIGHT),

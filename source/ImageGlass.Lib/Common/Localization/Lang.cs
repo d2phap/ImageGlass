@@ -1316,7 +1316,7 @@ public class Lang
         new(LangId.Tool_Projector_LblLayout, "Layout on screen {0}"), //v10.0
         new(LangId.Tool_Projector_Monitor, "Monitor {0}"), //v10.0
         new(LangId.Tool_Projector_DragHint, "Drag onto a monitor to move the projector there"), //v10.0
-        new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1} × {2} pixels, {3}% scale"), //v10.0
+        new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1}×{2} pixels, {3}% scale"), //v10.0
         new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
         #endregion // Tool: Projector
 
@@ -1339,7 +1339,7 @@ public class Lang
         #region Tool: Resizer
         new(LangId.Tool_Resizer_RadResizeByPixels, "Pixels" ), // v9.2
         new(LangId.Tool_Resizer_RadResizeByPercentage, "Percentage" ), // v9.2
-        new(LangId.Tool_Resizer_ChkKeepRatio, "Keep ratio propotional" ), // v9.2
+        new(LangId.Tool_Resizer_ChkKeepRatio, "Keep ratio proportional" ), // v9.2
         new(LangId.Tool_Resizer_LblResample, "Resample:" ), // v9.2
         new(LangId.Tool_Resizer_LblCurrentSize, "Current Size:" ), // v9.2
         new(LangId.Tool_Resizer_LblNewSize, "New Size:" ), // v9.2

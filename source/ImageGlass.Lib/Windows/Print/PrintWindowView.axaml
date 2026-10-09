@@ -209,16 +209,16 @@
             x:Name="PART_PreviewPane"
             Grid.Column="1"
             RowDefinitions="Auto,*,Auto">
-            <!--  the page buttons are larger than their arrows, so they are easy to hit  -->
+            <!--  the page buttons are larger than their arrows, so they are easy to hit; the arrows fill 3/4 of their 24-unit canvas  -->
             <StackPanel
                 Margin="0,8,0,0"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="2">
-                <ui:PhToolButton x:Name="PART_BtnPrevPage" Padding="12,10">
+                <ui:PhToolButton x:Name="PART_BtnPrevPage" Padding="9.33,7.33">
                     <PathIcon
-                        Width="16"
-                        Height="16"
+                        Width="21.33"
+                        Height="21.33"
                         Data="{StaticResource IconArrowLeft}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -227,10 +227,10 @@
                     MinWidth="90"
                     VerticalAlignment="Center"
                     TextAlignment="Center" />
-                <ui:PhToolButton x:Name="PART_BtnNextPage" Padding="12,10">
+                <ui:PhToolButton x:Name="PART_BtnNextPage" Padding="9.33,7.33">
                     <PathIcon
-                        Width="16"
-                        Height="16"
+                        Width="21.33"
+                        Height="21.33"
                         Data="{StaticResource IconArrowRight}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
