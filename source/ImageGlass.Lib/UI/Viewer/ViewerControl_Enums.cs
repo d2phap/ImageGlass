@@ -176,13 +176,6 @@ public enum ImageInterpolation : int
     /// </summary>
     CubicCatmullRom,
 
-    /// <summary>
-    /// Anisotropic filtering.
-    /// Best for: Images rendered with perspective transforms or at extreme oblique angles.
-    /// Note: Requires mipmaps for efficiency.
-    /// </summary>
-    Anisotropic,
-
 }
 
 

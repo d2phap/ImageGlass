@@ -909,7 +909,7 @@ public static partial class SkiaCodec
     /// <summary>
     /// Converts the enum to an <see cref="SKSamplingOptions"/> struct.
     /// </summary>
-    public static SKSamplingOptions ToSamplingOptions(this ImageInterpolation interpolation, int maxAniso = 16)
+    public static SKSamplingOptions ToSamplingOptions(this ImageInterpolation interpolation)
     {
         return interpolation switch
         {
@@ -923,8 +923,6 @@ public static partial class SkiaCodec
 
             ImageInterpolation.CubicMitchell => new SKSamplingOptions(SKCubicResampler.Mitchell),
             ImageInterpolation.CubicCatmullRom => new SKSamplingOptions(SKCubicResampler.CatmullRom),
-
-            ImageInterpolation.Anisotropic => new SKSamplingOptions(maxAniso),
 
             _ => SKSamplingOptions.Default,
         };
