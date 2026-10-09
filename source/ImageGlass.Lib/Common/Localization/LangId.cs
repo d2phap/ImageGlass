@@ -943,7 +943,6 @@ public enum LangId
     Print_RangeInvalid,
     Print_PreviousPage,
     Print_NextPage,
-    Print_TogglePreview,
     Print_Dpi,
     Print_Layout_FullPage,
     Print_Layout_Grid,

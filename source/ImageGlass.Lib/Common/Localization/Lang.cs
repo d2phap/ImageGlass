@@ -1386,7 +1386,6 @@ public class Lang
         new(LangId.Print_RangeInvalid, "Enter frames like 1-3, 5" ), //v10.0
         new(LangId.Print_PreviousPage, "Previous page" ), //v10.0
         new(LangId.Print_NextPage, "Next page" ), //v10.0
-        new(LangId.Print_TogglePreview, "Larger preview" ), //v10.0
         new(LangId.Print_Dpi, "{0} dpi" ), //v10.0
         new(LangId.Print_Layout_FullPage, "Full page" ), //v10.0
         new(LangId.Print_Layout_Grid, "{0} per page" ), //v10.0
