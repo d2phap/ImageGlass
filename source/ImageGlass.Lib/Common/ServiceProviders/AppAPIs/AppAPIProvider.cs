@@ -27,6 +27,7 @@ using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.Types;
 using ImageGlass.Common.Windows;
 using ImageGlass.Tools;
@@ -666,24 +667,35 @@ public partial class AppAPIProvider
             throw new NotSupportedException($"IGE: This feature is not supported on {BHelper.OS}.");
         }
 
-        var fileToPrint = Core.Photos.CurrentFilePath;
         _ = Message.ShowAsync(Core.Lang[LangId._CreatingFile], delayMs: 500);
 
-
-        if (string.IsNullOrEmpty(fileToPrint))
+        // the shown image, every edit applied, rather than the file on disk
+        var state = Viewer.CaptureImageState();
+        if (state is null)
         {
             _ = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
             {
-                Title = Core.Lang[LangId.Menu_MnuOpenWith],
+                Title = Core.Lang[LangId.Menu_MnuPrint],
                 Description = Core.Lang[LangId._CreatingFileError],
             });
         }
         else
         {
+            using var session = new PrintSession(state);
+
             try
             {
-                await Core.PrintProvider.OpenPrintAsync(fileToPrint,
-                    Core.Photos.CurrentMetadata, Core.ClipboardImage != null);
+                var paper = PaperCatalog.Papers.First(i => i.Id == PaperCatalog.DefaultPaperId);
+                var job = new PrintJob
+                {
+                    Settings = new PrintJobSettings { Printer = PrintProviderBase.SaveAsPdfPrinter, Paper = paper },
+                    Title = session.GetCaption(0),
+                    Layout = PrintLayoutEngine.Paginate(new PrintLayoutInput { Layout = PrintLayouts.FullPage, Paper = paper, ItemCount = 1 }),
+                    Session = session,
+                    Render = new PrintRenderOptions(),
+                };
+
+                await Core.PrintProvider.ShowSystemDialogAsync(App.MainWindow, job, CancellationToken.None);
             }
             catch (Exception ex)
             {
@@ -692,6 +704,7 @@ public partial class AppAPIProvider
                     Title = Core.Lang[LangId.Menu_MnuPrint],
                     Heading = Core.Lang[LangId.Menu_MnuPrint_Error],
                     Description = ex.Message,
+                    Details = BHelper.GetExceptionDetails(ex),
                 });
             }
         }

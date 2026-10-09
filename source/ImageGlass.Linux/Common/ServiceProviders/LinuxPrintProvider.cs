@@ -16,62 +16,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Common;
-using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
-using ImageGlass.Common.Types;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Linux.Common.ServiceProviders;
 
-internal class LinuxPrintProvider : IPrintProvider
+internal class LinuxPrintProvider : PrintProviderBase
 {
-    private readonly HashSet<string> _nativeLinuxFormats = [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff"];
-
-
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
-    public async Task OpenPrintAsync(string filePath, PhotoMetadata? meta, bool isClipboardFile)
+    protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
     {
-        var fileToPrint = filePath;
-        var srcFilePath = meta?.FilePath ?? string.Empty;
-        var ext = meta?.FileExtension.ToLowerInvariant() ?? string.Empty;
-        var isNativeSingleFrameFormat = meta?.FrameCount == 1 && !_nativeLinuxFormats.Contains(ext);
+        return Task.FromResult<IReadOnlyList<PrinterInfo>>([]);
+    }
 
 
-        // print clipboard image
-        if (Core.ClipboardImage != null || isNativeSingleFrameFormat)
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
-        // rename ext FAX -> TIFF to multi-frame printing
-        else if (ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
-        {
-            fileToPrint = BHelper.ConfigDir(Dir.Temporary, Path.GetFileNameWithoutExtension(srcFilePath) + ".tiff");
-            File.Copy(srcFilePath, fileToPrint, true);
-        }
-        else if (meta?.FrameCount > 1
-            && !ext.Equals(".gif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase))
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
-
-        if (string.IsNullOrEmpty(fileToPrint)) return;
+    /// <inheritdoc/>
+    protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.FromResult(PdfCapabilities);
+    }
 
 
-        // Print via the CUPS 'lpr' command, scaling the image to fit the page.
-        // 'lpr' (not 'lp') is used because the Flatpak runtime ships lpr but not
-        // lp; both drive CUPS, which applies its own image filters. The Flatpak
-        // grants --socket=cups so this reaches the host's print system.
-        BHelper.RunProcess("lpr", $"-o fit-to-page \"{fileToPrint}\"");
-
+    /// <inheritdoc/>
+    protected override Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    {
+        throw new NotSupportedException();
     }
 }

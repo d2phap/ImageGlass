@@ -94,9 +94,9 @@ public sealed class PhotoFrameReader : PhDisposable
 
 
     /// <summary>
-    /// Reads a frame, edits not applied; the caller owns the returned image.
+    /// Reads a frame, edits not applied, decoded to fit <paramref name="maxSize"/> square where the codec can scale (0 for full); the caller owns it.
     /// </summary>
-    public async Task<SKImage?> ReadFrameAsync(int frameIndex, CancellationToken token)
+    public async Task<SKImage?> ReadFrameAsync(int frameIndex, uint maxSize, CancellationToken token)
     {
         await _gate.WaitAsync(token).ConfigureAwait(false);
 
@@ -117,7 +117,7 @@ public sealed class PhotoFrameReader : PhDisposable
                 return first;
             }
 
-            return await DecodeFrameAsync(frameIndex, token).ConfigureAwait(false);
+            return await DecodeFrameAsync(frameIndex, maxSize, token).ConfigureAwait(false);
         }
         finally
         {
@@ -166,9 +166,9 @@ public sealed class PhotoFrameReader : PhDisposable
     /// <summary>
     /// Decodes one frame with the codec, else with Magick, which sniffs the content itself.
     /// </summary>
-    private async Task<SKImage?> DecodeFrameAsync(int frameIndex, CancellationToken token)
+    private async Task<SKImage?> DecodeFrameAsync(int frameIndex, uint maxSize, CancellationToken token)
     {
-        var options = _readOptions with { FrameIndex = frameIndex };
+        var options = _readOptions with { FrameIndex = frameIndex, Width = maxSize, Height = maxSize };
 
         if (_codec is not null)
         {

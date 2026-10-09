@@ -1346,6 +1346,84 @@ public class Lang
         #endregion // Tool: Resizer
 
         
+        #region Print
+
+        new(LangId.Print_Title, "Print" ), //v10.0
+        new(LangId.Print_LblPrinter, "Printer" ), //v10.0
+        new(LangId.Print_LblCopies, "Copies" ), //v10.0
+        new(LangId.Print_ChkCollate, "Collate" ), //v10.0
+        new(LangId.Print_LblPaper, "Paper size" ), //v10.0
+        new(LangId.Print_LblOrientation, "Orientation" ), //v10.0
+        new(LangId.Print_LblLayout, "Layout" ), //v10.0
+        new(LangId.Print_LblFit, "Fit" ), //v10.0
+        new(LangId.Print_ChkAutoRotate, "Rotate photos to fit" ), //v10.0
+        new(LangId.Print_LblMargins, "Margins" ), //v10.0
+        new(LangId.Print_LblPrintsEach, "Prints of each photo" ), //v10.0
+        new(LangId.Print_ChkFillPage, "Fill each page" ), //v10.0
+        new(LangId.Print_LblRegion, "What to print" ), //v10.0
+        new(LangId.Print_LblFrames, "Frames" ), //v10.0
+        new(LangId.Print_LblMoreSettings, "More settings" ), //v10.0
+        new(LangId.Print_LblColor, "Color" ), //v10.0
+        new(LangId.Print_LblQuality, "Quality" ), //v10.0
+        new(LangId.Print_LblTwoSided, "Two-sided" ), //v10.0
+        new(LangId.Print_ChkCaptions, "Show file names" ), //v10.0
+        new(LangId.Print_BtnProperties, "Printer properties…" ), //v10.0
+        new(LangId.Print_BtnSystemDialog, "Use the system dialog…" ), //v10.0
+        new(LangId.Print_BtnPrint, "Print" ), //v10.0
+        new(LangId.Print_BtnSave, "Save" ), //v10.0
+        new(LangId.Print_SaveAsPdf, "Save as PDF" ), //v10.0
+        new(LangId.Print_Summary, "{0} page(s), {1} print(s)" ), //v10.0
+        new(LangId.Print_PageOf, "{0} of {1}" ), //v10.0
+        new(LangId.Print_Printing, "Printing page {0} of {1}…" ), //v10.0
+        new(LangId.Print_Sent, "Sent to {0}" ), //v10.0
+        new(LangId.Print_Saved, "Saved as PDF" ), //v10.0
+        new(LangId.Print_LoadingPrinters, "Loading printers…" ), //v10.0
+        new(LangId.Print_NoPrinters, "No printers were found. You can still save as PDF." ), //v10.0
+        new(LangId.Print_CupsMissing, "Printing needs CUPS, which is not installed. You can still save as PDF." ), //v10.0
+        new(LangId.Print_PrinterUnavailable, "This printer is not responding." ), //v10.0
+        new(LangId.Print_WarnPrintShrunk, "The print size is larger than the paper, so it was scaled down." ), //v10.0
+        new(LangId.Print_WarnManyPages, "This will print {0} pages. Do you want to continue?" ), //v10.0
+        new(LangId.Print_RangeInvalid, "Enter frames like 1-3, 5" ), //v10.0
+        new(LangId.Print_PreviousPage, "Previous page" ), //v10.0
+        new(LangId.Print_NextPage, "Next page" ), //v10.0
+        new(LangId.Print_TogglePreview, "Larger preview" ), //v10.0
+        new(LangId.Print_Dpi, "{0} dpi" ), //v10.0
+        new(LangId.Print_Layout_FullPage, "Full page" ), //v10.0
+        new(LangId.Print_Layout_Grid, "{0} per page" ), //v10.0
+        new(LangId.Print_Layout_Wallet, "Wallet" ), //v10.0
+        new(LangId.Print_Layout_Passport, "Passport {0}" ), //v10.0
+        new(LangId.Print_Layout_ContactSheet, "Contact sheet" ), //v10.0
+
+        new(LangId.PrintOrientation_Auto, "Auto" ), //v10.0
+        new(LangId.PrintOrientation_Portrait, "Portrait" ), //v10.0
+        new(LangId.PrintOrientation_Landscape, "Landscape" ), //v10.0
+        new(LangId.PrintFitMode_Fit, "Fit" ), //v10.0
+        new(LangId.PrintFitMode_Fill, "Fill" ), //v10.0
+        new(LangId.PrintFitMode_ActualSize, "Actual size" ), //v10.0
+        new(LangId.PrintMarginPreset_None, "None" ), //v10.0
+        new(LangId.PrintMarginPreset_Narrow, "Narrow" ), //v10.0
+        new(LangId.PrintMarginPreset_Normal, "Normal" ), //v10.0
+        new(LangId.PrintMarginPreset_Wide, "Wide" ), //v10.0
+        new(LangId.PrintColorMode_Color, "Color" ), //v10.0
+        new(LangId.PrintColorMode_Grayscale, "Grayscale" ), //v10.0
+        new(LangId.PrintDuplex_None, "Off" ), //v10.0
+        new(LangId.PrintDuplex_LongEdge, "Flip on long edge" ), //v10.0
+        new(LangId.PrintDuplex_ShortEdge, "Flip on short edge" ), //v10.0
+        new(LangId.PrintFrameScope_Current, "Current" ), //v10.0
+        new(LangId.PrintFrameScope_All, "All ({0})" ), //v10.0
+        new(LangId.PrintFrameScope_Range, "Range" ), //v10.0
+        new(LangId.PrintRegion_WholeImage, "Whole image" ), //v10.0
+        new(LangId.PrintRegion_Selection, "Selection" ), //v10.0
+        new(LangId.PrintRegion_VisibleArea, "Visible area" ), //v10.0
+        new(LangId.PrinterState_Ready, "Ready" ), //v10.0
+        new(LangId.PrinterState_Busy, "Busy" ), //v10.0
+        new(LangId.PrinterState_Offline, "Offline" ), //v10.0
+        new(LangId.PrinterState_Paused, "Paused" ), //v10.0
+        new(LangId.PrinterState_Error, "Error" ), //v10.0
+
+        #endregion // Print
+
+
         #region Quick setup
 
         new(LangId.QuickSetup_Title, "ImageGlass Quick Setup" ), //v10.0

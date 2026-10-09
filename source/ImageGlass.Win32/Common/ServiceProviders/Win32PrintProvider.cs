@@ -17,57 +17,51 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Common;
-using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
-using ImageGlass.Common.Types;
+using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Win32.Common.ServiceProviders;
 
-public class Win32PrintProvider : IPrintProvider
+public class Win32PrintProvider : PrintProviderBase
 {
-    private readonly HashSet<string> _nativeWin32Formats = [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff", ".fax"];
+    /// <inheritdoc/>
+    protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
+    {
+        return Task.FromResult<IReadOnlyList<PrinterInfo>>([]);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.FromResult(PdfCapabilities);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    {
+        throw new NotSupportedException();
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanShowSystemDialog => true;
 
 
     /// <summary>
-    /// <inheritdoc/>
+    /// Opens Print Pictures with the shown frame, every edit applied.
     /// </summary>
-    public async Task OpenPrintAsync(string? filePath, PhotoMetadata? meta, bool isClipboardFile)
+    public override async Task ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
     {
-        var fileToPrint = filePath;
-        var srcFilePath = meta?.FilePath ?? string.Empty;
-        var ext = meta?.FileExtension.ToLowerInvariant() ?? string.Empty;
-        var isNativeSingleFrameFormat = meta?.FrameCount == 1 && !_nativeWin32Formats.Contains(ext);
+        var path = await WriteShownImagePngAsync(job, token);
+        if (string.IsNullOrEmpty(path)) return;
 
-
-        // print clipboard image
-        if (Core.ClipboardImage != null || isNativeSingleFrameFormat)
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
-        // print an image file
-        // rename ext FAX -> TIFF to multi-frame printing
-        else if (ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
-        {
-            fileToPrint = BHelper.ConfigDir(Dir.Temporary, Path.GetFileNameWithoutExtension(srcFilePath) + ".tiff");
-            File.Copy(srcFilePath, fileToPrint, true);
-        }
-        else if (meta?.FrameCount > 1
-            && !ext.Equals(".gif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase))
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
-
-        if (string.IsNullOrEmpty(fileToPrint)) return;
-
-        // open Print dialog
-        Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(fileToPrint));
+        Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(path));
     }
 }
