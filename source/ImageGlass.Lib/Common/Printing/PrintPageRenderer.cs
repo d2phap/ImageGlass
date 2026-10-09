@@ -218,12 +218,12 @@ public static class PrintPageRenderer
     /// <summary>
     /// Draws the caption of a print centered in its band, each script in a font that has it, cut short with an ellipsis when too long.
     /// </summary>
-    private static void DrawCaption(SKCanvas canvas, SKRect rect, string text)
+    private static void DrawCaption(SKCanvas canvas, SKRect rect, PrintCaption caption)
     {
-        if (string.IsNullOrEmpty(text) || rect.Width <= 0) return;
+        if (string.IsNullOrEmpty(caption.Name) || rect.Width <= 0) return;
 
         using var fonts = new CaptionFonts();
-        var runs = fonts.Split(Ellipsize(fonts, text, rect.Width - 4));
+        var runs = fonts.Split(FitCaption(fonts, caption, rect.Width - 4));
         var width = runs.Sum(i => i.Font.MeasureText(i.Text));
 
         using var paint = new SKPaint { Color = new SKColor(0x40, 0x40, 0x40), IsAntialias = true };
@@ -237,6 +237,23 @@ public static class PrintPageRenderer
             canvas.DrawPath(path, paint);
             x += font.MeasureText(runText);
         }
+    }
+
+
+    /// <summary>
+    /// Fits a caption to the width by shortening only the file name, so the page it shows stays readable.
+    /// </summary>
+    private static string FitCaption(CaptionFonts fonts, PrintCaption caption, float maxWidth)
+    {
+        var text = caption.ToString();
+        if (string.IsNullOrEmpty(caption.Page) || fonts.Measure(text) <= maxWidth) return Ellipsize(fonts, text, maxWidth);
+
+        // a band too narrow even for the page and an ellipsis cuts the whole caption
+        var page = $" {caption.Page}";
+        var nameWidth = maxWidth - fonts.Measure(page);
+        if (nameWidth < fonts.Measure("…")) return Ellipsize(fonts, text, maxWidth);
+
+        return Ellipsize(fonts, caption.Name, nameWidth) + page;
     }
 
 

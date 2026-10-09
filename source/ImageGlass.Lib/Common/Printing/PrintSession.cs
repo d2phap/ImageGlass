@@ -46,7 +46,7 @@ public interface IPrintImageSource
     /// <summary>
     /// Gets the caption of a print.
     /// </summary>
-    string GetCaption(int index);
+    PrintCaption GetCaption(int index);
 
     /// <summary>
     /// Gets the picture of a vector print, drawn as vectors; <c>null</c> for a raster print.
@@ -68,7 +68,18 @@ public interface IPrintImageSource
 /// <summary>
 /// One print of the session: a frame, and the part of it printed.
 /// </summary>
-public sealed record PrintItem(int FrameIndex, PrintRegion Region, string Caption);
+public sealed record PrintItem(int FrameIndex, PrintRegion Region, PrintCaption Caption);
+
+
+/// <summary>
+/// The caption under a print: the file name, which an ellipsis may shorten, and the page it shows, such as "(3/61)", which stays whole.
+/// </summary>
+public readonly record struct PrintCaption(string Name, string Page)
+{
+    public static PrintCaption Empty { get; } = new(string.Empty, string.Empty);
+
+    public override string ToString() => string.IsNullOrEmpty(Page) ? Name : $"{Name} {Page}";
+}
 
 
 /// <summary>
@@ -146,7 +157,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
 
         _items = frames
             .Where(i => i >= 0 && i < FrameCount)
-            .Select(i => new PrintItem(i, region, FrameCount > 1 ? $"{name} ({i + 1}/{FrameCount})" : name))
+            .Select(i => new PrintItem(i, region, new PrintCaption(name, FrameCount > 1 ? $"({i + 1}/{FrameCount})" : string.Empty)))
             .ToList();
     }
 
@@ -182,7 +193,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
 
 
     /// <inheritdoc/>
-    public string GetCaption(int index) => index >= 0 && index < _items.Count ? _items[index].Caption : string.Empty;
+    public PrintCaption GetCaption(int index) => index >= 0 && index < _items.Count ? _items[index].Caption : PrintCaption.Empty;
 
 
     /// <inheritdoc/>
@@ -267,7 +278,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     public async Task<SKImage?> BuildFullImageAsync(int frameIndex, PrintRegion region, CancellationToken token)
     {
         using var linked = CancellationTokenSource.CreateLinkedTokenSource(token, _cancel.Token);
-        return await BuildSourceImageAsync(new PrintItem(frameIndex, region, string.Empty), FULL_SIZE, linked.Token).ConfigureAwait(false);
+        return await BuildSourceImageAsync(new PrintItem(frameIndex, region, PrintCaption.Empty), FULL_SIZE, linked.Token).ConfigureAwait(false);
     }
 
 

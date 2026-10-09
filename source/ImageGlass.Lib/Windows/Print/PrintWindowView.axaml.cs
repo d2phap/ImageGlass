@@ -1102,7 +1102,7 @@ public partial class PrintWindowView : PhControl
         return new PrintJob
         {
             Settings = settings,
-            Title = _session.GetCaption(0),
+            Title = _session.GetCaption(0).ToString(),
             Layout = _doc!,
             Session = _session,
             Render = BuildRenderOptions(),
