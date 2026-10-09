@@ -36,17 +36,21 @@ internal sealed record CupsJobOptions(string Media, int Copies, bool Collate, Pr
 
 
 /// <summary>
-/// The printers of CUPS through the host's libcups, whose connection is per thread, so each call runs start to end on one thread.
+/// The printers of CUPS through the host's libcups; each call opens its own connection to the scheduler and runs start to end on one thread.
 /// </summary>
 internal static unsafe partial class CupsApi
 {
     private const string LIB_CUPS = "libcups.so.2";
 
-    // CUPS_HTTP_DEFAULT: the calling thread's connection to the default scheduler
-    private const nint HTTP_DEFAULT = 0;
-
+    private const int AF_UNSPEC = 0;
+    private const int CONNECT_TIMEOUT_MS = 30_000;
     private const int HTTP_STATUS_CONTINUE = 100;
+    private const int IPP_OP_GET_PRINTER_ATTRIBUTES = 0x000B;
     private const int IPP_STATUS_OK_EVENTS_COMPLETE = 0x0007;
+    private const int IPP_TAG_ZERO = 0x00;
+    private const int IPP_TAG_OPERATION = 0x01;
+    private const int IPP_TAG_KEYWORD = 0x44;
+    private const int IPP_TAG_URI = 0x45;
     private const int IPP_RES_PER_CM = 4;
     private const int IPP_PRINTER_PROCESSING = 4;
     private const int IPP_PRINTER_STOPPED = 5;
@@ -69,8 +73,9 @@ internal static unsafe partial class CupsApi
     /// </summary>
     public static List<PrinterInfo> GetPrinters()
     {
+        var http = Connect();
         CupsDest* dests = null;
-        var count = cupsGetDests2(HTTP_DEFAULT, &dests);
+        var count = cupsGetDests2(http, &dests);
 
         try
         {
@@ -97,6 +102,7 @@ internal static unsafe partial class CupsApi
         finally
         {
             if (dests != null) cupsFreeDests(count, dests);
+            httpClose(http);
         }
     }
 
@@ -106,14 +112,14 @@ internal static unsafe partial class CupsApi
     /// </summary>
     public static PrinterStatus GetStatus(string id)
     {
-        var dest = GetNamedDest(id);
-        if (dest == null) return new PrinterStatus(PrinterState.Unknown);
+        var http = Connect();
+        var dest = GetNamedDest(http, id);
 
         try
         {
-            var reasons = GetOption(dest, "printer-state-reasons") ?? string.Empty;
-            var message = GetOption(dest, "printer-state-message");
-            _ = int.TryParse(GetOption(dest, "printer-state"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var state);
+            if (dest == null) return new PrinterStatus(PrinterState.Unknown);
+
+            var (state, reasons, message) = ReadState(http, dest);
 
             PrinterState result;
             if (reasons.Contains("offline", StringComparison.OrdinalIgnoreCase)) result = PrinterState.Offline;
@@ -122,11 +128,56 @@ internal static unsafe partial class CupsApi
             else if (state == IPP_PRINTER_PROCESSING) result = PrinterState.Busy;
             else result = state > 0 ? PrinterState.Ready : PrinterState.Unknown;
 
-            return new PrinterStatus(result, string.IsNullOrWhiteSpace(message) ? null : message);
+            // a ready printer's message is the last job's chatter, and a pause without a reason only says "Paused"
+            var isNews = result != PrinterState.Ready && !string.Equals(message?.Trim('.'), result.ToString(), StringComparison.OrdinalIgnoreCase);
+            return new PrinterStatus(result, isNews && !string.IsNullOrWhiteSpace(message) ? message : null);
         }
         finally
         {
-            cupsFreeDests(1, dest);
+            if (dest != null) cupsFreeDests(1, dest);
+            httpClose(http);
+        }
+    }
+
+
+    /// <summary>
+    /// Reads the state, its reasons and its message from the scheduler, else from the destination's options, which never carry the message.
+    /// </summary>
+    private static (int State, string Reasons, string? Message) ReadState(nint http, CupsDest* dest)
+    {
+        _ = int.TryParse(GetOption(dest, "printer-state"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var state);
+        var reasons = GetOption(dest, "printer-state-reasons") ?? string.Empty;
+
+        var uri = GetOption(dest, "printer-uri-supported");
+        if (string.IsNullOrEmpty(uri)) return (state, reasons, null);
+
+        var request = ippNewRequest(IPP_OP_GET_PRINTER_ATTRIBUTES);
+        _ = ippAddString(request, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", null, uri);
+        _ = ippAddString(request, IPP_TAG_OPERATION, IPP_TAG_KEYWORD, "requested-attributes", null, "printer-description");
+
+        // the request is the scheduler's to free
+        var response = cupsDoRequest(http, request, "/");
+        if (response == 0) return (state, reasons, null);
+
+        try
+        {
+            var attr = ippFindAttribute(response, "printer-state", IPP_TAG_ZERO);
+            if (attr != 0) state = ippGetInteger(attr, 0);
+
+            attr = ippFindAttribute(response, "printer-state-reasons", IPP_TAG_ZERO);
+            if (attr != 0)
+            {
+                var values = new List<string>();
+                for (var i = 0; i < ippGetCount(attr); i++) values.Add(ToString(ippGetString(attr, i, null)) ?? string.Empty);
+                reasons = string.Join(',', values);
+            }
+
+            attr = ippFindAttribute(response, "printer-state-message", IPP_TAG_ZERO);
+            return (state, reasons, attr != 0 ? ToString(ippGetString(attr, 0, null)) : null);
+        }
+        finally
+        {
+            ippDelete(response);
         }
     }
 
@@ -140,32 +191,31 @@ internal static unsafe partial class CupsApi
     /// </summary>
     public static PrinterCapabilities GetCapabilities(string id, CancellationToken token)
     {
-        var dest = GetNamedDest(id);
-        if (dest == null) throw new IOException(GetLastError());
-
-        var info = cupsCopyDestInfo(HTTP_DEFAULT, dest);
+        var http = Connect();
+        var dest = GetNamedDest(http, id);
+        var info = dest == null ? 0 : cupsCopyDestInfo(http, dest);
 
         try
         {
             if (info == 0) throw new IOException(GetLastError());
 
-            var papers = ReadMedia(dest, info);
+            var papers = ReadMedia(http, dest, info);
             token.ThrowIfCancellationRequested();
 
             CupsSize defaultSize;
-            var defaultPaperId = cupsGetDestMediaDefault(HTTP_DEFAULT, dest, info, 0, &defaultSize) != 0
+            var defaultPaperId = cupsGetDestMediaDefault(http, dest, info, 0, &defaultSize) != 0
                 ? ToString(defaultSize.Media)
                 : null;
 
-            var resolutions = ReadResolutions(cupsFindDestSupported(HTTP_DEFAULT, dest, info, "printer-resolution"));
-            var defaultDpi = ReadResolutions(cupsFindDestDefault(HTTP_DEFAULT, dest, info, "printer-resolution")).FirstOrDefault();
+            var resolutions = ReadResolutions(cupsFindDestSupported(http, dest, info, "printer-resolution"));
+            var defaultDpi = ReadResolutions(cupsFindDestDefault(http, dest, info, "printer-resolution")).FirstOrDefault();
 
             return new PrinterCapabilities
             {
                 Papers = papers,
                 DefaultPaperId = defaultPaperId,
-                SupportsColor = cupsCheckDestSupported(HTTP_DEFAULT, dest, info, "print-color-mode", "color") == 1,
-                SupportsDuplex = cupsCheckDestSupported(HTTP_DEFAULT, dest, info, "sides", "two-sided-long-edge") == 1,
+                SupportsColor = cupsCheckDestSupported(http, dest, info, "print-color-mode", "color") == 1,
+                SupportsDuplex = cupsCheckDestSupported(http, dest, info, "sides", "two-sided-long-edge") == 1,
 
                 // the scheduler makes and collates copies itself when the printer cannot
                 SupportsCollate = true,
@@ -177,7 +227,8 @@ internal static unsafe partial class CupsApi
         finally
         {
             if (info != 0) cupsFreeDestInfo(info);
-            cupsFreeDests(1, dest);
+            if (dest != null) cupsFreeDests(1, dest);
+            httpClose(http);
         }
     }
 
@@ -185,16 +236,16 @@ internal static unsafe partial class CupsApi
     /// <summary>
     /// Reads the media of a destination with their printable areas, named by CUPS or, on an old libcups, from their PWG names.
     /// </summary>
-    private static List<PaperInfo> ReadMedia(CupsDest* dest, nint info)
+    private static List<PaperInfo> ReadMedia(nint http, CupsDest* dest, nint info)
     {
-        var count = cupsGetDestMediaCount(HTTP_DEFAULT, dest, info, 0);
+        var count = cupsGetDestMediaCount(http, dest, info, 0);
         var papers = new List<PaperInfo>(Math.Max(0, count));
         var seen = new HashSet<string>();
 
         for (var i = 0; i < count; i++)
         {
             CupsSize size;
-            if (cupsGetDestMediaByIndex(HTTP_DEFAULT, dest, info, i, 0, &size) == 0) continue;
+            if (cupsGetDestMediaByIndex(http, dest, info, i, 0, &size) == 0) continue;
 
             var id = ToString(size.Media);
             if (string.IsNullOrEmpty(id) || size.Width <= 0 || size.Length <= 0 || !seen.Add(id)) continue;
@@ -204,7 +255,7 @@ internal static unsafe partial class CupsApi
             var sizePt = new SKSize(ToPt(Math.Min(size.Width, size.Length)), ToPt(Math.Max(size.Width, size.Length)));
             var margins = new PrintMargins(ToPt(size.Left), ToPt(size.Top), ToPt(size.Right), ToPt(size.Bottom));
 
-            var name = LocalizeMedia(dest, info, &size) ?? GetNameFromPwg(id);
+            var name = LocalizeMedia(http, dest, info, &size) ?? GetNameFromPwg(id);
             papers.Add(new PaperInfo(id, PaperCatalog.GetDisplayName(name, sizePt), sizePt) { HardwareMarginsPt = margins });
         }
 
@@ -215,11 +266,11 @@ internal static unsafe partial class CupsApi
     /// <summary>
     /// Gets the localized name of a medium, which libcups has offered since 1.6; <c>null</c> when it cannot.
     /// </summary>
-    private static string? LocalizeMedia(CupsDest* dest, nint info, CupsSize* size)
+    private static string? LocalizeMedia(nint http, CupsDest* dest, nint info, CupsSize* size)
     {
         try
         {
-            var name = ToString(cupsLocalizeDestMedia(HTTP_DEFAULT, dest, info, 0, size));
+            var name = ToString(cupsLocalizeDestMedia(http, dest, info, 0, size));
             return string.IsNullOrWhiteSpace(name) ? null : name;
         }
         catch (EntryPointNotFoundException)
@@ -230,19 +281,20 @@ internal static unsafe partial class CupsApi
 
 
     /// <summary>
-    /// Builds a name from a self-describing PWG media name, such as "A4" from "iso_a4_210x297mm".
+    /// Builds a name from a self-describing PWG media name, such as "A4" from "iso_a4_210x297mm" or "iso_a6_105x148mm_borderless".
     /// </summary>
     private static string GetNameFromPwg(string pwgName)
     {
+        // class_name_size, then any suffix of a media key
         var parts = pwgName.Split('_');
         if (parts.Length < 3) return pwgName;
 
-        var name = string.Join(' ', parts[1..^1]).Replace('-', ' ');
+        var name = parts[1].Replace('-', ' ');
         if (name.Length == 0) return pwgName;
 
-        // ISO and JIS sizes are written in capitals, others as a word
-        var isSeriesName = name.Length <= 4 && char.IsLetter(name[0]) && name.Skip(1).All(char.IsDigit);
-        return isSeriesName
+        // ISO, JIS and envelope codes are written in capitals, such as "A4", "B5", "DL"; others as a word
+        var isCode = name.Length <= 4 && name.All(char.IsLetterOrDigit) && (name.Any(char.IsDigit) || name.Length <= 2);
+        return isCode
             ? name.ToUpperInvariant()
             : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
     }
@@ -281,10 +333,9 @@ internal static unsafe partial class CupsApi
     /// </summary>
     public static void PrintFile(string id, string pdfPath, string title, CupsJobOptions options)
     {
-        var dest = GetNamedDest(id);
-        if (dest == null) throw new IOException(GetLastError());
-
-        var info = cupsCopyDestInfo(HTTP_DEFAULT, dest);
+        var http = Connect();
+        var dest = GetNamedDest(http, id);
+        var info = dest == null ? 0 : cupsCopyDestInfo(http, dest);
 
         CupsOption* jobOptions = null;
         var optionCount = 0;
@@ -293,6 +344,15 @@ internal static unsafe partial class CupsApi
         {
             if (info == 0) throw new IOException(GetLastError());
 
+            // the destination's own options first, an instance's included, as lp sends them; the window's replace them
+            for (var i = 0; i < dest->NumOptions; i++)
+            {
+                if (ToString(dest->Options[i].Name) is { } name)
+                {
+                    optionCount = cupsAddOption(name, ToString(dest->Options[i].Value) ?? string.Empty, optionCount, &jobOptions);
+                }
+            }
+
             foreach (var (name, value) in GetJobOptions(options))
             {
                 optionCount = cupsAddOption(name, value, optionCount, &jobOptions);
@@ -300,27 +360,27 @@ internal static unsafe partial class CupsApi
 
             // 1. the job, with every option
             var jobId = 0;
-            var status = cupsCreateDestJob(HTTP_DEFAULT, dest, info, &jobId, title, optionCount, jobOptions);
+            var status = cupsCreateDestJob(http, dest, info, &jobId, title, optionCount, jobOptions);
             if (status > IPP_STATUS_OK_EVENTS_COMPLETE || jobId == 0) throw new IOException(GetLastError());
 
             // 2. its one document, sent whole, so a cancel never leaves the printer half a file
             try
             {
-                if (cupsStartDestDocument(HTTP_DEFAULT, dest, info, jobId, title, "application/pdf", 0, null, 1) != HTTP_STATUS_CONTINUE)
+                if (cupsStartDestDocument(http, dest, info, jobId, title, "application/pdf", 0, null, 1) != HTTP_STATUS_CONTINUE)
                 {
                     throw new IOException(GetLastError());
                 }
 
-                WriteDocument(pdfPath);
+                WriteDocument(http, pdfPath);
 
-                if (cupsFinishDestDocument(HTTP_DEFAULT, dest, info) > IPP_STATUS_OK_EVENTS_COMPLETE)
+                if (cupsFinishDestDocument(http, dest, info) > IPP_STATUS_OK_EVENTS_COMPLETE)
                 {
                     throw new IOException(GetLastError());
                 }
             }
             catch
             {
-                _ = cupsCancelDestJob(HTTP_DEFAULT, dest, jobId);
+                _ = cupsCancelDestJob(http, dest, jobId);
                 throw;
             }
         }
@@ -328,7 +388,8 @@ internal static unsafe partial class CupsApi
         {
             if (jobOptions != null) cupsFreeOptions(optionCount, jobOptions);
             if (info != 0) cupsFreeDestInfo(info);
-            cupsFreeDests(1, dest);
+            if (dest != null) cupsFreeDests(1, dest);
+            httpClose(http);
         }
     }
 
@@ -343,8 +404,9 @@ internal static unsafe partial class CupsApi
             ("media", options.Media),
             ("print-scaling", "none"),
 
-            // every page is portrait, a landscape one already turned onto it
+            // every page is portrait, a landscape one already turned onto it, one to a sheet whatever a default says
             ("orientation-requested", "3"),
+            ("number-up", "1"),
             ("print-color-mode", options.ColorMode == PrintColorMode.Grayscale ? "monochrome" : "color"),
             ("sides", options.Duplex switch
             {
@@ -352,13 +414,11 @@ internal static unsafe partial class CupsApi
                 PrintDuplex.ShortEdge => "two-sided-short-edge",
                 _ => "one-sided",
             }),
-        };
 
-        if (options.Copies > 1)
-        {
-            list.Add(("copies", options.Copies.ToString(CultureInfo.InvariantCulture)));
-            list.Add(("multiple-document-handling", options.Collate ? "separate-documents-collated-copies" : "separate-documents-uncollated-copies"));
-        }
+            // one copy too, or an instance's own count would apply
+            ("copies", options.Copies.ToString(CultureInfo.InvariantCulture)),
+            ("multiple-document-handling", options.Collate ? "separate-documents-collated-copies" : "separate-documents-uncollated-copies"),
+        };
 
         if (options.Dpi > 0)
         {
@@ -369,7 +429,7 @@ internal static unsafe partial class CupsApi
     }
 
 
-    private static void WriteDocument(string path)
+    private static void WriteDocument(nint http, string path)
     {
         using var stream = File.OpenRead(path);
         var buffer = new byte[WRITE_CHUNK_BYTES];
@@ -379,7 +439,7 @@ internal static unsafe partial class CupsApi
         {
             fixed (byte* p = buffer)
             {
-                if (cupsWriteRequestData(HTTP_DEFAULT, p, (nuint)read) != HTTP_STATUS_CONTINUE) throw new IOException(GetLastError());
+                if (cupsWriteRequestData(http, p, (nuint)read) != HTTP_STATUS_CONTINUE) throw new IOException(GetLastError());
             }
         }
     }
@@ -390,15 +450,27 @@ internal static unsafe partial class CupsApi
     #region Helpers
 
     /// <summary>
+    /// Opens a connection to the scheduler as libcups' default one does; <c>cupsLocalizeDestMedia</c> refuses that default.
+    /// </summary>
+    private static nint Connect()
+    {
+        var http = httpConnect2(cupsServer(), ippPort(), 0, AF_UNSPEC, cupsEncryption(), 1, CONNECT_TIMEOUT_MS, 0);
+        if (http == 0) throw new IOException(Marshal.GetPInvokeErrorMessage(Marshal.GetLastPInvokeError()));
+
+        return http;
+    }
+
+
+    /// <summary>
     /// Gets a destination by the id <see cref="GetPrinters"/> gave it, "name" or "name/instance"; the caller frees it.
     /// </summary>
-    private static CupsDest* GetNamedDest(string id)
+    private static CupsDest* GetNamedDest(nint http, string id)
     {
         var slash = id.IndexOf('/');
         var name = slash < 0 ? id : id[..slash];
         var instance = slash < 0 ? null : id[(slash + 1)..];
 
-        return cupsGetNamedDest(HTTP_DEFAULT, name, instance);
+        return cupsGetNamedDest(http, name, instance);
     }
 
 
@@ -463,6 +535,21 @@ internal static unsafe partial class CupsApi
 
 
     [LibraryImport(LIB_CUPS)]
+    private static partial byte* cupsServer();
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial int ippPort();
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial int cupsEncryption();
+
+    [LibraryImport(LIB_CUPS, SetLastError = true)]
+    private static partial nint httpConnect2(byte* host, int port, nint addrList, int family, int encryption, int blocking, int msec, nint cancel);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial void httpClose(nint http);
+
+    [LibraryImport(LIB_CUPS)]
     private static partial int cupsGetDests2(nint http, CupsDest** dests);
 
     [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
@@ -506,6 +593,27 @@ internal static unsafe partial class CupsApi
 
     [LibraryImport(LIB_CUPS)]
     private static partial int ippGetResolution(nint attribute, int element, int* yres, int* units);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial int ippGetInteger(nint attribute, int element);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial byte* ippGetString(nint attribute, int element, byte** language);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial nint ippNewRequest(int operation);
+
+    [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial nint ippAddString(nint ipp, int group, int valueTag, string name, string? language, string value);
+
+    [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial nint ippFindAttribute(nint ipp, string name, int valueTag);
+
+    [LibraryImport(LIB_CUPS)]
+    private static partial void ippDelete(nint ipp);
+
+    [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial nint cupsDoRequest(nint http, nint request, string resource);
 
     [LibraryImport(LIB_CUPS, StringMarshalling = StringMarshalling.Utf8)]
     private static partial int cupsAddOption(string name, string value, int numOptions, CupsOption** options);

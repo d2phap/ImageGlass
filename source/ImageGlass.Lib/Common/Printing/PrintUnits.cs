@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Common.Types;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -37,20 +38,7 @@ public static class PrintUnits
     /// <summary>
     /// Gets whether the user's region measures in metric units.
     /// </summary>
-    public static bool IsMetricRegion
-    {
-        get
-        {
-            try
-            {
-                return RegionInfo.CurrentRegion.IsMetric;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-    }
+    public static bool IsMetricRegion { get; } = GetIsMetricRegion();
 
 
     public static float MmToPt(double mm) => (float)(mm / MM_PER_INCH * POINTS_PER_INCH);
@@ -74,6 +62,31 @@ public static class PrintUnits
     private static string FormatNumber(double value, int decimals)
     {
         return Math.Round(value, decimals).ToString("0.##", CultureInfo.CurrentCulture);
+    }
+
+
+    private static bool GetIsMetricRegion()
+    {
+        try
+        {
+            // the app pins its culture to invariant and Linux derives the region from it, so read the locale's measurement category
+            if (BHelper.OS == OSType.Linux)
+            {
+                var locale = Environment.GetEnvironmentVariable("LC_ALL") is { Length: > 0 } all ? all
+                    : Environment.GetEnvironmentVariable("LC_MEASUREMENT") is { Length: > 0 } measurement ? measurement
+                    : Environment.GetEnvironmentVariable("LANG");
+
+                // "en_US.UTF-8" is the culture "en-US"; the C locale is metric
+                var name = locale?.Split('.', '@')[0].Replace('_', '-');
+                return string.IsNullOrEmpty(name) || name is "C" or "POSIX" || new RegionInfo(name).IsMetric;
+            }
+
+            return RegionInfo.CurrentRegion.IsMetric;
+        }
+        catch
+        {
+            return true;
+        }
     }
 }
 
@@ -115,10 +128,19 @@ public static partial class PaperCatalog
     /// </summary>
     public static string GetDisplayName(string name, SKSize sizePt)
     {
-        if (!DimensionRegex().IsMatch(name)) return $"{name} ({PrintUnits.FormatSize(sizePt, PrintUnits.IsMetricRegion)})";
+        if (!DimensionRegex().IsMatch(name))
+        {
+            // a qualifier the name already has shares the parentheses: "A6 (105×148 mm, Borderless)"
+            var sizeText = PrintUnits.FormatSize(sizePt, PrintUnits.IsMetricRegion);
+            var qualifier = QualifierRegex().Match(name);
+            return qualifier.Success
+                ? $"{qualifier.Groups[1].Value}({sizeText}, {qualifier.Groups[2].Value})"
+                : $"{name} ({sizeText})";
+        }
 
-        // a driver's own size, such as "4 x 6in", is written the app's way: "4×6 in"
+        // a driver's own size, such as "4 x 6in" or CUPS' "4 x 6″", is written the app's way: "4×6 in"
         var size = DimensionRegex().Replace(name, "$1×$2");
+        size = InchMarkRegex().Replace(size, "$1 in");
         size = UnitRegex().Replace(size, "$1 $2");
 
         // a size without its unit, such as macOS's "4 x 6", takes the unit its numbers match
@@ -159,6 +181,14 @@ public static partial class PaperCatalog
     // a unit written against its number, such as "6in"
     [GeneratedRegex(@"(\d)\s*(mm|cm|in)\b", RegexOptions.IgnoreCase)]
     private static partial Regex UnitRegex();
+
+    // inches written as a mark, such as CUPS' "6″"
+    [GeneratedRegex(@"(\d)\s*[″""”]")]
+    private static partial Regex InchMarkRegex();
+
+    // a name ending in a qualifier, such as CUPS' "A6 (Borderless)"
+    [GeneratedRegex(@"^(.+?\s*)\(([^()]+)\)$")]
+    private static partial Regex QualifierRegex();
 
     // a whole size once normalized, its unit when it has one
     [GeneratedRegex(@"(\d+(?:[.,]\d+)?)×(\d+(?:[.,]\d+)?)(\s(?:mm|cm|in)\b)?", RegexOptions.IgnoreCase)]

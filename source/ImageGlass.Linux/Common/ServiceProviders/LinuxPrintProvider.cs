@@ -104,17 +104,19 @@ internal class LinuxPrintProvider : PrintProviderBase
 
 
     /// <summary>
-    /// Hands the pages as a PDF to the desktop's print dialog, through the XDG print portal.
+    /// Hands the pages as a PDF to the desktop's print dialog, through the XDG print portal; returns whether the user printed there.
     /// </summary>
     public override async Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
     {
+        // the dialog belongs to the Print window, which a portal can only find on X11
+        var handle = owner.TryGetPlatformHandle();
+        var parent = handle?.HandleDescriptor == "XID" ? $"x11:{handle.Handle:x}" : string.Empty;
+
         var path = await WriteTempPdfAsync(job, true, null, token).ConfigureAwait(false);
 
         try
         {
-            // the portal's dialog runs in another process, so the job is handed over once it is up
-            await XdgPrintPortal.PrintAsync(path, job.Title, token).ConfigureAwait(false);
-            return true;
+            return await XdgPrintPortal.PrintAsync(path, job.Title, parent, token).ConfigureAwait(false);
         }
         finally
         {

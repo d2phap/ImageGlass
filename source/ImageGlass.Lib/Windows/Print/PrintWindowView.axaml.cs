@@ -172,7 +172,7 @@ public partial class PrintWindowView : PhControl
 
         _isUpdatingControls = true;
         FillEnumItems();
-        FillQualityItems();
+        FillQualityItems(true);
         _isUpdatingControls = false;
 
         PART_BtnAddPrinter.Text = Core.Lang[LangId.Print_BtnAddPrinter];
@@ -548,6 +548,7 @@ public partial class PrintWindowView : PhControl
         _capsCancel = cancel;
 
         PrinterCapabilities caps;
+        var isUnavailable = false;
         try
         {
             caps = await Core.PrintProvider.GetCapabilitiesAsync(printer, cancel.Token);
@@ -562,6 +563,7 @@ public partial class PrintWindowView : PhControl
             Debug.WriteLine($"❌❌❌ {nameof(PrintWindowView)}.{nameof(SelectPrinterAsync)}: {ex.Message}");
             ShowPrinterStatus(Core.Lang[LangId.Print_PrinterUnavailable], ResxId.IG_TextDangerBrush);
             caps = PrintProviderBase.PdfCapabilities;
+            isUnavailable = true;
         }
 
         if (!ReferenceEquals(_printer, printer)) return;
@@ -574,14 +576,14 @@ public partial class PrintWindowView : PhControl
         _isUpdatingControls = false;
 
         Relayout();
-        _ = ShowPrinterStateAsync(printer);
+        _ = ShowPrinterStateAsync(printer, isUnavailable);
     }
 
 
     /// <summary>
-    /// Shows the state of the printer under its name, when the printer reports one.
+    /// Shows the state of the printer under its name, when the printer reports one; otherwise a notice to keep stays.
     /// </summary>
-    private async Task ShowPrinterStateAsync(PrinterInfo printer)
+    private async Task ShowPrinterStateAsync(PrinterInfo printer, bool keepNotice = false)
     {
         try
         {
@@ -592,7 +594,7 @@ public partial class PrintWindowView : PhControl
 
             if (printer.IsVirtual || status.State == PrinterState.Unknown)
             {
-                ShowPrinterStatus(printer.IsVirtual ? _noPrintersText ?? string.Empty : string.Empty, ResxId.IG_TextWarningBrush);
+                if (!keepNotice) ShowPrinterStatus(printer.IsVirtual ? _noPrintersText ?? string.Empty : string.Empty, ResxId.IG_TextWarningBrush);
                 return;
             }
 
@@ -606,7 +608,7 @@ public partial class PrintWindowView : PhControl
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            if (ReferenceEquals(_printer, printer)) PART_PrinterStatusRow.IsVisible = false;
+            if (ReferenceEquals(_printer, printer) && !keepNotice) PART_PrinterStatusRow.IsVisible = false;
         }
     }
 
@@ -671,11 +673,11 @@ public partial class PrintWindowView : PhControl
 
 
     /// <summary>
-    /// Fills the resolutions of the printer: the one used last on it, else its default.
+    /// Fills the resolutions of the printer: the one used last on it, else its default; a language change keeps the choice.
     /// </summary>
-    private void FillQualityItems()
+    private void FillQualityItems(bool keepSelection = false)
     {
-        var selected = GetTag(PART_Quality, 0);
+        var selected = keepSelection ? GetTag(PART_Quality, 0) : 0;
         PART_Quality.Items.Clear();
 
         foreach (var dpi in _caps.ResolutionsDpi)
@@ -1030,11 +1032,17 @@ public partial class PrintWindowView : PhControl
     public async Task<bool> ShowSystemDialogAsync(PhWindow owner)
     {
         var settings = BuildSettings();
-        if (settings is null) return false;
+        if (settings is null || IsPrinting) return false;
+
+        // that dialog may stay open a while: it counts as a job, so nothing else starts and Esc closes it first
+        var cancel = CancellationTokenSource.CreateLinkedTokenSource(_closing.Token);
+        _printCancel = cancel;
+        SetSettingsEnabled(false);
+        StateChanged?.Invoke();
 
         try
         {
-            if (!await Core.PrintProvider.ShowSystemDialogAsync(owner, BuildJob(settings), _closing.Token)) return false;
+            if (!await Core.PrintProvider.ShowSystemDialogAsync(owner, BuildJob(settings), cancel.Token)) return false;
 
             SaveConfig();
             return true;
@@ -1053,6 +1061,13 @@ public partial class PrintWindowView : PhControl
                 Details = BHelper.GetExceptionDetails(ex),
             });
             return false;
+        }
+        finally
+        {
+            _printCancel = null;
+            cancel.Dispose();
+            SetSettingsEnabled(true);
+            StateChanged?.Invoke();
         }
     }
 
