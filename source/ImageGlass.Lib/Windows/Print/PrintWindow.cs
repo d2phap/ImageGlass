@@ -223,8 +223,8 @@ public sealed class PrintWindow : DialogWindow
     {
         // a printer prints, even one that writes a file; only the app's own PDF is a save
         Button1Text = _view.Printer?.Id == PrintProviderBase.PDF_PRINTER_ID
-            ? Core.Lang[LangId.Print_BtnSave]
-            : Core.Lang[LangId.Print_BtnPrint];
+            ? Core.Lang[LangId._Save]
+            : Core.Lang[LangId.Print_Title];
 
         _btn1.IsEnabled = _view.CanPrint;
         _systemDialogLink.IsEnabled = !_view.IsPrinting;

@@ -562,6 +562,34 @@ public class Lang
         new(LangId._Validation_FileExtensionValueOnly, "Must be a single file extension (e.g. .psd)"),
         new(LangId._Validation_FileExtensionsValueOnly, "Must be file extensions separated by ';' (e.g. .jpg;.png)"),
 
+        // print options
+        new(LangId._PrintOrientation_Auto, "Auto" ), //v10.0
+        new(LangId._PrintOrientation_Portrait, "Portrait" ), //v10.0
+        new(LangId._PrintOrientation_Landscape, "Landscape" ), //v10.0
+        new(LangId._PrintFitMode_Fit, "Fit" ), //v10.0
+        new(LangId._PrintFitMode_Fill, "Fill" ), //v10.0
+        new(LangId._PrintFitMode_ActualSize, "Actual size" ), //v10.0
+        new(LangId._PrintMarginPreset_None, "None" ), //v10.0
+        new(LangId._PrintMarginPreset_Narrow, "Narrow" ), //v10.0
+        new(LangId._PrintMarginPreset_Normal, "Normal" ), //v10.0
+        new(LangId._PrintMarginPreset_Wide, "Wide" ), //v10.0
+        new(LangId._PrintColorMode_Color, "Color" ), //v10.0
+        new(LangId._PrintColorMode_Grayscale, "Grayscale" ), //v10.0
+        new(LangId._PrintDuplex_None, "Off" ), //v10.0
+        new(LangId._PrintDuplex_LongEdge, "Flip on long edge" ), //v10.0
+        new(LangId._PrintDuplex_ShortEdge, "Flip on short edge" ), //v10.0
+        new(LangId._PrintPageScope_Current, "Current" ), //v10.0
+        new(LangId._PrintPageScope_All, "All ({0})" ), //v10.0
+        new(LangId._PrintPageScope_Range, "Range" ), //v10.0
+        new(LangId._PrintRegion_WholeImage, "Whole image" ), //v10.0
+        new(LangId._PrintRegion_Selection, "Selection" ), //v10.0
+        new(LangId._PrintRegion_VisibleArea, "Visible area" ), //v10.0
+        new(LangId._PrinterState_Ready, "Ready" ), //v10.0
+        new(LangId._PrinterState_Busy, "Busy" ), //v10.0
+        new(LangId._PrinterState_Offline, "Offline" ), //v10.0
+        new(LangId._PrinterState_Paused, "Paused" ), //v10.0
+        new(LangId._PrinterState_Error, "Error" ), //v10.0
+
 
         // main window
         new(LangId._PicMain_ErrorText, "Could not load this image"), // v2.0 beta, updated 4.0, 9.0, 10.0
@@ -1370,8 +1398,6 @@ public class Lang
         new(LangId.Print_BtnProperties, "Printer properties…" ), //v10.0
         new(LangId.Print_BtnSystemDialog, "Use the system dialog…" ), //v10.0
         new(LangId.Print_BtnAddPrinter, "Add a printer" ), //v10.0
-        new(LangId.Print_BtnPrint, "Print" ), //v10.0
-        new(LangId.Print_BtnSave, "Save" ), //v10.0
         new(LangId.Print_SaveAsPdf, "Save as PDF" ), //v10.0
         new(LangId.Print_Summary, "{0} page(s), {1} print(s)" ), //v10.0
         new(LangId.Print_PageOf, "{0} of {1}" ), //v10.0
@@ -1379,8 +1405,8 @@ public class Lang
         new(LangId.Print_Sent, "Sent to {0}" ), //v10.0
         new(LangId.Print_Saved, "Saved as PDF" ), //v10.0
         new(LangId.Print_LoadingPrinters, "Loading printers…" ), //v10.0
-        new(LangId.Print_NoPrinters, "No printers were found. You can still save as PDF." ), //v10.0
-        new(LangId.Print_CupsMissing, "Printing needs CUPS, which is not installed. You can still save as PDF." ), //v10.0
+        new(LangId.Print_NoPrinters, "No printers were found." ), //v10.0
+        new(LangId.Print_CupsMissing, "CUPS is not installed." ), //v10.0
         new(LangId.Print_PrinterUnavailable, "This printer is not responding." ), //v10.0
         new(LangId.Print_WarnPrintShrunk, "The print size is larger than the paper, so it was scaled down." ), //v10.0
         new(LangId.Print_WarnManyPages, "This will print {0} pages. Do you want to continue?" ), //v10.0
@@ -1393,33 +1419,6 @@ public class Lang
         new(LangId.Print_Layout_Wallet, "Wallet" ), //v10.0
         new(LangId.Print_Layout_Passport, "Passport {0}" ), //v10.0
         new(LangId.Print_Layout_ContactSheet, "Contact sheet" ), //v10.0
-
-        new(LangId.PrintOrientation_Auto, "Auto" ), //v10.0
-        new(LangId.PrintOrientation_Portrait, "Portrait" ), //v10.0
-        new(LangId.PrintOrientation_Landscape, "Landscape" ), //v10.0
-        new(LangId.PrintFitMode_Fit, "Fit" ), //v10.0
-        new(LangId.PrintFitMode_Fill, "Fill" ), //v10.0
-        new(LangId.PrintFitMode_ActualSize, "Actual size" ), //v10.0
-        new(LangId.PrintMarginPreset_None, "None" ), //v10.0
-        new(LangId.PrintMarginPreset_Narrow, "Narrow" ), //v10.0
-        new(LangId.PrintMarginPreset_Normal, "Normal" ), //v10.0
-        new(LangId.PrintMarginPreset_Wide, "Wide" ), //v10.0
-        new(LangId.PrintColorMode_Color, "Color" ), //v10.0
-        new(LangId.PrintColorMode_Grayscale, "Grayscale" ), //v10.0
-        new(LangId.PrintDuplex_None, "Off" ), //v10.0
-        new(LangId.PrintDuplex_LongEdge, "Flip on long edge" ), //v10.0
-        new(LangId.PrintDuplex_ShortEdge, "Flip on short edge" ), //v10.0
-        new(LangId.PrintPageScope_Current, "Current" ), //v10.0
-        new(LangId.PrintPageScope_All, "All ({0})" ), //v10.0
-        new(LangId.PrintPageScope_Range, "Range" ), //v10.0
-        new(LangId.PrintRegion_WholeImage, "Whole image" ), //v10.0
-        new(LangId.PrintRegion_Selection, "Selection" ), //v10.0
-        new(LangId.PrintRegion_VisibleArea, "Visible area" ), //v10.0
-        new(LangId.PrinterState_Ready, "Ready" ), //v10.0
-        new(LangId.PrinterState_Busy, "Busy" ), //v10.0
-        new(LangId.PrinterState_Offline, "Offline" ), //v10.0
-        new(LangId.PrinterState_Paused, "Paused" ), //v10.0
-        new(LangId.PrinterState_Error, "Error" ), //v10.0
 
         #endregion // Print
 

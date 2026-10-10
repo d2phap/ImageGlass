@@ -332,7 +332,7 @@ public partial class PrintWindowView : PhControl
 
         foreach (var value in values)
         {
-            var text = Core.Lang[Lang.GetKey($"{typeof(T).Name}_{value}"), args];
+            var text = Core.Lang[Lang.GetKey($"_{typeof(T).Name}_{value}"), args];
             box.Items.Add(new ComboBoxItem { Content = text, Tag = value });
         }
 
@@ -598,7 +598,7 @@ public partial class PrintWindowView : PhControl
                 return;
             }
 
-            var text = Core.Lang[Lang.GetKey($"{nameof(PrinterState)}_{status.State}")];
+            var text = Core.Lang[Lang.GetKey($"_{nameof(PrinterState)}_{status.State}")];
             ShowPrinterStatus(string.IsNullOrWhiteSpace(status.Message) ? text : $"{text}: {status.Message}", status.State switch
             {
                 PrinterState.Ready => ResxId.IG_TextSuccessBrush,
