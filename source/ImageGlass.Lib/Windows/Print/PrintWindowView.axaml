@@ -50,7 +50,7 @@
             HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="24,16,24,24" Spacing="14">
 
-                <!--  Printer, its state at the right of the label: a dot in the state's color, then the text  -->
+                <!--  Printer  -->
                 <StackPanel Classes="row">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <ui:PhTextBlock VerticalAlignment="Bottom" LangKey="Print_LblPrinter" />
@@ -78,7 +78,7 @@
                         x:Name="PART_BtnAddPrinter"
                         Padding="0"
                         HorizontalAlignment="Left"
-                        IconData="{StaticResource IconAddSmall}"
+                        IconData="{StaticResource IconAdd}"
                         IsVisible="False"
                         Variant="Link" />
                 </StackPanel>
@@ -89,7 +89,7 @@
                     <ComboBox x:Name="PART_Paper" />
                 </StackPanel>
 
-                <!--  Copies; the gap is the checkbox's own, so the box takes the whole row while it is hidden  -->
+                <!--  Copies  -->
                 <Grid ColumnDefinitions="*,Auto">
                     <StackPanel Classes="row">
                         <ui:PhTextBlock LangKey="Print_LblCopies" />
@@ -131,12 +131,15 @@
                     </CheckBox>
                 </Grid>
 
-                <!--  What to print: the pages, and the part of the image  -->
+                <!--  What to print  -->
                 <StackPanel x:Name="PART_PagesRow" Classes="row">
                     <ui:PhTextBlock LangKey="Print_LblPages" />
                     <ComboBox x:Name="PART_PageScope" />
                     <TextBox x:Name="PART_PageRange" IsVisible="False" />
-                    <TextBlock x:Name="PART_PageRangeHint" Classes="hint" IsVisible="False" />
+                    <TextBlock
+                        x:Name="PART_PageRangeHint"
+                        Classes="hint"
+                        IsVisible="False" />
                 </StackPanel>
                 <StackPanel x:Name="PART_RegionRow" Classes="row">
                     <ui:PhTextBlock LangKey="Print_LblRegion" />
@@ -204,12 +207,11 @@
         </ScrollViewer>
 
 
-        <!--  Preview, on a desk that fills its side of the window up to the settings' scrollbar  -->
+        <!--  Preview  -->
         <Grid
             x:Name="PART_PreviewPane"
             Grid.Column="1"
             RowDefinitions="Auto,*,Auto">
-            <!--  the page buttons are larger than their arrows, so they are easy to hit; the arrows fill 3/4 of their 24-unit canvas  -->
             <StackPanel
                 Margin="0,8,0,0"
                 HorizontalAlignment="Center"
@@ -247,7 +249,7 @@
                 Foreground="{DynamicResource IG_TextWarningBrush}"
                 IsVisible="False" />
 
-            <!--  Printing progress, over the preview  -->
+            <!--  Printing progress overlay  -->
             <Border
                 x:Name="PART_Progress"
                 Grid.Row="1"
