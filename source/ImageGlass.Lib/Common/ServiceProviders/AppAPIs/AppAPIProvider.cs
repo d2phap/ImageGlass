@@ -1369,12 +1369,15 @@ public partial class AppAPIProvider
 
 
     /// <summary>
-    /// Sets zoom = 100% if zoom value is less than 100%.
-    /// Otherwise, refresh the image with the current zoom mode.
+    /// Toggles the zoom between 100% and the current zoom mode.
     /// </summary>
     public static void IG_SetZoomForMouseClick()
     {
-        if (Viewer.ZoomFactor < 1)
+        var zoomFactor = Viewer.ZoomFactor;
+        var isZoomModeFactor = !Viewer.IsManualZoom && Viewer.ZoomMode != ZoomMode.LockZoom;
+        var isEnlargedByZoomMode = isZoomModeFactor && zoomFactor > 1;
+
+        if (zoomFactor < 1 || isEnlargedByZoomMode)
         {
             IG_SetZoom(1);
         }
