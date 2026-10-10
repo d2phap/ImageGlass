@@ -196,8 +196,8 @@ public partial class MouseSettingsView : SettingsPageView
 
         DisableIfLocked(ConfigId.MouseClickActions, PART_ClickTable, PART_ResetClick);
 
-        // custom mouse click actions are Pro
-        ProGate(ConfigId.MouseClickActions, PART_MouseClickBadge, PART_ClickTable, PART_ResetClick);
+        // custom mouse click actions are Pro; Classic can still open each one to view it
+        ProGate(ConfigId.MouseClickActions, null, PART_ResetClick);
     }
 
 
@@ -223,16 +223,25 @@ public partial class MouseSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Rebuilds the click rows: each event shows its label above a button that opens the editor.
+    /// Rebuilds the click rows: each event shows its label and Pro badge above its editor button.
     /// </summary>
     private void RebuildClickTable()
     {
         PART_ClickTable.Children.Clear();
+        var isProGated = Config.IsConfigProGated(ConfigId.MouseClickActions);
 
         foreach (var evt in Enum.GetValues<MouseClickEvent>())
         {
+            var header = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
+            header.Children.Add(new PhTextBlock
+            {
+                Text = EnumLabel(nameof(MouseClickEvent), evt),
+                VerticalAlignment = VerticalAlignment.Center,
+            });
+            header.Children.Add(new PhProBadge { IsVisible = isProGated });
+
             var row = new StackPanel { Spacing = 5 };
-            row.Children.Add(new PhTextBlock { Text = EnumLabel(nameof(MouseClickEvent), evt) });
+            row.Children.Add(header);
             row.Children.Add(BuildClickButton(evt));
 
             PART_ClickTable.Children.Add(row);
@@ -276,13 +285,13 @@ public partial class MouseSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Opens the editor for a click event, updates the working copy (an empty executable unbinds it)
-    /// and re-renders.
+    /// Opens the editor for a click event (view-only for Classic) and stages the result; empty unbinds it.
     /// </summary>
     private async Task EditClickActionAsync(MouseClickEvent evt)
     {
         var existing = _clickActions.GetValueOrDefault(evt);
-        var window = new MouseClickActionEditWindow(EnumLabel(nameof(MouseClickEvent), evt), existing);
+        var isReadOnly = Config.IsConfigProGated(ConfigId.MouseClickActions);
+        var window = new MouseClickActionEditWindow(EnumLabel(nameof(MouseClickEvent), evt), existing, isReadOnly);
 
         if (await window.ShowAsync(TopLevel.GetTopLevel(this) as PhWindow) != DialogExitCode.OK) return;
         if (window.ResultAction is not { } result) return;

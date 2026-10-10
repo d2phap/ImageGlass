@@ -25,17 +25,7 @@
 
 
         <!--  Mouse click action (Pro)  -->
-        <StackPanel
-            Margin="0,20,0,8"
-            Orientation="Horizontal"
-            Spacing="8">
-            <ui:PhTextBlock
-                Margin="0"
-                VerticalAlignment="Center"
-                Classes="group"
-                LangKey="Settings_MouseClickAction" />
-            <ui:PhProBadge x:Name="PART_MouseClickBadge" IsVisible="False" />
-        </StackPanel>
+        <ui:PhTextBlock Classes="group" LangKey="Settings_MouseClickAction" />
         <StackPanel Margin="{DynamicResource SettingsGroupIndent}" Spacing="14">
             <StackPanel x:Name="PART_ClickTable" Spacing="14" />
 

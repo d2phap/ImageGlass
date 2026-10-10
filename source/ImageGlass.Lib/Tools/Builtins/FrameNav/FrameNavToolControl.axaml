@@ -11,7 +11,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:Name="Root"
-    Padding="6,12">
+    Padding="6,8">
 
     <Grid ColumnDefinitions="1*,Auto,1*" ColumnSpacing="8">
         <TextBlock
@@ -25,7 +25,7 @@
         <Border
             x:Name="PART_PlaybackControlBorder"
             Grid.Column="1"
-            Padding="6"
+            Padding="4"
             CornerRadius="10">
             <StackPanel
                 VerticalAlignment="Center"
@@ -41,8 +41,8 @@
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="20"
-                        Height="20"
+                        Width="22"
+                        Height="22"
                         Data="{StaticResource IconArrowPrevious}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -58,8 +58,8 @@
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="20"
-                        Height="20"
+                        Width="22"
+                        Height="22"
                         Data="{StaticResource IconArrowLeft}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -77,21 +77,21 @@
                     <Panel IsHitTestVisible="False">
                         <!--  Live Photo  -->
                         <PathIcon
-                            Width="20"
-                            Height="20"
+                            Width="22"
+                            Height="22"
                             Data="{StaticResource IconLivePhoto}"
                             IsVisible="{CompiledBinding #Root.IsLivePhoto}" />
 
                         <!--  Animated Photo  -->
                         <StackPanel IsVisible="{CompiledBinding !#Root.IsLivePhoto}">
                             <PathIcon
-                                Width="20"
-                                Height="20"
+                                Width="22"
+                                Height="22"
                                 Data="{StaticResource IconPlay}"
                                 IsVisible="{CompiledBinding !#Root.IsPlaying}" />
                             <PathIcon
-                                Width="20"
-                                Height="20"
+                                Width="22"
+                                Height="22"
                                 Data="{StaticResource IconPause}"
                                 IsVisible="{CompiledBinding #Root.IsPlaying}" />
                         </StackPanel>
@@ -109,8 +109,8 @@
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="20"
-                        Height="20"
+                        Width="22"
+                        Height="22"
                         Data="{StaticResource IconArrowRight}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -126,8 +126,8 @@
                     ToolTip.Placement="Top"
                     ToolTip.VerticalOffset="0">
                     <PathIcon
-                        Width="20"
-                        Height="20"
+                        Width="22"
+                        Height="22"
                         Data="{StaticResource IconArrowNext}"
                         IsHitTestVisible="False" />
                 </ui:PhToolButton>
@@ -149,8 +149,8 @@
                 ToolTip.Placement="Top"
                 ToolTip.VerticalOffset="0">
                 <PathIcon
-                    Width="20"
-                    Height="20"
+                    Width="22"
+                    Height="22"
                     Data="{StaticResource IconImageForward}"
                     IsHitTestVisible="False" />
             </ui:PhToolButton>

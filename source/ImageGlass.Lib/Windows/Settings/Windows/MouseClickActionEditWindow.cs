@@ -31,13 +31,14 @@ internal sealed class MouseClickActionEditWindow : DialogWindow
 {
     private readonly PhActionEditorControl _editor;
     private readonly string _eventLabel;
+    private readonly bool _isReadOnly;
 
     protected override int MIN_WIDTH => 460;
     protected override int MAX_WIDTH => 460;
 
 
     /// <summary>
-    /// Gets the action built from the dialog inputs, or <c>null</c> if it wasn't submitted.
+    /// Gets the action built from the dialog inputs, or <c>null</c> if cancelled or read-only.
     /// </summary>
     public SingleAction? ResultAction { get; private set; }
 
@@ -45,21 +46,25 @@ internal sealed class MouseClickActionEditWindow : DialogWindow
     /// <summary>
     /// Opens the editor for <paramref name="action"/> (null = empty), titled by <paramref name="eventLabel"/>.
     /// </summary>
-    public MouseClickActionEditWindow(string eventLabel, SingleAction? action)
+    public MouseClickActionEditWindow(string eventLabel, SingleAction? action, bool isReadOnly = false)
     {
         _eventLabel = eventLabel;
+        _isReadOnly = isReadOnly;
 
-        IsButton1Visible = true;
         IsButton2Visible = true;
         IsButton3Visible = false;
-        DefaultButton = DialogButton.Button1;
-        DefaultFocus = DialogFocus.Default;
+
+        // view-only: show a single Close button instead of OK/Cancel
+        IsButton1Visible = !_isReadOnly;
+        DefaultButton = _isReadOnly ? DialogButton.Button2 : DialogButton.Button1;
+        DefaultFocus = _isReadOnly ? DialogFocus.Button2 : DialogFocus.Default;
 
         // optional action: no hotkeys, allow an empty executable
         _editor = new PhActionEditorControl
         {
             ShowHotkeys = false,
             IsExecutableRequired = false,
+            IsEnabled = !_isReadOnly,
         };
         _editor.LoadAction(action);
         DialogContent = _editor;
@@ -72,12 +77,19 @@ internal sealed class MouseClickActionEditWindow : DialogWindow
 
         Title = $"{_eventLabel} – {Core.Lang[LangId.Settings_MouseClickAction]}";
         Button1Text = Core.Lang[LangId._OK];
-        Button2Text = Core.Lang[LangId._Cancel];
+        Button2Text = Core.Lang[_isReadOnly ? LangId._Close : LangId._Cancel];
     }
 
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
+        // never commit a view-only action
+        if (_isReadOnly)
+        {
+            e.CanProceed = false;
+            return;
+        }
+
         if (!_editor.ValidateExecutable())
         {
             e.CanProceed = false;
