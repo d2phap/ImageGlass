@@ -25,6 +25,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
@@ -58,6 +59,9 @@ internal static unsafe class Win32PrinterApi
     private const short DMORIENT_LANDSCAPE = 2;
     private const int IDOK = 1;
     private const int PAPER_NAME_LENGTH = 64;
+
+    // an unreachable network printer holds CreateIC for 16 s, which must not cost the papers the driver lists at once
+    private const int MEASURE_TIMEOUT_MS = 2000;
 
     // the spooler's status bits, grouped by what the window shows
     private const uint STATUS_PAUSED = 0x1;
@@ -275,7 +279,7 @@ internal static unsafe class Win32PrinterApi
 
             return new PrinterCapabilities
             {
-                Papers = EstimatePrintableAreas(pName, devMode, papers, defaultPaperId),
+                Papers = EstimatePrintableAreas(name, devMode, papers, defaultPaperId),
                 DefaultPaperId = defaultPaperId,
                 SupportsColor = GetCapability(pName, pPort, PRINTER_DEVICE_CAPABILITIES.DC_COLORDEVICE, dm) == 1,
                 SupportsDuplex = GetCapability(pName, pPort, PRINTER_DEVICE_CAPABILITIES.DC_DUPLEX, dm) == 1,
@@ -380,10 +384,10 @@ internal static unsafe class Win32PrinterApi
     /// <summary>
     /// Measures the printable area of the default paper and lends it to the others, which are measured once chosen.
     /// </summary>
-    private static List<PaperInfo> EstimatePrintableAreas(char* name, byte[] devMode, List<PaperInfo> papers, string? defaultPaperId)
+    private static List<PaperInfo> EstimatePrintableAreas(string name, byte[] devMode, List<PaperInfo> papers, string? defaultPaperId)
     {
         var defaultPaper = papers.FirstOrDefault(i => i.Id == defaultPaperId) ?? papers.FirstOrDefault();
-        var defaultMargins = defaultPaper is null ? null : MeasureMargins(name, devMode, defaultPaper);
+        var defaultMargins = defaultPaper is null ? null : MeasureMarginsBounded(name, devMode, defaultPaper);
 
         return papers.Select(paper => ReferenceEquals(paper, defaultPaper)
             ? paper with { HardwareMarginsPt = defaultMargins ?? PrintMargins.Zero, IsPrintableAreaMeasured = defaultMargins is not null }
@@ -403,6 +407,33 @@ internal static unsafe class Win32PrinterApi
         {
             var margins = MeasureMargins(pName, devMode, paper);
             return paper with { HardwareMarginsPt = margins ?? paper.HardwareMarginsPt, IsPrintableAreaMeasured = true };
+        }
+    }
+
+
+    /// <summary>
+    /// Measures a paper's margins on a worker for at most <see cref="MEASURE_TIMEOUT_MS"/>; a late worker still frees its context.
+    /// </summary>
+    private static PrintMargins? MeasureMarginsBounded(string name, byte[] devMode, PaperInfo paper)
+    {
+        var measuring = Task.Run(() => MeasureMargins(name, devMode, paper));
+
+        try
+        {
+            return measuring.Wait(MEASURE_TIMEOUT_MS) ? measuring.Result : null;
+        }
+        catch (AggregateException)
+        {
+            return null;
+        }
+    }
+
+
+    private static PrintMargins? MeasureMargins(string name, byte[] devMode, PaperInfo paper)
+    {
+        fixed (char* pName = name)
+        {
+            return MeasureMargins(pName, devMode, paper);
         }
     }
 
