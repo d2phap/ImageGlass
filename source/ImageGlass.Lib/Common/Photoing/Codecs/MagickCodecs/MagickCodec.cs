@@ -1288,20 +1288,20 @@ public static partial class MagickCodec
 
 
     /// <summary>
-    /// Converts the Magick's <see cref="OrientationType"/> value to Skia's <see cref="SKEncodedOrigin"/> value.
+    /// Converts the Magick's <see cref="Orientation"/> value to Skia's <see cref="SKEncodedOrigin"/> value.
     /// </summary>
-    public static SKEncodedOrigin ToSkiaOrientation(OrientationType orientation)
+    public static SKEncodedOrigin ToSkiaOrientation(Orientation orientation)
     {
         return orientation switch
         {
-            OrientationType.TopLeft => SKEncodedOrigin.TopLeft,
-            OrientationType.TopRight => SKEncodedOrigin.TopRight,
-            OrientationType.BottomRight => SKEncodedOrigin.BottomRight,
-            OrientationType.BottomLeft => SKEncodedOrigin.BottomLeft,
-            OrientationType.LeftTop => SKEncodedOrigin.LeftTop,
-            OrientationType.RightTop => SKEncodedOrigin.RightTop,
-            OrientationType.RightBottom => SKEncodedOrigin.RightBottom,
-            OrientationType.LeftBottom => SKEncodedOrigin.LeftBottom,
+            Orientation.TopLeft => SKEncodedOrigin.TopLeft,
+            Orientation.TopRight => SKEncodedOrigin.TopRight,
+            Orientation.BottomRight => SKEncodedOrigin.BottomRight,
+            Orientation.BottomLeft => SKEncodedOrigin.BottomLeft,
+            Orientation.LeftTop => SKEncodedOrigin.LeftTop,
+            Orientation.RightTop => SKEncodedOrigin.RightTop,
+            Orientation.RightBottom => SKEncodedOrigin.RightBottom,
+            Orientation.LeftBottom => SKEncodedOrigin.LeftBottom,
             _ => SKEncodedOrigin.Default,
         };
     }
