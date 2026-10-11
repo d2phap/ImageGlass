@@ -497,7 +497,7 @@ public partial class Photo : PhDisposable
     }
 
 
-    private void ApplyDecodeResult(CodecDecodeResult result)
+    private void ApplyDecodeResult(CodecDecodeResult result, int frameIndex)
     {
         // set decoder codec
         CodecId = result.CodecId;
@@ -527,6 +527,9 @@ public partial class Photo : PhDisposable
         {
             Bitmap = result.SingleFrame;
             result.SingleFrame = null;
+
+            // record the decoded frame, or the viewer decodes frame 0 again and shows that
+            _frameIndex = Math.Max(0, frameIndex);
             return;
         }
 
@@ -546,6 +549,8 @@ public partial class Photo : PhDisposable
     /// </summary>
     private async Task OnDecodingAsync(PhotoMetadata meta, CancellationToken token)
     {
+        // one snapshot, so the frame recorded below is the frame decoded
+        var options = ReadOptions;
         var context = CreateCodecSelectionContext(meta);
         var selectedCodec = Core.CodecRegistry.SelectDecodeCodec(meta, context);
 
@@ -557,9 +562,9 @@ public partial class Photo : PhDisposable
         var isPlugin = codec is not (SvgCodecAdapter or SkiaCodecAdapter or MagickCodecAdapter);
         PhotoTrace.Mark("decode:codec", FilePath,
             $"{codec.CodecId} (decodePriority={codec.DecodePriority}, plugin={isPlugin}, "
-            + $"fallback={isFallback}, frameIndex={ReadOptions.FrameIndex})");
+            + $"fallback={isFallback}, frameIndex={options.FrameIndex})");
 
-        using var result = await codec.DecodeAsync(meta, ReadOptions, context, token).ConfigureAwait(false);
+        using var result = await codec.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
 
         // describe before ApplyDecodeResult nulls out the result fields (moves them to Bitmap)
         if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath, $"kind={DescribeDecodeResult(result)}");
@@ -572,16 +577,16 @@ public partial class Photo : PhDisposable
             PhotoTrace.Mark("decode:retry-fallback", FilePath, $"{codec.CodecId} decoded no frame");
 
             using var fallbackResult = await fallbackCodec
-                .DecodeAsync(meta, ReadOptions, context, token).ConfigureAwait(false);
+                .DecodeAsync(meta, options, context, token).ConfigureAwait(false);
 
             if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath,
                 $"kind={DescribeDecodeResult(fallbackResult)} (fallback)");
 
-            ApplyDecodeResult(fallbackResult);
+            ApplyDecodeResult(fallbackResult, options.FrameIndex);
             return;
         }
 
-        ApplyDecodeResult(result);
+        ApplyDecodeResult(result, options.FrameIndex);
     }
 
 
@@ -838,6 +843,13 @@ public partial class Photo : PhDisposable
             await LoadMetadataAsync(useCache, token: token);
             PhotoTrace.Mark("metadata:loaded", FilePath, DescribeMetadata(Metadata));
 
+            // the metadata may be new, so decode the frame a view opens on
+            var defaultFrameIndex = GetDefaultFrameIndex();
+            if (ReadOptions.FrameIndex != defaultFrameIndex)
+            {
+                ReadOptions = ReadOptions with { FrameIndex = defaultFrameIndex };
+            }
+
             if (!skipLoadingEvent)
             {
                 if (handleProgressFn is not null)
@@ -984,6 +996,26 @@ public partial class Photo : PhDisposable
         }
 
         return null;
+    }
+
+
+    /// <summary>
+    /// Gets the frame a view opens on; only the built-in decoder shares the metadata's frame order.
+    /// </summary>
+    public int GetDefaultFrameIndex()
+    {
+        var meta = Metadata;
+        var frameIndex = meta.DefaultFrameIndex;
+        if (frameIndex <= 0) return 0;
+        if (frameIndex >= meta.FrameCount) return 0;
+
+        // Magick lists icon frames in file order, a plugin may not (WIC does not)
+        var context = CreateCodecSelectionContext(meta);
+        var codec = Core.CodecRegistry.SelectDecodeCodec(meta, context) ?? Core.CodecRegistry.FallbackDecodeCodec;
+        var decodesWithMagick = ReferenceEquals(codec, Core.CodecRegistry.FallbackDecodeCodec);
+        if (!decodesWithMagick) return 0;
+
+        return frameIndex;
     }
 
 

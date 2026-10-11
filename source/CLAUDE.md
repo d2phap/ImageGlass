@@ -352,6 +352,12 @@ App.Initialize()
 - The reduction flows `SkiaDecoderOutput`/`MagickCodecAdapter` → `CodecDecodeResult.DecodeScale` → `Photo.DecodeScale`, and `AppStatusInfo.Dimension` shows it.
 - `Photo.Size` and `ViewerControl.BitmapSize` follow the DECODED size so zoom, selection, crop, and the color picker stay consistent; only `Photo.Metadata.Width/Height` keep the true file dimensions.
 
+### Multi-size icons (ICO/CUR)
+- A multi-size `.ico`/`.cur` opens on its largest frame (then deepest color, then first). `MagickCodec` picks it into `PhotoMetadata.DefaultFrameIndex` from the frames it already pinged, and the metadata `Width/Height` describe that frame so the preview and its zoom match the final image.
+- **Built-in Magick only.** The index is in Magick's frame order (the ICO directory order), and WIC numbers ICO frames differently, so `Photo.GetDefaultFrameIndex()` returns 0 unless the decode codec is `CodecRegistry.FallbackDecodeCodec`. Plugin-decoded icons open on frame 0; no ABI change.
+- `ReadOptions.FrameIndex` is the frame a load opens on: `LoadAsync__` re-points it once metadata is loaded, and both `FromConfig` resets (`ViewPhotoAsync`, the prefetch) pass `GetDefaultFrameIndex()`, because a cached photo is shown with no decode and Save As writes `ReadOptions.FrameIndex`.
+- `ApplyDecodeResult` must record the decoded frame in `_frameIndex`: the viewer asks `GetFrameAsync(Math.Max(0, FrameIndex))`, so a missing index decodes and shows frame 0 again.
+
 ### 2. Theme/Localization Changes
 - Change language: `Core.LanguageChanged?.Invoke()`
 - Change theme: `Core.ThemeChanged?.Invoke(new ThemePackChangedEventArgs(...))`

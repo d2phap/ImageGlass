@@ -280,7 +280,7 @@ public partial class PhotoManager
                 }
 
                 // decode under the same policy the viewer uses, or a cache hit later serves it wrong
-                photo.ReadOptions = PhotoReadOptions.FromConfig();
+                photo.ReadOptions = PhotoReadOptions.FromConfig(photo.GetDefaultFrameIndex());
 
                 if (!isSlideshow)
                 {

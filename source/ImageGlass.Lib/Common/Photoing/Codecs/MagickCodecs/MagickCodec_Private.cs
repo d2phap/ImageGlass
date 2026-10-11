@@ -233,6 +233,36 @@ public static partial class MagickCodec
 
 
     /// <summary>
+    /// Gets the frame a multi-size icon opens on: the largest, then the deepest color, then the first.
+    /// </summary>
+    private static int GetDefaultIconFrameIndex__(MagickImageCollection imgC)
+    {
+        var bestIndex = 0;
+        var bestArea = 0UL;
+        var bestColorRank = 0;
+
+        for (var i = 0; i < imgC.Count; i++)
+        {
+            var frame = imgC[i];
+            var area = (ulong)frame.Width * frame.Height;
+
+            // a palette frame reports its palette size (2, 16, 256), a true color one reports none
+            var colorRank = frame.ColormapSize > 0 ? frame.ColormapSize : int.MaxValue;
+
+            var isLarger = area > bestArea;
+            var isDeeper = area == bestArea && colorRank > bestColorRank;
+            if (!isLarger && !isDeeper) continue;
+
+            bestIndex = i;
+            bestArea = area;
+            bestColorRank = colorRank;
+        }
+
+        return bestIndex;
+    }
+
+
+    /// <summary>
     /// Gets <see cref="MagickFormat"/> from mime type.
     /// </summary>
     private static MagickFormat ConvertMimeTypeToMagickFormat__(string? mimeType)

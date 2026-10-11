@@ -305,8 +305,12 @@ public static partial class MagickCodec
         if (imgC.Count == 0) return meta;
 
 
-        // 1. calculate the specific frame index
-        var frameIndex = options?.FrameIndex ?? 0;
+        // 1. calculate the specific frame index; a multi-size icon opens on its largest image, so describe that one
+        var isIcon = meta.FileExtension is ".ico" or ".cur";
+        meta.DefaultFrameIndex = isIcon ? GetDefaultIconFrameIndex__(imgC) : 0;
+
+        var requestedFrameIndex = options?.FrameIndex ?? 0;
+        var frameIndex = meta.DefaultFrameIndex > 0 ? meta.DefaultFrameIndex : requestedFrameIndex;
 
         // make sure frame index is within range
         if (frameIndex >= imgC.Count) frameIndex = 0;

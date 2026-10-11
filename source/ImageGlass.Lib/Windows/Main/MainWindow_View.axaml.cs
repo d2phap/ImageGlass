@@ -1014,10 +1014,10 @@ public partial class MainWindowView : PhControl
         Core.DisposeClipboardPhoto();
         Core.ImageTransform.Clear();
 
-        // set read options for photo
+        // set read options for photo; a cached photo shows without a decode, so name its opening frame here
         if (photo is not null)
         {
-            photo.ReadOptions = PhotoReadOptions.FromConfig();
+            photo.ReadOptions = PhotoReadOptions.FromConfig(photo.GetDefaultFrameIndex());
         }
 
         Dispatcher.UIThread.Post(async () =>
