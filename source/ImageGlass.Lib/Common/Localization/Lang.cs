@@ -1289,6 +1289,7 @@ public class Lang
         new(LangId.Tool_Resizer_LblResample, "Resample:" ), // v9.2
         new(LangId.Tool_Resizer_LblCurrentSize, "Current Size:" ), // v9.2
         new(LangId.Tool_Resizer_LblNewSize, "New Size:" ), // v9.2
+        new(LangId.Tool_Resizer_Errors_SizeTooLarge, "Each side must be {0} px or less." ), //v10.0
         #endregion // Tool: Resizer
 
         

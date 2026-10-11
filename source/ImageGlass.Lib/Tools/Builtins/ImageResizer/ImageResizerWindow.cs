@@ -18,10 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Documents;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
@@ -29,6 +31,7 @@ using ImageGlass.Common.Types;
 using ImageGlass.UI.Windowing;
 using SkiaSharp;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +61,7 @@ public partial class ImageResizerWindow : ModalWindow
     private TextBlock _lblCurrentSizeValue = null!;
     private TextBlock _lblNewSize = null!;
     private TextBlock _lblNewSizeValue = null!;
+    private TextBlock _lblSizeError = null!;
 
 
 
@@ -123,6 +127,9 @@ public partial class ImageResizerWindow : ModalWindow
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
+        // Enter submits without going through the disabled OK button
+        if (!_btn1.IsEnabled) return;
+
         _ = RunAsync();
     }
 
@@ -264,15 +271,24 @@ public partial class ImageResizerWindow : ModalWindow
         };
 
 
-        // Row 5: New size label
+        // Row 5: New size label + size limit error
         _lblNewSize = new TextBlock
         {
-            VerticalAlignment = VerticalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Top,
         };
-        _lblNewSizeValue = new TextBlock
+        _lblNewSizeValue = new TextBlock();
+        _lblSizeError = new TextBlock
         {
-            VerticalAlignment = VerticalAlignment.Center,
+            IsVisible = false,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            FontSize = Const.FONT_SIZE_SMALL,
+            [!TextBlock.ForegroundProperty] = Resx.CreateBinding(ResxId.IG_TextDangerBrush),
         };
+        var newSizePanel = new StackPanel
+        {
+            Spacing = 2,
+        };
+        newSizePanel.Children.AddRange([_lblNewSizeValue, _lblSizeError]);
 
 
         // Build the grid layout
@@ -316,8 +332,8 @@ public partial class ImageResizerWindow : ModalWindow
         // Row 5: new size
         Grid.SetRow(_lblNewSize, 5);
         Grid.SetColumn(_lblNewSize, 0);
-        Grid.SetRow(_lblNewSizeValue, 5);
-        Grid.SetColumn(_lblNewSizeValue, 1);
+        Grid.SetRow(newSizePanel, 5);
+        Grid.SetColumn(newSizePanel, 1);
 
         gridEl.Children.AddRange([
             radioPanel,
@@ -325,7 +341,7 @@ public partial class ImageResizerWindow : ModalWindow
             _chkKeepRatio,
             _lblResample, _cmbResample,
             _lblCurrentSize, _lblCurrentSizeValue,
-            _lblNewSize, _lblNewSizeValue,
+            _lblNewSize, newSizePanel,
         ]);
 
         return gridEl;
@@ -389,47 +405,22 @@ public partial class ImageResizerWindow : ModalWindow
     {
         if (_suppressEvents) return;
 
-        _suppressEvents = true;
-        try
+        if (_chkKeepRatio.IsChecked == true
+            && _srcSize.Width > 0 && _srcSize.Height > 0)
         {
-            var usePixels = _radPixels.IsChecked == true;
-            var w = (double)(_numWidth.Value ?? 1);
-
-            // clamp to MAX_SIZE
-            var maxW = usePixels
-                ? MAX_SIZE
-                : (_srcSize.Width > 0 ? MAX_SIZE / _srcSize.Width * 100.0 : w);
-            if (w > maxW)
+            _suppressEvents = true;
+            try
             {
-                w = maxW;
-                _numWidth.Value = (decimal)Math.Max(1, Math.Round(w, 2));
-            }
+                var w = (double)(_numWidth.Value ?? 1);
 
-            if (_chkKeepRatio.IsChecked == true
-                && _srcSize.Width > 0 && _srcSize.Height > 0)
-            {
                 // percentages are relative to each axis, so keeping the ratio means equal values
-                var ratio = usePixels ? _srcSize.Height / _srcSize.Width : 1.0;
-                var newH = Math.Max(1, Math.Round(w * ratio, 2));
-
-                // clamp the proportional height too
-                var maxH = usePixels
-                    ? MAX_SIZE
-                    : MAX_SIZE / _srcSize.Height * 100.0;
-                if (newH > maxH)
-                {
-                    newH = maxH;
-                    // recalculate width from clamped height
-                    w = Math.Max(1, Math.Round(newH / ratio, 2));
-                    _numWidth.Value = (decimal)w;
-                }
-
-                _numHeight.Value = (decimal)newH;
+                var ratio = _radPixels.IsChecked == true ? _srcSize.Height / _srcSize.Width : 1.0;
+                _numHeight.Value = (decimal)Math.Max(1, Math.Round(w * ratio, 2));
             }
-        }
-        finally
-        {
-            _suppressEvents = false;
+            finally
+            {
+                _suppressEvents = false;
+            }
         }
 
         UpdateOutputSize();
@@ -440,47 +431,22 @@ public partial class ImageResizerWindow : ModalWindow
     {
         if (_suppressEvents) return;
 
-        _suppressEvents = true;
-        try
+        if (_chkKeepRatio.IsChecked == true
+            && _srcSize.Width > 0 && _srcSize.Height > 0)
         {
-            var usePixels = _radPixels.IsChecked == true;
-            var h = (double)(_numHeight.Value ?? 1);
-
-            // clamp to MAX_SIZE
-            var maxH = usePixels
-                ? MAX_SIZE
-                : (_srcSize.Height > 0 ? MAX_SIZE / _srcSize.Height * 100.0 : h);
-            if (h > maxH)
+            _suppressEvents = true;
+            try
             {
-                h = maxH;
-                _numHeight.Value = (decimal)Math.Max(1, Math.Round(h, 2));
-            }
+                var h = (double)(_numHeight.Value ?? 1);
 
-            if (_chkKeepRatio.IsChecked == true
-                && _srcSize.Width > 0 && _srcSize.Height > 0)
-            {
                 // percentages are relative to each axis, so keeping the ratio means equal values
-                var ratio = usePixels ? _srcSize.Width / _srcSize.Height : 1.0;
-                var newW = Math.Max(1, Math.Round(h * ratio, 2));
-
-                // clamp the proportional width too
-                var maxW = usePixels
-                    ? MAX_SIZE
-                    : MAX_SIZE / _srcSize.Width * 100.0;
-                if (newW > maxW)
-                {
-                    newW = maxW;
-                    // recalculate height from clamped width
-                    h = Math.Max(1, Math.Round(newW / ratio, 2));
-                    _numHeight.Value = (decimal)h;
-                }
-
-                _numWidth.Value = (decimal)newW;
+                var ratio = _radPixels.IsChecked == true ? _srcSize.Width / _srcSize.Height : 1.0;
+                _numWidth.Value = (decimal)Math.Max(1, Math.Round(h * ratio, 2));
             }
-        }
-        finally
-        {
-            _suppressEvents = false;
+            finally
+            {
+                _suppressEvents = false;
+            }
         }
 
         UpdateOutputSize();
@@ -504,6 +470,40 @@ public partial class ImageResizerWindow : ModalWindow
         }
 
         _lblNewSizeValue.Text = $"{_outputSize.Width:N0} × {_outputSize.Height:N0} px";
+
+        // each output side is capped at MAX_SIZE
+        var isWidthValid = _outputSize.Width <= MAX_SIZE;
+        var isHeightValid = _outputSize.Height <= MAX_SIZE;
+        var isValid = isWidthValid && isHeightValid;
+
+        SetErrorForeground(_numWidth, !isWidthValid);
+        SetErrorForeground(_numHeight, !isHeightValid);
+        SetErrorForeground(_lblNewSizeValue, !isValid);
+        _lblSizeError.Text = Core.Lang[LangId.Tool_Resizer_Errors_SizeTooLarge, $"{MAX_SIZE:N0}"];
+        _lblSizeError.IsVisible = !isValid;
+        _btn1.IsEnabled = isValid;
+    }
+
+
+    /// <summary>
+    /// Shows or clears the error color on a size box or label.
+    /// </summary>
+    private static void SetErrorForeground(Control control, bool isError)
+    {
+        // the focus style outranks NumericUpDown's template binding, so color its inner text box directly
+        var target = control is NumericUpDown num
+            ? num.GetVisualDescendants().OfType<TextBox>().FirstOrDefault()
+            : control;
+        if (target is null) return;
+
+        if (isError)
+        {
+            target[!TextElement.ForegroundProperty] = Resx.CreateBinding(ResxId.IG_TextDangerBrush);
+        }
+        else
+        {
+            target.ClearValue(TextElement.ForegroundProperty);
+        }
     }
 
 
