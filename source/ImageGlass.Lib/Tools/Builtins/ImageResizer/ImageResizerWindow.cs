@@ -408,7 +408,8 @@ public partial class ImageResizerWindow : ModalWindow
             if (_chkKeepRatio.IsChecked == true
                 && _srcSize.Width > 0 && _srcSize.Height > 0)
             {
-                var ratio = _srcSize.Height / _srcSize.Width;
+                // percentages are relative to each axis, so keeping the ratio means equal values
+                var ratio = usePixels ? _srcSize.Height / _srcSize.Width : 1.0;
                 var newH = Math.Max(1, Math.Round(w * ratio, 2));
 
                 // clamp the proportional height too
@@ -458,7 +459,8 @@ public partial class ImageResizerWindow : ModalWindow
             if (_chkKeepRatio.IsChecked == true
                 && _srcSize.Width > 0 && _srcSize.Height > 0)
             {
-                var ratio = _srcSize.Width / _srcSize.Height;
+                // percentages are relative to each axis, so keeping the ratio means equal values
+                var ratio = usePixels ? _srcSize.Width / _srcSize.Height : 1.0;
                 var newW = Math.Max(1, Math.Round(h * ratio, 2));
 
                 // clamp the proportional width too
