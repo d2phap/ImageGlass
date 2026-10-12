@@ -847,6 +847,7 @@ public enum LangId
     Tool_Resizer_LblResample,
     Tool_Resizer_LblCurrentSize,
     Tool_Resizer_LblNewSize,
+    Tool_Resizer_Errors_SizeTooLarge,
     #endregion // Tool: Resizer
 
 
