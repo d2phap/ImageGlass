@@ -703,8 +703,10 @@ public static partial class MagickCodec
     /// </summary>
     private static bool CanRetryContentRead__(Exception error, MagickReadSettings settings, string filePath)
     {
+        // ImageError: the HEIC decoder rejects a .heic file holding another format (e.g. JPEG)
         if (settings.Format != MagickFormat.Unknown
-            || error is not (MagickCorruptImageErrorException or MagickCoderErrorException)) return false;
+            || error is not (MagickCorruptImageErrorException
+                or MagickCoderErrorException or MagickImageErrorException)) return false;
 
         // Keep rejected RAW containers on their original decoder instead of falling back to TIFF.
         var extFormatInfo = MagickFormatInfo.Create(filePath);
@@ -720,8 +722,8 @@ public static partial class MagickCodec
         {
             var current = pending.Pop();
             if (!visited.Add(current)) continue;
-            if (current is not (MagickCorruptImageErrorException
-                or MagickCoderErrorException or MagickWarningException)) return false;
+            if (current is not (MagickCorruptImageErrorException or MagickCoderErrorException
+                or MagickImageErrorException or MagickWarningException)) return false;
 
             if (current is MagickException magickError)
             {
