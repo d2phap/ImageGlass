@@ -4,7 +4,7 @@
 
 First, thank you for considering contributing to ImageGlass! It's people like you that make the open source community such a great community! 😊
 
-ImageGlass 10 is a full rewrite in C# / .NET 10 with Avalonia and SkiaSharp, running on **Windows, macOS, and Linux**. That means there is more to help with than ever: new platforms to test, new formats to verify, and a lot of UI to polish.
+ImageGlass 10 is a full rewrite in C# / .NET 11 with Avalonia and SkiaSharp, running on **Windows, macOS, and Linux**. That means there is more to help with than ever: new platforms to test, new formats to verify, and a lot of UI to polish.
 
 Any type of contribution is welcome, not only code:
 
@@ -20,7 +20,7 @@ Any type of contribution is welcome, not only code:
 
 | Path | What it is |
 | --- | --- |
-| [source/](source/) | ImageGlass 10 (.NET 10, Avalonia, SkiaSharp). This is where active development happens. |
+| [source/](source/) | ImageGlass 10 (.NET 11, Avalonia, SkiaSharp). This is where active development happens. |
 | [v9/](v9/) | Legacy ImageGlass 9 (WinForms). Archived; only critical fixes are considered. |
 
 Branches:
@@ -34,7 +34,7 @@ Branches:
 **Version 10** (in [source/](source/)):
 
 - Visual Studio 2026 for the Windows build, or VS Code for the macOS and Linux builds
-- .NET 10 SDK
+- .NET 11 SDK
 - Open `source/ImageGlass.slnx`, or use the CLI:
 
 ```powershell

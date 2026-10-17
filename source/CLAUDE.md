@@ -1,7 +1,7 @@
 # ImageGlass v10
 
 ## Project Overview
-ImageGlass v10 is a complete rewrite in **C# with .NET 10**, using **Avalonia 12** for cross-platform image viewing and **SkiaSharp 4.152.x** for high-performance rendering. The primary targets are **Windows, macOS, Linux** on x64 and ARM64 with AOT (Ahead-of-Time) publishing enabled.
+ImageGlass v10 is a complete rewrite in **C# with .NET 11**, using **Avalonia 12** for cross-platform image viewing and **SkiaSharp 4.152.x** for high-performance rendering. The primary targets are **Windows, macOS, Linux** on x64 and ARM64 with AOT (Ahead-of-Time) publishing enabled.
 
 ## Repository Layout
 - **`/source`** — v10 source code (the active codebase; this `CLAUDE.md` lives here). All development happens here.
@@ -10,10 +10,10 @@ ImageGlass v10 is a complete rewrite in **C# with .NET 10**, using **Avalonia 12
 > **Default to v10 (`/source`).** Do not read, modify, or reference the v9 source in `/v9` unless the user explicitly asks about v9 or requests porting/comparison work.
 
 **Key Projects:**
-- `ImageGlass.Lib`: Core library (net10.0) — UI controls, rendering, codecs, themes, localization, settings
-- `ImageGlass.Win32`: Windows desktop app (net10.0-windows10.0.19041.0) — entry point with Win32 APIs and platform-specific services
-- `ImageGlass.Linux`: Linux desktop app (net10.0) — entry point with Linux-specific services
-- `ImageGlass.Mac`: macOS desktop app (net10.0) — entry point with macOS-specific services
+- `ImageGlass.Lib`: Core library (net11.0) — UI controls, rendering, codecs, themes, localization, settings
+- `ImageGlass.Win32`: Windows desktop app (net11.0-windows10.0.19041.0) — entry point with Win32 APIs and platform-specific services
+- `ImageGlass.Linux`: Linux desktop app (net11.0) — entry point with Linux-specific services
+- `ImageGlass.Mac`: macOS desktop app (net11.0) — entry point with macOS-specific services
 
 ---
 
@@ -319,7 +319,8 @@ dotnet run --project ImageGlass.Win32 -- [image_path] [additional_args]
 - Profile memory usage with large images and GIF animations
 
 ### Key C# Version & Langversion
-- **LangVersion**: `Preview` (C# 14 features available)
+- **LangVersion**: `Preview` (C# 15 features available)
+- **Features**: `runtime-async=on` in all projects (a .NET 11 preview, NativeAOT-supported): `async Task`/`ValueTask` methods compile to runtime-async methods instead of `<X>d__N` state machines; `async void` and async iterators still use the compiler's. Remove it from all four projects to fall back.
 - **Nullable**: `enable` across projects
 - **AllowUnsafeBlocks**: `true` (for P/Invoke, SkiaSharp interop)
 - **PublishAot**: `true` in all platform projects (Win32, Linux, Mac)
@@ -635,7 +636,7 @@ Scripts in `__assets/<win|mac|linux>/`, VS Code tasks `pack-*`, output in `__art
 - **A path shown for an app-owned folder cannot be opened ("Unable to find /app/imageglass"), or a file under the app dir is suddenly not found?** Two platform indirections hide the real location from the process: Flatpak mounts the install dir at `/app`, and MSIX may redirect `%LocalAppData%` into the package container. `BHelper.GetRealPlatformPath()` is the single translator to the path the OS and the user see — use it for anything displayed or handed outside the process (`BasePath`, `GetRealPlatformConfigDir`, `Lang.DisplayFilePath`, `IgTheme.DisplayFolderPath`, `XdgPortal`, `ApplyFlatpakHostSpawn`), and `IShellProvider.GetActualPath` is its per-platform half. A path used for I/O keeps the process form, so a type that needs both exposes a `Display*` twin (see those two) rather than mapping the stored value. `BHelper.BasePath` is therefore always the **full, real** dir of the binary; inside the sandbox that path is NOT readable, raw or via `/run/host`, even with `--filesystem=host`. Every read goes through `BHelper.BaseDir()`, which maps back to the mount — `Path.Combine(BasePath, x)` for I/O is the bug. Off Flatpak/MSIX every mapping is identity, so Windows/macOS behave exactly as before. Never add a second base-path accessor.
 - **A Flatpak build is missing `_lang`, `default.webp` or another asset the tarball does contain?** The manifest's `build-commands` copy the payload as a whole from `dest: payload`; a re-introduced explicit file list silently drops every asset added to `__assets/__app` afterwards.
 - **App vanishes with no error dialog (no in-app exception, nothing logged)?** That is a native crash, so `App.UIThread_UnhandledException` never runs. Do not hunt for a managed exception. Read the real fault first: `Get-WinEvent -FilterHashtable @{LogName='Application'}` filtered to `Application Error` gives the exception code (`0xc0000374` = heap corruption, `0xc0000005` = access violation). Then bucket it with `cdb.exe -z <dump> -c ".lastevent; !analyze -v; q"` (WinDbg installs via `winget install Microsoft.WinDbg`; `cdb.exe` sits in the package's `amd64` folder). Dumps land in `%LocalAppData%\CrashDumps`. `!analyze -v` names the faulting module and whether it was a double free, which is usually the whole answer. `dotnet-dump analyze <dump> -c "clrstack -all"` then shows which managed call was in flight on that thread.
-- **App vanishes on macOS with `EXC_CRASH (SIGABRT)` / `abort() called` on a `.NET TP Worker`?** That is NativeAOT `FailFast` from a *managed* exception that escaped a background thread — usually `async void`, whose `AsyncVoidMethodBuilder.SetException` rethrows with no `SynchronizationContext`. Do not chase native heap corruption. Symbolicate before theorising: crash reports are `~/Library/Logs/DiagnosticReports/ImageGlass-*.ips`, and `ImageGlass.Mac/bin/<Platform>/Release/net10.0/osx-arm64/native/ImageGlass.dSYM` matches when `dwarfdump --uuid` equals the report's UUID. Then `atos -o <dSYM>/Contents/Resources/DWARF/ImageGlass -arch arm64 -l <load addr> <frame addrs>` names the exact method — the frame under `AsyncVoidMethodBuilder__SetException` is the culprit.
+- **App vanishes on macOS with `EXC_CRASH (SIGABRT)` / `abort() called` on a `.NET TP Worker`?** That is NativeAOT `FailFast` from a *managed* exception that escaped a background thread — usually `async void`, whose `AsyncVoidMethodBuilder.SetException` rethrows with no `SynchronizationContext`. Do not chase native heap corruption. Symbolicate before theorising: crash reports are `~/Library/Logs/DiagnosticReports/ImageGlass-*.ips`, and `ImageGlass.Mac/bin/<Platform>/Release/net11.0/osx-arm64/native/ImageGlass.dSYM` matches when `dwarfdump --uuid` equals the report's UUID. Then `atos -o <dSYM>/Contents/Resources/DWARF/ImageGlass -arch arm64 -l <load addr> <frame addrs>` names the exact method — the frame under `AsyncVoidMethodBuilder__SetException` is the culprit.
 - **An `async void` outside a UI event handler is a crash, not a bug.** On the UI thread `Dispatcher.UIThread.UnhandledException` catches it; on any worker it kills the process silently. Every `async void` reachable from a worker (`Photo.OnDisposing`/`Unload`, `GalleryItem.LoadThumbnail`, file-search callbacks) must wrap its whole body in `try/catch (Exception)`. `AppDomain.CurrentDomain.UnhandledException` cannot save it: the process is torn down as soon as the handler returns, so a `Dispatcher.Post` there never renders.
 - **An integrated external tool (ExifGlass) opens but never shows the current photo, and does not follow navigation?** The IPC socket is unreachable, not the tool. On Linux a tool is commonly a Flatpak app (the seeded ExifGlass registration runs `flatpak run`), and **every Flatpak gets a private `/tmp`**, so the default `NamedPipeServerStream` socket at `/tmp/CoreFxPipe_*` is invisible to it. `ToolProcessManager.CreatePipeName()` therefore keys off `BHelper.OS == Linux`, **not** `IsFlatpakSandbox`: the tool's reachability is what matters, not whether ImageGlass itself is sandboxed. `~/.cache/ImageGlass/tools` works because the tool's manifest grants `--filesystem=host`. Keying it off `IsFlatpakSandbox` silently breaks every non-Flatpak Linux build (AppImage, tarball, `dotnet run`) while working under Flatpak.
 - **Works on Windows but crashes on macOS/Linux in the file-search path?** Only `Win32FileSearchProvider` overrides `SearchAsync` to publish through `Dispatcher.UIThread.Post` with a token re-check; the base provider invokes `progressFn` straight from its `Task.Run` worker. So a search callback that touches `Core.Photos.Items` (bound to the gallery) or any control runs off-thread on macOS/Linux only. Marshal the *whole* callback body, not just the `Add`.

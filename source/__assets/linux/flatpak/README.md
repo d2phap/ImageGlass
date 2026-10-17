@@ -12,7 +12,7 @@ Files used to build and distribute ImageGlass as a Flatpak.
 Build script: [`../script-pack-linux-x64-flatpak.sh`](../script-pack-linux-x64-flatpak.sh) (VS Code task: `pack-linux-x64-flatpak`).
 
 The manifest installs the prebuilt `publish-linux-x64` binary instead of compiling
-from source. Building .NET 10 AOT (trimming + SkiaSharp/HarfBuzz/Magick.NET native
+from source. Building .NET 11 AOT (trimming + SkiaSharp/HarfBuzz/Magick.NET native
 interop) offline on Flathub's builders isn't practical, so the manifest downloads a
 release tarball with a pinned sha256.
 

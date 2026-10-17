@@ -39,7 +39,7 @@ every payload `.exe`/`.dll` *and* the package itself.
 
 - **Windows 10/11 SDK** — provides `makeappx.exe`, `makepri.exe`, and `signtool.exe`.
   The script auto-locates the newest one under `Windows Kits\10\bin`; no PATH setup needed.
-- **.NET 10 SDK** — for `dotnet publish`.
+- **.NET 11 SDK** — for `dotnet publish`.
 - **Code-signing certificate** (signed flavour only) — installed in
   `CurrentUser\My` / `LocalMachine\My` with its private key, or supplied as a PFX.
 - **WiX Toolset 5.0.2** (MSI only) — a .NET global tool plus its UI extension:

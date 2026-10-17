@@ -32,7 +32,7 @@
     <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="4.152.0" />
     <PackageVersion Include="SkiaSharp.NativeAssets.macOS" Version="4.152.0" />
     <PackageVersion Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17" />
-    <PackageVersion Include="System.IO.Hashing" Version="10.0.13" />
+    <PackageVersion Include="System.IO.Hashing" Version="11.0.0-rc.2.26504.105" />
     <!-- the version Avalonia.FreeDesktop brings, so the Linux print portal shares its D-Bus library -->
     <PackageVersion Include="Tmds.DBus.Protocol" Version="0.95.1" />
   </ItemGroup>
