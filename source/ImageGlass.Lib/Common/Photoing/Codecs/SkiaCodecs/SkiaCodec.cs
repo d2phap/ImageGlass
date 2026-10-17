@@ -49,6 +49,11 @@ public static partial class SkiaCodec
     private static readonly float[] NATIVE_DECODE_SCALES =
         [7 / 8f, 6 / 8f, 5 / 8f, 4 / 8f, 3 / 8f, 2 / 8f, 1 / 8f];
 
+    /// <summary>
+    /// Smallest row band a draw is split into; below it, handing a band to a thread costs more than drawing it.
+    /// </summary>
+    private const long MIN_DRAW_BAND_PIXELS = 1 << 18;
+
 
     /// <summary>
     /// Loads photo metadata from file path.
@@ -988,19 +993,89 @@ public static partial class SkiaCodec
         // convert color space
         if (destColorSpace is not null)
         {
-            // Use SKSurface (not SKCanvas from SKBitmap) so that Skia's color
-            // management pipeline performs the ICC gamut conversion during draw.
             var info = new SKImageInfo(imgSrc.Width, imgSrc.Height,
                 imgSrc.ColorType, imgSrc.AlphaType, destColorSpace);
-            using var surface = SKSurface.Create(info);
-            if (surface is null) return false;
+            using var bmp = new SKBitmap();
+            var isAllocated = bmp.TryAllocPixels(info);
+            if (!isAllocated) return false;
 
-            surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
-            output = surface.Snapshot();
+            var isDrawn = TryDrawInBands(imgSrc, bmp);
+            if (!isDrawn) return false;
+
+            var converted = ToSKImageNoCopy(bmp);
+            if (converted is null) return false;
+
+            output = converted;
             return true;
         }
 
         return false;
+    }
+
+
+    /// <summary>
+    /// Draws <paramref name="image"/> converted to <paramref name="dest"/>'s format, in parallel row bands; <c>false</c> if Skia cannot.
+    /// </summary>
+    public static bool TryDrawInBands(SKImage image, SKBitmap dest)
+    {
+        var pixels = dest.GetPixels();
+        if (pixels == IntPtr.Zero) return false;
+
+        var info = dest.Info;
+        var rowBytes = dest.RowBytes;
+        var bandCount = GetDrawBandCount(image, info);
+
+        var surfaces = new SKSurface?[bandCount];
+        var canvases = new SKCanvas[bandCount];
+        var tops = new int[bandCount];
+        try
+        {
+            // a surface, not an SKCanvas over the bitmap, so Skia color-manages the draw; bands never share a row
+            for (var i = 0; i < bandCount; i++)
+            {
+                var top = (int)((long)info.Height * i / bandCount);
+                var bottom = (int)((long)info.Height * (i + 1) / bandCount);
+                var bandInfo = info.WithSize(info.Width, bottom - top);
+
+                var surface = SKSurface.Create(bandInfo, pixels + (nint)top * rowBytes, rowBytes);
+                if (surface is null) return false;
+
+                surfaces[i] = surface;
+                canvases[i] = surface.Canvas;
+                tops[i] = top;
+            }
+
+            Parallel.For(0, bandCount, i =>
+            {
+                canvases[i].DrawImage(image, 0, -tops[i], SKSamplingOptions.Default);
+            });
+
+            return true;
+        }
+        finally
+        {
+            foreach (var surface in surfaces)
+            {
+                surface?.Dispose();
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Number of row bands <see cref="TryDrawInBands"/> splits a draw of <paramref name="info"/> into.
+    /// </summary>
+    private static int GetDrawBandCount(SKImage image, SKImageInfo info)
+    {
+        // a lazy or GPU-backed image is not safe to read from several threads at once
+        if (image.IsLazyGenerated) return 1;
+        if (image.IsTextureBacked) return 1;
+
+        var bySize = (long)info.Width * info.Height / MIN_DRAW_BAND_PIXELS;
+        var byCores = Math.Min(info.Height, Environment.ProcessorCount * 2);
+        var maxBands = Math.Max(1, byCores);
+
+        return (int)Math.Clamp(bySize, 1, maxBands);
     }
 
 

@@ -529,6 +529,7 @@ Occurs in `Program.cs` before Avalonia app setup (Linux/Mac have equivalent regi
 - **No pooling in hot paths**: Allocation is fast; premature pooling hurts readability
 - **Pixel formats**: `SKColorType.Rgba8888` for sRGB; consider `ColorSpace` for ICC
 - **Bitmap to image**: use `SkiaCodec.ToSKImageNoCopy()` when the bitmap is finished (shares pixels); plain `ToSKImage()` copies the whole buffer
+- **Full-image color conversion**: draw through `SkiaCodec.TryDrawInBands()` (parallel row bands, straight into the destination bitmap); a Skia CPU draw is single-threaded, so one `SKSurface` draw plus `Snapshot` is several times slower
 - **Size ceiling**: check `width * height * bytesPerPixel` against `int.MaxValue` before allocating any full-image buffer
 - **Filtering**: `SKFilterQuality.High` for thumbnails; `Medium` for interactive zoom
 - **Mipmap strategy**: Precompute at load time; cache tiles on-demand; preserve zoom-aware LRU
