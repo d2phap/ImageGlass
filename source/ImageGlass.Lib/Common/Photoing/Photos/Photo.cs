@@ -200,6 +200,7 @@ public partial class Photo : PhDisposable
             if (!Metadata.FilePath.Equals(value, StringComparison.Ordinal))
             {
                 Metadata.FilePath = value;
+                (Bitmap as AnimatorImpl)?.UpdateFilePath(value);
 
                 OnPropertyChanged(nameof(FilePath));
                 OnPropertyChanged(nameof(DirPath));

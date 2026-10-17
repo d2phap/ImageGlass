@@ -233,6 +233,12 @@ public abstract class AnimatorImpl : PhDisposable
         RaiseFrameChanged();
     }
 
+
+    /// <summary>
+    /// Points the animator at the file's new path after a rename or move.
+    /// </summary>
+    public virtual void UpdateFilePath(string filePath) { }
+
     #endregion // Public methods
 
 

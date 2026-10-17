@@ -45,7 +45,9 @@ internal sealed unsafe class NativePluginAnimator : AnimatorImpl
     private const int MAX_CACHE_COUNT = 5;
 
     private readonly NativeCodecProxy _proxy;
-    private readonly string _filePath;
+
+    // written by a rename on the file watcher thread while frames still decode by path
+    private volatile string _filePath;
     private readonly SKColorSpace? _colorSpace;
 
     private readonly SKImage?[] _frameCache;
@@ -201,6 +203,10 @@ internal sealed unsafe class NativePluginAnimator : AnimatorImpl
 
 
     /// <inheritdoc/>
+    public override void UpdateFilePath(string filePath) => _filePath = filePath;
+
+
+    /// <inheritdoc/>
     public override SKImage? GetRenderedFrameBitmap(uint frameIndex)
     {
         lock (_syncLock)
@@ -250,14 +256,17 @@ internal sealed unsafe class NativePluginAnimator : AnimatorImpl
         var bufferOwned = false;
         var ownershipTransferred = false;
 
+        // read once, so the pinned chars and the length come from the same path
+        var filePath = _filePath;
+
         try
         {
             IGStatus status;
             try
             {
-                fixed (char* pPath = _filePath)
+                fixed (char* pPath = filePath)
                 {
-                    var pathRef = new IGStringRef { Data = pPath, Length = _filePath.Length };
+                    var pathRef = new IGStringRef { Data = pPath, Length = filePath.Length };
                     status = codecApi->DecodeAnimationFrame(pathRef, frameIndex, &buffer, null);
                 }
             }
