@@ -24,6 +24,7 @@ using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.ServiceProviders;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using System;
@@ -35,6 +36,8 @@ public partial class FrameNavToolControl : PhControl, IToolControl
 
     public static string TOOL_ID => "Tool_FrameNav";
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuFrameNav];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolFrameNav;
     public bool HasSettingsUI => false;
     public object? Settings { get; } = null;
     public ViewerControl Viewer { get; set; } = null!;

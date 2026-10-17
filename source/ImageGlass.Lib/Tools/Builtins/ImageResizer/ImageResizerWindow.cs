@@ -103,7 +103,7 @@ public partial class ImageResizerWindow : ModalWindow
 
         _numWidth.Value = (decimal)_srcSize.Width;
         _numHeight.Value = (decimal)_srcSize.Height;
-        _lblCurrentSizeValue.Text = $"{_srcSize.Width:N0} × {_srcSize.Height:N0} px";
+        _lblCurrentSizeValue.Text = $"{_srcSize.Width:N0}×{_srcSize.Height:N0} px";
     }
 
 
@@ -469,7 +469,7 @@ public partial class ImageResizerWindow : ModalWindow
             _outputSize = new(pxW, pxH);
         }
 
-        _lblNewSizeValue.Text = $"{_outputSize.Width:N0} × {_outputSize.Height:N0} px";
+        _lblNewSizeValue.Text = $"{_outputSize.Width:N0}×{_outputSize.Height:N0} px";
 
         // each output side is capped at MAX_SIZE
         var isWidthValid = _outputSize.Width <= MAX_SIZE;

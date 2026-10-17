@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -473,8 +473,12 @@ public class Lang
         new(LangId._Browse, "Browse…"), //v9.0
         new(LangId._Reset, "Reset"), //v9.0
         new(LangId._ResetToDefault, "Reset to default"), //v9.0
+        new(LangId._Default, "Default"), //v10.0
+        new(LangId._BackgroundColor, "Background color"), //v10.0
         new(LangId._CheckForUpdate, "Check for update…"), //v5.0
         new(LangId._Update, "Update"), //v9.0
+        new(LangId._Download, "Download"), //v10.0
+        new(LangId._RestartNow, "Restart now"), //v10.0
         new(LangId._Website, "Website"), //v9.0
         new(LangId._TypeToFilter, "Type to filter…"),
         new(LangId._Delete, "Delete"),
@@ -558,6 +562,34 @@ public class Lang
         new(LangId._Validation_FileExtensionValueOnly, "Must be a single file extension (e.g. .psd)"),
         new(LangId._Validation_FileExtensionsValueOnly, "Must be file extensions separated by ';' (e.g. .jpg;.png)"),
 
+        // print options
+        new(LangId._PrintOrientation_Auto, "Auto" ), //v10.0
+        new(LangId._PrintOrientation_Portrait, "Portrait" ), //v10.0
+        new(LangId._PrintOrientation_Landscape, "Landscape" ), //v10.0
+        new(LangId._PrintFitMode_Fit, "Fit" ), //v10.0
+        new(LangId._PrintFitMode_Fill, "Fill" ), //v10.0
+        new(LangId._PrintFitMode_ActualSize, "Actual size" ), //v10.0
+        new(LangId._PrintMarginPreset_None, "None" ), //v10.0
+        new(LangId._PrintMarginPreset_Narrow, "Narrow" ), //v10.0
+        new(LangId._PrintMarginPreset_Normal, "Normal" ), //v10.0
+        new(LangId._PrintMarginPreset_Wide, "Wide" ), //v10.0
+        new(LangId._PrintColorMode_Color, "Color" ), //v10.0
+        new(LangId._PrintColorMode_Grayscale, "Grayscale" ), //v10.0
+        new(LangId._PrintDuplex_None, "Off" ), //v10.0
+        new(LangId._PrintDuplex_LongEdge, "Flip on long edge" ), //v10.0
+        new(LangId._PrintDuplex_ShortEdge, "Flip on short edge" ), //v10.0
+        new(LangId._PrintPageScope_Current, "Current" ), //v10.0
+        new(LangId._PrintPageScope_All, "All ({0})" ), //v10.0
+        new(LangId._PrintPageScope_Range, "Range" ), //v10.0
+        new(LangId._PrintRegion_WholeImage, "Whole image" ), //v10.0
+        new(LangId._PrintRegion_Selection, "Selection" ), //v10.0
+        new(LangId._PrintRegion_VisibleArea, "Visible area" ), //v10.0
+        new(LangId._PrinterState_Ready, "Ready" ), //v10.0
+        new(LangId._PrinterState_Busy, "Busy" ), //v10.0
+        new(LangId._PrinterState_Offline, "Offline" ), //v10.0
+        new(LangId._PrinterState_Paused, "Paused" ), //v10.0
+        new(LangId._PrinterState_Error, "Error" ), //v10.0
+
 
         // main window
         new(LangId._PicMain_ErrorText, "Could not load this image"), // v2.0 beta, updated 4.0, 9.0, 10.0
@@ -620,6 +652,9 @@ public class Lang
         new(LangId.BrowsingMode_Sequential, "Sequential"),
         new(LangId.BrowsingMode_Sequential_Description, "Never skips. Each image is fully shown before the next."),
 
+        new(LangId.TransitionEffect_None, "None"),
+        new(LangId.TransitionEffect_Random, "Random"),
+
         // AfterEditAppAction
         new(LangId.AfterEditAppAction_Nothing, "Nothing"), //v8.0
         new(LangId.AfterEditAppAction_Minimize, "Minimize"), //v8.0
@@ -658,6 +693,18 @@ public class Lang
         new(LangId.CheckerboardType_None, "None"),
         new(LangId.CheckerboardType_Client, "Entire viewer"),
         new(LangId.CheckerboardType_Image, "Image region only"),
+
+        // ScrollbarMode
+        new(LangId.ScrollbarMode_Never, "Never"),
+        new(LangId.ScrollbarMode_AutoHide, "Auto-hide"),
+        new(LangId.ScrollbarMode_Always, "Always"),
+
+        // ImageInfoOverlayMode
+        new(LangId.ImageInfoOverlayMode_Hidden, "Hidden"),
+        new(LangId.ImageInfoOverlayMode_Always, "Always visible"),
+        new(LangId.ImageInfoOverlayMode_AlwaysAutoHide, "Auto-hide"),
+        new(LangId.ImageInfoOverlayMode_Borderless, "Borderless window only"),
+        new(LangId.ImageInfoOverlayMode_BorderlessAutoHide, "Borderless window only, auto-hide"),
 
         #endregion // Enums
 
@@ -813,6 +860,7 @@ public class Lang
         new(LangId.Menu_MnuResizeTool, "Resize image"), // v9.2
         new(LangId.Menu_MnuFrameNav, "Frame navigation"), // v7.5
         new(LangId.Menu_MnuHdrToneMapper, "HDR tone mapper"), // v10.0
+        new(LangId.Menu_MnuProjector, "Projector"), // v10.0
         new(LangId.Menu_MnuToolsSettings, "Tools settings…"),
 
         new(LangId.Menu_MnuLosslessCompression, "Magick.NET Lossless Compression"), // v9.1
@@ -871,6 +919,11 @@ public class Lang
         new(LangId.Menu_MnuCheckForUpdate_CurrentVersion, "Current version: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_LatestVersion, "The latest version: {0}" ), //v9.0
         new(LangId.Menu_MnuCheckForUpdate_PublishedDate, "Published date: {0}" ), //v9.0
+        new(LangId.Menu_MnuCheckForUpdate_ReadyToInstall, "Update ready to install"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_Downloading, "Downloading the update…"), //v10.0
+        new(LangId.Menu_MnuCheckForUpdate_Installing, "Installing the update…"), //v10.0
+        new(LangId.Menu_MnuInstallUpdate, "Install update…"), //v10.0
+        new(LangId.Menu_MnuInstallUpdate_Confirm, "ImageGlass will close and reopen to finish the update."), //v10.0
         new(LangId.Menu_MnuCheckForUpdate_ProFromStore, "Get ImageGlass Pro from Store"), // v10.0
 
         new(LangId.Menu_MnuSetDefaultPhotoViewer, "Set default photo viewer"), //v9.0
@@ -937,6 +990,7 @@ public class Lang
         new(LangId.Settings_AppUpdate, "App update"),
         new(LangId.Settings_AutoUpdate_Description, "The update check also includes a short anonymous message that helps improve ImageGlass. It contains no name, no account, and no identifier, and nothing about your files. Turning this off stops it completely."),
         new(LangId.Settings_SeeWhatIsSent, "See exactly what is sent…"),
+        new(LangId.Settings_EnableAutoInstallUpdate, "Download and install updates automatically"), //v10.0
 
         // General > Others
         new(LangId.Settings_Others, "Others"),
@@ -974,6 +1028,7 @@ public class Lang
 
         // Image > Caching
         new(LangId.Settings_Caching, "Caching"),
+        new(LangId.Settings_ImageBoosterCacheMaxFiles, "Maximum number of images to be cached: {0}"),
         new(LangId.Settings_ImageBoosterCacheMaxMemoryInMb, "Maximum memory used for caching images (in megabytes)"),
         new(LangId.Settings_ImageBoosterCacheMaxDimension, "Maximum image dimension to be cached (in pixels)"),
         new(LangId.Settings_ImageBoosterCacheMaxFileSizeInMb, "Maximum image file size to be cached (in megabytes)"),
@@ -992,7 +1047,6 @@ public class Lang
         new(LangId.Settings_Slideshow_Appearance, "Appearance"),
         new(LangId.Settings_EnableSlideshowCountdown, "Show slideshow countdown"),
         new(LangId.Settings_EnableFullscreenSlideshow, "Start slideshow in Full Screen mode"),
-        new(LangId.Settings_SlideshowBackgroundColor, "Slideshow background color"),
 
         // Slideshow > Playback
         new(LangId.Settings_Slideshow_Playback, "Playback"),
@@ -1003,6 +1057,13 @@ public class Lang
         new(LangId.Settings_SlideshowInterval_To, "To"),
 
         new(LangId.Settings_SlideshowImagesToNotifySound, "Number of images to trigger a notification sound"),
+
+        // Slideshow > Transition (shared with Image > Browsing)
+        new(LangId.Settings_TransitionEffect, "Transition effect"),
+        new(LangId.Settings_TransitionDuration, "Duration (milliseconds)"),
+        new(LangId.Settings_TransitionCompileError, "This effect cannot be used:"),
+        new(LangId.Settings_OpenTransitionsFolder, "Open transition effects folder"),
+        new(LangId.Settings_GetMoreTransitionEffects, "Get more effects…"),
         #endregion // Settings > Tab Slideshow
 
 
@@ -1044,6 +1105,10 @@ public class Lang
         new(LangId.Settings_Layout_Gallery, "Gallery"),
         new(LangId.Settings_Layout_ToolbarPosition, "Toolbar position"),
         new(LangId.Settings_Layout_GalleryPosition, "Gallery position"),
+
+        // Layout > Image information
+        new(LangId.Settings_ImageInfo, "Image information"),
+        new(LangId.Settings_ImageInfoOverlay, "Image information overlay"),
         #endregion // Settings > Tab Layout
 
 
@@ -1051,6 +1116,7 @@ public class Lang
         // Viewer > Appearance
         new(LangId.Settings_Appearance, "Appearance"),
         new(LangId.Settings_EnableNavigationButtons, "Show navigation arrow buttons"),
+        new(LangId.Settings_ViewerScrollbarMode, "Show scrollbars"),
         new(LangId.Settings_EnableCenterWindowFit, "Automatically center the window in Window Fit mode"),
         new(LangId.Settings_EnableVectorRenderer, "Use the vector renderer for SVG images"),
         new(LangId.Settings_CheckerboardMode, "Checkerboard background"),
@@ -1210,7 +1276,6 @@ public class Lang
         #region Settings > Tab Appearance
         // Appearance > Appearance
         new(LangId.Settings_WindowBackdrop, "Window backdrop"),
-        new(LangId.Settings_BackgroundColor, "Viewer background color"),
 
         // Appearance > Theme
         new(LangId.Settings_Theme, "Theme"),
@@ -1267,6 +1332,23 @@ public class Lang
         #endregion // Tool: HDR tone mapper
 
 
+        #region Tool: Projector
+        new(LangId.Tool_Projector_WindowTitle, "Projector {0}"), //v10.0
+        new(LangId.Tool_Projector_BtnAdd, "Add projector"), //v10.0
+        new(LangId.Tool_Projector_ChkSyncView, "Sync projectors with main window"), //v10.0
+        new(LangId.Tool_Projector_ChkShowPointer, "Highlight cursor on projectors"), //v10.0
+        new(LangId.Tool_Projector_ModeFullScreen, "Full screen"), //v10.0
+        new(LangId.Tool_Projector_ModeMaximized, "Maximized"), //v10.0
+        new(LangId.Tool_Projector_ModeNormal, "Window"), //v10.0
+        new(LangId.Tool_Projector_ModeTiled, "Tiled"), //v10.0
+        new(LangId.Tool_Projector_LblLayout, "Layout on screen {0}"), //v10.0
+        new(LangId.Tool_Projector_Monitor, "Monitor {0}"), //v10.0
+        new(LangId.Tool_Projector_DragHint, "Drag onto a monitor to move the projector there"), //v10.0
+        new(LangId.Tool_Projector_ScreenInfo, "Screen {0}: {1}×{2} pixels, {3}% scale"), //v10.0
+        new(LangId.Tool_Projector_MainWindow, "Main window"), //v10.0
+        #endregion // Tool: Projector
+
+
         #region Tool: Color picker
 
 
@@ -1285,7 +1367,7 @@ public class Lang
         #region Tool: Resizer
         new(LangId.Tool_Resizer_RadResizeByPixels, "Pixels" ), // v9.2
         new(LangId.Tool_Resizer_RadResizeByPercentage, "Percentage" ), // v9.2
-        new(LangId.Tool_Resizer_ChkKeepRatio, "Keep ratio propotional" ), // v9.2
+        new(LangId.Tool_Resizer_ChkKeepRatio, "Keep ratio proportional" ), // v9.2
         new(LangId.Tool_Resizer_LblResample, "Resample:" ), // v9.2
         new(LangId.Tool_Resizer_LblCurrentSize, "Current Size:" ), // v9.2
         new(LangId.Tool_Resizer_LblNewSize, "New Size:" ), // v9.2
@@ -1293,6 +1375,55 @@ public class Lang
         #endregion // Tool: Resizer
 
         
+        #region Print
+
+        new(LangId.Print_Title, "Print" ), //v10.0
+        new(LangId.Print_LblPrinter, "Printer" ), //v10.0
+        new(LangId.Print_LblCopies, "Copies" ), //v10.0
+        new(LangId.Print_ChkCollate, "Collate" ), //v10.0
+        new(LangId.Print_LblPaper, "Paper size" ), //v10.0
+        new(LangId.Print_LblOrientation, "Orientation" ), //v10.0
+        new(LangId.Print_LblLayout, "Layout" ), //v10.0
+        new(LangId.Print_LblFit, "Fit" ), //v10.0
+        new(LangId.Print_ChkAutoRotate, "Rotate photos to fit" ), //v10.0
+        new(LangId.Print_LblMargins, "Margins" ), //v10.0
+        new(LangId.Print_LblPrintsEach, "Prints of each page" ), //v10.0
+        new(LangId.Print_ChkFillPage, "Fill each page" ), //v10.0
+        new(LangId.Print_LblRegion, "What to print" ), //v10.0
+        new(LangId.Print_LblPages, "Pages" ), //v10.0
+        new(LangId.Print_LblMoreSettings, "More settings" ), //v10.0
+        new(LangId.Print_LblColor, "Color" ), //v10.0
+        new(LangId.Print_LblQuality, "Quality" ), //v10.0
+        new(LangId.Print_LblTwoSided, "Two-sided" ), //v10.0
+        new(LangId.Print_ChkCaptions, "Show file names" ), //v10.0
+        new(LangId.Print_BtnProperties, "Printer properties…" ), //v10.0
+        new(LangId.Print_BtnSystemDialog, "Use the system dialog…" ), //v10.0
+        new(LangId.Print_BtnAddPrinter, "Add a printer" ), //v10.0
+        new(LangId.Print_SaveAsPdf, "Save as PDF" ), //v10.0
+        new(LangId.Print_Summary, "{0} page(s), {1} print(s)" ), //v10.0
+        new(LangId.Print_PageOf, "{0} of {1}" ), //v10.0
+        new(LangId.Print_Printing, "Printing page {0} of {1}…" ), //v10.0
+        new(LangId.Print_Sent, "Sent to {0}" ), //v10.0
+        new(LangId.Print_Saved, "Saved as PDF" ), //v10.0
+        new(LangId.Print_LoadingPrinters, "Loading printers…" ), //v10.0
+        new(LangId.Print_NoPrinters, "No printers were found." ), //v10.0
+        new(LangId.Print_CupsMissing, "CUPS is not installed." ), //v10.0
+        new(LangId.Print_PrinterUnavailable, "This printer is not responding." ), //v10.0
+        new(LangId.Print_WarnPrintShrunk, "The print size is larger than the paper, so it was scaled down." ), //v10.0
+        new(LangId.Print_WarnManyPages, "This will print {0} pages. Do you want to continue?" ), //v10.0
+        new(LangId.Print_RangeInvalid, "Enter pages like 1-3, 5" ), //v10.0
+        new(LangId.Print_PreviousPage, "Previous page" ), //v10.0
+        new(LangId.Print_NextPage, "Next page" ), //v10.0
+        new(LangId.Print_Dpi, "{0} dpi" ), //v10.0
+        new(LangId.Print_Layout_FullPage, "Full page" ), //v10.0
+        new(LangId.Print_Layout_Grid, "{0} per page" ), //v10.0
+        new(LangId.Print_Layout_Wallet, "Wallet" ), //v10.0
+        new(LangId.Print_Layout_Passport, "Passport {0}" ), //v10.0
+        new(LangId.Print_Layout_ContactSheet, "Contact sheet" ), //v10.0
+
+        #endregion // Print
+
+
         #region Quick setup
 
         new(LangId.QuickSetup_Title, "ImageGlass Quick Setup" ), //v10.0

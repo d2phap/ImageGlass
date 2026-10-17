@@ -20,6 +20,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using D2Phap.FileWatcherEx;
@@ -32,6 +33,7 @@ using ImageGlass.Common.Types;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using ImageGlass.UI.Viewer.ZoomAndPan;
 using ImageGlass.ViewModels;
 using System;
@@ -55,6 +57,9 @@ public partial class MainWindowView : PhControl
 
     // land on the last photo of the list being searched (backward folder switch)
     private bool _selectLastOnSearch;
+
+    // the message's own margin, before it is inset to keep clear of the image info bar
+    private Thickness _messageMargin;
 
 
     public MainWindowViewModel VM => (MainWindowViewModel)DataContext!;
@@ -101,9 +106,12 @@ public partial class MainWindowView : PhControl
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged += PART_ToolHost_PropertyChanged;
-        PART_BtnMotionVideo.Click += PART_BtnMotionVideo_Click;
-        UpdateMotionButtonTooltip();
         UpdateMotionButtonState();
+
+        // the in-app message keeps clear of the image info bar
+        _messageMargin = PART_Message.Margin;
+        PART_ImageInfoOverlay.PropertyChanged += PART_ImageInfoOverlay_PropertyChanged;
+        UpdateMessageMargin();
 
         // hook viewer events for external tool broadcasting
         PART_Viewer.PhotoLoading += Core.Viewer_PhotoLoadingForPlugins;
@@ -140,7 +148,8 @@ public partial class MainWindowView : PhControl
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
-        PART_BtnMotionVideo.Click -= PART_BtnMotionVideo_Click;
+
+        PART_ImageInfoOverlay.PropertyChanged -= PART_ImageInfoOverlay_PropertyChanged;
 
         // unhook viewer events for external tools
         PART_Viewer.PhotoLoading -= Core.Viewer_PhotoLoadingForPlugins;
@@ -156,14 +165,6 @@ public partial class MainWindowView : PhControl
         base.OnSizeChanged(e);
 
         UpdateGalleryWidth();
-    }
-
-
-    protected override void OnIgLanguageChanged()
-    {
-        base.OnIgLanguageChanged();
-
-        UpdateMotionButtonTooltip();
     }
 
 
@@ -421,9 +422,14 @@ public partial class MainWindowView : PhControl
     }
 
 
-    private async void PART_BtnMotionVideo_Click(object? sender, RoutedEventArgs e)
+    private void PART_ImageInfoOverlay_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
-        _ = await Core.API.RunApiAsync(API.IG_ToggleImageAnimation);
+        // the bar's reach, or the edge it sits on
+        var isPlacementChanged = e.Property == ImageInfoOverlayControl.CoveredHeightProperty
+            || e.Property == VerticalAlignmentProperty;
+        if (!isPlacementChanged) return;
+
+        UpdateMessageMargin();
     }
 
 
@@ -994,7 +1000,8 @@ public partial class MainWindowView : PhControl
     }
 
 
-    public async Task ViewPhotoAsync(Photo? photo, bool useCache = true, bool scrollToThumbnail = true, bool resetZoom = true)
+    public async Task ViewPhotoAsync(Photo? photo, bool useCache = true, bool scrollToThumbnail = true, bool resetZoom = true,
+        TransitionRequest? transition = null)
     {
         // Sequential mode: close the navigation gate here, not inside the post below,
         // so the next key repeat already sees a load in flight
@@ -1007,10 +1014,10 @@ public partial class MainWindowView : PhControl
         Core.DisposeClipboardPhoto();
         Core.ImageTransform.Clear();
 
-        // set read options for photo
+        // set read options for photo; a cached photo shows without a decode, so name its opening frame here
         if (photo is not null)
         {
-            photo.ReadOptions = PhotoReadOptions.FromConfig();
+            photo.ReadOptions = PhotoReadOptions.FromConfig(photo.GetDefaultFrameIndex());
         }
 
         Dispatcher.UIThread.Post(async () =>
@@ -1031,6 +1038,7 @@ public partial class MainWindowView : PhControl
                     UseCache = useCache,
                     ResetZoom = resetZoom,
                     Channels = Core.ColorChannels,
+                    Transition = transition,
                 });
 
                 // reopening the gate at decode time is too early: the next navigation would
@@ -1283,17 +1291,25 @@ public partial class MainWindowView : PhControl
         var isLivePhoto = photo?.Error is null && (photo?.Metadata?.IsLivePhoto ?? false);
         var isFrameNavOpen = PART_ToolHost.Tool?.ToolId == FrameNavToolControl.TOOL_ID;
 
-        PART_MotionButtonHost.IsVisible = isLivePhoto && !isFrameNavOpen;
+        PART_MotionOverlay.IsShown = isLivePhoto && !isFrameNavOpen;
     }
 
 
     /// <summary>
-    /// Updates the motion-video button tooltip.
+    /// Insets the message from the edge the image info bar sits on by the bar's reach, so they never overlap.
     /// </summary>
-    private void UpdateMotionButtonTooltip()
+    private void UpdateMessageMargin()
     {
-        ToolTip.SetTip(PART_BtnMotionVideo, AppAPIProvider.GetMenuTooltipText(
-            LangId._PlayMotionVideo, LangId.Menu_MnuToggleImageAnimation));
+        var inset = PART_ImageInfoOverlay.CoveredHeight;
+        var isBarAtBottom = PART_ImageInfoOverlay.VerticalAlignment == VerticalAlignment.Bottom;
+        var topInset = isBarAtBottom ? 0 : inset;
+        var bottomInset = isBarAtBottom ? inset : 0;
+
+        PART_Message.Margin = new Thickness(
+            _messageMargin.Left,
+            _messageMargin.Top + topInset,
+            _messageMargin.Right,
+            _messageMargin.Bottom + bottomInset);
     }
 
 

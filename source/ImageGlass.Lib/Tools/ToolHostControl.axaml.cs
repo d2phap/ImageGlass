@@ -18,10 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
+using Avalonia.Media;
 using Avalonia.Metadata;
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.ServiceProviders;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using System;
 
@@ -94,6 +97,30 @@ public partial class ToolHostControl : PhControl
         AvaloniaProperty.Register<ToolHostControl, bool>(nameof(IsProPreview));
 
 
+    /// <summary>
+    /// Gets the name of the hosted tool, shown as a watermark beside its content.
+    /// </summary>
+    public string ToolName
+    {
+        get => GetValue(ToolNameProperty);
+        private set => SetValue(ToolNameProperty, value);
+    }
+    public static readonly StyledProperty<string> ToolNameProperty =
+        AvaloniaProperty.Register<ToolHostControl, string>(nameof(ToolName));
+
+
+    /// <summary>
+    /// Gets the icon of the hosted tool, shown beside <see cref="ToolName"/>.
+    /// </summary>
+    public Geometry? ToolIcon
+    {
+        get => GetValue(ToolIconProperty);
+        private set => SetValue(ToolIconProperty, value);
+    }
+    public static readonly StyledProperty<Geometry?> ToolIconProperty =
+        AvaloniaProperty.Register<ToolHostControl, Geometry?>(nameof(ToolIcon));
+
+
     #endregion // Public Properties
 
 
@@ -102,6 +129,8 @@ public partial class ToolHostControl : PhControl
     {
         InitializeComponent();
         IsContentVisible = false;
+
+        LayoutUpdated += ToolHostControl_LayoutUpdated;
     }
 
 
@@ -115,6 +144,19 @@ public partial class ToolHostControl : PhControl
 
         CloseButtonTooltipText = Core.Lang[LangId._Close];
         SettingsButtonTooltipText = Core.Lang[LangId.Menu_MnuSettings];
+        ToolName = Tool?.ToolName ?? string.Empty;
+    }
+
+
+    private void ToolHostControl_LayoutUpdated(object? sender, EventArgs e)
+    {
+        if (Tool is not Layoutable toolEl) return;
+
+        // tools center their content, so each side keeps half of the width the tool leaves unused
+        var sideRoom = (PART_ToolSlot.Bounds.Width - toolEl.DesiredSize.Width) / 2;
+        var isCrowded = sideRoom < PART_Watermark.DesiredSize.Width;
+
+        PART_Watermark.Classes.Set("crowded", isCrowded);
     }
 
 
@@ -159,6 +201,8 @@ public partial class ToolHostControl : PhControl
 
         HasSettings = newTool.HasSettingsUI;
         IsProPreview = newTool.IsProPreview;
+        ToolName = newTool.ToolName;
+        ToolIcon = Resx.GetIcon(newTool.ToolIcon);
 
         // open the tool
         Tool = newTool;

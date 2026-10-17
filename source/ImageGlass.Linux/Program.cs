@@ -46,6 +46,7 @@ sealed class Program
             Core.PreviewProvider = new PhotoPreviewProvider();
             Core.ShellProvider = new LinuxShellProvider();
             Core.PrintProvider = new LinuxPrintProvider();
+            Core.UpdateProvider = new LinuxUpdateProvider();
         });
 
         if (isHandled) return 0;

@@ -126,14 +126,28 @@ public sealed class ToolRegistry : PhDisposable
     {
         var jsonEl = tool.SaveSettings();
 
+        SetToolSettings(tool.ToolId, jsonEl);
+    }
+
+
+    /// <summary>
+    /// Writes the settings of a tool to the app config; <c>null</c> removes them.
+    /// </summary>
+    public static void SetToolSettings(string toolId, JsonElement? jsonEl)
+    {
+        var toolSettings = Core.Config.ToolSettings;
+
         if (jsonEl is null)
         {
-            Core.Config.ToolSettings.Remove(tool.ToolId);
+            toolSettings.Remove(toolId);
         }
         else
         {
-            Core.Config.ToolSettings[tool.ToolId] = jsonEl.Value;
+            toolSettings[toolId] = jsonEl.Value;
         }
+
+        // the getter hands out a new dictionary while the config holds none, so store this one
+        Core.Config.ToolSettings = toolSettings;
     }
 
 

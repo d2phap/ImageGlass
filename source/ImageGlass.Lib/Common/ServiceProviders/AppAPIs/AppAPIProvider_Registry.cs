@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -70,6 +70,7 @@ public partial class AppAPIProvider
 
         { API.IG_ViewByStep,            PhCommands.Create(IG_ViewByStep) },
         { API.IG_ViewByIndex,           PhCommands.Create(IG_ViewByIndex) },
+        { API.IG_ViewSiblingDirPhotos,  PhCommands.Create(IG_ViewSiblingDirPhotos) },
 
 
         // Zoom
@@ -151,6 +152,7 @@ public partial class AppAPIProvider
         { API.IG_OpenAboutWindow,           PhCommands.Create(IG_OpenAboutWindowAsync) },
         { API.IG_ManageLicense,             PhCommands.Create(IG_ManageLicenseAsync) },
         { API.IG_CheckForUpdate,            PhCommands.Create(IG_CheckForUpdateAsync) },
+        { API.IG_InstallUpdate,             PhCommands.Create(IG_InstallUpdateAsync) },
         { API.IG_ReportIssue,               PhCommands.Create(IG_ReportIssue) },
         { API.IG_QuickSetup,                PhCommands.Create(IG_QuickSetupAsync) },
         { API.IG_SetDefaultPhotoViewer,     PhCommands.Create(IG_SetDefaultPhotoViewerAsync) },

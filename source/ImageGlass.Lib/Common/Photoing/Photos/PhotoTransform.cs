@@ -95,6 +95,23 @@ public class PhotoTransform
 
 
     /// <summary>
+    /// Gets, sets the flips and rotation as one orientation, triggers the <see cref="Changed"/> event when changed.
+    /// </summary>
+    public ImageOrientation Orientation
+    {
+        get => ImageOrientation.From(_flipOptions, _rotation);
+        set
+        {
+            if (Orientation == value) return;
+
+            _flipOptions = value.Flips;
+            _rotation = value.Rotation;
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+
+    /// <summary>
     /// Checks if there are changes.
     /// </summary>
     public bool HasChanges => Flips != FlipOptions.None

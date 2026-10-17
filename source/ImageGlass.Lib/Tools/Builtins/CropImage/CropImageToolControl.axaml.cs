@@ -25,6 +25,7 @@ using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using ImageGlass.UI.Windowing;
@@ -43,6 +44,8 @@ public partial class CropImageToolControl : PhControl, IToolControl
 
     public static string TOOL_ID => "Tool_CropImage";
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuCropTool];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolCropImage;
     public bool HasSettingsUI => true;
     public object? Settings { get; private set; } = new CropImageConfig();
     public CropImageConfig Options => (CropImageConfig)Settings!;
@@ -247,8 +250,10 @@ public partial class CropImageToolControl : PhControl, IToolControl
 
     private async void PART_BtnCrop_Click(object? sender, RoutedEventArgs e)
     {
-        var bitmap = Viewer.GetRenderedBitmap(true);
-        var photo = new Photo(bitmap);
+        // the copy becomes the photo's own image, so it is not copied a second time
+        using var shownState = Viewer.CaptureImageState();
+        using var bitmap = shownState?.CopyPixels(ViewerImageRegion.Selection);
+        var photo = new Photo(SkiaCodec.ToSKImageNoCopy(bitmap));
 
         await AppAPIProvider.LoadClipboardPhotoAsync(photo);
     }

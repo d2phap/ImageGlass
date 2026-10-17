@@ -99,6 +99,12 @@ public partial class PhotoMetadata : PhDisposable
     public double DpiY { get; set; } = 0;
 
     public uint FrameCount { get; set; } = 0;
+
+    /// <summary>
+    /// Gets, sets the frame a view opens on, in the frame order of the codec that read this metadata.
+    /// </summary>
+    public int DefaultFrameIndex { get; set; } = 0;
+
     public string FrameCountFormatted => FrameCount > 1 ? FrameCount.ToString() : string.Empty;
     public uint AnimationLoop { get; set; } = 0;
     public IImmutableList<FrameMetadata> Frames { get; set; } = [];

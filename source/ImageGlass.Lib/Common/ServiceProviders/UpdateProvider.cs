@@ -27,25 +27,22 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Common.ServiceProviders;
 
-public sealed class UpdateProvider
+public partial class UpdateProvider : IUpdateProvider
 {
     private static readonly HttpClient _httpClient = CreateHttpClient();
     private InterlockedBool _isChecking;
 
 
     /// <summary>
-    /// Gets whether enough time has elapsed since the last check
-    /// to warrant a new silent check.
+    /// Gets whether enough time has elapsed since the last check to warrant a new silent check.
     /// </summary>
-    /// <remarks>
-    /// The threshold carries a fresh random offset each time it is read, so installs that launch
-    /// on the same cadence do not all report on the same day. Nothing is stored to achieve this.
-    /// </remarks>
     public static bool ShouldCheck
     {
         get
         {
             var lastCheckTime = ParseLastCheckTime();
+
+            // a fresh offset each read, so same-cadence installs do not all report on the same day
             var threshold = UpdateConstants.BackgroundCheckInterval
                 + TimeSpan.FromMinutes(Random.Shared.Next(0, UpdateConstants.CheckJitterMinutes));
 
@@ -74,7 +71,7 @@ public sealed class UpdateProvider
             if (isScheduled)
             {
                 // record the check time
-                Core.Config.AutoUpdate = DateTime.UtcNow.ToString("o");
+                Core.Config.AutoUpdate = BHelper.FormatUtcRoundtrip(DateTime.UtcNow);
             }
 
             return result;
@@ -184,12 +181,9 @@ public sealed class UpdateProvider
     private static DateTime ParseLastCheckTime()
     {
         var value = Core.Config.AutoUpdate;
-        if (string.IsNullOrEmpty(value) || string.Equals(value, "0", StringComparison.Ordinal))
-        {
-            return DateTime.MinValue;
-        }
+        if (string.Equals(value, "0", StringComparison.Ordinal)) return DateTime.MinValue;
 
-        return DateTime.TryParse(value, out var dt) ? dt.ToUniversalTime() : DateTime.MinValue;
+        return BHelper.TryParseUtcRoundtrip(value, out var dt) ? dt : DateTime.MinValue;
     }
 
 

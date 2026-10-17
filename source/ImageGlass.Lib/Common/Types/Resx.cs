@@ -53,6 +53,17 @@ public static class Resx
 
 
     /// <summary>
+    /// Gets the color of a solid brush resource; <paramref name="fallback"/> when it is missing or not solid.
+    /// </summary>
+    public static Color GetBrushColor(ResxId resxId, Color fallback)
+    {
+        var brush = Get<IBrush?>(resxId) as ISolidColorBrush;
+
+        return brush?.Color ?? fallback;
+    }
+
+
+    /// <summary>
     /// Sets resource.
     /// </summary>
     public static void Set(ResxId resxId, object resValue)
@@ -177,6 +188,7 @@ public enum ResxId
     SystemAccentColorDark1,
     SystemAccentColorDark2,
     SystemAccentColorDark3,
+    IG_AccentBrush, // the accent color itself as a brush, for a fill the accent covers whole
 
 
     // accent button text (contrasts with the accent background)
@@ -188,6 +200,7 @@ public enum ResxId
 
     // control styles
     ControlCornerRadius,
+    OverlayCornerRadius,
     ContentControlThemeFontFamily,
 
 
@@ -269,6 +282,7 @@ public enum ResxId
     IG_ThemeBackgroundBrush,
     IG_ViewerBackgroundBrush,
     IG_ToolHostBackgroundBrush,
+    IG_ProjectorBackgroundBrush,
     IG_ThemeForegroundBrush,
     IG_ThemeToolbarBackgroundBrush,
     IG_ThemeGalleryBackgroundBrush,
@@ -282,7 +296,7 @@ public enum ResxId
     IG_BackgroundNeutralBrush,
     IG_BorderNeutralBrush,
     IG_BorderControlBrush,
-    IG_MessageBackgroundBrush,
+    IG_OverlayBackgroundBrush,
 
     IG_TextSuccessBrush,
     IG_TextWarningBrush,
@@ -308,6 +322,7 @@ public enum ResxIconId
 {
     IconEllipsis,
     IconClose,
+    IconAdd,
     IconSearch,
     IconSettings,
     IconSave,
@@ -319,6 +334,8 @@ public enum ResxIconId
     IconArrowNext,
     IconArrowLeft,
     IconArrowRight,
+    IconChevronRight,
+    IconChevronDown,
     IconPlay,
     IconPause,
     IconImageForward,
@@ -332,6 +349,13 @@ public enum ResxIconId
     IconWeatherMoon,
     IconWeatherSunny,
     IconProStar,
+    IconToolColorPicker,
+    IconToolCropImage,
+    IconToolFrameNav,
+    IconToolHdrToneMapper,
+    IconToolProjector,
+    IconToolImageResizer,
+    IconToolLosslessCompression,
 }
 
 

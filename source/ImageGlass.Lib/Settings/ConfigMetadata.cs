@@ -39,6 +39,7 @@ public enum ConfigId
     ShowAppIcon,
     EnableMainWindowMaximized,
     EnableSettingsWindowMaximized,
+    EnablePrintWindowMaximized,
     EnableSlideshow,
     EnableSlideshowCountdown,
     EnableSlideshowRandomInterval,
@@ -75,6 +76,7 @@ public enum ConfigId
     EnableCutMultipleFiles,
     EnableFileWatcher,
     EnableAutoOpenNewAddedImage,
+    EnableAutoInstallUpdate,
     EnableDebug,
 
     #endregion // Boolean settings
@@ -89,9 +91,12 @@ public enum ConfigId
     SlideshowInterval,
     SlideshowIntervalTo,
     SlideshowImagesToNotifySound,
+    SlideshowTransitionDuration,
+    NavigationTransitionDuration,
     ThumbnailSize,
     GalleryCacheSizeInMb,
     GalleryColumns,
+    CacheMaxFiles,
     CacheMaxMemoryInMb,
     CacheMaxDimension,
     CacheMaxFileSizeInMb,
@@ -109,12 +114,15 @@ public enum ConfigId
 
     AutoUpdate,
     UpdateSkippedVersion,
+    UpdatePendingVersion,
     ColorProfile,
     LastSeenImagePath,
     LastOpenedTool,
     LastOpenedSetting,
     BackgroundColor,
     SlideshowBackgroundColor,
+    SlideshowTransition,
+    NavigationTransition,
     DarkTheme,
     LightTheme,
     Language,
@@ -125,6 +133,8 @@ public enum ConfigId
     #region Enum settings
 
     CheckerboardMode,
+    ViewerScrollbarMode,
+    ImageInfoOverlayMode,
     BrowsingMode,
     ImageLoadingOrder,
     ImageLoadingOrderType,
@@ -141,6 +151,7 @@ public enum ConfigId
 
     MainWindowBounds,
     SettingsWindowBounds,
+    PrintWindowBounds,
     ZoomLevels,
     EditApps,
     SingleFrameFormats,

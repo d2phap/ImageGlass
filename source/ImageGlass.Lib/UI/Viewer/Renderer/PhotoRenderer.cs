@@ -24,7 +24,9 @@ using Avalonia.Threading;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.Types;
+using ImageGlass.UI.Viewer.Transitions;
 using SkiaSharp;
+using Svg.Skia;
 using System;
 using System.Threading;
 
@@ -73,7 +75,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
 
     private readonly Rect _bounds;
-    private readonly Action<SKImage?> _onDrawFirstTime;
+    private readonly Action<SKImage?>? _onDrawFirstTime;
     private readonly Lock _lock;
     private bool _isFirstDraw;
 
@@ -85,6 +87,13 @@ public partial class PhotoRenderer : ICustomDrawOperation
     private readonly MipmapTileCache? _tileCache;
     private readonly double _zoomFactor;
     private readonly ViewerControl _viewer;
+    private readonly float _dpi;
+    private readonly SKRect _drawingArea;
+
+    // a mirror draws the photo of _viewer through the viewport of another viewer
+    private readonly bool _isMirror;
+    private readonly ViewerControl? _mirror;
+    private readonly SKSvg? _mirrorSvgDocument;
 
 
     #region Public Properties
@@ -98,7 +107,8 @@ public partial class PhotoRenderer : ICustomDrawOperation
     #endregion // Public Properties
 
 
-    public PhotoRenderer(ViewerControl viewer, Action<SKImage?> processFirstDrawFn)
+    /// <param name="processFirstDrawFn">Called after the first draw of a new source; <c>null</c> never claims the first draw.</param>
+    public PhotoRenderer(ViewerControl viewer, Action<SKImage?>? processFirstDrawFn)
     {
         _lock = viewer._lock;
 
@@ -120,15 +130,53 @@ public partial class PhotoRenderer : ICustomDrawOperation
             _tileCache = viewer._mipmapCache;
             _zoomFactor = viewer.ZoomFactor;
             _viewer = viewer;
+            _dpi = (float)viewer.Dpi;
+            _drawingArea = viewer.DrawingArea.ToSKRect();
 
-            // Atomically claim first-draw ownership so that concurrent
-            // InvalidateVisual() calls cannot trigger duplicate
-            // OnDrawnImageFirstTime processing.
-            _isFirstDraw = viewer._isFirstDraw;
+            // claim first-draw ownership atomically so concurrent paints cannot process it twice
+            _isFirstDraw = processFirstDrawFn is not null && viewer._isFirstDraw;
             if (_isFirstDraw)
             {
                 viewer._isFirstDraw.SetFalse();
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Draws the photo of <paramref name="source"/>, transformed if <paramref name="showTransforms"/>, through the viewport of <paramref name="mirror"/>.
+    /// </summary>
+    internal PhotoRenderer(ViewerControl mirror, ViewerControl source, bool showTransforms)
+    {
+        // drawn under the source lock: the source frees its images under it
+        _lock = source._lock;
+        _viewer = source;
+        _isMirror = true;
+        _mirror = mirror;
+        _onDrawFirstTime = null;
+
+        // UI-thread state of the mirror, computed for what the source shows right now
+        _bounds = mirror.Bounds;
+        _srcRect = mirror.SrcRect.ToSKRect();
+        _destRect = mirror.DestRect.ToSKRect();
+        _samplingOptions = SkiaCodec.ToSamplingOptions(mirror.CurrentInterpolation);
+        _tileCache = mirror._mirrorSharedTileCache ?? mirror._mipmapCache;
+        _zoomFactor = mirror.ZoomFactor;
+        _dpi = (float)mirror.Dpi;
+        _drawingArea = mirror.DrawingArea.ToSKRect();
+        _mirrorSvgDocument = mirror._mirrorSvgDocument;
+
+        lock (_lock)
+        {
+            // a vector photo draws its live picture, never the rasterized fallback
+            if (_mirrorSvgDocument is not null) return;
+
+            _imgSource = source._imgSource;
+            _imgRender = showTransforms ? source._imgRender : null;
+
+            // keep images alive until this renderer is disposed
+            _imgSource?.KeepAlive();
+            _imgRender?.KeepAlive();
         }
     }
 
@@ -184,89 +232,33 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
         lock (_lock)
         {
-            SKImageRef.ImageLease? imageLease = null;
-            SKImageRef.ImageLease? srcLease = null;
-
-            try
+            // read live under the same lock, which guards the transition a mirror plays in its own viewport too
+            var transition = (_mirror ?? _viewer)._transition;
+            if (transition is null || transition.IsDisposed)
             {
-                SKImage? imageRender;
-
-                // Vector (SVG) rendering: read the picture live from the
-                // viewer so we always use the latest picture reference
-                // produced by SvgAnimator (avoids using a stale/disposed snapshot).
-                var svgPicture = _viewer._svgPicture;
-                if (svgPicture is not null && !svgPicture.IsDisposed())
-                {
-                    RenderVector(lease.SkCanvas, svgPicture);
-
-                    if (_isFirstDraw)
-                    {
-                        // clear old cache
-                        lease.GrContext?.PurgeResources();
-
-                        _isFirstDraw = false;
-
-                        // no raster image to process for vector; pass null
-                        Dispatcher.UIThread.Post(() => _onDrawFirstTime(null), DispatcherPriority.Send);
-                    }
-                }
-                else if (_isFirstDraw)
-                {
-                    srcLease = _imgSource?.Acquire();
-                    var srcImage = srcLease?.Image;
-
-                    // source went away since the snapshot: let a later paint do the first draw
-                    if (srcImage.IsDisposed())
-                    {
-                        ReturnFirstDrawClaim();
-                        return;
-                    }
-
-
-                    // set the image to draw
-                    imageRender = srcImage;
-
-
-                    // draw the full image for first frame
-                    var canvas = lease.SkCanvas;
-                    canvas.Save();
-                    canvas.DrawImage(imageRender, _srcRect, _destRect, _samplingOptions);
-                    canvas.Restore();
-
-
-                    // clear old cache
-                    lease.GrContext?.PurgeResources();
-
-                    // process after first time drawing
-                    _isFirstDraw = false;
-                    Dispatcher.UIThread.Post(() => _onDrawFirstTime(imageRender), DispatcherPriority.Send);
-                }
-                else if (_tileCache?.AcquireProxy() is { } proxyLease)
-                {
-                    using (proxyLease)
-                    {
-                        RenderTiled(lease.SkCanvas, proxyLease.Image);
-                    }
-                }
-                else
-                {
-                    // direct rendering for small / animated images, and until the proxy is ready
-                    imageLease = _imgRender?.Acquire() ?? _imgSource?.Acquire();
-                    imageRender = imageLease?.Image;
-
-                    if (imageRender is null || imageRender.IsDisposed()) return;
-
-                    var canvas = lease.SkCanvas;
-                    canvas.Save();
-                    canvas.DrawImage(imageRender, _srcRect, _destRect, _samplingOptions);
-                    canvas.Restore();
-                }
+                DrawContent(lease.SkCanvas, lease.GrContext);
             }
-            finally
+            else
             {
-                imageLease?.Dispose();
-                srcLease?.Dispose();
+                RenderTransition(lease.SkCanvas, lease.GrContext, transition);
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Records the photo as drawn now into a picture in viewer coordinates; the checkerboard stays out of it.
+    /// </summary>
+    internal SKPicture RecordFrame()
+    {
+        lock (_lock)
+        {
+            using var recorder = new SKPictureRecorder();
+            var canvas = recorder.BeginRecording(_drawingArea);
+
+            DrawContent(canvas, null);
+
+            return recorder.EndRecording();
         }
     }
 
@@ -276,6 +268,206 @@ public partial class PhotoRenderer : ICustomDrawOperation
 
 
     #region Private Methods
+
+
+    /// <summary>
+    /// Draws the photo in viewer coordinates; the caller holds <see cref="_lock"/>.
+    /// </summary>
+    private void DrawContent(SKCanvas canvas, GRContext? grContext)
+    {
+        SKImageRef.ImageLease? imageLease = null;
+        SKImageRef.ImageLease? srcLease = null;
+
+        try
+        {
+            SKImage? imageRender;
+
+            // read the SVG picture live: SvgAnimator replaces it between frames
+            var svgPicture = GetVectorPicture();
+            if (svgPicture is not null && !svgPicture.IsDisposed())
+            {
+                if (_isFirstDraw) PurgeEarlierGpuResources(grContext);
+
+                RenderVector(canvas, svgPicture);
+
+                if (_isFirstDraw)
+                {
+                    _isFirstDraw = false;
+
+                    // no raster image to process for vector; pass null
+                    Dispatcher.UIThread.Post(() => _onDrawFirstTime!(null), DispatcherPriority.Send);
+                }
+            }
+            else if (_isFirstDraw)
+            {
+                srcLease = _imgSource?.Acquire();
+                var srcImage = srcLease?.Image;
+
+                // source went away since the snapshot: let a later paint do the first draw
+                if (srcImage.IsDisposed())
+                {
+                    ReturnFirstDrawClaim();
+                    return;
+                }
+
+
+                // set the image to draw: a frame prepared with its edits draws them from the start
+                imageLease = _imgRender?.Acquire();
+                imageRender = imageLease?.Image ?? srcImage;
+                PurgeEarlierGpuResources(grContext);
+
+
+                // draw the full image for first frame
+                canvas.Save();
+                canvas.DrawImage(imageRender, _srcRect, _destRect, _samplingOptions);
+                canvas.Restore();
+
+
+                // process after first time drawing; the source identifies the frame this draw was for
+                _isFirstDraw = false;
+                Dispatcher.UIThread.Post(() => _onDrawFirstTime!(srcImage), DispatcherPriority.Send);
+            }
+            else if (_tileCache?.AcquireProxy() is { } proxyLease)
+            {
+                using (proxyLease)
+                {
+                    RenderTiled(canvas, proxyLease.Image);
+                }
+            }
+            else
+            {
+                // direct rendering for small / animated images, and until the proxy is ready
+                imageLease = _imgRender?.Acquire() ?? _imgSource?.Acquire();
+                imageRender = imageLease?.Image;
+
+                if (imageRender is null || imageRender.IsDisposed()) return;
+
+                canvas.Save();
+                canvas.DrawImage(imageRender, _srcRect, _destRect, _samplingOptions);
+                canvas.Restore();
+            }
+        }
+        finally
+        {
+            imageLease?.Dispose();
+            srcLease?.Dispose();
+        }
+    }
+
+
+
+    /// <summary>
+    /// Frees the GPU resources of earlier photos, which the unlimited cache budget would keep forever; call before a new photo's first draw.
+    /// </summary>
+    private static void PurgeEarlierGpuResources(GRContext? grContext)
+    {
+        // not PurgeResources(): it flushes first, so it frees what this frame already drew, and every text atlas too
+        grContext?.PurgeUnlockedResources(false);
+    }
+
+
+    /// <summary>
+    /// Gets the SVG picture to draw; the caller holds <see cref="_lock"/>.
+    /// </summary>
+    private SKPicture? GetVectorPicture()
+    {
+        if (!_isMirror) return _viewer._svgPicture;
+        if (_mirrorSvgDocument is null) return null;
+
+        // a mirror viewport is computed for one document, so a newer one waits for the next draw
+        var isSameDocument = ReferenceEquals(_viewer._svgDocument, _mirrorSvgDocument);
+        return isSameDocument ? _viewer._svgPicture : null;
+    }
+
+
+    /// <summary>
+    /// Draws the transition: the old frame until the new photo can be drawn, then the effect blending both.
+    /// </summary>
+    private void RenderTransition(SKCanvas canvas, GRContext? grContext, ViewerTransition transition)
+    {
+        if (transition.StartTime is null)
+        {
+            canvas.DrawPicture(transition.FromFrame);
+            return;
+        }
+
+        var area = _drawingArea;
+        var width = (int)Math.Ceiling(area.Width * _dpi);
+        var height = (int)Math.Ceiling(area.Height * _dpi);
+        var effect = transition.Request.Effect.GetEffect();
+
+        var info = new SKImageInfo(Math.Max(1, width), Math.Max(1, height), SKImageInfo.PlatformColorType, SKAlphaType.Premul);
+        using var fromSurface = effect is null ? null : CreateSurface(grContext, info);
+        using var toSurface = fromSurface is null ? null : CreateSurface(grContext, info);
+
+        // no effect to play: draw the new photo as usual
+        if (effect is null || fromSurface is null || toSurface is null)
+        {
+            DrawContent(canvas, grContext);
+            return;
+        }
+
+
+        // 1. render both sides at device resolution, so the effect samples them 1:1
+        PrepareTransitionCanvas(fromSurface.Canvas, area).DrawPicture(transition.FromFrame);
+
+        var toCanvas = PrepareTransitionCanvas(toSurface.Canvas, area);
+        DrawContent(toCanvas, grContext);
+
+        using var fromImage = fromSurface.Snapshot();
+        using var toImage = toSurface.Snapshot();
+
+
+        // 2. feed both sides to the effect; outside its side, an image reads as transparent
+        var toLogical = SKMatrix.CreateScale(1 / _dpi, 1 / _dpi);
+        var sampling = new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None);
+        using var fromShader = fromImage.ToShader(SKShaderTileMode.Decal, SKShaderTileMode.Decal, sampling, toLogical);
+        using var toShader = toImage.ToShader(SKShaderTileMode.Decal, SKShaderTileMode.Decal, sampling, toLogical);
+
+        using var uniforms = new SKRuntimeEffectUniforms(effect);
+        if (uniforms.Contains("progress")) uniforms["progress"] = transition.Progress;
+        if (uniforms.Contains("resolution")) uniforms["resolution"] = new[] { area.Width, area.Height };
+        if (uniforms.Contains("navigationDirection")) uniforms["navigationDirection"] = (float)transition.Request.Direction;
+        if (uniforms.Contains("ratio")) uniforms["ratio"] = area.Width / area.Height;
+
+        using var children = new SKRuntimeEffectChildren(effect);
+        if (children.Contains("fromImage")) children["fromImage"] = fromShader;
+        if (children.Contains("toImage")) children["toImage"] = toShader;
+
+
+        // 3. draw the effect over the drawing area, which the shader sees as (0, 0)-resolution
+        using var shader = effect.ToShader(uniforms, children);
+        using var paint = new SKPaint { Shader = shader };
+
+        canvas.Save();
+        canvas.Translate(area.Left, area.Top);
+        canvas.DrawRect(0, 0, area.Width, area.Height, paint);
+        canvas.Restore();
+    }
+
+
+    /// <summary>
+    /// Creates an offscreen surface on the GPU when there is one, else in memory.
+    /// </summary>
+    private static SKSurface? CreateSurface(GRContext? grContext, SKImageInfo info)
+    {
+        return grContext is null
+            ? SKSurface.Create(info)
+            : SKSurface.Create(grContext, false, info);
+    }
+
+
+    /// <summary>
+    /// Clears a transition side and maps viewer coordinates onto its device pixels.
+    /// </summary>
+    private SKCanvas PrepareTransitionCanvas(SKCanvas canvas, SKRect area)
+    {
+        canvas.Clear(SKColors.Transparent);
+        canvas.Scale(_dpi);
+        canvas.Translate(-area.Left, -area.Top);
+
+        return canvas;
+    }
 
 
     /// <summary>
@@ -360,8 +552,7 @@ public partial class PhotoRenderer : ICustomDrawOperation
     /// </summary>
     private void RenderVector(SKCanvas canvas, SKPicture picture)
     {
-        // safety: the picture may have been disposed between the null-check
-        // and arriving here if the animation advanced on another thread.
+        // the animation may have disposed the picture since the caller's null-check
         if (picture.IsDisposed()) return;
 
         // compute transform: map SVG CullRect to destRect, accounting for srcRect (pan/zoom)

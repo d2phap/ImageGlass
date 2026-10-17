@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -38,8 +38,12 @@ public enum LangId
     _Browse,
     _Reset,
     _ResetToDefault,
+    _Default,
+    _BackgroundColor,
     _CheckForUpdate,
     _Update,
+    _Download,
+    _RestartNow,
     _Website,
     _TypeToFilter,
     _Delete,
@@ -118,6 +122,34 @@ public enum LangId
     _Validation_FileExtensionValueOnly,
     _Validation_FileExtensionsValueOnly,
 
+    // print options
+    _PrintOrientation_Auto,
+    _PrintOrientation_Portrait,
+    _PrintOrientation_Landscape,
+    _PrintFitMode_Fit,
+    _PrintFitMode_Fill,
+    _PrintFitMode_ActualSize,
+    _PrintMarginPreset_None,
+    _PrintMarginPreset_Narrow,
+    _PrintMarginPreset_Normal,
+    _PrintMarginPreset_Wide,
+    _PrintColorMode_Color,
+    _PrintColorMode_Grayscale,
+    _PrintDuplex_None,
+    _PrintDuplex_LongEdge,
+    _PrintDuplex_ShortEdge,
+    _PrintPageScope_Current,
+    _PrintPageScope_All,
+    _PrintPageScope_Range,
+    _PrintRegion_WholeImage,
+    _PrintRegion_Selection,
+    _PrintRegion_VisibleArea,
+    _PrinterState_Ready,
+    _PrinterState_Busy,
+    _PrinterState_Offline,
+    _PrinterState_Paused,
+    _PrinterState_Error,
+
 
     // main window
     _PicMain_ErrorText,
@@ -176,6 +208,9 @@ public enum LangId
     BrowsingMode_Sequential,
     BrowsingMode_Sequential_Description,
 
+    TransitionEffect_None,
+    TransitionEffect_Random,
+
     AfterEditAppAction_Nothing,
     AfterEditAppAction_Minimize,
     AfterEditAppAction_Close,
@@ -208,6 +243,18 @@ public enum LangId
     CheckerboardType_None,
     CheckerboardType_Client,
     CheckerboardType_Image,
+
+    // values match the ScrollbarMode enum members
+    ScrollbarMode_Never,
+    ScrollbarMode_AutoHide,
+    ScrollbarMode_Always,
+
+    // values match the ImageInfoOverlayMode enum members
+    ImageInfoOverlayMode_Hidden,
+    ImageInfoOverlayMode_Always,
+    ImageInfoOverlayMode_AlwaysAutoHide,
+    ImageInfoOverlayMode_Borderless,
+    ImageInfoOverlayMode_BorderlessAutoHide,
 
     #endregion // Enums
 
@@ -373,6 +420,7 @@ public enum LangId
     Menu_MnuResizeTool,
     Menu_MnuFrameNav,
     Menu_MnuHdrToneMapper,
+    Menu_MnuProjector,
     Menu_MnuToolsSettings,
 
     Menu_MnuLosslessCompression,
@@ -430,6 +478,11 @@ public enum LangId
     Menu_MnuCheckForUpdate_CurrentVersion,
     Menu_MnuCheckForUpdate_LatestVersion,
     Menu_MnuCheckForUpdate_PublishedDate,
+    Menu_MnuCheckForUpdate_ReadyToInstall,
+    Menu_MnuCheckForUpdate_Downloading,
+    Menu_MnuCheckForUpdate_Installing,
+    Menu_MnuInstallUpdate,
+    Menu_MnuInstallUpdate_Confirm,
     Menu_MnuCheckForUpdate_ProFromStore,
 
     Menu_MnuSetDefaultPhotoViewer,
@@ -496,6 +549,7 @@ public enum LangId
     Settings_AppUpdate,
     Settings_AutoUpdate_Description,
     Settings_SeeWhatIsSent,
+    Settings_EnableAutoInstallUpdate,
 
     // General > Others
     Settings_Others,
@@ -533,6 +587,7 @@ public enum LangId
 
     // Image > Caching
     Settings_Caching,
+    Settings_ImageBoosterCacheMaxFiles,
     Settings_ImageBoosterCacheMaxMemoryInMb,
     Settings_ImageBoosterCacheMaxDimension,
     Settings_ImageBoosterCacheMaxFileSizeInMb,
@@ -551,7 +606,6 @@ public enum LangId
     Settings_Slideshow_Appearance,
     Settings_EnableSlideshowCountdown,
     Settings_EnableFullscreenSlideshow,
-    Settings_SlideshowBackgroundColor,
 
     // Slideshow > Playback
     Settings_Slideshow_Playback,
@@ -562,6 +616,13 @@ public enum LangId
     Settings_SlideshowInterval_To,
 
     Settings_SlideshowImagesToNotifySound,
+
+    // Slideshow > Transition (shared with Image > Browsing)
+    Settings_TransitionEffect,
+    Settings_TransitionDuration,
+    Settings_TransitionCompileError,
+    Settings_OpenTransitionsFolder,
+    Settings_GetMoreTransitionEffects,
     #endregion // Settings > Tab Slideshow
 
 
@@ -602,6 +663,10 @@ public enum LangId
     Settings_Layout_Gallery,
     Settings_Layout_ToolbarPosition,
     Settings_Layout_GalleryPosition,
+
+    // Layout > Image information
+    Settings_ImageInfo,
+    Settings_ImageInfoOverlay,
     #endregion // Settings > Tab Layout
 
 
@@ -609,6 +674,7 @@ public enum LangId
     // Viewer > Appearance
     Settings_Appearance,
     Settings_EnableNavigationButtons,
+    Settings_ViewerScrollbarMode,
     Settings_EnableCenterWindowFit,
     Settings_EnableVectorRenderer,
     Settings_CheckerboardMode,
@@ -766,7 +832,6 @@ public enum LangId
     #region Settings > Tab Appearance
     // Appearance > Appearance
     Settings_WindowBackdrop,
-    Settings_BackgroundColor,
 
     // Appearance > Theme
     Settings_Theme,
@@ -827,6 +892,23 @@ public enum LangId
     #endregion // Tool: HDR tone mapper
 
 
+    #region Tool: Projector
+    Tool_Projector_WindowTitle,
+    Tool_Projector_BtnAdd,
+    Tool_Projector_ChkSyncView,
+    Tool_Projector_ChkShowPointer,
+    Tool_Projector_ModeFullScreen,
+    Tool_Projector_ModeMaximized,
+    Tool_Projector_ModeNormal,
+    Tool_Projector_ModeTiled,
+    Tool_Projector_LblLayout,
+    Tool_Projector_Monitor,
+    Tool_Projector_DragHint,
+    Tool_Projector_ScreenInfo,
+    Tool_Projector_MainWindow,
+    #endregion // Tool: Projector
+
+
     #region Tool: Color picker
 
     // Color picker settings
@@ -849,6 +931,53 @@ public enum LangId
     Tool_Resizer_LblNewSize,
     Tool_Resizer_Errors_SizeTooLarge,
     #endregion // Tool: Resizer
+
+
+    #region Print
+    Print_Title,
+    Print_LblPrinter,
+    Print_LblCopies,
+    Print_ChkCollate,
+    Print_LblPaper,
+    Print_LblOrientation,
+    Print_LblLayout,
+    Print_LblFit,
+    Print_ChkAutoRotate,
+    Print_LblMargins,
+    Print_LblPrintsEach,
+    Print_ChkFillPage,
+    Print_LblRegion,
+    Print_LblPages,
+    Print_LblMoreSettings,
+    Print_LblColor,
+    Print_LblQuality,
+    Print_LblTwoSided,
+    Print_ChkCaptions,
+    Print_BtnProperties,
+    Print_BtnSystemDialog,
+    Print_BtnAddPrinter,
+    Print_SaveAsPdf,
+    Print_Summary,
+    Print_PageOf,
+    Print_Printing,
+    Print_Sent,
+    Print_Saved,
+    Print_LoadingPrinters,
+    Print_NoPrinters,
+    Print_CupsMissing,
+    Print_PrinterUnavailable,
+    Print_WarnPrintShrunk,
+    Print_WarnManyPages,
+    Print_RangeInvalid,
+    Print_PreviousPage,
+    Print_NextPage,
+    Print_Dpi,
+    Print_Layout_FullPage,
+    Print_Layout_Grid,
+    Print_Layout_Wallet,
+    Print_Layout_Passport,
+    Print_Layout_ContactSheet,
+    #endregion // Print
 
 
     #region Quick setup

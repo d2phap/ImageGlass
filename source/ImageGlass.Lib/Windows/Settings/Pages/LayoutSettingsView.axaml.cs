@@ -106,7 +106,11 @@ public partial class LayoutSettingsView : SettingsPageView
             LangId.Settings_ShowAppIcon, LangId.Settings_Window, true);
         BindToggle(PART_EnableCenterWindowFit, ConfigId.EnableCenterWindowFit,
             LangId.Settings_EnableCenterWindowFit, LangId.Settings_Window, true);
+
+        // Image information
         BuildImageInfoTags();
+        BindEnumDropdown(PART_ImageInfoOverlayMode, ConfigId.ImageInfoOverlayMode, ImageInfoOverlayMode.BorderlessAutoHide,
+            LangId.Settings_ImageInfoOverlay, LangId.Settings_ImageInfo);
 
         // Controls
         BuildPositionCombos();
@@ -144,7 +148,7 @@ public partial class LayoutSettingsView : SettingsPageView
         PART_AvailableTags.Text = string.Join(TAG_SEPARATOR, _availableTags);
 
         RegisterSearchKey(PART_ImageInfoTags, LangId.Settings_ImageInfoTags,
-            ConfigId.ImageInfoTags, LangId.Settings_Window);
+            ConfigId.ImageInfoTags, LangId.Settings_ImageInfo);
     }
 
 

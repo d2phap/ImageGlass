@@ -265,7 +265,24 @@ public class SkiaAnimator : AnimatorImpl
     {
         for (var i = from; i <= to; i++)
         {
-            if (!_codec.GetFrameInfo(i, out var meta) || meta.RequiredFrame != i - 1) return false;
+            if (!_codec.GetFrameInfo(i, out var meta)) return false;
+            if (meta.RequiredFrame < 0 || meta.RequiredFrame > i - 1) return false;
+            if (!HasNoRestorePrevious(meta.RequiredFrame, i - 1)) return false;
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Whether the skipped disposal in <paramref name="from"/>..<paramref name="to"/> is safe to skip.
+    /// </summary>
+    private bool HasNoRestorePrevious(int from, int to)
+    {
+        for (var i = from; i <= to; i++)
+        {
+            if (!_codec.GetFrameInfo(i, out var meta)) return false;
+            if (meta.DisposalMethod == SKCodecAnimationDisposalMethod.RestorePrevious) return false;
         }
 
         return true;
@@ -292,11 +309,12 @@ public class SkiaAnimator : AnimatorImpl
             ? frameMeta.RequiredFrame
             : NO_FRAME;
 
-        // chaining is only legal while the buffer really holds the frame the codec is told about,
-        // and only priorFrame == requiredFrame makes the codec apply that frame's disposal
+        // the codec takes any prior frame at or after the required one, skipping the disposal between
         var canChainFromPrevious = frameIndex > 0
             && _lastRenderedFrameIndex == frameIndex - 1
-            && requiredFrame == frameIndex - 1;
+            && requiredFrame >= 0
+            && requiredFrame <= frameIndex - 1
+            && HasNoRestorePrevious(requiredFrame, frameIndex - 1);
 
         var options = canChainFromPrevious
             ? new SKCodecOptions(frameIndex, frameIndex - 1)

@@ -88,7 +88,8 @@ public partial class BHelper
                 || firstPath.Equals(Dir.Plugins, StringComparison.OrdinalIgnoreCase)
                 || firstPath.Equals(Dir.Cache, StringComparison.OrdinalIgnoreCase)
                 || firstPath.Equals(Dir.Temporary, StringComparison.OrdinalIgnoreCase)
-                || firstPath.Equals(Dir.Logs, StringComparison.OrdinalIgnoreCase);
+                || firstPath.Equals(Dir.Logs, StringComparison.OrdinalIgnoreCase)
+                || firstPath.Equals(Dir.Transitions, StringComparison.OrdinalIgnoreCase);
 
             // create the built-in directory if not exist
             if (isBuiltinDir)

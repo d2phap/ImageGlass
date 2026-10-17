@@ -57,6 +57,17 @@ GPG_KEY="<your-key-id-or-email>" bash __assets/linux/script-pack-linux-x64-flatp
 
 Signing is optional for a single-file bundle; users can install it either way.
 
+### In-app updates
+
+A bundle install's origin remote (`imageglass-origin`) has no URL, so `flatpak update` answers
+"Nothing to do." ImageGlass Pro updates it in place instead: it downloads the release's
+`linux-x64-flatpak` artifact, checks its sha256, and runs `flatpak install --bundle` on the host
+through `flatpak-spawn --host`. That call is why `--talk-name=org.freedesktop.Flatpak` is needed.
+
+An install from a remote with a URL (Flathub, or the dev install `flatpak-builder --install`
+creates) stays check-only. A bundle installed over it keeps that origin but deploys a commit the
+remote does not have, so a later `flatpak update` can downgrade it.
+
 ## Submit to Flathub
 
 1. The tarball must be reachable at the manifest's `url`, so cut the GitHub release

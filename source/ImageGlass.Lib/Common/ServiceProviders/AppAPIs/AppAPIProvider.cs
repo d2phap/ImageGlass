@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -27,11 +27,13 @@ using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.Types;
 using ImageGlass.Common.Windows;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using ImageGlass.UI.Windowing;
 using ImageGlass.Windows;
 using System;
@@ -60,6 +62,9 @@ public partial class AppAPIProvider
     // windowed layout captured on entering full screen; null when not in full screen
     private WindowLayoutSnapshot? _preFullScreenLayout;
 
+    // shows the folder switch message once the new folder's photo loads; null when none is pending
+    private static TEventHandler<ViewerControl, PhotoLoadingEventArgs>? _siblingDirAnnouncer;
+
     // slideshow state backup
     private bool _isFullScreenBeforeSlideshow;
     private bool _isFramelessBeforeSlideshow;
@@ -69,7 +74,6 @@ public partial class AppAPIProvider
     private bool _windowMaximizedBeforeSlideshow;
     private DispatcherTimer? _slideshowCountdownTimer;
     private IdleCursorHider? _slideshowCursorHider;
-    private bool _slideshowIsAdvancing;
 
     // set once the user runs a check-for-update with UI; the startup silent check then completes
     // its work without popping its own window on top of what the user already asked for
@@ -87,7 +91,7 @@ public partial class AppAPIProvider
     private static ToolbarControl Toolbar => App.MainWindow.PART_MainView.PART_Toolbar;
     private static GalleryControl Gallery => App.MainWindow.PART_MainView.PART_Gallery;
     private static PhGridSplitter GalleryResizer => App.MainWindow.PART_MainView.PART_GalleryResizer;
-    private static MessageControl Message => App.MainWindow.PART_MainView.PART_Message;
+    private static MessageOverlayControl Message => App.MainWindow.PART_MainView.PART_Message;
     private static ToolHostControl ToolHost => App.MainWindow.PART_MainView.PART_ToolHost;
     private static SlideshowCountdownOverlay SlideshowCountdown => App.MainWindow.PART_MainView.PART_SlideshowCountdown;
 
@@ -109,6 +113,8 @@ public partial class AppAPIProvider
             new ToolControlAdapter(FrameNavToolControl.TOOL_ID, v => new FrameNavToolControl { Viewer = v }));
         Core.ToolRegistry.Register(HdrToneMapperToolControl.TOOL_ID,
             new ToolControlAdapter(HdrToneMapperToolControl.TOOL_ID, v => new HdrToneMapperToolControl { Viewer = v }));
+        Core.ToolRegistry.Register(ProjectorToolControl.TOOL_ID,
+            new ToolControlAdapter(ProjectorToolControl.TOOL_ID, v => new ProjectorToolControl { Viewer = v }));
 
         // Register built-in non-hosted plugins
         Core.ToolRegistry.Register(ImageResizerTool.TOOL_ID, new ImageResizerTool());
@@ -380,26 +386,31 @@ public partial class AppAPIProvider
             }
         }
 
+        // the last Save As wins; until there is one, start from the source format
+        var suggestedExt = SavingExts.LastSavedExtension ?? srcExt;
         var destFileName = string.IsNullOrEmpty(srcFilePath)
-            ? $"untitle{srcExt}"
+            ? $"untitle{suggestedExt}"
             : Path.GetFileNameWithoutExtension(srcFilePath);
 
 
-        // 2. create file save picker
+        // 2. create file save picker; it matches SuggestedFileType by reference, so take it from this list
+        var fileTypeChoices = SavingExts.FilePickerFileTypeChoices;
+        var suggestedFileType = SavingExts.FindChoice(fileTypeChoices, suggestedExt);
+
         var result = await App.MainWindow.StorageProvider.SaveFilePickerWithResultAsync(new FilePickerSaveOptions
         {
             Title = Core.Lang[LangId.Menu_MnuSaveAs],
-            FileTypeChoices = SavingExts.FilePickerFileTypeChoices,
+            FileTypeChoices = fileTypeChoices,
             ShowOverwritePrompt = !Core.Config.EnableSaveConfirmation, // only show 1 prompt
             SuggestedStartLocation = initSaveDir,
             SuggestedFileName = destFileName,
-            SuggestedFileType = SavingExts.LastSavedFileType,
+            SuggestedFileType = suggestedFileType,
         });
-
-        SavingExts.LastSavedFileType = result.SelectedFileType;
 
         var destFilePath = result.File?.TryGetLocalPath() ?? string.Empty;
         if (string.IsNullOrEmpty(destFilePath)) return;
+
+        SavingExts.LastSavedExtension = Path.GetExtension(destFilePath).ToLowerInvariant();
 
 
         // 3. show override warning
@@ -459,8 +470,9 @@ public partial class AppAPIProvider
         {
             try
             {
-                using var selectedBmp = Viewer.GetRenderedBitmap(true);
-                var selectedImg = SkiaCodec.ToSKImage(selectedBmp)!;
+                using var shownState = Viewer.CaptureImageState();
+                using var selectedBmp = shownState?.CopyPixels(ViewerImageRegion.Selection);
+                var selectedImg = SkiaCodec.ToSKImageNoCopy(selectedBmp)!;
                 using var photo = new Photo(selectedImg);
 
                 await photo.SaveAsAsync(destFilePath, new PhotoTransform(),
@@ -646,46 +658,43 @@ public partial class AppAPIProvider
 
 
     /// <summary>
-    /// Opens Print dialog to print the current photo.
+    /// Opens the Print window for the photo as it is shown, every frame and edit included.
     /// </summary>
     public static async Task IG_PrintAsync()
     {
-        if (BHelper.OS != OSType.Windows)
-        {
-            throw new NotSupportedException($"IGE: This feature is not supported on {BHelper.OS}.");
-        }
-
-        var fileToPrint = Core.Photos.CurrentFilePath;
-        _ = Message.ShowAsync(Core.Lang[LangId._CreatingFile], delayMs: 500);
-
-
-        if (string.IsNullOrEmpty(fileToPrint))
+        // the shown image, every edit applied, rather than the file on disk
+        var state = Viewer.CaptureImageState();
+        if (state is null)
         {
             _ = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
             {
-                Title = Core.Lang[LangId.Menu_MnuOpenWith],
-                Description = Core.Lang[LangId._CreatingFileError],
+                Title = Core.Lang[LangId.Menu_MnuPrint],
+                Description = Core.Lang[LangId.Menu_MnuPrint_Error],
             });
-        }
-        else
-        {
-            try
-            {
-                await Core.PrintProvider.OpenPrintAsync(fileToPrint,
-                    Core.Photos.CurrentMetadata, Core.ClipboardImage != null);
-            }
-            catch (Exception ex)
-            {
-                _ = await ModalWindow.ShowErrorAsync(App.MainWindow, new ModalWindowOptions
-                {
-                    Title = Core.Lang[LangId.Menu_MnuPrint],
-                    Heading = Core.Lang[LangId.Menu_MnuPrint_Error],
-                    Description = ex.Message,
-                });
-            }
+            return;
         }
 
-        _ = Message.ClearAsync();
+        using var session = new PrintSession(state);
+        var window = new PrintWindow(session);
+
+        // a running slideshow would move on to the next photo behind the window
+        var slideshow = Core.Slideshow;
+        var isSlideshowPaused = slideshow is { IsRunning: true, IsPaused: false };
+        if (isSlideshowPaused) slideshow!.Pause();
+
+        // a busy app holds the animation still and refuses edits while the window is open
+        Core.IsBusy = true;
+        try
+        {
+            await window.ShowAsync(App.MainWindow);
+        }
+        finally
+        {
+            Core.IsBusy = false;
+            if (isSlideshowPaused) slideshow!.Resume();
+        }
+
+        if (window.CompletedMessage is { } message) _ = Message.ShowAsync(message);
     }
 
 
@@ -958,6 +967,15 @@ public partial class AppAPIProvider
     /// </summary>
     public void IG_ViewByStep(int step)
     {
+        _ = ViewByStep__(step, isSlideshowAdvance: false);
+    }
+
+
+    /// <summary>
+    /// Views the photo <paramref name="step"/> away; the task completes when its transition finished.
+    /// </summary>
+    private Task ViewByStep__(int step, bool isSlideshowAdvance)
+    {
         // Sequential mode: ignore navigation until the current photo is painted, so holding
         // an arrow key advances one fully-drawn image at a time.
         // must run before GetByStep below, which advances CurrentIndex right away
@@ -968,7 +986,7 @@ public partial class AppAPIProvider
             if (isLoading)
             {
                 PhotoTrace.Mark("nav:blocked-sequential", Core.Photos.CurrentFilePath);
-                return;
+                return Task.CompletedTask;
             }
         }
 
@@ -985,7 +1003,9 @@ public partial class AppAPIProvider
         if (reachedBoundary && autoSwitchDir)
         {
             // try the sibling directory; if none found, fall back to normal loop-back handling
-            if (TryOpenSiblingDir(step)) return;
+            var currentDir = Path.GetDirectoryName(Core.Photos.CurrentFilePath);
+            var isSiblingDirOpened = TryOpenSiblingDir(currentDir, isNext: step >= 0, selectLastPhoto: step < 0);
+            if (isSiblingDirOpened) return Task.CompletedTask;
             reachedBoundary = !Core.Photos.GetByStep(step, canLoopBack, out photo);
         }
 
@@ -996,38 +1016,76 @@ public partial class AppAPIProvider
             _ = Message.ShowAsync(Core.Lang[isFirst
                 ? LangId._ReachedFirstImage
                 : LangId._ReachedLastImage]);
-            return;
+            return Task.CompletedTask;
         }
 
 
-        _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo);
+        var transition = CreateTransitionRequest__(step, isSlideshowAdvance);
+        _ = App.MainWindow.PART_MainView.ViewPhotoAsync(photo, transition: transition);
 
         // reset slideshow interval on manual navigation
-        if (Core.Config.EnableSlideshow && !_slideshowIsAdvancing)
-        {
-            if (Core.Slideshow is { } slideshow)
-            {
-                // resume if auto-paused (e.g. at end of list)
-                if (slideshow.IsPaused)
-                {
-                    slideshow.Resume();
-                }
+        if (!isSlideshowAdvance) ResetSlideshowInterval__();
 
-                slideshow.ResetInterval();
-            }
-        }
+        return transition?.Completion ?? Task.CompletedTask;
     }
 
 
     /// <summary>
-    /// At a navigation boundary, opens the next/previous sibling directory that contains images.
-    /// Forward navigation lands on the first image; backward navigation lands on the last image.
+    /// Creates the transition for a step navigation from the config; <c>null</c> for none.
     /// </summary>
-    /// <returns><c>false</c> if no suitable sibling directory is found.</returns>
-    private static bool TryOpenSiblingDir(int step)
+    private TransitionRequest? CreateTransitionRequest__(int step, bool isSlideshowAdvance)
     {
-        var direction = step >= 0 ? 1 : -1;
-        var currentDir = Path.GetDirectoryName(Core.Photos.CurrentFilePath);
+        // holding an arrow key flips through photos, which a transition would only slow down
+        if (IsQuickBrowsing) return null;
+
+        var effectId = isSlideshowAdvance
+            ? Core.Config.SlideshowTransition
+            : Core.Config.NavigationTransition;
+        var durationMs = isSlideshowAdvance
+            ? Core.Config.SlideshowTransitionDuration
+            : Core.Config.NavigationTransitionDuration;
+
+        return TransitionEffects.CreateRequest(effectId, durationMs, step);
+    }
+
+
+    /// <summary>
+    /// Views the photos of the next (<c>"true"</c> or empty) or previous (<c>"false"</c>) sibling folder.
+    /// </summary>
+    public static void IG_ViewSiblingDirPhotos(string? isNextStr)
+    {
+        var isNext = BHelper.ConvertStringToBool(isNextStr) ?? true;
+        IG_ViewSiblingDirPhotos(isNext);
+    }
+
+
+    /// <summary>
+    /// Views the first photo of the next or previous sibling folder with images, regardless of <see cref="Config.EnableAutoSwitchSiblingDir"/>.
+    /// </summary>
+    public static void IG_ViewSiblingDirPhotos(bool isNext)
+    {
+        // no current photo (an empty folder, or a switch still searching): use the folder being listed
+        var currentFilePath = Core.Photos.CurrentFilePath;
+        var hasCurrentPhoto = !string.IsNullOrEmpty(currentFilePath);
+        var currentDir = hasCurrentPhoto
+            ? Path.GetDirectoryName(currentFilePath)
+            : Core.Photos.DistinctDirs.FirstOrDefault();
+        if (string.IsNullOrEmpty(currentDir)) return;
+
+        // none left in that direction: stay on the first/last sibling folder
+        var isSiblingDirOpened = TryOpenSiblingDir(currentDir, isNext, selectLastPhoto: false);
+        if (!isSiblingDirOpened) return;
+
+        ResetSlideshowInterval__();
+    }
+
+
+    /// <summary>
+    /// Opens the next or previous sibling directory of <paramref name="currentDir"/> with images; <c>false</c> if none.
+    /// </summary>
+    private static bool TryOpenSiblingDir(string? currentDir, bool isNext, bool selectLastPhoto)
+    {
+        var direction = isNext ? 1 : -1;
         var supportedExts = Core.GetSupportedFileExtensions();
         var includeHidden = Core.Config.EnableHiddenImagesLoading;
 
@@ -1038,24 +1096,51 @@ public partial class AppAPIProvider
         // by the load pipeline, which clears the in-app message on PhotoState.Loaded
         void OnPhotoLoaded(ViewerControl s, PhotoLoadingEventArgs e)
         {
+            // a photo of the folder being left can still finish loading after the switch
+            var isSiblingDirPhoto = BHelper.IsPathContainedIn(e.Photo.FilePath, siblingDir);
+            if (!isSiblingDirPhoto) return;
             if (e.State != PhotoState.Loaded && e.Photo.Error is null) return;
 
             Viewer.PhotoLoading -= OnPhotoLoaded;
+            _siblingDirAnnouncer = null;
             if (e.Photo.Error is not null) return;
 
             _ = Message.ShowAsync(Core.Lang[direction < 0
                 ? LangId._SwitchedToPreviousFolder
                 : LangId._SwitchedToNextFolder, siblingDir]);
         }
-        Viewer.PhotoLoading += OnPhotoLoaded;
 
-        // forward -> first image, backward -> last image; resolved after the list is built, so it
-        // follows whatever order the search produced (Explorer view order included)
+        // a quicker switch drops the message of one whose folder never got to load
+        if (_siblingDirAnnouncer is not null) Viewer.PhotoLoading -= _siblingDirAnnouncer;
+        _siblingDirAnnouncer = OnPhotoLoaded;
+        Viewer.PhotoLoading += _siblingDirAnnouncer;
+
+        // the first/last photo is picked once the search builds the list, so it follows Explorer view order too
         App.MainWindow.PART_MainView.PrepareLoadPhotoList([siblingDir],
             currentFilePath: null, disposeForegroundShell: true, reloadInitPhoto: true,
-            selectLastPhoto: direction < 0);
+            selectLastPhoto);
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Resumes a paused slideshow and restarts its interval, after a manual navigation.
+    /// </summary>
+    private static void ResetSlideshowInterval__()
+    {
+        if (!Core.Config.EnableSlideshow) return;
+
+        var slideshow = Core.Slideshow;
+        if (slideshow is null) return;
+
+        // resume if auto-paused (e.g. at end of list)
+        if (slideshow.IsPaused)
+        {
+            slideshow.Resume();
+        }
+
+        slideshow.ResetInterval();
     }
 
 
@@ -1284,12 +1369,15 @@ public partial class AppAPIProvider
 
 
     /// <summary>
-    /// Sets zoom = 100% if zoom value is less than 100%.
-    /// Otherwise, refresh the image with the current zoom mode.
+    /// Toggles the zoom between 100% and the current zoom mode.
     /// </summary>
     public static void IG_SetZoomForMouseClick()
     {
-        if (Viewer.ZoomFactor < 1)
+        var zoomFactor = Viewer.ZoomFactor;
+        var isZoomModeFactor = !Viewer.IsManualZoom && Viewer.ZoomMode != ZoomMode.LockZoom;
+        var isEnlargedByZoomMode = isZoomModeFactor && zoomFactor > 1;
+
+        if (zoomFactor < 1 || isEnlargedByZoomMode)
         {
             IG_SetZoom(1);
         }
@@ -1679,14 +1767,6 @@ public partial class AppAPIProvider
         if (Viewer.FilterColorChannels(channels, false))
         {
             Core.ColorChannels = channels;
-
-            // apply transforms
-            if (Core.ImageTransform.HasChanges)
-            {
-                _ = Viewer.RotateImage(Core.ImageTransform.Rotation, false);
-                _ = Viewer.FlipImage(Core.ImageTransform.Flips, false);
-            }
-
             Viewer.Refresh(resetZoom: false);
         }
         else
@@ -1859,16 +1939,10 @@ public partial class AppAPIProvider
 
         var degree = options == RotateOption.Left ? -90 : 90;
 
-        // update rotation changes
+        // the viewer composed the click onto its orientation, which Save applies as is
         if (Viewer.RotateImage(degree))
         {
-            var currentRotation = Core.ImageTransform.Rotation + degree;
-            if (Math.Abs(currentRotation) >= 360)
-            {
-                currentRotation %= 360;
-            }
-
-            Core.ImageTransform.Rotation = currentRotation;
+            Core.ImageTransform.Orientation = Viewer.PhotoOrientation;
         }
         else
         {
@@ -1906,32 +1980,10 @@ public partial class AppAPIProvider
     {
         if (Viewer.SourceKind == PhotoSource.None || Core.IsBusy) return;
 
-        // update flip changes
+        // the viewer composed the click onto its orientation, which Save applies as is
         if (Viewer.FlipImage(options))
         {
-            if (options.HasFlag(FlipOptions.Horizontal))
-            {
-                if (Core.ImageTransform.Flips.HasFlag(FlipOptions.Horizontal))
-                {
-                    Core.ImageTransform.Flips ^= FlipOptions.Horizontal;
-                }
-                else
-                {
-                    Core.ImageTransform.Flips |= FlipOptions.Horizontal;
-                }
-            }
-
-            if (options.HasFlag(FlipOptions.Vertical))
-            {
-                if (Core.ImageTransform.Flips.HasFlag(FlipOptions.Vertical))
-                {
-                    Core.ImageTransform.Flips ^= FlipOptions.Vertical;
-                }
-                else
-                {
-                    Core.ImageTransform.Flips |= FlipOptions.Vertical;
-                }
-            }
+            Core.ImageTransform.Orientation = Viewer.PhotoOrientation;
         }
         else
         {
@@ -2137,7 +2189,10 @@ public partial class AppAPIProvider
         if (Viewer.SourceKind == PhotoSource.None || App.MainWindow.Clipboard is null) return;
 
         // 1. get rendered bitmap
-        var bmp = Viewer.GetRenderedBitmap(!Viewer.SourceSelection.IsEmpty);
+        using var shownState = Viewer.CaptureImageState();
+        using var bmp = shownState?.CopyPixels(Viewer.SourceSelection.IsEmpty
+            ? ViewerImageRegion.WholeImage
+            : ViewerImageRegion.Selection);
         if (bmp.IsDisposed()) return;
 
 
@@ -2396,7 +2451,7 @@ public partial class AppAPIProvider
 
         // get current screen workarea
         var screen = App.MainWindow.Screens.ScreenFromWindow(App.MainWindow)!;
-        var workArea = screen.WorkingArea.ToRect(dpi);
+        var workArea = screen.GetActualWorkingArea().ToRect(dpi);
 
         // get source image size
         var srcImgW = Viewer.BitmapSize.Width;
@@ -2748,11 +2803,10 @@ public partial class AppAPIProvider
             Core.Slideshow = null;
         }
 
-        // release the forced look-ahead image the slideshow preloaded; when no memory
-        // budget is set, a normal cache pass would early-return without unloading it
-        if (Core.Config.CacheMaxMemoryInMb == 0)
+        // free the look-ahead no later pass would unload, but spare the shown photo: its Bitmap may be a live animator
+        if (!Core.Photos.IsCachingEnabled)
         {
-            Core.Photos.ClearCache();
+            Core.Photos.ClearCache(Viewer.Photo);
         }
 
 
@@ -2777,11 +2831,9 @@ public partial class AppAPIProvider
         if (_isWindowFitBeforeSlideshow) IG_ToggleWindowFit(true);
     }
 
-    private void OnSlideshowNextPhoto__()
+    private Task OnSlideshowNextPhoto__()
     {
-        _slideshowIsAdvancing = true;
-        IG_ViewNext();
-        _slideshowIsAdvancing = false;
+        return ViewByStep__(1, isSlideshowAdvance: true);
     }
 
 
@@ -3312,7 +3364,7 @@ public partial class AppAPIProvider
         }
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-        var result = await Core.Update.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
+        var result = await Core.UpdateProvider.CheckForUpdateAsync(cts.Token, isScheduled: !showUI);
 
         if (showUI)
         {
@@ -3324,6 +3376,10 @@ public partial class AppAPIProvider
         }
         else
         {
+            // auto-download when enabled; the ready package shows the menu affordance, not a popup
+            var download = await Core.UpdateProvider.TryDownloadUpdateAsync(result, CancellationToken.None);
+            if (download.IsSuccess) return;
+
             // silent mode: only show window for an update the user has not already checked for
             if (result.Status == Update.UpdateCheckStatus.UpdateAvailable && !_hasManualUpdateCheck)
             {
@@ -3332,6 +3388,103 @@ public partial class AppAPIProvider
                 _ = await updateWindow.ShowAsync(App.MainWindow);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_InstallUpdateAsync(string? boolStr = null)
+    {
+        var needsConfirm = BHelper.ConvertStringToBool(boolStr) ?? true;
+        await IG_InstallUpdateAsync(needsConfirm);
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded update and relaunches the app.
+    /// </summary>
+    public static async Task IG_InstallUpdateAsync(bool needsConfirm)
+    {
+        var provider = Core.UpdateProvider;
+        var version = Core.Config.UpdatePendingVersion;
+        var title = Core.Lang[LangId._CheckForUpdate];
+
+        // self-guard: reachable without RunApiAsync, so the admin lock is enforced here too
+        if (FeatureManager.IsLocked(API.IG_InstallUpdate)) return;
+        if (string.IsNullOrWhiteSpace(version)) return;
+
+        var pkgPath = provider.GetPendingPackagePath();
+        if (pkgPath is null)
+        {
+            provider.DiscardPendingUpdate();
+            _ = await Core.Config.SaveAsync();
+
+            var cacheDir = BHelper.ConfigDir(Dir.Cache, Update.UpdateConstants.PackageCacheDir);
+            var realCacheDir = BHelper.GetRealPlatformPath(cacheDir);
+
+            await ShowUpdateFailedAsync(Update.UpdateOpResult.Fail(
+                $"IGE: The downloaded update package for {version} is no longer in the cache folder.", realCacheDir));
+            return;
+        }
+
+        // notes are cached with the package, so the prompt can show them with no network call
+        var pendingRelease = provider.GetPendingRelease();
+
+        // the menu entry is one click from killing the app; the dialog's [Restart now] already confirmed
+        if (needsConfirm)
+        {
+            // the update window already renders the release card, changelog link and skip link
+            if (pendingRelease is not null)
+            {
+                var updateWindow = new UpdateWindow();
+                updateWindow.SetResultState(Update.UpdateCheckResult.Available(pendingRelease));
+                _ = await updateWindow.ShowAsync(App.MainWindow);
+
+                // it installs through this same API, so this call is done either way
+                return;
+            }
+
+            var confirm = await ModalWindow.ShowAsync(App.MainWindow, new ModalWindowOptions
+            {
+                Title = title,
+                Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_ReadyToInstall],
+                Description = Core.Lang[LangId.Menu_MnuInstallUpdate_Confirm],
+                Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck),
+            }, ModalWindowButton.OK_Cancel);
+            if (confirm.ExitCode != DialogExitCode.OK) return;
+        }
+
+        // deployment terminates the process, so OnClosing never runs: persist window state now
+        if (App.MainWindow is { } mainWindow)
+        {
+            _ = await mainWindow.CaptureAndSaveConfigAsync();
+        }
+
+        var release = pendingRelease ?? new Update.UpdateReleaseInfo { Version = version };
+        var apply = await provider.ApplyAndRestartAsync(pkgPath, release);
+
+        // on success the process is already being torn down by the installer
+        if (!apply.IsSuccess && !apply.IsSkipped)
+        {
+            await ShowUpdateFailedAsync(apply);
+        }
+    }
+
+
+    /// <summary>
+    /// Reports the real reason a self-update failed and offers the download page instead.
+    /// </summary>
+    public static async Task ShowUpdateFailedAsync(Update.UpdateOpResult opResult, PhWindow? owner = null)
+    {
+        owner ??= App.MainWindow;
+
+        var result = await ModalWindow.ShowErrorAsync(owner, new ModalWindowOptions
+        {
+            Title = Core.Lang[LangId._CheckForUpdate],
+            Heading = opResult.ErrorMessage ?? Core.Lang[LangId.Menu_MnuCheckForUpdate_Failed],
+            Details = opResult.ErrorDetails,
+        });
     }
 
 

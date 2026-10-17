@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -25,6 +25,7 @@ using ImageGlass.Common.Types.JsonTypeConverters;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
+using ImageGlass.UI.Viewer.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -121,6 +122,15 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.EnableSettingsWindowMaximized, false);
         set => Set(ConfigId.EnableSettingsWindowMaximized, value);
+    }
+
+    /// <summary>
+    /// Gets, sets maximized state of the print window.
+    /// </summary>
+    public bool EnablePrintWindowMaximized
+    {
+        get => Get(ConfigId.EnablePrintWindowMaximized, false);
+        set => Set(ConfigId.EnablePrintWindowMaximized, value);
     }
 
     /// <summary>
@@ -452,6 +462,15 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Enables / Disables downloading app updates in the background so they are ready to install.
+    /// </summary>
+    public bool EnableAutoInstallUpdate
+    {
+        get => Get(ConfigId.EnableAutoInstallUpdate, false);
+        set => Set(ConfigId.EnableAutoInstallUpdate, value);
+    }
+
+    /// <summary>
     /// Enables, disables debug mode.
     /// </summary>
     public bool EnableDebug
@@ -531,6 +550,24 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets the slideshow transition duration in milliseconds.
+    /// </summary>
+    public uint SlideshowTransitionDuration
+    {
+        get => Get(ConfigId.SlideshowTransitionDuration, 1000u);
+        set => Set(ConfigId.SlideshowTransitionDuration, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the transition duration in milliseconds when navigating photos.
+    /// </summary>
+    public uint NavigationTransitionDuration
+    {
+        get => Get(ConfigId.NavigationTransitionDuration, 300u);
+        set => Set(ConfigId.NavigationTransitionDuration, value);
+    }
+
+    /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
     public uint ThumbnailSize
@@ -555,6 +592,15 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.GalleryColumns, 3u);
         set => Set(ConfigId.GalleryColumns, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the maximum number of images to cache, excluding the viewing image.
+    /// </summary>
+    public uint CacheMaxFiles
+    {
+        get => Get(ConfigId.CacheMaxFiles, 10u);
+        set => Set(ConfigId.CacheMaxFiles, value);
     }
 
     /// <summary>
@@ -653,7 +699,7 @@ public partial class Config : PhReactive
     /// </summary>
     public string AutoUpdate
     {
-        get => Get(ConfigId.AutoUpdate, DateTime.UtcNow.Subtract(TimeSpan.FromDays(30)).ToString());
+        get => Get(ConfigId.AutoUpdate, BHelper.FormatUtcRoundtrip(DateTime.UtcNow.AddDays(-30)));
         set => Set(ConfigId.AutoUpdate, value);
     }
 
@@ -664,6 +710,16 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.UpdateSkippedVersion, string.Empty);
         set => Set(ConfigId.UpdateSkippedVersion, value);
+    }
+
+
+    /// <summary>
+    /// Gets, sets the version of the verified update package waiting to be installed.
+    /// </summary>
+    public string UpdatePendingVersion
+    {
+        get => Get(ConfigId.UpdatePendingVersion, string.Empty);
+        set => Set(ConfigId.UpdatePendingVersion, value);
     }
 
     /// <summary>
@@ -721,6 +777,24 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets the transition effect id played when the slideshow advances.
+    /// </summary>
+    public string SlideshowTransition
+    {
+        get => Get(ConfigId.SlideshowTransition, TransitionEffects.NONE);
+        set => Set(ConfigId.SlideshowTransition, value);
+    }
+
+    /// <summary>
+    /// Gets, sets the transition effect id played when navigating photos.
+    /// </summary>
+    public string NavigationTransition
+    {
+        get => Get(ConfigId.NavigationTransition, TransitionEffects.NONE);
+        set => Set(ConfigId.NavigationTransition, value);
+    }
+
+    /// <summary>
     /// Gets, sets the theme name for dark mode.
     /// </summary>
     public string DarkTheme
@@ -760,6 +834,26 @@ public partial class Config : PhReactive
     {
         get => Get(ConfigId.CheckerboardMode, CheckerboardType.None);
         set => Set(ConfigId.CheckerboardMode, value);
+    }
+
+    /// <summary>
+    /// Gets, sets how the viewer shows scrollbars when the image does not fit in it.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumSafeConverter<ScrollbarMode>))]
+    public ScrollbarMode ViewerScrollbarMode
+    {
+        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.AutoHide);
+        set => Set(ConfigId.ViewerScrollbarMode, value);
+    }
+
+    /// <summary>
+    /// Gets, sets where and how the image info tags are shown on top of the image.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumSafeConverter<ImageInfoOverlayMode>))]
+    public ImageInfoOverlayMode ImageInfoOverlayMode
+    {
+        get => Get(ConfigId.ImageInfoOverlayMode, ImageInfoOverlayMode.BorderlessAutoHide);
+        set => Set(ConfigId.ImageInfoOverlayMode, value);
     }
 
     /// <summary>
@@ -871,6 +965,16 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
+    /// Gets, sets the bounds of the print window.
+    /// </summary>
+    [JsonConverter(typeof(JsonArrayToRectConverter))]
+    public Rect PrintWindowBounds
+    {
+        get => Get(ConfigId.PrintWindowBounds, new Rect(200, 200, 1000, 680));
+        set => Set(ConfigId.PrintWindowBounds, value);
+    }
+
+    /// <summary>
     /// Gets, sets zoom levels of the viewer
     /// </summary>
     [JsonConverter(typeof(JsonArrayToZoomFactorConverter))]
@@ -888,10 +992,6 @@ public partial class Config : PhReactive
         get => Get(ConfigId.EditApps, new Dictionary<string, EditingApp?>());
         set => Set(ConfigId.EditApps, value);
     }
-
-    /// <summary>
-    /// Gets, sets the list of formats that always use native codec to decode.
-    /// </summary>
 
     /// <summary>
     /// Gets, sets the list of supported image formats

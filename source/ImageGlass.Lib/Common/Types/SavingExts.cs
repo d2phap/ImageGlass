@@ -57,9 +57,23 @@ public static class SavingExts
 
 
     /// <summary>
-    /// Gets, sets the last extensions used for saving.
+    /// Gets, sets the last Save As extension, e.g. <c>.jxl</c>; text because the choices are rebuilt per get.
     /// </summary>
-    public static FilePickerFileType? LastSavedFileType { get; set; }
+    public static string? LastSavedExtension { get; set; }
+
+
+    /// <summary>
+    /// Finds the choice that writes <paramref name="ext"/>, or <c>null</c> when none does.
+    /// </summary>
+    public static FilePickerFileType? FindChoice(IEnumerable<FilePickerFileType> choices, string? ext)
+    {
+        if (string.IsNullOrEmpty(ext)) return null;
+
+        var pattern = $"*{ext}";
+        var choice = choices.FirstOrDefault(c => c.Patterns?.Contains(pattern, StringComparer.OrdinalIgnoreCase) is true);
+
+        return choice;
+    }
 
 
     /// <summary>

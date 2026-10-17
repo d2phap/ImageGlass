@@ -91,12 +91,22 @@ public partial class ViewerControl
                 _svgDocument,
                 _lock,
                 picture => _svgPicture = picture,
-                InvalidateVisual);
+                InvalidateVectorFrame);
             _animator.FrameChanged += Animator_FrameChanged;
             StartAnimator();
         }
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Redraws a new SMIL frame here and in the mirrors.
+    /// </summary>
+    private void InvalidateVectorFrame()
+    {
+        InvalidateVisual();
+        OnRenderStateChanged();
     }
 
 

@@ -16,63 +16,113 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia.Threading;
 using ImageGlass.Common;
-using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
-using ImageGlass.Common.Types;
+using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Mac.Common.ServiceProviders;
 
-internal class MacPrintProvider : IPrintProvider
+
+/// <summary>
+/// Prints through PrintCore as PDF jobs, and opens the macOS print panel for the system dialog.
+/// </summary>
+internal class MacPrintProvider : PrintProviderBase
 {
-    private readonly HashSet<string> _nativeMacFormats = [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff", ".heic", ".pdf"];
+    /// <inheritdoc/>
+    protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
+    {
+        return Task.Run<IReadOnlyList<PrinterInfo>>(MacPrintCoreApi.GetPrinters, token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.Run(() => MacPrintCoreApi.GetCapabilities(printer.Id, token), token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PrinterStatus> GetSystemStatusAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.Run(() => MacPrintCoreApi.GetStatus(printer.Id), token).WaitAsync(token);
+    }
 
 
     /// <summary>
-    /// <inheritdoc/>
+    /// Writes the job as a PDF of portrait pages, a landscape one turned onto its sheet, and hands it to the print system.
     /// </summary>
-    public async Task OpenPrintAsync(string filePath, PhotoMetadata? meta, bool isClipboardFile)
+    protected override async Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
     {
-        var fileToPrint = filePath;
-        var srcFilePath = meta?.FilePath ?? string.Empty;
-        var ext = meta?.FileExtension.ToLowerInvariant() ?? string.Empty;
-        var isNativeSingleFrameFormat = meta?.FrameCount == 1 && !_nativeMacFormats.Contains(ext);
+        var path = await WriteTempPdfAsync(job, true, progress, token).ConfigureAwait(false);
 
-
-        // print clipboard image or convert non-native single-frame formats
-        if (Core.ClipboardImage != null || isNativeSingleFrameFormat)
+        try
         {
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
+            // past this point the job goes whole, so a cancel never leaves half a document on the printer
+            token.ThrowIfCancellationRequested();
+
+            var settings = job.Settings;
+            var options = new MacPrintJobOptions(settings.Paper.Id, settings.Copies, settings.Collate, settings.Duplex, settings.ColorMode);
+            await Task.Run(() => MacPrintCoreApi.PrintFile(settings.Printer.Id, path, job.Title, options), CancellationToken.None).ConfigureAwait(false);
         }
-        // rename .fax -> .tiff for multi-frame printing
-        else if (ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
+        finally
         {
-            fileToPrint = BHelper.ConfigDir(Dir.Temporary, Path.GetFileNameWithoutExtension(srcFilePath) + ".tiff");
-            File.Copy(srcFilePath, fileToPrint, true);
+            TryDelete(path);
         }
-        else if (meta?.FrameCount > 1
-            && !ext.Equals(".gif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase))
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanShowSystemDialog => true;
+
+
+    /// <summary>
+    /// Shows the macOS print panel for the pages as a PDF, landscape pages kept, since the panel turns them to its paper.
+    /// </summary>
+    public override async Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
+    {
+        var path = await WriteTempPdfAsync(job, false, null, token).ConfigureAwait(false);
+
+        // the panel starts from the window's printer and paper; Save as PDF has neither in PrintCore
+        var settings = job.Settings;
+        var isSystemPrinter = !settings.Printer.IsVirtual;
+        var options = new MacPrintPanelOptions(
+            isSystemPrinter ? settings.Printer.DisplayName : null,
+            isSystemPrinter ? settings.Paper.Id : null,
+            settings.IsLandscape,
+            settings.Copies);
+
+        try
         {
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
+            // AppKit runs the panel on the main thread
+            return await Dispatcher.UIThread.InvokeAsync(() => MacPrintPanelApi.ShowPrintPanel(path, options));
         }
+        finally
+        {
+            TryDelete(path);
+        }
+    }
 
-        if (string.IsNullOrEmpty(fileToPrint)) return;
+
+    /// <inheritdoc/>
+    public override bool CanAddPrinter => true;
 
 
-        // open the macOS system print dialog via Preview's print command
-        MacShellProvider.RunAppleScript(
-            $"set theFile to POSIX file \"{fileToPrint}\"\n" +
-            "tell application \"Preview\"\n" +
-            "open theFile\n" +
-            "activate\n" +
-            "tell application \"System Events\" to keystroke \"p\" using command down\n" +
-            "end tell");
+    /// <summary>
+    /// Opens Printers &amp; Scanners, whose id changed when System Preferences became System Settings in macOS 13.
+    /// </summary>
+    public override Task OpenAddPrinterSettingsAsync(PhWindow owner)
+    {
+        var url = OperatingSystem.IsMacOSVersionAtLeast(13)
+            ? "x-apple.systempreferences:com.apple.Print-Scan-Settings.extension"
+            : "x-apple.systempreferences:com.apple.preference.printfax";
 
+        return BHelper.OpenUrlAsync(owner, url);
     }
 }

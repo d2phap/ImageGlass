@@ -20,7 +20,6 @@ using ImageGlass.Common.Types;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -194,13 +193,7 @@ public static partial class UsageStatsAgent
     }
 
 
-    private static string GetArchToken() => RuntimeInformation.OSArchitecture switch
-    {
-        Architecture.X64 => "x64",
-        Architecture.Arm64 => "arm64",
-        Architecture.X86 => "x86",
-        _ => "other",
-    };
+    private static string GetArchToken() => BHelper.ArchToken;
 
 
     /// <summary>
@@ -236,11 +229,10 @@ public static partial class UsageStatsAgent
     private static int? GetGapDays()
     {
         var raw = Core.Config?.AutoUpdate;
-        if (string.IsNullOrEmpty(raw) || raw == "0") return null;
-        if (!DateTime.TryParse(raw, CultureInfo.InvariantCulture,
-            DateTimeStyles.RoundtripKind, out var last)) return null;
+        if (raw == "0") return null;
+        if (!BHelper.TryParseUtcRoundtrip(raw, out var last)) return null;
 
-        var days = (int)Math.Round((DateTime.UtcNow - last.ToUniversalTime()).TotalDays);
+        var days = (int)Math.Round((DateTime.UtcNow - last).TotalDays);
         return days is >= MIN_GAP_DAYS and <= MAX_GAP_DAYS ? days : null;
     }
 

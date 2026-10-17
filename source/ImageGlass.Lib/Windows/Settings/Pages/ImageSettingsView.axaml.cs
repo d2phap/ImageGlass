@@ -69,6 +69,9 @@ public partial class ImageSettingsView : SettingsPageView
         BindToggle(PART_AutoSwitchSiblingDir, ConfigId.EnableAutoSwitchSiblingDir,
             LangId.Settings_EnableAutoSwitchSiblingDir, LangId.Settings_Browsing);
         BuildBrowsingMode();
+        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError,
+            PART_OpenTransitionsFolder, PART_GetMoreTransitions,
+            ConfigId.NavigationTransition, ConfigId.NavigationTransitionDuration, 300u, LangId.Settings_Browsing);
 
         // Image preview
         BindToggle(PART_ImagePreview, ConfigId.EnableImagePreview,
@@ -104,6 +107,8 @@ public partial class ImageSettingsView : SettingsPageView
         BuildColorProfile();
 
         // Caching
+        BindUIntSlider(PART_CacheMaxFiles, ConfigId.CacheMaxFiles,
+            LangId.Settings_ImageBoosterCacheMaxFiles, LangId.Settings_Caching, 10u, PART_CacheMaxFilesLabel);
         BindUIntInput(PART_CacheMaxMemory, ConfigId.CacheMaxMemoryInMb,
             LangId.Settings_ImageBoosterCacheMaxMemoryInMb, LangId.Settings_Caching);
         BindUIntInput(PART_CacheMaxDimension, ConfigId.CacheMaxDimension,

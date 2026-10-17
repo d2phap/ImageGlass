@@ -60,6 +60,12 @@ public partial class ViewerControl : PhControl
     public event TEventHandler<ViewerControl, ViewerMouseWheelEventArgs>? ViewerMouseWheel;
 
 
+    public ViewerControl()
+    {
+        InitScrollbars();
+    }
+
+
     #region Public Properties
 
     /// <summary>
@@ -104,6 +110,18 @@ public partial class ViewerControl : PhControl
     public bool IsColorInverted { get; protected set; } = false;
 
 
+    /// <summary>
+    /// Gets, sets whether the viewer takes pointer and touch input; off for a display-only viewer.
+    /// </summary>
+    public bool IsInteractive
+    {
+        get => GetValue(IsInteractiveProperty);
+        set => SetValue(IsInteractiveProperty, value);
+    }
+    public static readonly StyledProperty<bool> IsInteractiveProperty =
+        AvaloniaProperty.Register<ViewerControl, bool>(nameof(IsInteractive), true);
+
+
     #endregion // Public Properties
 
 
@@ -119,6 +137,8 @@ public partial class ViewerControl : PhControl
         // suppress the default way to open context menu
         AddHandler(ContextRequestedEvent, OnContextMenuRequested, RoutingStrategies.Tunnel);
         RegisterTouchGestures();
+
+        AttachMirrorSource(MirrorSource);
     }
 
 
@@ -133,6 +153,7 @@ public partial class ViewerControl : PhControl
         // suppress the default way to open context menu
         RemoveHandler(ContextRequestedEvent, OnContextMenuRequested);
 
+        DetachMirrorSource(MirrorSource);
         DisposeCheckerboard();
         DisposeNativePhotoResources();
     }
@@ -161,6 +182,8 @@ public partial class ViewerControl : PhControl
             ResetZoom = false,
             UseCache = false,
             Channels = Core.ColorChannels,
+            Orientation = PhotoOrientation,
+            IsColorInverted = IsColorInverted,
         });
     }
 
@@ -187,6 +210,9 @@ public partial class ViewerControl : PhControl
 
         DisposeCheckerboard();
         InvalidateVisual();
+
+        // the zoom factor is in device pixels, so a mirror re-fits
+        OnRenderStateChanged();
     }
 
 
@@ -197,6 +223,13 @@ public partial class ViewerControl : PhControl
         // update drawing area
         if (e.Property == PaddingProperty || e.Property == BoundsProperty)
         {
+            // a mirror takes its whole viewport from the source on render
+            if (MirrorSource is not null)
+            {
+                InvalidateVisual();
+                return;
+            }
+
             Dispatcher.UIThread.Post(() =>
             {
                 DrawingArea = Bounds.Deflate(Padding);
@@ -209,8 +242,37 @@ public partial class ViewerControl : PhControl
         }
         else if (e.Property == EnableNavButtonsProperty)
         {
-            _navButtons.IsEnabled = (bool)e.NewValue!;
+            _navButtons.IsEnabled = (bool)e.NewValue! && IsInteractive;
         }
+        else if (e.Property == ScrollbarModeProperty)
+        {
+            ApplyScrollbarMode();
+        }
+        else if (e.Property == IsInteractiveProperty)
+        {
+            ApplyInteractivity();
+        }
+        else if (e.Property == MirrorSourceProperty)
+        {
+            OnMirrorSourceChanged(e.OldValue as ViewerControl, e.NewValue as ViewerControl);
+        }
+        else if (e.Property == EnableMirrorSyncProperty)
+        {
+            InvalidateVisual();
+        }
+    }
+
+
+    /// <summary>
+    /// Turns input on or off; with hit testing off, no pointer, wheel or gesture reaches the viewer.
+    /// </summary>
+    private void ApplyInteractivity()
+    {
+        var isInteractive = IsInteractive;
+
+        IsHitTestVisible = isInteractive;
+        _navButtons.IsEnabled = isInteractive && EnableNavButtons;
+        ApplyScrollbarMode();
     }
 
 
@@ -583,7 +645,10 @@ public partial class ViewerControl : PhControl
                 }
             }
 
+            // also covers a source swapped in without a new drawing region, e.g. the full image after a zoomed preview
+            UpdateScrollbars();
             InvalidateVisual();
+            OnRenderStateChanged();
         });
     }
 
@@ -625,6 +690,8 @@ public partial class ViewerControl : PhControl
             SKImageRef.Set(ref _imgRender, null);
             SKImageRef.Set(ref _imgHdrSource, null);
         }
+
+        OnRenderStateChanged();
     }
 
 
@@ -666,6 +733,7 @@ public partial class ViewerControl : PhControl
     public void ClearPhotoTransforms()
     {
         IsColorInverted = false;
+        PhotoOrientation = ImageOrientation.Identity;
     }
 
 
@@ -682,6 +750,9 @@ public partial class ViewerControl : PhControl
             // save pan position for LockZoom before unloading
             _lockZoomSavedSrcPoint = ZoomMode == ZoomMode.LockZoom ? _logicalSrcPoint : null;
 
+            // capture the old frame for the transition while its images still exist
+            BeginTransition(options?.Transition);
+
             // unload current photo resources
             UnloadPhoto();
 
@@ -697,6 +768,10 @@ public partial class ViewerControl : PhControl
             _loadingOptions = options ?? new();
             _enablePanningVelocity = true;
             Photo = inputPhoto;
+
+            // a reload of the same photo keeps its edits
+            IsColorInverted = _loadingOptions.IsColorInverted;
+            PhotoOrientation = _loadingOptions.Orientation;
         }
 
 
@@ -966,6 +1041,9 @@ public partial class ViewerControl : PhControl
         // raw pre-tone-map HDR frame to keep for live re-tone-mapping (null = don't retain)
         SKImage? hdrRawToRetain = null;
 
+        // the frame with the edits a reload keeps, drawn from the first frame on
+        SKImage? editedFrame = null;
+
         try
         {
             // 2. check if photo error
@@ -1024,18 +1102,21 @@ public partial class ViewerControl : PhControl
                         imgFrameColored = await ApplySkiaColorSpaceAsync(imgFrame, e.Photo.Metadata);
                     }
 
+                    // take the frame from the photo, or Photo.Unload frees it under our leases (the clipboard keeps its own)
+                    var ownsFrame = imgFrame is not null && !e.Photo.IsClipboard
+                        && e.Photo.ReleaseFrame(imgFrame);
+
                     if (imgFrameColored is not null)
                     {
                         PhotoTrace.Mark("viewer:color-managed", e.Photo.FilePath,
                             $"applied (hdrToneMap={Core.Config.EnableHdrToneMapping && e.Photo.Metadata.IsHdr}, srcProfile={(string.IsNullOrEmpty(e.Photo.Metadata.ColorProfileName) ? "none" : e.Photo.Metadata.ColorProfileName)})");
 
                         // retain the pre-tone-map HDR frame for live re-tone-mapping, else free it
-                        // (never dispose the clipboard photo's frame)
-                        if (_liveHdrToneMapping && e.Photo.Metadata.IsHdr && !e.Photo.IsClipboard)
+                        if (ownsFrame && _liveHdrToneMapping && e.Photo.Metadata.IsHdr)
                         {
                             hdrRawToRetain = imgFrame;
                         }
-                        else if (!e.Photo.IsClipboard)
+                        else if (ownsFrame)
                         {
                             imgFrame?.Dispose();
                         }
@@ -1045,10 +1126,14 @@ public partial class ViewerControl : PhControl
                     else
                     {
                         PhotoTrace.Mark("viewer:color-managed", e.Photo.FilePath, "skipped");
+
+                        // the photo dropped it during the pass (unload or reload), so it is not ours to show
+                        if (!ownsFrame && !e.Photo.IsClipboard) imgFrame = null;
                     }
 
                     // IsDisposed, not null: a dead frame renders nothing yet claims the photo is shown
                     hasSource = !imgFrame.IsDisposed();
+                    if (hasSource) editedFrame = await BuildEditedFrameAsync(imgFrame);
                 }
             }
 
@@ -1068,7 +1153,10 @@ public partial class ViewerControl : PhControl
             lock (_lock)
             {
                 // update bitmap size after the preview is cancelled
-                BitmapSize = e.Photo.Size;
+                BitmapSize = editedFrame is not null ? new Size(editedFrame.Width, editedFrame.Height) : e.Photo.Size;
+
+                // the preview shows the photo unturned
+                if (editedFrame is not null && PhotoOrientation.SwapsAxes) prevSize = new Size(prevSize.Height, prevSize.Width);
 
                 // 5. calculate the source viewport to match with the preview
                 if (hasSource)
@@ -1085,6 +1173,8 @@ public partial class ViewerControl : PhControl
                     {
                         _isFirstDraw.SetTrue();
                         SKImageRef.Set(ref _imgSource, imgFrame);
+                        SKImageRef.Set(ref _imgRender, editedFrame);
+                        editedFrame = null;
 
                         // keep (or clear) the retained raw HDR frame for live re-tone-mapping
                         SKImageRef.Set(ref _imgHdrSource, hdrRawToRetain);
@@ -1148,7 +1238,16 @@ public partial class ViewerControl : PhControl
                             _lockZoomSavedSrcPoint = null;
                         }
 
-                        Refresh(_loadingOptions.ResetZoom);
+                        // fit now: a posted Refresh runs after the next render pass, which would draw this source with the preview's rects
+                        if (_loadingOptions.ResetZoom)
+                        {
+                            SetZoomMode();
+                            InvalidateVisual();
+                        }
+                        else
+                        {
+                            Refresh(false);
+                        }
                     }
                 }
             }
@@ -1185,9 +1284,11 @@ public partial class ViewerControl : PhControl
             imgFrame?.Dispose();
             imgFrame = null;
 
-            // free the retained raw HDR frame if we hadn't stored it yet
+            // free the retained raw HDR frame and the edited frame if we hadn't stored them yet
             hdrRawToRetain?.Dispose();
             hdrRawToRetain = null;
+            editedFrame?.Dispose();
+            editedFrame = null;
 
             animator?.Dispose();
             animator = null;
@@ -1235,6 +1336,7 @@ public partial class ViewerControl : PhControl
         }
 
         InvalidateVisual();
+        OnRenderStateChanged();
         OnPhotoFrameChanged(e);
     }
 
@@ -1278,38 +1380,64 @@ public partial class ViewerControl : PhControl
     /// </summary>
     public async Task ViewFrameAsync(uint frameIndex)
     {
-        if (Photo is null) return;
+        var photo = Photo;
+        if (photo is null) return;
 
         // pause the animator if it's running
         if (IsImageAnimating) StopAnimator();
 
-        var imgFrame = await Photo.GetFrameAsync(frameIndex);
+        // the page on screen is already ours, so asking for it again needs no decode
+        if (photo.Bitmap is not AnimatorImpl && photo.FrameIndex == (int)frameIndex)
+        {
+            lock (_lock)
+            {
+                if (_imgSource?.Image.IsDisposed() == false) return;
+            }
+        }
+
+        var imgFrame = await photo.GetFrameAsync(frameIndex);
         if (imgFrame is null) return;
+
+        // take a decoded frame before the pass, as the next frame switch disposes the photo's (animator frames stay the animator's)
+        var ownsFrame = photo.Bitmap is not AnimatorImpl && !photo.IsClipboard;
+        if (ownsFrame && !photo.ReleaseFrame(imgFrame)) return;
 
         // apply color space off the UI thread
         SKImage? colored;
-        using (Photo.PinBitmap())
+        using (photo.PinBitmap())
         {
-            colored = await ApplySkiaColorSpaceAsync(imgFrame, Photo.Metadata);
+            colored = await ApplySkiaColorSpaceAsync(imgFrame, photo.Metadata);
         }
 
+        if (colored is not null && ownsFrame) imgFrame.Dispose();
         var sourceImg = colored ?? imgFrame;
+
+        // a turned or filtered page keeps its edits, applied before its first draw so it never flashes without them
+        var editedImg = await BuildEditedFrameAsync(sourceImg);
 
         lock (_lock)
         {
+            // another photo took over during the pass, so nothing here is shown
+            if (!ReferenceEquals(Photo, photo))
+            {
+                if (ownsFrame || colored is not null) sourceImg.Dispose();
+                editedImg?.Dispose();
+                return;
+            }
+
             _mipmapCache?.Dispose();
             _mipmapCache = null;
 
-            SKImageRef.Set(ref _imgRender, null);
+            SKImageRef.Set(ref _imgRender, editedImg);
             SKImageRef.Set(ref _imgSource, sourceImg);
             _isFirstDraw.SetTrue();
         }
 
-        // variable-size frames: each frame is its own canvas. Photo.Size still reports
-        // the metadata size for animated sources, so measure the decoded frame itself.
-        var frameSize = sourceImg.IsDisposed()
-            ? Photo.Size
-            : new Size(sourceImg.Width, sourceImg.Height);
+        // each frame is its own canvas, and Photo.Size reports the metadata size, so measure the shown frame
+        var shownImg = editedImg ?? sourceImg;
+        var frameSize = shownImg.IsDisposed()
+            ? photo.Size
+            : new Size(shownImg.Width, shownImg.Height);
 
         if (frameSize != BitmapSize)
         {

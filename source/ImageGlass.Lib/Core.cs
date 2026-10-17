@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -27,6 +27,7 @@ using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Licensing;
+using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
 using ImageGlass.Plugins;
 using ImageGlass.SDK.Plugins;
@@ -131,9 +132,9 @@ public static class Core
 
 
     /// <summary>
-    /// Provides the update service for checking and downloading app updates.
+    /// Checks for app updates and, where the packaging format allows, installs them in place.
     /// </summary>
-    public static UpdateProvider Update { get; set; } = null!;
+    public static IUpdateProvider UpdateProvider { get; set; } = new UpdateProvider();
 
 
     /// <summary>
@@ -223,6 +224,12 @@ public static class Core
     /// Gets or sets the HDR tone mapping options used when rendering high dynamic range images.
     /// </summary>
     public static HdrToneMappingOptions HdrToneMappingConfig { get; set; } = new();
+
+
+    /// <summary>
+    /// Whether a verified update package is downloaded and waiting to be installed.
+    /// </summary>
+    public static bool HasPendingUpdate => !string.IsNullOrWhiteSpace(Config?.UpdatePendingVersion);
 
 
     /// <summary>
@@ -321,6 +328,8 @@ public static class Core
         Core.Slideshow?.Dispose();
         Core.Slideshow = null;
 
+        ProjectorToolControl.DisposeManager();
+
         Core.Photos.Dispose();
         Core.ColorProfileProvider?.Dispose();
         Core.ColorProfileProvider = null;
@@ -328,6 +337,8 @@ public static class Core
         Core.FileSearchProvider?.Dispose();
         Core.FileSearchProvider = null!;
 
+        // the request must reach the shell provider before it goes away
+        SleepGuard.ReleaseAll();
         Core.ShellProvider?.Dispose();
         Core.ShellProvider = null;
     }
@@ -734,7 +745,7 @@ public static class Core
         Resx.Set(ResxId.IG_BackgroundNeutralBrush, bgNeutral.ToBrush());
         Resx.Set(ResxId.IG_BorderNeutralBrush, borderNeutral.ToBrush());
         Resx.Set(ResxId.IG_BorderControlBrush, borderControl.ToBrush());
-        Resx.Set(ResxId.IG_MessageBackgroundBrush, bgColor.A(200).ToBrush());
+        Resx.Set(ResxId.IG_OverlayBackgroundBrush, bgColor.A(220).ToBrush());
 
 
         // update text color
@@ -838,6 +849,13 @@ public static class Core
         }
 
         Resx.Set(ResxId.IG_ToolHostBackgroundBrush, toolHostBg.ToBrush());
+
+
+        // 5. a projector presents the photo to an audience, like a slideshow does
+        var projectorBg = BHelper.ColorFromHex(Config.SlideshowBackgroundColor, AccentColor);
+        if (projectorBg.IsEmpty) projectorBg = bgColor;
+
+        Resx.Set(ResxId.IG_ProjectorBackgroundBrush, projectorBg.ToBrush());
     }
 
 
@@ -867,6 +885,7 @@ public static class Core
         Resx.Set(ResxId.SystemAccentColorDark1, accentDark1);
         Resx.Set(ResxId.SystemAccentColorDark2, accentDark2);
         Resx.Set(ResxId.SystemAccentColorDark3, accentDark3);
+        Resx.Set(ResxId.IG_AccentBrush, accent.ToBrush());
 
         // accent-colored text: the raw accent is too dark on a dark background,
         // so lighten it in dark mode and darken it in light mode for contrast
@@ -964,8 +983,11 @@ public static class Core
     /// </summary>
     public static async Task<string?> SavePhotoAsTempFileAsync(string ext = ".png")
     {
-        // 1. check if we can use the current clipboard image path
-        if (File.Exists(Core.TempImagePath))
+        var photo = Core.ClipboardImage ?? Core.Photos.Current;
+        var state = new TempImageState(photo, Core.ImageTransform.Orientation, Core.ImageTransform.IsColorInverted);
+
+        // 1. reuse the temp file only when it was written for this photo in this exact state
+        if (File.Exists(Core.TempImagePath) && state == _tempImageState)
         {
             var extension = Path.GetExtension(Core.TempImagePath);
 
@@ -981,15 +1003,18 @@ public static class Core
 
 
         // 3. save the photo to file
-        var photo = Core.ClipboardImage ?? Core.Photos.Current;
         if (photo is not null)
         {
             try
             {
+                // SetPngCompressionLevel turns quality 10 into zlib level 1, ~4x faster than the default 6
+                var quality = ext.Equals(".png", StringComparison.OrdinalIgnoreCase) ? 10u : 85u;
+
                 // save photo as file
-                await photo.SaveAsAsync(tempFilePath, Core.ImageTransform, 85);
+                await photo.SaveAsAsync(tempFilePath, Core.ImageTransform, quality);
 
                 Core.TempImagePath = tempFilePath;
+                _tempImageState = state;
             }
             catch
             {
@@ -999,6 +1024,11 @@ public static class Core
 
         return Core.TempImagePath;
     }
+
+
+    // the photo and transform the temp file was written with
+    private static TempImageState _tempImageState;
+    private readonly record struct TempImageState(Photo? Photo, ImageOrientation Orientation, bool IsColorInverted);
 
 
     /// <summary>
@@ -1028,9 +1058,11 @@ public static class Core
         // (a codec chosen while Skia was ineligible must not stay stuck decoding).
         Core.CodecRegistry.InvalidateSelectionCaches();
 
-        // apply the new profile and notify
-        Core.DestColorProfile?.Dispose();
+        // apply the new profile and notify; Skia can hand back the same object, which must stay alive
+        var oldProfile = Core.DestColorProfile;
         Core.DestColorProfile = results.ColorSpace;
+        if (!ReferenceEquals(oldProfile, results.ColorSpace)) oldProfile?.Dispose();
+
         Core.OnColorProfileChanged(requiresPhotoReload);
     }
 

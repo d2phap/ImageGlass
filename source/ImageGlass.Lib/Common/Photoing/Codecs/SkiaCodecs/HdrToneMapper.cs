@@ -41,11 +41,6 @@ namespace ImageGlass.Common.Photoing;
 public static class HdrToneMapper
 {
     /// <summary>
-    /// PQ EOTF peak luminance in nits (SMPTE ST 2084).
-    /// </summary>
-    private const float PqPeakNits = 10_000f;
-
-    /// <summary>
     /// Input level, in reference-white units, mapped to SDR white when the file declares no
     /// content peak. Covers a 1200-nit grade, so brighter grades clip.
     /// </summary>
@@ -292,7 +287,7 @@ public static class HdrToneMapper
         using var linearSurface = SKSurface.Create(linearInfo);
         if (linearSurface is null) return null;
 
-        linearSurface.Canvas.DrawImage(source, 0, 0);
+        linearSurface.Canvas.DrawImage(source, 0, 0, SKSamplingOptions.Default);
 
         // Copy pixels into an owned bitmap so the surface can be disposed safely.
         using var linearSnapshot = linearSurface.Snapshot();
@@ -525,7 +520,7 @@ public static class HdrToneMapper
         using var finalSurface = SKSurface.Create(finalInfo);
         if (finalSurface is null) return null;
 
-        finalSurface.Canvas.DrawImage(linearImg, 0, 0);
+        finalSurface.Canvas.DrawImage(linearImg, 0, 0, SKSamplingOptions.Default);
         return finalSurface.Snapshot();
     }
 
@@ -573,12 +568,11 @@ public static class HdrToneMapper
 
 
     /// <summary>
-    /// The luminance a linearized 1.0 stands for: PQ is absolute nits, scRGB pins 1.0 to 80 nits,
-    /// scene-referred calls 1.0 diffuse white. Converts a sample to nits, and nits to v.
+    /// The luminance a linearized 1.0 stands for: Skia decodes PQ and HLG against BT.2408
+    /// reference white, scRGB pins 1.0 to 80 nits, scene-referred calls 1.0 diffuse white.
     /// </summary>
     private static float EncodingWhiteNits(HdrTransferFunction transferFn) => transferFn switch
     {
-        HdrTransferFunction.PQ => PqPeakNits,
         HdrTransferFunction.ScRgb => ScRgbWhiteNits,
         _ => Bt2408ReferenceWhiteNits,
     };
@@ -594,16 +588,12 @@ public static class HdrToneMapper
     {
         var whiteNits = ClampReferenceWhiteNits(options);
 
-        // v is in reference-white units under every transfer function except HLG, whose 1.0 is its
-        // own peak, so only there is a peak in nits not comparable with v
-        var peakIsComparable = transferFn is not HdrTransferFunction.HLG;
-
         // metadata wins; failing that the samples are absolute, so the brightest one IS the peak
         var peakNits = contentPeakNits > 0d
             ? contentPeakNits
             : measuredPeak * EncodingWhiteNits(transferFn);
 
-        var baseLevel = peakIsComparable && peakNits > 0d
+        var baseLevel = peakNits > 0d
             ? Math.Clamp((float)(peakNits / whiteNits),
                 MinToneCurveWhiteLevel, MaxToneCurveWhiteLevel)
             : FallbackToneCurveWhiteLevel;

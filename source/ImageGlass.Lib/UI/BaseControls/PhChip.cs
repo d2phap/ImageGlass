@@ -34,6 +34,7 @@ public enum PhChipVariant
     Warning,
     Danger,
     Info,
+    Accent,
 }
 
 
@@ -44,6 +45,10 @@ public enum PhChipVariant
 /// </summary>
 public class PhChip : PhControl
 {
+    // the shape of a chip, for controls that draw chips themselves
+    public const double CHIP_CORNER_RADIUS = 4;
+    public static readonly Thickness CHIP_PADDING = new(7, 1);
+
     private readonly Border _border;
     private readonly TextBlock _label;
 
@@ -84,8 +89,8 @@ public class PhChip : PhControl
 
         _border = new Border
         {
-            CornerRadius = new CornerRadius(4),
-            Padding = new Thickness(7, 1),
+            CornerRadius = new CornerRadius(CHIP_CORNER_RADIUS),
+            Padding = CHIP_PADDING,
             Child = _label,
         };
 
@@ -135,6 +140,10 @@ public class PhChip : PhControl
             case PhChipVariant.Info:
                 bgId = ResxId.IG_BackgroundInfoBrush;
                 fgId = null;
+                break;
+            case PhChipVariant.Accent:
+                bgId = ResxId.IG_AccentBrush;
+                fgId = ResxId.AccentButtonForeground;
                 break;
             default: // Neutral
                 bgId = ResxId.IG_BackgroundNeutralBrush;

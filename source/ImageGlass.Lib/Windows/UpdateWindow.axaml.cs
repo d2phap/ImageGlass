@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -18,17 +18,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.ServiceProviders.Licensing;
 using ImageGlass.Common.ServiceProviders.Update;
 using ImageGlass.Common.Types;
 using ImageGlass.UI.Windowing;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Windows;
 
 public partial class UpdateWindow : ModalWindow
 {
     private UpdateCheckResult? _result;
+    private bool _isReadyToInstall;
+    private bool _canDownloadAndInstall;
+    private bool _isClosed;
+    private CancellationTokenSource? _cancelDownload;
 
     protected override int MIN_WIDTH => 550;
     protected override int MAX_WIDTH => 550;
@@ -81,6 +88,20 @@ public partial class UpdateWindow : ModalWindow
 
     protected override void OnDialogSubmitted(DialogEventArgs e)
     {
+        // restart to install
+        if (_isReadyToInstall)
+        {
+            _ = InstallThenCloseAsync();
+            return;
+        }
+
+        // download and install
+        if (_canDownloadAndInstall)
+        {
+            _ = DownloadThenInstallAsync();
+            return;
+        }
+
         // the Store delivers updates for its own package, so go to the Store listing
         if (IsMsStoreBuild)
         {
@@ -99,6 +120,14 @@ public partial class UpdateWindow : ModalWindow
         }
     }
 
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+
+        _isClosed = true;
+        _cancelDownload?.Cancel();
+    }
+
     #endregion // Override Methods
 
 
@@ -115,6 +144,13 @@ public partial class UpdateWindow : ModalWindow
         {
             Core.Config.UpdateSkippedVersion = version;
             IsSkipped = true;
+
+            // nothing was staged with the OS, so skipping really does retract the update
+            if (string.Equals(Core.Config.UpdatePendingVersion, version, StringComparison.OrdinalIgnoreCase))
+            {
+                Core.UpdateProvider.DiscardPendingUpdate();
+                _ = Core.Config.SaveAsync();
+            }
         }
 
         DialogResult = DialogExitCode.Cancel;
@@ -187,6 +223,81 @@ public partial class UpdateWindow : ModalWindow
         PART_BtnSkipVersion.IsVisible = false;
     }
 
+
+    /// <summary>
+    /// Downloads the package with progress, then hands it to the installer.
+    /// </summary>
+    private async Task DownloadThenInstallAsync()
+    {
+        var release = _result?.Release;
+        if (release is null) return;
+
+        _cancelDownload?.Cancel();
+        _cancelDownload = new CancellationTokenSource();
+        var token = _cancelDownload.Token;
+
+        // downloading state
+        Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_Downloading];
+        IsButton1Visible = false;
+        Button2Text = Core.Lang[LangId._Cancel];
+        IsProgressVisible = true;
+        IsProgressIndeterminate = false;
+        ProgressValue = 0;
+        PART_BtnSkipVersion.IsVisible = false;
+
+        var progress = new Progress<double>(percent => ProgressValue = percent);
+        var download = await Core.UpdateProvider.TryDownloadForInstallAsync(release, progress, token);
+
+        if (token.IsCancellationRequested || download.IsSkipped) return;
+
+        if (!download.IsSuccess)
+        {
+            // put the dialog back so the user can still reach the download page
+            SetResultState(_result!);
+            _canDownloadAndInstall = false;
+
+            _ = AppAPIProvider.ShowUpdateFailedAsync(download);
+        }
+        else
+        {
+            SetInstallingState();
+            await AppAPIProvider.IG_InstallUpdateAsync(false);
+        }
+
+
+        if (_isClosed) return;
+        DialogResult = DialogExitCode.Cancel;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Installs the downloaded package, then closes; the installer reports a failure itself.
+    /// </summary>
+    private async Task InstallThenCloseAsync()
+    {
+        SetInstallingState();
+        await AppAPIProvider.IG_InstallUpdateAsync(false);
+
+        if (_isClosed) return;
+        DialogResult = DialogExitCode.Cancel;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Shows the install as in progress; an installer that does not end the process must not be clicked twice.
+    /// </summary>
+    private void SetInstallingState()
+    {
+        Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_Installing];
+        IsButton1Visible = false;
+        Button2Text = Core.Lang[LangId._Close];
+        IsProgressVisible = true;
+        IsProgressIndeterminate = true;
+        PART_BtnSkipVersion.IsVisible = false;
+    }
+
     #endregion // Private Methods
 
 
@@ -228,6 +339,8 @@ public partial class UpdateWindow : ModalWindow
         // shared defaults: a single [Close] button, no extra content
         Note = null;
         Thumbnail = null;
+        _isReadyToInstall = false;
+        _canDownloadAndInstall = false;
         HideResultContent();
         IsButton1Visible = false;
         IsButton3Visible = false;
@@ -240,14 +353,29 @@ public partial class UpdateWindow : ModalWindow
 
         if (result.Status == UpdateCheckStatus.UpdateAvailable && release is not null)
         {
-            Heading = Core.Lang[LangId.Menu_MnuCheckForUpdate_NewVersion];
+            // a downloaded package installs from disk; otherwise the button opens the download page
+            _isReadyToInstall = string.Equals(Core.Config.UpdatePendingVersion, release.Version,
+                    StringComparison.OrdinalIgnoreCase)
+                && Core.UpdateProvider.CanApplyPendingUpdate
+                && Core.UpdateProvider.GetPendingPackagePath() is not null;
+
+            _canDownloadAndInstall = !_isReadyToInstall
+                && Core.UpdateProvider.CanInstallUpdateInApp
+                && Core.UpdateProvider.ResolveArtifact(release) is not null;
+
+            Heading = Core.Lang[_isReadyToInstall
+                ? LangId.Menu_MnuCheckForUpdate_ReadyToInstall
+                : LangId.Menu_MnuCheckForUpdate_NewVersion];
             Description = Core.Lang[LangId.Menu_MnuCheckForUpdate_CurrentVersion, Core.BuildInfo.Version];
             Thumbnail = Resx.GetSvg(ResxSvgId.StarStruck);
             ShowReleaseCard(release);
 
-            // "Skip this version" link + [Update] [Close]
+            // "Skip this version" link + [Update / Restart now] [Close]
             PART_BtnSkipVersion.IsVisible = true;
-            Button1Text = Core.Lang[LangId._Update];
+            // "Download" is the honest label when the click fetches the package instead of a page
+            Button1Text = Core.Lang[_isReadyToInstall
+                ? LangId._RestartNow
+                : _canDownloadAndInstall ? LangId._Download : LangId._Update];
             IsButton1Visible = true;
             DefaultButton = DialogButton.Button1;
             DefaultFocus = DialogFocus.Button1;

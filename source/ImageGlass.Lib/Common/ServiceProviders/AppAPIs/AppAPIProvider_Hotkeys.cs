@@ -61,8 +61,8 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuSave,                 API.IG_Save,                Hotkey.Ctrl, Key.S),
         new(LangId.Menu_MnuSaveAs,               API.IG_SaveAs,              Hotkey.Ctrl | MKeys.Shift, Key.S),
         new(LangId.Menu_MnuExportFrames,         API.IG_ExportImageFrames,   Hotkey.Ctrl, Key.J),
+        new(LangId.Menu_MnuPrint,                API.IG_Print,               Hotkey.Ctrl, Key.P),
         .. SupportedOn(BHelper.OS == OSType.Windows, [
-            new(LangId.Menu_MnuPrint,            API.IG_Print,               Hotkey.Ctrl, Key.P),
             new(LangId.Menu_MnuOpenWith,         API.IG_OpenWith,            Key.D),
             new(LangId.Menu_MnuShare,            API.IG_Share,               Key.S),
         ]),
@@ -76,7 +76,7 @@ public partial class AppAPIProvider
         // Navigation
         new(LangId.Menu_MnuViewNext,             API.IG_ViewNext,            Key.Right),
         new(LangId.Menu_MnuViewPrevious,         API.IG_ViewPrevious,        Key.Left),
-        new(LangId.Menu_MnuGoTo,                 API.IG_Goto,                Key.F),
+        new(LangId.Menu_MnuGoTo,                 API.IG_Goto,                Hotkey.Ctrl, Key.F),
         new(LangId.Menu_MnuGoToFirst,            API.IG_GotoFirst,           Key.Home),
         new(LangId.Menu_MnuGoToLast,             API.IG_GotoLast,            Key.End),
         new(LangId.Menu_MnuViewNextFrame,        API.IG_ViewNextFrame,       Hotkey.Ctrl, Key.Right),
@@ -138,14 +138,14 @@ public partial class AppAPIProvider
 
 
         // Clipboard
-        new(LangId.Menu_MnuPasteImage,       API.IG_PasteImage,          Hotkey.Ctrl, Key.V),
-        new(LangId.Menu_MnuCopyImagePixels,  API.IG_CopyImagePixels,     Hotkey.Ctrl | MKeys.Shift, Key.C),
-        new(LangId.Menu_MnuCopyFile,         API.IG_CopyFiles,           Hotkey.Ctrl, Key.C),
+        new(LangId.Menu_MnuPasteImage,          API.IG_PasteImage,          Hotkey.Ctrl, Key.V),
+        new(LangId.Menu_MnuCopyImagePixels,     API.IG_CopyImagePixels,     Hotkey.Ctrl | MKeys.Shift, Key.C),
+        new(LangId.Menu_MnuCopyFile,            API.IG_CopyFiles,           Hotkey.Ctrl, Key.C),
         .. SupportedOn(BHelper.OS != OSType.Mac, [
-            new(LangId.Menu_MnuCutFile,      API.IG_CutFiles,            Hotkey.Ctrl, Key.X),
+            new(LangId.Menu_MnuCutFile,         API.IG_CutFiles,            Hotkey.Ctrl, Key.X),
         ]),
-        new(LangId.Menu_MnuCopyPath,         API.IG_CopyImagePath,       Hotkey.Ctrl, Key.L),
-        new(LangId.Menu_MnuClearClipboard,   API.IG_ClearClipboard,      Hotkey.Ctrl, Key.OemTilde),
+        new(LangId.Menu_MnuCopyPath,            API.IG_CopyImagePath,       Hotkey.Ctrl, Key.L),
+        new(LangId.Menu_MnuClearClipboard,      API.IG_ClearClipboard,      Hotkey.Ctrl, Key.OemTilde),
 
 
         // Window modes
@@ -167,18 +167,19 @@ public partial class AppAPIProvider
 
 
         // Tools
-        new(LangId.Menu_MnuColorPicker,         API.IG_ToggleTool, ColorPickerToolControl.TOOL_ID,      [new(Key.K)]),
-        new(LangId.Menu_MnuCropTool,            API.IG_ToggleTool, CropImageToolControl.TOOL_ID,        [new(Key.C)]),
-        new(LangId.Menu_MnuFrameNav,            API.IG_ToggleTool, FrameNavToolControl.TOOL_ID,         [new(Key.P)]),
-        new(LangId.Menu_MnuHdrToneMapper,       API.IG_ToggleTool, HdrToneMapperToolControl.TOOL_ID,    [new(Key.H)]),
-        new(LangId.Menu_MnuResizeTool,          API.IG_OpenTool, ImageResizerTool.TOOL_ID,              [new(Key.R)]),
-        new(LangId.Menu_MnuLosslessCompression, API.IG_OpenTool, LosslessCompressionTool.TOOL_ID,       [new(Key.M)]),
-        new(LangId.Menu_MnuToolsSettings,       API.IG_OpenSettings, nameof(SettingsNavId.Tools)),
+        new(LangId.Menu_MnuColorPicker,             API.IG_ToggleTool, ColorPickerToolControl.TOOL_ID,      [new(Key.K)]),
+        new(LangId.Menu_MnuCropTool,                API.IG_ToggleTool, CropImageToolControl.TOOL_ID,        [new(Key.C)]),
+        new(LangId.Menu_MnuFrameNav,                API.IG_ToggleTool, FrameNavToolControl.TOOL_ID,         [new(Key.F)]),
+        new(LangId.Menu_MnuHdrToneMapper,           API.IG_ToggleTool, HdrToneMapperToolControl.TOOL_ID,    [new(Key.H)]),
+        new(LangId.Menu_MnuProjector,               API.IG_ToggleTool, ProjectorToolControl.TOOL_ID,        [new(Key.P)]),
+        new(LangId.Menu_MnuResizeTool,              API.IG_OpenTool, ImageResizerTool.TOOL_ID,              [new(Key.R)]),
+        new(LangId.Menu_MnuLosslessCompression,     API.IG_OpenTool, LosslessCompressionTool.TOOL_ID,       [new(Key.M)]),
+        new(LangId.Menu_MnuToolsSettings,           API.IG_OpenSettings, nameof(SettingsNavId.Tools)),
 
 
         // Settings
-        new(LangId.Menu_MnuPlugins,             API.IG_OpenSettings, nameof(SettingsNavId.Plugins)),
-        new(LangId.Menu_MnuSettings,            API.IG_OpenSettings,                                    Hotkey.Ctrl, Key.OemComma),
+        new(LangId.Menu_MnuPlugins,                 API.IG_OpenSettings, nameof(SettingsNavId.Plugins)),
+        new(LangId.Menu_MnuSettings,                API.IG_OpenSettings,                                    Hotkey.Ctrl, Key.OemComma),
 
 
         // Help
@@ -186,6 +187,7 @@ public partial class AppAPIProvider
         new(LangId.Menu_MnuUpgradeLicense,              API.IG_ManageLicense),
         new(LangId.Menu_MnuManageLicense,               API.IG_ManageLicense),
         new(LangId._CheckForUpdate,                     API.IG_CheckForUpdate),
+        new(LangId.Menu_MnuInstallUpdate,               API.IG_InstallUpdate),
         new(LangId.Menu_MnuReportIssue,                 API.IG_ReportIssue),
         new(LangId.Menu_MnuQuickSetup,                  API.IG_QuickSetup),
         new(LangId.Menu_MnuSetDefaultPhotoViewer,       API.IG_SetDefaultPhotoViewer),
@@ -193,7 +195,7 @@ public partial class AppAPIProvider
 
 
         // Exit
-        new(LangId.Menu_MnuExit,                         API.IG_Exit,            [new(Key.Escape), new(Hotkey.Ctrl, Key.W)]),
+        new(LangId.Menu_MnuExit,                        API.IG_Exit,            [new(Key.Escape), new(Hotkey.Ctrl, Key.W)]),
     ];
 
 

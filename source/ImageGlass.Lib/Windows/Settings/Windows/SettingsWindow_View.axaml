@@ -134,7 +134,7 @@
                     Variant="Outline" />
 
                 <Panel Grid.Column="2">
-                    <ui:PhSearchBoxControl x:Name="PART_Search" Width="250" />
+                    <ui:PhSearchBoxControl x:Name="PART_Search" Width="200" />
 
                     <Popup
                         x:Name="PART_SearchPopup"

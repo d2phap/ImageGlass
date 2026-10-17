@@ -37,6 +37,8 @@ public partial class ColorPickerToolControl : PhControl, IToolControl
 {
     public static string TOOL_ID => "Tool_ColorPicker";
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuColorPicker];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolColorPicker;
     public bool HasSettingsUI => true;
     public object? Settings { get; private set; } = new ColorPickerConfig();
     public ColorPickerConfig Options => (ColorPickerConfig)Settings!;

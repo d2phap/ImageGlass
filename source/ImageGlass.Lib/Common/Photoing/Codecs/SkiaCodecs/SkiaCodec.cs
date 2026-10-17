@@ -407,6 +407,7 @@ public static partial class SkiaCodec
 
                 // write image data to file
                 imgM.Quality = quality;
+                MagickCodec.SetPngCompressionLevel(imgM, destFilePath, quality);
                 await imgM.WriteAsync(destFilePath, token);
             }
             else
@@ -581,23 +582,8 @@ public static partial class SkiaCodec
     {
         if (imgSrc.IsDisposed() || transform is null || !transform.HasChanges) return null;
 
-        SKImage? result = null;
-
-        // flip
-        if (transform.Flips != FlipOptions.None)
-        {
-            var flipped = FlipImage(result ?? imgSrc, transform.Flips);
-            result?.Dispose();
-            result = flipped;
-        }
-
-        // rotation
-        if (transform.Rotation != 0)
-        {
-            var rotated = RotateImage(result ?? imgSrc, transform.Rotation);
-            result?.Dispose();
-            result = rotated;
-        }
+        // flips then rotation, as one exact right-angle orientation
+        var result = OrientImage(imgSrc, transform.Orientation);
 
         // invert color
         if (transform.IsColorInverted)
@@ -605,6 +591,68 @@ public static partial class SkiaCodec
             var inverted = InvertImageColors(result ?? imgSrc);
             result?.Dispose();
             result = inverted;
+        }
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Returns a new image mirrored and turned by <paramref name="orientation"/>, or <c>null</c> for the identity.
+    /// </summary>
+    public static SKImage? OrientImage(SKImage? imgSrc, ImageOrientation orientation)
+    {
+        if (imgSrc.IsDisposed() || orientation.IsIdentity) return null;
+
+        // the exact swapped size: a bounding box from sin/cos can gain a pixel on a long panorama
+        var (w, h) = (imgSrc.Width, imgSrc.Height);
+        var (outW, outH) = orientation.GetSize(w, h);
+
+        var info = new SKImageInfo(outW, outH, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
+        using var surface = SKSurface.Create(info);
+        if (surface.IsDisposed()) return null;
+
+        // canvas transforms apply last-first: mirror about the source center, then turn about the output center
+        var canvas = surface.Canvas;
+        canvas.Translate(outW / 2f, outH / 2f);
+        canvas.RotateDegrees(orientation.Rotation);
+        if (orientation.IsMirrored) canvas.Scale(-1, 1);
+        canvas.Translate(-w / 2f, -h / 2f);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
+
+        return surface.Snapshot();
+    }
+
+
+    /// <summary>
+    /// Returns a new image with the viewer edits in their one order (channels, invert, orientation), or <c>null</c> when there are none.
+    /// </summary>
+    public static SKImage? ApplyImageEdits(SKImage? imgSrc, ColorChannels channels, bool isColorInverted, ImageOrientation orientation)
+    {
+        if (imgSrc.IsDisposed()) return null;
+
+        SKImage? result = null;
+
+        // 1. color channels: pixel ops first, as geometry commutes with them
+        if (!channels.HasFlag(ColorChannels.RGBA))
+        {
+            result = FilterImageColorChannels(imgSrc, channels);
+        }
+
+        // 2. invert
+        if (isColorInverted)
+        {
+            var inverted = InvertImageColors(result ?? imgSrc);
+            result?.Dispose();
+            result = inverted;
+        }
+
+        // 3. orientation
+        var oriented = OrientImage(result ?? imgSrc, orientation);
+        if (oriented is not null)
+        {
+            result?.Dispose();
+            result = oriented;
         }
 
         return result;
@@ -635,7 +683,7 @@ public static partial class SkiaCodec
         using var surface = SKSurface.Create(info);
         if (surface.IsDisposed()) return null;
 
-        surface.Canvas.DrawImage(imgSrc, 0, 0, paint);
+        surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default, paint);
         return surface.Snapshot();
     }
 
@@ -704,7 +752,7 @@ public static partial class SkiaCodec
             surface.Canvas.Clear(SKColors.Black);
         }
 
-        surface.Canvas.DrawImage(imgSrc, 0, 0, paint);
+        surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default, paint);
         return surface.Snapshot();
     }
 
@@ -724,12 +772,12 @@ public static partial class SkiaCodec
         var w = imgSrc.Width;
         var h = imgSrc.Height;
 
-        // compute the bounding box of the rotated image
+        // compute the bounding box of the rotated image; cos(90) is not exactly 0, so ignore a sliver past a whole pixel
         var rad = degree * Math.PI / 180.0;
         var cos = Math.Abs(Math.Cos(rad));
         var sin = Math.Abs(Math.Sin(rad));
-        var outW = (int)Math.Ceiling(w * cos + h * sin);
-        var outH = (int)Math.Ceiling(w * sin + h * cos);
+        var outW = (int)Math.Ceiling(w * cos + h * sin - 1e-6);
+        var outH = (int)Math.Ceiling(w * sin + h * cos - 1e-6);
 
         var info = new SKImageInfo(outW, outH, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
         using var surface = SKSurface.Create(info);
@@ -741,7 +789,7 @@ public static partial class SkiaCodec
         canvas.Translate(outW / 2f, outH / 2f);
         canvas.RotateDegrees((float)degree);
         canvas.Translate(-w / 2f, -h / 2f);
-        canvas.DrawImage(imgSrc, 0, 0);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
 
         return surface.Snapshot();
     }
@@ -771,7 +819,7 @@ public static partial class SkiaCodec
             canvas.Scale(1, -1, 0, h / 2f);
         }
 
-        canvas.DrawImage(imgSrc, 0, 0);
+        canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
         return surface.Snapshot();
     }
 
@@ -869,7 +917,7 @@ public static partial class SkiaCodec
                         break;
                 }
 
-                canvas.DrawBitmap(bmpSrc, 0, 0);
+                canvas.DrawBitmap(bmpSrc, 0, 0, SKSamplingOptions.Default);
                 canvas.Flush();
             }
 
@@ -887,21 +935,21 @@ public static partial class SkiaCodec
 
 
     /// <summary>
-    /// Converts the Skia's <see cref="SKEncodedOrigin"/> value to Magick's <see cref="OrientationType"/> value.
+    /// Converts the Skia's <see cref="SKEncodedOrigin"/> value to Magick's <see cref="Orientation"/> value.
     /// </summary>
-    public static OrientationType ToMagickOrientation(SKEncodedOrigin orientation)
+    public static Orientation ToMagickOrientation(SKEncodedOrigin orientation)
     {
         return orientation switch
         {
-            SKEncodedOrigin.TopLeft => OrientationType.TopLeft,
-            SKEncodedOrigin.TopRight => OrientationType.TopRight,
-            SKEncodedOrigin.BottomRight => OrientationType.BottomRight,
-            SKEncodedOrigin.BottomLeft => OrientationType.BottomLeft,
-            SKEncodedOrigin.LeftTop => OrientationType.LeftTop,
-            SKEncodedOrigin.RightTop => OrientationType.RightTop,
-            SKEncodedOrigin.RightBottom => OrientationType.RightBottom,
-            SKEncodedOrigin.LeftBottom => OrientationType.LeftBottom,
-            _ => OrientationType.Undefined,
+            SKEncodedOrigin.TopLeft => Orientation.TopLeft,
+            SKEncodedOrigin.TopRight => Orientation.TopRight,
+            SKEncodedOrigin.BottomRight => Orientation.BottomRight,
+            SKEncodedOrigin.BottomLeft => Orientation.BottomLeft,
+            SKEncodedOrigin.LeftTop => Orientation.LeftTop,
+            SKEncodedOrigin.RightTop => Orientation.RightTop,
+            SKEncodedOrigin.RightBottom => Orientation.RightBottom,
+            SKEncodedOrigin.LeftBottom => Orientation.LeftBottom,
+            _ => Orientation.Undefined,
         };
     }
 
@@ -909,7 +957,7 @@ public static partial class SkiaCodec
     /// <summary>
     /// Converts the enum to an <see cref="SKSamplingOptions"/> struct.
     /// </summary>
-    public static SKSamplingOptions ToSamplingOptions(this ImageInterpolation interpolation, int maxAniso = 16)
+    public static SKSamplingOptions ToSamplingOptions(this ImageInterpolation interpolation)
     {
         return interpolation switch
         {
@@ -923,8 +971,6 @@ public static partial class SkiaCodec
 
             ImageInterpolation.CubicMitchell => new SKSamplingOptions(SKCubicResampler.Mitchell),
             ImageInterpolation.CubicCatmullRom => new SKSamplingOptions(SKCubicResampler.CatmullRom),
-
-            ImageInterpolation.Anisotropic => new SKSamplingOptions(maxAniso),
 
             _ => SKSamplingOptions.Default,
         };
@@ -949,7 +995,7 @@ public static partial class SkiaCodec
             using var surface = SKSurface.Create(info);
             if (surface is null) return false;
 
-            surface.Canvas.DrawImage(imgSrc, 0, 0);
+            surface.Canvas.DrawImage(imgSrc, 0, 0, SKSamplingOptions.Default);
             output = surface.Snapshot();
             return true;
         }
@@ -1090,6 +1136,23 @@ public static partial class SkiaCodec
     {
         (SKColorSpace? ColorSpace, bool IsSupported) results = new(null, true);
 
+        // the app presents SDR, so an HDR display profile would convert every SDR image INTO PQ
+        static (SKColorSpace?, bool) AsSdrProfile(SKColorSpace? cs)
+        {
+            if (HdrToneMapper.IsHdrColorSpace(cs))
+            {
+                cs?.Dispose();
+                cs = null;
+            }
+            else if (cs?.IsSrgb == true)
+            {
+                // every sRGB profile is one shared wrapper, so any holder's Dispose would kill it; this one ignores Dispose
+                cs = SKColorSpace.CreateSrgb();
+            }
+
+            return (cs, cs is not null); // Skia does not support all profiles
+        }
+
 
         // 1. don't use color profile
         if (name.Equals(nameof(ColorProfileOption.None))) return results;
@@ -1102,8 +1165,7 @@ public static partial class SkiaCodec
                 return results;
 
             using var data = SKData.Create(Core.ColorProfileProvider.ProfilePath);
-            results.ColorSpace = CreateIccColorSpace(data);
-            results.IsSupported = results.ColorSpace is not null; // Skia does not support all profiles
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(data));
 
             return results;
         }
@@ -1113,8 +1175,7 @@ public static partial class SkiaCodec
         var magickProfile = MagickCodec.GetBuiltinColorProfile(name);
         if (magickProfile is not null)
         {
-            results.ColorSpace = CreateIccColorSpace(magickProfile.ToReadOnlySpan());
-            results.IsSupported = results.ColorSpace is not null;
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(magickProfile.ToReadOnlySpan()));
 
             return results;
         }
@@ -1124,8 +1185,7 @@ public static partial class SkiaCodec
         if (Path.Exists(name))
         {
             using var data = SKData.Create(name);
-            results.ColorSpace = CreateIccColorSpace(data);
-            results.IsSupported = results.ColorSpace is not null;
+            (results.ColorSpace, results.IsSupported) = AsSdrProfile(CreateIccColorSpace(data));
 
             return results;
         }
@@ -1154,6 +1214,13 @@ public static partial class SkiaCodec
     {
         decodeScale = 1;
         if (imgM is null) return null;
+
+        // an SDR hand-over (thumbnail, preview) must not carry a PQ/HLG tag, or a later
+        // conversion to the destination profile blows it out
+        if (!isHdr && HdrToneMapper.IsHdrColorSpace(srcColorSpace))
+        {
+            srcColorSpace = null;
+        }
 
         // prepare image info
         var alphaType = imgM.HasAlpha ? SKAlphaType.Unpremul : SKAlphaType.Opaque;
@@ -1387,8 +1454,22 @@ public static partial class SkiaCodec
 
 
     /// <summary>
-    /// Converts a finished bitmap to an image without copying its pixels; the image keeps
-    /// the buffer alive. Only call once nothing will draw into <paramref name="bmp"/> again.
+    /// Returns an independent raster copy of the image, keeping its color type, alpha type and color space.
+    /// </summary>
+    public static SKImage? CopyImage(SKImage? imgSrc)
+    {
+        if (imgSrc.IsDisposed()) return null;
+
+        var info = new SKImageInfo(imgSrc.Width, imgSrc.Height, imgSrc.ColorType, imgSrc.AlphaType, imgSrc.ColorSpace);
+        using var bmp = new SKBitmap(info);
+        if (!imgSrc.ReadPixels(info, bmp.GetPixels(), bmp.RowBytes, 0, 0)) return null;
+
+        return ToSKImageNoCopy(bmp);
+    }
+
+
+    /// <summary>
+    /// Converts a finished bitmap to an image sharing its pixels; only call once nothing draws into <paramref name="bmp"/> again.
     /// </summary>
     public static SKImage? ToSKImageNoCopy(SKBitmap? bmp)
     {
@@ -1418,7 +1499,8 @@ public static partial class SkiaCodec
     {
         if (skImg.IsDisposed()) return null;
 
-        var info = new SKImageInfo(skImg.Width, skImg.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+        // Magick imports straight alpha, so premultiplied bytes would darken every semi-transparent pixel
+        var info = new SKImageInfo(skImg.Width, skImg.Height, SKColorType.Bgra8888, SKAlphaType.Unpremul);
         var rowBytes = info.Width * info.BytesPerPixel;
         var pixelBuffer = new byte[rowBytes * info.Height];
 

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Common.Types;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Tools;
@@ -28,6 +29,18 @@ public interface IToolControl : ITool
 {
     // Hosted tools are always hosted
     bool ITool.IsHosted => true;
+
+
+    /// <summary>
+    /// Gets the localized tool name, shown as a watermark in <see cref="ToolHostControl"/>.
+    /// </summary>
+    string ToolName { get; }
+
+
+    /// <summary>
+    /// Gets the icon shown beside <see cref="ToolName"/>, or <c>null</c> for none.
+    /// </summary>
+    ResxIconId? ToolIcon => null;
 
 
     /// <summary>

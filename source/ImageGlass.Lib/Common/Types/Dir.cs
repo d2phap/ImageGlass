@@ -68,4 +68,9 @@ public static class Dir
     /// </summary>
     public static string Logs { get; } = "_logs";
 
+    /// <summary>
+    /// Gets the folder name of the custom transition effects.
+    /// </summary>
+    public static string Transitions { get; } = "_transitions";
+
 }

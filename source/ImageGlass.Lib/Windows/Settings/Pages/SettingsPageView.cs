@@ -20,10 +20,14 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using ImageGlass.Common.Extensions;
 using ImageGlass.Common.Localization;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
+using ImageGlass.UI.Viewer.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace ImageGlass.Common.Windows;
 
@@ -32,6 +36,9 @@ namespace ImageGlass.Common.Windows;
 /// </summary>
 public abstract class SettingsPageView : PhControl
 {
+    private const string TRANSITIONS_URL = "https://imageglass.org/effects";
+
+
     /// <summary>
     /// Gets the staging working-copy view model the page binds to.
     /// </summary>
@@ -374,6 +381,83 @@ public abstract class SettingsPageView : PhControl
         picker.DefaultColor = BHelper.ColorFromHex(defaultHex);
         picker.SelectedColor = BHelper.ColorFromHex(VM.GetValue(id, defaultHex));
         _suppressColorStaging = false;
+    }
+
+
+    /// <summary>
+    /// Binds a transition effect dropdown (the effect files, re-read now) and its duration box.
+    /// </summary>
+    protected void BindTransitionEditor(ComboBox combo, PhTextBox durationBox, PhTextBlock errorText,
+        PhButton openFolderBtn, PhButton getMoreBtn,
+        ConfigId effectId, ConfigId durationId, uint defaultDuration, LangId section)
+    {
+        // picks up effect files added since the last time settings were opened
+        TransitionEffects.Reload();
+
+        var current = VM.GetValue(effectId, TransitionEffects.NONE);
+        bool IsCurrent(string id) => id.Equals(current, StringComparison.OrdinalIgnoreCase);
+
+        var effectOptions = TransitionEffects.All
+            .Select(e => TransitionEffectOption.FromFile(e.Id, e.FilePath!))
+            .ToList();
+
+        // keep a saved id whose file is gone, rather than silently switching it to None
+        var isKnown = IsCurrent(TransitionEffects.NONE)
+            || IsCurrent(TransitionEffects.RANDOM)
+            || effectOptions.Any(o => IsCurrent(o.Id));
+        if (!isKnown) effectOptions.Add(TransitionEffectOption.FromId(current));
+
+        var options = new List<TransitionEffectOption> { TransitionEffectOption.FromId(TransitionEffects.NONE) };
+
+        // picking at random needs at least two effects to pick from
+        if (TransitionEffects.All.Count >= 2 || IsCurrent(TransitionEffects.RANDOM))
+        {
+            options.Add(TransitionEffectOption.FromId(TransitionEffects.RANDOM));
+        }
+
+        if (effectOptions.Count > 0)
+        {
+            options.Add(TransitionEffectOption.CreateDivider());
+            options.AddRange(effectOptions);
+        }
+
+        combo.ItemsSource = options;
+        combo.SelectedItem = options.Find(o => IsCurrent(o.Id)) ?? options[0];
+
+        // shows why the selected effect cannot play, and disables the duration of None
+        void UpdateEffectState()
+        {
+            var id = (combo.SelectedItem as TransitionEffectOption)?.Id ?? TransitionEffects.NONE;
+            var isNone = id.Equals(TransitionEffects.NONE, StringComparison.OrdinalIgnoreCase);
+            var isRandom = id.Equals(TransitionEffects.RANDOM, StringComparison.OrdinalIgnoreCase);
+
+            var effect = isNone || isRandom ? null : TransitionEffects.Find(id);
+            var hasError = effect is not null && effect.GetEffect() is null;
+
+            errorText.IsVisible = hasError;
+            errorText.Text = hasError
+                ? $"{Core.Lang[LangId.Settings_TransitionCompileError]} {Path.GetFileName(effect!.FilePath)}\n{effect.CompileError}"
+                : string.Empty;
+            durationBox.IsEnabled = !isNone && !Config.IsConfigLocked(durationId);
+        }
+
+        combo.SelectionChanged += (_, _) =>
+        {
+            if (combo.SelectedItem is TransitionEffectOption { IsDivider: false } option) VM.SetValue(effectId, option.Id);
+            UpdateEffectState();
+        };
+        AddLangRefresher(() =>
+        {
+            options.ForEach(o => o.RefreshLang());
+            UpdateEffectState();
+        });
+        RegisterSearchKey(combo, LangId.Settings_TransitionEffect, effectId, section);
+
+        BindUIntInput(durationBox, durationId, LangId.Settings_TransitionDuration, section, defaultDuration);
+        BindLink(openFolderBtn, LangId.Settings_OpenTransitionsFolder,
+            () => BHelper.OpenFolderPath(BHelper.GetRealPlatformConfigDir(Dir.Transitions)));
+        BindLink(getMoreBtn, LangId.Settings_GetMoreTransitionEffects, TRANSITIONS_URL,
+            () => _ = BHelper.OpenUrlAsync(this, TRANSITIONS_URL, "from_setting_transitions"));
     }
 
 

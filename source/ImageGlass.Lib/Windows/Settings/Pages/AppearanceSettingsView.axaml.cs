@@ -101,7 +101,7 @@ public partial class AppearanceSettingsView : SettingsPageView
 
         // Viewer background color (group has no heading)
         BindColorPicker(PART_BgColor, ConfigId.BackgroundColor, Core.Theme.Colors.BgColor,
-            LangId.Settings_BackgroundColor, null);
+            LangId._BackgroundColor, null);
 
         BuildThemeSection();
     }

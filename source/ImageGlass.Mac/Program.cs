@@ -46,6 +46,7 @@ sealed class Program
             Core.PreviewProvider = new PhotoPreviewProvider();
             Core.ShellProvider = new MacShellProvider();
             Core.PrintProvider = new MacPrintProvider();
+            Core.UpdateProvider = new MacUpdateProvider();
         });
 
         if (isHandled) return 0;

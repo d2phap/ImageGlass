@@ -24,6 +24,7 @@ using Avalonia.Layout;
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Types;
 using ImageGlass.UI;
 using ImageGlass.UI.Viewer;
 using System;
@@ -57,6 +58,8 @@ public partial class HdrToneMapperToolControl : PhControl, IToolControl
 
     public static string TOOL_ID => "Tool_HdrToneMapper";
     public string ToolId => TOOL_ID;
+    public string ToolName => Core.Lang[LangId.Menu_MnuHdrToneMapper];
+    public ResxIconId? ToolIcon => ResxIconId.IconToolHdrToneMapper;
     public bool HasSettingsUI => false;
     public bool IsProPreview => !Core.IsProEnabled;
     public object? Settings => Core.HdrToneMappingConfig;

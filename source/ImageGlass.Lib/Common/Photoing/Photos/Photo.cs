@@ -61,6 +61,9 @@ public partial class Photo : PhDisposable
     private CancellationTokenSource? _cancelThumbnailLoading;
     private double _galleryThumbnailRequestSize;
 
+    // the frame handed to the viewer by ReleaseFrame still counts against the cache budget
+    private int _releasedBytesPerPixel;
+
     /// <summary>
     /// Prevents duplicate concurrent loads of the same photo's thumbnail.
     /// </summary>
@@ -117,13 +120,18 @@ public partial class Photo : PhDisposable
     /// </summary>
     public int BytesPerPixel => Bitmap is SKImage img && !img.IsDisposed()
         ? Math.Max(1, img.ColorType.GetBytesPerPixel())
-        : 4;
+        : _releasedBytesPerPixel > 0 ? _releasedBytesPerPixel : 4;
 
     /// <summary>
     /// Gets the linear scale this photo was decoded at. Below 1 when the full resolution
     /// exceeded what the renderer can hold, so <see cref="Size"/> is smaller than the file.
     /// </summary>
     public double DecodeScale { get; private set; } = 1;
+
+    /// <summary>
+    /// Gets whether the decoded pixels carry a display profile their color tag cannot describe, as a CMYK soft-proof does.
+    /// </summary>
+    public bool HasBakedDisplayProfile { get; private set; }
 
     /// <summary>
     /// Whether a load will decode the embedded RAW preview instead of the full image.
@@ -469,6 +477,7 @@ public partial class Photo : PhDisposable
         _width = (uint)Metadata.Width;
         _height = (uint)Metadata.Height;
         DecodeScale = 1;
+        HasBakedDisplayProfile = false;
 
         State = state;
     }
@@ -488,7 +497,7 @@ public partial class Photo : PhDisposable
     }
 
 
-    private void ApplyDecodeResult(CodecDecodeResult result)
+    private void ApplyDecodeResult(CodecDecodeResult result, int frameIndex)
     {
         // set decoder codec
         CodecId = result.CodecId;
@@ -496,6 +505,7 @@ public partial class Photo : PhDisposable
         _width = (uint)result.Size.Width;
         _height = (uint)result.Size.Height;
         DecodeScale = result.DecodeScale;
+        HasBakedDisplayProfile = result.HasBakedDisplayProfile;
 
         if (result.VectorSource is not null)
         {
@@ -517,6 +527,9 @@ public partial class Photo : PhDisposable
         {
             Bitmap = result.SingleFrame;
             result.SingleFrame = null;
+
+            // record the decoded frame, or the viewer decodes frame 0 again and shows that
+            _frameIndex = Math.Max(0, frameIndex);
             return;
         }
 
@@ -536,6 +549,8 @@ public partial class Photo : PhDisposable
     /// </summary>
     private async Task OnDecodingAsync(PhotoMetadata meta, CancellationToken token)
     {
+        // one snapshot, so the frame recorded below is the frame decoded
+        var options = ReadOptions;
         var context = CreateCodecSelectionContext(meta);
         var selectedCodec = Core.CodecRegistry.SelectDecodeCodec(meta, context);
 
@@ -547,9 +562,9 @@ public partial class Photo : PhDisposable
         var isPlugin = codec is not (SvgCodecAdapter or SkiaCodecAdapter or MagickCodecAdapter);
         PhotoTrace.Mark("decode:codec", FilePath,
             $"{codec.CodecId} (decodePriority={codec.DecodePriority}, plugin={isPlugin}, "
-            + $"fallback={isFallback}, frameIndex={ReadOptions.FrameIndex})");
+            + $"fallback={isFallback}, frameIndex={options.FrameIndex})");
 
-        using var result = await codec.DecodeAsync(meta, ReadOptions, context, token).ConfigureAwait(false);
+        using var result = await codec.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
 
         // describe before ApplyDecodeResult nulls out the result fields (moves them to Bitmap)
         if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath, $"kind={DescribeDecodeResult(result)}");
@@ -562,16 +577,16 @@ public partial class Photo : PhDisposable
             PhotoTrace.Mark("decode:retry-fallback", FilePath, $"{codec.CodecId} decoded no frame");
 
             using var fallbackResult = await fallbackCodec
-                .DecodeAsync(meta, ReadOptions, context, token).ConfigureAwait(false);
+                .DecodeAsync(meta, options, context, token).ConfigureAwait(false);
 
             if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath,
                 $"kind={DescribeDecodeResult(fallbackResult)} (fallback)");
 
-            ApplyDecodeResult(fallbackResult);
+            ApplyDecodeResult(fallbackResult, options.FrameIndex);
             return;
         }
 
-        ApplyDecodeResult(result);
+        ApplyDecodeResult(result, options.FrameIndex);
     }
 
 
@@ -675,15 +690,40 @@ public partial class Photo : PhDisposable
     /// </summary>
     public void UnloadBitmap()
     {
-        if (Bitmap is AnimatorImpl animator)
+        // same lock as ReleaseFrame, so a frame is either handed over or disposed, never both
+        IDisposable? bitmap;
+        lock (_lock)
+        {
+            bitmap = Bitmap;
+            Bitmap = null;
+            _frameIndex = -1;
+            _releasedBytesPerPixel = 0;
+        }
+
+        if (bitmap is AnimatorImpl animator)
         {
             animator.FrameChanged -= OnAnimatorFrameChanged;
         }
 
-        Bitmap?.Dispose();
-        Bitmap = null;
+        bitmap?.Dispose();
+    }
 
-        _frameIndex = -1;
+
+    /// <summary>
+    /// Hands <paramref name="frame"/> over to the caller, who must dispose it.
+    /// Returns <see langword="false"/> if this photo no longer holds that frame.
+    /// </summary>
+    public bool ReleaseFrame(SKImage frame)
+    {
+        lock (_lock)
+        {
+            if (!ReferenceEquals(Bitmap, frame)) return false;
+
+            // FrameIndex stays: it is the frame on screen, and GetFrameAsync re-decodes without a Bitmap
+            _releasedBytesPerPixel = frame.IsDisposed() ? 0 : Math.Max(1, frame.ColorType.GetBytesPerPixel());
+            Bitmap = null;
+            return true;
+        }
     }
 
 
@@ -802,6 +842,13 @@ public partial class Photo : PhDisposable
             // load metadata
             await LoadMetadataAsync(useCache, token: token);
             PhotoTrace.Mark("metadata:loaded", FilePath, DescribeMetadata(Metadata));
+
+            // the metadata may be new, so decode the frame a view opens on
+            var defaultFrameIndex = GetDefaultFrameIndex();
+            if (ReadOptions.FrameIndex != defaultFrameIndex)
+            {
+                ReadOptions = ReadOptions with { FrameIndex = defaultFrameIndex };
+            }
 
             if (!skipLoadingEvent)
             {
@@ -953,6 +1000,26 @@ public partial class Photo : PhDisposable
 
 
     /// <summary>
+    /// Gets the frame a view opens on; only the built-in decoder shares the metadata's frame order.
+    /// </summary>
+    public int GetDefaultFrameIndex()
+    {
+        var meta = Metadata;
+        var frameIndex = meta.DefaultFrameIndex;
+        if (frameIndex <= 0) return 0;
+        if (frameIndex >= meta.FrameCount) return 0;
+
+        // Magick lists icon frames in file order, a plugin may not (WIC does not)
+        var context = CreateCodecSelectionContext(meta);
+        var codec = Core.CodecRegistry.SelectDecodeCodec(meta, context) ?? Core.CodecRegistry.FallbackDecodeCodec;
+        var decodesWithMagick = ReferenceEquals(codec, Core.CodecRegistry.FallbackDecodeCodec);
+        if (!decodesWithMagick) return 0;
+
+        return frameIndex;
+    }
+
+
+    /// <summary>
     /// Gets an image frame from the photo.
     /// </summary>
     public async Task<SKImage?> GetFrameAsync(uint frameIndex)
@@ -995,6 +1062,7 @@ public partial class Photo : PhDisposable
                 {
                     // update decoder codec
                     CodecId = result.CodecId;
+                    HasBakedDisplayProfile = result.HasBakedDisplayProfile;
 
                     // Detach the frame from the result so its dispose doesn't free our image.
                     var detached = sf;
@@ -1006,7 +1074,8 @@ public partial class Photo : PhDisposable
             // Fallback: legacy direct-Magick path (e.g. SVG vector codec returned no raster).
             using var data = await MagickCodec.DecodeImageAsync(Metadata,
                 options, GetOrCreateMagickReadSettings(), null, CancellationToken.None);
-            return SkiaCodec.FromMagick(data.SingleFrame, Metadata.SkiaColorSpace, Metadata.IsHdr);
+            HasBakedDisplayProfile = MagickCodec.HasBakedDisplayProfile(data, Metadata);
+            return SkiaCodec.FromMagick(data.SingleFrame, MagickCodec.GetDecodedColorSpace(data, Metadata), Metadata.IsHdr);
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
 
 
@@ -1030,18 +1099,24 @@ public partial class Photo : PhDisposable
 
 
     /// <summary>
-    /// Decodes a fresh copy of the given frame directly from the source, WITHOUT touching the cached
-    /// <see cref="Bitmap"/> or the current frame index. The caller owns the returned image. Used by
-    /// the viewer to (re)capture the pre-tone-map HDR frame for live re-tone-mapping without a full,
-    /// display-disrupting reload.
+    /// Decodes a fresh copy of a frame without touching <see cref="Bitmap"/> or the frame index; the caller owns the image.
     /// </summary>
-    public async Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, CancellationToken token = default)
+    public Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, CancellationToken token = default)
+    {
+        return DecodeStaticFrameAsync(frameIndex, null, token);
+    }
+
+
+    /// <summary>
+    /// Decodes a fresh copy of a frame like the overload above, reading with <paramref name="readOptions"/> instead of <see cref="ReadOptions"/> when given.
+    /// </summary>
+    public async Task<SKImage?> DecodeStaticFrameAsync(uint frameIndex, PhotoReadOptions? readOptions, CancellationToken token = default)
     {
         var newFrameIndex = (int)frameIndex;
 
         return await Task.Factory.StartNew(async () =>
         {
-            var options = ReadOptions with { FrameIndex = newFrameIndex };
+            var options = (readOptions ?? ReadOptions) with { FrameIndex = newFrameIndex };
             var context = CreateCodecSelectionContext(Metadata);
             var codec = Core.CodecRegistry.SelectDecodeCodec(Metadata, context);
             if (codec is not null)
@@ -1059,7 +1134,7 @@ public partial class Photo : PhDisposable
             // fallback: direct Magick decode
             using var data = await MagickCodec.DecodeImageAsync(Metadata, options,
                 GetOrCreateMagickReadSettings(), null, token);
-            return SkiaCodec.FromMagick(data.SingleFrame, Metadata.SkiaColorSpace, Metadata.IsHdr);
+            return SkiaCodec.FromMagick(data.SingleFrame, MagickCodec.GetDecodedColorSpace(data, Metadata), Metadata.IsHdr);
         }, token, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
     }
 
@@ -1096,10 +1171,14 @@ public partial class Photo : PhDisposable
             // 2. save photo to file
             else if (!handled)
             {
+                // a single-image format writes one numbered file per frame, leaving nothing at the staged path
+                var saveAllFrames = Metadata.FrameCount > 1
+                    && MagickFormatInfo.Create(destFilePath)?.SupportsMultipleFrames == true;
+
                 // update read options
                 var readOptions = ReadOptions with
                 {
-                    FrameIndex = Metadata.FrameCount > 1
+                    FrameIndex = saveAllFrames
                         ? -1 // save all frame
                         : ReadOptions.FrameIndex, // save only current frame
                 };

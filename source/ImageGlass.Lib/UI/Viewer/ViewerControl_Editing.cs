@@ -48,64 +48,6 @@ public partial class ViewerControl
     #region Control Methods
 
     /// <summary>
-    /// Gets a rendered bitmap of the current image or the selected region.
-    /// </summary>
-    public SKBitmap? GetRenderedBitmap(bool selectionOnly = false)
-    {
-        SKImageRef.ImageLease? imgLease = null;
-        Rect selectionRect;
-
-        try
-        {
-            lock (_lock)
-            {
-                var imageRef = _imgRender ?? _imgSource;
-                if (imageRef is null) return null;
-
-                // Acquire a lease to keep the image alive while we copy pixels.
-                imgLease = imageRef.Acquire();
-                var leaseImage = imgLease?.Image;
-                if (leaseImage is null || leaseImage.IsDisposed()) return null;
-                if (selectionOnly && SourceSelection.IsEmpty) return null;
-
-                // Determine the source rectangle to copy (in source image coords).
-                selectionRect = selectionOnly
-                    ? SourceSelection.Normalize()
-                    : new Rect(0, 0, leaseImage.Width, leaseImage.Height);
-            }
-
-            // Validate the leased image again after exiting the lock.
-            var img = imgLease?.Image;
-            if (img is null || img.IsDisposed()) return null;
-
-            // Intersect selection with actual image bounds to avoid out-of-range
-            // reads and to handle partially out-of-bounds selections.
-            var bounds = new Rect(0, 0, img.Width, img.Height);
-            selectionRect = selectionRect.GetIntersection(bounds);
-            if (selectionRect.IsEmpty) return null;
-
-            // prepare output bitmap
-            var rect = selectionRect.ToSKRectI();
-            var info = new SKImageInfo(rect.Width, rect.Height, img.ColorType, img.AlphaType, img.ColorSpace);
-            var bmpOutput = new SKBitmap(info);
-
-            // copy the image pixels to the output bitmap
-            if (!img.ReadPixels(info, bmpOutput.GetPixels(), bmpOutput.RowBytes, rect.Left, rect.Top))
-            {
-                bmpOutput.Dispose();
-                return null;
-            }
-
-            return bmpOutput;
-        }
-        finally
-        {
-            imgLease?.Dispose();
-        }
-    }
-
-
-    /// <summary>
     /// Gets the color of the pixel at the specified coordinates from the image source.
     /// </summary>
     /// <returns>
@@ -204,8 +146,10 @@ public partial class ViewerControl
             }
         }
 
-        // 2. monitor color profile only
-        if (destProfile is not null
+        // 2. monitor color profile only; a Magick decode that already converted to it tags the pixels so
+        var isInDestSpace = destProfile is not null && srcImage.ColorSpace is { } srcSpace
+            && SKColorSpace.Equal(srcSpace, destProfile);
+        if (destProfile is not null && !isInDestSpace
             && SkiaCodec.TryApplyColorSpace(srcImage, destProfile, out var colored))
         {
             return colored;
@@ -343,12 +287,17 @@ public partial class ViewerControl
             bool applyProfile;
             var destProfile = Core.DestColorProfile;
 
+            // the viewer edits to apply to the new frame, snapshotted with the rest
+            var channels = _loadingOptions.Channels;
+            var isColorInverted = IsColorInverted;
+            var orientation = PhotoOrientation;
+            bool hasEdits;
+
             lock (_lock)
             {
                 if (_animator is not null || IsVectorSource()) return;
                 if (Photo is not { State: PhotoState.Loaded }) return;
-                // Mode drives tone-map vs pass-through (Mode=None => EnableHdrToneMapping is off and
-                // ToneMapToSdr returns null => raw pass-through); only HDR photos are handled here
+                // only HDR photos; Mode None makes ToneMapToSdr return null, a raw pass-through
                 if (Photo.Metadata?.IsHdr != true) return;
 
                 lease = _imgHdrSource?.Acquire();
@@ -356,6 +305,7 @@ public partial class ViewerControl
                 transferFn = Photo.Metadata.HdrTransferFn;
                 contentPeakNits = Photo.Metadata.ContentPeakNits;
                 applyProfile = CanApplySkiaColorSpace();
+                hasEdits = HasImageEdits();
             }
 
             // raw frame not captured yet: capture it once (background, no display change), then retry
@@ -371,6 +321,7 @@ public partial class ViewerControl
 
             // heavy work off the UI thread; the lease keeps the raw frame alive across a photo change
             SKImage? result = null;
+            SKImage? edited = null;
             var passthrough = false;
             try
             {
@@ -394,6 +345,14 @@ public partial class ViewerControl
                     }
                     return (toneMapped, false);
                 }).ConfigureAwait(false);
+
+                // the edits too, so the swapped frame draws with them at once
+                if (hasEdits)
+                {
+                    var shownFrame = passthrough ? lease.Image : result;
+                    edited = await Task.Run(() => SkiaCodec.ApplyImageEdits(shownFrame, channels, isColorInverted, orientation))
+                        .ConfigureAwait(false);
+                }
             }
             finally
             {
@@ -410,6 +369,7 @@ public partial class ViewerControl
                         || _imgHdrSource is null || _imgHdrSource.Image.IsDisposed())
                     {
                         result?.Dispose();
+                        edited?.Dispose();
                         return;
                     }
 
@@ -425,8 +385,19 @@ public partial class ViewerControl
                     }
                     else
                     {
+                        edited?.Dispose();
                         return;
                     }
+
+                    // an edit made during the pass makes the first draw rebuild them instead
+                    var isEditUnchanged = channels == _loadingOptions.Channels
+                        && isColorInverted == IsColorInverted && orientation == PhotoOrientation;
+                    if (!isEditUnchanged)
+                    {
+                        edited?.Dispose();
+                        edited = null;
+                    }
+                    SKImageRef.Set(ref _imgRender, edited);
 
                     _mipmapCache?.Dispose();
                     _mipmapCache = null;
@@ -537,23 +508,25 @@ public partial class ViewerControl
 
 
     /// <summary>
-    /// Rotates the image.
+    /// Rotates the image clockwise by a multiple of 90 degrees.
     /// </summary>
     public bool RotateImage(double degree, bool requestRerender = true)
     {
         lock (_lock)
         {
-            // do nothing for animated images or when there is no source
-            if (_animator is not null || IsVectorSource()) return false;
+            // do nothing for animated images, for a non-right angle, or when there is no source
+            if (_animator is not null || IsVectorSource() || degree % 90 != 0) return false;
 
             var srcImage = (_imgRender ?? _imgSource)?.Image;
-            var rotatedImage = SkiaCodec.RotateImage(srcImage, degree);
+            var rotatedImage = SkiaCodec.OrientImage(srcImage, ImageOrientation.Identity.Rotate((int)degree));
             if (rotatedImage.IsDisposed()) return false;
 
             // update the render cache, keep _imgSource intact
             SKImageRef.Set(ref _imgRender, rotatedImage);
             _mipmapCache?.Dispose();
             _mipmapCache = null;
+
+            PhotoOrientation = PhotoOrientation.Rotate((int)degree);
 
             // update source size
             BitmapSize = new(rotatedImage.Width, rotatedImage.Height);
@@ -587,6 +560,8 @@ public partial class ViewerControl
             SKImageRef.Set(ref _imgRender, flippedImage);
             _mipmapCache?.Dispose();
             _mipmapCache = null;
+
+            PhotoOrientation = PhotoOrientation.Flip(options);
         }
 
         // render the transformation
@@ -608,30 +583,16 @@ public partial class ViewerControl
         {
             // 1. do nothing for animated/vector images or when there is no source
             if (_animator is not null || IsVectorSource()) return false;
-
-            var srcImage = _imgSource?.Image;
-            if (srcImage.IsDisposed()) return false;
+            if (_imgSource?.Image.IsDisposed() != false) return false;
 
 
-            // 2. reset render cache to start from original source
-            SKImageRef.Set(ref _imgRender, null);
-            _mipmapCache?.Dispose();
-            _mipmapCache = null;
+            // 2. rebuild from the source with every edit, so invert and orientation survive the new channels
             _loadingOptions.Channels = colors;
-
-
-            // 3. skip filtering when all channels (RGBA) are selected
-            if (!colors.HasFlag(ColorChannels.RGBA))
-            {
-                var filteredImage = SkiaCodec.FilterImageColorChannels(srcImage, colors);
-                if (filteredImage.IsDisposed()) return false;
-
-                SKImageRef.Set(ref _imgRender, filteredImage);
-            }
+            if (!RebuildEditedImage()) return false;
         }
 
 
-        // 4. render the transformation
+        // 3. render the transformation
         if (requestRerender)
         {
             Refresh(false);

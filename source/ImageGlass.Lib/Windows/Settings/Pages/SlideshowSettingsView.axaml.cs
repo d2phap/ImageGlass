@@ -54,7 +54,7 @@ public partial class SlideshowSettingsView : SettingsPageView
         BindToggle(PART_SlideshowCountdown, ConfigId.EnableSlideshowCountdown,
             LangId.Settings_EnableSlideshowCountdown, LangId.Settings_Slideshow_Appearance, true);
         BindColorPicker(PART_BgColor, ConfigId.SlideshowBackgroundColor, "#000000",
-            LangId.Settings_SlideshowBackgroundColor, LangId.Settings_Slideshow_Appearance);
+            LangId._BackgroundColor, LangId.Settings_Slideshow_Appearance);
 
         // Playback
         BindToggle(PART_LoopSlideshow, ConfigId.EnableLoopSlideshow,
@@ -77,6 +77,10 @@ public partial class SlideshowSettingsView : SettingsPageView
         // Notification
         BindUIntInput(PART_NotifySound, ConfigId.SlideshowImagesToNotifySound,
             LangId.Settings_SlideshowImagesToNotifySound, LangId.Settings_Slideshow_Playback);
+
+        BindTransitionEditor(PART_Transition, PART_TransitionDuration, PART_TransitionError,
+            PART_OpenTransitionsFolder, PART_GetMoreTransitions,
+            ConfigId.SlideshowTransition, ConfigId.SlideshowTransitionDuration, 1000u, LangId.Settings_Slideshow_Playback);
     }
 
 

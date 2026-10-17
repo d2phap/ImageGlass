@@ -21,6 +21,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using Avalonia.VisualTree;
 using ImageGlass.Common;
 using ImageGlass.Common.Photoing;
@@ -36,8 +37,11 @@ namespace ImageGlass.UI;
 
 public partial class GalleryControl : PhControl
 {
+    private const int TOOLTIP_RESUME_DELAY_MS = 250;
+
     private CancellationTokenSource? _cancelScrollAnimation;
     private ScrollViewer? _cachedScrollViewerEl;
+    private DispatcherTimer? _tooltipResumeTimer;
     public static readonly Thickness GalleryItemMargin = new(1);
     public static readonly Thickness GalleryPadding = new(4, 4, 4, 8);
 
@@ -119,6 +123,7 @@ public partial class GalleryControl : PhControl
 
         // tunneling: ScrollContentPresenter consumes the bubbling wheel event with its own fixed 50px step
         AddHandler(PointerWheelChangedEvent, GalleryControl_PointerWheelChanged, RoutingStrategies.Tunnel);
+        AddHandler(ScrollViewer.ScrollChangedEvent, GalleryControl_ScrollChanged);
     }
 
 
@@ -228,6 +233,14 @@ public partial class GalleryControl : PhControl
     }
 
 
+    private void GalleryControl_ScrollChanged(object? sender, ScrollChangedEventArgs e)
+    {
+        if (e.OffsetDelta == default || !IsPointerOver) return;
+
+        SuspendItemTooltips();
+    }
+
+
     private void GalleryItem_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is not GalleryItem itemEl) return;
@@ -267,6 +280,35 @@ public partial class GalleryControl : PhControl
             if (IsContentVisible) item.LoadThumbnail();
             else item.CancelThumbnailLoading();
         }
+    }
+
+
+    /// <summary>
+    /// Hides item tooltips until scrolling stops, else Avalonia opens a popup for every item passing under the pointer.
+    /// </summary>
+    private void SuspendItemTooltips()
+    {
+        if (ToolTip.GetServiceEnabled(this))
+        {
+            ToolTip.SetServiceEnabled(this, false);
+
+            foreach (var item in PART_ItemsControl.GetVisualDescendants().OfType<GalleryItem>())
+            {
+                if (ToolTip.GetIsOpen(item)) ToolTip.SetIsOpen(item, false);
+            }
+        }
+
+        _tooltipResumeTimer ??= new DispatcherTimer(
+            TimeSpan.FromMilliseconds(TOOLTIP_RESUME_DELAY_MS),
+            DispatcherPriority.Background,
+            (_, _) =>
+            {
+                _tooltipResumeTimer?.Stop();
+                ToolTip.SetServiceEnabled(this, true);
+            });
+
+        _tooltipResumeTimer.Stop();
+        _tooltipResumeTimer.Start();
     }
 
 

@@ -40,6 +40,7 @@ public partial class ToolsSettingsView : SettingsPageView
 {
     private const double NAME_MAX_WIDTH = 220;
     private const double HOTKEY_MAX_WIDTH = 200;
+    private const string TOOLS_URL = "https://imageglass.org/tools";
 
     // working copy of the registered tools; staged into the VM on change
     private readonly List<ExternalTool> _tools = [];
@@ -68,8 +69,8 @@ public partial class ToolsSettingsView : SettingsPageView
         SetLocalizedText(PART_AddTool, LangId._Add);
         PART_AddTool.Click += async (_, _) => await AddOrEditToolAsync(null);
 
-        SetLocalizedText(PART_GetMoreTools, LangId._GetMoreTools);
-        PART_GetMoreTools.Click += async (_, _) => await BHelper.OpenUrlAsync(App.SettingsWindow, "https://imageglass.org/tools", "from_get_more_tools");
+        BindLink(PART_GetMoreTools, LangId._GetMoreTools, TOOLS_URL,
+            () => _ = BHelper.OpenUrlAsync(App.SettingsWindow, TOOLS_URL, "from_get_more_tools"));
 
         // rebuild on language change (also performs the initial render)
         AddLangRefresher(RebuildTable);

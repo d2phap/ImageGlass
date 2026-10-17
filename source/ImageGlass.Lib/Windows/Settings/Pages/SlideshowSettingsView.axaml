@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="using:ImageGlass.Common.Types"
     xmlns:ui="using:ImageGlass.UI"
     xmlns:windows="using:ImageGlass.Common.Windows"
     mc:Ignorable="d"
@@ -24,7 +25,7 @@
 
             <!--  Slideshow Background  -->
             <StackPanel Margin="0,10,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
-                <ui:PhTextBlock LangKey="Settings_SlideshowBackgroundColor" />
+                <ui:PhTextBlock LangKey="_BackgroundColor" />
                 <ui:PhColorPickerControl x:Name="PART_BgColor" HorizontalAlignment="Left" />
             </StackPanel>
         </StackPanel>
@@ -70,6 +71,84 @@
                     Width="200"
                     HorizontalAlignment="Left"
                     AcceptValue="UnsignedIntValueOnly" />
+            </StackPanel>
+
+            <!--  Sub-group: Transition effect (both labels share the subgroup style, so they sit on one line)  -->
+            <StackPanel Spacing="{DynamicResource SettingsLabelInputGap}">
+                <Grid
+                    HorizontalAlignment="Left"
+                    ColumnDefinitions="Auto,Auto"
+                    RowDefinitions="Auto,Auto">
+                    <ui:PhTextBlock Classes="subgroup" LangKey="Settings_TransitionEffect" />
+                    <ui:PhTextBlock
+                        Grid.Column="1"
+                        Margin="14,10,0,4"
+                        Classes="subgroup"
+                        FontWeight="Normal"
+                        LangKey="Settings_TransitionDuration" />
+
+                    <ComboBox
+                        x:Name="PART_Transition"
+                        Grid.Row="1"
+                        MinWidth="200">
+                        <ComboBox.Styles>
+                            <Style x:DataType="windows:TransitionEffectOption" Selector="ComboBoxItem">
+                                <Setter Property="IsEnabled" Value="{CompiledBinding !IsDivider}" />
+                                <Setter Property="ToolTip.Tip" Value="{CompiledBinding DisplayFilePath}" />
+                            </Style>
+                            <Style Selector="ComboBoxItem:disabled">
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="0,2" />
+                            </Style>
+                        </ComboBox.Styles>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="windows:TransitionEffectOption">
+                                <Panel>
+                                    <Separator Margin="0" IsVisible="{CompiledBinding IsDivider}" />
+                                    <StackPanel
+                                        MaxWidth="200"
+                                        IsVisible="{CompiledBinding !IsDivider}"
+                                        Spacing="2">
+                                        <TextBlock Text="{CompiledBinding Name}" TextTrimming="CharacterEllipsis" />
+
+                                        <!--  effect file path  -->
+                                        <TextBlock
+                                            FontSize="{x:Static types:Const.FONT_SIZE_SMALL}"
+                                            IsVisible="{CompiledBinding HasFilePath}"
+                                            Opacity="0.6"
+                                            Text="{CompiledBinding DisplayFilePath}"
+                                            TextTrimming="PathSegmentEllipsis" />
+                                    </StackPanel>
+                                </Panel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.SelectionBoxItemTemplate>
+                            <DataTemplate x:DataType="windows:TransitionEffectOption">
+                                <TextBlock Text="{CompiledBinding Name}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.SelectionBoxItemTemplate>
+                    </ComboBox>
+                    <ui:PhTextBox
+                        x:Name="PART_TransitionDuration"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Width="200"
+                        Margin="14,0,0,0"
+                        AcceptValue="UnsignedIntValueOnly" />
+                </Grid>
+
+                <ui:PhTextBlock
+                    x:Name="PART_TransitionError"
+                    Foreground="{DynamicResource IG_TextDangerBrush}"
+                    IsVisible="False"
+                    TextWrapping="Wrap" />
+                <StackPanel
+                    Margin="0,8,0,8"
+                    HorizontalAlignment="Left"
+                    Spacing="8">
+                    <ui:PhButton x:Name="PART_OpenTransitionsFolder" Variant="Link" />
+                    <ui:PhButton x:Name="PART_GetMoreTransitions" Variant="Link" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
 

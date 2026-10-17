@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass - A Fast, Seamless Photo Viewer
 Copyright (C) 2010 - 2026 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -77,6 +77,13 @@ public partial class GeneralSettingsView : SettingsPageView
             LangId.Settings_AutoUpdate, LangId.Settings_AppUpdate);
         BindLink(PART_SeeWhatIsSent, LangId.Settings_SeeWhatIsSent, ShowUsageStatsPreview);
 
+        BindToggle(PART_AutoInstallUpdate, ConfigId.EnableAutoInstallUpdate,
+            LangId.Settings_EnableAutoInstallUpdate, LangId.Settings_AppUpdate);
+        ProGate(ConfigId.EnableAutoInstallUpdate, PART_AutoInstallUpdateBadge, PART_AutoInstallUpdate);
+
+        // nothing to offer on a channel that cannot install its own updates, or when an admin locked it
+        var canSelfUpdate = Core.UpdateProvider.CanInstallUpdate;
+        PART_AutoInstallUpdateRow.IsVisible = canSelfUpdate;
         SetLocalizedText(PART_CheckForUpdate, LangId._CheckForUpdate);
         PART_CheckForUpdate.Click += (_, _) => CheckForUpdate();
         PART_CheckForUpdate.IsVisible = !FeatureManager.IsLocked(API.IG_CheckForUpdate);
@@ -96,7 +103,7 @@ public partial class GeneralSettingsView : SettingsPageView
         var current = VM.GetValue(id, "0");
         chk.IsChecked = !string.Equals(current, "0", StringComparison.OrdinalIgnoreCase);
         chk.IsCheckedChanged += (_, _) =>
-            VM.SetValue(id, (chk.IsChecked ?? false) ? DateTime.UtcNow.ToString() : "0");
+            VM.SetValue(id, (chk.IsChecked ?? false) ? BHelper.FormatUtcRoundtrip(DateTime.UtcNow) : "0");
 
         RegisterSearchKey(chk, label, id, section);
     }

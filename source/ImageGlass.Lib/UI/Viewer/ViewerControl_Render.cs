@@ -193,6 +193,9 @@ public partial class ViewerControl
 
     public override void Render(DrawingContext c)
     {
+        // right before drawing, so the mirror viewport matches the content it draws
+        if (MirrorSource is not null) SyncFromMirrorSource();
+
         base.Render(c);
 
         using (c.PushClip(DrawingArea))
@@ -237,7 +240,7 @@ public partial class ViewerControl
             Cached indexes = [{cacheIndexStr}]
             """;
 
-        var textLayout = new TextLayout(text, new Typeface("Consolas"), FontSize, Brushes.HotPink);
+        var textLayout = new TextLayout(text, new Typeface(Const.FONT_CODE), FontSize, Brushes.HotPink);
         var textOrigin = new Point(DrawingArea.X + 20, DrawingArea.Y + 20);
         for (int i = 0; i < textLayout.TextLines.Count; i++)
         {
@@ -332,8 +335,12 @@ public partial class ViewerControl
     /// </summary>
     protected virtual void OnDrawImage(DrawingContext c)
     {
-        // draw image
-        c.Custom(new PhotoRenderer(this, OnDrawnImageFirstTime));
+        // a mirror draws the photo of its source through its own viewport
+        var renderer = MirrorSource is { } source
+            ? new PhotoRenderer(this, source, EnableMirrorSync)
+            : new PhotoRenderer(this, OnDrawnImageFirstTime);
+
+        c.Custom(renderer);
     }
 
 
@@ -342,30 +349,35 @@ public partial class ViewerControl
     /// </summary>
     protected void OnDrawnImageFirstTime(SKImage? img)
     {
+        Size? refitSize = null;
+
         lock (_lock)
         {
-            // img may be disposed after the render posted this callback; ?. only guards null
-            var imgSize = img.IsDisposed() ? "0x0" : $"{img.Width}x{img.Height}";
+            // a source swapped in since the draw (e.g. an HDR pass) may already have freed img
+            var isCurrent = img is not null && ReferenceEquals(img, _imgSource?.Image);
+            var imgSize = isCurrent && !img.IsDisposed() ? $"{img.Width}x{img.Height}" : "0x0";
             PhotoTrace.Mark("render:first-draw", Photo?.FilePath,
                 $"{imgSize}, vector={IsVectorSource()}");
 
             // the photo is now on screen; release anyone waiting on the first paint
             _firstDrawTcs?.TrySetResult();
 
-            // vector images don't need raster caching
-            if (IsVectorSource())
+            // vector images don't need raster caching; a stale img would get a second owner
+            if (IsVectorSource() || !isCurrent)
             {
                 InvalidateVisual();
+                OnRenderStateChanged();
                 return;
             }
 
-            // cache the proccessed image for next draw
-            SKImageRef.Set(ref _imgRender, img, _imgSource);
-
-            // apply color channel filter
-            if (_loadingOptions.Channels != ColorChannels.RGBA)
+            // a frame prepared with its edits keeps them; otherwise share the source and apply the edits now
+            if (_imgRender is null)
             {
-                _ = FilterColorChannels(_loadingOptions.Channels, false);
+                SKImageRef.Set(ref _imgRender, img, _imgSource);
+                if (HasImageEdits() && RebuildEditedImage())
+                {
+                    refitSize = GetShownImageSize(BitmapSize);
+                }
             }
 
             // build mipmap tile cache for non-animated photos
@@ -373,7 +385,11 @@ public partial class ViewerControl
 
             // draw again
             InvalidateVisual();
+            OnRenderStateChanged();
         }
+
+        // outside the lock, as a refit raises ZoomChanged
+        if (refitSize is { } size) RefitForFrameSize(size);
     }
 
 
@@ -468,10 +484,20 @@ public partial class ViewerControl
         if (_animator is not null) return;
 
         // use the processed (color-managed) image if available, otherwise the source
-        _mipmapCache = MipmapTileCache.Create(_imgRender ?? _imgSource, InvalidateVisual);
+        _mipmapCache = MipmapTileCache.Create(_imgRender ?? _imgSource, InvalidateTiledFrame);
 
         PhotoTrace.Mark("render:mipmap-cache", Photo?.FilePath,
             _mipmapCache is null ? "not created (image too small)" : "created");
+    }
+
+
+    /// <summary>
+    /// Redraws a tile that landed, here and in the mirrors that share the tiles.
+    /// </summary>
+    private void InvalidateTiledFrame()
+    {
+        InvalidateVisual();
+        OnRenderStateChanged();
     }
 
 

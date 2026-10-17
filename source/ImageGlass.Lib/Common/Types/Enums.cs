@@ -143,6 +143,38 @@ public enum BrowsingMode
 
 
 /// <summary>
+/// Specifies where and how the image information overlay shows; the names are also language keys.
+/// </summary>
+public enum ImageInfoOverlayMode
+{
+    /// <summary>
+    /// Never shown.
+    /// </summary>
+    Hidden = 0,
+
+    /// <summary>
+    /// Shown in every window mode.
+    /// </summary>
+    Always = 1,
+
+    /// <summary>
+    /// Shown in every window mode, while the pointer is near it.
+    /// </summary>
+    AlwaysAutoHide = 2,
+
+    /// <summary>
+    /// Shown while the window has no title bar: frameless or full screen.
+    /// </summary>
+    Borderless = 3,
+
+    /// <summary>
+    /// Shown while the window has no title bar, and the pointer is near it.
+    /// </summary>
+    BorderlessAutoHide = 4,
+}
+
+
+/// <summary>
 /// Image resampling methods. Member names and order mirror Magick.NET's <c>FilterType</c>
 /// (with <see cref="Auto"/> in place of <c>Undefined</c>), so a value casts directly to its filter.
 /// </summary>

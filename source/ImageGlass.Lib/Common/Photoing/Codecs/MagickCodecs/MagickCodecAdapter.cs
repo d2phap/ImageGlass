@@ -96,7 +96,8 @@ public sealed class MagickCodecAdapter : PhDisposable, ICodec
             null,
             cancellationToken).ConfigureAwait(false);
 
-        var image = SkiaCodec.FromMagick(output.SingleFrame, metadata.SkiaColorSpace,
+        // tag what the decode converted to, so the viewer never converts the same pixels twice
+        var image = SkiaCodec.FromMagick(output.SingleFrame, MagickCodec.GetDecodedColorSpace(output, metadata),
             metadata.IsHdr, out var decodeScale);
 
         return new CodecDecodeResult
@@ -108,6 +109,7 @@ public sealed class MagickCodecAdapter : PhDisposable, ICodec
             SingleFrame = image,
             IsHdr = metadata.IsHdr,
             HasEmbeddedColorProfile = metadata.SkiaColorSpace is not null || metadata.MagickColorProfile is not null,
+            HasBakedDisplayProfile = MagickCodec.HasBakedDisplayProfile(output, metadata),
         };
     }
 

@@ -305,8 +305,12 @@ public static partial class MagickCodec
         if (imgC.Count == 0) return meta;
 
 
-        // 1. calculate the specific frame index
-        var frameIndex = options?.FrameIndex ?? 0;
+        // 1. calculate the specific frame index; a multi-size icon opens on its largest image, so describe that one
+        var isIcon = meta.FileExtension is ".ico" or ".cur";
+        meta.DefaultFrameIndex = isIcon ? GetDefaultIconFrameIndex__(imgC) : 0;
+
+        var requestedFrameIndex = options?.FrameIndex ?? 0;
+        var frameIndex = meta.DefaultFrameIndex > 0 ? meta.DefaultFrameIndex : requestedFrameIndex;
 
         // make sure frame index is within range
         if (frameIndex >= imgC.Count) frameIndex = 0;
@@ -360,10 +364,10 @@ public static partial class MagickCodec
                     meta.Height = meta.OriginalWidth;
                 }
 
-                // DPI: Convert units to inch
-                var density = imgC[frameIndex].Density;
-                meta.DpiX = density.X * 2.54d;
-                meta.DpiY = density.Y * 2.54d;
+                // DPI: only a density per centimeter converts; one per inch or of no unit is already right
+                var density = imgC[frameIndex].Density.ChangeUnits(DensityUnit.PixelsPerInch);
+                meta.DpiX = density.X;
+                meta.DpiY = density.Y;
 
                 // image color
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
@@ -527,7 +531,8 @@ public static partial class MagickCodec
             var i = 0;
             foreach (var imgFrameM in imgColl)
             {
-                ProcessMagickImage__((MagickImage)imgFrameM, options, meta, false);
+                ProcessMagickImage__((MagickImage)imgFrameM, options, meta, false, out var frameConversion);
+                if (i == 0) result.ColorConversion = frameConversion;
 
                 // apply transformation
                 if (i == transform?.FrameIndex || transform?.FrameIndex == -1)
@@ -608,9 +613,14 @@ public static partial class MagickCodec
         }
 
 
-        // 2.3 process image
-        var thumbM = ProcessMagickImage__(imgM, options, meta, true);
-        if (thumbM != null) imgM = thumbM;
+        // 2.3 process image; an embedded thumbnail replaces the full image, which is freed now
+        var thumbM = ProcessMagickImage__(imgM, options, meta, true, out var conversion);
+        if (thumbM != null)
+        {
+            imgM.Dispose();
+            imgM = thumbM;
+        }
+        result.ColorConversion = conversion;
 
 
         // 2.4 apply final changes
@@ -913,6 +923,7 @@ public static partial class MagickCodec
             else if (result.SingleFrame is not null)
             {
                 result.SingleFrame.Quality = ResolveHdrSafeQuality__(meta, destExt, quality);
+                SetPngCompressionLevel(result.SingleFrame, destFilePath, quality);
 
                 // resize ICO file if it's larger than 256
                 if (destExt.Equals(".ICO", StringComparison.OrdinalIgnoreCase))
@@ -949,6 +960,21 @@ public static partial class MagickCodec
 
 
     /// <summary>
+    /// Derives the zlib level of a PNG write from <paramref name="quality"/>, never above the default 6.
+    /// </summary>
+    public static void SetPngCompressionLevel(MagickImage imgM, string destFilePath, uint quality)
+    {
+        if (MagickFormatInfo.Create(destFilePath)?.ModuleFormat != MagickFormat.Png) return;
+
+        // the PNG writer reads quality as zlib level * 10, and 7-9 cost up to 7x the time of 6 for a few percent
+        const uint MAX_LEVEL = 6;
+        var level = Math.Clamp(quality / 10, 1, MAX_LEVEL);
+
+        imgM.Settings.SetDefines(new PngWriteDefines { CompressionLevel = level });
+    }
+
+
+    /// <summary>
     /// Exports image frames to files, using Magick.NET
     /// </summary>
     /// <param name="srcFilePath">The full path of source file</param>
@@ -981,6 +1007,7 @@ public static partial class MagickCodec
                     + ".png";
                 var destFilePath = Path.Combine(destFolder, newFilename);
 
+                SetPngCompressionLevel((MagickImage)imgM, destFilePath, imgM.Quality);
                 await imgM.WriteAsync(destFilePath, MagickFormat.Png, token);
             }
             catch (OperationCanceledException) { break; }
@@ -1267,20 +1294,20 @@ public static partial class MagickCodec
 
 
     /// <summary>
-    /// Converts the Magick's <see cref="OrientationType"/> value to Skia's <see cref="SKEncodedOrigin"/> value.
+    /// Converts the Magick's <see cref="Orientation"/> value to Skia's <see cref="SKEncodedOrigin"/> value.
     /// </summary>
-    public static SKEncodedOrigin ToSkiaOrientation(OrientationType orientation)
+    public static SKEncodedOrigin ToSkiaOrientation(Orientation orientation)
     {
         return orientation switch
         {
-            OrientationType.TopLeft => SKEncodedOrigin.TopLeft,
-            OrientationType.TopRight => SKEncodedOrigin.TopRight,
-            OrientationType.BottomRight => SKEncodedOrigin.BottomRight,
-            OrientationType.BottomLeft => SKEncodedOrigin.BottomLeft,
-            OrientationType.LeftTop => SKEncodedOrigin.LeftTop,
-            OrientationType.RightTop => SKEncodedOrigin.RightTop,
-            OrientationType.RightBottom => SKEncodedOrigin.RightBottom,
-            OrientationType.LeftBottom => SKEncodedOrigin.LeftBottom,
+            Orientation.TopLeft => SKEncodedOrigin.TopLeft,
+            Orientation.TopRight => SKEncodedOrigin.TopRight,
+            Orientation.BottomRight => SKEncodedOrigin.BottomRight,
+            Orientation.BottomLeft => SKEncodedOrigin.BottomLeft,
+            Orientation.LeftTop => SKEncodedOrigin.LeftTop,
+            Orientation.RightTop => SKEncodedOrigin.RightTop,
+            Orientation.RightBottom => SKEncodedOrigin.RightBottom,
+            Orientation.LeftBottom => SKEncodedOrigin.LeftBottom,
             _ => SKEncodedOrigin.Default,
         };
     }
@@ -1363,9 +1390,32 @@ public static partial class MagickCodec
 
 
     /// <summary>
-    /// Get Magick color profile.
+    /// Gets the color space the decoded pixels are in, so their tag describes the conversion the decode applied.
     /// </summary>
-    /// <param name="name">Name or Full path of color profile</param>
+    public static SKColorSpace? GetDecodedColorSpace(MagickDecoderOutput output, PhotoMetadata meta)
+    {
+        return output.ColorConversion switch
+        {
+            MagickColorConversion.ToDisplayProfile => Core.IsDestColorProfileSupported ? Core.DestColorProfile : null,
+            MagickColorConversion.ToSrgb => null,
+            _ => meta.SkiaColorSpace,
+        };
+    }
+
+
+    /// <summary>
+    /// Checks whether the decoded pixels carry a display profile their tag cannot describe, such as a CMYK soft-proof.
+    /// </summary>
+    public static bool HasBakedDisplayProfile(MagickDecoderOutput output, PhotoMetadata meta)
+    {
+        return output.ColorConversion == MagickColorConversion.ToDisplayProfile
+            && GetDecodedColorSpace(output, meta) is null;
+    }
+
+
+    /// <summary>
+    /// Gets the Magick color profile from its name or the full path of its file.
+    /// </summary>
     public static ColorProfile? GetColorProfileByName(string name)
     {
         // 1. don't use color profile
@@ -1412,7 +1462,8 @@ public static partial class MagickCodec
             nameof(ColorProfiles.AppleRGB) => ColorProfiles.AppleRGB,
             nameof(ColorProfiles.CoatedFOGRA39) => ColorProfiles.CoatedFOGRA39,
             nameof(ColorProfiles.ColorMatchRGB) => ColorProfiles.ColorMatchRGB,
-            nameof(ColorProfiles.SRGB) => ColorProfiles.SRGB,
+            // the settings store ColorProfileOption.sRGB, spelled differently from Magick's
+            nameof(ColorProfiles.SRGB) or nameof(ColorProfileOption.sRGB) => ColorProfiles.SRGB,
             nameof(ColorProfiles.USWebCoatedSWOP) => ColorProfiles.USWebCoatedSWOP,
             _ => null,
         };

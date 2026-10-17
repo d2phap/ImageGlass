@@ -17,57 +17,103 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Common;
-using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
-using ImageGlass.Common.Types;
+using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Win32.Common.ServiceProviders;
 
-public class Win32PrintProvider : IPrintProvider
+
+/// <summary>
+/// Prints through the Windows spooler with GDI, and opens Print Pictures as the system dialog.
+/// </summary>
+public class Win32PrintProvider : PrintProviderBase
 {
-    private readonly HashSet<string> _nativeWin32Formats = [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff", ".fax"];
+    /// <inheritdoc/>
+    protected override Task<IReadOnlyList<PrinterInfo>> GetSystemPrintersAsync(CancellationToken token)
+    {
+        return Task.Run<IReadOnlyList<PrinterInfo>>(Win32PrinterApi.GetPrinters, token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PrinterCapabilities> GetSystemCapabilitiesAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.Run(() => Win32PrinterApi.GetCapabilities(printer.Id, token), token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PrinterStatus> GetSystemStatusAsync(PrinterInfo printer, CancellationToken token)
+    {
+        return Task.Run(() => Win32PrinterApi.GetStatus(printer.Id), token).WaitAsync(token);
+    }
+
+
+    /// <inheritdoc/>
+    protected override Task<PaperInfo> MeasureSystemPaperAsync(PrinterInfo printer, PaperInfo paper, CancellationToken token)
+    {
+        return Task.Run(() => Win32PrinterApi.MeasurePaper(printer.Id, paper), token).WaitAsync(token);
+    }
 
 
     /// <summary>
-    /// <inheritdoc/>
+    /// Shows the driver's own settings dialog, owned by the Print window, on the UI thread.
     /// </summary>
-    public async Task OpenPrintAsync(string? filePath, PhotoMetadata? meta, bool isClipboardFile)
+    protected override Task<bool> ShowSystemPropertiesDialogAsync(PhWindow owner, PrintJobSettings settings)
     {
-        var fileToPrint = filePath;
-        var srcFilePath = meta?.FilePath ?? string.Empty;
-        var ext = meta?.FileExtension.ToLowerInvariant() ?? string.Empty;
-        var isNativeSingleFrameFormat = meta?.FrameCount == 1 && !_nativeWin32Formats.Contains(ext);
+        var handle = owner.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
+
+        return Task.FromResult(Win32PrinterApi.ShowPropertiesDialog(handle, settings));
+    }
 
 
-        // print clipboard image
-        if (Core.ClipboardImage != null || isNativeSingleFrameFormat)
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
-        // print an image file
-        // rename ext FAX -> TIFF to multi-frame printing
-        else if (ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
-        {
-            fileToPrint = BHelper.ConfigDir(Dir.Temporary, Path.GetFileNameWithoutExtension(srcFilePath) + ".tiff");
-            File.Copy(srcFilePath, fileToPrint, true);
-        }
-        else if (meta?.FrameCount > 1
-            && !ext.Equals(".gif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
-            && !ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase))
-        {
-            // save image to temp file
-            fileToPrint = await Core.SavePhotoAsTempFileAsync();
-        }
+    /// <inheritdoc/>
+    protected override async Task PrintToSystemAsync(PrintJob job, IProgress<PrintProgress>? progress, CancellationToken token)
+    {
+        var settings = job.Settings;
+        var name = settings.Printer.Id;
 
-        if (string.IsNullOrEmpty(fileToPrint)) return;
+        // copies go to the driver when it can make them in the order asked, else the app prints each one
+        var copies = Math.Max(1, settings.Copies);
+        var (maxCopies, canCollate) = Win32PrinterApi.GetCopySupport(name);
+        var isDriverCopies = copies <= maxCopies && (!settings.Collate || canCollate || job.Layout.Pages.Count == 1);
 
-        // open Print dialog
-        Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(fileToPrint));
+        var devMode = Win32PrinterApi.BuildDevMode(name, settings, isDriverCopies ? copies : 1);
+        await Win32GdiPrintJob.RunAsync(job, devMode, isDriverCopies ? 1 : copies, progress, token).ConfigureAwait(false);
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanShowSystemDialog => true;
+
+
+    /// <summary>
+    /// Opens Print Pictures with the shown frame, every edit applied.
+    /// </summary>
+    public override async Task<bool> ShowSystemDialogAsync(PhWindow owner, PrintJob job, CancellationToken token)
+    {
+        var path = await WriteShownImagePngAsync(job, token);
+        if (string.IsNullOrEmpty(path)) return false;
+
+        Win32PrintApi.OpenPrintDialog(BHelper.GetRealPlatformPath(path));
+        return true;
+    }
+
+
+    /// <inheritdoc/>
+    public override bool CanAddPrinter => true;
+
+
+    /// <summary>
+    /// Opens Settings at Printers &amp; scanners, where "Add device" adds a printer.
+    /// </summary>
+    public override Task OpenAddPrinterSettingsAsync(PhWindow owner)
+    {
+        return BHelper.OpenUrlAsync(owner, "ms-settings:printers");
     }
 }
