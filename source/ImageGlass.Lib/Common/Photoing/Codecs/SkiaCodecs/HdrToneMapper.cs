@@ -19,6 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Common.Extensions;
 using SkiaSharp;
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -225,14 +227,7 @@ public static class HdrToneMapper
         var whiteLevel = ComputeToneCurveWhiteLevel(transferFn, options,
             contentPeakNits, measuredPeak, compression);
 
-        Func<float, float>? toneCurve = options.Mode switch
-        {
-            HdrToneMappingMode.BT2408 => v => ReferenceWhiteToneMap(v, whiteLevel),
-            HdrToneMappingMode.Reinhard => v => ExtendedReinhardToneMap(v, compression),
-            HdrToneMappingMode.ACES => v => AcesToneMap(v, compression),
-            _ => null,
-        };
-
+        var toneCurve = ToneCurve.For(options.Mode, whiteLevel, compression);
         if (toneCurve is null) return null;
 
         var width = linearBmp.Width;
@@ -255,12 +250,12 @@ public static class HdrToneMapper
         if (isLinearSrgb)
         {
             ToneMapPerChannel(srcPtr, srcRowBytes, dstPtr, dstRowBytes,
-                width, height, normScale, saturation, toneCurve);
+                width, height, normScale, saturation, toneCurve.Value);
         }
         else
         {
             ToneMapLuminanceBased(srcPtr, srcRowBytes, dstPtr, dstRowBytes,
-                width, height, normScale, saturation, toneCurve);
+                width, height, normScale, saturation, toneCurve.Value);
         }
 
         // ── Step 5: convert linear sRGB float -> final sRGB Rgba8888 ──
@@ -284,15 +279,16 @@ public static class HdrToneMapper
         var linearInfo = new SKImageInfo(source.Width, source.Height,
             SKColorType.RgbaF32, SKAlphaType.Unpremul, targetCs);
 
-        using var linearSurface = SKSurface.Create(linearInfo);
-        if (linearSurface is null) return null;
+        var bitmap = new SKBitmap();
+        var isAllocated = bitmap.TryAllocPixels(linearInfo);
+        if (!isAllocated)
+        {
+            bitmap.Dispose();
+            return null;
+        }
 
-        linearSurface.Canvas.DrawImage(source, 0, 0, SKSamplingOptions.Default);
-
-        // Copy pixels into an owned bitmap so the surface can be disposed safely.
-        using var linearSnapshot = linearSurface.Snapshot();
-        var bitmap = new SKBitmap(linearInfo);
-        if (!linearSnapshot.ReadPixels(bitmap.Info, bitmap.GetPixels(), bitmap.RowBytes, 0, 0))
+        var isDrawn = SkiaCodec.TryDrawInBands(source, bitmap);
+        if (!isDrawn)
         {
             bitmap.Dispose();
             return null;
@@ -396,7 +392,7 @@ public static class HdrToneMapper
     private static unsafe void ToneMapPerChannel(
         byte* srcPtr, int srcRowBytes, byte* dstPtr, int dstRowBytes,
         int width, int height, float normScale, float saturation,
-        Func<float, float> toneCurve)
+        ToneCurve toneCurve)
     {
         var applySaturation = MathF.Abs(saturation - 1f) > 1e-4f;
 
@@ -408,7 +404,18 @@ public static class HdrToneMapper
             var srcRow = (float*)((byte*)srcBase + (long)y * srcRowBytes);
             var dstRow = (float*)((byte*)dstBase + (long)y * dstRowBytes);
 
-            for (var x = 0; x < width; x++)
+            // four pixels per step, then the rest one at a time
+            var x = 0;
+            if (Vector128.IsHardwareAccelerated)
+            {
+                for (; x <= width - 4; x += 4)
+                {
+                    ToneMapPerChannel4(srcRow + x * 4, dstRow + x * 4,
+                        normScale, saturation, applySaturation, toneCurve);
+                }
+            }
+
+            for (; x < width; x++)
             {
                 var i = x * 4;
                 var r = srcRow[i] * normScale;
@@ -418,9 +425,9 @@ public static class HdrToneMapper
 
                 if (r > 0f || g > 0f || b > 0f)
                 {
-                    r = toneCurve(r);
-                    g = toneCurve(g);
-                    b = toneCurve(b);
+                    r = toneCurve.Map(r);
+                    g = toneCurve.Map(g);
+                    b = toneCurve.Map(b);
                 }
 
                 // Saturation: lerp toward luminance gray in linear sRGB
@@ -448,7 +455,7 @@ public static class HdrToneMapper
     private static unsafe void ToneMapLuminanceBased(
         byte* srcPtr, int srcRowBytes, byte* dstPtr, int dstRowBytes,
         int width, int height, float normScale, float saturation,
-        Func<float, float> toneCurve)
+        ToneCurve toneCurve)
     {
         var applySaturation = MathF.Abs(saturation - 1f) > 1e-4f;
 
@@ -460,7 +467,18 @@ public static class HdrToneMapper
             var srcRow = (float*)((byte*)srcBase + (long)y * srcRowBytes);
             var dstRow = (float*)((byte*)dstBase + (long)y * dstRowBytes);
 
-            for (var x = 0; x < width; x++)
+            // four pixels per step, then the rest one at a time
+            var x = 0;
+            if (Vector128.IsHardwareAccelerated)
+            {
+                for (; x <= width - 4; x += 4)
+                {
+                    ToneMapLuminanceBased4(srcRow + x * 4, dstRow + x * 4,
+                        normScale, saturation, applySaturation, toneCurve);
+                }
+            }
+
+            for (; x < width; x++)
             {
                 var i = x * 4;
                 var r = srcRow[i] * normScale;
@@ -472,7 +490,7 @@ public static class HdrToneMapper
 
                 if (lum > 0f)
                 {
-                    var scale = toneCurve(lum) / lum;
+                    var scale = toneCurve.Map(lum) / lum;
                     r *= scale;
                     g *= scale;
                     b *= scale;
@@ -506,22 +524,172 @@ public static class HdrToneMapper
 
 
     /// <summary>
+    /// <see cref="ToneMapPerChannel"/>'s pixel body on four pixels, op for op, so it writes the same bits.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static unsafe void ToneMapPerChannel4(float* src, float* dst,
+        float normScale, float saturation, bool applySaturation, in ToneCurve toneCurve)
+    {
+        LoadPlanes(src, out var r, out var g, out var b, out var a);
+        r *= normScale;
+        g *= normScale;
+        b *= normScale;
+
+        // a pixel with any channel above zero maps all three
+        var isRedLit = Vector128.GreaterThan(r, Vector128<float>.Zero);
+        var isGreenLit = Vector128.GreaterThan(g, Vector128<float>.Zero);
+        var isBlueLit = Vector128.GreaterThan(b, Vector128<float>.Zero);
+        var isLit = isRedLit | isGreenLit | isBlueLit;
+
+        var mappedR = toneCurve.Map(r);
+        var mappedG = toneCurve.Map(g);
+        var mappedB = toneCurve.Map(b);
+        r = Vector128.ConditionalSelect(isLit, mappedR, r);
+        g = Vector128.ConditionalSelect(isLit, mappedG, g);
+        b = Vector128.ConditionalSelect(isLit, mappedB, b);
+
+        if (applySaturation)
+        {
+            var lum = Lum709R * r + Lum709G * g + Lum709B * b;
+            r = lum + saturation * (r - lum);
+            g = lum + saturation * (g - lum);
+            b = lum + saturation * (b - lum);
+        }
+
+        var clampedR = Clamp01(r);
+        var clampedG = Clamp01(g);
+        var clampedB = Clamp01(b);
+        var clampedA = Clamp01(a);
+        StorePlanes(dst, clampedR, clampedG, clampedB, clampedA);
+    }
+
+
+    /// <summary>
+    /// <see cref="ToneMapLuminanceBased"/>'s pixel body on four pixels, op for op, so it writes the same bits.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static unsafe void ToneMapLuminanceBased4(float* src, float* dst,
+        float normScale, float saturation, bool applySaturation, in ToneCurve toneCurve)
+    {
+        LoadPlanes(src, out var r, out var g, out var b, out var a);
+        r *= normScale;
+        g *= normScale;
+        b *= normScale;
+
+        var lum = Lum2020R * r + Lum2020G * g + Lum2020B * b;
+
+        // an unlit pixel goes black, so its lanes of the division are dropped
+        var isLit = Vector128.GreaterThan(lum, Vector128<float>.Zero);
+        var mapped = toneCurve.Map(lum);
+        var scale = mapped / lum;
+        r = Vector128.ConditionalSelect(isLit, r * scale, Vector128<float>.Zero);
+        g = Vector128.ConditionalSelect(isLit, g * scale, Vector128<float>.Zero);
+        b = Vector128.ConditionalSelect(isLit, b * scale, Vector128<float>.Zero);
+
+        var sr = M00 * r + M01 * g + M02 * b;
+        var sg = M10 * r + M11 * g + M12 * b;
+        var sb = M20 * r + M21 * g + M22 * b;
+
+        if (applySaturation)
+        {
+            var srgbLum = Lum709R * sr + Lum709G * sg + Lum709B * sb;
+            sr = srgbLum + saturation * (sr - srgbLum);
+            sg = srgbLum + saturation * (sg - srgbLum);
+            sb = srgbLum + saturation * (sb - srgbLum);
+        }
+
+        var clampedR = Clamp01(sr);
+        var clampedG = Clamp01(sg);
+        var clampedB = Clamp01(sb);
+        var clampedA = Clamp01(a);
+        StorePlanes(dst, clampedR, clampedG, clampedB, clampedA);
+    }
+
+
+    /// <summary>
+    /// Splits four RGBA float pixels at <paramref name="src"/> into one vector per channel.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static unsafe void LoadPlanes(float* src, out Vector128<float> r, out Vector128<float> g,
+        out Vector128<float> b, out Vector128<float> a)
+    {
+        var p0 = Vector128.Load(src);
+        var p1 = Vector128.Load(src + 4);
+        var p2 = Vector128.Load(src + 8);
+        var p3 = Vector128.Load(src + 12);
+
+        // the even lanes of two RGBA pixels are R and B, the odd lanes G and A
+        var rb01 = Vector128.UnzipEven(p0, p1);
+        var ga01 = Vector128.UnzipOdd(p0, p1);
+        var rb23 = Vector128.UnzipEven(p2, p3);
+        var ga23 = Vector128.UnzipOdd(p2, p3);
+
+        r = Vector128.UnzipEven(rb01, rb23);
+        b = Vector128.UnzipOdd(rb01, rb23);
+        g = Vector128.UnzipEven(ga01, ga23);
+        a = Vector128.UnzipOdd(ga01, ga23);
+    }
+
+
+    /// <summary>
+    /// Interleaves one vector per channel back into four RGBA float pixels at <paramref name="dst"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static unsafe void StorePlanes(float* dst, Vector128<float> r, Vector128<float> g,
+        Vector128<float> b, Vector128<float> a)
+    {
+        var rb01 = Vector128.ZipLower(r, b);
+        var rb23 = Vector128.ZipUpper(r, b);
+        var ga01 = Vector128.ZipLower(g, a);
+        var ga23 = Vector128.ZipUpper(g, a);
+
+        var p0 = Vector128.ZipLower(rb01, ga01);
+        var p1 = Vector128.ZipUpper(rb01, ga01);
+        var p2 = Vector128.ZipLower(rb23, ga23);
+        var p3 = Vector128.ZipUpper(rb23, ga23);
+
+        p0.Store(dst);
+        p1.Store(dst + 4);
+        p2.Store(dst + 8);
+        p3.Store(dst + 12);
+    }
+
+
+    /// <summary>
+    /// <see cref="Math.Clamp(float, float, float)"/> to [0, 1] on each lane, NaN and -0 kept as it keeps them.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static Vector128<float> Clamp01(Vector128<float> v)
+    {
+        var isBelow = Vector128.LessThan(v, Vector128<float>.Zero);
+        var isAbove = Vector128.GreaterThan(v, Vector128<float>.One);
+        var raised = Vector128.ConditionalSelect(isBelow, Vector128<float>.Zero, v);
+
+        return Vector128.ConditionalSelect(isAbove, Vector128<float>.One, raised);
+    }
+
+
+    /// <summary>
     /// Converts a linear sRGB <see cref="SKColorType.RgbaF32"/> bitmap to a final
     /// sRGB <see cref="SKColorType.Rgba8888"/> image. Monitor profile is applied
     /// by the caller.
     /// </summary>
     private static SKImage? ConvertToFinalSrgb(SKBitmap linearBmp)
     {
-        using var linearImg = SKImage.FromBitmap(linearBmp);
+        // the tone-mapped bitmap is finished, so the image shares its pixels instead of copying them
+        using var linearImg = SkiaCodec.ToSKImageNoCopy(linearBmp);
         if (linearImg is null) return null;
 
         var finalInfo = new SKImageInfo(linearBmp.Width, linearBmp.Height,
             SKColorType.Rgba8888, SKAlphaType.Premul, SKColorSpace.CreateSrgb());
-        using var finalSurface = SKSurface.Create(finalInfo);
-        if (finalSurface is null) return null;
+        using var finalBmp = new SKBitmap();
+        var isAllocated = finalBmp.TryAllocPixels(finalInfo);
+        if (!isAllocated) return null;
 
-        finalSurface.Canvas.DrawImage(linearImg, 0, 0, SKSamplingOptions.Default);
-        return finalSurface.Snapshot();
+        var isDrawn = SkiaCodec.TryDrawInBands(linearImg, finalBmp);
+        if (!isDrawn) return null;
+
+        return SkiaCodec.ToSKImageNoCopy(finalBmp);
     }
 
 
@@ -621,6 +789,21 @@ public static class HdrToneMapper
 
 
     /// <summary>
+    /// <see cref="ReferenceWhiteToneMap(float, float)"/> on four lanes, op for op, so both give the same bits.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static Vector128<float> ReferenceWhiteToneMap(Vector128<float> v, float whiteLevel)
+    {
+        var one = Vector128<float>.One;
+        var mapped = v * (one + v / Vector128.Create(whiteLevel * whiteLevel)) / (one + v);
+        var clipped = Vector128.Min(one, mapped);
+        var isNotPositive = Vector128.LessThanOrEqual(v, Vector128<float>.Zero);
+
+        return Vector128.ConditionalSelect(isNotPositive, Vector128<float>.Zero, clipped);
+    }
+
+
+    /// <summary>
     /// Extended Reinhard with wide shoulder (no discontinuity).
     /// Trades SDR brightness for significantly more highlight detail.
     /// </summary>
@@ -659,6 +842,63 @@ public static class HdrToneMapper
 
         float excess = v - kneeStart;
         return kneeStart + range * MathF.Tanh(excess / range);
+    }
+
+
+    /// <summary>
+    /// The tone curve of one <see cref="HdrToneMappingMode"/>, on a single sample or on four lanes at once.
+    /// </summary>
+    private readonly struct ToneCurve
+    {
+        private readonly HdrToneMappingMode _mode;
+        private readonly float _whiteLevel;
+        private readonly float _compression;
+
+
+        private ToneCurve(HdrToneMappingMode mode, float whiteLevel, float compression)
+        {
+            _mode = mode;
+            _whiteLevel = whiteLevel;
+            _compression = compression;
+        }
+
+
+        /// <summary>
+        /// The curve <paramref name="mode"/> maps with, or <c>null</c> when it has none.
+        /// </summary>
+        public static ToneCurve? For(HdrToneMappingMode mode, float whiteLevel, float compression) => mode switch
+        {
+            HdrToneMappingMode.BT2408 or HdrToneMappingMode.Reinhard or HdrToneMappingMode.ACES
+                => new ToneCurve(mode, whiteLevel, compression),
+            _ => null,
+        };
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float Map(float v) => _mode switch
+        {
+            HdrToneMappingMode.BT2408 => ReferenceWhiteToneMap(v, _whiteLevel),
+            HdrToneMappingMode.Reinhard => ExtendedReinhardToneMap(v, _compression),
+            _ => AcesToneMap(v, _compression),
+        };
+
+
+        /// <summary>
+        /// Maps four samples, each to exactly what <see cref="Map(float)"/> gives it.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector128<float> Map(Vector128<float> v)
+        {
+            if (_mode == HdrToneMappingMode.BT2408) return ReferenceWhiteToneMap(v, _whiteLevel);
+
+            // the knee curves stay per lane, so each keeps one definition (and ACES needs tanh)
+            var lane0 = Map(v.GetElement(0));
+            var lane1 = Map(v.GetElement(1));
+            var lane2 = Map(v.GetElement(2));
+            var lane3 = Map(v.GetElement(3));
+
+            return Vector128.Create(lane0, lane1, lane2, lane3);
+        }
     }
 
 
