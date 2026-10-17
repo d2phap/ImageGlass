@@ -269,6 +269,7 @@ public partial class PhotoManager
 
                     usedMemory += photoMem;
                     newCachedSet.Add(idx);
+                    usedMemory += await PrepareForDisplayAsync(photo, usedMemory, maxMemoryBytes, isGuaranteed, token);
                     continue;
                 }
 
@@ -324,6 +325,7 @@ public partial class PhotoManager
                 var decodedMem = EstimatePhotoMemory(photo);
                 usedMemory += decodedMem > 0 ? decodedMem : estimatedMem;
                 newCachedSet.Add(idx);
+                usedMemory += await PrepareForDisplayAsync(photo, usedMemory, maxMemoryBytes, isGuaranteed, token);
             }
 
             if (token.IsCancellationRequested) return;
@@ -442,13 +444,38 @@ public partial class PhotoManager
 
 
     /// <summary>
+    /// Color-manages a cached photo ahead of its view when the budget has room, returning the bytes that added.
+    /// </summary>
+    private static async Task<long> PrepareForDisplayAsync(Photo photo, long usedMemory, long maxMemoryBytes,
+        bool isGuaranteed, CancellationToken token)
+    {
+        if (token.IsCancellationRequested) return 0;
+
+        // the main viewer renders HDR exactly when this setting says so
+        var pass = DisplayColorPass.For(photo.Metadata, Core.Config.EnableHdrToneMapping);
+        if (pass.IsNoOp) return 0;
+
+        // tone mapping ends in 8-bit, a profile conversion keeps the decoded depth
+        var bytesPerPixel = pass.IsHdr ? 4 : photo.BytesPerPixel;
+        var displayBytes = (long)photo.Width * photo.Height * bytesPerPixel;
+        if (!isGuaranteed && usedMemory + displayBytes > maxMemoryBytes) return 0;
+
+        var bytesBefore = photo.DisplayFrameBytes;
+        await photo.PrepareDisplayFrameAsync(pass, token);
+
+        return photo.DisplayFrameBytes - bytesBefore;
+    }
+
+
+    /// <summary>
     /// Real memory footprint of a loaded photo from its decoded pixel depth; <c>0</c> when not loaded.
     /// </summary>
     private static long EstimatePhotoMemory(Photo photo)
     {
         if (photo.State != PhotoState.Loaded) return 0;
 
-        return (long)photo.Width * photo.Height * photo.BytesPerPixel;
+        // a display frame a cache pass prepared is held beside the decoded one
+        return (long)photo.Width * photo.Height * photo.BytesPerPixel + photo.DisplayFrameBytes;
     }
 
 

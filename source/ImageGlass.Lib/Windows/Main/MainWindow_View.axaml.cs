@@ -1008,6 +1008,9 @@ public partial class MainWindowView : PhControl
         var isSequential = Core.Config.BrowsingMode == BrowsingMode.Sequential;
         if (isSequential) Interlocked.Increment(ref _sequentialLoadDepth);
 
+        // the old neighborhood's cache pass would compete with this load; a new one starts once it is shown
+        Core.Photos.CancelCaching();
+
         // clear the current in-app message
         _ = PART_Message.ClearAsync();
 

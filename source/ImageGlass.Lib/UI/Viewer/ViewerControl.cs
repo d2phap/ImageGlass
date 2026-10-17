@@ -1099,7 +1099,7 @@ public partial class ViewerControl : PhControl
                     SKImage? imgFrameColored;
                     using (e.Photo.PinBitmap())
                     {
-                        imgFrameColored = await ApplySkiaColorSpaceAsync(imgFrame, e.Photo.Metadata);
+                        imgFrameColored = await ApplySkiaColorSpaceAsync(imgFrame, e.Photo);
                     }
 
                     // take the frame from the photo, or Photo.Unload frees it under our leases (the clipboard keeps its own)
@@ -1406,7 +1406,7 @@ public partial class ViewerControl : PhControl
         SKImage? colored;
         using (photo.PinBitmap())
         {
-            colored = await ApplySkiaColorSpaceAsync(imgFrame, photo.Metadata);
+            colored = await ApplySkiaColorSpaceAsync(imgFrame, photo);
         }
 
         if (colored is not null && ownsFrame) imgFrame.Dispose();

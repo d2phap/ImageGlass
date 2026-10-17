@@ -64,6 +64,17 @@ public partial class Photo : PhDisposable
     // the frame handed to the viewer by ReleaseFrame still counts against the cache budget
     private int _releasedBytesPerPixel;
 
+    // a frame a cache pass color-managed ahead of the view, with the frame and the pass it came from
+    private SKImage? _displayFrame;
+    private SKImage? _displayFrameSource;
+    private DisplayColorPass? _displayFramePass;
+
+    // set once a viewer takes the frame: it may free it from then on, so no cache pass reads it
+    private bool _isDisplayClaimed;
+
+    // serializes making the display frame with taking it, and with freeing the frame it is made from
+    private readonly SemaphoreSlim _displayFrameGate = new(1, 1);
+
     /// <summary>
     /// Prevents duplicate concurrent loads of the same photo's thumbnail.
     /// </summary>
@@ -410,7 +421,16 @@ public partial class Photo : PhDisposable
             await Task.Delay(10).ConfigureAwait(false);
         }
 
-        UnloadBitmap();
+        // a cache pass making the display frame reads the bitmap as well
+        await _displayFrameGate.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            UnloadBitmap();
+        }
+        finally
+        {
+            _ = _displayFrameGate.Release();
+        }
 
         // dispose everything
         if (disposeEverything)
@@ -693,12 +713,19 @@ public partial class Photo : PhDisposable
     {
         // same lock as ReleaseFrame, so a frame is either handed over or disposed, never both
         IDisposable? bitmap;
+        SKImage? displayFrame;
         lock (_lock)
         {
             bitmap = Bitmap;
             Bitmap = null;
             _frameIndex = -1;
             _releasedBytesPerPixel = 0;
+
+            displayFrame = _displayFrame;
+            _displayFrame = null;
+            _displayFrameSource = null;
+            _displayFramePass = null;
+            _isDisplayClaimed = false;
         }
 
         if (bitmap is AnimatorImpl animator)
@@ -707,6 +734,7 @@ public partial class Photo : PhDisposable
         }
 
         bitmap?.Dispose();
+        displayFrame?.Dispose();
     }
 
 
@@ -725,6 +753,117 @@ public partial class Photo : PhDisposable
             Bitmap = null;
             return true;
         }
+    }
+
+
+    /// <summary>
+    /// Bytes held by the display frame a cache pass prepared, which the cache budget pays for too.
+    /// </summary>
+    public long DisplayFrameBytes
+    {
+        get
+        {
+            lock (_lock)
+            {
+                var frame = _displayFrame;
+                if (frame.IsDisposed()) return 0;
+
+                return (long)frame.Width * frame.Height * frame.ColorType.GetBytesPerPixel();
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Color-manages the decoded frame with <paramref name="pass"/> ahead of a view, so showing the photo skips the pass.
+    /// </summary>
+    public async Task PrepareDisplayFrameAsync(DisplayColorPass pass, CancellationToken token)
+    {
+        if (pass.IsNoOp) return;
+
+        await _displayFrameGate.WaitAsync(token).ConfigureAwait(false);
+        try
+        {
+            SKImage? source;
+            lock (_lock)
+            {
+                // a viewer may free a frame it took, and a page switch frees a multi-frame photo's frame
+                if (_isDisplayClaimed) return;
+                if (State != PhotoState.Loaded) return;
+                if (Error is not null) return;
+                if (Metadata.FrameCount > 1) return;
+
+                source = Bitmap as SKImage;
+                if (source.IsDisposed()) return;
+
+                var isSameSource = ReferenceEquals(_displayFrameSource, source);
+                var isSamePass = Equals(_displayFramePass, pass);
+                if (isSameSource && isSamePass) return;
+            }
+
+            var sw = Stopwatch.StartNew();
+            var displayFrame = pass.Apply(source);
+            if (PhotoTrace.Enabled) PhotoTrace.Mark("cache:display-frame", FilePath,
+                $"{sw.ElapsedMilliseconds} ms, changed={displayFrame is not null}");
+
+            SKImage? stale;
+            lock (_lock)
+            {
+                stale = _displayFrame;
+                _displayFrame = displayFrame;
+                _displayFrameSource = source;
+                _displayFramePass = pass;
+            }
+
+            stale?.Dispose();
+        }
+        finally
+        {
+            _ = _displayFrameGate.Release();
+        }
+    }
+
+
+    /// <summary>
+    /// Takes the display frame a cache pass made from <paramref name="frame"/> with <paramref name="pass"/>, else <c>null</c>.
+    /// </summary>
+    public async Task<SKImage?> TakeDisplayFrameAsync(SKImage frame, DisplayColorPass pass)
+    {
+        // a pass still making the frame finishes first, so its work is used instead of repeated
+        await _displayFrameGate.WaitAsync().ConfigureAwait(false);
+
+        SKImage? displayFrame;
+        bool isSameSource;
+        bool isSamePass;
+        try
+        {
+            lock (_lock)
+            {
+                // the caller owns the frame now and may free it, so no later cache pass reads it
+                _isDisplayClaimed = true;
+
+                displayFrame = _displayFrame;
+                isSameSource = ReferenceEquals(_displayFrameSource, frame);
+                isSamePass = Equals(_displayFramePass, pass);
+
+                _displayFrame = null;
+                _displayFrameSource = null;
+                _displayFramePass = null;
+            }
+        }
+        finally
+        {
+            _ = _displayFrameGate.Release();
+        }
+
+        if (displayFrame is null) return null;
+
+        var isUsable = isSameSource && isSamePass;
+        if (isUsable) return displayFrame;
+
+        // made from another frame, or under settings that have changed since
+        displayFrame.Dispose();
+        return null;
     }
 
 

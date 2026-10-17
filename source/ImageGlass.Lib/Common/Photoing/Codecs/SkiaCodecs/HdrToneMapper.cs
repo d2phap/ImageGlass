@@ -704,7 +704,8 @@ public static class HdrToneMapper
         var newInfo = pixmap.Info.WithColorSpace(newColorSpace);
         using var reinterpreted = new SKPixmap(newInfo, pixmap.GetPixels(), pixmap.RowBytes);
 
-        return SKImage.FromPixelCopy(reinterpreted);
+        // shares the source's pixels instead of copying them: ToneMapToSdr disposes this before returning
+        return SKImage.FromPixels(reinterpreted);
     }
 
 

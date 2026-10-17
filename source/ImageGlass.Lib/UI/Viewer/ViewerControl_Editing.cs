@@ -21,6 +21,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
+using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Photoing;
 using ImageGlass.Common.Types;
 using SkiaSharp;
@@ -90,72 +91,27 @@ public partial class ViewerControl
 
 
     /// <summary>
-    /// Applies HDR tone mapping and/or the destination Skia color profile to a decoded frame,
-    /// off the UI thread. Both are full-image pixel passes: run inline they freeze the app for
-    /// over a second on a large HDR photo. Returns <see langword="null"/> if nothing applied.
+    /// On the UI thread, takes the frame a cache pass color-managed, else color-manages <paramref name="srcImage"/> off it; <c>null</c> if unchanged.
     /// </summary>
-    /// <remarks>
-    /// Must be called on the UI thread (it reads <see cref="EnableHdrRendering"/>). The caller
-    /// owns <paramref name="srcImage"/> and must keep it alive for the whole pass
-    /// (see <see cref="Photo.PinBitmap"/>).
-    /// </remarks>
-    private async Task<SKImage?> ApplySkiaColorSpaceAsync(SKImage? srcImage, PhotoMetadata? meta)
+    private async Task<SKImage?> ApplySkiaColorSpaceAsync(SKImage? srcImage, Photo photo)
     {
         if (srcImage.IsDisposed()) return null;
 
         // snapshot UI-thread-affine state: the pass must not touch Photo or styled properties
-        var isHdr = EnableHdrRendering && meta?.IsHdr == true;
-        var transferFn = meta?.HdrTransferFn ?? HdrTransferFunction.None;
-        var contentPeakNits = meta?.ContentPeakNits ?? 0d;
+        var pass = DisplayColorPass.For(photo.Metadata, EnableHdrRendering);
 
-        // tuning the options is Pro-only
-        var options = Core.IsProEnabled ? Core.HdrToneMappingConfig : new HdrToneMappingOptions();
-        var destProfile = CanApplySkiaColorSpace() ? Core.DestColorProfile : null;
+        // taking it also stops any later cache pass from reading a frame this viewer may free
+        var prepared = await photo.TakeDisplayFrameAsync(srcImage, pass);
+        if (prepared is not null)
+        {
+            PhotoTrace.Mark("viewer:display-frame", photo.FilePath, "prepared by the cache pass");
+            return prepared;
+        }
 
         // nothing to do: skip the thread hop entirely
-        if (!isHdr && destProfile is null) return null;
+        if (pass.IsNoOp) return null;
 
-        return await Task.Run(()
-            => ApplySkiaColorSpace(srcImage, isHdr, transferFn, options, contentPeakNits, destProfile));
-    }
-
-
-    /// <summary>
-    /// The color-management pixel work itself, with every input already snapshotted so it is
-    /// safe to run on a background thread.
-    /// </summary>
-    private static SKImage? ApplySkiaColorSpace(SKImage srcImage, bool isHdr,
-        HdrTransferFunction transferFn, HdrToneMappingOptions options, double contentPeakNits,
-        SKColorSpace? destProfile)
-    {
-        // 1. HDR: tone-map to standard sRGB first, then the monitor profile below (same as SDR)
-        if (isHdr)
-        {
-            var toneMapped = HdrToneMapper.ToneMapToSdr(srcImage, transferFn, options, contentPeakNits);
-
-            if (!toneMapped.IsDisposed())
-            {
-                if (destProfile is not null
-                    && SkiaCodec.TryApplyColorSpace(toneMapped, destProfile, out var profiled))
-                {
-                    toneMapped.Dispose();
-                    return profiled;
-                }
-
-                return toneMapped;
-            }
-        }
-
-        // 2. monitor color profile only; a Magick decode that already converted to it tags the pixels so
-        var isInDestSpace = destProfile is not null && srcImage.ColorSpace is { } srcSpace
-            && SKColorSpace.Equal(srcSpace, destProfile);
-        if (destProfile is not null && !isInDestSpace
-            && SkiaCodec.TryApplyColorSpace(srcImage, destProfile, out var colored))
-        {
-            return colored;
-        }
-
-        return null;
+        return await Task.Run(() => pass.Apply(srcImage));
     }
 
 
@@ -461,16 +417,7 @@ public partial class ViewerControl
     /// </summary>
     private bool CanApplySkiaColorSpace()
     {
-        // 1. check if the destination profile is supported
-        if (!Core.IsDestColorProfileSupported) return false;
-
-        // 2. check user configs
-        if (Core.Config.EnableAlwaysApplyColorProfile || Photo?.Metadata?.SkiaColorSpace is not null)
-        {
-            return true;
-        }
-
-        return false;
+        return DisplayColorPass.CanApplyDestProfile(Photo?.Metadata);
     }
 
 
