@@ -175,6 +175,14 @@ public abstract class AnimatorImpl : PhDisposable
             _lastFrameTime = TimeSpan.Zero;
         }
 
+        // a finished playback holds its last frame, so playing again replays from the first one
+        if (_loopCount > 0 && _currentLoop >= _loopCount)
+        {
+            _currentFrame = 0;
+            _currentLoop = 0;
+            _needsInitialFrame = true;
+        }
+
         if (_isPaused)
         {
             // shift lastFrameTime forward by pause duration to preserve correct timing
