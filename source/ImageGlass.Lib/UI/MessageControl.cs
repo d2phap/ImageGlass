@@ -19,10 +19,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input.Platform;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using ImageGlass.Common;
+using ImageGlass.Common.Localization;
 using ImageGlass.Common.Types;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,6 +37,7 @@ public class MessageControl : PhControl
 {
     private CancellationTokenSource? _cancelMessage;
     private readonly Lock _lock = new();
+    private PhButton? _btnCopy;
 
 
     #region Public Properties
@@ -116,6 +122,14 @@ public class MessageControl : PhControl
 
     #region Override Methods
 
+    protected override void OnIgLanguageChanged()
+    {
+        base.OnIgLanguageChanged();
+
+        _btnCopy?.Text = Core.Lang[LangId._Copy];
+    }
+
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
@@ -164,15 +178,25 @@ public class MessageControl : PhControl
             [!TextBlock.TextProperty] = this[!HeadingProperty],
             [!TextBlock.IsVisibleProperty] = this[!IsHeadingVisibleProperty],
         };
-        var lblDescription = new TextBlock
+        var lblDescription = new SelectableTextBlock
         {
             TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             TextAlignment = Avalonia.Media.TextAlignment.Center,
             [!TextBlock.TextProperty] = this[!DescriptionProperty],
             [!TextBlock.IsVisibleProperty] = this[!IsDescriptionVisibleProperty],
         };
+        _btnCopy = new PhButton
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Focusable = false,
+            IconData = Resx.GetIcon(ResxIconId.IconCopy),
+            [!PhButton.IsVisibleProperty] = this[!IsDetailsVisibleProperty],
+        };
+        _btnCopy.Click += BtnCopy_Click;
+
         topEl.Children.Add(lblHeading);
         topEl.Children.Add(lblDescription);
+        topEl.Children.Add(_btnCopy);
 
 
         // bottom section
@@ -221,9 +245,25 @@ public class MessageControl : PhControl
             [!Border.CornerRadiusProperty] = Resx.CreateBinding(ResxId.ControlCornerRadius),
             [!Border.BackgroundProperty] = Resx.CreateBinding(ResxId.IG_MessageBackgroundBrush),
             [!Border.IsVisibleProperty] = this[!IsMessageVisibleProperty],
+
+            // short messages (e.g. loading) must not block clicks on the viewer
+            [!Border.IsHitTestVisibleProperty] = this[!IsDetailsVisibleProperty],
         };
 
+        // stop text selection from also panning or triggering viewer click actions
+        rootEl.PointerPressed += (_, e) => e.Handled = true;
+        rootEl.PointerReleased += (_, e) => e.Handled = true;
+
         return rootEl;
+    }
+
+
+    private void BtnCopy_Click(object? sender, RoutedEventArgs e)
+    {
+        var text = string.Join(Environment.NewLine + Environment.NewLine,
+            new[] { Heading, Description, Details }.Where(i => !string.IsNullOrWhiteSpace(i)));
+
+        _ = TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
     }
 
 
