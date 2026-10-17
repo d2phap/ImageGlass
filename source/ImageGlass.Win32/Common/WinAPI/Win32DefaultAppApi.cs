@@ -521,9 +521,10 @@ public static class Win32DefaultAppApi
             ? AppCmds.SET_DEFAULT_PHOTO_VIEWER
             : AppCmds.REMOVE_DEFAULT_PHOTO_VIEWER;
         var extArg = string.Join(";", extensions);
+        string[] args = [cmd, extArg];
 
         // reuse the shared elevating launcher (UAC prompt + cancellation handled there)
-        return await BHelper.RunExeAsync(BHelper.AppExePath, [cmd, extArg], asAdmin: true, waitForExit: true);
+        return await BHelper.RunExeAsync(BHelper.AppExePath, args, asAdmin: true, waitForExit: true);
     }
 
 }

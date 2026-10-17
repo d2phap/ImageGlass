@@ -16,30 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Common.Types.JsonTypeConverters;
-using ImageGlass.Tools;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace ImageGlass.Common.Printing;
 
 
-[JsonSerializable(typeof(PrintConfig))]
-public partial class PrintConfigJsonContext : JsonSerializerContext { }
-
-
 /// <summary>
-/// The Print window's last choices, saved in the tool settings of the config; counts such as copies always start at 1.
+/// The Print window's last choices, kept in memory for this session only; counts such as copies always start at 1.
 /// </summary>
 public sealed class PrintConfig
 {
-    /// <summary>
-    /// The key the settings are saved under; it only follows the tool settings naming.
-    /// </summary>
-    public const string SETTINGS_KEY = "Tool_Print";
+    private static PrintConfig? _saved;
 
 
     public string? LastPrinterId { get; set; }
@@ -55,55 +42,35 @@ public sealed class PrintConfig
     public Dictionary<string, int> DpiByPrinter { get; set; } = [];
 
     public string LayoutId { get; set; } = PrintLayouts.FULL_PAGE_ID;
-
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<PrintFitMode>))]
     public PrintFitMode Fit { get; set; } = PrintFitMode.Fit;
-
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<PrintOrientation>))]
     public PrintOrientation Orientation { get; set; } = PrintOrientation.Auto;
-
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<PrintMarginPreset>))]
     public PrintMarginPreset Margins { get; set; } = PrintMarginPreset.Normal;
-
     public bool AutoRotate { get; set; } = true;
     public bool ShowCaptions { get; set; }
     public bool FillPage { get; set; }
     public bool Collate { get; set; } = true;
-
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<PrintColorMode>))]
     public PrintColorMode ColorMode { get; set; } = PrintColorMode.Color;
-
-    [JsonConverter(typeof(JsonStringEnumSafeConverter<PrintDuplex>))]
     public PrintDuplex Duplex { get; set; } = PrintDuplex.None;
 
 
     /// <summary>
-    /// Loads the saved settings, or the defaults when there are none or they cannot be read.
+    /// Loads the choices saved earlier in this session, or the defaults.
     /// </summary>
-    public static PrintConfig Load()
-    {
-        try
-        {
-            if (Core.Config.ToolSettings.TryGetValue(SETTINGS_KEY, out var el)
-                && el.Deserialize(PrintConfigJsonContext.Default.PrintConfig) is { } config)
-            {
-                return config;
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"❌❌❌ {nameof(PrintConfig)}.{nameof(Load)}: {ex.Message}");
-        }
-
-        return new PrintConfig();
-    }
+    public static PrintConfig Load() => _saved?.Clone() ?? new PrintConfig();
 
 
     /// <summary>
-    /// Writes the settings into the config, which saves them with the rest of it.
+    /// Keeps the choices for the next Print window of this session.
     /// </summary>
-    public void Save()
+    public void Save() => _saved = Clone();
+
+
+    private PrintConfig Clone()
     {
-        ToolRegistry.SetToolSettings(SETTINGS_KEY, JsonSerializer.SerializeToElement(this, PrintConfigJsonContext.Default.PrintConfig));
+        var copy = (PrintConfig)MemberwiseClone();
+        copy.PaperByPrinter = new(PaperByPrinter);
+        copy.DpiByPrinter = new(DpiByPrinter);
+
+        return copy;
     }
 }
