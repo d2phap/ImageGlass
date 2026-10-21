@@ -135,12 +135,15 @@
                  Sunken="yes" Property="IGFOLDERPERUSER" Indirect="no"
                  ShowCondition="IGINSTALLSCOPE = &quot;perUser&quot;"
                  HideCondition="IGINSTALLSCOPE &lt;&gt; &quot;perUser&quot;" />
+        <!-- Browses INSTALLFOLDER, not the scope's own property: BrowseDlg's OK runs SetTargetPath,
+             which fails with 2727 on anything but a Directory row. OK copies the pick back. -->
         <Control Id="BrowseUser" Type="PushButton" X="292" Y="170" Width="56" Height="17"
                  Text="!(loc.IgBrowse)"
                  ShowCondition="IGINSTALLSCOPE = &quot;perUser&quot;"
                  HideCondition="IGINSTALLSCOPE &lt;&gt; &quot;perUser&quot;">
-          <Publish Property="_BrowseProperty" Value="IGFOLDERPERUSER" Order="1" />
-          <Publish Event="SpawnDialog" Value="BrowseDlg" Order="2" />
+          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERUSER]" Order="1" />
+          <Publish Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="2" />
+          <Publish Event="SpawnDialog" Value="BrowseDlg" Order="3" />
         </Control>
 
         <Control Id="FolderMachine" Type="PathEdit" X="20" Y="171" Width="266" Height="18"
@@ -151,8 +154,9 @@
                  Text="!(loc.IgBrowse)"
                  ShowCondition="IGINSTALLSCOPE = &quot;perMachine&quot;"
                  HideCondition="IGINSTALLSCOPE &lt;&gt; &quot;perMachine&quot;">
-          <Publish Property="_BrowseProperty" Value="IGFOLDERPERMACHINE" Order="1" />
-          <Publish Event="SpawnDialog" Value="BrowseDlg" Order="2" />
+          <Publish Property="INSTALLFOLDER" Value="[IGFOLDERPERMACHINE]" Order="1" />
+          <Publish Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="2" />
+          <Publish Event="SpawnDialog" Value="BrowseDlg" Order="3" />
         </Control>
 
         <Control Id="ElevationNote" Type="Text" X="20" Y="198" Width="330" Height="20"
@@ -206,10 +210,17 @@
       </Dialog>
 
       <!-- ==== Flow ===================================================================== -->
+      <!-- Orders 3+ run after the stock SetTargetPath (1); its EndDialog (2) does not cut them short. -->
       <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction"
-               Value="WixUIValidatePath_$(var.WixUiArch)" Order="1" />
-      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="2"
+               Value="WixUIValidatePath_$(var.WixUiArch)" Order="3" />
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"
                Condition="WIXUI_INSTALLDIR_VALID &lt;&gt; &quot;1&quot;" />
+      <Publish Dialog="BrowseDlg" Control="OK" Property="IGFOLDERPERUSER" Value="[INSTALLFOLDER]"
+               Order="5"
+               Condition="IGINSTALLSCOPE = &quot;perUser&quot; AND WIXUI_INSTALLDIR_VALID = &quot;1&quot;" />
+      <Publish Dialog="BrowseDlg" Control="OK" Property="IGFOLDERPERMACHINE" Value="[INSTALLFOLDER]"
+               Order="6"
+               Condition="IGINSTALLSCOPE = &quot;perMachine&quot; AND WIXUI_INSTALLDIR_VALID = &quot;1&quot;" />
 
       <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog"
                Value="MaintenanceTypeDlg" />
