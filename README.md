@@ -4,7 +4,9 @@
 
 ### A Fast, Seamless Photo Viewer
 
-ImageGlass is a fast, modern, open-source image viewer built for Windows, macOS, and Linux. Designed for speed and efficiency, it delivers a smooth, immersive viewing experience by combining high-performance rendering with powerful tools for both everyday users and designers. ImageGlass provides seamless, quick navigation across 90+ image formats, including `WEBP`, `JXL`, `SVG`, `HEIC`, `AVIF`, `HDR`, and raw images.
+ImageGlass is a fast, modern, open-source image viewer for Windows, macOS, and Linux. It pairs high-performance rendering with a smooth, immersive viewing experience and powerful tools for everyday users and designers alike, with seamless navigation across 90+ image formats, including `WEBP`, `JXL`, `SVG`, `HEIC`, `AVIF`, `HDR`, and raw images.
+
+Built enterprise-ready, ImageGlass Pro supports managed deployment through preset config files that work across every platform and package. IT teams can roll out a preconfigured app config, enforce admin-locked settings, and lock individual features on every managed device.
 
 <br/>
 
@@ -12,7 +14,7 @@ ImageGlass is a fast, modern, open-source image viewer built for Windows, macOS,
 [![Latest version downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23e66700&label=Latest%20version&)](https://imageglass.org/pricing)
 
 [![Discord](https://img.shields.io/discord/818852544859209748?label=chat&logo=discord&color=%233097B8&style=social)](https://discord.gg/tWjbynH2X8)
-[![Twitter Follow](https://img.shields.io/twitter/follow/duongdieuphap?style=social)](https://twitter.com/duongdieuphap)
+[![Twitter Follow](https://img.shields.io/twitter/follow/d2phap?style=social)](https://twitter.com/d2phap)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/imageglass/localized.svg)](https://crowdin.com/project/imageglass)
 
 <br/>
@@ -59,11 +61,12 @@ ImageGlass is a fast, modern, open-source image viewer built for Windows, macOS,
 
 
 > [!Caution]
-> ### Security Alert: Fake Repositories and AI Threat Mitigation
-> Automated malicious campaigns are actively deploying AI tools to impersonate trusted software. They stand up fake GitHub profiles and Gists designed to trick users into downloading compromised packages.
-> - **Only use official channels**: Always download ImageGlass directly from the ([official website](https://imageglass.org)). Never download binaries from third-party mirrors, unverified GitHub forks, or standalone GitHub Gists.
-> - **Verify the repo source:** The only authentic spaces for this project on GitHub are the official [d2phap/ImageGlass](https://github.com/d2phap/ImageGlass) repository and the [ImageGlass Organization](https://github.com/ImageGlass). Any other profile or fork promising 'portable patches', 'extended releases', or alternative mirrors is completely unauthorized and highly likely to contain malware.
-> - **Check the URL**: Double-check your browser address bar to ensure you are not visiting a typosquatted domain.
+> ### Security Alert: Beware of Fake ImageGlass Downloads
+> Malicious campaigns are using AI tools to impersonate trusted software through fake GitHub profiles, forks, and Gists that spread malware. Download ImageGlass only from its official sources:
+> - Website: [**imageglass.org**](https://imageglass.org)
+> - GitHub: [**github.com/d2phap/ImageGlass**](https://github.com/d2phap/ImageGlass) and the [**github.com/ImageGlass**](https://github.com/ImageGlass)
+>
+> Any other repo, fork, or Gist offering ImageGlass builds is not mine. Always check the URL before downloading.
 
 <br/>
 
@@ -85,6 +88,7 @@ Primarily a photo viewer, ImageGlass offers a wide array of features geared towa
 - Themes, layouts, and custom hotkeys
 - Custom action binding for toolbar, mouse...
 - [Plugins](https://imageglass.org/plugins) and [external tools](https://imageglass.org/tools) support via [ImageGlass.SDK](https://github.com/ImageGlass/SDK)
+- Managed deployment with [preset app config](https://imageglass.org/docs/app-configs), admin-locked settings, and feature lock, for all platforms and packages (Available for Pro only)
 - Windows: Explorer sort order support
 - Windows: Custom file type icon pack (Not available for Store release)
 
@@ -97,7 +101,7 @@ Primarily a photo viewer, ImageGlass offers a wide array of features geared towa
 **Version 10**
 - Windows 10/11 x64 or arm64, version 1809 (build 17763) or later
 - macOS 14+, Apple Silicon arm64
-- Linux Desktop X11 x64
+- Linux Desktop X11 x64: Ubuntu 20.04+, Linux Mint 20+, Debian 11+, Fedora 30+, RHEL/Alma/Rocky 9+,...
 
 **Version 9**
 - Windows 10/11 x64 or arm64, version 1809 (build 17763) or later
@@ -124,7 +128,7 @@ The `develop` branch contains the latest commits, while the `prod` branch holds 
 
 ## Roadmap
 
-[![ImageGlass 2026 roadmap](https://github.com/user-attachments/assets/9cf2a8a4-18f4-4852-ad83-5df79239d93f)](https://github.com/d2phap/ImageGlass/discussions/2287)
+[![ImageGlass 2026 roadmap](.github/assets/ig_roadmap.svg)](https://github.com/d2phap/ImageGlass/discussions/2287)
 
 <br/>
 
