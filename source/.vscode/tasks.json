@@ -148,9 +148,8 @@
       "problemMatcher": [],
       "group": "build"
     },
-    // Linux AppImage pack task. Like the Flatpak one the script publishes a fresh AOT
-    // build itself. Unlike Flatpak, an AppImage runs against the HOST glibc, so the
-    // script prints the floor of the shipped binaries on every run.
+    // Linux AppImage pack task. Like the Flatpak one it publishes a fresh AOT build, linked
+    // against a pinned glibc 2.31 sysroot, and fails if a shipped binary needs a newer glibc.
     {
       "label": "pack-linux-x64-appimage",
       "type": "process",

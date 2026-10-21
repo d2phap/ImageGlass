@@ -7,8 +7,8 @@
 #   2. Stages an AppDir: payload under usr/lib/imageglass (mirroring the Flatpak's
 #      /app/imageglass), a generated AppRun, the root .desktop + icon + .DirIcon, and the
 #      usr/share/{applications,icons,metainfo} copies integration tools read.
-#   3. Prints the glibc floor of the shipped ELFs. Unlike Flatpak, an AppImage runs
-#      against the HOST glibc, so a toolchain bump that raises it must be caught here.
+#   3. Fails if a shipped ELF needs a newer glibc than the pinned Ubuntu 20.04 sysroot
+#      it is linked against. Unlike Flatpak, an AppImage runs against the HOST glibc.
 #   4. Builds __artifacts/bundle/ImageGlass_<version>_linux-x64.AppImage, optionally
 #      GPG-signed, fetching appimagetool if it is not already available.
 #   5. Embeds AppImage update information and emits the matching .zsync, so AppImage
@@ -26,6 +26,7 @@
 #   UPDATE_INFO=<string>       override the embedded update information verbatim
 #   NO_UPDATE_INFO=1           embed none (no self-update, no .zsync)
 #   GH_OWNER=/GH_REPO=<name>   the GitHub repo the update information points at
+#   GLIBC_MAX=<ver>            highest glibc a shipped ELF may need (default: the sysroot's)
 #   SKIP_PUBLISH=1             reuse __artifacts/publish/linux-x64 -- DEBUG ONLY, it can
 #                              ship stale code under a new version number
 
@@ -43,6 +44,9 @@ APPDIR_STAGE="$BUILD_ROOT/AppDir"
 TOOLS_DIR="$WORKSPACE_DIR/__artifacts/tools"
 BUILD_PROPS_FILE="$WORKSPACE_DIR/Directory.Build.props"
 APP_ID="io.github.d2phap.imageglass"
+
+# shellcheck source=script-linux-x64-sysroot.sh
+source "$WORKSPACE_DIR/__assets/linux/script-linux-x64-sysroot.sh"
 
 GPG_KEY="${GPG_KEY:-}"
 COMP="${COMP:-zstd}"
@@ -89,15 +93,21 @@ else
 	UPDATE_INFO="${UPDATE_INFO:-gh-releases-zsync|$GH_OWNER|$GH_REPO|$ZSYNC_TAG|$ZSYNC_GLOB}"
 fi
 
+# --- glibc sysroot (also under SKIP_PUBLISH: the libgomp fallback comes from it) ---
+ig_sysroot_prepare "$TOOLS_DIR"
+GLIBC_MAX="${GLIBC_MAX:-$IG_SYSROOT_GLIBC}"
+
 # --- Publish a fresh self-contained AOT build ---
 if [[ "${SKIP_PUBLISH:-0}" == "1" ]]; then
 	echo "==> SKIP_PUBLISH=1 -- reusing $PUBLISH_DIR (debug only)"
 else
-	echo "==> Publishing ImageGlass $IG_VERSION (linux-x64, AOT)"
+	echo "==> Publishing ImageGlass $IG_VERSION (linux-x64, AOT, glibc $IG_SYSROOT_GLIBC sysroot)"
 	rm -rf "$PUBLISH_DIR"
+	ig_force_native_relink "$WORKSPACE_DIR/ImageGlass.Linux" linux-x64
 	dotnet publish "$WORKSPACE_DIR/ImageGlass.Linux/ImageGlass.Linux.csproj" \
 		-c Release -r linux-x64 -p:Platform=x64 \
 		-p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true \
+		-p:SysRoot="$IG_SYSROOT" \
 		-o "$PUBLISH_DIR" --self-contained true
 	cp -r "$WORKSPACE_DIR/__assets/__app/." "$PUBLISH_DIR/"
 
@@ -177,22 +187,9 @@ if command -v desktop-file-validate >/dev/null 2>&1; then
 fi
 
 # --- Bundle libgomp.so.1 as a FALLBACK only ---
-# Magick.Native needs libgomp.so.1 (DT_NEEDED, no RUNPATH) and minimal systems lack it.
-# AppRun only uses this copy when the host has none, so it never shadows the host's.
-GOMP_SRC=""
-for d in /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib64 /lib64 /usr/lib; do
-	if [[ -e "$d/libgomp.so.1" ]]; then GOMP_SRC="$d/libgomp.so.1"; break; fi
-done
-if [[ -n "$GOMP_SRC" ]]; then
-	# -L: land a real file; a dangling symlink in a squashfs is useless.
-	cp -L "$GOMP_SRC" "$APPDIR_STAGE/usr/lib/fallback/libgomp.so.1"
-	GOMP_FLOOR="$(objdump -T "$APPDIR_STAGE/usr/lib/fallback/libgomp.so.1" 2>/dev/null \
-		| grep -o 'GLIBC_[0-9][0-9.]*' | sort -uV | tail -n1 || true)"
-	echo "    libgomp fallback: $GOMP_SRC (itself needs ${GOMP_FLOOR:-unknown})"
-else
-	echo "    WARNING: libgomp.so.1 not found on this host -- no fallback bundled."
-	echo "             Users without libgomp installed cannot load the Magick codecs."
-fi
+# Magick.Native needs libgomp.so.1 (no RUNPATH); AppRun uses it only when the host has none.
+# From the sysroot, as the build host's raises the glibc floor; -L lands a file, not a link.
+cp -L "$IG_SYSROOT/usr/lib/x86_64-linux-gnu/libgomp.so.1" "$APPDIR_STAGE/usr/lib/fallback/libgomp.so.1"
 
 # --- AppRun ---
 echo "==> Writing AppRun"
@@ -246,25 +243,9 @@ APPRUN_EOF
 chmod 755 "$APPDIR_STAGE/AppRun"
 sh -n "$APPDIR_STAGE/AppRun" || { echo "Error: generated AppRun is not valid POSIX sh" >&2; exit 1; }
 
-# --- Report the glibc floor of the shipped ELFs ---
-# The highest symbol version any shipped binary needs IS the minimum distro supported.
-# The || true guards matter: under pipefail a no-match grep would abort the script.
-echo "==> glibc floor"
-GLIBC_FLOOR="$(
-	{ find "$APPDIR_STAGE/usr/lib/imageglass" -type f \
-		\( -name "ImageGlass" -o -name "*.so" -o -name "*.so.*" \) -print0 \
-	  | xargs -0 -r -n1 objdump -T 2>/dev/null || true; } \
-	| grep -o 'GLIBC_[0-9][0-9.]*' | sort -uV | tail -n1 || true
-)"
-echo "    requires: ${GLIBC_FLOOR:-unknown}"
-case "$GLIBC_FLOOR" in
-	GLIBC_2.38)
-		echo "    -> Ubuntu 24.04+, Fedora 39+, Debian 13+. Symbols forcing it:"
-		objdump -T "$APPDIR_STAGE/usr/lib/imageglass/ImageGlass" 2>/dev/null \
-			| awk '/GLIBC_2\.38/ { print "        " $NF }' | sort -u || true
-		;;
-	GLIBC_2.34) echo "    -> Ubuntu 22.04+, Debian 12+, RHEL/Alma/Rocky 9+, Fedora 35+." ;;
-esac
+# --- Refuse a glibc floor above the sysroot's, before anything is built ---
+ig_check_glibc_floor "$GLIBC_MAX" "$APPDIR_STAGE/usr/lib/imageglass" "$APPDIR_STAGE/usr/lib/fallback"
+GLIBC_FLOOR="$IG_GLIBC_FLOOR"
 
 # --- Locate appimagetool ---
 # No distro packages it, so cache the download under __artifacts/ (gitignored). Use

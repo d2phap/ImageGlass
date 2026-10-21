@@ -2,13 +2,13 @@
 #
 # Package the prebuilt Linux build of ImageGlass for Flatpak.
 #
-#   1. Tars the publish output (__artifacts/publish/linux-x64) into a release
-#      archive, stripping debug symbols.
+#   1. Publishes a fresh AOT build against the pinned glibc 2.31 sysroot, then tars it
+#      into a release archive, stripping debug symbols.
 #   2. Writes the download URL + sha256 into the Flatpak manifest.
 #   3. If flatpak-builder is available: builds a single-file .flatpak bundle
 #      (for direct download / GitHub Releases) and installs it locally to test.
 #
-# Run after the publish-linux-x64 task. Distribution steps: __assets/linux/flatpak/README.md
+# Run standalone; it publishes itself. Distribution steps: __assets/linux/flatpak/README.md
 #
 # Env overrides:
 #   RELEASE_TAG=10.0.2.66-beta-2   tag used to build the GitHub download URL
@@ -16,6 +16,7 @@
 #   GPG_KEY=<keyid>       sign the .flatpak bundle with this GPG key and embed its
 #                         public half so the signature is verifiable on install
 #                         (optional; unset => unsigned bundle)
+#   GLIBC_MAX=<ver>       highest glibc a shipped ELF may need (default: the sysroot's)
 
 set -euo pipefail
 
@@ -25,6 +26,7 @@ FLATPAK_DIR="$WORKSPACE_DIR/__assets/linux/flatpak"
 DIST_DIR="$WORKSPACE_DIR/__artifacts/bundle"
 BUILD_ROOT="$WORKSPACE_DIR/__artifacts/bundle/linux-flatpak"
 STATE_DIR="$BUILD_ROOT/.flatpak-builder"
+TOOLS_DIR="$WORKSPACE_DIR/__artifacts/tools"
 BUILD_PROPS_FILE="$WORKSPACE_DIR/Directory.Build.props"
 MANIFEST="$FLATPAK_DIR/io.github.d2phap.imageglass.yaml"
 APP_ID="io.github.d2phap.imageglass"
@@ -33,6 +35,9 @@ APP_ID="io.github.d2phap.imageglass"
 # Empty => unsigned bundle. If the key isn't in the local keyring, the build falls
 # back to unsigned (with a warning) rather than failing.
 GPG_KEY="${GPG_KEY:-}"
+
+# shellcheck source=script-linux-x64-sysroot.sh
+source "$WORKSPACE_DIR/__assets/linux/script-linux-x64-sysroot.sh"
 
 # --- Read version + release type from Directory.Build.props ---
 IG_VERSION="$(sed -n 's:.*<IgVersion>\(.*\)</IgVersion>.*:\1:p' "$BUILD_PROPS_FILE" | head -n 1)"
@@ -54,15 +59,21 @@ TARBALL_PATH="$DIST_DIR/$TARBALL_NAME"
 BUNDLE_PATH="$DIST_DIR/$BUNDLE_NAME"
 RELEASE_URL="https://github.com/d2phap/ImageGlass/releases/download/${RELEASE_TAG}/${TARBALL_NAME}"
 
+# --- glibc sysroot: the tarball also runs outside Flatpak, on the host glibc ---
+ig_sysroot_prepare "$TOOLS_DIR"
+GLIBC_MAX="${GLIBC_MAX:-$IG_SYSROOT_GLIBC}"
+
 # --- Publish a fresh self-contained AOT build ---
 # Always re-publish so the bundle matches the current source and IgVersion. The
 # version is baked into the binary (AppBuildInfo.g.cs); packaging a stale publish
 # dir would ship the wrong version and old code.
-echo "==> Publishing ImageGlass $IG_VERSION (linux-x64, AOT)"
+echo "==> Publishing ImageGlass $IG_VERSION (linux-x64, AOT, glibc $IG_SYSROOT_GLIBC sysroot)"
 rm -rf "$PUBLISH_DIR"
+ig_force_native_relink "$WORKSPACE_DIR/ImageGlass.Linux" linux-x64
 dotnet publish "$WORKSPACE_DIR/ImageGlass.Linux/ImageGlass.Linux.csproj" \
 	-c Release -r linux-x64 -p:Platform=x64 \
 	-p:PublishAot=true -p:PublishSingleFile=true -p:PublishTrimmed=true \
+	-p:SysRoot="$IG_SYSROOT" \
 	-o "$PUBLISH_DIR" --self-contained true
 cp -r "$WORKSPACE_DIR/__assets/__app/." "$PUBLISH_DIR/"
 
@@ -94,6 +105,9 @@ rm -rf "$STAGE_DIR"
 mkdir -p "$STAGE_DIR/ImageGlass" "$DIST_DIR"
 ( cd "$PUBLISH_DIR" && cp -a . "$STAGE_DIR/ImageGlass/" )
 find "$STAGE_DIR/ImageGlass" -type f \( -name "*.dbg" -o -name "*.pdb" \) -delete
+
+# The tarball also runs as-is on the host, where the glibc floor applies as for AppImage.
+ig_check_glibc_floor "$GLIBC_MAX" "$STAGE_DIR/ImageGlass"
 
 echo "==> Creating tarball: $TARBALL_NAME"
 rm -f "$TARBALL_PATH"

@@ -16,6 +16,10 @@ from source. Building .NET 11 AOT (trimming + SkiaSharp/HarfBuzz/Magick.NET nati
 interop) offline on Flathub's builders isn't practical, so the manifest downloads a
 release tarball with a pinned sha256.
 
+That tarball also runs as-is outside Flatpak, on the host glibc, so the script links it
+against the same pinned glibc 2.31 sysroot as the AppImage; see
+[glibc floor](../appimage/README.md#glibc-floor).
+
 ## Build
 
 ```bash
@@ -23,7 +27,7 @@ release tarball with a pinned sha256.
 sudo apt install flatpak-builder
 flatpak install -y flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08
 
-# publish first (VS Code task: publish-linux-x64), then:
+# publishes its own AOT build; do not reuse the host-linked publish-linux-x64 output
 bash __assets/linux/script-pack-linux-x64-flatpak.sh
 ```
 

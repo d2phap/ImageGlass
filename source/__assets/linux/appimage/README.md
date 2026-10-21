@@ -24,8 +24,9 @@ Build script: [`../script-pack-linux-x64-appimage.sh`](../script-pack-linux-x64-
 bash __assets/linux/script-pack-linux-x64-appimage.sh
 ```
 
-No prerequisites: the script publishes a fresh AOT build itself and downloads
-`appimagetool` into `__artifacts/tools/` on first run (no distro packages it). It prints
+No prerequisites: the script publishes a fresh AOT build itself and downloads into
+`__artifacts/tools/` on first run both the [glibc sysroot](#glibc-floor) and
+`appimagetool` (no distro packages it). It prints
 the download's sha256 — pin it on later runs so a moving `continuous` tag cannot swap the
 tool silently:
 
@@ -44,14 +45,38 @@ duplicate `.appdata.xml`.
 
 Other env overrides: `GPG_KEY` (sign the image), `COMP` (`zstd` default, `xz`, `gzip`),
 `APPIMAGETOOL` (use your own copy), `NO_APPSTREAM=1`, `UPDATE_INFO` / `NO_UPDATE_INFO=1` /
-`GH_OWNER` / `GH_REPO` (see [Updates](#updates)), `SKIP_PUBLISH=1` (debug only — it can
-ship stale code under a new version number).
+`GH_OWNER` / `GH_REPO` (see [Updates](#updates)), `GLIBC_MAX` (see
+[glibc floor](#glibc-floor)), `SKIP_PUBLISH=1` (debug only — it can ship stale code
+under a new version number).
 
 ## Runtime requirements
 
 Unlike the Flatpak, which ships its own runtime, an AppImage runs against the **host**
-glibc and host libraries. The script prints the glibc floor of the shipped binaries on
-every run; check it before a release.
+glibc and host libraries.
+
+### glibc floor
+
+The shipped binaries need **glibc 2.29**: Ubuntu 20.04+, Linux Mint 20+, Debian 11+,
+Fedora 30+, RHEL/Alma/Rocky 9+. `Magick.Native` sets that floor and is prebuilt upstream;
+`ImageGlass` itself needs less.
+
+NativeAOT links `ImageGlass` against the glibc of the machine that **builds** it, so a
+plain publish on Ubuntu 24.04 needed 2.38 and would not start on 22.04
+([#2484](https://github.com/d2phap/ImageGlass/issues/2484)). Both Linux pack scripts
+therefore link against a pinned Ubuntu 20.04 sysroot (`-p:SysRoot`), built by
+[`../script-linux-x64-sysroot.sh`](../script-linux-x64-sysroot.sh) from five
+release-pocket `.deb`s (glibc 2.31, libgcc, libgomp). Each is checked against the sha256
+in Ubuntu's `Packages` index, unpacked without root (`dpkg-deb`, or `ar` + `xz`), and
+cached in `__artifacts/tools/sysroot-ubuntu20.04-x64`. No Docker is needed.
+
+The build **fails** when any shipped ELF needs a newer glibc than the sysroot's 2.31, and
+names the symbols forcing it. That catches an unlinked publish (`SKIP_PUBLISH=1` over a
+plain `dotnet publish`) and a dependency bump that raises the floor. `GLIBC_MAX=<ver>`
+overrides the check, for local debugging only.
+
+NativeAOT's link step does not rerun when only linker arguments change, so the scripts
+delete the previously linked binary under `bin/` first. Otherwise a host-linked binary
+from an earlier publish would ship unchanged.
 
 The host must provide:
 
@@ -74,7 +99,8 @@ SkiaSharp.
 
 `libgomp.so.1` (needed by the Magick codecs) is the only library bundled, and it is used
 only when the host has none — `LD_LIBRARY_PATH` is searched before `ld.so.cache`, so an
-unconditional entry would shadow the host's own glibc-matched copy.
+unconditional entry would shadow the host's own glibc-matched copy. It comes from the
+sysroot, not the build machine, so it does not raise the glibc floor either.
 
 Nothing else is bundled on purpose: `libGL` is coupled to the host's GPU driver,
 `libfontconfig` must see the user's font configuration, and both are on the AppImage
