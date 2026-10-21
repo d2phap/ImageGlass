@@ -21,6 +21,7 @@ using ImageGlass.Common.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -38,6 +39,9 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 
     // Dolphin and Nautilus rank the base name above the extension; Explorer and Finder do not
     private static readonly bool _compareExtensionLast = BHelper.OS == OSType.Linux;
+
+    // Dolphin collates by the user's locale, so "a_b" comes before "ab" and "éa" before "f"
+    private static readonly CompareInfo? _nameCollation = BHelper.OS == OSType.Linux ? GetLinuxCollation() : null;
 
 
     // Public Properties
@@ -217,9 +221,9 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
     /// </summary>
     private static IOrderedEnumerable<FileSearchEntry> SortEntries(IEnumerable<FileSearchEntry> fileList, FileSearchOptions options)
     {
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast, _nameCollation);
         var dirPathComparer = options.GroupByDir
-            ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase)
+            ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, collation: _nameCollation)
             : (IComparer<string?>)Comparer<string>.Create((a, b) => 0);
         var query = fileList.OrderBy(f => Path.GetDirectoryName(f.FilePath), dirPathComparer);
 
@@ -256,11 +260,11 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
 
 
         // Gets the file path comparer.
-        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast);
+        var filePathComparer = new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, _compareExtensionLast, _nameCollation);
 
         // Gets the directory path comparer.
         var dirPathComparer = options.GroupByDir
-            ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase)
+            ? new StringNaturalComparer(options.OrderType == ImageOrderType.Asc, StringComparison.OrdinalIgnoreCase, collation: _nameCollation)
             : (IComparer<string?>)Comparer<string>.Create((a, b) => 0);
 
 
@@ -373,6 +377,30 @@ public partial class FileSearchProvider() : PhDisposable, IFileSearchProvider
         return query
             .OrderBy(f => Path.GetDirectoryName(f), dirPathComparer)
             .ThenBy(f => Path.GetFileName(f), filePathComparer);
+    }
+
+
+    /// <summary>
+    /// Gets the collation of the user's locale, read from the environment as the app pins its culture to invariant.
+    /// </summary>
+    private static CompareInfo GetLinuxCollation()
+    {
+        try
+        {
+            var locale = Environment.GetEnvironmentVariable("LC_ALL") is { Length: > 0 } all ? all
+                : Environment.GetEnvironmentVariable("LC_COLLATE") is { Length: > 0 } collate ? collate
+                : Environment.GetEnvironmentVariable("LANG");
+
+            // "en_US.UTF-8" is the culture "en-US"; the C locale has no tailoring
+            var name = locale?.Split('.', '@')[0].Replace('_', '-');
+            if (!string.IsNullOrEmpty(name) && name is not ("C" or "POSIX"))
+            {
+                return CultureInfo.GetCultureInfo(name).CompareInfo;
+            }
+        }
+        catch (CultureNotFoundException) { }
+
+        return CultureInfo.InvariantCulture.CompareInfo;
     }
 
 

@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ImageGlass.Common.ServiceProviders.FileSearchService;
 
@@ -33,11 +34,18 @@ namespace ImageGlass.Common.ServiceProviders.FileSearchService;
 /// <param name="orderByAsc">String order mode</param>
 /// <param name="compareMode">String comparison mode</param>
 /// <param name="compareExtensionLast">Whether the inputs are file names whose extension is only a tie-breaker</param>
+/// <param name="collation">The culture to collate the inputs by, or <c>null</c> to compare them by character code</param>
 public sealed class StringNaturalComparer(
     bool orderByAsc = true,
     StringComparison compareMode = StringComparison.Ordinal,
-    bool compareExtensionLast = false) : IComparer<string?>, IComparer<ReadOnlyMemory<char>>
+    bool compareExtensionLast = false,
+    CompareInfo? collation = null) : IComparer<string?>, IComparer<ReadOnlyMemory<char>>
 {
+    // invariant globalization (no ICU) silently ignores NumericOrdering, so "a2" would sort after "a10"
+    private static readonly bool _isNumericCollationSupported =
+        CultureInfo.InvariantCulture.CompareInfo.Compare("a2", "a10", CompareOptions.NumericOrdering) < 0;
+
+
     /// <summary>
     /// Indicates whether the ordering should be in ascending order.
     /// </summary>
@@ -52,6 +60,11 @@ public sealed class StringNaturalComparer(
     /// Compares the inputs as file names, where the extension only breaks a tie on the base name.
     /// </summary>
     public bool CompareExtensionLast { get; set; } = compareExtensionLast;
+
+    /// <summary>
+    /// The culture to collate the inputs by, with numbers by value and symbols before letters like the OS file managers.
+    /// </summary>
+    public CompareInfo? Collation { get; set; } = collation;
 
 
     /// <summary>
@@ -106,17 +119,35 @@ public sealed class StringNaturalComparer(
 
     private int Compare__(ReadOnlySpan<char> x, ReadOnlySpan<char> y)
     {
-        return CompareExtensionLast
-            ? CompareFileName(x, y, CompareMode)
-            : Compare(x, y, CompareMode);
+        var compareResult = CompareExtensionLast
+            ? CompareFileName(x, y, CompareMode, Collation)
+            : Compare(x, y, CompareMode, Collation);
+
+        // collation ties "ABC" with "abc" and "01" with "1"; ordinal keeps the order stable
+        if (compareResult == 0 && Collation is not null)
+        {
+            compareResult = Compare(x, y, StringComparison.Ordinal);
+        }
+
+        return compareResult;
     }
 
 
     /// <summary>
-    /// Compares two character spans.
+    /// Compares two character spans, by <paramref name="collation"/> when it is given.
     /// </summary>
-    public static int Compare(ReadOnlySpan<char> x, ReadOnlySpan<char> y, StringComparison stringComparison)
+    public static int Compare(ReadOnlySpan<char> x, ReadOnlySpan<char> y, StringComparison stringComparison, CompareInfo? collation = null)
     {
+        if (collation is not null && _isNumericCollationSupported)
+        {
+            var ignoreCase = stringComparison is StringComparison.OrdinalIgnoreCase
+                or StringComparison.CurrentCultureIgnoreCase
+                or StringComparison.InvariantCultureIgnoreCase;
+
+            return collation.Compare(x, y, CompareOptions.NumericOrdering
+                | (ignoreCase ? CompareOptions.IgnoreCase : CompareOptions.None));
+        }
+
         var length = Math.Min(x.Length, y.Length);
 
         for (var i = 0; i < length; i++)
@@ -155,20 +186,20 @@ public sealed class StringNaturalComparer(
     /// <summary>
     /// Compares two file names, using the extension only to break a tie on the base name.
     /// </summary>
-    public static int CompareFileName(ReadOnlySpan<char> x, ReadOnlySpan<char> y, StringComparison stringComparison)
+    public static int CompareFileName(ReadOnlySpan<char> x, ReadOnlySpan<char> y, StringComparison stringComparison, CompareInfo? collation = null)
     {
         var xDotIndex = FindExtensionSeparator(x);
         var yDotIndex = FindExtensionSeparator(y);
         var xBaseLength = xDotIndex < 0 ? x.Length : xDotIndex;
         var yBaseLength = yDotIndex < 0 ? y.Length : yDotIndex;
 
-        var compareResult = Compare(x.Slice(0, xBaseLength), y.Slice(0, yBaseLength), stringComparison);
+        var compareResult = Compare(x.Slice(0, xBaseLength), y.Slice(0, yBaseLength), stringComparison, collation);
         if (compareResult != 0 || (xDotIndex < 0 && yDotIndex < 0))
         {
             return compareResult;
         }
 
-        return Compare(x.Slice(xBaseLength), y.Slice(yBaseLength), stringComparison);
+        return Compare(x.Slice(xBaseLength), y.Slice(yBaseLength), stringComparison, collation);
     }
 
 
