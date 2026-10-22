@@ -42,11 +42,11 @@ Built enterprise-ready, ImageGlass Pro supports managed deployment through prese
 </picture></a></td>
 <td width="25%" align="center"><a target="_blank" href="https://buy.stripe.com/6oU8wP5IVh1g4qdcZPfUQ0a?client_reference_id=pro-team__onetime__imageglass-10-0-6-906-66"><picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/pro-team-dark.svg"/>
-  <img src=".github/assets/pricing/pro-team.svg" width="100%" alt="Pro Team: $69 one-time, up to 3 users or devices, Commercial Pro license, Pro v10.x updates"/>
+  <img src=".github/assets/pricing/pro-team.svg" width="100%" alt="Pro Team: $69 one-time, up to 3 users, Commercial Pro license, Pro v10.x updates"/>
 </picture></a></td>
-<td width="25%" align="center"><a target="_blank" href="https://buy.stripe.com/14A4gz8V73aq5uhcZPfUQ0b?client_reference_id=pro-business__yearly__imageglass-10-0-6-906-66"><picture>
+<td width="25%" align="center"><a target="_blank" href="https://imageglass.org/pricing"><picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/pro-business-dark.svg"/>
-  <img src=".github/assets/pricing/pro-business.svg" width="100%" alt="Pro Business: from $99 per seat per year, subscription, Commercial Pro license, all versions, priority support"/>
+  <img src=".github/assets/pricing/pro-business.svg" width="100%" alt="Pro Business: volume pricing by number of users, invoiced for 1–3 years, Commercial Pro license, all versions, priority support"/>
 </picture></a></td>
 <td width="25%" align="center"><a target="_blank" href="https://imageglass.org/download"><picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/pricing/classic-dark.svg"/>
