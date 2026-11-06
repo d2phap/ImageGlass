@@ -223,6 +223,10 @@ public static partial class SkiaCodec
         // 1. read animated formats
         if (codec.FrameCount > 0)
         {
+            // the animator lives as long as the photo, and a file-backed codec blocks deleting or renaming the file
+            codec.Dispose();
+            codec = CreateInMemoryCodec(meta.FilePath);
+
             var frames = meta.Frames.Select(f => f.Animation ?? CreateUnknownFrameInfo()).ToArray();
             result.Animator = new SkiaAnimator(codec, frames);
             return result;
@@ -285,6 +289,30 @@ public static partial class SkiaCodec
         codec = null;
 
         return result;
+    }
+
+
+    /// <summary>
+    /// Creates a codec over an in-memory copy of the file, so the codec holds no file handle.
+    /// </summary>
+    private static unsafe SKCodec? CreateInMemoryCodec(string filePath)
+    {
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read,
+            FileShare.ReadWrite | FileShare.Delete);
+        var length = fs.Length;
+
+        // the codec keeps its own reference to the data
+        using var data = SKData.Create(length);
+        var buffer = (byte*)data.Data;
+
+        for (long offset = 0; offset < length;)
+        {
+            var chunk = (int)Math.Min(length - offset, int.MaxValue);
+            fs.ReadExactly(new Span<byte>(buffer + offset, chunk));
+            offset += chunk;
+        }
+
+        return SKCodec.Create(data);
     }
 
 

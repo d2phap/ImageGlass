@@ -127,6 +127,8 @@ public class SkiaAnimator : AnimatorImpl
                 _frameCache[i] = null;
             }
             _cachedFramesQueue.Clear();
+
+            _codec.Dispose();
         }
     }
 
@@ -176,7 +178,8 @@ public class SkiaAnimator : AnimatorImpl
     {
         lock (_syncLock)
         {
-            if (IsDisposed || _codec is null) return null;
+            // OnDisposing frees the codec before IsDisposed turns true
+            if (IsDisposed || _codec.IsDisposed()) return null;
 
             // 1. Return cached result if available
             var cached = _frameCache[frameIndex];

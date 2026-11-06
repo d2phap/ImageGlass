@@ -761,7 +761,6 @@ public partial class AppAPIProvider
     /// </summary>
     public static async Task IG_RenameAsync()
     {
-        var photo = Core.Photos.Current;
         var oldFilePath = Core.Photos.CurrentFilePath;
         if (!File.Exists(oldFilePath)) return;
 
@@ -807,14 +806,11 @@ public partial class AppAPIProvider
                 File.Move(oldFilePath, newFilePath);
             }
 
-            // the watcher reports the rename ~50 ms later, and the next frame decodes by path
-            (photo?.Bitmap as AnimatorImpl)?.UpdateFilePath(newFilePath);
-
-
-            // manually update the change if FileWatcher is not enabled
-            if (!Core.Config.EnableFileWatcher)
+            // the watcher is Pro-only and lags ~50 ms, so update the list here; its later event finds nothing to do
+            var photoIndex = Core.Photos.IndexOf(oldFilePath);
+            if (photoIndex >= 0)
             {
-                Core.Photos.SetFilePath(Core.Photos.CurrentIndex, newFilePath);
+                Core.Photos.SetFilePath(photoIndex, newFilePath);
             }
         }
         catch (Exception ex)
