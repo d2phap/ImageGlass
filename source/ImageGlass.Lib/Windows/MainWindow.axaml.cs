@@ -367,13 +367,16 @@ public partial class MainWindow : PhWindow
         var taskConfig = CaptureAndSaveConfigAsync();
 
 
-        // permanently adds the data that is on the Clipboard so that it is available
-        // after the data's original application closes.
+        // keep our clipboard data after exit; flushing data we don't own fails, and Avalonia retries that for ~1 s
         if (Clipboard is not null)
         {
             try
             {
-                await Clipboard.FlushAsync();
+                var ownData = await Clipboard.TryGetInProcessDataAsync();
+                if (ownData is not null)
+                {
+                    await Clipboard.FlushAsync();
+                }
             }
             catch { }
         }
