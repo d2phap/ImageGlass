@@ -25,6 +25,7 @@ using ImageGlass.UI;
 using ImageGlass.UI.Windowing;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Common.Windows;
 
@@ -39,7 +40,7 @@ internal enum PluginInfoWindowMode
     View,
 
     /// <summary>
-    /// Trust-and-enable consent prompt ([Trust and Enable] / [Cancel]).
+    /// Trust-and-enable consent prompt ([Trust and Enable] / [Cancel]); turns into <see cref="Configure"/> once enabled.
     /// </summary>
     Enable,
 
@@ -57,9 +58,14 @@ internal enum PluginInfoWindowMode
 internal sealed class PluginInfoWindow : DialogWindow
 {
     private readonly PluginInfoWindowView _view;
-    private readonly PluginInfoWindowMode _mode;
+    private readonly PluginManifest _manifest;
+    private readonly string _pluginDir;
+    private readonly bool _showFormats;
+    private readonly Func<Task<bool>>? _enableAsync;
     private readonly PhButton _deleteButton;
     private readonly string _pluginName;
+    private PluginInfoWindowMode _mode;
+    private bool _isEnabling;
 
 
     // fixed dialog width so it doesn't grow/shrink with the metadata text
@@ -93,6 +99,12 @@ internal sealed class PluginInfoWindow : DialogWindow
 
 
     /// <summary>
+    /// Whether the plugin was enabled from this window, which stands even if the window is then cancelled.
+    /// </summary>
+    public bool PluginEnabled { get; private set; }
+
+
+    /// <summary>
     /// Opens the window on <paramref name="manifest"/> (folder <paramref name="pluginDir"/>), titled
     /// with the plugin's name. <paramref name="mode"/> picks the footer and whether the format picker
     /// is editable: <see cref="PluginInfoWindowMode.Enable"/> is the consent prompt
@@ -100,11 +112,19 @@ internal sealed class PluginInfoWindow : DialogWindow
     /// <see cref="PluginInfoWindowMode.Configure"/> allows edits, and
     /// <see cref="PluginInfoWindowMode.View"/> is read-only.
     /// </summary>
+    /// <param name="enableAsync">Trusts and loads the plugin for [Trust and enable]; <c>true</c> if trust changed.</param>
     public PluginInfoWindow(PluginManifest manifest, string pluginDir,
-        PluginInfoWindowMode mode = PluginInfoWindowMode.View, bool hashChanged = false)
+        PluginInfoWindowMode mode = PluginInfoWindowMode.View, bool hashChanged = false,
+        Func<Task<bool>>? enableAsync = null)
     {
         _mode = mode;
+        _manifest = manifest;
+        _pluginDir = pluginDir;
+        _enableAsync = enableAsync;
         _pluginName = string.IsNullOrWhiteSpace(manifest.Name) ? manifest.Id : manifest.Name;
+
+        // file formats are a codec concept; a future non-codec kind gets the info tab only
+        _showFormats = manifest.Kind == IGPluginKind.Codec;
 
         if (mode is PluginInfoWindowMode.Enable or PluginInfoWindowMode.Configure)
         {
@@ -130,8 +150,7 @@ internal sealed class PluginInfoWindow : DialogWindow
         _view = new PluginInfoWindowView();
         _view.LoadData(manifest, pluginDir,
             allowEdit: mode == PluginInfoWindowMode.Configure,
-            // file formats are a codec concept; a future non-codec kind gets the info tab only
-            showFormats: manifest.Kind == IGPluginKind.Codec);
+            showFormats: _showFormats);
         if (mode == PluginInfoWindowMode.Enable)
         {
             // the badge glyph is an outline, so it has to be stroked instead of filled
@@ -175,6 +194,92 @@ internal sealed class PluginInfoWindow : DialogWindow
         Title = _pluginName;
         _deleteButton.Text = Core.Lang[LangId._Delete];
 
+        UpdateButtonTexts();
+    }
+
+
+    protected override async void OnDialogSubmitted(DialogEventArgs e)
+    {
+        if (_mode != PluginInfoWindowMode.Enable || _enableAsync is null)
+        {
+            base.OnDialogSubmitted(e);
+            return;
+        }
+        if (!e.CanProceed || _isEnabling) return;
+
+        SetEnabling(true);
+        try
+        {
+            PluginEnabled = await _enableAsync();
+        }
+        finally
+        {
+            SetEnabling(false);
+        }
+
+        // closed while enabling
+        if (DialogResult != DialogExitCode.None) return;
+
+        // an unloaded plugin has no formats to choose; the caller reports why it did not load
+        if (!_showFormats || !Core.PluginRegistry.IsLoaded(_manifest.Id))
+        {
+            base.OnDialogSubmitted(e);
+            return;
+        }
+
+        SwitchToConfigure();
+    }
+
+
+    protected override void OnDialogAborted()
+    {
+        // the caller reads PluginEnabled on close, so the enable has to finish first
+        if (_isEnabling) return;
+
+        base.OnDialogAborted();
+    }
+
+
+    /// <summary>
+    /// Locks the footer while the plugin is being trusted and loaded.
+    /// </summary>
+    private void SetEnabling(bool isEnabling)
+    {
+        _isEnabling = isEnabling;
+        _btn1.IsEnabled = !isEnabling;
+        _btn2.IsEnabled = !isEnabling;
+        _deleteButton.IsEnabled = !isEnabling;
+    }
+
+
+    /// <summary>
+    /// Turns the enable prompt into the format picker of the now-loaded plugin.
+    /// </summary>
+    private void SwitchToConfigure()
+    {
+        _mode = PluginInfoWindowMode.Configure;
+
+        _view.LoadData(_manifest, _pluginDir, allowEdit: true, showFormats: _showFormats);
+        _view.ShowFormatsAfterEnable();
+
+        // the accent moves from Cancel to Save, as in a window opened in Configure mode
+        _btn2.IsDefault = false;
+        _btn2.Variant = PhButtonVariant.Default;
+        Button1Icon = null;
+        DefaultButton = DialogButton.Button1;
+        DefaultFocus = DialogFocus.Button1;
+        SetDefaultButton(DefaultButton);
+        SetDefaultFocus();
+
+        UpdateButtonTexts();
+    }
+
+
+    /// <summary>
+    /// Sets the footer button captions for the current mode.
+    /// </summary>
+    private void UpdateButtonTexts()
+    {
         switch (_mode)
         {
             case PluginInfoWindowMode.Enable:

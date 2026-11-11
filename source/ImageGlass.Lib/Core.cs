@@ -517,21 +517,32 @@ public static class Core
 
 
     /// <summary>
-    /// Hot-loads a plugin just enabled (after <c>PluginTrustPolicy.TrustAsync</c>) and reloads the
-    /// current photo. Returns <c>false</c> if it could not be loaded (quarantined, ABI mismatch, ...).
+    /// Hot-loads a plugin just trusted; <paramref name="formatsOff"/> excludes all its formats first. <c>false</c> if it did not load.
     /// </summary>
-    public static async Task<bool> EnablePluginAsync(PluginManifest manifest, string pluginDir)
+    public static async Task<bool> EnablePluginAsync(PluginManifest manifest, string pluginDir,
+        bool formatsOff = false)
     {
         if (PluginRegistry.IsLoaded(manifest.Id)) return true;
 
-        var extensions = new List<string>();
-
         // native load + SHA-256 hashing is I/O; keep it off the UI thread
-        var loaded = await Task.Run(() => RegisterPluginCodecs(manifest, pluginDir, extensions));
-        if (!loaded) return false;
+        var handle = await Task.Run(() => PluginRegistry.LoadAndProbe(manifest, pluginDir));
+        if (handle is null) return false;
+
+        // the declared formats are only known once loaded, and the proxies read the exclusions
+        if (formatsOff)
+        {
+            var (decode, encode) = PluginRegistry.GetDeclaredCodecExtensions(manifest.Id);
+            await PluginTrustPolicy.SetExtensionExclusionsAsync(manifest.Id, decode, encode);
+        }
+
+        var extensions = new List<string>();
+        var registered = RegisterProxies(handle, extensions);
 
         // plugin formats are not persisted; purge any leftovers older versions baked in
         if (extensions.Count > 0) Config.PurgePluginFileFormats(extensions);
+
+        // loaded with every format off: no codec changed
+        if (!registered) return true;
 
         Photos.ClearCache();
         InvalidateCodecsAndReload();

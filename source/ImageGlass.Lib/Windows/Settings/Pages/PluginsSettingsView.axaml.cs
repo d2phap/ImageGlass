@@ -421,7 +421,8 @@ public partial class PluginsSettingsView : SettingsPageView
                 : PluginInfoWindowMode.Enable;
 
         var win = new PluginInfoWindow(plugin.Manifest, plugin.Dir, mode,
-            hashChanged: state == PluginTrustPolicy.TrustState.Changed);
+            hashChanged: state == PluginTrustPolicy.TrustState.Changed,
+            enableAsync: () => EnablePluginAsync(plugin));
         var result = await win.ShowAsync(TopLevel.GetTopLevel(this) as PhWindow);
 
         // the footer link runs its own flow instead of the primary action
@@ -431,14 +432,12 @@ public partial class PluginsSettingsView : SettingsPageView
             return false;
         }
 
-        if (result != DialogExitCode.OK) return false;
+        // enabling happens inside the window, so it stands even when the format picker is cancelled
+        var changed = win.PluginEnabled;
+        if (result != DialogExitCode.OK) return changed;
 
-        return mode switch
-        {
-            PluginInfoWindowMode.Enable => await EnablePluginAsync(plugin, win),
-            PluginInfoWindowMode.Configure => await ApplyPluginChoicesAsync(plugin, win),
-            _ => false,
-        };
+        var saved = await ApplyPluginChoicesAsync(plugin, win);
+        return changed || saved;
     }
 
 
@@ -518,22 +517,13 @@ public partial class PluginsSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Trusts + enables the plugin, then hot-loads it so its codecs take effect without a restart.
-    /// Returns <c>true</c> if the trust state changed.
+    /// Trusts + hot-loads the plugin with every format off, for the user to opt in; <c>true</c> if trust changed.
     /// </summary>
-    private async Task<bool> EnablePluginAsync((PluginManifest Manifest, string Dir) plugin,
-        PluginInfoWindow? win = null)
+    private async Task<bool> EnablePluginAsync((PluginManifest Manifest, string Dir) plugin)
     {
-        // Persist any choices in the same write, so the plugin's first load already honors them.
-        var disabledDecode = win?.ChoicesChanged == true ? win.DisabledDecodeExtensions : null;
-        var disabledEncode = win?.ChoicesChanged == true ? win.DisabledEncodeExtensions : null;
+        if (!await PluginTrustPolicy.TrustAsync(plugin.Manifest, plugin.Dir)) return false;
 
-        if (!await PluginTrustPolicy.TrustAsync(plugin.Manifest, plugin.Dir, disabledDecode, disabledEncode))
-        {
-            return false;
-        }
-
-        await Core.EnablePluginAsync(plugin.Manifest, plugin.Dir);
+        await Core.EnablePluginAsync(plugin.Manifest, plugin.Dir, formatsOff: true);
 
         // consent is recorded either way, so report the loader's own error
         if (LoadErrorOf(plugin.Manifest.Id) is { } error) ShowHint(error, isWarning: true);

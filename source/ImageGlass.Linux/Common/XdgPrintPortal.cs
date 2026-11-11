@@ -60,7 +60,7 @@ internal static class XdgPrintPortal
             notification =>
             {
                 if (notification.HasValue) response.TrySetResult(notification.Value);
-                else if (notification.Exception is { } ex) response.TrySetException(ex);
+                else if (notification.CompletionReason is { } ex) response.TrySetException(ex);
             },
             ObserverFlags.None, false, null).ConfigureAwait(false);
 

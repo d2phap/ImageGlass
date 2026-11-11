@@ -179,6 +179,16 @@ public partial class PluginInfoWindowView : PhControl
 
 
     /// <summary>
+    /// Hides the consent banner and brings the formats tab forward, once the plugin is enabled.
+    /// </summary>
+    public void ShowFormatsAfterEnable()
+    {
+        PART_ConsentRow.IsVisible = false;
+        if (PART_TabFormats.IsVisible) PART_Tabs.SelectedItem = PART_TabFormats;
+    }
+
+
+    /// <summary>
     /// Rebuilds the format picker: one row per declared extension, with a Decode and an Encode
     /// checkbox. An unloaded plugin has nothing to show, so the hint replaces the table.
     /// </summary>
