@@ -8,13 +8,13 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.HarfBuzz" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.Skia" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.1.4" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.4" />
+    <PackageVersion Include="Avalonia" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.HarfBuzz" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.Skia" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.6" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.6" />
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageVersion Include="D2Phap.EggShell-ARM64" Version="1.2.927" />
     <PackageVersion Include="D2Phap.EggShell-x64" Version="1.2.927" />
@@ -22,8 +22,8 @@
     <PackageVersion Include="ImageGlass.SDK" Version="1.2.0" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-arm64" Version="15.0.0" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="15.0.0" />
-    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="15.0.0" />
-    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.363" />
+    <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="15.1.0" />
+    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.371" />
     <PackageVersion Include="NativeMemoryArray" Version="1.2.2" />
     <PackageVersion Include="NetCoreAudio" Version="2.0.1" />
     <PackageVersion Include="SkiaSharp" Version="4.152.0" />
@@ -32,8 +32,8 @@
     <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="4.152.0" />
     <PackageVersion Include="SkiaSharp.NativeAssets.macOS" Version="4.152.0" />
     <PackageVersion Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17" />
-    <PackageVersion Include="System.IO.Hashing" Version="11.0.0-rc.2.26504.105" />
+    <PackageVersion Include="System.IO.Hashing" Version="11.0.0" />
     <!-- the version Avalonia.FreeDesktop brings, so the Linux print portal shares its D-Bus library -->
-    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.95.1" />
+    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.95.2" />
   </ItemGroup>
 </Project>
