@@ -658,9 +658,20 @@ public partial class AppAPIProvider
 
 
     /// <summary>
-    /// Opens the Print window for the photo as it is shown, every frame and edit included.
+    /// Opens the Print window to print the photo.
     /// </summary>
-    public static async Task IG_PrintAsync()
+    public static async Task IG_PrintAsync(string? regionStr)
+    {
+        var isRegion = Enum.TryParse<PrintRegion>(regionStr, true, out var region);
+
+        await IG_PrintAsync(isRegion ? region : null);
+    }
+
+
+    /// <summary>
+    /// Opens the Print window to print the photo.
+    /// </summary>
+    public static async Task IG_PrintAsync(PrintRegion? region = null)
     {
         // the shown image, every edit applied, rather than the file on disk
         var state = Viewer.CaptureImageState();
@@ -675,7 +686,7 @@ public partial class AppAPIProvider
         }
 
         using var session = new PrintSession(state);
-        var window = new PrintWindow(session);
+        var window = new PrintWindow(session, region ?? PrintRegion.WholeImage);
 
         // a running slideshow would move on to the next photo behind the window
         var slideshow = Core.Slideshow;

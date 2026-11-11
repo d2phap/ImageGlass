@@ -1302,8 +1302,6 @@ public class Lang
         new(LangId.Tool_Crop_SelectionAspectRatio_Original, "Original"), //v9.0
 
         new(LangId.Tool_Crop_BtnReset, "Reset"), //v9.0
-        new(LangId.Tool_Crop_BtnSave, "Save"), //v9.0
-        new(LangId.Tool_Crop_BtnSaveAs, "Save as…"), //v9.0
         new(LangId.Tool_Crop_BtnCrop, "Crop"), //v9.0
         new(LangId.Tool_Crop_BtnCopy, "Copy"), //v9.0
 

@@ -140,6 +140,11 @@
                 HorizontalContentAlignment="Center"
                 IconData="{StaticResource IconSaveAs}" />
             <ui:PhButton
+                x:Name="PART_BtnPrint"
+                MinWidth="80"
+                HorizontalContentAlignment="Center"
+                IconData="{StaticResource IconPrint}" />
+            <ui:PhButton
                 x:Name="PART_BtnReset"
                 MinWidth="80"
                 HorizontalContentAlignment="Center"

@@ -114,13 +114,13 @@ public partial class PrintWindowView : PhControl
     }
 
 
-    public PrintWindowView(PrintSession session) : this()
+    public PrintWindowView(PrintSession session, PrintRegion region = PrintRegion.WholeImage) : this()
     {
         _session = session;
         _config = PrintConfig.Load();
         _layout = PrintLayouts.Find(_config.LayoutId);
 
-        InitializeControls();
+        InitializeControls(region);
         WireEvents();
         PART_PreviewPane.Background = new SolidColorBrush(PrintPreviewControl.GetDeskColor());
         PART_BtnAddPrinter.IsVisible = Core.PrintProvider.CanAddPrinter;
@@ -204,9 +204,9 @@ public partial class PrintWindowView : PhControl
     #region Controls
 
     /// <summary>
-    /// Fills the choices and sets them from the saved settings.
+    /// Fills the choices and sets them from the saved settings, with the part to print preselected when it is offered.
     /// </summary>
-    private void InitializeControls()
+    private void InitializeControls(PrintRegion region)
     {
         _isUpdatingControls = true;
 
@@ -234,7 +234,7 @@ public partial class PrintWindowView : PhControl
         var hasSelection = !state.GetRegionRect(ViewerImageRegion.Selection).IsEmpty;
         var hasVisibleArea = !visible.IsEmpty && (visible.Width < whole.Width || visible.Height < whole.Height);
         PART_RegionRow.IsVisible = hasSelection || hasVisibleArea;
-        FillRegionItems(hasSelection, hasVisibleArea);
+        FillRegionItems(hasSelection, hasVisibleArea, region);
 
         // Save as PDF until the printers arrive, so the preview shows at once
         _printer = PrintProviderBase.SaveAsPdfPrinter;
@@ -311,14 +311,15 @@ public partial class PrintWindowView : PhControl
     }
 
 
-    private void FillRegionItems(bool hasSelection, bool hasVisibleArea)
+    private void FillRegionItems(bool hasSelection, bool hasVisibleArea, PrintRegion region)
     {
         var values = new List<PrintRegion> { PrintRegion.WholeImage };
         if (hasSelection) values.Add(PrintRegion.Selection);
         if (hasVisibleArea) values.Add(PrintRegion.VisibleArea);
 
+        // a region not offered leaves the whole image chosen
         FillItems(PART_Region, values);
-        SelectTag(PART_Region, PrintRegion.WholeImage);
+        SelectTag(PART_Region, region);
     }
 
 

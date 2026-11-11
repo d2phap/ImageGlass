@@ -330,6 +330,7 @@ public enum ResxIconId
     IconCrop,
     IconCopy,
     IconReset,
+    IconPrint,
     IconArrowPrevious,
     IconArrowNext,
     IconArrowLeft,

@@ -24,6 +24,7 @@ using Avalonia.Threading;
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Photoing;
+using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.Common.Types;
 using ImageGlass.UI;
@@ -77,6 +78,8 @@ public partial class CropImageToolControl : PhControl, IToolControl
         PART_BtnSaveAs.Click += PART_BtnSaveAs_Click;
         PART_BtnCrop.Click += PART_BtnCrop_Click;
         PART_BtnCopy.Click += PART_BtnCopy_Click;
+        PART_BtnPrint.Click += PART_BtnPrint_Click;
+        PART_BtnPrint.IsVisible = !FeatureManager.IsLocked(API.IG_Print);
 
         // subscribe to aspect ratio change
         PART_CmdAspectRatio.SelectionChanged += PART_CmdAspectRatio_SelectionChanged;
@@ -118,6 +121,7 @@ public partial class CropImageToolControl : PhControl, IToolControl
         PART_BtnSaveAs.Click -= PART_BtnSaveAs_Click;
         PART_BtnCrop.Click -= PART_BtnCrop_Click;
         PART_BtnCopy.Click -= PART_BtnCopy_Click;
+        PART_BtnPrint.Click -= PART_BtnPrint_Click;
 
         PART_CmdAspectRatio.SelectionChanged -= PART_CmdAspectRatio_SelectionChanged;
 
@@ -144,10 +148,11 @@ public partial class CropImageToolControl : PhControl, IToolControl
         base.OnIgLanguageChanged();
 
         PART_BtnReset.Text = Core.Lang[LangId.Tool_Crop_BtnReset];
-        PART_BtnSave.Text = Core.Lang[LangId.Tool_Crop_BtnSave];
-        PART_BtnSaveAs.Text = Core.Lang[LangId.Tool_Crop_BtnSaveAs];
+        PART_BtnSave.Text = Core.Lang[LangId.Menu_MnuSave];
+        PART_BtnSaveAs.Text = Core.Lang[LangId.Menu_MnuSaveAs];
         PART_BtnCrop.Text = Core.Lang[LangId.Tool_Crop_BtnCrop];
         PART_BtnCopy.Text = Core.Lang[LangId.Tool_Crop_BtnCopy];
+        PART_BtnPrint.Text = Core.Lang[LangId.Menu_MnuPrint];
 
         PART_CmdAspectRatio.Items[0] = Core.Lang[LangId.Tool_Crop_SelectionAspectRatio_FreeRatio];
         PART_CmdAspectRatio.Items[1] = Core.Lang[LangId.Tool_Crop_SelectionAspectRatio_Custom];
@@ -262,6 +267,12 @@ public partial class CropImageToolControl : PhControl, IToolControl
     private async void PART_BtnCopy_Click(object? sender, RoutedEventArgs e)
     {
         await Core.API!.RunApiAsync(API.IG_CopyImagePixels);
+    }
+
+
+    private async void PART_BtnPrint_Click(object? sender, RoutedEventArgs e)
+    {
+        await Core.API!.RunApiAsync(API.IG_Print, nameof(PrintRegion.Selection));
     }
 
     #endregion // Control Events
@@ -584,6 +595,7 @@ public partial class CropImageToolControl : PhControl, IToolControl
         PART_BtnSaveAs.IsEnabled = hasSelection;
         PART_BtnCrop.IsEnabled = hasSelection;
         PART_BtnCopy.IsEnabled = hasSelection;
+        PART_BtnPrint.IsEnabled = hasSelection;
     }
 
 
