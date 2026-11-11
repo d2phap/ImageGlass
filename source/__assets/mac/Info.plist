@@ -41,7 +41,7 @@
 	<key>CFBundleIconFile</key>
 	<string>logo.icns</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (C) 2010-2026 Dương Diệu Pháp</string>
+	<string>Copyright (C) 2010-2027 Dương Diệu Pháp</string>
 
 	<key>CFBundleDocumentTypes</key>
 	<array>

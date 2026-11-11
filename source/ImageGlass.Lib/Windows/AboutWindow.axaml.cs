@@ -1,6 +1,6 @@
 /*
 ImageGlass - A Fast, Seamless Photo Viewer
-Copyright (C) 2010 - 2026 DUONG DIEU PHAP
+Copyright (C) 2010 - 2027 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -74,11 +74,11 @@ public partial class AboutWindow : DialogWindow
           Copyright (c) Microsoft Corporation
 
         ◍ D2Phap.EggShell                           Apache-2.0 license
-          Copyright (c) 2024-2026 Dương Diệu Pháp
+          Copyright (c) 2024-2027 Dương Diệu Pháp
 
         ◍ D2Phap.FileWatcherEx                             MIT licence
           https://github.com/d2phap/FileWatcherEx
-          Copyright (c) 2018-2026 Dương Diệu Pháp
+          Copyright (c) 2018-2027 Dương Diệu Pháp
 
         ◍ ImageGlass logo idea
           Nguyễn Quốc Tuấn
