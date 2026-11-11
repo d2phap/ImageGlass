@@ -3687,7 +3687,7 @@ public partial class AppAPIProvider
     /// </summary>
     public static void IG_OpenContextMenu()
     {
-        Viewer.ContextMenu?.Open();
+        App.MainWindow.PART_MainView.OpenViewerContextMenu();
     }
 
 

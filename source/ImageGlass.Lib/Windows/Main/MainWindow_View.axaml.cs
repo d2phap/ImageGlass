@@ -102,7 +102,6 @@ public partial class MainWindowView : PhControl
         PART_Viewer.NavButtonClicked += PART_Viewer_NavButtonClicked;
         PART_Viewer.ViewerPointerClicked += PART_Viewer_ViewerPointerClicked;
         PART_Viewer.ViewerMouseWheel += PART_Viewer_ViewerMouseWheel;
-        PART_Viewer.ContextMenu?.Opened += PART_Viewer_ContextMenu_Opened;
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged += PART_ToolHost_PropertyChanged;
@@ -144,7 +143,6 @@ public partial class MainWindowView : PhControl
         PART_Viewer.NavButtonClicked -= PART_Viewer_NavButtonClicked;
         PART_Viewer.ViewerPointerClicked -= PART_Viewer_ViewerPointerClicked;
         PART_Viewer.ViewerMouseWheel -= PART_Viewer_ViewerMouseWheel;
-        PART_Viewer.ContextMenu?.Opened -= PART_Viewer_ContextMenu_Opened;
 
         // motion/live photo overlay button
         PART_ToolHost.PropertyChanged -= PART_ToolHost_PropertyChanged;
@@ -523,9 +521,8 @@ public partial class MainWindowView : PhControl
     }
 
 
-    private void PART_Viewer_ContextMenu_Opened(object? sender, RoutedEventArgs e)
+    private void BuildViewerContextMenu(ContextMenu mnuContext)
     {
-        if (sender is not ContextMenu mnuContext) return;
         mnuContext.Items.Clear();
 
         var hasClipboardImage = Core.ClipboardImage != null;
@@ -1315,6 +1312,18 @@ public partial class MainWindowView : PhControl
             _messageMargin.Bottom + bottomInset);
     }
 
+
+    /// <summary>
+    /// Opens the viewer context menu with freshly built items.
+    /// </summary>
+    public void OpenViewerContextMenu()
+    {
+        var mnuContext = PART_Viewer.ContextMenu;
+        if (mnuContext is null || mnuContext.IsOpen) return;
+
+        BuildViewerContextMenu(mnuContext);
+        mnuContext.Open();
+    }
 
     #endregion // Control Methods
 
