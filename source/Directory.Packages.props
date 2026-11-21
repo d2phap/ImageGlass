@@ -19,7 +19,7 @@
     <PackageVersion Include="D2Phap.EggShell-ARM64" Version="1.2.927" />
     <PackageVersion Include="D2Phap.EggShell-x64" Version="1.2.927" />
     <PackageVersion Include="D2Phap.FileWatcherEx" Version="3.0.0" />
-    <PackageVersion Include="ImageGlass.SDK" Version="1.2.0" />
+    <PackageVersion Include="ImageGlass.SDK" Version="1.3.0" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-arm64" Version="15.0.0" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-arm64" Version="15.0.0" />
     <PackageVersion Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="15.1.0" />
