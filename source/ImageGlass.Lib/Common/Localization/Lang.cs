@@ -1071,7 +1071,7 @@ public class Lang
         // Edit > Saving
         new(LangId.Settings_Edit_Saving, "Saving"),
         new(LangId.Settings_EnableDeleteConfirmation, "Show confirmation dialog when deleting file"),
-        new(LangId.Settings_EnableSaveConfirmation, "Show confirmation dialog when overriding file"),
+        new(LangId.Settings_EnableSaveConfirmation, "Show confirmation dialog when overwriting file"),
         new(LangId.Settings_EnablePreserveModifiedDate, "Preserve the image's modified date on save"),
         new(LangId.Settings_EnableOpenSaveAsInCurrentFolder, "Open the Save As dialog in the current image directory"), // v9.1
         new(LangId.Settings_ImageEditQuality, "Image quality: {0}"),

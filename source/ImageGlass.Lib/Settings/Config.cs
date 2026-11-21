@@ -254,7 +254,7 @@ public partial class Config : PhReactive
     }
 
     /// <summary>
-    /// Gets, sets value indicates that Confirmation dialog is displayed when overriding the viewing image
+    /// Gets, sets value indicates that Confirmation dialog is displayed when overwriting the viewing image
     /// </summary>
     public bool EnableSaveConfirmation
     {
