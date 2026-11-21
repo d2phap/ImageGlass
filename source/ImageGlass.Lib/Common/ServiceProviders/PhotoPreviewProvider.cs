@@ -102,8 +102,7 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
             + $"meta={meta.Width}x{meta.Height}, largeEnough={isPreviewLargeEnough}");
 
 
-        // 2. slow paths: preview missing, or too small for the gallery cell (it would be scaled
-        // up and look blurry). Selecting the codec probes the file, so do it once here.
+        // 2. slow paths: preview missing, or too small for the gallery cell (it would be scaled up and look blurry)
         if (!isPreviewLargeEnough)
         {
             var codec = SelectDecodeCodec(meta);
@@ -115,7 +114,7 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
             // format and may misread the bytes into a frame that wins KeepLarger.
             if (isPluginCodec)
             {
-                var imgPlugin = await DecodeViaCodecRegistryAsync(meta, maxSize, token, codec);
+                var imgPlugin = await DecodeViaCodecRegistryAsync(meta, maxSize, token);
                 PhotoTrace.Mark("thumb:decode", null, $"{meta.FilePath} -> plugin {Describe(imgPlugin)}");
                 _ = KeepLarger(ref imgPreview, imgPlugin);
             }
@@ -135,7 +134,7 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
                 // (e.g. the SVG renderer) that neither quick path above covers
                 if (imgPreview.IsDisposed())
                 {
-                    imgPreview = await DecodeViaCodecRegistryAsync(meta, maxSize, token, codec);
+                    imgPreview = await DecodeViaCodecRegistryAsync(meta, maxSize, token);
                 }
             }
         }
@@ -226,12 +225,11 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
 
 
     /// <summary>
-    /// Whether a plugin codec claims this file's extension. The content-sniffing built-in decoders
-    /// can return a garbage frame instead of failing on such a file, so they must not run first.
+    /// Whether a plugin codec claims this file; built-in sniffers can turn it into a garbage frame, so they must not run first.
     /// </summary>
     protected static bool IsPluginOwnedFormat(PhotoMetadata? meta)
     {
-        return Core.CodecRegistry.IsDecodingExtensionOwnedByPlugin(meta?.FileExtension);
+        return Core.CodecRegistry.IsDecodingFileOwnedByPlugin(meta, CreateCodecContext());
     }
 
 
@@ -269,19 +267,17 @@ public class PhotoPreviewProvider : IPhotoPreviewProvider
     /// path), so no further processing is applied here.
     /// </summary>
     protected static async Task<SKImage?> DecodeViaCodecRegistryAsync(PhotoMetadata meta,
-        int maxSize, CancellationToken token, ICodec? selectedCodec = null)
+        int maxSize, CancellationToken token)
     {
         var context = CreateCodecContext();
-        var codec = selectedCodec ?? Core.CodecRegistry.SelectDecodeCodec(meta, context);
-        if (codec is null) return null;
-
         var options = new PhotoReadOptions
         {
             Width = (uint)Math.Max(0, maxSize),
             Height = (uint)Math.Max(0, maxSize),
         };
 
-        using var result = await codec.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
+        using var result = await Core.CodecRegistry.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
+        if (result is null) return null;
 
         // an animated codec hands back an animator instead of a frame, so take the first
         // frame from it. The animator owns its frame cache, hence the copy.

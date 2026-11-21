@@ -45,6 +45,12 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
     private readonly PluginFailureManager _failureManager;
     private readonly HashSet<string> _supportedExtensionsSet;
     private readonly HashSet<string> _encodingExtensionsSet;
+    private readonly bool _hasSignatureProbe;
+
+    /// <summary>
+    /// How many leading bytes of a file the optional <see cref="IGCodecApi.CanHandleSignature"/> probe receives.
+    /// </summary>
+    internal const int SIGNATURE_PROBE_BYTES = 4096;
 
     /// <summary>
     /// Gets the plugin handle that owns this codec entry.
@@ -170,6 +176,9 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         SupportsStaticRasterEncoding = capability.SupportsStaticRasterEncoding;
         SupportsMultiFrameEncoding = capability.SupportsMultiFrameEncoding;
 
+        // read once while loaded: any later read of the table needs the live token
+        _hasSignatureProbe = PluginAbi.HasEntryPoint(codecApi, &codecApi->CanHandleSignature);
+
         // Evaluated once, so changing the choices needs Core.ReloadPluginCodecs.
         var (disabledDecode, disabledEncode) = PluginTrustPolicy.GetExtensionExclusions(plugin.PluginId);
 
@@ -223,7 +232,8 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         if (_failureManager.IsQuarantined(_plugin.PluginId)) return false;
         if (string.IsNullOrEmpty(filePath)) return false;
         var ext = Path.GetExtension(filePath);
-        return _supportedExtensionsSet.Contains(ext);
+        if (!_supportedExtensionsSet.Contains(ext)) return false;
+        return MatchesSignature(filePath);
     }
 
 
@@ -235,8 +245,61 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         if (!SupportsStaticRasterDecoding) return false;
         if (_failureManager.IsQuarantined(_plugin.PluginId)) return false;
         if (metadata is null || string.IsNullOrEmpty(metadata.FilePath)) return false;
-        return _supportedExtensionsSet.Contains(metadata.FileExtension);
+        if (!_supportedExtensionsSet.Contains(metadata.FileExtension)) return false;
+        return MatchesSignature(metadata.FilePath);
     }
+
+
+    /// <summary>
+    /// Asks the plugin's optional signature probe whether the file content is its format; <c>true</c> when it has no probe.
+    /// </summary>
+    private bool MatchesSignature(string filePath)
+    {
+        if (!_hasSignatureProbe) return true;
+
+        // an extension is shared by unrelated formats (.raw), so the content decides
+        Span<byte> header = stackalloc byte[SIGNATURE_PROBE_BYTES];
+        int length;
+        try
+        {
+            using var handle = File.OpenHandle(filePath, FileMode.Open, FileAccess.Read,
+                FileShare.ReadWrite | FileShare.Delete);
+            length = RandomAccess.Read(handle, header, 0);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
+        if (length <= 0) return false;
+
+        // hold the plugin alive (see LoadMetadataCore)
+        if (!_plugin.LiveToken.TryEnter()) return false;
+        try
+        {
+            fixed (byte* pHeader = header)
+            {
+                var matched = _codecApi->CanHandleSignature(pHeader, length);
+                return matched != 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            _failureManager.RecordSoftFailure(_plugin.PluginId,
+                $"managed exception during CanHandleSignature: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            _plugin.LiveToken.Exit();
+        }
+    }
+
+
+    /// <summary>
+    /// Whether the status refuses the file rather than failing on it, which hands it to the next codec.
+    /// </summary>
+    internal static bool IsDecline(IGStatus status)
+        => status is IGStatus.Unsupported or IGStatus.NotImplemented;
 
 
     /// <summary>
@@ -346,6 +409,12 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
             {
                 token.ThrowIfCancellationRequested();
             }
+            if (IsDecline(status))
+            {
+                meta.Dispose();
+                throw new CodecDeclinedException(
+                    $"IGE: Native codec '{CodecId}' returned status {status} for the metadata of '{filePath}'.");
+            }
             if (status == IGStatus.OK)
             {
                 // Copy the native metadata fields into the managed photo model.
@@ -445,6 +514,11 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
             if (status == IGStatus.Canceled)
             {
                 token.ThrowIfCancellationRequested();
+            }
+            if (IsDecline(status))
+            {
+                throw new CodecDeclinedException(
+                    $"IGE: Native codec '{CodecId}' returned status {status} for '{filePath}'.");
             }
             if (status != IGStatus.OK)
             {

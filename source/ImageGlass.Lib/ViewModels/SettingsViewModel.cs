@@ -132,20 +132,10 @@ public sealed class SettingsViewModel : PhReactive
             or ConfigId.EnableAlwaysApplyColorProfile
             or ConfigId.EnableVectorRenderer);
 
-        // ColorProfile isn't in reloadPhoto: UpdateDestColorProfile also invalidates the codec
-        // selection cache, then re-applies via the ColorProfileChanged event (also keeping zoom).
+        // ColorProfile isn't in reloadPhoto: UpdateDestColorProfile re-applies via ColorProfileChanged, keeping zoom
         if (changedIds.Contains(ConfigId.ColorProfile))
         {
             Core.UpdateDestColorProfile();
-        }
-
-        // these flip which codec decodes an extension; drop the sticky per-extension selection cache
-        if (changedIds.Any(static id => id
-            is ConfigId.EnableVectorRenderer
-            or ConfigId.EnableOnlyLoadRawPreview
-            or ConfigId.EnableOnlyLoadNonRawPreview))
-        {
-            Core.CodecRegistry.InvalidateSelectionCaches();
         }
 
         // language pack changed -> reload it live (setting Core.Lang raises Core.LanguageChanged)

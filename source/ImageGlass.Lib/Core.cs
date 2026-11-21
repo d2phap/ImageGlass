@@ -510,7 +510,7 @@ public static class Core
 
         if (!oldDecodeExts.SetEquals(newDecodeExts))
         {
-            InvalidateCodecsAndReload();
+            AppAPIProvider.IG_Reload(false);
             AppAPIProvider.IG_ReloadList();
         }
     }
@@ -545,7 +545,7 @@ public static class Core
         if (!registered) return true;
 
         Photos.ClearCache();
-        InvalidateCodecsAndReload();
+        AppAPIProvider.IG_Reload(false);
 
         // the plugin's formats are now live -> rebuild the image list so they become browsable
         if (extensions.Count > 0) AppAPIProvider.IG_ReloadList();
@@ -581,7 +581,7 @@ public static class Core
         // frees the native library; late buffer releases are gated by PluginLiveToken
         PluginRegistry.UnloadPlugin(pluginId);
 
-        InvalidateCodecsAndReload();
+        AppAPIProvider.IG_Reload(false);
     }
 
 
@@ -608,17 +608,6 @@ public static class Core
         }
 
         return set;
-    }
-
-
-    /// <summary>
-    /// Drops the codec-selection caches and reloads the current photo (keeping zoom + pan) so a
-    /// plugin enable/disable takes effect immediately.
-    /// </summary>
-    private static void InvalidateCodecsAndReload()
-    {
-        CodecRegistry.InvalidateSelectionCaches();
-        AppAPIProvider.IG_Reload(false);
     }
 
 
@@ -1064,10 +1053,6 @@ public static class Core
     {
         var results = SkiaCodec.GetColorProfileByName(Core.Config.ColorProfile);
         Core.IsDestColorProfileSupported = results.IsSupported;
-
-        // Codec selection depends on IsDestColorProfileSupported, so drop the cached winners
-        // (a codec chosen while Skia was ineligible must not stay stuck decoding).
-        Core.CodecRegistry.InvalidateSelectionCaches();
 
         // apply the new profile and notify; Skia can hand back the same object, which must stay alive
         var oldProfile = Core.DestColorProfile;

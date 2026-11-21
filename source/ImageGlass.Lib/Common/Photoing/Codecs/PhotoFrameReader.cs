@@ -33,7 +33,7 @@ namespace ImageGlass.Common.Photoing;
 public sealed class PhotoFrameReader : PhDisposable
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
-    private readonly ICodec? _codec;
+    private ICodec? _codec;
     private readonly CodecSelectionContext _context;
     private readonly PhotoReadOptions _readOptions;
 
@@ -136,7 +136,11 @@ public sealed class PhotoFrameReader : PhDisposable
         CodecDecodeResult? result = null;
         try
         {
-            result = await _codec.DecodeAsync(Metadata, _readOptions with { FrameIndex = 0 }, _context, token).ConfigureAwait(false);
+            result = await Core.CodecRegistry.DecodeAsync(Metadata, _readOptions with { FrameIndex = 0 }, _context, token).ConfigureAwait(false);
+
+            // the codec that took frame 0 reads the rest; none means every claimant declined, so Magick reads them
+            _codec = result?.Codec;
+            if (result is null) return;
 
             // detach both, so disposing the result does not free what we keep
             _animator = result.Animator;
@@ -199,10 +203,7 @@ public sealed class PhotoFrameReader : PhDisposable
     {
         try
         {
-            var codec = Core.CodecRegistry.SelectMetadataCodec(filePath);
-            if (codec is null) return null;
-
-            return await codec.LoadMetadataAsync(filePath, null, token).ConfigureAwait(false);
+            return await Core.CodecRegistry.LoadMetadataAsync(filePath, null, token).ConfigureAwait(false);
         }
         catch (OperationCanceledException) { throw; }
         catch (Exception ex)

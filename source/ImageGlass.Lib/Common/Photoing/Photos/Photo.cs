@@ -573,29 +573,19 @@ public partial class Photo : PhDisposable
         // one snapshot, so the frame recorded below is the frame decoded
         var options = ReadOptions;
         var context = CreateCodecSelectionContext(meta);
-        var selectedCodec = Core.CodecRegistry.SelectDecodeCodec(meta, context);
 
-        // no registered codec claims the file -> let Magick try anyway, it sniffs the content
-        var isFallback = selectedCodec is null;
-        var codec = selectedCodec ?? Core.CodecRegistry.FallbackDecodeCodec;
-
-        // codec-agnostic trace: covers built-in and plugin codecs uniformly
-        var isPlugin = codec is not (SvgCodecAdapter or SkiaCodecAdapter or MagickCodecAdapter);
-        PhotoTrace.Mark("decode:codec", FilePath,
-            $"{codec.CodecId} (decodePriority={codec.DecodePriority}, plugin={isPlugin}, "
-            + $"fallback={isFallback}, frameIndex={options.FrameIndex})");
-
-        using var result = await codec.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
+        using var result = await Core.CodecRegistry.DecodeAsync(meta, options, context, token).ConfigureAwait(false)
+            ?? await DecodeWithFallbackCodecAsync(meta, options, context, token).ConfigureAwait(false);
 
         // describe before ApplyDecodeResult nulls out the result fields (moves them to Bitmap)
         if (PhotoTrace.Enabled) PhotoTrace.Mark("decode:done", FilePath, $"kind={DescribeDecodeResult(result)}");
 
         // a codec that claimed the file but decoded no frame would leave the viewer blank
         var fallbackCodec = Core.CodecRegistry.FallbackDecodeCodec;
-        if (IsEmptyDecodeResult(result) && !isFallback && !ReferenceEquals(codec, fallbackCodec))
+        if (IsEmptyDecodeResult(result) && !ReferenceEquals(result.Codec, fallbackCodec))
         {
             token.ThrowIfCancellationRequested();
-            PhotoTrace.Mark("decode:retry-fallback", FilePath, $"{codec.CodecId} decoded no frame");
+            PhotoTrace.Mark("decode:retry-fallback", FilePath, $"{result.Codec?.CodecId} decoded no frame");
 
             using var fallbackResult = await fallbackCodec
                 .DecodeAsync(meta, options, context, token).ConfigureAwait(false);
@@ -608,6 +598,25 @@ public partial class Photo : PhDisposable
         }
 
         ApplyDecodeResult(result, options.FrameIndex);
+    }
+
+
+    /// <summary>
+    /// Decodes with Magick when no registered codec claims the file or every one declined it; Magick sniffs the content.
+    /// </summary>
+    private async Task<CodecDecodeResult> DecodeWithFallbackCodecAsync(PhotoMetadata meta,
+        PhotoReadOptions options, CodecSelectionContext context, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+
+        var codec = Core.CodecRegistry.FallbackDecodeCodec;
+        PhotoTrace.Mark("decode:codec", FilePath,
+            $"{codec.CodecId} (decodePriority={codec.DecodePriority}, plugin=False, "
+            + $"fallback=True, frameIndex={options.FrameIndex})");
+
+        var result = await codec.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
+        result.Codec = codec;
+        return result;
     }
 
 
@@ -1109,22 +1118,16 @@ public partial class Photo : PhDisposable
             // load the metadata if it's outdated
             if (hasOutdatedCache)
             {
-                var metadataCodec = Core.CodecRegistry.SelectMetadataCodec(FilePath);
-                PhotoTrace.Mark("metadata:codec", FilePath,
-                    metadataCodec is null ? "none (fallback)" : $"{metadataCodec.CodecId} (metaPriority={metadataCodec.MetadataPriority})");
-
                 // load metadata off-thread
-                if (metadataCodec is not null)
+                _taskMetadata = Task.Run(async () =>
                 {
-                    _taskMetadata = Task.Run(() => metadataCodec.LoadMetadataAsync(
-                        FilePath,
-                        ReadOptions,
-                        CancellationToken.None));
-                }
-                else
-                {
-                    _taskMetadata = Task.Run(() => new PhotoMetadata(FilePath));
-                }
+                    var meta = await Core.CodecRegistry.LoadMetadataAsync(FilePath, ReadOptions,
+                        CancellationToken.None).ConfigureAwait(false);
+                    if (meta is not null) return meta;
+
+                    PhotoTrace.Mark("metadata:codec", FilePath, "none (fallback)");
+                    return new PhotoMetadata(FilePath);
+                });
 
                 // must assign on UI thread
                 return await _taskMetadata;
@@ -1194,11 +1197,9 @@ public partial class Photo : PhDisposable
         {
             var options = ReadOptions with { FrameIndex = newFrameIndex };
             var context = CreateCodecSelectionContext(Metadata);
-            var codec = Core.CodecRegistry.SelectDecodeCodec(Metadata, context);
-            if (codec is not null)
+            using (var result = await Core.CodecRegistry.DecodeAsync(Metadata, options, context, CancellationToken.None).ConfigureAwait(false))
             {
-                using var result = await codec.DecodeAsync(Metadata, options, context, CancellationToken.None).ConfigureAwait(false);
-                if (result.SingleFrame is SKImage sf)
+                if (result?.SingleFrame is SKImage sf)
                 {
                     // update decoder codec
                     CodecId = result.CodecId;
@@ -1258,11 +1259,9 @@ public partial class Photo : PhDisposable
         {
             var options = (readOptions ?? ReadOptions) with { FrameIndex = newFrameIndex };
             var context = CreateCodecSelectionContext(Metadata);
-            var codec = Core.CodecRegistry.SelectDecodeCodec(Metadata, context);
-            if (codec is not null)
+            using (var result = await Core.CodecRegistry.DecodeAsync(Metadata, options, context, token).ConfigureAwait(false))
             {
-                using var result = await codec.DecodeAsync(Metadata, options, context, token).ConfigureAwait(false);
-                if (result.SingleFrame is SKImage sf)
+                if (result?.SingleFrame is SKImage sf)
                 {
                     // detach so the result's dispose doesn't free the returned image
                     var detached = sf;

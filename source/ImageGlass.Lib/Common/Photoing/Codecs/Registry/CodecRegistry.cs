@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Common.Loggers;
 using ImageGlass.Common.Types;
 using ImageGlass.Plugins;
 using System;
@@ -24,6 +25,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Common.Photoing;
 
@@ -68,19 +70,13 @@ public sealed class CodecRegistry : PhDisposable
     private readonly List<ICodec> _metadataCodecs = [];
     private readonly List<ICodec> _decodeCodecs = [];
 
-    // Per-extension fast-path caches. The first lookup for an extension walks the full
-    // priority-sorted list; subsequent lookups try the remembered winner first and only
-    // fall back to a full scan if it can no longer handle the file (e.g. context changed,
-    // file content differs). Caches are cleared whenever a new codec is registered.
-    private readonly ConcurrentDictionary<string, ICodec> _metadataCodecByExt = new(StringComparer.OrdinalIgnoreCase);
-    private readonly ConcurrentDictionary<string, ICodec> _decodeCodecByExt = new(StringComparer.OrdinalIgnoreCase);
+    // Encode only: the read predicates sniff each file, so one file's winner must not route the next (#2505).
     private readonly ConcurrentDictionary<string, ICodec> _encodeCodecByExt = new(StringComparer.OrdinalIgnoreCase);
 
     // Only codecs that can write; keeps decode-only codecs out of encode selection.
     private readonly List<ICodec> _encodeCodecs = [];
 
-    // Extensions declared for decoding by plugin codecs; answers "plugin-owned?" without a
-    // SelectDecodeCodec scan and the file probing it costs.
+    // Extensions declared for decoding by plugin codecs; a file outside them never reaches a plugin probe.
     private readonly HashSet<string> _pluginDecodingExts = new(StringComparer.OrdinalIgnoreCase);
 
     // Registration order, used to break priority ties deterministically.
@@ -192,13 +188,8 @@ public sealed class CodecRegistry : PhDisposable
     /// </summary>
     public ICodec? SelectMetadataCodec(string filePath)
     {
-        var ext = string.IsNullOrEmpty(filePath) ? string.Empty : Path.GetExtension(filePath);
-
-        lock (_lock)
-        {
-            return SelectWithCache(_metadataCodecByExt, _metadataCodecs, ext,
-                c => c.CanLoadMetadata(filePath), nameof(SelectMetadataCodec));
-        }
+        return SelectFirst(Snapshot(_metadataCodecs),
+            c => c.CanLoadMetadata(filePath), nameof(SelectMetadataCodec));
     }
 
 
@@ -210,28 +201,94 @@ public sealed class CodecRegistry : PhDisposable
         ArgumentNullException.ThrowIfNull(metadata);
         ArgumentNullException.ThrowIfNull(context);
 
-        var ext = metadata.FileExtension ?? string.Empty;
-
-        lock (_lock)
-        {
-            return SelectWithCache(_decodeCodecByExt, _decodeCodecs, ext,
-                c => c.CanDecode(metadata, context), nameof(SelectDecodeCodec));
-        }
+        return SelectFirst(Snapshot(_decodeCodecs),
+            c => c.CanDecode(metadata, context), nameof(SelectDecodeCodec));
     }
 
 
     /// <summary>
-    /// Whether a plugin codec declares <paramref name="extension"/> for decoding. Callers use it to
-    /// keep a content-sniffing built-in decoder from pre-empting the codec that owns the format.
+    /// Loads metadata with the first codec that claims the file and does not decline it; <c>null</c> when none does.
     /// </summary>
-    public bool IsDecodingExtensionOwnedByPlugin(string? extension)
+    public async Task<PhotoMetadata?> LoadMetadataAsync(string filePath,
+        PhotoReadOptions? options = null, CancellationToken token = default)
     {
-        if (string.IsNullOrEmpty(extension)) return false;
+        foreach (var codec in Snapshot(_metadataCodecs))
+        {
+            token.ThrowIfCancellationRequested();
+            if (!TryMatch(codec, c => c.CanLoadMetadata(filePath), nameof(LoadMetadataAsync))) continue;
 
+            PhotoTrace.Mark("metadata:codec", filePath,
+                $"{codec.CodecId} (metaPriority={codec.MetadataPriority})");
+
+            try
+            {
+                return await codec.LoadMetadataAsync(filePath, options, token).ConfigureAwait(false);
+            }
+            catch (CodecDeclinedException ex)
+            {
+                PhotoTrace.Mark("metadata:declined", filePath, ex.Message);
+            }
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Decodes with the first codec that claims the file and does not decline it; <c>null</c> when none does.
+    /// </summary>
+    public async Task<CodecDecodeResult?> DecodeAsync(PhotoMetadata metadata, PhotoReadOptions options,
+        CodecSelectionContext context, CancellationToken token = default)
+    {
+        ArgumentNullException.ThrowIfNull(metadata);
+        ArgumentNullException.ThrowIfNull(context);
+
+        foreach (var codec in Snapshot(_decodeCodecs))
+        {
+            token.ThrowIfCancellationRequested();
+            if (!TryMatch(codec, c => c.CanDecode(metadata, context), nameof(DecodeAsync))) continue;
+
+            PhotoTrace.Mark("decode:codec", metadata.FilePath,
+                $"{codec.CodecId} (decodePriority={codec.DecodePriority}, plugin={IsPluginCodec(codec)}, "
+                + $"fallback=false, frameIndex={options.FrameIndex})");
+
+            try
+            {
+                var result = await codec.DecodeAsync(metadata, options, context, token).ConfigureAwait(false);
+                result.Codec = codec;
+                return result;
+            }
+            catch (CodecDeclinedException ex)
+            {
+                PhotoTrace.Mark("decode:declined", metadata.FilePath, ex.Message);
+            }
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Whether a plugin codec claims this file by extension and signature, so content-sniffing built-in previews must not run first.
+    /// </summary>
+    public bool IsDecodingFileOwnedByPlugin(PhotoMetadata? metadata, CodecSelectionContext context)
+    {
+        if (string.IsNullOrEmpty(metadata?.FileExtension)) return false;
+
+        ICodec[] codecs;
         lock (_lock)
         {
-            return _pluginDecodingExts.Contains(extension);
+            if (!_pluginDecodingExts.Contains(metadata.FileExtension)) return false;
+            codecs = [.. _decodeCodecs];
         }
+
+        foreach (var codec in codecs)
+        {
+            if (!IsPluginCodec(codec)) continue;
+            if (TryMatch(codec, c => c.CanDecode(metadata, context), nameof(IsDecodingFileOwnedByPlugin))) return true;
+        }
+
+        return false;
     }
 
 
@@ -255,27 +312,10 @@ public sealed class CodecRegistry : PhDisposable
 
 
     /// <summary>
-    /// Clears the per-extension codec-selection caches so the next lookup re-scans by
-    /// priority. Call when selection context changes (e.g. color-profile support toggles),
-    /// else a codec chosen while a higher-priority one was ineligible stays stuck.
-    /// </summary>
-    public void InvalidateSelectionCaches()
-    {
-        lock (_lock)
-        {
-            ClearSelectionCaches();
-        }
-    }
-
-
-    /// <summary>
-    /// Clears every per-extension cache. One place, so a future cache cannot be forgotten.
-    /// Caller holds <c>_lock</c>.
+    /// Clears every per-extension cache; one place, so a future cache cannot be forgotten. Caller holds <c>_lock</c>.
     /// </summary>
     private void ClearSelectionCaches()
     {
-        _metadataCodecByExt.Clear();
-        _decodeCodecByExt.Clear();
         _encodeCodecByExt.Clear();
     }
 
@@ -421,12 +461,40 @@ public sealed class CodecRegistry : PhDisposable
     }
 
 
-    private static ICodec? SelectFirst(List<ICodec> orderedCodecs, Func<ICodec, bool> predicate, string opName)
+    /// <summary>
+    /// Copies a priority-ordered list, so predicates and codec calls (file reads, plugin code) run outside <c>_lock</c>.
+    /// </summary>
+    private ICodec[] Snapshot(List<ICodec> orderedCodecs)
+    {
+        lock (_lock)
+        {
+            return [.. orderedCodecs];
+        }
+    }
+
+
+    /// <summary>
+    /// Runs a selection predicate; a throwing codec counts as not matching.
+    /// </summary>
+    private static bool TryMatch(ICodec codec, Func<ICodec, bool> predicate, string opName)
+    {
+        try
+        {
+            return predicate(codec);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"❌❌❌ {opName} ({codec.CodecId}): {ex.Message}");
+            return false;
+        }
+    }
+
+
+    private static ICodec? SelectFirst(IReadOnlyList<ICodec> orderedCodecs, Func<ICodec, bool> predicate, string opName)
     {
         foreach (var codec in orderedCodecs)
         {
-            try { if (predicate(codec)) return codec; }
-            catch (Exception ex) { Debug.WriteLine($"❌❌❌ {opName} ({codec.CodecId}): {ex.Message}"); }
+            if (TryMatch(codec, predicate, opName)) return codec;
         }
         return null;
     }

@@ -33,6 +33,11 @@ public sealed class CodecDecodeResult : PhDisposable
     public string CodecId { get; set; } = string.Empty;
 
     /// <summary>
+    /// Gets or sets the registered codec that produced the result; set by <see cref="CodecRegistry.DecodeAsync"/>.
+    /// </summary>
+    public ICodec? Codec { get; set; }
+
+    /// <summary>
     /// Gets or sets the decoded content kind.
     /// </summary>
     public CodecContentKind ContentKind { get; set; } = CodecContentKind.None;

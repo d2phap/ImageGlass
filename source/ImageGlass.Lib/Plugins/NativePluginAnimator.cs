@@ -101,6 +101,11 @@ internal sealed unsafe class NativePluginAnimator : AnimatorImpl
             {
                 token.ThrowIfCancellationRequested();
             }
+            if (NativeCodecProxy.IsDecline(status))
+            {
+                throw new CodecDeclinedException(
+                    $"IGE: Native codec '{proxy.CodecId}' returned status {status} for GetAnimationInfo of '{metadata.FilePath}'.");
+            }
             if (status != IGStatus.OK)
             {
                 throw new InvalidDataException(

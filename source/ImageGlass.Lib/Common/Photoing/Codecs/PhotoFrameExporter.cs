@@ -65,7 +65,15 @@ public static class PhotoFrameExporter
 
         if (meta is not null && codec is not null && !isMagickDecoder)
         {
-            var firstResult = await TryDecodeAsync(codec, meta, context, 0, token).ConfigureAwait(false);
+            var firstResult = await TryDecodeFirstFrameAsync(meta, context, token).ConfigureAwait(false);
+
+            // the codec that took frame 0 decodes the rest; Magick taking over after a decline keeps its single pass
+            codec = firstResult?.Codec;
+            if (ReferenceEquals(codec, Core.CodecRegistry.FallbackDecodeCodec))
+            {
+                firstResult?.Dispose();
+                firstResult = null;
+            }
 
             if (firstResult is not null)
             {
@@ -160,10 +168,7 @@ public static class PhotoFrameExporter
     {
         try
         {
-            var codec = Core.CodecRegistry.SelectMetadataCodec(srcFilePath);
-            if (codec is null) return null;
-
-            return await codec.LoadMetadataAsync(srcFilePath, null, token).ConfigureAwait(false);
+            return await Core.CodecRegistry.LoadMetadataAsync(srcFilePath, null, token).ConfigureAwait(false);
         }
         catch (OperationCanceledException) { return null; }
         catch (Exception ex)
@@ -202,6 +207,26 @@ public static class PhotoFrameExporter
         catch (Exception ex)
         {
             Debug.WriteLine($"❌❌❌ {nameof(TryDecodeAsync)} ({codec.CodecId}, frame {frameIndex}): {ex.Message}");
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// Decodes frame 0 with the first codec that takes the file. Returns <c>null</c> when the decode fails or none takes it.
+    /// </summary>
+    private static async Task<CodecDecodeResult?> TryDecodeFirstFrameAsync(PhotoMetadata meta,
+        CodecSelectionContext context, CancellationToken token)
+    {
+        try
+        {
+            var options = new PhotoReadOptions() { FrameIndex = 0 };
+            return await Core.CodecRegistry.DecodeAsync(meta, options, context, token).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) { return null; }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"❌❌❌ {nameof(TryDecodeFirstFrameAsync)}: {ex.Message}");
             return null;
         }
     }
