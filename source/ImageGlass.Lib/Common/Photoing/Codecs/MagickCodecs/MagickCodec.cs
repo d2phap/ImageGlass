@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Cysharp.Collections;
 using ImageGlass.Common.Loggers;
+using ImageGlass.Common.Types;
 using ImageMagick;
 using ImageMagick.Formats;
 using SkiaSharp;
@@ -41,6 +42,18 @@ public static partial class MagickCodec
     /// Indicates whether <see cref="MagickCodec"/> is initialized or not.
     /// </summary>
     public static bool IsInitialized { get; private set; } = false;
+
+
+    static MagickCodec()
+    {
+        try
+        {
+            // set cache folder for ImageMagick
+            var cacheDir = BHelper.ConfigDir(Dir.Cache);
+            ImageMagick.OpenCL.SetCacheDirectory(cacheDir);
+        }
+        catch { }
+    }
 
 
     /// <summary>
