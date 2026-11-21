@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -49,6 +50,10 @@ public partial class ViewerControl : PhControl
     private Point? _lastMousePanPoint = null; // mouse panning
     private Point? _lockZoomSavedSrcPoint; // saved pan position for LockZoom
     private Point? _mouseClickDownPoint = null; // track press point for click action
+
+    // the checkerboard is measured on the window's monitor, so it follows the window across monitors
+    private WindowBase? _window;
+    private Screens? _screens;
 
 
     // events
@@ -139,6 +144,11 @@ public partial class ViewerControl : PhControl
         RegisterTouchGestures();
 
         AttachMirrorSource(MirrorSource);
+
+        _window = TopLevel.GetTopLevel(this) as WindowBase;
+        _window?.PositionChanged += Window_PositionChanged;
+        _screens = TopLevel.GetTopLevel(this)?.Screens;
+        _screens?.Changed += Screens_Changed;
     }
 
 
@@ -156,6 +166,29 @@ public partial class ViewerControl : PhControl
         DetachMirrorSource(MirrorSource);
         DisposeCheckerboard();
         DisposeNativePhotoResources();
+
+        _window?.PositionChanged -= Window_PositionChanged;
+        _window = null;
+        _screens?.Changed -= Screens_Changed;
+        _screens = null;
+    }
+
+
+    private void Window_PositionChanged(object? sender, PixelPointEventArgs e)
+    {
+        if (CheckerboardMode == CheckerboardType.None || _window is null) return;
+
+        // a monitor with the same scale raises no DPI change, yet its density may differ
+        var screen = _window.Screens?.ScreenFromTopLevel(_window);
+        if (!Equals(screen, _checkerboardScreen)) InvalidateVisual();
+    }
+
+
+    private void Screens_Changed(object? sender, EventArgs e)
+    {
+        // a monitor swapped on the same port keeps its bounds, so measure again
+        _checkerboardScreen = null;
+        InvalidateVisual();
     }
 
 

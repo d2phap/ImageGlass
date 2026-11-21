@@ -17,10 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using ImageGlass.Common;
 using ImageGlass.Common.Extensions;
@@ -59,6 +61,11 @@ public partial class ViewerControl
 
     private RenderTargetBitmap? _bmpCheckerboard;
     private readonly CheckerboardInfo _checkerboard = new();
+
+    // the monitor the checkerboard cells were measured on
+    private Screen? _checkerboardScreen;
+    private PixelRect _checkerboardScreenBounds;
+    private double? _checkerboardScreenPhysicalDpi;
 
     internal readonly Lock _lock = new();
 
@@ -286,9 +293,15 @@ public partial class ViewerControl
 
         // create empty render bitmap: [X, O]
         //                             [O, X]
-        var cellW = (int)(_checkerboard.Size.Width * Dpi);
-        var cellH = (int)(_checkerboard.Size.Height * Dpi);
+        var dpi = Dpi;
+
+        // the scale setting is a preference, not a density, so only the monitor's real size keeps cells equal on every screen
+        var pxPerUnit = GetScreenPhysicalDpi() / 96d ?? dpi;
+        var cellW = Math.Max(1, (int)Math.Round(_checkerboard.Size.Width * pxPerUnit));
+        var cellH = Math.Max(1, (int)Math.Round(_checkerboard.Size.Height * pxPerUnit));
         var pxSize = new PixelSize(cellW * 2, cellH * 2);
+
+        if (_bmpCheckerboard is not null && _bmpCheckerboard.PixelSize != pxSize) DisposeCheckerboard();
         _bmpCheckerboard ??= new RenderTargetBitmap(pxSize);
 
         // fill the bitmap with a tile
@@ -317,7 +330,7 @@ public partial class ViewerControl
             TileMode = TileMode.Tile,
             AlignmentX = AlignmentX.Left,
             AlignmentY = AlignmentY.Top,
-            DestinationRect = new(0, 0, cellW, cellH, RelativeUnit.Absolute),
+            DestinationRect = new(0, 0, pxSize.Width / dpi, pxSize.Height / dpi, RelativeUnit.Absolute),
             Opacity = 0.1,
         };
 
@@ -327,6 +340,27 @@ public partial class ViewerControl
         {
             c.FillRectangle(imgBrush, region);
         }
+    }
+
+
+    /// <summary>
+    /// Gets the device pixels per physical inch of the monitor showing the viewer; <c>null</c> when unknown.
+    /// </summary>
+    private double? GetScreenPhysicalDpi()
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        var screen = topLevel?.Screens?.ScreenFromTopLevel(topLevel);
+        if (screen is null) return null;
+
+        // the OS query runs once per monitor and resolution, not per frame
+        if (!screen.Equals(_checkerboardScreen) || screen.Bounds != _checkerboardScreenBounds)
+        {
+            _checkerboardScreen = screen;
+            _checkerboardScreenBounds = screen.Bounds;
+            _checkerboardScreenPhysicalDpi = screen.GetPhysicalDpi();
+        }
+
+        return _checkerboardScreenPhysicalDpi;
     }
 
 

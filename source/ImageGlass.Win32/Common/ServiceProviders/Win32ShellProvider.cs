@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Avalonia;
+using Avalonia.Platform;
 using D2Phap;
 using ImageGlass.Common;
 using ImageGlass.Common.Localization;
@@ -431,6 +433,12 @@ public class Win32ShellProvider : PhDisposable, IShellProvider
     /// <inheritdoc/>
     /// </summary>
     public void AllowSleep() => Win32PowerApi.AllowSleep();
+
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Size? GetScreenPhysicalSize(Screen screen) => Win32ScreenApi.GetPhysicalSize(screen);
 
     #endregion // Public Methods
 

@@ -15,6 +15,7 @@ BITMAPINFO
 MONITORINFOEXW
 MonitorFromWindow
 GetMonitorInfo
+GetDpiForMonitor
 GetICMProfile
 CreateDC
 DeleteDC

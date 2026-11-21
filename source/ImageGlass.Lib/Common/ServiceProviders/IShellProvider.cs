@@ -184,6 +184,12 @@ public interface IShellProvider : IDisposable
 
 
     /// <summary>
+    /// Gets the physical size of <paramref name="screen"/> in millimetres; <c>null</c> when the monitor does not report it.
+    /// </summary>
+    Size? GetScreenPhysicalSize(Screen screen) => null;
+
+
+    /// <summary>
     /// Returns <c>true</c> if the current scroll event originates from a trackpad
     /// (precise/continuous scrolling). Must be called during a scroll event handler.
     /// Returns <c>false</c> for mouse wheel (discrete) events.

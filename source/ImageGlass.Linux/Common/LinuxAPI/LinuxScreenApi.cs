@@ -30,6 +30,7 @@ namespace ImageGlass.Linux.Common;
 public static partial class LinuxScreenApi
 {
     private const string LIB_X11 = "libX11.so.6";
+    private const string LIB_XRANDR = "libXrandr.so.2";
     private const int SUCCESS = 0;
     private const nint ANY_PROPERTY_TYPE = 0;
 
@@ -70,6 +71,51 @@ public static partial class LinuxScreenApi
             {
                 // no libX11 to call, so the work area the framework reports stays
                 _isDisplayUnavailable = true;
+                return null;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Gets the physical size of the monitor at <paramref name="screenBounds"/> in millimetres; <c>null</c> when it reports none.
+    /// </summary>
+    public static unsafe Size? GetPhysicalSize(PixelRect screenBounds)
+    {
+        lock (_lock)
+        {
+            try
+            {
+                var display = GetDisplay__();
+                if (display == 0) return null;
+
+                // Avalonia builds its screens from these same monitors, so the bounds match exactly
+                var monitors = XRRGetMonitors(display, XDefaultRootWindow(display), getActive: 1, out var count);
+                if (monitors == null) return null;
+
+                try
+                {
+                    foreach (var monitor in new ReadOnlySpan<XRRMonitorInfo>(monitors, count))
+                    {
+                        var bounds = new PixelRect(monitor.X, monitor.Y, monitor.Width, monitor.Height);
+                        if (bounds != screenBounds) continue;
+
+                        // a projector reports no size
+                        if (monitor.WidthMm <= 0 || monitor.HeightMm <= 0) return null;
+
+                        return new Size(monitor.WidthMm, monitor.HeightMm);
+                    }
+
+                    return null;
+                }
+                finally
+                {
+                    XRRFreeMonitors(monitors);
+                }
+            }
+            catch
+            {
+                // no libXrandr 1.5; the X connection itself still serves the work area
                 return null;
             }
         }
@@ -197,6 +243,29 @@ public static partial class LinuxScreenApi
 
     [LibraryImport(LIB_X11)]
     private static partial int XFree(nint data);
+
+    [LibraryImport(LIB_XRANDR)]
+    private static unsafe partial XRRMonitorInfo* XRRGetMonitors(nint display, nint window, int getActive, out int monitorCount);
+
+    [LibraryImport(LIB_XRANDR)]
+    private static unsafe partial void XRRFreeMonitors(XRRMonitorInfo* monitors);
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct XRRMonitorInfo
+    {
+        public nint Name;
+        public int Primary;
+        public int Automatic;
+        public int OutputCount;
+        public int X;
+        public int Y;
+        public int Width;
+        public int Height;
+        public int WidthMm;
+        public int HeightMm;
+        public nint Outputs;
+    }
 
     #endregion // Native methods
 

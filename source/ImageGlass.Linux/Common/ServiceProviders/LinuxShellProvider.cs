@@ -323,6 +323,12 @@ internal class LinuxShellProvider : PhDisposable, IShellProvider
     }
 
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Size? GetScreenPhysicalSize(Screen screen) => LinuxScreenApi.GetPhysicalSize(screen.Bounds);
+
+
 
     #region Private helpers
 

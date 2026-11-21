@@ -33,5 +33,21 @@ public static class Screen_Exts
         {
             return Core.ShellProvider?.GetScreenWorkingArea(screen) ?? screen.WorkingArea;
         }
+
+
+        /// <summary>
+        /// Gets the device pixels per physical inch, whatever the scale setting; <c>null</c> when the monitor reports no size.
+        /// </summary>
+        public double? GetPhysicalDpi()
+        {
+            var sizeMm = Core.ShellProvider?.GetScreenPhysicalSize(screen);
+            if (sizeMm is not { Width: > 0, Height: > 0 } size) return null;
+
+            // diagonals, so a rotated screen needs no axis matching
+            var pixelDiagonal = double.Hypot(screen.Bounds.Width, screen.Bounds.Height);
+            var inchDiagonal = double.Hypot(size.Width, size.Height) / 25.4;
+
+            return pixelDiagonal / inchDiagonal;
+        }
     }
 }
