@@ -126,17 +126,24 @@ public partial class PluginsSettingsView : SettingsPageView
         if (paths.Count == 0) return;
 
         var pluginsDir = BHelper.ConfigDir(Dir.Plugins);
-        var installedIds = await Task.Run(() =>
+        var (installedIds, failures) = await Task.Run(() =>
         {
             var ids = new List<string>();
+            var errors = new List<string>();
             foreach (var file in paths)
             {
                 if (!File.Exists(file)) continue;
 
-                var id = InstallPackage(file, pluginsDir);
-                if (id is not null) ids.Add(id);
+                var (id, error) = InstallPackage(file, pluginsDir);
+                if (id is not null)
+                {
+                    ids.Add(id);
+                    continue;
+                }
+
+                errors.Add($"{Path.GetFileName(file)}: {error ?? "IGE_PLUGIN_INSTALL_FAILED"}");
             }
-            return ids;
+            return (ids, errors);
         });
 
         ReloadPlugins();
@@ -149,13 +156,21 @@ public partial class PluginsSettingsView : SettingsPageView
         RebuildTable();
 
         // trust survives a reinstall, so only ask about the ones that are not already running
+        var lines = new List<string>();
         if (installedIds.Count > 0)
         {
             var hint = Core.Lang[LangId.Settings_Plugins_InstallSuccess];
             if (reconciled.LoadError is not null) hint += ". " + reconciled.LoadError;
             else if (reconciled.Pending > 0) hint += ". " + Core.Lang[LangId.Settings_Plugins_EnableToLoad];
 
-            ShowHint(hint, isWarning: reconciled.LoadError is not null);
+            lines.Add(hint);
+        }
+        lines.AddRange(failures);
+
+        if (lines.Count > 0)
+        {
+            ShowHint(string.Join(Environment.NewLine, lines),
+                isWarning: reconciled.LoadError is not null || failures.Count > 0);
         }
     }
 
@@ -220,9 +235,9 @@ public partial class PluginsSettingsView : SettingsPageView
 
     /// <summary>
     /// Installs one <c>*.igplugin.zip</c> through a temp staging folder, so a malformed or hostile
-    /// archive cannot escape into <c>_plugins</c>. Returns the plugin id, <c>null</c> if not installed.
+    /// archive cannot escape into <c>_plugins</c>. Returns the plugin id, else the reason if known.
     /// </summary>
-    private static string? InstallPackage(string packageFile, string pluginsDir)
+    private static (string? Id, string? Error) InstallPackage(string packageFile, string pluginsDir)
     {
         var staging = Path.Combine(Path.GetTempPath(), "ig_plugin_" + Guid.NewGuid().ToString("N"));
         try
@@ -232,20 +247,24 @@ public partial class PluginsSettingsView : SettingsPageView
 
             // locate + validate the manifest (archive root, or one directory below)
             var manifestPath = FindManifest(staging);
-            if (manifestPath is null) return null;
+            if (manifestPath is null) return (null, null);
 
             var manifest = ReadManifest(manifestPath);
-            if (manifest is null || string.IsNullOrWhiteSpace(manifest.Id)) return null;
+            if (manifest is null || string.IsNullOrWhiteSpace(manifest.Id)) return (null, null);
 
             var srcDir = Path.GetDirectoryName(manifestPath)!;
+
+            // a package without its library could never be enabled, and must not replace a working install
+            if (MissingLibraryError(manifest, srcDir) is { } libraryError) return (null, libraryError);
+
             var destDir = Path.Combine(pluginsDir, MakeSafeFolderName(manifest.Id));
 
             ReplaceInstall(srcDir, destDir, pluginsDir);
-            return manifest.Id;
+            return (manifest.Id, null);
         }
-        catch
+        catch (Exception ex)
         {
-            return null;
+            return (null, ex.Message);
         }
         finally
         {
@@ -286,6 +305,18 @@ public partial class PluginsSettingsView : SettingsPageView
         {
             try { Directory.Delete(stash, recursive: true); } catch { }
         }
+    }
+
+
+    /// <summary>
+    /// Why the plugin's library cannot be found in <paramref name="pluginDir"/>, or <c>null</c> when it is there.
+    /// </summary>
+    private static string? MissingLibraryError(PluginManifest manifest, string pluginDir)
+    {
+        var libraryPath = PluginTrustPolicy.ResolveLibraryPath(manifest, pluginDir);
+        if (libraryPath is not null && File.Exists(libraryPath)) return null;
+
+        return $"IGE_PLUGIN_LIBRARY_NOT_FOUND ({manifest.Executable})";
     }
 
 
@@ -559,7 +590,7 @@ public partial class PluginsSettingsView : SettingsPageView
                     ToggleCell(plugin, state),
                     NameCell(plugin),
                     PhTableControl.TextCell(m.Kind.ToString()),
-                    StatusCell(state, notLoaded, m.Id),
+                    StatusCell(plugin, state, notLoaded),
                 ],
                 Actions = BuildActions(plugin),
             };
@@ -629,10 +660,9 @@ public partial class PluginsSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Builds the trust-status chip, colored by state via <see cref="PhChip"/>
-    /// Returns <c>null</c> when there is nothing to show (missing/broken plugin).
+    /// Builds the trust-status chip, colored by state via <see cref="PhChip"/>.
     /// </summary>
-    private static PhChip? StatusChip(PluginTrustPolicy.TrustState state, bool notLoaded)
+    private static PhChip StatusChip(PluginTrustPolicy.TrustState state, bool notLoaded)
     {
         var (key, variant) = state switch
         {
@@ -643,28 +673,31 @@ public partial class PluginsSettingsView : SettingsPageView
             PluginTrustPolicy.TrustState.Changed => (LangId.Settings_Plugins_StatusChanged, PhChipVariant.Warning),
             PluginTrustPolicy.TrustState.Disabled => (LangId.Settings_Plugins_StatusDisabled, PhChipVariant.Neutral),
             PluginTrustPolicy.TrustState.Untrusted => (LangId.Settings_Plugins_StatusUntrusted, PhChipVariant.Neutral),
-            _ => ((LangId?)null, PhChipVariant.Neutral), // Missing -> nothing
+            _ => (LangId.Settings_Plugins_StatusNotLoaded, PhChipVariant.Danger), // Missing
         };
-
-        if (key is null) return null;
 
         return new PhChip
         {
-            Text = Core.Lang[key.Value],
+            Text = Core.Lang[key],
             Variant = variant,
         };
     }
 
 
     /// <summary>
-    /// The status cell: the trust-status chip (left-aligned), or an empty cell for a missing plugin.
+    /// The status cell: the trust-status chip (left-aligned), with the reason as a tooltip when
+    /// the plugin cannot run.
     /// </summary>
-    private static Control StatusCell(PluginTrustPolicy.TrustState state, bool notLoaded, string pluginId)
+    private static Control StatusCell((PluginManifest Manifest, string Dir) plugin,
+        PluginTrustPolicy.TrustState state, bool notLoaded)
     {
-        if (StatusChip(state, notLoaded) is not { } chip) return PhTableControl.TextCell(string.Empty);
+        var chip = StatusChip(state, notLoaded);
 
-        // the loader's own message, so the failure is readable without retrying the load
-        if (notLoaded && LoadErrorOf(pluginId) is { } error) ToolTip.SetTip(chip, error);
+        // why it cannot run, so the failure is readable without retrying the load
+        var reason = state == PluginTrustPolicy.TrustState.Missing
+            ? MissingLibraryError(plugin.Manifest, plugin.Dir)
+            : notLoaded ? LoadErrorOf(plugin.Manifest.Id) : null;
+        if (reason is not null) ToolTip.SetTip(chip, reason);
 
         return PhTableControl.WrapCell(chip);
     }
