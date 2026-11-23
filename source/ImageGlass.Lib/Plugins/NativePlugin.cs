@@ -21,7 +21,6 @@ using ImageGlass.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace ImageGlass.Plugins;
@@ -43,7 +42,7 @@ internal sealed unsafe class NativePlugin : PhDisposable
     public string LibraryPath { get; }
 
     /// <summary>
-    /// Gets the native library handle returned by <see cref="NativeLibrary.Load(string)"/>.
+    /// Gets the handle the library is mapped under, from <see cref="PluginLibraryLoader"/>.
     /// </summary>
     public nint LibraryHandle { get; }
 
@@ -58,8 +57,8 @@ internal sealed unsafe class NativePlugin : PhDisposable
     public List<NativeCodecEntry> Codecs { get; } = [];
 
     /// <summary>
-    /// Shared liveness gate; marked dead before the library is freed so late buffer
-    /// releases no-op instead of calling into the unloaded library.
+    /// Shared liveness gate; marked dead before the plugin is shut down so late buffer
+    /// releases no-op instead of calling into a plugin that has stopped.
     /// </summary>
     public PluginLiveToken LiveToken { get; } = new();
 
@@ -77,11 +76,12 @@ internal sealed unsafe class NativePlugin : PhDisposable
 
 
     /// <summary>
-    /// Shuts the plugin down and releases the native library handle.
+    /// Shuts the plugin down and stops every call into it. The library stays mapped on purpose,
+    /// see PluginLibraryLoader.
     /// </summary>
     protected override void OnDisposing()
     {
-        // Mark dead first so buffer releases stop calling into the library we're unmapping.
+        // Mark dead first: nothing may call into the plugin once it has been shut down.
         LiveToken.MarkDead();
 
         // Give the plugin a chance to release its own process-lifetime state.
@@ -95,16 +95,6 @@ internal sealed unsafe class NativePlugin : PhDisposable
         catch (Exception ex)
         {
             Debug.WriteLine($"[NativePlugin] Shutdown threw for '{PluginId}': {ex.Message}");
-        }
-
-        // Release the loaded shared library after shutdown has completed.
-        try
-        {
-            if (LibraryHandle != 0) NativeLibrary.Free(LibraryHandle);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[NativePlugin] NativeLibrary.Free threw for '{PluginId}': {ex.Message}");
         }
 
         base.OnDisposing();
@@ -140,8 +130,8 @@ internal readonly struct NativeCodecEntry
 
 
 /// <summary>
-/// Thread-safe gate tying use of a plugin to its library's lifetime. Calling into a freed library
-/// faults uncatchably, so every crossing goes through here and <see cref="MarkDead"/> drains.
+/// Thread-safe gate tying use of a plugin to its enabled lifetime. Calling a plugin that has been
+/// shut down is undefined, so every crossing goes through here and <see cref="MarkDead"/> drains.
 /// </summary>
 internal sealed class PluginLiveToken
 {
@@ -187,8 +177,8 @@ internal sealed class PluginLiveToken
     }
 
     /// <summary>
-    /// Marks the plugin dead and blocks until in-flight calls finish, so the caller can free the
-    /// library. Never call from inside a <see cref="TryEnter"/> scope.
+    /// Marks the plugin dead and blocks until in-flight calls finish, so the caller can shut it
+    /// down. Never call from inside a <see cref="TryEnter"/> scope.
     /// </summary>
     public void MarkDead()
     {

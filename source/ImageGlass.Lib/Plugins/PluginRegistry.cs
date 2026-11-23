@@ -177,7 +177,8 @@ public sealed unsafe class PluginRegistry : PhDisposable
 
         // Trust gate: never execute a plugin the user has not explicitly enabled and whose pinned
         // SHA-256 still matches the on-disk library (defends against a swapped binary).
-        if (!PluginTrustPolicy.IsTrusted(manifest.Id, libraryPath))
+        var libraryHash = PluginTrustPolicy.ComputeSha256(libraryPath);
+        if (libraryHash is null || !PluginTrustPolicy.IsTrustedHash(manifest.Id, libraryHash))
         {
             return Fail(manifest.Id, "not enabled, or the library no longer matches the approved file.");
         }
@@ -190,13 +191,16 @@ public sealed unsafe class PluginRegistry : PhDisposable
         FailureManager.SetLoadingBreadcrumb(manifest.Id);
         try
         {
-            // 1. Load the library
-            libHandle = NativeLibrary.Load(libraryPath);
+            // 1. Map the library (kept mapped for the process lifetime, see PluginLibraryLoader)
+            libHandle = PluginLibraryLoader.Load(libraryPath, libraryHash, pluginDir, out var loadError);
+            if (libHandle == 0)
+            {
+                return Fail(manifest.Id, loadError ?? $"could not load {Path.GetFileName(libraryPath)}.");
+            }
 
             // 2. Resolve the entry point
             if (!NativeLibrary.TryGetExport(libHandle, IGNativeAbi.ENTRY_POINT_NAME, out var entryAddr))
             {
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"'{Path.GetFileName(libraryPath)}' exports no "
                     + $"'{IGNativeAbi.ENTRY_POINT_NAME}'. A managed build output is not a plugin library: "
                     + "publish the project with PublishAot + NativeLib=Shared.");
@@ -212,13 +216,11 @@ public sealed unsafe class PluginRegistry : PhDisposable
             catch (Exception ex)
             {
                 FailureManager.Quarantine(manifest.Id, $"entry point threw: {ex.Message}");
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"'{IGNativeAbi.ENTRY_POINT_NAME}' threw "
                     + $"{ex.GetType().Name}: {ex.Message}");
             }
             if (pluginApi == null)
             {
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"'{IGNativeAbi.ENTRY_POINT_NAME}' returned null: the plugin "
                     + $"refused host ABI {IGNativeAbi.IG_PLUGIN_ABI_VERSION}.");
             }
@@ -226,13 +228,11 @@ public sealed unsafe class PluginRegistry : PhDisposable
             // 4. Validate plugin ABI
             if (pluginApi->StructSize != sizeof(IGPluginApi))
             {
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"IGPluginApi.StructSize is {pluginApi->StructSize}, expected "
                     + $"{sizeof(IGPluginApi)}: rebuild the plugin against the current ImageGlass SDK.");
             }
             if (DecodeMajor(pluginApi->AbiVersion) != IGNativeAbi.IG_PLUGIN_ABI_MAJOR)
             {
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"ABI major mismatch: plugin {pluginApi->AbiVersion}, "
                     + $"host {IGNativeAbi.IG_PLUGIN_ABI_VERSION}.");
             }
@@ -245,12 +245,10 @@ public sealed unsafe class PluginRegistry : PhDisposable
                 catch (Exception ex)
                 {
                     FailureManager.Quarantine(manifest.Id, $"Initialize threw: {ex.Message}");
-                    NativeLibrary.Free(libHandle);
                     return Fail(manifest.Id, $"Initialize threw {ex.GetType().Name}: {ex.Message}");
                 }
                 if (initStatus != IGStatus.OK)
                 {
-                    NativeLibrary.Free(libHandle);
                     return Fail(manifest.Id, $"Initialize returned {initStatus}.");
                 }
             }
@@ -262,7 +260,6 @@ public sealed unsafe class PluginRegistry : PhDisposable
             if (codecCount < 0 || codecCount > 1024)
             {
                 FailureManager.Quarantine(manifest.Id, $"invalid CodecCount={codecCount} (likely IGPluginInfo struct layout mismatch).");
-                NativeLibrary.Free(libHandle);
                 return Fail(manifest.Id, $"reported CodecCount={codecCount}: IGPluginInfo struct layout "
                     + "mismatch; rebuild the plugin against the current ImageGlass SDK.");
             }
@@ -337,8 +334,8 @@ public sealed unsafe class PluginRegistry : PhDisposable
                 handle.Codecs.Add(new NativeCodecEntry((nint)codecApi, managed));
             }
 
-            // A plugin whose codecs all failed to probe contributes nothing; unload it rather
-            // than caching a loaded library forever.
+            // A plugin whose codecs all failed to probe contributes nothing; shut it down rather
+            // than keeping a live handle to it forever.
             if (handle.Codecs.Count == 0)
             {
                 handle.Dispose();
@@ -364,16 +361,6 @@ public sealed unsafe class PluginRegistry : PhDisposable
         catch (Exception ex)
         {
             FailureManager.Quarantine(manifest.Id, $"load failed: {ex.Message}");
-
-            try
-            {
-                if (libHandle != 0)
-                {
-                    NativeLibrary.Free(libHandle);
-                }
-            }
-            catch { }
-
             return Fail(manifest.Id, $"{ex.GetType().Name}: {ex.Message}");
         }
         finally
@@ -411,8 +398,8 @@ public sealed unsafe class PluginRegistry : PhDisposable
 
 
     /// <summary>
-    /// Hot-unloads a loaded plugin (Shutdown + free library); returns <c>false</c> if not loaded.
-    /// Outstanding buffers are gated by <c>PluginLiveToken</c>, so late releases safely no-op.
+    /// Hot-disables a loaded plugin (Shutdown, then stop every call into it); <c>false</c> if not
+    /// loaded. The library itself stays mapped for the process lifetime, see PluginLibraryLoader.
     /// </summary>
     public bool UnloadPlugin(string pluginId)
     {
@@ -592,8 +579,10 @@ public sealed unsafe class PluginRegistry : PhDisposable
 
         foreach (var dir in Directory.EnumerateDirectories(pluginsDirectory))
         {
-            // skip the reinstall stash folder
-            if (string.Equals(Path.GetFileName(dir), TRASH_DIR_NAME, StringComparison.Ordinal)) continue;
+            // skip the housekeeping folders (a shadow copy carries a manifest of its own)
+            var dirName = Path.GetFileName(dir);
+            if (string.Equals(dirName, TRASH_DIR_NAME, StringComparison.Ordinal)
+                || string.Equals(dirName, PluginLibraryLoader.SHADOW_DIR_NAME, StringComparison.Ordinal)) continue;
 
             var manifestPath = Path.Combine(dir, PluginManifest.FILE_NAME);
             if (!File.Exists(manifestPath)) continue;
@@ -618,18 +607,24 @@ public sealed unsafe class PluginRegistry : PhDisposable
 
 
     /// <summary>
-    /// Best-effort delete of stashed previous installs; skips still-locked folders. Call before any load.
+    /// Best-effort delete of the previous session's stashed installs and shadow copies; skips
+    /// still-locked folders. Call before any load, while nothing of either is mapped yet.
     /// </summary>
-    public static void CleanupTrashDirs(string pluginsDir)
+    public static void CleanupStaleDirs(string pluginsDir)
     {
-        var trashRoot = Path.Combine(pluginsDir, TRASH_DIR_NAME);
-        if (!Directory.Exists(trashRoot)) return;
+        Reap(Path.Combine(pluginsDir, TRASH_DIR_NAME));
+        Reap(Path.Combine(pluginsDir, PluginLibraryLoader.SHADOW_DIR_NAME));
 
-        foreach (var dir in Directory.GetDirectories(trashRoot))
+        static void Reap(string root)
         {
-            try { Directory.Delete(dir, recursive: true); } catch { }
+            if (!Directory.Exists(root)) return;
+
+            foreach (var dir in Directory.GetDirectories(root))
+            {
+                try { Directory.Delete(dir, recursive: true); } catch { }
+            }
+            try { Directory.Delete(root, recursive: false); } catch { } // drop the root once empty
         }
-        try { Directory.Delete(trashRoot, recursive: false); } catch { } // drop the root once empty
     }
 
 }

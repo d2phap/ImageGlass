@@ -491,8 +491,8 @@ public partial class PluginsSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Confirms, then deletes the plugin: hot-unloads it (releases the locked library), removes its
-    /// trust entry and folder, and re-renders the list.
+    /// Confirms, then deletes the plugin: hot-disables it, removes its trust entry and folder,
+    /// and re-renders the list.
     /// </summary>
     private async Task DeletePluginAsync((PluginManifest Manifest, string Dir) plugin)
     {
@@ -646,12 +646,12 @@ public partial class PluginsSettingsView : SettingsPageView
 
 
     /// <summary>
-    /// Disables the plugin and hot-unloads it so it stops taking effect without a restart.
+    /// Disables the plugin and shuts it down so it stops taking effect without a restart.
     /// Returns <c>true</c> (the trust state changed).
     /// </summary>
     private static async Task<bool> DisablePluginAsync((PluginManifest Manifest, string Dir) plugin)
     {
-        // Don't unload on a refused write, or the config would still say enabled.
+        // Don't stop the plugin on a refused write, or the config would still say enabled.
         if (!await PluginTrustPolicy.DisableAsync(plugin.Manifest.Id)) return false;
 
         Core.DisablePlugin(plugin.Manifest.Id);

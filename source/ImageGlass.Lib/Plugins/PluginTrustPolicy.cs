@@ -91,11 +91,21 @@ public static class PluginTrustPolicy
     /// </summary>
     public static bool IsTrusted(string pluginId, string libraryPath)
     {
+        var hash = ComputeSha256(libraryPath);
+        return hash is not null && IsTrustedHash(pluginId, hash);
+    }
+
+
+    /// <summary>
+    /// Same gate as <see cref="IsTrusted"/> against an already-computed library hash, for a caller
+    /// that needs the hash anyway and must not read the file twice.
+    /// </summary>
+    public static bool IsTrustedHash(string pluginId, string libraryHash)
+    {
         if (!Core.Config.PluginTrust.TryGetValue(pluginId, out var info) || info is null || !info.Enabled)
             return false;
 
-        var hash = ComputeSha256(libraryPath);
-        return hash is not null && string.Equals(hash, info.Hash, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(libraryHash, info.Hash, StringComparison.OrdinalIgnoreCase);
     }
 
 

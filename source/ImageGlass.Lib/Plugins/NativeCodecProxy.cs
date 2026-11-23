@@ -380,7 +380,7 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         var meta = new PhotoMetadata(filePath);
         if (!PluginAbi.HasEntryPoint(_codecApi, &_codecApi->LoadMetadata)) return meta;
 
-        // hold the plugin alive: a hot-disable could otherwise unmap it mid-call
+        // hold the plugin alive: a hot-disable could otherwise shut it down mid-call
         if (!_plugin.LiveToken.TryEnter()) return meta;
 
         // Register a host-side cancellation handle before crossing the ABI.

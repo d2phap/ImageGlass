@@ -362,8 +362,8 @@ public static class Core
             StartupTrace.Mark("plugins:discover:begin");
             var pluginsDir = BHelper.ConfigDir(Dir.Plugins);
 
-            // reap stashed installs before any library loads
-            PluginRegistry.CleanupTrashDirs(pluginsDir);
+            // reap the previous session's stashed installs + shadow copies before any library loads
+            PluginRegistry.CleanupStaleDirs(pluginsDir);
 
             var discovered = PluginRegistry.DiscoverManifests(pluginsDir);
 
@@ -555,12 +555,12 @@ public static class Core
 
 
     /// <summary>
-    /// Hot-unloads a plugin the user just disabled (after <c>PluginTrustPolicy.DisableAsync</c>):
-    /// unregisters its codecs, frees the native library, and reloads the current photo.
+    /// Hot-disables a plugin the user just disabled (after <c>PluginTrustPolicy.DisableAsync</c>):
+    /// unregisters its codecs, shuts the plugin down, and reloads the current photo.
     /// </summary>
     public static void DisablePlugin(string pluginId)
     {
-        // free cached plugin buffers + cancel caching before the library is unloaded
+        // free cached plugin buffers + cancel caching before the plugin is shut down
         Photos.ClearCache();
 
         List<NativeCodecProxy>? proxies;
@@ -578,7 +578,7 @@ public static class Core
             }
         }
 
-        // frees the native library; late buffer releases are gated by PluginLiveToken
+        // shuts the plugin down; late buffer releases are gated by PluginLiveToken
         PluginRegistry.UnloadPlugin(pluginId);
 
         AppAPIProvider.IG_Reload(false);

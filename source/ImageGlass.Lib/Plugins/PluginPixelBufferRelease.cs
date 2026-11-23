@@ -54,7 +54,7 @@ internal sealed class PluginPixelBufferRelease
     public string PluginId = string.Empty;
 
     /// <summary>
-    /// Liveness gate of the owning plugin; the release no-ops once its library is unloaded.
+    /// Liveness gate of the owning plugin; the release no-ops once the plugin is shut down.
     /// </summary>
     public PluginLiveToken? LiveToken;
 
@@ -110,8 +110,8 @@ internal sealed class PluginPixelBufferRelease
     {
         if (System.Threading.Interlocked.Exchange(ref _released, 1) != 0) return;
 
-        // Skip if the library was unloaded; calling into unmapped memory crashes with an
-        // uncatchable AccessViolationException. Memory is reclaimed by the OS on unload.
+        // Skip once the plugin is shut down: calling it then is undefined. The buffer is leaked
+        // until the process ends, which ClearCache before a disable keeps down to what was in use.
         if (LiveToken is not null) LiveToken.RunIfAlive(FreeBuffer);
         else FreeBuffer();
 
