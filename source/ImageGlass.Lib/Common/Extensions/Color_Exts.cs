@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia.Media;
 using System;
+using System.Globalization;
 
 namespace ImageGlass.Common.Extensions;
 
@@ -315,12 +316,8 @@ public static class Color_Exts
     /// </summary>
     public static string ToHex(this Color c, bool skipAlpha = false)
     {
-        if (skipAlpha)
-        {
-            return String.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
-        }
-
-        return String.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
+        // "H" is #RRGGBBAA (CSS order), not "X" (#AARRGGBB): ColorFromHex reads it back
+        return c.ToString(skipAlpha ? "x" : "H", CultureInfo.InvariantCulture);
     }
 
 
