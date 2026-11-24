@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
@@ -58,6 +60,9 @@ public class PhOverlay : PhControl
     private const int SHADOW_ALPHA_DARK = 56;
     private const int SHADOW_ALPHA_LIGHT = 28;
 
+    // frosted: what is under the overlay is blurred, then tinted by a fill thin enough to show it
+    private const int FROSTED_FILL_ALPHA = 180;
+
     // it fades in growing out of the side it enters from, quicker on the way out
     private const double SHOW_MS = 200;
     private const double HIDE_MS = 150;
@@ -65,6 +70,7 @@ public class PhOverlay : PhControl
     private const double START_SCALE = 0.95;
 
     private readonly MatrixTransform _transform = new();
+    private ContentPresenter? _surface;
     private IImmutableBrush? _fillBrush;
     private ImmutablePen? _borderPen;
     private BoxShadows _shadow;
@@ -142,6 +148,22 @@ public class PhOverlay : PhControl
 
     #region Control Events
 
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+
+        // the presenter draws after its own backdrop, and its rounded clip is the only way to round the blur
+        _surface = e.NameScope.Find<ContentPresenter>("PART_ContentPresenter");
+        if (_surface is not null)
+        {
+            _surface.ClipToBounds = true;
+            _surface.BackdropEffect = new ImmutableBlurEffect(Const.BACKDROP_BLUR_RADIUS);
+        }
+
+        UpdateBrushes();
+    }
+
+
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -171,6 +193,10 @@ public class PhOverlay : PhControl
             UpdateTransformOrigin();
             ApplyProgress();
         }
+        else if (change.Property == CornerRadiusProperty)
+        {
+            UpdateSurface();
+        }
     }
 
 
@@ -182,9 +208,18 @@ public class PhOverlay : PhControl
         if (size.Width <= 0) return;
         if (size.Height <= 0) return;
 
-        // the surface, under the content
         var surface = new RoundedRect(new Rect(size), GetCornerRadius());
-        c.DrawRectangle(_fillBrush, _borderPen, surface, _shadow);
+
+        // no presenter to carry the blur: paint the plain surface, under the content
+        if (_surface is null)
+        {
+            c.DrawRectangle(_fillBrush, _borderPen, surface, _shadow);
+            return;
+        }
+
+        // the presenter fills the surface; the shadow and the hairline stay outside its clip
+        c.DrawRectangle(null, null, surface, _shadow);
+        c.DrawRectangle(null, _borderPen, surface.Inflate(0.5, 0.5));
     }
 
     #endregion // Control Events
@@ -199,6 +234,8 @@ public class PhOverlay : PhControl
     private void UpdateBrushes()
     {
         var fillColor = Resx.GetBrushColor(ResxId.IG_OverlayBackgroundBrush, AppThemeColors.BgBrush.Color);
+        if (_surface is not null) fillColor = fillColor.WithAlpha(Math.Min((int)fillColor.A, FROSTED_FILL_ALPHA));
+
         var borderColor = Core.Theme.InvertedBaseColor.WithAlpha(BORDER_ALPHA);
         var shadowAlpha = Core.Theme.Settings.IsDarkMode ? SHADOW_ALPHA_DARK : SHADOW_ALPHA_LIGHT;
 
@@ -210,6 +247,20 @@ public class PhOverlay : PhControl
             Blur = SHADOW_BLUR,
             Color = Colors.Black.WithAlpha(shadowAlpha),
         });
+
+        UpdateSurface();
+    }
+
+
+    /// <summary>
+    /// Gives the presenter the fill and the corners of the surface.
+    /// </summary>
+    private void UpdateSurface()
+    {
+        if (_surface is null) return;
+
+        _surface.Background = _fillBrush;
+        _surface.CornerRadius = GetCornerRadius();
     }
 
 

@@ -20,12 +20,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Svg.Skia;
 using Avalonia.VisualTree;
 using ImageGlass.Common;
 using ImageGlass.Common.AppThemes;
-using ImageGlass.Common.Extensions;
 using System;
 using System.IO;
 
@@ -55,12 +55,24 @@ public class NavButtonsOverlay : PhControl
     private bool _animRunning = false;
     private TimeSpan _lastFrameTime = TimeSpan.Zero;
 
+    // a backdrop blur belongs to one visual and its clip, so each button is a visual of its own
+    private readonly NavButton _leftButton = new()
+    {
+        HorizontalAlignment = HorizontalAlignment.Left,
+        Margin = new Thickness(NavButtonsInfo.NAV_BTN_MARGIN, 0, 0, 0),
+    };
+    private readonly NavButton _rightButton = new()
+    {
+        HorizontalAlignment = HorizontalAlignment.Right,
+        Margin = new Thickness(0, 0, NavButtonsInfo.NAV_BTN_MARGIN, 0),
+    };
+
 
     public NavButtonsOverlay()
     {
-        // Transparent background is required for hit-testing;
-        // without it, pointer events pass through and hover/press states never trigger.
+        // without a transparent background, pointer events pass through and hover/press never trigger
         Background = Brushes.Transparent;
+        Content = new Panel { Children = { _leftButton, _rightButton } };
     }
 
 
@@ -129,7 +141,7 @@ public class NavButtonsOverlay : PhControl
         _swallowActivatingPress = true;
         _state.ResetState();
         UpdateAnimationTargets();
-        InvalidateVisual();
+        UpdateButtons();
     }
 
 
@@ -137,26 +149,7 @@ public class NavButtonsOverlay : PhControl
     {
         base.OnIgThemeChanged(e);
         LoadIcons();
-        InvalidateVisual();
-    }
-
-
-    protected override void OnIgDpiChanged()
-    {
-        base.OnIgDpiChanged();
-        InvalidateVisual();
-    }
-
-
-    public override void Render(DrawingContext c)
-    {
-        base.Render(c);
-
-        if (_parentViewer is null) return;
-        if (!_state.IsEnabled || _parentViewer.EnableSelection) return;
-
-        DrawButton(c, isLeft: true);
-        DrawButton(c, isLeft: false);
+        UpdateButtons();
     }
 
 
@@ -186,7 +179,7 @@ public class NavButtonsOverlay : PhControl
             _state.IsRightPressed = false;
             _state.IsLeftPressed = true;
             UpdateAnimationTargets();
-            InvalidateVisual();
+            UpdateButtons();
         }
         else if (GetRightHitArea().Contains(pos))
         {
@@ -194,7 +187,7 @@ public class NavButtonsOverlay : PhControl
             _state.IsLeftPressed = false;
             _state.IsRightPressed = true;
             UpdateAnimationTargets();
-            InvalidateVisual();
+            UpdateButtons();
         }
 
         // Don't set e.Handled — let the event bubble to parent ViewerControl
@@ -283,7 +276,7 @@ public class NavButtonsOverlay : PhControl
         _state.IsLeftHovered = GetLeftHitArea().Contains(pos);
         _state.IsRightHovered = GetRightHitArea().Contains(pos);
         UpdateAnimationTargets();
-        InvalidateVisual();
+        UpdateButtons();
     }
 
 
@@ -323,60 +316,20 @@ public class NavButtonsOverlay : PhControl
     }
 
 
-    private void DrawButton(DrawingContext c, bool isLeft)
+    /// <summary>
+    /// Brings both button visuals to their animation progress, press state and icon.
+    /// </summary>
+    private void UpdateButtons()
     {
-        var progress = isLeft ? _leftAnimProgress : _rightAnimProgress;
-        if (progress <= 0) return;
+        var isActive = _parentViewer is not null && _state.IsEnabled && !_parentViewer.EnableSelection;
+        var leftProgress = isActive ? _leftAnimProgress : 0;
+        var rightProgress = isActive ? _rightAnimProgress : 0;
+        var isLeftPressed = _state.IsLeftPressed && !_state.IsDragging;
+        var isRightPressed = _state.IsRightPressed && !_state.IsDragging;
 
-        var btnRect = isLeft ? GetLeftButtonRect() : GetRightButtonRect();
-        var icon = isLeft ? _state.LeftIcon : _state.RightIcon;
-        var isPressed = isLeft ? _state.IsLeftPressed : _state.IsRightPressed;
-
-        // slide offset: left button slides from right, right from left
-        var slideOffset = ANIM_SLIDE_DISTANCE * (1.0 - progress);
-        if (!isLeft) slideOffset = -slideOffset;
-
-
-        using (c.PushTransform(Matrix.CreateTranslation(slideOffset, 0)))
-        {
-            using (c.PushOpacity(progress))
-            {
-                // pressed: scale down around button center
-                var pressScale = (isPressed && !_state.IsDragging) ? 0.95 : 1.0;
-                var btnCenterX = btnRect.X + btnRect.Width / 2;
-                var btnCenterY = btnRect.Y + btnRect.Height / 2;
-                using var _scale = c.PushTransform(
-                    Matrix.CreateTranslation(-btnCenterX, -btnCenterY)
-                    * Matrix.CreateScale(pressScale, pressScale)
-                    * Matrix.CreateTranslation(btnCenterX, btnCenterY));
-
-                // base backdrop for contrast
-                c.DrawEllipseEx(btnRect, null, Core.Theme.BaseColor.WithAlpha(120));
-
-                // accent ellipse
-                if (isPressed && !_state.IsDragging)
-                {
-                    c.DrawEllipseEx(btnRect, Core.AccentColor.WithAlpha(180), Core.AccentColor.WithAlpha(100), 1.5f);
-                }
-                else
-                {
-                    c.DrawEllipseEx(btnRect, Core.AccentColor.WithAlpha(120), Core.AccentColor.WithAlpha(100), 1f);
-                }
-
-                // draw icon at 50% of button size, centered
-                if (icon is not null)
-                {
-                    var iconSize = new Size(btnRect.Width * 0.5, btnRect.Height * 0.5);
-                    var iconRect = new Rect(
-                        btnRect.X + (btnRect.Width - iconSize.Width) / 2,
-                        btnRect.Y + (btnRect.Height - iconSize.Height) / 2,
-                        iconSize.Width,
-                        iconSize.Height);
-
-                    c.DrawImage(icon, iconRect);
-                }
-            }
-        }
+        // the left button slides in from the right, the right one from the left
+        _leftButton.Apply(leftProgress, ANIM_SLIDE_DISTANCE * (1 - leftProgress), isLeftPressed, _state.LeftIcon);
+        _rightButton.Apply(rightProgress, -ANIM_SLIDE_DISTANCE * (1 - rightProgress), isRightPressed, _state.RightIcon);
     }
 
 
@@ -434,7 +387,7 @@ public class NavButtonsOverlay : PhControl
                 ? Math.Min(1.0, _rightAnimProgress + step)
                 : Math.Max(0.0, _rightAnimProgress - step);
 
-            InvalidateVisual();
+            UpdateButtons();
         }
         _lastFrameTime = ts;
 
@@ -464,20 +417,6 @@ public class NavButtonsOverlay : PhControl
     {
         var hitWidth = NavButtonsInfo.NAV_BTN_SIZE.Width + NavButtonsInfo.NAV_BTN_MARGIN;
         return new Rect(Bounds.Width - hitWidth, 0, hitWidth, Bounds.Height);
-    }
-
-
-    private Rect GetLeftButtonRect()
-    {
-        var size = NavButtonsInfo.NAV_BTN_SIZE;
-        return new Rect(NavButtonsInfo.NAV_BTN_MARGIN, (Bounds.Height - size.Height) / 2, size.Width, size.Height);
-    }
-
-
-    private Rect GetRightButtonRect()
-    {
-        var size = NavButtonsInfo.NAV_BTN_SIZE;
-        return new Rect(Bounds.Width - NavButtonsInfo.NAV_BTN_MARGIN - size.Width, (Bounds.Height - size.Height) / 2, size.Width, size.Height);
     }
 
 

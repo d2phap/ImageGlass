@@ -50,6 +50,7 @@ public static class Const
     public static readonly string DECIMAL_SEPARATOR = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
     public static readonly Color COLOR_EMPTY = new Color(0, 0, 0, 0);
     public static readonly int MOUSE_WHEEL_SCROLL_DELTA = 120;
+    public const double BACKDROP_BLUR_RADIUS = 24;
 
 
     /// <summary>
@@ -108,6 +109,7 @@ public static class Const
     public static readonly double FONT_SIZE_TITLE = 22 + FONT_SIZE_MAC_OFFSET;
     public static readonly double FONT_SIZE_SUBTITLE = 18 + FONT_SIZE_MAC_OFFSET;
     public static readonly double FONT_SIZE_SMALL = 13 + FONT_SIZE_MAC_OFFSET;
+
 
 }
 
