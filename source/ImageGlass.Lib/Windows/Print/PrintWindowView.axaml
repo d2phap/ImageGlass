@@ -50,6 +50,30 @@
             HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="24,16,24,24" Spacing="14">
 
+                <!--  Photos  -->
+                <StackPanel Classes="row">
+                    <TextBlock x:Name="PART_PhotoCount" />
+                    <ui:PhTextBlock Classes="hint" LangKey="Print_AddPhotoHint" />
+                    <WrapPanel>
+                        <ui:PhButton x:Name="PART_BtnShowViewer" Margin="0,0,8,4" />
+                        <ui:PhButton
+                            x:Name="PART_BtnAddPhoto"
+                            Margin="0,0,0,4"
+                            IconData="{StaticResource IconAdd}" />
+                    </WrapPanel>
+                    <TextBlock
+                        x:Name="PART_PhotoFeedback"
+                        Classes="hint"
+                        Foreground="{DynamicResource IG_TextWarningBrush}"
+                        IsVisible="False" />
+                    <ui:PhButton
+                        x:Name="PART_BtnClearPhotos"
+                        Padding="0"
+                        HorizontalAlignment="Left"
+                        IsVisible="False"
+                        Variant="Link" />
+                </StackPanel>
+
                 <!--  Printer  -->
                 <StackPanel Classes="row">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
@@ -133,7 +157,7 @@
 
                 <!--  What to print  -->
                 <StackPanel x:Name="PART_PagesRow" Classes="row">
-                    <ui:PhTextBlock LangKey="Print_LblPages" />
+                    <ui:PhTextBlock x:Name="PART_PagesLabel" LangKey="Print_LblPages" />
                     <ComboBox x:Name="PART_PageScope" />
                     <TextBox x:Name="PART_PageRange" IsVisible="False" />
                     <TextBlock
@@ -142,7 +166,7 @@
                         IsVisible="False" />
                 </StackPanel>
                 <StackPanel x:Name="PART_RegionRow" Classes="row">
-                    <ui:PhTextBlock LangKey="Print_LblRegion" />
+                    <ui:PhTextBlock x:Name="PART_RegionLabel" LangKey="Print_LblRegion" />
                     <ComboBox x:Name="PART_Region" />
                 </StackPanel>
 

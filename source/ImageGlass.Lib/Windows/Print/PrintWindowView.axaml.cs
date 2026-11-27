@@ -62,6 +62,9 @@ public partial class PrintWindowView : PhControl
     private PrinterInfo? _printer;
     private PrinterCapabilities _caps = PrintProviderBase.PdfCapabilities;
     private PrintLayout _layout = PrintLayouts.FullPage;
+    private PrintLayout? _singlePhotoLayout;
+    private bool _singlePhotoFillPage;
+    private LangId? _photoFeedback;
     private PrintDocumentLayout? _doc;
     private byte[]? _platformState;
     private string? _noPrintersText;
@@ -70,6 +73,7 @@ public partial class PrintWindowView : PhControl
     private int _pageIndex;
     private int _renderVersion;
     private bool _isUpdatingControls;
+    private bool _hasInvalidPageRange;
     private bool _isMoreVisible;
     private bool _isLoadingPrinters;
     private bool _refreshPrintersOnActivate;
@@ -91,7 +95,11 @@ public partial class PrintWindowView : PhControl
     /// <summary>
     /// Gets whether there is something to print and somewhere to print it.
     /// </summary>
-    public bool CanPrint => _doc is { Pages.Count: > 0 } && _printer is not null && !IsPrinting;
+    public bool CanPrint => _doc is { Pages.Count: > 0 } && _printer is not null && !_hasInvalidPageRange && !IsPrinting;
+
+    // Windows hands one image to the legacy photo-print wizard. The other platforms send the laid-out job.
+    public bool CanShowSystemDialog => Core.PrintProvider.CanShowSystemDialog
+        && (BHelper.OS != OSType.Windows || _session.AddedPhotoCount == 0);
 
 
     /// <summary>
@@ -153,6 +161,9 @@ public partial class PrintWindowView : PhControl
 
     private void Window_Activated(object? sender, EventArgs e)
     {
+        _photoFeedback = null;
+        UpdatePhotoControls();
+
         // back from the system's printer settings: a printer added there is listed and chosen
         if (_refreshPrintersOnActivate && !IsPrinting) _ = LoadPrintersAsync(true);
     }
@@ -176,6 +187,10 @@ public partial class PrintWindowView : PhControl
         _isUpdatingControls = false;
 
         PART_BtnAddPrinter.Text = Core.Lang[LangId.Print_BtnAddPrinter];
+        PART_BtnShowViewer.Text = Core.Lang[LangId.Print_BtnShowViewer];
+        PART_BtnAddPhoto.Text = Core.Lang[LangId.Print_BtnAddPhoto];
+        PART_BtnClearPhotos.Text = Core.Lang[LangId.Print_BtnClearPhotos];
+        UpdatePhotoControls();
         PART_BtnMore.Text = Core.Lang[LangId.Print_LblMoreSettings];
         PART_BtnProperties.Text = Core.Lang[LangId.Print_BtnProperties];
         ToolTip.SetTip(PART_BtnPrevPage, Core.Lang[LangId.Print_PreviousPage]);
@@ -225,7 +240,6 @@ public partial class PrintWindowView : PhControl
 
         // a document prints all its pages, an animation the frame on screen
         var state = _session.State;
-        PART_PagesRow.IsVisible = _session.FrameCount > 1;
         SelectTag(PART_PageScope, _session.FrameCount > 1 && !state.IsAnimated ? PrintPageScope.All : PrintPageScope.Current);
 
         // the part to print: offered with a selection, or a view zoomed into the photo
@@ -233,8 +247,8 @@ public partial class PrintWindowView : PhControl
         var visible = state.GetRegionRect(ViewerImageRegion.VisibleArea);
         var hasSelection = !state.GetRegionRect(ViewerImageRegion.Selection).IsEmpty;
         var hasVisibleArea = !visible.IsEmpty && (visible.Width < whole.Width || visible.Height < whole.Height);
-        PART_RegionRow.IsVisible = hasSelection || hasVisibleArea;
         FillRegionItems(hasSelection, hasVisibleArea, region);
+        UpdatePhotoControls();
 
         // Save as PDF until the printers arrive, so the preview shows at once
         _printer = PrintProviderBase.SaveAsPdfPrinter;
@@ -268,10 +282,17 @@ public partial class PrintWindowView : PhControl
         // a paper chosen in code is measured too, so this runs while the controls update
         PART_Paper.SelectionChanged += (_, _) => _ = MeasureSelectedPaperAsync();
 
-        foreach (var check in new[] { PART_AutoRotate, PART_Captions, PART_FillPage, PART_Collate })
+        foreach (var check in new[] { PART_AutoRotate, PART_Captions, PART_Collate })
         {
             check.IsCheckedChanged += (_, _) => OnSettingChanged();
         }
+
+        PART_FillPage.IsCheckedChanged += (_, _) =>
+        {
+            if (!_isUpdatingControls && _singlePhotoLayout is not null)
+                _singlePhotoFillPage = PART_FillPage.IsChecked == true;
+            OnSettingChanged();
+        };
 
         PART_Copies.ValueChanged += (_, _) => OnSettingChanged();
         PART_PrintsEach.ValueChanged += (_, _) => OnSettingChanged();
@@ -281,11 +302,77 @@ public partial class PrintWindowView : PhControl
         PART_PageRange.TextChanged += (_, _) => OnItemsChanged();
 
         PART_BtnAddPrinter.Click += async (_, _) => await OpenAddPrinterSettingsAsync();
+        PART_BtnShowViewer.Click += (_, _) => App.MainWindow.RestoreAndActivate();
+        PART_BtnAddPhoto.Click += (_, _) => AddCurrentPhoto();
+        PART_BtnClearPhotos.Click += (_, _) => ClearAddedPhotos();
         PART_BtnMore.Click += (_, _) => ToggleMore();
         PART_BtnProperties.Click += async (_, _) => await ShowPropertiesAsync();
         PART_BtnPrevPage.Click += (_, _) => GoToPage(-1);
         PART_BtnNextPage.Click += (_, _) => GoToPage(1);
         PART_Preview.SizeChanged += (_, _) => RequestRender();
+    }
+
+
+    private void AddCurrentPhoto()
+    {
+        if (IsPrinting) return;
+
+        var state = AppAPIProvider.GetViewer()?.CaptureImageState();
+        if (state is null || !_session.AddPhoto(state))
+        {
+            _photoFeedback = state is null ? LangId.Print_NoPhotoToAdd : LangId.Print_PhotoAlreadyAdded;
+            UpdatePhotoControls();
+            return;
+        }
+
+        if (_session.AddedPhotoCount == 1)
+        {
+            // Keep the single-photo choices for when the added photos are cleared.
+            _singlePhotoLayout = _layout;
+            _singlePhotoFillPage = PART_FillPage.IsChecked == true;
+            if ((_doc?.CellsPerPage ?? 1) == 1) _layout = PrintLayouts.Find("grid-2");
+            _isUpdatingControls = true;
+            PART_FillPage.IsChecked = false;
+            _isUpdatingControls = false;
+        }
+
+        _photoFeedback = null;
+        UpdatePhotoControls();
+        ApplyItems();
+        Relayout(showLastPage: true);
+    }
+
+
+    private void ClearAddedPhotos()
+    {
+        if (IsPrinting || _session.AddedPhotoCount == 0) return;
+
+        _session.ClearAddedPhotos();
+        _layout = _singlePhotoLayout ?? _layout;
+        _singlePhotoLayout = null;
+        _isUpdatingControls = true;
+        PART_FillPage.IsChecked = _singlePhotoFillPage;
+        _isUpdatingControls = false;
+
+        _photoFeedback = null;
+        _pageIndex = 0;
+        UpdatePhotoControls();
+        ApplyItems();
+        Relayout();
+    }
+
+
+    private void UpdatePhotoControls()
+    {
+        var hasAddedPhotos = _session.AddedPhotoCount > 0;
+        PART_PhotoCount.Text = Core.Lang[LangId.Print_PhotoCount, 1 + _session.AddedPhotoCount];
+        PART_BtnClearPhotos.IsVisible = hasAddedPhotos;
+        PART_PhotoFeedback.IsVisible = _photoFeedback.HasValue;
+        PART_PhotoFeedback.Text = _photoFeedback.HasValue ? Core.Lang[_photoFeedback] : string.Empty;
+        PART_PagesLabel.LangKey = hasAddedPhotos ? LangId.Print_FirstPhotoPages : LangId.Print_LblPages;
+        PART_RegionLabel.LangKey = hasAddedPhotos ? LangId.Print_FirstPhotoRegion : LangId.Print_LblRegion;
+        PART_PagesRow.IsVisible = _session.FrameCount > 1;
+        PART_RegionRow.IsVisible = PART_Region.Items.Count > 1;
     }
 
 
@@ -427,6 +514,7 @@ public partial class PrintWindowView : PhControl
     private void SelectLayout(PrintLayout layout)
     {
         _layout = layout;
+        if (_singlePhotoLayout is not null) _singlePhotoLayout = layout;
         Relayout();
     }
 
@@ -783,7 +871,8 @@ public partial class PrintWindowView : PhControl
         };
 
         PART_PageRange.IsVisible = scope == PrintPageScope.Range;
-        PART_PageRangeHint.IsVisible = scope == PrintPageScope.Range && pages.Count == 0;
+        _hasInvalidPageRange = region == PrintRegion.WholeImage && scope == PrintPageScope.Range && pages.Count == 0;
+        PART_PageRangeHint.IsVisible = _hasInvalidPageRange;
         PART_PageRangeHint.Text = Core.Lang[LangId.Print_RangeInvalid];
 
         // a part of the image prints the page on screen only
@@ -797,9 +886,9 @@ public partial class PrintWindowView : PhControl
     /// <summary>
     /// Lays the prints out again and redraws the preview.
     /// </summary>
-    private void Relayout()
+    private void Relayout(bool showLastPage = false)
     {
-        if (_isUpdatingControls) return;
+        if (_isUpdatingControls || _closing.IsCancellationRequested) return;
         if (GetTag<PaperInfo?>(PART_Paper, null) is not { } paper) return;
 
         var input = new PrintLayoutInput
@@ -816,7 +905,8 @@ public partial class PrintWindowView : PhControl
         };
 
         _doc = PrintLayoutEngine.Paginate(input);
-        _pageIndex = Math.Clamp(_pageIndex, 0, Math.Max(0, _doc.Pages.Count - 1));
+        var lastPage = Math.Max(0, _doc.Pages.Count - 1);
+        _pageIndex = showLastPage ? lastPage : Math.Clamp(_pageIndex, 0, lastPage);
 
         UpdateLayoutOptions(paper, input);
         PART_FillPage.IsVisible = _doc.CellsPerPage > 1;
@@ -955,7 +1045,7 @@ public partial class PrintWindowView : PhControl
     /// </summary>
     public async Task<bool> PrintAsync(PhWindow owner)
     {
-        if (!CanPrint || _doc is null || _printer is null) return false;
+        if (_closing.IsCancellationRequested || !CanPrint || _doc is null || _printer is null) return false;
 
         // a long job asks first
         var copies = (int)(PART_Copies.Value ?? 1);
@@ -967,7 +1057,7 @@ public partial class PrintWindowView : PhControl
                 Title = Core.Lang[LangId.Print_Title],
                 Description = Core.Lang[LangId.Print_WarnManyPages, sheets],
             }, ModalWindowButton.OK_Cancel);
-            if (answer.ExitCode != DialogExitCode.OK) return false;
+            if (_closing.IsCancellationRequested || answer.ExitCode != DialogExitCode.OK) return false;
         }
 
         var settings = BuildSettings();
@@ -977,7 +1067,7 @@ public partial class PrintWindowView : PhControl
         if (_printer.OutputFileExtension is { } extension)
         {
             var path = await PickOutputFileAsync(extension);
-            if (string.IsNullOrEmpty(path)) return false;
+            if (_closing.IsCancellationRequested || string.IsNullOrEmpty(path)) return false;
             settings.OutputPath = path;
         }
 
@@ -1033,7 +1123,7 @@ public partial class PrintWindowView : PhControl
     public async Task<bool> ShowSystemDialogAsync(PhWindow owner)
     {
         var settings = BuildSettings();
-        if (settings is null || IsPrinting) return false;
+        if (settings is null || !CanPrint || !CanShowSystemDialog) return false;
 
         // that dialog may stay open a while: it counts as a job, so nothing else starts and Esc closes it first
         var cancel = CancellationTokenSource.CreateLinkedTokenSource(_closing.Token);
@@ -1085,7 +1175,7 @@ public partial class PrintWindowView : PhControl
             if (GetTag(PART_Quality, 0) is var dpi and > 0) _config.DpiByPrinter[_printer.Id] = dpi;
         }
 
-        _config.LayoutId = _layout.Id;
+        _config.LayoutId = (_singlePhotoLayout ?? _layout).Id;
         _config.Fit = GetTag(PART_Fit, PrintFitMode.Fit);
         _config.Orientation = GetTag(PART_Orientation, PrintOrientation.Auto);
         _config.Margins = GetTag(PART_Margins, PrintMarginPreset.Normal);
@@ -1093,7 +1183,7 @@ public partial class PrintWindowView : PhControl
         _config.Duplex = GetTag(PART_Duplex, PrintDuplex.None);
         _config.AutoRotate = PART_AutoRotate.IsChecked == true;
         _config.ShowCaptions = PART_Captions.IsChecked == true;
-        _config.FillPage = PART_FillPage.IsChecked == true;
+        _config.FillPage = _singlePhotoLayout is null ? PART_FillPage.IsChecked == true : _singlePhotoFillPage;
         _config.Collate = PART_Collate.IsChecked == true;
         _config.Save();
     }
@@ -1133,15 +1223,11 @@ public partial class PrintWindowView : PhControl
 
     private PrintRenderOptions BuildRenderOptions()
     {
-        // the resolution the file declares, for actual size; a missing or odd value reads as the screen's 96
-        var dpi = _session.State.Photo.Metadata?.DpiX ?? 0;
-
         return new PrintRenderOptions
         {
             Fit = GetTag(PART_Fit, PrintFitMode.Fit),
             AutoRotate = PART_AutoRotate.IsChecked == true,
             ColorMode = PART_ColorRow.IsVisible ? GetTag(PART_Color, PrintColorMode.Color) : PrintColorMode.Color,
-            ImageDpi = dpi is >= 30 and <= 4800 ? (float)dpi : 96,
         };
     }
 
@@ -1153,9 +1239,10 @@ public partial class PrintWindowView : PhControl
     {
         if (TopLevel.GetTopLevel(this) is not { } top) return null;
 
-        var photoPath = _session.State.Photo.FilePath;
+        var photoPath = _session.FilePath;
         var name = string.IsNullOrEmpty(photoPath) ? "ImageGlass" : Path.GetFileNameWithoutExtension(photoPath);
         var folder = string.IsNullOrEmpty(photoPath) ? null : await top.StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(photoPath)!);
+        if (_closing.IsCancellationRequested) return null;
 
         var file = await top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {

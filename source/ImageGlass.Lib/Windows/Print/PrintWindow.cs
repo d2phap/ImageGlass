@@ -21,12 +21,14 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Threading;
 using ImageGlass.Common.Localization;
 using ImageGlass.Common.Printing;
 using ImageGlass.Common.ServiceProviders;
 using ImageGlass.UI;
 using ImageGlass.UI.Windowing;
 using System;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Common.Windows;
 
@@ -48,6 +50,7 @@ public sealed class PrintWindow : DialogWindow
     private readonly PrintWindowView _view;
     private readonly PhButton _systemDialogLink;
     private readonly TextBlock _summary;
+    private bool _closingForShutdown;
 
 
     /// <summary>
@@ -68,7 +71,7 @@ public sealed class PrintWindow : DialogWindow
 
         CanResize = true;
         CanMaximize = true;
-        CanMinimize = false;
+        CanMinimize = true;
         ShowInTaskbar = true;
         SizeToContent = SizeToContent.Manual;
         MinWidth = MIN_RESTORE_WIDTH;
@@ -139,10 +142,11 @@ public sealed class PrintWindow : DialogWindow
                 ? Core.Lang[LangId.Print_Saved]
                 : Core.Lang[LangId.Print_Sent, printer?.DisplayName];
 
-            base.OnDialogSubmitted(e);
+            CloseWithResult(DialogExitCode.OK);
         }
         catch (Exception ex)
         {
+            if (_closingForShutdown || !IsVisible) return;
             await ModalWindow.ShowErrorAsync(this, new ModalWindowOptions
             {
                 Title = Core.Lang[LangId.Print_Title],
@@ -162,7 +166,7 @@ public sealed class PrintWindow : DialogWindow
             return;
         }
 
-        base.OnDialogCancelled(e);
+        if (e.CanProceed) CloseWithResult(DialogExitCode.Cancel);
     }
 
 
@@ -174,7 +178,7 @@ public sealed class PrintWindow : DialogWindow
             return;
         }
 
-        base.OnDialogAborted();
+        CloseWithResult(DialogExitCode.Abort);
     }
 
 
@@ -206,6 +210,25 @@ public sealed class PrintWindow : DialogWindow
     #endregion // Overrides
 
 
+    private void CloseWithResult(DialogExitCode result)
+    {
+        DialogResult = result;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Stops an active job and waits until the independent print window has closed.
+    /// </summary>
+    internal Task CloseForShutdownAsync()
+    {
+        _closingForShutdown = true;
+        var closed = _taskSourceExitCode.Task;
+        Close();
+        return closed;
+    }
+
+
     /// <summary>
     /// Turns the pages of the preview on PageUp and PageDown, unless a text box or an open dropdown takes them.
     /// </summary>
@@ -227,8 +250,17 @@ public sealed class PrintWindow : DialogWindow
             : Core.Lang[LangId.Print_Title];
 
         _btn1.IsEnabled = _view.CanPrint;
-        _systemDialogLink.IsEnabled = !_view.IsPrinting;
+        _systemDialogLink.IsVisible = _view.CanShowSystemDialog;
+        _systemDialogLink.IsEnabled = _view.CanPrint;
         _summary.Text = _view.SummaryText;
+
+        if (_closingForShutdown && !_view.IsPrinting)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                if (IsVisible && !_view.IsPrinting) Close();
+            });
+        }
     }
 
 
@@ -240,11 +272,11 @@ public sealed class PrintWindow : DialogWindow
             if (!await _view.ShowSystemDialogAsync(this)) return;
 
             // the platform's dialog takes it from here
-            DialogResult = DialogExitCode.Cancel;
-            Close(DialogResult);
+            CloseWithResult(DialogExitCode.Cancel);
         }
         catch (Exception ex)
         {
+            if (_closingForShutdown || !IsVisible) return;
             await ModalWindow.ShowErrorAsync(this, new ModalWindowOptions
             {
                 Title = Core.Lang[LangId.Print_Title],
