@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Common.Extensions;
+using ImageGlass.Common.Localization;
+using ImageGlass.Common.Types;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -42,11 +45,6 @@ public sealed record PrintRenderOptions
     /// Gets the resolution images are requested at, in pixels per inch of paper.
     /// </summary>
     public float TargetDpi { get; init; } = 300;
-
-    /// <summary>
-    /// Gets the resolution of the image itself, which <see cref="PrintFitMode.ActualSize"/> prints at.
-    /// </summary>
-    public float ImageDpi { get; init; } = 96;
 
     /// <summary>
     /// Gets whether this draws the on-screen preview: cached images and placeholders, never a wait, plus the printable band.
@@ -124,15 +122,13 @@ public static class PrintPageRenderer
         PrintRenderOptions options, float maxDpi, CancellationToken token)
     {
         // a vector print has no pixels of its own
-        var picture = images.GetPicture(cell.ItemIndex);
-        if (picture is not null && !picture.IsDisposed()) return maxDpi;
+        if (images.UsePicture(cell.ItemIndex)) return maxDpi;
 
-        using var lease = await images.GetImageAsync(cell.ItemIndex, GetRequestLongSide(cell, options), token).ConfigureAwait(false);
-        var img = lease?.Image;
+        using var lease = await GetPrintImageAsync(images, cell.ItemIndex, GetRequestLongSide(cell, options), token).ConfigureAwait(false);
+        var img = lease.Image;
         var ceiling = Math.Min(maxDpi, MAX_PHOTO_RASTER_DPI);
-        if (img.IsDisposed()) return ceiling;
 
-        var (dest, _) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, new SKSize(img.Width, img.Height), options.Fit, options.AutoRotate, options.ImageDpi);
+        var (dest, _) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, new SKSize(img.Width, img.Height), options.Fit, options.AutoRotate, images.GetImageDpi(cell.ItemIndex));
         var destLongSidePt = Math.Max(dest.Width, dest.Height);
         if (destLongSidePt <= 0) return ceiling;
 
@@ -146,7 +142,7 @@ public static class PrintPageRenderer
     /// </summary>
     private static int GetRequestLongSide(PrintCell cell, PrintRenderOptions options)
     {
-        if (options.Fit == PrintFitMode.ActualSize) return int.MaxValue;
+        if (options.Fit == PrintFitMode.ActualSize && !options.IsPreview) return int.MaxValue;
 
         var longSidePt = Math.Max(cell.ImageRectPt.Width, cell.ImageRectPt.Height);
         return (int)Math.Ceiling(PrintUnits.PtToPx(longSidePt, options.TargetDpi) * (options.Fit == PrintFitMode.Fill ? 1.5f : 1f));
@@ -162,8 +158,7 @@ public static class PrintPageRenderer
         using var paint = new SKPaint { ColorFilter = filter };
 
         // a vector print stays vector, crisp at any resolution
-        var picture = images.GetPicture(cell.ItemIndex);
-        if (picture is not null && !picture.IsDisposed())
+        if (images.UsePicture(cell.ItemIndex, picture =>
         {
             var size = picture.CullRect.Size;
             var (dest, rotate) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, size, options.Fit, options.AutoRotate, 96);
@@ -174,13 +169,17 @@ public static class PrintPageRenderer
             canvas.Translate(-picture.CullRect.Left, -picture.CullRect.Top);
             canvas.DrawPicture(picture, paint);
             canvas.Restore();
-            return;
-        }
+        })) return;
 
         var longSide = GetRequestLongSide(cell, options);
-        using var lease = options.IsPreview
-            ? images.TryGetImage(cell.ItemIndex, longSide)
-            : await images.GetImageAsync(cell.ItemIndex, longSide, token).ConfigureAwait(false);
+        var originalSize = SKSize.Empty;
+        using var lease = options switch
+        {
+            { IsPreview: true, Fit: PrintFitMode.ActualSize } =>
+                images.TryGetActualSizePreview(cell.ItemIndex, longSide, out originalSize),
+            { IsPreview: true } => images.TryGetImage(cell.ItemIndex, longSide),
+            _ => await GetPrintImageAsync(images, cell.ItemIndex, longSide, token).ConfigureAwait(false),
+        };
 
         var img = lease?.Image;
         if (img.IsDisposed())
@@ -190,13 +189,40 @@ public static class PrintPageRenderer
         }
 
         var imageSize = new SKSize(img.Width, img.Height);
-        var (imageDest, turn) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, imageSize, options.Fit, options.AutoRotate, options.ImageDpi);
+        var (imageDest, turn) = PrintLayoutEngine.PlaceImage(cell.ImageRectPt, originalSize.IsEmpty ? imageSize : originalSize, options.Fit, options.AutoRotate, images.GetImageDpi(cell.ItemIndex));
 
         canvas.Save();
         canvas.ClipRect(cell.ImageRectPt);
         ApplyPlacement(canvas, imageDest, turn, imageSize);
         canvas.DrawImage(img, SKRect.Create(imageSize), new SKSamplingOptions(SKCubicResampler.Mitchell), paint);
         canvas.Restore();
+    }
+
+
+    /// <summary>
+    /// Requires the requested resolution for output. A file may have moved since it was
+    /// selected in the viewer; only the preview can substitute a placeholder.
+    /// </summary>
+    private static async Task<SKImageRef.ImageLease> GetPrintImageAsync(IPrintImageSource images, int index,
+        int longSide, CancellationToken token)
+    {
+        Exception? cause = null;
+        try
+        {
+            var lease = await images.GetImageAsync(index, longSide, token).ConfigureAwait(false);
+            if (lease is not null)
+            {
+                if (!lease.Image.IsDisposed()) return lease;
+                lease.Dispose();
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            cause = ex;
+        }
+
+        token.ThrowIfCancellationRequested();
+        throw new IOException(Core.Lang[LangId.Print_PhotoUnavailable, images.GetCaption(index).Name], cause);
     }
 
 
