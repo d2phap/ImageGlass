@@ -933,6 +933,16 @@ public enum LangId
 
     #region Print
     Print_Title,
+    Print_PhotoCount,
+    Print_BtnShowViewer,
+    Print_BtnAddPhoto,
+    Print_BtnClearPhotos,
+    Print_AddPhotoHint,
+    Print_PhotoAlreadyAdded,
+    Print_NoPhotoToAdd,
+    Print_PhotoUnavailable,
+    Print_FirstPhotoPages,
+    Print_FirstPhotoRegion,
     Print_LblPrinter,
     Print_LblCopies,
     Print_ChkCollate,
