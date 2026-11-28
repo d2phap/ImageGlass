@@ -36,8 +36,8 @@ modules:
       - install -Dm644 io.github.d2phap.imageglass.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/io.github.d2phap.imageglass.png
     sources:
       - type: archive
-        url: https://github.com/d2phap/ImageGlass/releases/download/10.0.6.906/ImageGlass_10.0.6.906_linux-x64.tar.gz
-        sha256: fe75dc8bed701a3dd454494ebd2e03d0c412601d635c52f087a0c197456088dc
+        url: https://github.com/d2phap/ImageGlass/releases/download/10.1.0.1128-beta/ImageGlass_10.1.0.1128-beta_linux-x64.tar.gz
+        sha256: dc101cf76b2d7620e6bf0498e4029ec99e85895e32f6745807d11b9315d882b2
         strip-components: 1
         # own subdir so the blanket copy above cannot pick up the metadata files below
         dest: payload
