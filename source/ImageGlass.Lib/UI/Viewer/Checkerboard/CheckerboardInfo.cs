@@ -37,7 +37,7 @@ internal class CheckerboardInfo
     /// <summary>
     /// Represents the size of a checkerboard cell, in 1/96 inch on the physical screen.
     /// </summary>
-    public Size Size { get; set; } = new Size(8, 8);
+    public Size Size { get; set; } = new Size(10, 10);
 
 
     /// <summary>

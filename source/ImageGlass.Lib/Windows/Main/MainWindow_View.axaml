@@ -38,6 +38,7 @@
                     x:Name="PART_Viewer"
                     Grid.Row="0"
                     CheckerboardMode="{CompiledBinding CheckerboardMode, Source={x:Static cm:Core.Config}}"
+                    CheckerboardSize="{CompiledBinding CheckerboardSize, Source={x:Static cm:Core.Config}}"
                     EnableDebug="{CompiledBinding EnableDebug, Source={x:Static cm:Core.Config}}"
                     EnableFreePan="{CompiledBinding EnableFreePan, Source={x:Static cm:Core.Config}, Converter={x:Static cm:ProGate.Bool}}"
                     EnableHdrRendering="{CompiledBinding EnableHdrToneMapping, Source={x:Static cm:Core.Config}}"

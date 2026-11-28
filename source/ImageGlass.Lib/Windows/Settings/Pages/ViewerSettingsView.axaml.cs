@@ -62,6 +62,8 @@ public partial class ViewerSettingsView : SettingsPageView
             LangId.Settings_ViewerScrollbarMode, LangId.Settings_Appearance);
         BindEnumDropdown(PART_CheckerboardMode, ConfigId.CheckerboardMode, CheckerboardType.None,
             LangId.Settings_CheckerboardMode, LangId.Settings_Appearance);
+        BindUIntSlider(PART_CheckerboardSize, ConfigId.CheckerboardSize,
+            LangId.Settings_CheckerboardSize, LangId.Settings_Appearance, 10u, PART_CheckerboardSizeLabel);
 
         // Panning (free & margin panning are Pro)
         BindToggle(PART_FreePan, ConfigId.EnableFreePan,

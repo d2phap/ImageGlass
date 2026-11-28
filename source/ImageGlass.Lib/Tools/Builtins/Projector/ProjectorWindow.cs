@@ -165,6 +165,7 @@ public sealed class ProjectorWindow : PhWindow
             PanMargin = 0,
             ZoomMode = GetStartZoomMode(),
             CheckerboardMode = Core.Config.CheckerboardMode,
+            CheckerboardSize = Core.Config.CheckerboardSize,
             InterpolationScaleDown = Core.Config.ImageInterpolationScaleDown,
             InterpolationScaleUp = Core.Config.ImageInterpolationScaleUp,
         };
@@ -286,6 +287,10 @@ public sealed class ProjectorWindow : PhWindow
         else if (e.PropertyName == nameof(Config.CheckerboardMode))
         {
             Viewer.CheckerboardMode = Core.Config.CheckerboardMode;
+        }
+        else if (e.PropertyName == nameof(Config.CheckerboardSize))
+        {
+            Viewer.CheckerboardSize = Core.Config.CheckerboardSize;
         }
     }
 

@@ -293,6 +293,11 @@ public partial class ViewerControl : PhControl
         {
             InvalidateVisual();
         }
+        else if (e.Property == CheckerboardSizeProperty)
+        {
+            _checkerboard.Size = new Size(CheckerboardSize, CheckerboardSize);
+            InvalidateVisual();
+        }
     }
 
 

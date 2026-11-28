@@ -689,6 +689,15 @@ public partial class Config : PhReactive
         set => Set(ConfigId.PreviewMinHeight, value);
     }
 
+    /// <summary>
+    /// Gets, sets the checkerboard cell size (1 to 500), in 1/96 inch on the physical screen.
+    /// </summary>
+    public uint CheckerboardSize
+    {
+        get => Get(ConfigId.CheckerboardSize, 10u);
+        set => Set(ConfigId.CheckerboardSize, value);
+    }
+
     #endregion // Number items
 
 
@@ -842,7 +851,7 @@ public partial class Config : PhReactive
     [JsonConverter(typeof(JsonStringEnumSafeConverter<ScrollbarMode>))]
     public ScrollbarMode ViewerScrollbarMode
     {
-        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.AutoHide);
+        get => Get(ConfigId.ViewerScrollbarMode, ScrollbarMode.Never);
         set => Set(ConfigId.ViewerScrollbarMode, value);
     }
 

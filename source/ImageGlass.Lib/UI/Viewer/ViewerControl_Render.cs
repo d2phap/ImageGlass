@@ -128,6 +128,19 @@ public partial class ViewerControl
 
 
     /// <summary>
+    /// Gets or sets the size of a checkerboard cell, in 1/96 inch on the physical screen.
+    /// </summary>
+    public uint CheckerboardSize
+    {
+        get => GetValue(CheckerboardSizeProperty);
+        set => SetValue(CheckerboardSizeProperty, value);
+    }
+    public static readonly StyledProperty<uint> CheckerboardSizeProperty =
+        AvaloniaProperty.Register<ViewerControl, uint>(nameof(CheckerboardSize), 10u,
+            coerce: (_, value) => Math.Clamp(value, 1u, 500u)); // the tile bitmap grows with the square of this
+
+
+    /// <summary>
     /// Gets, sets interpolation mode used when the
     /// <see cref="ZoomFactor"/> is less than or equal <c>1.0f</c>.
     /// </summary>

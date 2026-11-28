@@ -1120,6 +1120,7 @@ public class Lang
         new(LangId.Settings_EnableCenterWindowFit, "Automatically center the window in Window Fit mode"),
         new(LangId.Settings_EnableVectorRenderer, "Use the vector renderer for SVG images"),
         new(LangId.Settings_CheckerboardMode, "Checkerboard background"),
+        new(LangId.Settings_CheckerboardSize, "Checkerboard cell size: {0}"),
 
         // Viewer > Panning
         new(LangId.Settings_Panning, "Panning"),

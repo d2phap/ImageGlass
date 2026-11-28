@@ -40,6 +40,19 @@
                     Width="200"
                     HorizontalAlignment="Left" />
             </StackPanel>
+
+            <!--  Checkerboard cell size (1 - 500)  -->
+            <StackPanel Margin="0,10,0,0" Spacing="{DynamicResource SettingsLabelInputGap}">
+                <ui:PhTextBlock x:Name="PART_CheckerboardSizeLabel" LangKey="Settings_CheckerboardSize" />
+                <Slider
+                    x:Name="PART_CheckerboardSize"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    IsSnapToTickEnabled="True"
+                    Maximum="500"
+                    Minimum="1"
+                    TickFrequency="1" />
+            </StackPanel>
         </StackPanel>
 
 

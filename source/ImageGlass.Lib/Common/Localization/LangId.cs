@@ -678,6 +678,7 @@ public enum LangId
     Settings_EnableCenterWindowFit,
     Settings_EnableVectorRenderer,
     Settings_CheckerboardMode,
+    Settings_CheckerboardSize,
 
     // Viewer > Panning
     Settings_Panning,

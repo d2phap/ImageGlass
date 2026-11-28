@@ -106,6 +106,7 @@ public enum ConfigId
     InAppMessageDuration,
     PreviewMinWidth,
     PreviewMinHeight,
+    CheckerboardSize,
 
     #endregion // Number settings
 
