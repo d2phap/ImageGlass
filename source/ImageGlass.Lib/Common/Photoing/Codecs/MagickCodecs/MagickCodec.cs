@@ -452,14 +452,16 @@ public static partial class MagickCodec
                 if (imgC[frameIndex].GetColorProfile() is IColorProfile colorProfile)
                 {
                     meta.ColorSpace = colorProfile.ColorSpace;
-                    if (string.IsNullOrEmpty(colorProfile.Description))
+
+                    // Magick.NET skips an ICC v4 "mluc" description, such as Apple's Display P3 (#2050)
+                    var description = colorProfile.Description;
+                    if (string.IsNullOrEmpty(description))
                     {
-                        meta.ColorProfileName = colorProfile.ColorSpace.ToString();
+                        var iccProfile = new PhotoColorProfile(colorProfile.ToByteArray());
+                        description = iccProfile.GetIccDescription();
                     }
-                    else
-                    {
-                        meta.ColorProfileName = $"{colorProfile.Description} ({colorProfile.ColorSpace})";
-                    }
+
+                    meta.ColorProfileName = PhotoMetadata.FormatColorProfileName(description, colorProfile.ColorSpace);
 
                     meta.MagickColorProfile = colorProfile;
                     meta.SkiaColorSpace = SkiaCodec.CreateIccColorSpace(colorProfile.ToReadOnlySpan());

@@ -323,6 +323,17 @@ public partial class PhotoMetadata : PhDisposable
 
 
     /// <summary>
+    /// Formats a <see cref="ColorProfileName"/>: the profile's description with its color model, else the model alone.
+    /// </summary>
+    public static string FormatColorProfileName(string? description, ColorSpace colorSpace)
+    {
+        if (string.IsNullOrEmpty(description)) return colorSpace.ToString();
+
+        return $"{description} ({colorSpace})";
+    }
+
+
+    /// <summary>
     /// Retrieves an embedded thumbnail from either a RAW format or an EXIF profile if exists.
     /// </summary>
     public MagickImage? GetEmbeddedPreview()

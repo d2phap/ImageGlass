@@ -73,8 +73,8 @@ public partial class PhotoColorProfile(byte[]? data)
         var length = ReadBE32__(data, offset + 8);
         if (length <= 1 || 12 + length > size) return string.Empty;
 
-        // the stored count includes the terminating NUL
-        return System.Text.Encoding.ASCII.GetString(data, offset + 12, length - 1);
+        var text = System.Text.Encoding.ASCII.GetString(data, offset + 12, length);
+        return CutAtNul__(text);
     }
 
 
@@ -92,7 +92,20 @@ public partial class PhotoColorProfile(byte[]? data)
         var strOffset = ReadBE32__(data, offset + 16 + 8);
         if (strLength <= 0 || strOffset < 0 || strOffset + strLength > size) return string.Empty;
 
-        return System.Text.Encoding.BigEndianUnicode.GetString(data, offset + strOffset, strLength);
+        var text = System.Text.Encoding.BigEndianUnicode.GetString(data, offset + strOffset, strLength);
+        return CutAtNul__(text);
+    }
+
+
+    /// <summary>
+    /// Cuts <paramref name="text"/> at its first NUL, since some writers pad the stored string with them.
+    /// </summary>
+    private static string CutAtNul__(string text)
+    {
+        var nulIndex = text.IndexOf('\0');
+        if (nulIndex < 0) return text;
+
+        return text[..nulIndex];
     }
 
 

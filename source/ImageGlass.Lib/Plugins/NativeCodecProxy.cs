@@ -1087,6 +1087,7 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         // both SKColorSpace.CreateIcc and PhotoColorProfile copy what they need
         // synchronously, so we don't retain the pointer past this call.
         SKColorSpace? skiaCs = null;
+        var iccColorSpace = ImageMagick.ColorSpace.Undefined;
         if (info.IccProfileData != null && info.IccProfileSize > 0)
         {
             try
@@ -1097,10 +1098,15 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
 
                 var bytes = iccSpan.ToArray();
                 var photoProfile = new PhotoColorProfile(bytes);
-                meta.ColorProfileName = photoProfile.GetIccDescription();
+                var description = photoProfile.GetIccDescription();
+                meta.ColorProfileName = description;
                 if (photoProfile.ProfileData is not null)
                 {
                     meta.MagickColorProfile = new ColorProfile(photoProfile.ProfileData);
+                    iccColorSpace = meta.MagickColorProfile.ColorSpace;
+
+                    // named as the Magick path names it, or a profile called "sRGB" collapses into the color space in the title
+                    meta.ColorProfileName = PhotoMetadata.FormatColorProfileName(description, iccColorSpace);
                 }
             }
             catch (Exception ex)
@@ -1117,6 +1123,13 @@ internal sealed unsafe class NativeCodecProxy : PhDisposable, ICodec
         {
             meta.SkiaColorSpace?.Dispose();
             meta.SkiaColorSpace = skiaCs;
+        }
+
+        // the profile's own color model, as the Magick path reports it; IsSrgb alone hid a P3 profile from the title
+        if (iccColorSpace != ImageMagick.ColorSpace.Undefined)
+        {
+            meta.ColorSpace = iccColorSpace;
+            return;
         }
 
         meta.ColorSpace = skiaCs is not null && skiaCs.IsSrgb

@@ -40,7 +40,7 @@ public partial class AppStatusInfo : PhDisposable
     /// <summary>
     /// Gets the separator between the items of the status text.
     /// </summary>
-    public const string TEXT_SEPARATOR = "  ︱  ";
+    public const string TEXT_SEPARATOR = "   |   ";
 
     private ViewerControl _viewer;
     private string? _filePath = null;
