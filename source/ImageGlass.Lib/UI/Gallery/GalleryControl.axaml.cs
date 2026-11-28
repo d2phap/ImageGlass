@@ -148,14 +148,6 @@ public partial class GalleryControl : PhControl
     }
 
 
-    protected override void OnSizeChanged(SizeChangedEventArgs e)
-    {
-        base.OnSizeChanged(e);
-
-        ScrollToItem(Core.Photos.CurrentIndex, false);
-    }
-
-
     protected override void OnIgDpiChanged()
     {
         base.OnIgDpiChanged();
@@ -235,6 +227,12 @@ public partial class GalleryControl : PhControl
 
     private void GalleryControl_ScrollChanged(object? sender, ScrollChangedEventArgs e)
     {
+        // not OnSizeChanged: re-shown items lay out a dispatch after the control is resized (#2502)
+        if (e.ViewportDelta != default)
+        {
+            ScrollToItem(Core.Photos.CurrentIndex);
+        }
+
         if (e.OffsetDelta == default || !IsPointerOver) return;
 
         SuspendItemTooltips();
