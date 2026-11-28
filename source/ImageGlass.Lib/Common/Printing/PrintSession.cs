@@ -49,14 +49,22 @@ public interface IPrintImageSource
     PrintCaption GetCaption(int index);
 
     /// <summary>
-    /// Gets the picture of a vector print, drawn as vectors; <c>null</c> for a raster print.
+    /// Gets the pixel density of the photo for actual-size printing.
     /// </summary>
-    SKPicture? GetPicture(int index);
+    float GetImageDpi(int index);
+
+    /// <summary>
+    /// Uses the picture of a vector print while it is held alive. Returns false for a raster print.
+    /// </summary>
+    bool UsePicture(int index, Action<SKPicture>? draw = null);
 
     /// <summary>
     /// Gets a ready image of a print at least <paramref name="longSide"/> pixels long, or <c>null</c> when none is ready yet; never waits.
     /// </summary>
     SKImageRef.ImageLease? TryGetImage(int index, int longSide);
+
+    /// <summary>Gets a screen-sized preview and its original size in pixels for physical placement.</summary>
+    SKImageRef.ImageLease? TryGetActualSizePreview(int index, int longSide, out SKSize originalSize);
 
     /// <summary>
     /// Gets an image of a print about <paramref name="longSide"/> pixels long, decoding it when needed.
@@ -68,7 +76,128 @@ public interface IPrintImageSource
 /// <summary>
 /// One print of the session: a frame, and the part of it printed.
 /// </summary>
-public sealed record PrintItem(int FrameIndex, PrintRegion Region, PrintCaption Caption);
+public sealed record PrintItem(int FrameIndex, PrintRegion Region, PrintCaption Caption)
+{
+    internal PrintPhoto Source { get; init; } = null!;
+}
+
+
+/// <summary>
+/// Captures metadata before navigation can unload the viewer's Photo. A running decode
+/// keeps the pixels and reader alive when a photo is removed or its window is closed.
+/// </summary>
+internal sealed class PrintPhoto
+{
+    private int _references = 1;
+    public ViewerImageState State { get; }
+    public string FilePath { get; }
+    public int FrameCount { get; }
+    public float Dpi { get; }
+    public float Aspect { get; }
+    public Task<PhotoFrameReader?>? ReaderTask { get; set; }
+    public SKSvg? Svg { get; }
+    public Task<string?>? Snapshot { get; }
+    public bool Removed { get; set; }
+    public Dictionary<(int FrameIndex, PrintRegion Region), SKSize> OriginalSizes { get; } = [];
+
+
+    public PrintPhoto(ViewerImageState state)
+    {
+        State = state;
+        FilePath = state.Photo.FilePath;
+        var metadata = state.Photo.Metadata;
+        FrameCount = state.Photo.IsClipboard ? 1 : (int)Math.Max(1, metadata.FrameCount);
+        Dpi = metadata.DpiX is >= 30 and <= 4800 ? (float)metadata.DpiX : 96;
+        Aspect = metadata is { Width: > 0, Height: > 0 } ? metadata.Width / (float)metadata.Height : 1;
+        if (state.Photo.IsClipboard) return;
+
+        // Parse with the original base URI so SVG references keep their meaning after navigation.
+        if (state.IsVector)
+        {
+            try { Svg = SvgCodec.LoadSvg(FilePath); }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        }
+
+        // Most ordinary photos can use the viewer's leased, full-resolution pixels directly.
+        if (FrameCount > 1 || state.IsPreview || !state.HasExactColorTag || state.IsVector)
+        {
+            Snapshot = CaptureFileAsync(FilePath);
+        }
+    }
+
+
+    // Open synchronously at selection, then copy off the UI thread. Every size and frame
+    // is decoded from these same bytes, even if the original path is subsequently reused.
+    private static async Task<string?> CaptureFileAsync(string path)
+    {
+        DirectoryInfo? directory = null;
+        try
+        {
+            using var original = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete);
+            var stamp = File.GetLastWriteTimeUtc(original.SafeFileHandle);
+            var length = original.Length;
+            directory = Directory.CreateTempSubdirectory("ig-print-");
+            var snapshot = Path.Combine(directory.FullName, "source" + Path.GetExtension(path));
+            await Task.Run(() =>
+            {
+                using var copy = new FileStream(snapshot, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                original.CopyTo(copy);
+                if (copy.Length != length || File.GetLastWriteTimeUtc(original.SafeFileHandle) != stamp)
+                    throw new IOException("The source changed while it was being captured.");
+            }).ConfigureAwait(false);
+            return snapshot;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            if (directory is not null) DeleteSnapshot(directory.FullName);
+            return null;
+        }
+    }
+
+
+    private static void DeleteSnapshot(string directory)
+    {
+        try { Directory.Delete(directory, true); }
+        catch (IOException ex) { Debug.WriteLine(ex.Message); }
+        catch (UnauthorizedAccessException ex) { Debug.WriteLine(ex.Message); }
+    }
+
+
+    public PrintItem CreateItem(int frame, PrintRegion region)
+    {
+        var name = string.IsNullOrEmpty(FilePath) ? "ImageGlass" : Path.GetFileName(FilePath);
+        var page = FrameCount > 1 ? $"({frame + 1}/{FrameCount})" : string.Empty;
+        return new PrintItem(frame, region, new PrintCaption(name, page)) { Source = this };
+    }
+
+
+    // References are changed under the session lock.
+    public void Retain() => _references++;
+
+    public void Release()
+    {
+        if (--_references != 0) return;
+
+        State.Dispose();
+        Svg?.Dispose();
+        _ = ReleaseReaderAsync();
+    }
+
+
+    private async Task ReleaseReaderAsync()
+    {
+        try
+        {
+            if (ReaderTask is { } reader) (await reader.ConfigureAwait(false))?.Dispose();
+        }
+        finally
+        {
+            if (Snapshot is { } pending && await pending.ConfigureAwait(false) is { } path)
+                DeleteSnapshot(Path.GetDirectoryName(path)!);
+        }
+    }
+}
 
 
 /// <summary>
@@ -92,18 +221,17 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     private const int FULL_SIZE = int.MaxValue;
     private const long CACHE_BUDGET_BYTES = 256L * 1024 * 1024;
 
-    private readonly ViewerImageState _state;
+    private readonly PrintPhoto _first;
+    private readonly List<PrintPhoto> _added = [];
     private readonly Lock _lock = new();
     private readonly CancellationTokenSource _cancel = new();
     private readonly SemaphoreSlim _decodeGate = new(2, 2);
-    private readonly Dictionary<(int Frame, PrintRegion Region, int Bucket), SKImageRef> _cache = [];
-    private readonly LinkedList<(int, PrintRegion, int)> _lru = new();
-    private readonly HashSet<(int, PrintRegion, int)> _pending = [];
+    private readonly Dictionary<(PrintItem Item, int Bucket), SKImageRef> _cache = [];
+    private readonly LinkedList<(PrintItem, int)> _lru = new();
+    private readonly HashSet<(PrintItem, int)> _pending = [];
     private long _cacheBytes;
 
-    private Task<PhotoFrameReader?>? _readerTask;
-    private SKSvg? _svg;
-    private IReadOnlyList<PrintItem> _items = [];
+    private volatile IReadOnlyList<PrintItem> _items = [];
 
 
     /// <summary>
@@ -115,13 +243,19 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <summary>
     /// Gets the captured viewer state the session prints.
     /// </summary>
-    public ViewerImageState State => _state;
+    public ViewerImageState State => _first.State;
+
+    /// <summary>Gets the original file path captured before navigating the viewer.</summary>
+    public string FilePath => _first.FilePath;
+
+    /// <summary>Gets the number of photos added after the initial capture.</summary>
+    public int AddedPhotoCount => _added.Count;
 
 
     /// <summary>
     /// Gets the number of frames or pages of the photo.
     /// </summary>
-    public int FrameCount { get; }
+    public int FrameCount => _first.FrameCount;
 
 
     /// <summary>
@@ -139,10 +273,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// </summary>
     public PrintSession(ViewerImageState state)
     {
-        _state = state;
-
-        var meta = state.Photo.Metadata;
-        FrameCount = state.Photo.IsClipboard ? 1 : (int)Math.Max(1, meta?.FrameCount ?? 1);
+        _first = new PrintPhoto(state);
         SetItems([state.FrameIndex], PrintRegion.WholeImage);
     }
 
@@ -152,13 +283,71 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// </summary>
     public void SetItems(IReadOnlyList<int> frameIndexes, PrintRegion region)
     {
-        var frames = region == PrintRegion.WholeImage ? frameIndexes : [_state.FrameIndex];
-        var name = GetPhotoName();
-
+        var frames = region == PrintRegion.WholeImage ? frameIndexes : [State.FrameIndex];
         _items = frames
             .Where(i => i >= 0 && i < FrameCount)
-            .Select(i => new PrintItem(i, region, new PrintCaption(name, FrameCount > 1 ? $"({i + 1}/{FrameCount})" : string.Empty)))
-            .ToList();
+            .Select(i => _first.CreateItem(i, region))
+            .Concat(_added.Select(photo => photo.CreateItem(photo.State.FrameIndex, PrintRegion.WholeImage)))
+            .ToArray();
+    }
+
+
+    /// <summary>
+    /// Adds the shown frame after the original photo's selected frames. Takes ownership
+    /// of the capture even if the same photo is already in the session.
+    /// </summary>
+    public bool AddPhoto(ViewerImageState state)
+    {
+        var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        var path = state.Photo.FilePath;
+        bool Matches(PrintPhoto photo) => ReferenceEquals(photo.State.Photo, state.Photo)
+            || (!string.IsNullOrEmpty(path) && path.Equals(
+                string.IsNullOrEmpty(photo.State.Photo.FilePath) ? photo.FilePath : photo.State.Photo.FilePath, comparison));
+
+        if (_cancel.IsCancellationRequested || Matches(_first) || _added.Any(Matches))
+        {
+            state.Dispose();
+            return false;
+        }
+
+        var source = new PrintPhoto(state);
+        _added.Add(source);
+        _items = [.. _items, source.CreateItem(state.FrameIndex, PrintRegion.WholeImage)];
+        return true;
+    }
+
+
+    /// <summary>
+    /// Removes the extra photos and releases their cached images.
+    /// </summary>
+    public void ClearAddedPhotos()
+    {
+        _items = _items.Where(i => i.Source == _first).ToArray();
+        lock (_lock)
+        {
+            foreach (var photo in _added)
+            {
+                photo.Removed = true;
+                photo.Release();
+            }
+            _added.Clear();
+
+            foreach (var key in _cache.Keys.Where(k => k.Item.Source.Removed).ToArray())
+            {
+                var image = _cache[key];
+                _cache.Remove(key);
+                _lru.Remove(key);
+                _cacheBytes -= image.Image?.Info.BytesSize64 ?? 0;
+                image.RequestDispose();
+            }
+        }
+    }
+
+
+    private PrintItem? GetItem(int index)
+    {
+        var items = _items;
+        return index >= 0 && index < items.Count ? items[index] : null;
     }
 
 
@@ -167,55 +356,80 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// </summary>
     public float GetAspect(int index)
     {
-        if (index < 0 || index >= _items.Count) return 1;
-        var item = _items[index];
-
-        // the shown frame is the one whose size is known before any decode
-        var shown = _state.Image;
-        if (item.FrameIndex == _state.FrameIndex && !shown.IsDisposed())
-        {
-            var rect = _state.GetRegionRect(ToViewerRegion(item.Region));
-            if (rect.Width > 0 && rect.Height > 0) return rect.Width / (float)rect.Height;
-        }
+        if (GetItem(index) is not { } item) return 1;
 
         lock (_lock)
         {
+            if (item.Source.Removed) return 1;
+
+            // the shown frame is the one whose size is known before any decode
+            var state = item.Source.State;
+            if (item.FrameIndex == state.FrameIndex && !state.Image.IsDisposed())
+            {
+                var rect = state.GetRegionRect(ToViewerRegion(item.Region));
+                if (rect.Width > 0 && rect.Height > 0) return rect.Width / (float)rect.Height;
+            }
+
             foreach (var (key, img) in _cache)
             {
-                if (key.Frame != item.FrameIndex || key.Region != item.Region || img.Image.IsDisposed()) continue;
+                if (key.Item != item || img.Image.IsDisposed()) continue;
                 return img.Image.Width / (float)img.Image.Height;
             }
         }
 
-        var meta = _state.Photo.Metadata;
-        return meta is { Width: > 0, Height: > 0 } ? meta.Width / (float)meta.Height : 1;
+        return item.Source.Aspect;
     }
 
 
     /// <inheritdoc/>
-    public PrintCaption GetCaption(int index) => index >= 0 && index < _items.Count ? _items[index].Caption : PrintCaption.Empty;
+    public PrintCaption GetCaption(int index) => GetItem(index)?.Caption ?? PrintCaption.Empty;
 
 
     /// <inheritdoc/>
-    public SKPicture? GetPicture(int index)
-    {
-        if (!_state.IsVector || index < 0 || index >= _items.Count) return null;
+    public float GetImageDpi(int index) => GetItem(index)?.Source.Dpi ?? 96;
 
+
+    /// <inheritdoc/>
+    public bool UsePicture(int index, Action<SKPicture>? draw = null)
+    {
+        if (GetItem(index) is not { } item || !item.Source.State.IsVector) return false;
+        var source = item.Source;
+
+        SKPicture picture;
         lock (_lock)
         {
-            if (_svg is null && !IsDisposed)
-            {
-                try
-                {
-                    _svg = SvgCodec.LoadSvg(_state.Photo.FilePath);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"❌❌❌ {nameof(PrintSession)}.{nameof(GetPicture)}: {ex.Message}");
-                }
-            }
+            if (source.Removed) return false;
+            if (source.Svg?.Picture is not { } svgPicture || svgPicture.IsDisposed()) return false;
+            if (draw is null) return true;
+            picture = svgPicture;
+            source.Retain();
+        }
 
-            return _svg?.Picture;
+        try
+        {
+            if (item.Region == PrintRegion.WholeImage) draw(picture);
+            else
+            {
+                var state = source.State;
+                var rect = state.GetRegionRect(ToViewerRegion(item.Region));
+                if (rect.IsEmpty || state.Image is not { } shown) return false;
+                var bounds = picture.CullRect;
+                var sx = bounds.Width / shown.Width;
+                var sy = bounds.Height / shown.Height;
+                var crop = SKRect.Create(rect.Width * sx, rect.Height * sy);
+                using var recorder = new SKPictureRecorder();
+                var canvas = recorder.BeginRecording(crop);
+                canvas.ClipRect(crop);
+                canvas.Translate(-bounds.Left - rect.Left * sx, -bounds.Top - rect.Top * sy);
+                canvas.DrawPicture(picture);
+                using var clipped = recorder.EndRecording();
+                draw(clipped);
+            }
+            return true;
+        }
+        finally
+        {
+            lock (_lock) source.Release();
         }
     }
 
@@ -223,22 +437,23 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <inheritdoc/>
     public SKImageRef.ImageLease? TryGetImage(int index, int longSide)
     {
-        if (index < 0 || index >= _items.Count || IsDisposed) return null;
+        if (GetItem(index) is not { } item || IsDisposed) return null;
 
-        var item = _items[index];
         var bucket = GetBucket(longSide);
 
         lock (_lock)
         {
+            if (item.Source.Removed) return null;
+
             // the requested size, else any larger one, else a smaller stand-in while the right one decodes
-            var exact = Acquire((item.FrameIndex, item.Region, bucket));
+            var exact = Acquire((item, bucket));
             if (exact is not null) return exact;
 
             RequestLoad(item, bucket);
 
             foreach (var b in _buckets.Where(b => b > bucket).Append(FULL_SIZE).Concat(_buckets.Where(b => b < bucket).Reverse()))
             {
-                var other = Acquire((item.FrameIndex, item.Region, b));
+                var other = Acquire((item, b));
                 if (other is not null) return other;
             }
         }
@@ -248,13 +463,39 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
 
 
     /// <inheritdoc/>
+    public SKImageRef.ImageLease? TryGetActualSizePreview(int index, int longSide, out SKSize originalSize)
+    {
+        originalSize = SKSize.Empty;
+        if (GetItem(index) is not { } item) return null;
+
+        lock (_lock)
+        {
+            if (item.Source.Removed) return null;
+            if (CanUseShownImage(item))
+            {
+                var rect = item.Source.State.GetRegionRect(ToViewerRegion(item.Region));
+                originalSize = new SKSize(rect.Width, rect.Height);
+                return TryGetImage(index, longSide);
+            }
+
+            // This preview needs the dimensions of a full decode, even when a smaller
+            // cached rendering exists. A separate bucket keeps it at screen resolution.
+            var bucket = -GetBucket(longSide);
+            if (item.Source.OriginalSizes.TryGetValue((item.FrameIndex, item.Region), out originalSize)
+                && Acquire((item, bucket)) is { } ready) return ready;
+            RequestLoad(item, bucket);
+            return null;
+        }
+    }
+
+
+    /// <inheritdoc/>
     public async Task<SKImageRef.ImageLease?> GetImageAsync(int index, int longSide, CancellationToken token)
     {
-        if (index < 0 || index >= _items.Count || IsDisposed) return null;
+        if (GetItem(index) is not { } item || IsDisposed) return null;
 
-        var item = _items[index];
         var bucket = GetBucket(longSide);
-        var key = (item.FrameIndex, item.Region, bucket);
+        var key = (item, bucket);
 
         lock (_lock)
         {
@@ -263,12 +504,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
         }
 
         using var linked = CancellationTokenSource.CreateLinkedTokenSource(token, _cancel.Token);
-        await LoadAsync(item, bucket, linked.Token).ConfigureAwait(false);
-
-        lock (_lock)
-        {
-            return Acquire(key);
-        }
+        return await LoadAsync(item, bucket, linked.Token).ConfigureAwait(false);
     }
 
 
@@ -278,14 +514,14 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     public async Task<SKImage?> BuildFullImageAsync(int frameIndex, PrintRegion region, CancellationToken token)
     {
         using var linked = CancellationTokenSource.CreateLinkedTokenSource(token, _cancel.Token);
-        return await BuildSourceImageAsync(new PrintItem(frameIndex, region, PrintCaption.Empty), FULL_SIZE, linked.Token).ConfigureAwait(false);
+        return await BuildSourceImageAsync(_first.CreateItem(frameIndex, region), FULL_SIZE, linked.Token).ConfigureAwait(false);
     }
 
 
     /// <summary>
     /// Takes a lease on a cached image and marks it recently used; the caller holds <see cref="_lock"/>.
     /// </summary>
-    private SKImageRef.ImageLease? Acquire((int, PrintRegion, int) key)
+    private SKImageRef.ImageLease? Acquire((PrintItem, int) key)
     {
         if (!_cache.TryGetValue(key, out var imgRef)) return null;
 
@@ -303,14 +539,14 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// </summary>
     private void RequestLoad(PrintItem item, int bucket)
     {
-        if (!_pending.Add((item.FrameIndex, item.Region, bucket))) return;
+        if (!_pending.Add((item, bucket))) return;
 
         _ = Task.Run(async () =>
         {
             try
             {
-                await LoadAsync(item, bucket, _cancel.Token).ConfigureAwait(false);
-                if (!IsDisposed) ImageReady?.Invoke();
+                using var lease = await LoadAsync(item, bucket, _cancel.Token).ConfigureAwait(false);
+                if (lease is not null && !_cancel.IsCancellationRequested) ImageReady?.Invoke();
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -319,7 +555,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
             }
             finally
             {
-                lock (_lock) _pending.Remove((item.FrameIndex, item.Region, bucket));
+                lock (_lock) _pending.Remove((item, bucket));
             }
         });
     }
@@ -328,33 +564,46 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <summary>
     /// Decodes an image at a size bucket into the cache, unless it is already there.
     /// </summary>
-    private async Task LoadAsync(PrintItem item, int bucket, CancellationToken token)
+    private async Task<SKImageRef.ImageLease?> LoadAsync(PrintItem item, int bucket, CancellationToken token)
     {
-        var key = (item.FrameIndex, item.Region, bucket);
+        var key = (item, bucket);
 
         await _decodeGate.WaitAsync(token).ConfigureAwait(false);
         try
         {
             lock (_lock)
             {
-                if (_cache.ContainsKey(key)) return;
+                if (item.Source.Removed) return null;
+                if (Acquire(key) is { } cached) return cached;
             }
 
-            var image = await BuildSourceImageAsync(item, bucket, token).ConfigureAwait(false);
-            if (image is null) return;
+            SKImage? image;
+            if (bucket < 0)
+            {
+                using var full = await BuildSourceImageAsync(item, FULL_SIZE, token).ConfigureAwait(false);
+                if (full is null) return null;
+                var rect = SKRectI.Create(full.Width, full.Height);
+                lock (_lock) item.Source.OriginalSizes[(item.FrameIndex, item.Region)] = new SKSize(rect.Width, rect.Height);
+                image = Resample(full, rect, -bucket);
+            }
+            else image = await BuildSourceImageAsync(item, bucket, token).ConfigureAwait(false);
+
+            if (image is null) return null;
 
             lock (_lock)
             {
-                if (IsDisposed || _cache.ContainsKey(key))
+                if (item.Source.Removed || _cache.ContainsKey(key))
                 {
                     image.Dispose();
-                    return;
+                    return Acquire(key);
                 }
 
                 _cache[key] = new SKImageRef(image);
                 _lru.AddFirst(key);
                 _cacheBytes += image.Info.BytesSize64;
                 TrimCache(key);
+                // Pin this result before another photo's decode can evict it.
+                return _cache[key].Acquire();
             }
         }
         finally
@@ -367,7 +616,7 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <summary>
     /// Evicts the least recently used images over the budget, never the one just added; the caller holds <see cref="_lock"/>.
     /// </summary>
-    private void TrimCache((int, PrintRegion, int) keep)
+    private void TrimCache((PrintItem, int) keep)
     {
         while (_cacheBytes > CACHE_BUDGET_BYTES && _lru.Last is { } node && !node.Value.Equals(keep))
         {
@@ -389,45 +638,61 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     {
         token.ThrowIfCancellationRequested();
 
-        // 1. the shown frame, already edited, when its pixels say what color space they are in
-        if (CanUseShownImage(item))
+        var source = item.Source;
+        lock (_lock)
         {
-            return await Task.Run(() => ScaleShownImage(item, bucket), token).ConfigureAwait(false);
+            if (source.Removed) return null;
+            source.Retain();
         }
 
-        // 2. any other frame, decoded apart from the viewer with true colors
-        var reader = await GetReaderAsync(token).ConfigureAwait(false);
-        if (reader is null) return null;
+        try
+        {
+            // 1. the shown frame, already edited, when its pixels say what color space they are in
+            if (CanUseShownImage(item))
+            {
+                return await Task.Run(() => ScaleShownImage(item, bucket), token).ConfigureAwait(false);
+            }
 
-        var box = bucket == FULL_SIZE ? 0u : (uint)bucket;
-        using var frame = await reader.ReadFrameAsync(item.FrameIndex, box, token).ConfigureAwait(false);
-        if (frame.IsDisposed()) return null;
+            // 2. any other frame, decoded apart from the viewer with true colors
+            var reader = await GetReaderAsync(item.Source, token).ConfigureAwait(false);
+            if (reader is null) return null;
 
-        return await Task.Run(() => EditDecodedFrame(frame, reader.Metadata, item, bucket), token).ConfigureAwait(false);
+            var box = bucket == FULL_SIZE ? 0u : (uint)bucket;
+            using var frame = await reader.ReadFrameAsync(item.FrameIndex, box, token).ConfigureAwait(false);
+            if (frame.IsDisposed()) return null;
+
+            return await Task.Run(() => EditDecodedFrame(frame, reader.Metadata, item, bucket), token).ConfigureAwait(false);
+        }
+        finally
+        {
+            lock (_lock) source.Release();
+        }
     }
 
 
     /// <summary>
     /// Checks whether a print can use the captured image instead of a decode.
     /// </summary>
-    private bool CanUseShownImage(PrintItem item)
+    private static bool CanUseShownImage(PrintItem item)
     {
-        if (_state.Image.IsDisposed() || _state.IsVector) return false;
-        if (_state.Photo.IsClipboard) return true;
+        var state = item.Source.State;
+        if (state.Image.IsDisposed() || state.IsVector) return false;
+        if (string.IsNullOrEmpty(item.Source.FilePath)) return true;
 
-        return item.FrameIndex == _state.FrameIndex && !_state.IsPreview && _state.HasExactColorTag;
+        return item.FrameIndex == state.FrameIndex && !state.IsPreview && state.HasExactColorTag;
     }
 
 
     /// <summary>
     /// Crops the captured image to the printed part and scales it into sRGB within the bucket.
     /// </summary>
-    private SKImage? ScaleShownImage(PrintItem item, int bucket)
+    private static SKImage? ScaleShownImage(PrintItem item, int bucket)
     {
-        var shown = _state.Image;
+        var state = item.Source.State;
+        var shown = state.Image;
         if (shown.IsDisposed()) return null;
 
-        var rect = _state.GetRegionRect(ToViewerRegion(item.Region));
+        var rect = state.GetRegionRect(ToViewerRegion(item.Region));
         if (rect.IsEmpty) rect = SKRectI.Create(shown.Width, shown.Height);
 
         return Resample(shown, rect, bucket);
@@ -437,11 +702,13 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <summary>
     /// Applies the captured tone mapping and edits to a decoded frame, crops it like the shown one, and scales it into sRGB.
     /// </summary>
-    private SKImage? EditDecodedFrame(SKImage frame, PhotoMetadata meta, PrintItem item, int bucket)
+    private static SKImage? EditDecodedFrame(SKImage frame, PhotoMetadata meta, PrintItem item, int bucket)
     {
+        var state = item.Source.State;
+
         // HDR is shown tone-mapped, so it prints tone-mapped
         SKImage? toneMapped = null;
-        if (_state.HdrToneMapping is { } options && meta.IsHdr)
+        if (state.HdrToneMapping is { } options && meta.IsHdr)
         {
             toneMapped = HdrToneMapper.ToneMapToSdr(frame, meta.HdrTransferFn, options, meta.ContentPeakNits);
         }
@@ -449,14 +716,14 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
         try
         {
             var source = toneMapped ?? frame;
-            using var edited = SkiaCodec.ApplyImageEdits(source, _state.Channels, _state.IsColorInverted, _state.Orientation);
+            using var edited = SkiaCodec.ApplyImageEdits(source, state.Channels, state.IsColorInverted, state.Orientation);
             var shownFrame = edited ?? source;
 
             // the region was drawn on the shown image, so scale it to this decode's size
             var rect = SKRectI.Create(shownFrame.Width, shownFrame.Height);
-            if (item.Region != PrintRegion.WholeImage && _state.Image is { } shown && !shown.IsDisposed())
+            if (item.Region != PrintRegion.WholeImage && state.Image is { } shown && !shown.IsDisposed())
             {
-                var region = _state.GetRegionRect(ToViewerRegion(item.Region));
+                var region = state.GetRegionRect(ToViewerRegion(item.Region));
                 var sx = shownFrame.Width / (float)shown.Width;
                 var sy = shownFrame.Height / (float)shown.Height;
                 var scaled = SKRectI.Round(new SKRect(region.Left * sx, region.Top * sy, region.Right * sx, region.Bottom * sy));
@@ -500,20 +767,23 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     /// <summary>
     /// Opens the frame reader once, on first need.
     /// </summary>
-    private Task<PhotoFrameReader?> GetReaderAsync(CancellationToken token)
+    private Task<PhotoFrameReader?> GetReaderAsync(PrintPhoto source, CancellationToken token)
     {
         lock (_lock)
         {
-            _readerTask ??= OpenReaderAsync();
-            return _readerTask.WaitAsync(token);
+            // A file restored after a failed preview can open on the next request.
+            if (source.ReaderTask is null || source.ReaderTask.IsCompletedSuccessfully && source.ReaderTask.Result is null)
+            {
+                source.ReaderTask = OpenReaderAsync(source);
+            }
+            return source.ReaderTask.WaitAsync(token);
         }
     }
 
 
-    private async Task<PhotoFrameReader?> OpenReaderAsync()
+    private async Task<PhotoFrameReader?> OpenReaderAsync(PrintPhoto source)
     {
-        var path = _state.Photo.FilePath;
-        if (string.IsNullOrEmpty(path) || !File.Exists(path)) return null;
+        if (source.Snapshot is not { } snapshot || await snapshot.ConfigureAwait(false) is not { } path) return null;
 
         try
         {
@@ -551,13 +821,6 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
     };
 
 
-    private string GetPhotoName()
-    {
-        var path = _state.Photo.FilePath;
-        return string.IsNullOrEmpty(path) ? "ImageGlass" : Path.GetFileName(path);
-    }
-
-
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
@@ -573,12 +836,13 @@ public sealed class PrintSession : PhDisposable, IPrintImageSource
             _lru.Clear();
             _cacheBytes = 0;
 
-            _svg?.Dispose();
-            _svg = null;
+            foreach (var photo in _added.Prepend(_first))
+            {
+                photo.Removed = true;
+                photo.Release();
+            }
+            _added.Clear();
+            _items = [];
         }
-
-        // a reader still opening disposes itself once it lands
-        _ = _readerTask?.ContinueWith(t => t.Result?.Dispose(), TaskContinuationOptions.OnlyOnRanToCompletion);
-        _state.Dispose();
     }
 }

@@ -1377,6 +1377,16 @@ public class Lang
         #region Print
 
         new(LangId.Print_Title, "Print" ), //v10.0
+        new(LangId.Print_PhotoCount, "Photos in this job ({0})" ), //v10.0
+        new(LangId.Print_BtnShowViewer, "Show viewer" ), //v10.0
+        new(LangId.Print_BtnAddPhoto, "Add current photo" ), //v10.0
+        new(LangId.Print_BtnClearPhotos, "Clear added photos" ), //v10.0
+        new(LangId.Print_AddPhotoHint, "Choose a photo in the viewer, then use Print to return here." ), //v10.0
+        new(LangId.Print_PhotoAlreadyAdded, "This photo is already in the print job." ), //v10.0
+        new(LangId.Print_NoPhotoToAdd, "Open a photo in the viewer first." ), //v10.0
+        new(LangId.Print_PhotoUnavailable, "Could not read “{0}” for printing. Check that the original file is still available." ), //v10.0
+        new(LangId.Print_FirstPhotoPages, "Pages of the first photo" ), //v10.0
+        new(LangId.Print_FirstPhotoRegion, "Area of the first photo" ), //v10.0
         new(LangId.Print_LblPrinter, "Printer" ), //v10.0
         new(LangId.Print_LblCopies, "Copies" ), //v10.0
         new(LangId.Print_ChkCollate, "Collate" ), //v10.0

@@ -219,6 +219,7 @@ public abstract class PrintProviderBase : IPrintProvider
                 await PdfPrintWriter.WriteAsync(stream, job.Layout, job.Session, options, progress, token).ConfigureAwait(false);
             }
 
+            token.ThrowIfCancellationRequested();
             File.Move(tempPath, path, true);
         }
         catch
@@ -249,7 +250,11 @@ public abstract class PrintProviderBase : IPrintProvider
     {
         var region = job.Session.Items.FirstOrDefault()?.Region ?? PrintRegion.WholeImage;
         using var img = await job.Session.BuildFullImageAsync(job.Session.State.FrameIndex, region, token).ConfigureAwait(false);
-        if (img.IsDisposed()) return null;
+        if (img.IsDisposed())
+        {
+            token.ThrowIfCancellationRequested();
+            throw new IOException(Core.Lang[LangId.Print_PhotoUnavailable, job.Session.GetCaption(0).Name]);
+        }
 
         var path = BHelper.ConfigDir(Dir.Temporary, $"ig_print_{Guid.NewGuid():N}.png");
         using var data = img.Encode(SKEncodedImageFormat.Png, 100);

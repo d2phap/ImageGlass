@@ -41,6 +41,7 @@ namespace ImageGlass.Common.Windows;
 public partial class MainWindow : PhWindow
 {
     private readonly AppStatusInfo _status;
+    private bool _isClosing;
     private bool _isClosingHandled; // to handle closing for saving configs
 
     private const double DEFAULT_WIDTH = 800;
@@ -144,7 +145,8 @@ public partial class MainWindow : PhWindow
 
         // cancel the close so async work can complete before the app tears down
         e.Cancel = true;
-        _isClosingHandled = true;
+        if (_isClosing) return;
+        _isClosing = true;
 
         // let a save the user just triggered finish writing before anything is torn down
         if (Photo.PendingSaveCount > 0)
@@ -169,6 +171,9 @@ public partial class MainWindow : PhWindow
             // stop slideshow so pre-slideshow config values are restored before saving
             Core.API?.IG_ToggleSlideshow(false);
 
+            // The independent print window must stop using the providers before Core is disposed.
+            await AppAPIProvider.ClosePrintWindowAsync();
+
             // the projectors mirror this window; their settings are already in the config
             ProjectorToolControl.Manager?.CloseAll();
 
@@ -184,6 +189,7 @@ public partial class MainWindow : PhWindow
         }
 
         // now close for real — _isClosingHandled lets the second pass through
+        _isClosingHandled = true;
         Close();
     }
 

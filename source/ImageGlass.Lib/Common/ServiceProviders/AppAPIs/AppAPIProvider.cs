@@ -65,6 +65,9 @@ public partial class AppAPIProvider
     // shows the folder switch message once the new folder's photo loads; null when none is pending
     private static TEventHandler<ViewerControl, PhotoLoadingEventArgs>? _siblingDirAnnouncer;
 
+    private static PrintWindow? _printWindow;
+    private static bool _resumeSlideshowAfterPrint;
+
     // slideshow state backup
     private bool _isFullScreenBeforeSlideshow;
     private bool _isFramelessBeforeSlideshow;
@@ -673,6 +676,12 @@ public partial class AppAPIProvider
     /// </summary>
     public static async Task IG_PrintAsync(PrintRegion? region = null)
     {
+        if (_printWindow is { } openWindow)
+        {
+            openWindow.RestoreAndActivate();
+            return;
+        }
+
         // the shown image, every edit applied, rather than the file on disk
         var state = Viewer.CaptureImageState();
         if (state is null)
@@ -685,28 +694,42 @@ public partial class AppAPIProvider
             return;
         }
 
-        using var session = new PrintSession(state);
-        var window = new PrintWindow(session, region ?? PrintRegion.WholeImage);
-
-        // a running slideshow would move on to the next photo behind the window
+        var session = new PrintSession(state);
         var slideshow = Core.Slideshow;
         var isSlideshowPaused = slideshow is { IsRunning: true, IsPaused: false };
-        if (isSlideshowPaused) slideshow!.Pause();
 
-        // a busy app holds the animation still and refuses edits while the window is open
-        Core.IsBusy = true;
+        void ReleaseSession()
+        {
+            _printWindow = null;
+            session.Dispose();
+            if (_resumeSlideshowAfterPrint) slideshow?.Resume();
+            _resumeSlideshowAfterPrint = false;
+        }
+
         try
         {
-            await window.ShowAsync(App.MainWindow);
-        }
-        finally
-        {
-            Core.IsBusy = false;
-            if (isSlideshowPaused) slideshow!.Resume();
-        }
+            var window = new PrintWindow(session, region ?? PrintRegion.WholeImage);
+            _printWindow = window;
+            window.Closed += (_, _) =>
+            {
+                ReleaseSession();
+                if (window.CompletedMessage is { } message) _ = Message.ShowAsync(message);
+            };
 
-        if (window.CompletedMessage is { } message) _ = Message.ShowAsync(message);
+            _resumeSlideshowAfterPrint = isSlideshowPaused;
+            if (isSlideshowPaused) slideshow!.Pause();
+            // An independent window lets the viewer come to the front, even for a maximized print preview.
+            window.Show();
+        }
+        catch
+        {
+            ReleaseSession();
+            throw;
+        }
     }
+
+
+    internal static Task ClosePrintWindowAsync() => _printWindow?.CloseForShutdownAsync() ?? Task.CompletedTask;
 
 
     /// <summary>
@@ -1140,7 +1163,7 @@ public partial class AppAPIProvider
     /// </summary>
     private static void ResetSlideshowInterval__()
     {
-        if (!Core.Config.EnableSlideshow) return;
+        if (!Core.Config.EnableSlideshow || _printWindow is not null) return;
 
         var slideshow = Core.Slideshow;
         if (slideshow is null) return;
@@ -2908,6 +2931,7 @@ public partial class AppAPIProvider
     public static void IG_ToggleSlideshowPlayback(bool? enabled = null)
     {
         if (Core.Slideshow?.IsRunning != true) return;
+        _resumeSlideshowAfterPrint = false; // An explicit playback choice supersedes the temporary print pause.
         var isPaused = Core.Slideshow?.IsPaused ?? false;
 
         if (isPaused) Core.Slideshow?.Resume();
